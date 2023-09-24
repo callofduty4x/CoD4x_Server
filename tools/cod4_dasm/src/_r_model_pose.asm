@@ -1,21 +1,21 @@
 ;Imports of r_model_pose:
-	extern InterlockedCompareExchange
-	extern DObjGetSurfaceData
+	extern iInterlockedCompareExchange
+	extern _Z18DObjGetSurfaceDataPK6DObj_sPKffPc
 	extern useFastFile
-	extern DObjGetSurfaces
-	extern CG_DObjCalcPose
-	extern DObjGetBoneInfo
-	extern DObjNumBones
+	extern _Z15DObjGetSurfacesPK6DObj_sPiPKc
+	extern _Z15CG_DObjCalcPosePK7cpose_tPK6DObj_sPi
+	extern _Z15DObjGetBoneInfoPK6DObj_sPP9XBoneInfo
+	extern _Z12DObjNumBonesPK6DObj_s
 	extern scene
-	extern DObjBad
-	extern I_dmaGetDObjSkel
+	extern _Z7DObjBadPK6DObj_s
+	extern _Z16I_dmaGetDObjSkelPK6DObj_s
 
 ;Exports of r_model_pose:
 	global _GLOBAL__I__Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si
 	global g_worldMins
 	global g_worldMaxs
-	global R_UpdateSceneEntBounds
-	global R_UpdateGfxEntityBoundsCmd
+	global _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si
+	global _Z26R_UpdateGfxEntityBoundsCmdPv
 
 
 SECTION .text
@@ -28,21 +28,21 @@ _GLOBAL__I__Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -312,7 +312,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_UpdateSceneEntBounds(GfxSceneEntity*, GfxSceneEntity**, DObj_s const**, int)
-R_UpdateSceneEntBounds:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -325,9 +325,9 @@ R_UpdateSceneEntBounds:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
-	call InterlockedCompareExchange
+	call iInterlockedCompareExchange
 	test eax, eax
-	jnz R_UpdateSceneEntBounds_10
+	jnz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_10
 	mov eax, [ebp+0x8]
 	mov [ebx], eax
 	mov ebx, [eax+0x70]
@@ -342,19 +342,19 @@ R_UpdateSceneEntBounds:
 	mov [esp+0x8], eax
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call DObjGetSurfaceData
+	call _Z18DObjGetSurfaceDataPK6DObj_sPKffPc
 	mov eax, useFastFile
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_UpdateSceneEntBounds_20
-R_UpdateSceneEntBounds_110:
+	jz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_20
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_110:
 	mov [esp+0x8], esi
 	lea eax, [ebp-0x28]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call DObjGetSurfaces
+	call _Z15DObjGetSurfacesPK6DObj_sPiPKc
 	test eax, eax
-	jz R_UpdateSceneEntBounds_30
+	jz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_30
 	mov eax, [ebp-0x28]
 	mov [ebp-0x38], eax
 	mov eax, [ebp-0x24]
@@ -369,10 +369,10 @@ R_UpdateSceneEntBounds_110:
 	mov [esp+0x8], eax
 	mov [esp+0x4], ebx
 	mov [esp], edx
-	call CG_DObjCalcPose
+	call _Z15CG_DObjCalcPosePK7cpose_tPK6DObj_sPi
 	mov [ebp-0x2a8], eax
 	test eax, eax
-	jz R_UpdateSceneEntBounds_40
+	jz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_40
 	movss xmm0, dword [g_worldMaxs]
 	movss [ebp-0x58], xmm0
 	movss xmm0, dword [g_worldMaxs+0x4]
@@ -392,12 +392,12 @@ R_UpdateSceneEntBounds_110:
 	lea eax, [ebp-0x298]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call DObjGetBoneInfo
+	call _Z15DObjGetBoneInfoPK6DObj_sPP9XBoneInfo
 	mov [esp], ebx
-	call DObjNumBones
+	call _Z12DObjNumBonesPK6DObj_s
 	mov [ebp-0x2ac], eax
 	test eax, eax
-	jle R_UpdateSceneEntBounds_50
+	jle _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_50
 	mov ecx, [ebp-0x2a8]
 	mov dword [ebp-0x2a4], 0x80000000
 	mov dword [ebp-0x2b0], 0x0
@@ -407,12 +407,12 @@ R_UpdateSceneEntBounds_110:
 	movss [ebp-0x2c4], xmm0
 	movss xmm0, dword [ebp-0x50]
 	movss [ebp-0x2c8], xmm0
-R_UpdateSceneEntBounds_100:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_100:
 	mov eax, [ebp-0x2b0]
 	sar eax, 0x5
 	mov edx, [ebp-0x2a4]
 	test [ebp+eax*4-0x28], edx
-	jz R_UpdateSceneEntBounds_60
+	jz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_60
 	movss xmm1, dword [ecx+0x1c]
 	movss xmm0, dword [ecx]
 	movaps xmm4, xmm1
@@ -527,10 +527,10 @@ R_UpdateSceneEntBounds_100:
 	addss xmm3, xmm7
 	movss xmm0, dword [ebp-0x2c0]
 	ucomiss xmm0, xmm1
-	jbe R_UpdateSceneEntBounds_70
+	jbe _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_70
 	movss [ebp-0x2c0], xmm1
 	movss [ebp-0x58], xmm1
-R_UpdateSceneEntBounds_70:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_70:
 	movss xmm1, dword [ebp-0x48]
 	movaps xmm0, xmm1
 	cmpss xmm0, xmm3, 0x5
@@ -577,10 +577,10 @@ R_UpdateSceneEntBounds_70:
 	addss xmm3, xmm0
 	movss xmm0, dword [ebp-0x2c4]
 	ucomiss xmm0, xmm2
-	jbe R_UpdateSceneEntBounds_80
+	jbe _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_80
 	movss [ebp-0x2c4], xmm2
 	movss [ebp-0x54], xmm2
-R_UpdateSceneEntBounds_80:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_80:
 	movss xmm1, dword [ebp-0x44]
 	movaps xmm0, xmm1
 	cmpss xmm0, xmm3, 0x5
@@ -625,10 +625,10 @@ R_UpdateSceneEntBounds_80:
 	addss xmm3, xmm0
 	movss xmm0, dword [ebp-0x2c8]
 	ucomiss xmm0, xmm2
-	jbe R_UpdateSceneEntBounds_90
+	jbe _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_90
 	movss [ebp-0x2c8], xmm2
 	movss [ebp-0x50], xmm2
-R_UpdateSceneEntBounds_90:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_90:
 	movss xmm1, dword [ebp-0x40]
 	movaps xmm0, xmm1
 	cmpss xmm0, xmm3, 0x5
@@ -636,14 +636,14 @@ R_UpdateSceneEntBounds_90:
 	andnps xmm0, xmm3
 	orps xmm0, xmm1
 	movss [ebp-0x40], xmm0
-R_UpdateSceneEntBounds_60:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_60:
 	add dword [ebp-0x2b0], 0x1
 	ror dword [ebp-0x2a4], 1
 	add ecx, 0x20
 	mov eax, [ebp-0x2b0]
 	cmp [ebp-0x2ac], eax
-	jnz R_UpdateSceneEntBounds_100
-R_UpdateSceneEntBounds_130:
+	jnz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_100
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_130:
 	movss xmm0, dword [ebp-0x2c0]
 	mov eax, [ebp+0x8]
 	movss [eax+0x30], xmm0
@@ -660,37 +660,37 @@ R_UpdateSceneEntBounds_130:
 	mov [edx+0x44], eax
 	mov dword [edx+0x2c], 0x2
 	mov eax, [ebp-0x2a8]
-R_UpdateSceneEntBounds_120:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_120:
 	add esp, 0x2dc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_UpdateSceneEntBounds_20:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_20:
 	mov [esp], ebx
-	call DObjBad
+	call _Z7DObjBadPK6DObj_s
 	test eax, eax
-	jz R_UpdateSceneEntBounds_110
+	jz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_110
 	mov edx, [ebp+0x8]
 	mov dword [edx+0x2c], 0x4
 	mov dword [ebp-0x2a8], 0x0
 	mov eax, [ebp-0x2a8]
-	jmp R_UpdateSceneEntBounds_120
-R_UpdateSceneEntBounds_50:
+	jmp _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_120
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_50:
 	movss xmm0, dword [ebp-0x58]
 	movss [ebp-0x2c0], xmm0
 	movss xmm0, dword [ebp-0x54]
 	movss [ebp-0x2c4], xmm0
 	movss xmm0, dword [ebp-0x50]
 	movss [ebp-0x2c8], xmm0
-	jmp R_UpdateSceneEntBounds_130
-R_UpdateSceneEntBounds_10:
+	jmp _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_130
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_10:
 	mov dword [ebx], 0x0
 	mov eax, [ebp+0x14]
 	test eax, eax
-	jnz R_UpdateSceneEntBounds_140
-R_UpdateSceneEntBounds_160:
+	jnz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_140
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_160:
 	mov dword [ebp-0x2a8], 0x0
 	mov eax, [ebp-0x2a8]
 	add esp, 0x2dc
@@ -699,7 +699,7 @@ R_UpdateSceneEntBounds_160:
 	pop edi
 	pop ebp
 	ret
-R_UpdateSceneEntBounds_30:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_30:
 	mov ebx, [ebp+0x8]
 	mov dword [ebx+0x2c], 0x4
 	mov dword [ebp-0x2a8], 0x0
@@ -710,32 +710,32 @@ R_UpdateSceneEntBounds_30:
 	pop edi
 	pop ebp
 	ret
-R_UpdateSceneEntBounds_140:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_140:
 	mov edx, [ebp+0x8]
-R_UpdateSceneEntBounds_150:
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_150:
 	mov eax, [edx+0x2c]
 	cmp eax, 0x1
-	jz R_UpdateSceneEntBounds_150
+	jz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_150
 	cmp eax, 0x4
-	jz R_UpdateSceneEntBounds_160
+	jz _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_160
 	mov [ebx], edx
 	mov eax, [edx+0x70]
 	mov ebx, [ebp+0x10]
 	mov [ebx], eax
 	mov [esp], eax
-	call I_dmaGetDObjSkel
+	call _Z16I_dmaGetDObjSkelPK6DObj_s
 	mov [ebp-0x2a8], eax
-	jmp R_UpdateSceneEntBounds_120
-R_UpdateSceneEntBounds_40:
+	jmp _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_120
+_Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_40:
 	mov eax, [ebp+0x8]
 	mov dword [eax+0x2c], 0x4
 	mov eax, [ebp-0x2a8]
-	jmp R_UpdateSceneEntBounds_120
+	jmp _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si_120
 	nop
 
 
 ;R_UpdateGfxEntityBoundsCmd(void*)
-R_UpdateGfxEntityBoundsCmd:
+_Z26R_UpdateGfxEntityBoundsCmdPv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -747,7 +747,7 @@ R_UpdateGfxEntityBoundsCmd:
 	mov eax, [ebp+0x8]
 	mov eax, [eax]
 	mov [esp], eax
-	call R_UpdateSceneEntBounds
+	call _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si
 	leave
 	ret
 
@@ -829,7 +829,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

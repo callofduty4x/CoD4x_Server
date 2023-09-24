@@ -1,14 +1,14 @@
 ;Imports of r_dpvs:
-	extern R_AddWorkerCmd
+	extern _Z14R_AddWorkerCmd13WorkerCmdTypePv
 	extern rgp
-	extern Com_ConvexHull
+	extern _Z14Com_ConvexHullPA2_fjS0_
 	extern memcpy
-	extern Com_Error
-	extern BoxOnPlaneSide
+	extern _Z9Com_Error11errorParm_tPKcz
+	extern _Z14BoxOnPlaneSidePKfS0_PK8cplane_s
 	extern gfxCfg
 	extern scene
-	extern Vec3ProjectionCoords
-	extern ProjectedWindingContainsCoplanarPoint
+	extern _Z20Vec3ProjectionCoordsPKfPiS1_
+	extern _Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS_
 	extern _ZN10LargeLocalC1Ei
 	extern _ZN10LargeLocal6GetBufEv
 	extern r_portalWalkLimit
@@ -20,52 +20,52 @@
 	extern _ZN10LargeLocalD1Ev
 	extern colorMdCyan
 	extern frontEndDataOut
-	extern R_AddDebugLine
+	extern _Z14R_AddDebugLineP12DebugGlobalsPKfS2_S2_
 	extern colorLtCyan
-	extern R_WarnOncePerFrame
-	extern R_AddDebugPolygon
+	extern _Z18R_WarnOncePerFrame14GfxWarningTypez
+	extern _Z17R_AddDebugPolygonP12DebugGlobalsPKfiPA3_f
 	extern _Unwind_Resume
-	extern R_IsDynEntVisibleToAnyShadowedPrimaryLight
-	extern DynEnt_GetClientPose
-	extern DynEnt_GetEntityDef
-	extern R_SkinXModel
-	extern R_GetBrushModel
+	extern _Z42R_IsDynEntVisibleToAnyShadowedPrimaryLightPK11GfxViewInfoj17DynEntityDrawType
+	extern _Z20DynEnt_GetClientPoset17DynEntityDrawType
+	extern _Z19DynEnt_GetEntityDeft17DynEntityDrawType
+	extern _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj
+	extern _Z15R_GetBrushModelj
 	extern r_drawDecals
-	extern InterlockedExchangeAdd
+	extern iInterlockedExchangeAdd
 	extern memset
-	extern Com_Memset
-	extern R_IsEntityVisibleToAnyShadowedPrimaryLight
-	extern R_SkinAndBoundSceneEnt
+	extern _Z10Com_MemsetPvii
+	extern _Z42R_IsEntityVisibleToAnyShadowedPrimaryLightPK11GfxViewInfoj
+	extern _Z22R_SkinAndBoundSceneEntP14GfxSceneEntity
 	extern r_zfar
-	extern R_AllocGlobalVariable
+	extern _Z21R_AllocGlobalVariablejPKc
 	extern rg
 	extern r_skipPvs
 	extern r_singleCell
-	extern R_AddSkySurfacesDpvs
+	extern _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei
 	extern r_vc_makelog
-	extern R_ShowLightVisCachePoints
-	extern R_FreeGlobalVariable
-	extern XModelGetRadius
-	extern R_AllocSceneModel
+	extern _Z25R_ShowLightVisCachePointsPKfPK9DpvsPlanei
+	extern _Z20R_FreeGlobalVariablePv
+	extern _Z15XModelGetRadiusPK6XModel
+	extern _Z17R_AllocSceneModelv
 	extern sm_strictCull
-	extern CG_GetPoseLightingHandle
-	extern R_AllocModelLighting_Box
-	extern R_AllocModelLighting_Sphere
+	extern _Z24CG_GetPoseLightingHandlePK7cpose_t
+	extern _Z24R_AllocModelLighting_BoxPK11GfxViewInfoPKfS3_S3_PtP15GfxLightingInfo
+	extern _Z27R_AllocModelLighting_SpherePK11GfxViewInfoPKfS3_fPtP15GfxLightingInfo
 	extern sc_enable
-	extern DynEnt_GetClientEntity
-	extern R_AllocModelLighting_PrimaryLight
-	extern R_AddBModelSurfacesCamera
-	extern PIXBeginNamedEvent
-	extern R_SortDrawSurfs
-	extern R_AddXModelSurfacesCamera
-	extern R_AddDObjSurfacesCamera
+	extern _Z22DynEnt_GetClientEntityt17DynEntityDrawType
+	extern _Z33R_AllocModelLighting_PrimaryLightPKfjPtP15GfxLightingInfo
+	extern _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j
+	extern _Z18PIXBeginNamedEventiPKcz
+	extern _Z15R_SortDrawSurfsP11GfxDrawSurfi
+	extern _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j
+	extern _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3_
 	extern gfxMetrics
-	extern R_AddDObjSurfaces
-	extern R_AddXModelSurfaces
-	extern R_AddBModelSurfaces
-	extern R_IsDynEntVisibleToPrimaryLight
-	extern R_IsEntityVisibleToPrimaryLight
-	extern R_CullPointAndRadius
+	extern _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3_
+	extern _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
+	extern _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
+	extern _Z31R_IsDynEntVisibleToPrimaryLightj17DynEntityDrawTypej
+	extern _Z31R_IsEntityVisibleToPrimaryLightjjj
+	extern _Z20R_CullPointAndRadiusPKffPK9DpvsPlanei
 
 ;Exports of r_dpvs:
 	global _GLOBAL__I__Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane
@@ -74,50 +74,50 @@
 	global standardFrustumSidePlanes
 	global g_dpvsView
 	global g_dynEntVisData
-	global R_AddCellSurfacesAndCullGroupsInFrustumDelayed
-	global R_ChopPortalWinding
-	global R_AddVertToPortalHullPoints
-	global R_FilterDynEntIntoCells_r
-	global R_EnqueuePortal
-	global R_FilterEntIntoCells_r
-	global R_GetSidePlaneNormals
-	global R_GetFurtherCellList_r
-	global R_VisitPortalsForCellNoFrustum
-	global R_VisitPortalsForCell
+	global _Z46R_AddCellSurfacesAndCullGroupsInFrustumDelayedPK7GfxCellPK9DpvsPlaneii
+	global _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
+	global _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf
+	global _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3_
+	global _Z15R_EnqueuePortalP9GfxPortal
+	global _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4_
+	global _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f
+	global _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i
+	global _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij
+	global _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren
 	global _ZZ14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_iE5color
-	global R_VisitPortals
-	global R_SetVisData
-	global R_AddSceneDObj
-	global R_CellForPoint
-	global R_DrawAllDynEnt
-	global R_InitSceneData
-	global R_ClearDpvsScene
-	global R_DrawAllSceneEnt
-	global R_GetFarPlaneDist
-	global R_InitSceneBuffers
-	global DynEntCl_InitFilter
-	global R_FrustumClipPlanes
-	global R_FilterDObjIntoCells
-	global R_AddWorldSurfacesDpvs
-	global R_SetViewFrustumPlanes
-	global R_ShutdownSceneBuffers
-	global R_UnfilterEntFromCells
-	global R_FilterBModelIntoCells
-	global R_FilterDynEntIntoCells
-	global R_FilterXModelIntoScene
-	global R_SetupWorldSurfacesDpvs
-	global R_FilterEntitiesIntoCells
-	global R_SetupShadowSurfacesDpvs
-	global R_UnfilterDynEntFromCells
-	global R_CalcReflectionProbeIndex
-	global R_AddWorldSurfacesFrustumOnly
-	global R_AddAllSceneEntSurfacesCamera
-	global R_GenerateShadowMapCasterCells
-	global R_AddAllSceneEntSurfacesSunShadow
-	global R_AddAllSceneEntSurfacesSpotShadow
-	global R_CullDynamicSpotLightInCameraView
-	global R_CullDynamicPointLightsInCameraView
-	global R_AddCellDynBrushSurfacesInFrustumCmd
+	global _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i
+	global _Z12R_SetVisDataj
+	global _Z14R_AddSceneDObjjj
+	global _Z14R_CellForPointPKf
+	global _Z15R_DrawAllDynEntPK11GfxViewInfo
+	global _Z15R_InitSceneDatai
+	global _Z16R_ClearDpvsScenev
+	global _Z17R_DrawAllSceneEntPK11GfxViewInfo
+	global _Z17R_GetFarPlaneDistv
+	global _Z18R_InitSceneBuffersv
+	global _Z19DynEntCl_InitFilterv
+	global _Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane
+	global _Z21R_FilterDObjIntoCellsjjPff
+	global _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi
+	global _Z22R_SetViewFrustumPlanesP11GfxViewInfo
+	global _Z22R_ShutdownSceneBuffersv
+	global _Z22R_UnfilterEntFromCellsjj
+	global _Z23R_FilterBModelIntoCellsjjP13GfxBrushModel
+	global _Z23R_FilterDynEntIntoCellsj17DynEntityDrawTypePfS0_
+	global _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt
+	global _Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms
+	global _Z25R_FilterEntitiesIntoCellsi
+	global _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji
+	global _Z25R_UnfilterDynEntFromCellsj17DynEntityDrawType
+	global _Z26R_CalcReflectionProbeIndexPKf
+	global _Z29R_AddWorldSurfacesFrustumOnlyv
+	global _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo
+	global _Z30R_GenerateShadowMapCasterCellsv
+	global _Z33R_AddAllSceneEntSurfacesSunShadowv
+	global _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj
+	global _Z34R_CullDynamicSpotLightInCameraViewv
+	global _Z36R_CullDynamicPointLightsInCameraViewv
+	global _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv
 
 
 SECTION .text
@@ -130,11 +130,11 @@ _GLOBAL__I__Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;R_AddCellSurfacesAndCullGroupsInFrustumDelayed(GfxCell const*, DpvsPlane const*, int, int)
-R_AddCellSurfacesAndCullGroupsInFrustumDelayed:
+_Z46R_AddCellSurfacesAndCullGroupsInFrustumDelayedPK7GfxCellPK9DpvsPlaneii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -154,7 +154,7 @@ R_AddCellSurfacesAndCullGroupsInFrustumDelayed:
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x3
-	call R_AddWorkerCmd
+	call _Z14R_AddWorkerCmd13WorkerCmdTypePv
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	sub ebx, [eax+0x104]
@@ -180,13 +180,13 @@ R_AddCellSurfacesAndCullGroupsInFrustumDelayed:
 	lea ebx, [ebp-0x30]
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x5
-	call R_AddWorkerCmd
+	call _Z14R_AddWorkerCmd13WorkerCmdTypePv
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x4
-	call R_AddWorkerCmd
+	call _Z14R_AddWorkerCmd13WorkerCmdTypePv
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x6
-	call R_AddWorkerCmd
+	call _Z14R_AddWorkerCmd13WorkerCmdTypePv
 	add esp, 0x3c
 	pop ebx
 	pop esi
@@ -196,17 +196,17 @@ R_AddCellSurfacesAndCullGroupsInFrustumDelayed:
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -476,7 +476,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_ChopPortalWinding(float const (*) [3], int*, DpvsPlane const*, float (*) [3])
-R_ChopPortalWinding:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -487,7 +487,7 @@ R_ChopPortalWinding:
 	mov [ebp-0x2ac], edx
 	mov ebx, [edx]
 	test ebx, ebx
-	jle R_ChopPortalWinding_10
+	jle _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_10
 	movss xmm5, dword [ecx]
 	movss xmm4, dword [ecx+0x4]
 	movss xmm3, dword [ecx+0x8]
@@ -498,16 +498,16 @@ R_ChopPortalWinding:
 	xor ecx, ecx
 	movss xmm6, dword [_float_0_00100000]
 	movss xmm7, dword [_float__0_00100000]
-	jmp R_ChopPortalWinding_20
-R_ChopPortalWinding_40:
+	jmp _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_20
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_40:
 	mov byte [eax], 0x1
 	add esi, 0x1
-R_ChopPortalWinding_50:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_50:
 	add ecx, 0x1
 	add edx, 0xc
 	cmp ebx, ecx
-	jz R_ChopPortalWinding_30
-R_ChopPortalWinding_20:
+	jz _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_30
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_20:
 	movaps xmm1, xmm5
 	mulss xmm1, [edx]
 	movaps xmm0, xmm4
@@ -523,21 +523,21 @@ R_ChopPortalWinding_20:
 	lea eax, [ecx+edi]
 	mov byte [eax], 0x2
 	ucomiss xmm7, xmm1
-	ja R_ChopPortalWinding_40
+	ja _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_40
 	ucomiss xmm1, [_float_0_00100000]
-	jbe R_ChopPortalWinding_50
+	jbe _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_50
 	mov byte [eax], 0x0
 	add dword [ebp-0x2b4], 0x1
 	add ecx, 0x1
 	add edx, 0xc
 	cmp ebx, ecx
-	jnz R_ChopPortalWinding_20
-R_ChopPortalWinding_30:
+	jnz _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_20
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_30:
 	mov eax, [ebp-0x2b4]
 	test eax, eax
-	jz R_ChopPortalWinding_60
+	jz _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_60
 	test esi, esi
-	jz R_ChopPortalWinding_70
+	jz _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_70
 	movzx eax, byte [ebp-0x91]
 	mov [ebp+ecx-0x91], al
 	mov eax, [ebp-0x298]
@@ -545,10 +545,10 @@ R_ChopPortalWinding_30:
 	xor edi, edi
 	mov dword [ebp-0x2a4], 0x0
 	mov esi, [ebp+0x8]
-	jmp R_ChopPortalWinding_80
-R_ChopPortalWinding_130:
+	jmp _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_80
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_130:
 	test bl, bl
-	jnz R_ChopPortalWinding_90
+	jnz _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_90
 	lea eax, [edi+edi*2]
 	mov edx, [ebp-0x2a8]
 	lea eax, [edx+eax*4]
@@ -560,13 +560,13 @@ R_ChopPortalWinding_130:
 	mov [esi+0x8], eax
 	add dword [ebp-0x2a4], 0x1
 	add esi, 0xc
-R_ChopPortalWinding_90:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_90:
 	lea ecx, [edi+0x1]
 	movzx eax, byte [ebp+ecx-0x91]
 	cmp al, 0x2
-	jz R_ChopPortalWinding_100
+	jz _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_100
 	cmp bl, al
-	jz R_ChopPortalWinding_100
+	jz _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_100
 	movss xmm2, dword [ebp+edi*4-0x298]
 	movaps xmm0, xmm2
 	subss xmm0, [ebp+ecx*4-0x298]
@@ -601,17 +601,17 @@ R_ChopPortalWinding_90:
 	movss [esi+0x8], xmm1
 	add dword [ebp-0x2a4], 0x1
 	add esi, 0xc
-R_ChopPortalWinding_100:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_100:
 	mov edi, [ebp-0x2ac]
 	cmp ecx, [edi]
-	jge R_ChopPortalWinding_110
+	jge _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_110
 	cmp dword [ebp-0x2a4], 0x7f
-	jg R_ChopPortalWinding_120
+	jg _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_120
 	mov edi, ecx
-R_ChopPortalWinding_80:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_80:
 	movzx ebx, byte [ebp+edi-0x91]
 	cmp bl, 0x2
-	jnz R_ChopPortalWinding_130
+	jnz _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_130
 	lea eax, [edi+edi*2]
 	mov edx, [ebp-0x2a8]
 	lea eax, [edx+eax*4]
@@ -624,10 +624,10 @@ R_ChopPortalWinding_80:
 	add dword [ebp-0x2a4], 0x1
 	add esi, 0xc
 	lea ecx, [edi+0x1]
-	jmp R_ChopPortalWinding_100
-R_ChopPortalWinding_10:
+	jmp _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_100
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_10:
 	mov eax, edx
-R_ChopPortalWinding_140:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_140:
 	mov dword [eax], 0x0
 	mov dword [ebp-0x2a8], 0x0
 	mov eax, [ebp-0x2a8]
@@ -637,9 +637,9 @@ R_ChopPortalWinding_140:
 	pop edi
 	pop ebp
 	ret
-R_ChopPortalWinding_120:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_120:
 	mov eax, [ebp-0x2ac]
-R_ChopPortalWinding_150:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_150:
 	mov edx, [ebp-0x2a4]
 	mov [eax], edx
 	mov ebx, [ebp+0x8]
@@ -651,10 +651,10 @@ R_ChopPortalWinding_150:
 	pop edi
 	pop ebp
 	ret
-R_ChopPortalWinding_60:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_60:
 	mov eax, [ebp-0x2ac]
-	jmp R_ChopPortalWinding_140
-R_ChopPortalWinding_70:
+	jmp _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_140
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_70:
 	mov eax, [ebp-0x2a8]
 	add esp, 0x2ac
 	pop ebx
@@ -662,13 +662,13 @@ R_ChopPortalWinding_70:
 	pop edi
 	pop ebp
 	ret
-R_ChopPortalWinding_110:
+_Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_110:
 	mov eax, edi
-	jmp R_ChopPortalWinding_150
+	jmp _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f_150
 
 
 ;R_AddVertToPortalHullPoints(GfxPortal*, float const*)
-R_AddVertToPortalHullPoints:
+_Z27R_AddVertToPortalHullPointsP9GfxPortalPKf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -679,10 +679,10 @@ R_AddVertToPortalHullPoints:
 	mov esi, edx
 	mov ecx, [eax+0x4]
 	test ecx, ecx
-	jz R_AddVertToPortalHullPoints_10
+	jz _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_10
 	cmp byte [eax+0x3], 0x40
-	jz R_AddVertToPortalHullPoints_20
-R_AddVertToPortalHullPoints_40:
+	jz _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_20
+_Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_40:
 	lea eax, [ebx+0x2c]
 	movzx edx, byte [ebx+0x3]
 	movss xmm1, dword [esi]
@@ -713,16 +713,16 @@ R_AddVertToPortalHullPoints_40:
 	pop edi
 	pop ebp
 	ret
-R_AddVertToPortalHullPoints_20:
+_Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_20:
 	lea eax, [ebp-0x218]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x40
 	mov [esp], ecx
-	call Com_ConvexHull
+	call _Z14Com_ConvexHullPA2_fjS0_
 	mov edi, eax
 	cmp eax, 0x40
-	jz R_AddVertToPortalHullPoints_30
-R_AddVertToPortalHullPoints_60:
+	jz _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_30
+_Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_60:
 	mov ecx, edi
 	mov [ebx+0x3], cl
 	mov edx, [ebx+0x4]
@@ -734,35 +734,35 @@ R_AddVertToPortalHullPoints_60:
 	mov [esp], edx
 	call memcpy
 	mov ecx, [ebx+0x4]
-	jmp R_AddVertToPortalHullPoints_40
-R_AddVertToPortalHullPoints_10:
+	jmp _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_40
+_Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_10:
 	mov edi, [dpvsGlob+0x54]
 	test edi, edi
-	jz R_AddVertToPortalHullPoints_50
-R_AddVertToPortalHullPoints_70:
+	jz _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_50
+_Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_70:
 	mov eax, [edi]
 	mov [dpvsGlob+0x54], eax
 	mov ecx, edi
 	mov [ebx+0x4], edi
 	mov byte [ebx+0x3], 0x0
-	jmp R_AddVertToPortalHullPoints_40
-R_AddVertToPortalHullPoints_30:
+	jmp _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_40
+_Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_30:
 	mov dword [esp+0x8], 0x40
 	mov dword [esp+0x4], _cstring_more_than_i_poin
 	mov dword [esp], 0x2
-	call Com_Error
-	jmp R_AddVertToPortalHullPoints_60
-R_AddVertToPortalHullPoints_50:
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_60
+_Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_50:
 	mov dword [esp+0x8], 0x100
 	mov dword [esp+0x4], _cstring_more_than_i_queu
 	mov dword [esp], 0x2
-	call Com_Error
-	jmp R_AddVertToPortalHullPoints_70
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf_70
 
 
 ;R_FilterDynEntIntoCells_r(mnode_t*, unsigned int, DynEntityDrawType, float const*, float const*)
-R_FilterDynEntIntoCells_r:
-R_FilterDynEntIntoCells_r_80:
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3_:
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__80:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -798,13 +798,13 @@ R_FilterDynEntIntoCells_r_80:
 	mov eax, [ebp-0x50]
 	shr eax, 0x5
 	mov [ebp-0x5c], eax
-R_FilterDynEntIntoCells_r_70:
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__70:
 	movzx eax, word [esi]
 	movzx edx, ax
 	mov ecx, edx
 	sub ecx, edi
-	js R_FilterDynEntIntoCells_r_10
-R_FilterDynEntIntoCells_r_30:
+	js _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__10
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__30:
 	mov edx, [ebp-0x58]
 	mov eax, [edx+0x20a0]
 	lea edx, [ecx+ecx*4]
@@ -815,9 +815,9 @@ R_FilterDynEntIntoCells_r_30:
 	mov [esp+0x4], ecx
 	lea eax, [ebp-0x24]
 	mov [esp], eax
-	call BoxOnPlaneSide
+	call _Z14BoxOnPlaneSidePKfS0_PK8cplane_s
 	cmp eax, 0x3
-	jz R_FilterDynEntIntoCells_r_20
+	jz _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__20
 	lea edx, [eax-0x1]
 	movzx eax, word [esi+0x2]
 	lea eax, [eax+eax-0x4]
@@ -827,10 +827,10 @@ R_FilterDynEntIntoCells_r_30:
 	movzx edx, ax
 	mov ecx, edx
 	sub ecx, edi
-	jns R_FilterDynEntIntoCells_r_30
-R_FilterDynEntIntoCells_r_10:
+	jns _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__30
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__10:
 	test ax, ax
-	jz R_FilterDynEntIntoCells_r_40
+	jz _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__40
 	mov ecx, [ebp-0x58]
 	mov eax, [ecx+0x20a0]
 	sub edx, 0x1
@@ -840,20 +840,20 @@ R_FilterDynEntIntoCells_r_10:
 	mov eax, [eax+ecx*4+0x2bc]
 	mov ecx, [ebp-0x60]
 	or [eax+edx*4], ecx
-R_FilterDynEntIntoCells_r_40:
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__40:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_FilterDynEntIntoCells_r_20:
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__20:
 	movzx edx, byte [ebx+0x10]
 	movzx eax, word [esi+0x2]
 	lea eax, [esi+eax*2]
 	mov [ebp-0x4c], eax
 	cmp edx, 0x2
-	ja R_FilterDynEntIntoCells_r_50
+	ja _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__50
 	movss xmm1, dword [ebx+0xc]
 	mov eax, [ebp-0x24]
 	mov [ebp-0x3c], eax
@@ -871,8 +871,8 @@ R_FilterDynEntIntoCells_r_20:
 	movss [ebp+edx*4-0x48], xmm1
 	movss xmm0, dword [ebp+edx*4-0x30]
 	ucomiss xmm0, xmm1
-	ja R_FilterDynEntIntoCells_r_60
-R_FilterDynEntIntoCells_r_90:
+	ja _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__60
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__90:
 	mov eax, [ebp-0x48]
 	mov [ebp-0x30], eax
 	mov eax, [ebp-0x44]
@@ -880,8 +880,8 @@ R_FilterDynEntIntoCells_r_90:
 	mov eax, [ebp-0x40]
 	mov [ebp-0x28], eax
 	mov esi, [ebp-0x4c]
-	jmp R_FilterDynEntIntoCells_r_70
-R_FilterDynEntIntoCells_r_50:
+	jmp _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__70
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__50:
 	lea eax, [esi+0x4]
 	lea ecx, [ebp-0x30]
 	mov [esp+0x4], ecx
@@ -889,10 +889,10 @@ R_FilterDynEntIntoCells_r_50:
 	mov [esp], edx
 	mov ecx, [ebp-0x54]
 	mov edx, [ebp-0x50]
-	call R_FilterDynEntIntoCells_r_80
+	call _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__80
 	mov esi, [ebp-0x4c]
-	jmp R_FilterDynEntIntoCells_r_70
-R_FilterDynEntIntoCells_r_60:
+	jmp _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__70
+_Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__60:
 	lea eax, [esi+0x4]
 	lea edx, [ebp-0x30]
 	mov [esp+0x4], edx
@@ -900,13 +900,13 @@ R_FilterDynEntIntoCells_r_60:
 	mov [esp], edx
 	mov ecx, [ebp-0x54]
 	mov edx, [ebp-0x50]
-	call R_FilterDynEntIntoCells_r_80
-	jmp R_FilterDynEntIntoCells_r_90
+	call _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__80
+	jmp _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3__90
 	nop
 
 
 ;R_EnqueuePortal(GfxPortal*)
-R_EnqueuePortal:
+_Z15R_EnqueuePortalP9GfxPortal:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -915,8 +915,8 @@ R_EnqueuePortal:
 	sub esp, 0x1c
 	mov edi, eax
 	cmp dword [dpvsGlob+0x4c], 0xff
-	jg R_EnqueuePortal_10
-R_EnqueuePortal_140:
+	jg _Z15R_EnqueuePortalP9GfxPortal_10
+_Z15R_EnqueuePortalP9GfxPortal_140:
 	mov byte [edi], 0x1
 	movzx ebx, byte [edi+0x28]
 	mov ecx, [edi+0x24]
@@ -946,10 +946,10 @@ R_EnqueuePortal_140:
 	addss xmm1, xmm0
 	addss xmm1, xmm4
 	ucomiss xmm3, xmm1
-	ja R_EnqueuePortal_20
+	ja _Z15R_EnqueuePortalP9GfxPortal_20
 	sub ebx, 0x2
 	test ebx, ebx
-	jle R_EnqueuePortal_30
+	jle _Z15R_EnqueuePortalP9GfxPortal_30
 	lea eax, [ebx+ebx*2]
 	lea eax, [ecx+eax*4]
 	movaps xmm3, xmm6
@@ -962,15 +962,15 @@ R_EnqueuePortal_140:
 	addss xmm3, xmm0
 	addss xmm3, xmm4
 	ucomiss xmm1, xmm3
-	ja R_EnqueuePortal_30
+	ja _Z15R_EnqueuePortalP9GfxPortal_30
 	xor edx, edx
 	lea ecx, [ebx-0x1]
-	jmp R_EnqueuePortal_40
-R_EnqueuePortal_60:
+	jmp _Z15R_EnqueuePortalP9GfxPortal_40
+_Z15R_EnqueuePortalP9GfxPortal_60:
 	movaps xmm3, xmm1
-R_EnqueuePortal_40:
+_Z15R_EnqueuePortalP9GfxPortal_40:
 	cmp edx, ecx
-	jz R_EnqueuePortal_50
+	jz _Z15R_EnqueuePortalP9GfxPortal_50
 	movaps xmm1, xmm6
 	mulss xmm1, [eax-0x8]
 	movaps xmm0, xmm7
@@ -983,18 +983,18 @@ R_EnqueuePortal_40:
 	add edx, 0x1
 	sub eax, 0xc
 	ucomiss xmm3, xmm1
-	jbe R_EnqueuePortal_60
-R_EnqueuePortal_50:
+	jbe _Z15R_EnqueuePortalP9GfxPortal_60
+_Z15R_EnqueuePortalP9GfxPortal_50:
 	mov esi, [dpvsGlob+0x4c]
 	lea eax, [esi-0x1]
 	mov ebx, eax
 	sar ebx, 1
-	js R_EnqueuePortal_70
-R_EnqueuePortal_130:
+	js _Z15R_EnqueuePortalP9GfxPortal_70
+_Z15R_EnqueuePortalP9GfxPortal_130:
 	mov ecx, [dpvsGlob+0x50]
 	lea eax, [ecx+ebx*8]
 	ucomiss xmm3, [eax+0x4]
-	jb R_EnqueuePortal_80
+	jb _Z15R_EnqueuePortalP9GfxPortal_80
 	lea edx, [esi*8]
 	mov [ecx+edx], edi
 	mov eax, [dpvsGlob+0x50]
@@ -1006,10 +1006,10 @@ R_EnqueuePortal_130:
 	pop edi
 	pop ebp
 	ret
-R_EnqueuePortal_20:
+_Z15R_EnqueuePortalP9GfxPortal_20:
 	sub ebx, 0x1
 	cmp ebx, 0x1
-	jle R_EnqueuePortal_50
+	jle _Z15R_EnqueuePortalP9GfxPortal_50
 	lea eax, [ecx+0xc]
 	movaps xmm2, xmm5
 	mulss xmm2, [eax+0x8]
@@ -1021,17 +1021,17 @@ R_EnqueuePortal_20:
 	addss xmm2, xmm0
 	addss xmm2, xmm4
 	ucomiss xmm3, xmm2
-	ja R_EnqueuePortal_50
+	ja _Z15R_EnqueuePortalP9GfxPortal_50
 	mov eax, ecx
 	movaps xmm3, xmm2
 	mov edx, 0x1
-	jmp R_EnqueuePortal_90
-R_EnqueuePortal_100:
+	jmp _Z15R_EnqueuePortalP9GfxPortal_90
+_Z15R_EnqueuePortalP9GfxPortal_100:
 	movaps xmm3, xmm2
-R_EnqueuePortal_90:
+_Z15R_EnqueuePortalP9GfxPortal_90:
 	add edx, 0x1
 	cmp ebx, edx
-	jz R_EnqueuePortal_50
+	jz _Z15R_EnqueuePortalP9GfxPortal_50
 	movaps xmm2, xmm5
 	mulss xmm2, [eax+0x20]
 	movaps xmm0, xmm6
@@ -1043,12 +1043,12 @@ R_EnqueuePortal_90:
 	addss xmm2, xmm4
 	add eax, 0xc
 	ucomiss xmm3, xmm2
-	jbe R_EnqueuePortal_100
-	jmp R_EnqueuePortal_50
-R_EnqueuePortal_120:
+	jbe _Z15R_EnqueuePortalP9GfxPortal_100
+	jmp _Z15R_EnqueuePortalP9GfxPortal_50
+_Z15R_EnqueuePortalP9GfxPortal_120:
 	mov esi, ebx
 	mov ebx, edx
-R_EnqueuePortal_80:
+_Z15R_EnqueuePortalP9GfxPortal_80:
 	mov edx, [eax+0x4]
 	mov eax, [eax]
 	mov [ecx+esi*8], eax
@@ -1056,13 +1056,13 @@ R_EnqueuePortal_80:
 	lea eax, [ebx-0x1]
 	mov edx, eax
 	sar edx, 1
-	js R_EnqueuePortal_110
+	js _Z15R_EnqueuePortalP9GfxPortal_110
 	mov ecx, [dpvsGlob+0x50]
 	lea eax, [ecx+edx*8]
 	ucomiss xmm3, [eax+0x4]
-	jb R_EnqueuePortal_120
+	jb _Z15R_EnqueuePortalP9GfxPortal_120
 	mov esi, ebx
-R_EnqueuePortal_150:
+_Z15R_EnqueuePortalP9GfxPortal_150:
 	lea edx, [esi*8]
 	mov [ecx+edx], edi
 	mov eax, [dpvsGlob+0x50]
@@ -1074,14 +1074,14 @@ R_EnqueuePortal_150:
 	pop edi
 	pop ebp
 	ret
-R_EnqueuePortal_30:
+_Z15R_EnqueuePortalP9GfxPortal_30:
 	movaps xmm3, xmm1
 	mov esi, [dpvsGlob+0x4c]
 	lea eax, [esi-0x1]
 	mov ebx, eax
 	sar ebx, 1
-	jns R_EnqueuePortal_130
-R_EnqueuePortal_70:
+	jns _Z15R_EnqueuePortalP9GfxPortal_130
+_Z15R_EnqueuePortalP9GfxPortal_70:
 	mov ecx, [dpvsGlob+0x50]
 	lea edx, [esi*8]
 	mov [ecx+edx], edi
@@ -1094,22 +1094,22 @@ R_EnqueuePortal_70:
 	pop edi
 	pop ebp
 	ret
-R_EnqueuePortal_10:
+_Z15R_EnqueuePortalP9GfxPortal_10:
 	mov dword [esp+0x8], 0x100
 	mov dword [esp+0x4], _cstring_more_than_i_queu1
 	mov dword [esp], 0x2
-	call Com_Error
-	jmp R_EnqueuePortal_140
-R_EnqueuePortal_110:
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z15R_EnqueuePortalP9GfxPortal_140
+_Z15R_EnqueuePortalP9GfxPortal_110:
 	mov ecx, [dpvsGlob+0x50]
 	mov esi, ebx
-	jmp R_EnqueuePortal_150
+	jmp _Z15R_EnqueuePortalP9GfxPortal_150
 	nop
 
 
 ;R_FilterEntIntoCells_r(FilterEntInfo*, mnode_t*, float const*, float const*)
-R_FilterEntIntoCells_r:
-R_FilterEntIntoCells_r_80:
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4_:
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__80:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1137,13 +1137,13 @@ R_FilterEntIntoCells_r_80:
 	mov eax, [edx+0x8]
 	mov [ebp-0x28], eax
 	mov [ebp-0x58], ebx
-R_FilterEntIntoCells_r_70:
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__70:
 	movzx eax, word [esi]
 	movzx edi, ax
 	mov edx, edi
 	sub edx, [ebp-0x50]
-	js R_FilterEntIntoCells_r_10
-R_FilterEntIntoCells_r_30:
+	js _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__10
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__30:
 	mov ecx, [ebp-0x58]
 	mov eax, [ecx+0x20a0]
 	lea edx, [edx+edx*4]
@@ -1154,9 +1154,9 @@ R_FilterEntIntoCells_r_30:
 	mov [esp+0x4], edi
 	lea eax, [ebp-0x24]
 	mov [esp], eax
-	call BoxOnPlaneSide
+	call _Z14BoxOnPlaneSidePKfS0_PK8cplane_s
 	cmp eax, 0x3
-	jz R_FilterEntIntoCells_r_20
+	jz _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__20
 	lea edx, [eax-0x1]
 	movzx eax, word [esi+0x2]
 	lea eax, [eax+eax-0x4]
@@ -1166,10 +1166,10 @@ R_FilterEntIntoCells_r_30:
 	movzx edi, ax
 	mov edx, edi
 	sub edx, [ebp-0x50]
-	jns R_FilterEntIntoCells_r_30
-R_FilterEntIntoCells_r_10:
+	jns _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__30
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__10:
 	test ax, ax
-	jz R_FilterEntIntoCells_r_40
+	jz _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__40
 	mov eax, [ebp-0x54]
 	mov esi, [eax]
 	mov edx, [eax+0x4]
@@ -1205,19 +1205,19 @@ R_FilterEntIntoCells_r_10:
 	mov eax, [ecx+0x8]
 	mov edi, [ebp-0x4c]
 	mov [edx+edi*4], eax
-R_FilterEntIntoCells_r_40:
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__40:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_FilterEntIntoCells_r_20:
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__20:
 	movzx edx, byte [ebx+0x10]
 	movzx eax, word [esi+0x2]
 	lea edi, [esi+eax*2]
 	cmp edx, 0x2
-	ja R_FilterEntIntoCells_r_50
+	ja _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__50
 	movss xmm1, dword [ebx+0xc]
 	mov eax, [ebp-0x24]
 	mov [ebp-0x3c], eax
@@ -1235,8 +1235,8 @@ R_FilterEntIntoCells_r_20:
 	movss [ebp+edx*4-0x48], xmm1
 	movss xmm0, dword [ebp+edx*4-0x30]
 	ucomiss xmm0, xmm1
-	ja R_FilterEntIntoCells_r_60
-R_FilterEntIntoCells_r_90:
+	ja _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__60
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__90:
 	mov eax, [ebp-0x48]
 	mov [ebp-0x30], eax
 	mov eax, [ebp-0x44]
@@ -1244,29 +1244,29 @@ R_FilterEntIntoCells_r_90:
 	mov eax, [ebp-0x40]
 	mov [ebp-0x28], eax
 	mov esi, edi
-	jmp R_FilterEntIntoCells_r_70
-R_FilterEntIntoCells_r_50:
+	jmp _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__70
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__50:
 	lea edx, [esi+0x4]
 	lea eax, [ebp-0x30]
 	mov [esp], eax
 	lea ecx, [ebp-0x24]
 	mov eax, [ebp-0x54]
-	call R_FilterEntIntoCells_r_80
+	call _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__80
 	mov esi, edi
-	jmp R_FilterEntIntoCells_r_70
-R_FilterEntIntoCells_r_60:
+	jmp _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__70
+_Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__60:
 	lea edx, [esi+0x4]
 	lea ecx, [ebp-0x30]
 	mov [esp], ecx
 	lea ecx, [ebp-0x3c]
 	mov eax, [ebp-0x54]
-	call R_FilterEntIntoCells_r_80
-	jmp R_FilterEntIntoCells_r_90
+	call _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__80
+	jmp _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4__90
 	nop
 
 
 ;R_GetSidePlaneNormals(float const (*) [3], unsigned int, float (*) [3])
-R_GetSidePlaneNormals:
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1278,27 +1278,27 @@ R_GetSidePlaneNormals:
 	mov [ebp-0x630], ecx
 	mov ebx, [dpvsGlob+0x48]
 	test ebx, ebx
-	jz R_GetSidePlaneNormals_10
+	jz _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_10
 	lea edx, [edx-0x1]
 	test esi, esi
-	jnz R_GetSidePlaneNormals_20
-R_GetSidePlaneNormals_50:
+	jnz _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_20
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_50:
 	add esp, 0x62c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_GetSidePlaneNormals_10:
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_10:
 	test edx, edx
-	jz R_GetSidePlaneNormals_30
+	jz _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_30
 	movss xmm3, dword [dpvsGlob+0x38]
 	movss xmm2, dword [dpvsGlob+0x3c]
 	movss xmm1, dword [dpvsGlob+0x40]
 	mov ecx, [ebp-0x62c]
 	xor edx, edx
 	lea edi, [ebp-0x624]
-R_GetSidePlaneNormals_40:
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_40:
 	lea eax, [edx+edx*2]
 	lea eax, [edi+eax*4]
 	movss xmm0, dword [ecx]
@@ -1313,7 +1313,7 @@ R_GetSidePlaneNormals_40:
 	add edx, 0x1
 	add ecx, 0xc
 	cmp esi, edx
-	jnz R_GetSidePlaneNormals_40
+	jnz _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_40
 	lea edx, [esi+esi*2]
 	lea edx, [edi+edx*4]
 	mov eax, [ebp-0x624]
@@ -1323,8 +1323,8 @@ R_GetSidePlaneNormals_40:
 	mov eax, [ebp-0x61c]
 	mov [edx+0x8], eax
 	test esi, esi
-	jz R_GetSidePlaneNormals_50
-R_GetSidePlaneNormals_90:
+	jz _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_50
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_90:
 	xor ebx, ebx
 	movss xmm5, dword [_data16_80000000]
 	pxor xmm7, xmm7
@@ -1332,10 +1332,10 @@ R_GetSidePlaneNormals_90:
 	mov edx, [ebp-0x630]
 	add edx, 0x8
 	mov eax, edi
-	jmp R_GetSidePlaneNormals_60
-R_GetSidePlaneNormals_70:
+	jmp _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_60
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_70:
 	movaps xmm1, xmm6
-R_GetSidePlaneNormals_80:
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_80:
 	mulss xmm4, xmm1
 	movss [edx-0x8], xmm4
 	movaps xmm0, xmm1
@@ -1345,8 +1345,8 @@ R_GetSidePlaneNormals_80:
 	movss [edx], xmm1
 	add edx, 0xc
 	cmp esi, ebx
-	jz R_GetSidePlaneNormals_50
-R_GetSidePlaneNormals_60:
+	jz _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_50
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_60:
 	add ebx, 0x1
 	add eax, 0xc
 	movss xmm3, dword [eax+0x4]
@@ -1377,12 +1377,12 @@ R_GetSidePlaneNormals_60:
 	movaps xmm0, xmm1
 	xorps xmm0, xmm5
 	ucomiss xmm0, xmm7
-	jae R_GetSidePlaneNormals_70
+	jae _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_70
 	movaps xmm0, xmm6
 	divss xmm0, xmm1
 	movaps xmm1, xmm0
-	jmp R_GetSidePlaneNormals_80
-R_GetSidePlaneNormals_30:
+	jmp _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_80
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_30:
 	lea edi, [ebp-0x624]
 	lea edx, [esi+esi*2]
 	lea edx, [edi+edx*4]
@@ -1393,19 +1393,19 @@ R_GetSidePlaneNormals_30:
 	mov eax, [ebp-0x61c]
 	mov [edx+0x8], eax
 	test esi, esi
-	jz R_GetSidePlaneNormals_50
-	jmp R_GetSidePlaneNormals_90
-R_GetSidePlaneNormals_20:
+	jz _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_50
+	jmp _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_90
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_20:
 	mov ecx, [ebp-0x62c]
 	xor edi, edi
 	movss xmm5, dword [_data16_80000000]
 	pxor xmm7, xmm7
 	movss xmm6, dword [_float_1_00000000]
 	mov ebx, ecx
-	jmp R_GetSidePlaneNormals_100
-R_GetSidePlaneNormals_110:
+	jmp _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_100
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_110:
 	movaps xmm1, xmm6
-R_GetSidePlaneNormals_120:
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_120:
 	mulss xmm3, xmm1
 	movss [eax], xmm3
 	movaps xmm0, xmm1
@@ -1417,10 +1417,10 @@ R_GetSidePlaneNormals_120:
 	add ecx, 0xc
 	mov edx, edi
 	cmp esi, eax
-	jz R_GetSidePlaneNormals_50
+	jz _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_50
 	mov edi, eax
 	mov ebx, [ebp-0x62c]
-R_GetSidePlaneNormals_100:
+_Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_100:
 	lea edx, [edx+edx*2]
 	shl edx, 0x2
 	lea eax, [edx+ebx]
@@ -1465,17 +1465,17 @@ R_GetSidePlaneNormals_100:
 	movaps xmm0, xmm1
 	xorps xmm0, xmm5
 	ucomiss xmm0, xmm7
-	jae R_GetSidePlaneNormals_110
+	jae _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_110
 	movaps xmm0, xmm6
 	divss xmm0, xmm1
 	movaps xmm1, xmm0
-	jmp R_GetSidePlaneNormals_120
+	jmp _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f_120
 	nop
 
 
 ;R_GetFurtherCellList_r(GfxCell const*, DpvsPlane const*, DpvsPlane const*, int, float (*) [128][3], GfxCell const**, int)
-R_GetFurtherCellList_r:
-R_GetFurtherCellList_r_110:
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i:
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_110:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1489,33 +1489,33 @@ R_GetFurtherCellList_r_110:
 	mov ebx, [ebp+0x14]
 	mov edx, [eax+0x20]
 	test edx, edx
-	jle R_GetFurtherCellList_r_10
+	jle _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_10
 	mov dword [ebp-0x58], 0x0
 	mov dword [ebp-0x2c], 0x0
 	mov eax, [ebp-0x5c]
-R_GetFurtherCellList_r_50:
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_50:
 	mov esi, [ebp-0x2c]
 	add esi, [eax+0x24]
 	mov edx, [esi+0x20]
 	test ebx, ebx
-	jle R_GetFurtherCellList_r_20
+	jle _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_20
 	cmp edx, [edi]
-	jz R_GetFurtherCellList_r_30
+	jz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
 	xor eax, eax
-R_GetFurtherCellList_r_40:
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_40:
 	add eax, 0x1
 	cmp ebx, eax
-	jz R_GetFurtherCellList_r_20
+	jz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_20
 	cmp edx, [edi+eax*4]
-	jnz R_GetFurtherCellList_r_40
-R_GetFurtherCellList_r_30:
+	jnz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_40
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30:
 	add dword [ebp-0x58], 0x1
 	add dword [ebp-0x2c], 0x44
 	mov edx, [ebp-0x58]
 	mov eax, [ebp-0x5c]
 	cmp edx, [eax+0x20]
-	jl R_GetFurtherCellList_r_50
-R_GetFurtherCellList_r_10:
+	jl _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_50
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_10:
 	mov eax, ebx
 	add esp, 0x6c
 	pop ebx
@@ -1523,9 +1523,9 @@ R_GetFurtherCellList_r_10:
 	pop edi
 	pop ebp
 	ret
-R_GetFurtherCellList_r_20:
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_20:
 	cmp byte [esi+0x1], 0x0
-	jnz R_GetFurtherCellList_r_30
+	jnz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
 	lea eax, [esi+0xc]
 	movss xmm1, dword [esi+0xc]
 	mulss xmm1, [dpvsGlob+0x38]
@@ -1540,11 +1540,11 @@ R_GetFurtherCellList_r_20:
 	addss xmm1, xmm0
 	pxor xmm3, xmm3
 	ucomiss xmm1, xmm3
-	ja R_GetFurtherCellList_r_30
+	ja _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
 	mov eax, [ebp+0x8]
 	test eax, eax
-	jnz R_GetFurtherCellList_r_60
-R_GetFurtherCellList_r_140:
+	jnz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_60
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_140:
 	movzx eax, byte [esi+0x28]
 	mov [ebp-0x1c], eax
 	mov eax, [esi+0x24]
@@ -1552,14 +1552,14 @@ R_GetFurtherCellList_r_140:
 	mov [esp], edx
 	mov ecx, [ebp-0x60]
 	lea edx, [ebp-0x1c]
-	call R_ChopPortalWinding
+	call _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
 	mov [ebp-0x3c], eax
 	mov eax, [ebp-0x1c]
 	test eax, eax
-	jz R_GetFurtherCellList_r_30
+	jz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
 	mov ecx, [dpvsGlob+0x2c]
 	test ecx, ecx
-	jz R_GetFurtherCellList_r_70
+	jz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_70
 	mov eax, 0x600
 	mov edx, [ebp-0x3c]
 	cmp [ebp+0xc], edx
@@ -1569,23 +1569,23 @@ R_GetFurtherCellList_r_140:
 	mov [esp], eax
 	lea edx, [ebp-0x1c]
 	mov eax, [ebp-0x3c]
-	call R_ChopPortalWinding
+	call _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
 	mov [ebp-0x3c], eax
 	mov eax, [ebp-0x1c]
 	test eax, eax
-	jz R_GetFurtherCellList_r_30
-R_GetFurtherCellList_r_70:
+	jz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_70:
 	mov eax, [ebp+0x8]
 	test eax, eax
-	jle R_GetFurtherCellList_r_80
+	jle _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_80
 	mov eax, [ebp-0x64]
 	mov [ebp-0x38], eax
 	mov dword [ebp-0x40], 0x0
 	mov ecx, eax
-	jmp R_GetFurtherCellList_r_90
-R_GetFurtherCellList_r_100:
+	jmp _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_90
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_100:
 	mov ecx, [ebp-0x38]
-R_GetFurtherCellList_r_90:
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_90:
 	mov eax, 0x600
 	mov edx, [ebp+0xc]
 	cmp [ebp-0x3c], edx
@@ -1595,20 +1595,20 @@ R_GetFurtherCellList_r_90:
 	mov [esp], eax
 	lea edx, [ebp-0x1c]
 	mov eax, [ebp-0x3c]
-	call R_ChopPortalWinding
+	call _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
 	mov [ebp-0x3c], eax
 	mov eax, [ebp-0x1c]
 	test eax, eax
-	jz R_GetFurtherCellList_r_30
+	jz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
 	add dword [ebp-0x40], 0x1
 	add dword [ebp-0x38], 0x14
 	mov eax, [ebp-0x40]
 	cmp [ebp+0x8], eax
-	jnz R_GetFurtherCellList_r_100
-R_GetFurtherCellList_r_80:
+	jnz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_100
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_80:
 	mov eax, [ebp-0x1c]
 	test eax, eax
-	jz R_GetFurtherCellList_r_30
+	jz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
 	mov eax, [esi+0x20]
 	mov [edi+ebx*4], eax
 	lea edx, [ebx+0x1]
@@ -1621,10 +1621,10 @@ R_GetFurtherCellList_r_80:
 	mov [esp], edx
 	mov ecx, [ebp-0x64]
 	mov edx, [ebp-0x60]
-	call R_GetFurtherCellList_r_110
+	call _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_110
 	mov ebx, eax
-	jmp R_GetFurtherCellList_r_30
-R_GetFurtherCellList_r_60:
+	jmp _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_60:
 	mov edx, [esi+0x24]
 	mov [ebp-0x4c], edx
 	movzx eax, byte [esi+0x28]
@@ -1639,9 +1639,9 @@ R_GetFurtherCellList_r_60:
 	mov [ebp-0x44], edx
 	mov ecx, [ebp-0x64]
 	mov dword [ebp-0x30], 0x0
-R_GetFurtherCellList_r_130:
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_130:
 	cmp byte [ebp-0x51], 0x0
-	jz R_GetFurtherCellList_r_30
+	jz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
 	movss xmm6, dword [ecx]
 	movss xmm5, dword [ecx+0x4]
 	movss xmm4, dword [ecx+0x8]
@@ -1659,22 +1659,22 @@ R_GetFurtherCellList_r_130:
 	addss xmm0, xmm1
 	addss xmm0, xmm7
 	ucomiss xmm0, xmm3
-	jbe R_GetFurtherCellList_r_120
-R_GetFurtherCellList_r_160:
+	jbe _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_120
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_160:
 	add ecx, 0x14
 	add dword [ebp-0x30], 0x1
 	mov edx, [ebp+0x8]
 	cmp [ebp-0x30], edx
-	jnz R_GetFurtherCellList_r_130
-	jmp R_GetFurtherCellList_r_140
-R_GetFurtherCellList_r_120:
+	jnz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_130
+	jmp _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_140
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_120:
 	mov [ebp-0x34], eax
 	xor edx, edx
 	mov eax, [ebp-0x50]
 	sub eax, 0x1
 	mov [ebp-0x68], eax
-	jmp R_GetFurtherCellList_r_150
-R_GetFurtherCellList_r_170:
+	jmp _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_150
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_170:
 	mov eax, [ebp-0x34]
 	add edx, 0x1
 	add dword [ebp-0x34], 0xc
@@ -1688,16 +1688,16 @@ R_GetFurtherCellList_r_170:
 	addss xmm1, xmm0
 	addss xmm1, xmm7
 	ucomiss xmm1, xmm3
-	ja R_GetFurtherCellList_r_160
-R_GetFurtherCellList_r_150:
+	ja _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_160
+_Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_150:
 	cmp edx, [ebp-0x68]
-	jnz R_GetFurtherCellList_r_170
-	jmp R_GetFurtherCellList_r_30
+	jnz _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_170
+	jmp _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i_30
 	nop
 
 
 ;R_VisitPortalsForCellNoFrustum(GfxCell const*, GfxPortal*, DpvsPlane const*, DpvsPlane const*, int, int, unsigned int)
-R_VisitPortalsForCellNoFrustum:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1730,26 +1730,26 @@ R_VisitPortalsForCellNoFrustum:
 	shl eax, cl
 	or [edx+ebx*4], eax
 	test esi, esi
-	jz R_VisitPortalsForCellNoFrustum_10
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_10
 	mov eax, esi
-R_VisitPortalsForCellNoFrustum_20:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_20:
 	mov byte [eax+0x1], 0x1
 	mov eax, [eax+0x8]
 	test eax, eax
-	jnz R_VisitPortalsForCellNoFrustum_20
-R_VisitPortalsForCellNoFrustum_10:
+	jnz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_20
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_10:
 	mov eax, [ebp-0xc54]
 	mov eax, [eax+0x20]
 	test eax, eax
-	jle R_VisitPortalsForCellNoFrustum_30
+	jle _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_30
 	mov dword [ebp-0xc50], 0x0
 	mov dword [ebp-0xc2c], 0x0
 	mov edx, [ebp-0xc54]
-R_VisitPortalsForCellNoFrustum_60:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_60:
 	mov ebx, [ebp-0xc2c]
 	add ebx, [edx+0x24]
 	cmp byte [ebx+0x1], 0x0
-	jnz R_VisitPortalsForCellNoFrustum_40
+	jnz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_40
 	lea eax, [ebx+0xc]
 	movss xmm1, dword [ebx+0xc]
 	mulss xmm1, [dpvsGlob+0x38]
@@ -1764,34 +1764,34 @@ R_VisitPortalsForCellNoFrustum_60:
 	addss xmm1, xmm0
 	pxor xmm3, xmm3
 	ucomiss xmm1, xmm3
-	jbe R_VisitPortalsForCellNoFrustum_50
-R_VisitPortalsForCellNoFrustum_100:
+	jbe _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_50
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_100:
 	mov edx, [ebp-0xc54]
-R_VisitPortalsForCellNoFrustum_40:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_40:
 	add dword [ebp-0xc50], 0x1
 	add dword [ebp-0xc2c], 0x44
 	mov eax, [ebp-0xc50]
 	cmp [edx+0x20], eax
-	jg R_VisitPortalsForCellNoFrustum_60
+	jg _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_60
 	test esi, esi
-	jz R_VisitPortalsForCellNoFrustum_70
-R_VisitPortalsForCellNoFrustum_80:
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_70
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_80:
 	mov byte [esi+0x1], 0x0
 	mov esi, [esi+0x8]
-R_VisitPortalsForCellNoFrustum_30:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_30:
 	test esi, esi
-	jnz R_VisitPortalsForCellNoFrustum_80
-R_VisitPortalsForCellNoFrustum_70:
+	jnz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_80
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_70:
 	add esp, 0xc6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_VisitPortalsForCellNoFrustum_50:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_50:
 	mov edi, [ebp+0xc]
 	test edi, edi
-	jz R_VisitPortalsForCellNoFrustum_90
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_90
 	mov eax, [ebx+0x24]
 	mov [ebp-0xc48], eax
 	movzx edx, byte [ebx+0x28]
@@ -1807,9 +1807,9 @@ R_VisitPortalsForCellNoFrustum_50:
 	mov dword [ebp-0xc30], 0x0
 	sub eax, 0x1
 	mov [ebp-0xc5c], eax
-R_VisitPortalsForCellNoFrustum_120:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_120:
 	cmp byte [ebp-0xc49], 0x0
-	jz R_VisitPortalsForCellNoFrustum_100
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_100
 	movss xmm7, dword [edi]
 	movss xmm6, dword [edi+0x4]
 	movss xmm5, dword [edi+0x8]
@@ -1827,17 +1827,17 @@ R_VisitPortalsForCellNoFrustum_120:
 	addss xmm0, xmm1
 	addss xmm0, xmm4
 	ucomiss xmm0, xmm3
-	jbe R_VisitPortalsForCellNoFrustum_110
-R_VisitPortalsForCellNoFrustum_220:
+	jbe _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_110
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_220:
 	add edi, 0x14
 	add dword [ebp-0xc30], 0x1
 	mov edx, [ebp+0xc]
 	cmp [ebp-0xc30], edx
-	jnz R_VisitPortalsForCellNoFrustum_120
-R_VisitPortalsForCellNoFrustum_90:
+	jnz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_120
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_90:
 	mov ecx, [ebp-0xc58]
 	test ecx, ecx
-	jz R_VisitPortalsForCellNoFrustum_130
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_130
 	movzx eax, byte [ebx+0x28]
 	mov [ebp-0x1c], eax
 	mov eax, [ebx+0x24]
@@ -1845,75 +1845,75 @@ R_VisitPortalsForCellNoFrustum_90:
 	mov [esp], edx
 	mov ecx, [ebp-0xc58]
 	lea edx, [ebp-0x1c]
-	call R_ChopPortalWinding
+	call _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
 	mov edx, [ebp-0x1c]
 	test edx, edx
-	jz R_VisitPortalsForCellNoFrustum_100
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_100
 	mov ecx, [dpvsGlob+0x2c]
 	test ecx, ecx
-	jz R_VisitPortalsForCellNoFrustum_140
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_140
 	lea edx, [ebp-0xc1c]
 	cmp edx, eax
-	jz R_VisitPortalsForCellNoFrustum_150
-R_VisitPortalsForCellNoFrustum_260:
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_150
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_260:
 	mov [esp], edx
 	lea edx, [ebp-0x1c]
-	call R_ChopPortalWinding
+	call _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
 	mov edi, [ebp-0x1c]
 	test edi, edi
-	jz R_VisitPortalsForCellNoFrustum_100
-R_VisitPortalsForCellNoFrustum_140:
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_100
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_140:
 	mov ecx, [ebp+0xc]
 	test ecx, ecx
-	jle R_VisitPortalsForCellNoFrustum_160
+	jle _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_160
 	mov edi, [ebp+0x8]
 	mov dword [ebp-0xc34], 0x0
-	jmp R_VisitPortalsForCellNoFrustum_170
-R_VisitPortalsForCellNoFrustum_180:
+	jmp _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_170
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_180:
 	mov [esp], edx
 	mov ecx, edi
 	lea edx, [ebp-0x1c]
-	call R_ChopPortalWinding
+	call _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
 	mov edx, [ebp-0x1c]
 	test edx, edx
-	jz R_VisitPortalsForCellNoFrustum_100
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_100
 	add dword [ebp-0xc34], 0x1
 	add edi, 0x14
 	mov edx, [ebp-0xc34]
 	cmp [ebp+0xc], edx
-	jz R_VisitPortalsForCellNoFrustum_160
-R_VisitPortalsForCellNoFrustum_170:
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_160
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_170:
 	lea edx, [ebp-0xc1c]
 	cmp eax, edx
-	jnz R_VisitPortalsForCellNoFrustum_180
+	jnz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_180
 	lea edx, [ebp-0x61c]
-	jmp R_VisitPortalsForCellNoFrustum_180
-R_VisitPortalsForCellNoFrustum_130:
+	jmp _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_180
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_130:
 	movzx eax, byte [ebx+0x28]
 	mov [ebp-0xc3c], eax
 	mov eax, [ebx+0x24]
-R_VisitPortalsForCellNoFrustum_230:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_230:
 	mov edi, [ebp-0xc3c]
 	test edi, edi
-	jg R_VisitPortalsForCellNoFrustum_190
-R_VisitPortalsForCellNoFrustum_250:
+	jg _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_190
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_250:
 	cmp byte [ebx], 0x0
-	jz R_VisitPortalsForCellNoFrustum_200
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_200
 	movzx eax, byte [ebx+0x2]
 	cmp eax, [ebp+0x14]
 	cmovge eax, [ebp+0x14]
 	mov [ebx+0x2], al
 	cmp esi, [ebx+0x8]
-	jz R_VisitPortalsForCellNoFrustum_100
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_100
 	mov dword [ebx+0x8], 0x0
 	mov edx, [ebp-0xc54]
-	jmp R_VisitPortalsForCellNoFrustum_40
-R_VisitPortalsForCellNoFrustum_110:
+	jmp _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_40
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_110:
 	mov ecx, eax
 	xor edx, edx
-R_VisitPortalsForCellNoFrustum_210:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_210:
 	cmp [ebp-0xc5c], edx
-	jz R_VisitPortalsForCellNoFrustum_100
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_100
 	mov eax, ecx
 	add edx, 0x1
 	add ecx, 0xc
@@ -1927,43 +1927,43 @@ R_VisitPortalsForCellNoFrustum_210:
 	addss xmm0, xmm1
 	addss xmm0, xmm4
 	ucomiss xmm0, xmm3
-	jbe R_VisitPortalsForCellNoFrustum_210
-	jmp R_VisitPortalsForCellNoFrustum_220
-R_VisitPortalsForCellNoFrustum_160:
+	jbe _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_210
+	jmp _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_220
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_160:
 	mov edx, [ebp-0x1c]
 	mov [ebp-0xc3c], edx
 	test edx, edx
-	jz R_VisitPortalsForCellNoFrustum_100
-	jmp R_VisitPortalsForCellNoFrustum_230
-R_VisitPortalsForCellNoFrustum_200:
+	jz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_100
+	jmp _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_230
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_200:
 	movzx eax, byte [ebp+0x14]
 	mov [ebx+0x2], al
 	mov [ebx+0x8], esi
 	mov eax, ebx
-	call R_EnqueuePortal
+	call _Z15R_EnqueuePortalP9GfxPortal
 	mov edx, [ebp-0xc54]
-	jmp R_VisitPortalsForCellNoFrustum_40
-R_VisitPortalsForCellNoFrustum_190:
+	jmp _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_40
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_190:
 	mov edi, eax
 	mov dword [ebp-0xc38], 0x0
-R_VisitPortalsForCellNoFrustum_240:
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_240:
 	mov edx, edi
 	mov eax, ebx
-	call R_AddVertToPortalHullPoints
+	call _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf
 	add dword [ebp-0xc38], 0x1
 	add edi, 0xc
 	mov edx, [ebp-0xc38]
 	cmp [ebp-0xc3c], edx
-	jnz R_VisitPortalsForCellNoFrustum_240
-	jmp R_VisitPortalsForCellNoFrustum_250
-R_VisitPortalsForCellNoFrustum_150:
+	jnz _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_240
+	jmp _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_250
+_Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_150:
 	lea edx, [ebp-0x61c]
-	jmp R_VisitPortalsForCellNoFrustum_260
+	jmp _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij_260
 
 
 ;R_VisitPortalsForCell(GfxCell const*, GfxPortal*, DpvsPlane const*, DpvsPlane const*, int, int, unsigned int, DpvsClipChildren)
-R_VisitPortalsForCell:
-R_VisitPortalsForCell_120:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_120:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1978,7 +1978,7 @@ R_VisitPortalsForCell_120:
 	mov ecx, [ebp+0xc]
 	mov edx, [ebp+0x8]
 	mov eax, [ebp-0x1c68]
-	call R_AddCellSurfacesAndCullGroupsInFrustumDelayed
+	call _Z46R_AddCellSurfacesAndCullGroupsInFrustumDelayedPK7GfxCellPK9DpvsPlaneii
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov edx, [ebp-0x1c68]
@@ -2002,38 +2002,38 @@ R_VisitPortalsForCell_120:
 	shl eax, cl
 	or [edx+ebx*4], eax
 	test edi, edi
-	jz R_VisitPortalsForCell_10
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_10
 	mov eax, edi
-R_VisitPortalsForCell_20:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_20:
 	mov byte [eax+0x1], 0x1
 	mov eax, [eax+0x8]
 	test eax, eax
-	jnz R_VisitPortalsForCell_20
-R_VisitPortalsForCell_10:
+	jnz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_20
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_10:
 	mov ebx, [ebp+0x18]
 	test ebx, ebx
-	jz R_VisitPortalsForCell_30
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_30
 	mov eax, [ebp-0x1c68]
 	mov eax, [eax+0x20]
 	test eax, eax
-	jle R_VisitPortalsForCell_40
+	jle _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_40
 	mov dword [ebp-0x1c60], 0x0
 	mov dword [ebp-0x1c2c], 0x0
 	mov eax, [ebp-0x1c68]
-	jmp R_VisitPortalsForCell_50
-R_VisitPortalsForCell_70:
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_50
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70:
 	mov eax, [ebp-0x1c68]
-R_VisitPortalsForCell_60:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_60:
 	add dword [ebp-0x1c60], 0x1
 	add dword [ebp-0x1c2c], 0x44
 	mov edx, [ebp-0x1c60]
 	cmp edx, [eax+0x20]
-	jge R_VisitPortalsForCell_40
-R_VisitPortalsForCell_50:
+	jge _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_40
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_50:
 	mov esi, [ebp-0x1c2c]
 	add esi, [eax+0x24]
 	cmp byte [esi+0x1], 0x0
-	jnz R_VisitPortalsForCell_60
+	jnz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_60
 	lea eax, [esi+0xc]
 	movss xmm1, dword [esi+0xc]
 	mulss xmm1, [dpvsGlob+0x38]
@@ -2048,10 +2048,10 @@ R_VisitPortalsForCell_50:
 	addss xmm1, xmm0
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
-	ja R_VisitPortalsForCell_70
+	ja _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70
 	mov ecx, [ebp+0xc]
 	test ecx, ecx
-	jz R_VisitPortalsForCell_80
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_80
 	mov edx, [esi+0x24]
 	mov [ebp-0x1c4c], edx
 	movzx eax, byte [esi+0x28]
@@ -2066,9 +2066,9 @@ R_VisitPortalsForCell_50:
 	mov [ebp-0x1c44], edx
 	mov ebx, [ebp+0x8]
 	mov dword [ebp-0x1c30], 0x0
-R_VisitPortalsForCell_100:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_100:
 	cmp byte [ebp-0x1c51], 0x0
-	jz R_VisitPortalsForCell_70
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70
 	movss xmm6, dword [ebx]
 	movss xmm5, dword [ebx+0x4]
 	movss xmm4, dword [ebx+0x8]
@@ -2086,14 +2086,14 @@ R_VisitPortalsForCell_100:
 	addss xmm0, xmm1
 	addss xmm0, xmm3
 	ucomiss xmm0, xmm2
-	jbe R_VisitPortalsForCell_90
-R_VisitPortalsForCell_240:
+	jbe _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_90
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_240:
 	add ebx, 0x14
 	add dword [ebp-0x1c30], 0x1
 	mov edx, [ebp+0xc]
 	cmp [ebp-0x1c30], edx
-	jnz R_VisitPortalsForCell_100
-R_VisitPortalsForCell_80:
+	jnz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_100
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_80:
 	lea eax, [esi+0xc]
 	mov [ebp-0x1c64], eax
 	movss xmm1, dword [esi+0xc]
@@ -2108,7 +2108,7 @@ R_VisitPortalsForCell_80:
 	mulss xmm0, [dpvsGlob+0x44]
 	addss xmm1, xmm0
 	ucomiss xmm1, [_float__0_12500000]
-	jbe R_VisitPortalsForCell_110
+	jbe _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_110
 	movzx ebx, byte [esi+0x28]
 	mov edx, [esi+0x24]
 	mov [ebp-0x1c40], edx
@@ -2118,7 +2118,7 @@ R_VisitPortalsForCell_80:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c64]
 	mov [esp], eax
-	call Vec3ProjectionCoords
+	call _Z20Vec3ProjectionCoordsPKfPiS1_
 	mov dword [esp+0x10], dpvsGlob+0x38
 	mov eax, [ebp-0x20]
 	mov [esp+0xc], eax
@@ -2127,9 +2127,9 @@ R_VisitPortalsForCell_80:
 	mov [esp+0x4], ebx
 	mov edx, [ebp-0x1c40]
 	mov [esp], edx
-	call ProjectedWindingContainsCoplanarPoint
+	call _Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS_
 	test eax, eax
-	jz R_VisitPortalsForCell_70
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70
 	mov dword [esi+0x8], 0x0
 	mov eax, [esi+0x20]
 	mov edx, [ebp+0x18]
@@ -2145,22 +2145,22 @@ R_VisitPortalsForCell_80:
 	mov [esp], edx
 	mov ecx, [ebp-0x1c64]
 	mov edx, esi
-	call R_VisitPortalsForCell_120
+	call _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_120
 	mov eax, [ebp-0x1c68]
-	jmp R_VisitPortalsForCell_60
-R_VisitPortalsForCell_130:
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_60
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_130:
 	mov byte [edi+0x1], 0x0
 	mov edi, [edi+0x8]
-R_VisitPortalsForCell_40:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_40:
 	test edi, edi
-	jnz R_VisitPortalsForCell_130
+	jnz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_130
 	add esp, 0x1c8c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_VisitPortalsForCell_30:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_30:
 	mov dword [esp+0xc], 0x0
 	lea ebx, [ebp-0x1c20]
 	mov [esp+0x8], ebx
@@ -2171,24 +2171,24 @@ R_VisitPortalsForCell_30:
 	mov ecx, [ebp+0x8]
 	mov edx, [ebp-0x1c6c]
 	mov eax, [ebp-0x1c68]
-	call R_GetFurtherCellList_r
+	call _Z22R_GetFurtherCellList_rPK7GfxCellPK9DpvsPlaneS4_iPA128_A3_fPS1_i
 	mov [ebp-0x1c5c], eax
 	test eax, eax
-	jle R_VisitPortalsForCell_140
-	jmp R_VisitPortalsForCell_150
-R_VisitPortalsForCell_160:
+	jle _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_140
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_150
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_160:
 	mov byte [edi+0x1], 0x0
 	mov edi, [edi+0x8]
-R_VisitPortalsForCell_140:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_140:
 	test edi, edi
-	jnz R_VisitPortalsForCell_160
+	jnz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_160
 	add esp, 0x1c8c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_VisitPortalsForCell_110:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_110:
 	movzx eax, byte [esi+0x28]
 	mov [ebp-0x20], eax
 	mov eax, [esi+0x24]
@@ -2196,59 +2196,59 @@ R_VisitPortalsForCell_110:
 	mov [esp], edx
 	mov ecx, [ebp-0x1c6c]
 	lea edx, [ebp-0x20]
-	call R_ChopPortalWinding
+	call _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
 	mov edx, [ebp-0x20]
 	test edx, edx
-	jz R_VisitPortalsForCell_70
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70
 	mov ecx, [dpvsGlob+0x2c]
 	test ecx, ecx
-	jz R_VisitPortalsForCell_170
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_170
 	lea edx, [ebp-0xc20]
 	cmp edx, eax
-	jz R_VisitPortalsForCell_180
-R_VisitPortalsForCell_270:
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_180
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_270:
 	mov [esp], edx
 	lea edx, [ebp-0x20]
-	call R_ChopPortalWinding
+	call _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
 	mov ebx, [ebp-0x20]
 	test ebx, ebx
-	jz R_VisitPortalsForCell_70
-R_VisitPortalsForCell_170:
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_170:
 	mov ecx, [ebp+0xc]
 	test ecx, ecx
-	jle R_VisitPortalsForCell_190
+	jle _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_190
 	mov ebx, [ebp+0x8]
 	mov dword [ebp-0x1c34], 0x0
-	jmp R_VisitPortalsForCell_200
-R_VisitPortalsForCell_210:
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_200
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_210:
 	mov [esp], edx
 	mov ecx, ebx
 	lea edx, [ebp-0x20]
-	call R_ChopPortalWinding
+	call _Z19R_ChopPortalWindingPA3_KfPiPK9DpvsPlanePA3_f
 	mov edx, [ebp-0x20]
 	test edx, edx
-	jz R_VisitPortalsForCell_70
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70
 	add dword [ebp-0x1c34], 0x1
 	add ebx, 0x14
 	mov edx, [ebp-0x1c34]
 	cmp [ebp+0xc], edx
-	jz R_VisitPortalsForCell_190
-R_VisitPortalsForCell_200:
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_190
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_200:
 	lea edx, [ebp-0xc20]
 	cmp edx, eax
-	jnz R_VisitPortalsForCell_210
+	jnz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_210
 	lea edx, [ebp-0x620]
-	jmp R_VisitPortalsForCell_210
-R_VisitPortalsForCell_150:
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_210
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_150:
 	mov dword [ebp-0x1c58], 0x0
 	mov esi, ebx
-R_VisitPortalsForCell_220:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_220:
 	mov eax, [ebp+0x10]
 	mov [esp], eax
 	mov ecx, [ebp+0xc]
 	mov edx, [ebp+0x8]
 	mov eax, [esi]
-	call R_AddCellSurfacesAndCullGroupsInFrustumDelayed
+	call _Z46R_AddCellSurfacesAndCullGroupsInFrustumDelayedPK7GfxCellPK9DpvsPlaneii
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov eax, [esi]
@@ -2275,17 +2275,17 @@ R_VisitPortalsForCell_220:
 	add esi, 0x4
 	mov edx, [ebp-0x1c58]
 	cmp [ebp-0x1c5c], edx
-	jnz R_VisitPortalsForCell_220
-	jmp R_VisitPortalsForCell_140
-R_VisitPortalsForCell_90:
+	jnz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_220
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_140
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_90:
 	mov ecx, [ebp-0x1c4c]
 	xor edx, edx
 	mov eax, [ebp-0x1c50]
 	sub eax, 0x1
 	mov [ebp-0x1c70], eax
-R_VisitPortalsForCell_230:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_230:
 	cmp [ebp-0x1c70], edx
-	jz R_VisitPortalsForCell_70
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70
 	mov eax, ecx
 	add edx, 0x1
 	add ecx, 0xc
@@ -2299,54 +2299,54 @@ R_VisitPortalsForCell_230:
 	addss xmm0, xmm1
 	addss xmm0, xmm3
 	ucomiss xmm0, xmm2
-	jbe R_VisitPortalsForCell_230
-	jmp R_VisitPortalsForCell_240
-R_VisitPortalsForCell_190:
+	jbe _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_230
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_240
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_190:
 	mov edx, [ebp-0x20]
 	mov [ebp-0x1c3c], edx
 	cmp edx, 0x0
-	jz R_VisitPortalsForCell_70
-	jg R_VisitPortalsForCell_250
-R_VisitPortalsForCell_290:
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70
+	jg _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_250
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_290:
 	cmp byte [esi], 0x0
-	jz R_VisitPortalsForCell_260
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_260
 	movzx eax, byte [esi+0x2]
 	cmp eax, [ebp+0x14]
 	cmovge eax, [ebp+0x14]
 	mov [esi+0x2], al
 	cmp edi, [esi+0x8]
-	jz R_VisitPortalsForCell_70
+	jz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_70
 	mov dword [esi+0x8], 0x0
 	mov eax, [ebp-0x1c68]
-	jmp R_VisitPortalsForCell_60
-R_VisitPortalsForCell_180:
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_60
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_180:
 	lea edx, [ebp-0x620]
-	jmp R_VisitPortalsForCell_270
-R_VisitPortalsForCell_260:
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_270
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_260:
 	movzx edx, byte [ebp+0x14]
 	mov [esi+0x2], dl
 	mov [esi+0x8], edi
 	mov eax, esi
-	call R_EnqueuePortal
+	call _Z15R_EnqueuePortalP9GfxPortal
 	mov eax, [ebp-0x1c68]
-	jmp R_VisitPortalsForCell_60
-R_VisitPortalsForCell_250:
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_60
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_250:
 	mov ebx, eax
 	mov dword [ebp-0x1c38], 0x0
-R_VisitPortalsForCell_280:
+_Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_280:
 	mov edx, ebx
 	mov eax, esi
-	call R_AddVertToPortalHullPoints
+	call _Z27R_AddVertToPortalHullPointsP9GfxPortalPKf
 	add dword [ebp-0x1c38], 0x1
 	add ebx, 0xc
 	mov eax, [ebp-0x1c3c]
 	cmp [ebp-0x1c38], eax
-	jnz R_VisitPortalsForCell_280
-	jmp R_VisitPortalsForCell_290
+	jnz _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_280
+	jmp _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren_290
 
 
 ;R_VisitPortals(GfxCell const*, DpvsPlane const*, DpvsPlane const*, int)
-R_VisitPortals:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2364,13 +2364,13 @@ R_VisitPortals:
 	mov ecx, eax
 	xor ebx, ebx
 	mov edx, eax
-R_VisitPortals_10:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_10:
 	add ebx, 0x1
 	add edx, 0x200
 	mov [ecx], edx
 	add ecx, 0x200
 	cmp ebx, 0xff
-	jnz R_VisitPortals_10
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_10
 	mov dword [eax+0x1fe00], 0x0
 	mov [dpvsGlob+0x54], eax
 	lea ebx, [ebp-0x1770]
@@ -2385,14 +2385,14 @@ R_VisitPortals_10:
 	mov ecx, [ebp+0xc]
 	xor edx, edx
 	mov eax, [ebp+0x8]
-	call R_VisitPortalsForCell
+	call _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren
 	mov dword [ebp-0x179c], 0x0
 	mov dword [ebp-0x17a4], 0x0
-R_VisitPortals_40:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_40:
 	mov esi, [dpvsGlob+0x4c]
 	test esi, esi
-	jz R_VisitPortals_20
-R_VisitPortals_290:
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_20
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_290:
 	mov eax, [dpvsGlob+0x50]
 	mov eax, [eax]
 	mov [ebp-0x17b0], eax
@@ -2401,11 +2401,11 @@ R_VisitPortals_290:
 	sub eax, 0x1
 	mov [dpvsGlob+0x4c], eax
 	test eax, eax
-	jg R_VisitPortals_30
+	jg _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_30
 	lea edx, [eax*8]
 	xor esi, esi
 	mov ebx, [dpvsGlob+0x50]
-R_VisitPortals_450:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_450:
 	mov eax, [ebx+edx]
 	mov edx, [ebx+edx+0x4]
 	mov [ebx+esi], eax
@@ -2417,7 +2417,7 @@ R_VisitPortals_450:
 	mov [esp+0x4], eax
 	mov eax, [edx+0x4]
 	mov [esp], eax
-	call Com_ConvexHull
+	call _Z14Com_ConvexHullPA2_fjS0_
 	mov [ebp-0x17ac], eax
 	mov ecx, [ebp-0x17b0]
 	mov edx, [ecx+0x4]
@@ -2427,13 +2427,13 @@ R_VisitPortals_450:
 	mov dword [ecx+0x4], 0x0
 	mov edx, [ebp-0x17ac]
 	test edx, edx
-	jz R_VisitPortals_40
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_40
 	add dword [ebp-0x17a4], 0x1
 	mov eax, r_portalWalkLimit
 	mov eax, [eax]
 	mov ebx, [ebp-0x17a4]
 	cmp ebx, [eax+0xc]
-	jz R_VisitPortals_50
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_50
 	movss xmm0, dword [ecx+0x18]
 	xorps xmm0, [_data16_80000000]
 	add ecx, 0xc
@@ -2450,10 +2450,10 @@ R_VisitPortals_450:
 	lea ebx, [edi+0x38]
 	xor edx, edx
 	lea eax, [ebp-0x550]
-	jmp R_VisitPortals_60
-R_VisitPortals_70:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_60
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_70:
 	mov edi, [ebp-0x17b0]
-R_VisitPortals_60:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_60:
 	movss xmm1, dword [edx+ebp-0x250]
 	movaps xmm0, xmm1
 	mulss xmm0, [edi+0x2c]
@@ -2482,22 +2482,22 @@ R_VisitPortals_60:
 	add eax, 0xc
 	add edx, 0x8
 	cmp [ebp-0x17ac], ecx
-	jnz R_VisitPortals_70
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_70
 	mov eax, r_showPortals
 	mov eax, [eax]
 	mov eax, [eax+0xc]
 	test eax, eax
-	jz R_VisitPortals_80
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_80
 	mov eax, r_portalBevelsOnly
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_VisitPortals_90
-R_VisitPortals_80:
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_90
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_80:
 	mov eax, [ebp-0x179c]
 	add eax, 0x10
 	cmp eax, 0x800
-	ja R_VisitPortals_100
-R_VisitPortals_690:
+	ja _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_100
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_690:
 	mov edx, [ebp-0x179c]
 	lea eax, [edx+edx*4]
 	lea eax, [eax*4+dpvsGlob+0x5c]
@@ -2505,60 +2505,60 @@ R_VisitPortals_690:
 	cmp dword [ebp-0x17ac], 0xa
 	setbe byte [ebp-0x178d]
 	cmp byte [ebp-0x178d], 0x0
-	jz R_VisitPortals_110
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_110
 	mov eax, r_portalBevelsOnly
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_VisitPortals_110
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_110
 	mov eax, r_portalBevels
 	mov eax, [eax]
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm0, [_float_0_00000000]
-	jbe R_VisitPortals_120
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_120
 	mov edi, 0x1
 	mov dword [ebp-0x178c], 0x0
-R_VisitPortals_460:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_460:
 	lea ecx, [ebp-0xf70]
 	mov edx, [ebp-0x17ac]
 	lea eax, [ebp-0x550]
-	call R_GetSidePlaneNormals
+	call _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f
 	mov ecx, edi
 	test cl, cl
-	jnz R_VisitPortals_130
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_130
 	mov eax, r_portalMinClipArea
 	mov eax, [eax]
 	movss xmm0, dword [eax+0xc]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jbe R_VisitPortals_140
-R_VisitPortals_130:
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_140
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_130:
 	mov eax, [ebp-0x17ac]
 	test eax, eax
-	jg R_VisitPortals_150
+	jg _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_150
 	mov dword [ebp-0x1788], 0x3f800000
 	mov dword [ebp-0x1780], 0x3f800000
 	movss xmm6, dword [_float__1_00000000]
 	movaps xmm7, xmm6
 	movss xmm1, dword [_float__2_00000000]
 	movaps xmm0, xmm1
-R_VisitPortals_760:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_760:
 	mulss xmm1, xmm0
 	mulss xmm1, [_float_0_25000000]
 	mov ebx, r_portalMinClipArea
 	mov eax, [ebx]
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm0, xmm1
-	jbe R_VisitPortals_160
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_160
 	mov dword [ebp-0x17a0], 0x0
-R_VisitPortals_720:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_720:
 	mov eax, edi
 	test al, al
-	jnz R_VisitPortals_170
-R_VisitPortals_500:
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_170
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_500:
 	mov dword [ebp-0x1794], 0x0
-R_VisitPortals_590:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_590:
 	cmp byte [ebp-0x178d], 0x0
-	jz R_VisitPortals_180
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_180
 	xor edi, edi
 	lea esi, [ebp-0x550]
 	movss xmm5, dword [_float_0_00100000]
@@ -2567,7 +2567,7 @@ R_VisitPortals_590:
 	lea eax, [ebx+ebx*4]
 	mov edx, [ebp-0x17a8]
 	lea ebx, [edx+eax*4]
-R_VisitPortals_210:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_210:
 	movss xmm2, dword [ecx]
 	movss xmm3, dword [ecx+0x4]
 	movss xmm4, dword [ecx+0x8]
@@ -2581,9 +2581,9 @@ R_VisitPortals_210:
 	addss xmm0, xmm1
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jp R_VisitPortals_190
-	jz R_VisitPortals_200
-R_VisitPortals_190:
+	jp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_190
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_200
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_190:
 	movss [ebx], xmm2
 	movss [ebx+0x4], xmm3
 	movss [ebx+0x8], xmm4
@@ -2621,13 +2621,13 @@ R_VisitPortals_190:
 	mov [ebx+0x12], al
 	add dword [ebp-0x1794], 0x1
 	add ebx, 0x14
-R_VisitPortals_200:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_200:
 	add edi, 0x1
 	add ecx, 0xc
 	add esi, 0xc
 	cmp [ebp-0x17ac], edi
-	jnz R_VisitPortals_210
-R_VisitPortals_180:
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_210
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_180:
 	mov edx, [ebp-0x1794]
 	lea eax, [edx+edx*4]
 	mov ecx, [ebp-0x17a8]
@@ -2670,11 +2670,11 @@ R_VisitPortals_180:
 	addss xmm2, xmm0
 	addss xmm2, xmm4
 	ucomiss xmm2, xmm3
-	ja R_VisitPortals_220
+	ja _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_220
 	mov eax, ebx
 	sub eax, 0x2
 	test eax, eax
-	jle R_VisitPortals_230
+	jle _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_230
 	lea eax, [eax+eax*2]
 	lea edx, [eax*4]
 	lea eax, [ebp-0x550]
@@ -2689,17 +2689,17 @@ R_VisitPortals_180:
 	addss xmm3, xmm0
 	addss xmm3, xmm4
 	ucomiss xmm3, xmm2
-	ja R_VisitPortals_230
+	ja _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_230
 	lea ebx, [edx-0xc]
 	xor ecx, ecx
 	mov edi, [ebp-0x17ac]
 	lea edx, [edi-0x3]
-	jmp R_VisitPortals_240
-R_VisitPortals_260:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_240
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_260:
 	movaps xmm3, xmm2
-R_VisitPortals_240:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_240:
 	cmp edx, ecx
-	jz R_VisitPortals_250
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_250
 	lea eax, [ebp-0x550]
 	add eax, ebx
 	movaps xmm2, xmm5
@@ -2714,19 +2714,19 @@ R_VisitPortals_240:
 	add ecx, 0x1
 	sub ebx, 0xc
 	ucomiss xmm2, xmm3
-	jbe R_VisitPortals_260
-R_VisitPortals_250:
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_260
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_250:
 	pxor xmm0, xmm0
 	ucomiss xmm3, xmm0
-	jbe R_VisitPortals_270
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_270
 	subss xmm4, xmm3
 	movss [esi+0xc], xmm4
-R_VisitPortals_270:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_270:
 	mov ebx, [ebp-0x1794]
 	add ebx, 0x1
 	mov ecx, [dpvsGlob+0x2c]
 	test ecx, ecx
-	jz R_VisitPortals_280
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_280
 	lea eax, [ebx+ebx*4]
 	shl eax, 0x2
 	mov edx, [ecx]
@@ -2742,7 +2742,7 @@ R_VisitPortals_270:
 	mov [eax+ebx+0x10], edx
 	mov ebx, [ebp-0x1794]
 	add ebx, 0x2
-R_VisitPortals_280:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_280:
 	add [ebp-0x179c], ebx
 	mov edi, [ebp-0x17b0]
 	movzx edx, byte [edi+0x2]
@@ -2763,11 +2763,11 @@ R_VisitPortals_280:
 	mov [esp], ebx
 	mov ecx, [ebp-0x17b4]
 	mov edx, edi
-	call R_VisitPortalsForCell
+	call _Z21R_VisitPortalsForCellPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij16DpvsClipChildren
 	mov esi, [dpvsGlob+0x4c]
 	test esi, esi
-	jnz R_VisitPortals_290
-R_VisitPortals_20:
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_290
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_20:
 	lea edi, [ebp-0x20]
 	mov [esp], edi
 	call _ZN10LargeLocalD1Ev
@@ -2777,11 +2777,11 @@ R_VisitPortals_20:
 	pop edi
 	pop ebp
 	ret
-R_VisitPortals_310:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_310:
 	lea edx, [eax*8]
 	xor esi, esi
 	mov ebx, [dpvsGlob+0x50]
-R_VisitPortals_380:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_380:
 	mov eax, [edx+ebx]
 	mov edx, [edx+ebx+0x4]
 	mov [esi+ebx], eax
@@ -2793,10 +2793,10 @@ R_VisitPortals_380:
 	mov [dpvsGlob+0x54], edx
 	mov edx, [ebp-0x177c]
 	mov dword [edx+0x4], 0x0
-R_VisitPortals_50:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_50:
 	mov eax, [dpvsGlob+0x4c]
 	test eax, eax
-	jz R_VisitPortals_300
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_300
 	mov eax, [dpvsGlob+0x50]
 	mov eax, [eax]
 	mov [ebp-0x177c], eax
@@ -2805,21 +2805,21 @@ R_VisitPortals_50:
 	sub eax, 0x1
 	mov [dpvsGlob+0x4c], eax
 	test eax, eax
-	jle R_VisitPortals_310
+	jle _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_310
 	mov dword [ebp-0x1798], 0x0
 	xor edi, edi
 	mov ecx, 0x1
-	jmp R_VisitPortals_320
-R_VisitPortals_350:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_320
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_350:
 	lea esi, [ecx*8]
 	mov ebx, [dpvsGlob+0x50]
-R_VisitPortals_360:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_360:
 	lea edx, [eax*8]
 	lea eax, [esi+ebx]
 	movss xmm0, dword [eax+0x4]
 	ucomiss xmm0, [ebx+edx+0x4]
-	jae R_VisitPortals_330
-R_VisitPortals_370:
+	jae _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_330
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_370:
 	mov edx, [eax+0x4]
 	mov eax, [eax]
 	mov edi, [ebp-0x1798]
@@ -2829,43 +2829,43 @@ R_VisitPortals_370:
 	lea edx, [edi+0x1]
 	mov eax, [dpvsGlob+0x4c]
 	cmp edx, eax
-	jg R_VisitPortals_340
+	jg _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_340
 	mov [ebp-0x1798], ecx
 	mov ecx, edx
-R_VisitPortals_320:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_320:
 	cmp eax, ecx
-	jle R_VisitPortals_350
+	jle _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_350
 	mov ebx, [dpvsGlob+0x50]
 	lea esi, [ecx*8]
 	movss xmm0, dword [ebx+esi+0x4]
 	ucomiss xmm0, [ebx+esi+0xc]
-	jbe R_VisitPortals_360
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_360
 	lea ecx, [edi+0x2]
 	lea esi, [ecx*8]
 	lea edx, [eax*8]
 	lea eax, [esi+ebx]
 	movss xmm0, dword [eax+0x4]
 	ucomiss xmm0, [ebx+edx+0x4]
-	jb R_VisitPortals_370
-R_VisitPortals_330:
+	jb _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_370
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_330:
 	mov esi, [ebp-0x1798]
 	shl esi, 0x3
-	jmp R_VisitPortals_380
-R_VisitPortals_30:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_380
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_30:
 	xor edi, edi
 	mov ecx, 0x1
 	mov dword [ebp-0x1784], 0x0
-	jmp R_VisitPortals_390
-R_VisitPortals_420:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_390
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_420:
 	lea esi, [ecx*8]
 	mov ebx, [dpvsGlob+0x50]
-R_VisitPortals_430:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_430:
 	lea edx, [eax*8]
 	lea eax, [esi+ebx]
 	movss xmm0, dword [eax+0x4]
 	ucomiss xmm0, [ebx+edx+0x4]
-	jae R_VisitPortals_400
-R_VisitPortals_440:
+	jae _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_400
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_440:
 	mov edx, [eax+0x4]
 	mov eax, [eax]
 	mov edi, [ebp-0x1784]
@@ -2875,41 +2875,41 @@ R_VisitPortals_440:
 	lea edx, [edi+0x1]
 	mov eax, [dpvsGlob+0x4c]
 	cmp eax, edx
-	jl R_VisitPortals_410
+	jl _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_410
 	mov [ebp-0x1784], ecx
 	mov ecx, edx
-R_VisitPortals_390:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_390:
 	cmp ecx, eax
-	jge R_VisitPortals_420
+	jge _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_420
 	mov ebx, [dpvsGlob+0x50]
 	lea esi, [ecx*8]
 	movss xmm0, dword [ebx+esi+0x4]
 	ucomiss xmm0, [ebx+esi+0xc]
-	jbe R_VisitPortals_430
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_430
 	lea ecx, [edi+0x2]
 	lea esi, [ecx*8]
 	lea edx, [eax*8]
 	lea eax, [esi+ebx]
 	movss xmm0, dword [eax+0x4]
 	ucomiss xmm0, [ebx+edx+0x4]
-	jb R_VisitPortals_440
-R_VisitPortals_400:
+	jb _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_440
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_400:
 	mov esi, [ebp-0x1784]
 	shl esi, 0x3
-	jmp R_VisitPortals_450
-R_VisitPortals_110:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_450
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_110:
 	mov edi, 0x1
 	mov dword [ebp-0x178c], 0x1
-	jmp R_VisitPortals_460
-R_VisitPortals_410:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_460
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_410:
 	lea edx, [eax*8]
 	mov ebx, [dpvsGlob+0x50]
-	jmp R_VisitPortals_450
-R_VisitPortals_220:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_450
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_220:
 	mov edx, ebx
 	sub edx, 0x1
 	cmp edx, 0x1
-	jle R_VisitPortals_250
+	jle _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_250
 	movaps xmm2, xmm5
 	mulss xmm2, [ebp-0x53c]
 	movaps xmm0, xmm7
@@ -2920,17 +2920,17 @@ R_VisitPortals_220:
 	addss xmm2, xmm0
 	addss xmm2, xmm4
 	ucomiss xmm2, xmm3
-	ja R_VisitPortals_250
+	ja _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_250
 	movaps xmm3, xmm2
 	mov ecx, 0x1
 	lea eax, [ebp-0x550]
-	jmp R_VisitPortals_470
-R_VisitPortals_480:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_470
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_480:
 	movaps xmm3, xmm2
-R_VisitPortals_470:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_470:
 	add ecx, 0x1
 	cmp ecx, edx
-	jz R_VisitPortals_250
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_250
 	movaps xmm2, xmm5
 	mulss xmm2, [eax+0x20]
 	movaps xmm0, xmm7
@@ -2942,9 +2942,9 @@ R_VisitPortals_470:
 	addss xmm2, xmm4
 	add eax, 0xc
 	ucomiss xmm2, xmm3
-	jbe R_VisitPortals_480
-	jmp R_VisitPortals_250
-R_VisitPortals_150:
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_480
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_250
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_150:
 	movss xmm5, dword [ebp-0x550]
 	mov ecx, [dpvsGlob+0x30]
 	movss xmm4, dword [ebp-0x54c]
@@ -2959,9 +2959,9 @@ R_VisitPortals_150:
 	addss xmm2, xmm0
 	addss xmm2, [ecx+0x3c]
 	ucomiss xmm2, [_float_0_12500000]
-	jp R_VisitPortals_490
-	jae R_VisitPortals_490
-R_VisitPortals_740:
+	jp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_490
+	jae _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_490
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_740:
 	mov dword [ebp-0x17a0], 0x1
 	mov dword [ebp-0x1788], 0xbf800000
 	movss xmm1, dword [ebp-0x1788]
@@ -2970,18 +2970,18 @@ R_VisitPortals_740:
 	movaps xmm7, xmm6
 	mov eax, edi
 	test al, al
-	jz R_VisitPortals_500
-R_VisitPortals_170:
+	jz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_500
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_170:
 	xor ebx, ebx
 	mov edx, [dpvsGlob+0x34]
-R_VisitPortals_530:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_530:
 	lea eax, [ebx+ebx*2]
 	lea ecx, [ebp+eax*4-0x970]
 	movss xmm4, dword [ebp-0x1780]
-	jmp R_VisitPortals_510
-R_VisitPortals_540:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_510
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_540:
 	movaps xmm5, xmm6
-R_VisitPortals_550:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_550:
 	movaps xmm3, xmm4
 	mulss xmm3, [edx+0x4]
 	movaps xmm0, xmm5
@@ -3014,18 +3014,18 @@ R_VisitPortals_550:
 	movss [ecx+0x8], xmm2
 	add ebx, 0x1
 	cmp ebx, 0x3
-	ja R_VisitPortals_520
+	ja _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_520
 	add ecx, 0xc
 	movaps xmm4, xmm7
 	cmp ebx, 0x1
-	jbe R_VisitPortals_530
-R_VisitPortals_510:
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_530
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_510:
 	lea eax, [ebx-0x1]
 	cmp eax, 0x1
-	ja R_VisitPortals_540
+	ja _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_540
 	movss xmm5, dword [ebp-0x1788]
-	jmp R_VisitPortals_550
-R_VisitPortals_520:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_550
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_520:
 	mov eax, [ebp-0x970]
 	mov [ebp-0x940], eax
 	mov eax, [ebp-0x96c]
@@ -3035,11 +3035,11 @@ R_VisitPortals_520:
 	lea ecx, [ebp-0x50]
 	mov edx, 0x4
 	lea eax, [ebp-0x970]
-	call R_GetSidePlaneNormals
+	call _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f
 	xor edi, edi
 	mov dword [ebp-0x1794], 0x0
 	mov esi, [ebp-0x17a8]
-R_VisitPortals_600:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_600:
 	lea eax, [edi+edi*2]
 	lea eax, [ebp+eax*4-0x50]
 	movss xmm2, dword [eax]
@@ -3050,7 +3050,7 @@ R_VisitPortals_600:
 	movss [esi+0x8], xmm3
 	mov eax, [ebp-0x178c]
 	test eax, eax
-	jnz R_VisitPortals_560
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_560
 	mov eax, r_portalBevels
 	mov eax, [eax]
 	movss xmm5, dword [eax+0xc]
@@ -3062,20 +3062,20 @@ R_VisitPortals_600:
 	addss xmm2, xmm0
 	addss xmm1, xmm2
 	ucomiss xmm1, xmm5
-	jbe R_VisitPortals_570
-R_VisitPortals_630:
+	jbe _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_570
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_630:
 	mov eax, r_showPortals
 	mov eax, [eax]
 	test byte [eax+0xc], 0x2
-	jnz R_VisitPortals_580
-R_VisitPortals_670:
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_580
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_670:
 	lea ebx, [edi+0x1]
-R_VisitPortals_610:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_610:
 	cmp ebx, 0x3
-	ja R_VisitPortals_590
+	ja _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_590
 	mov edi, ebx
-	jmp R_VisitPortals_600
-R_VisitPortals_580:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_600
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_580:
 	lea ebx, [edi+0x1]
 	mov eax, colorMdCyan
 	mov [esp+0xc], eax
@@ -3089,13 +3089,13 @@ R_VisitPortals_580:
 	mov eax, [eax]
 	add eax, 0x11e71c
 	mov [esp], eax
-	call R_AddDebugLine
-	jmp R_VisitPortals_610
-R_VisitPortals_570:
+	call _Z14R_AddDebugLineP12DebugGlobalsPKfS2_S2_
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_610
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_570:
 	xor ecx, ecx
 	lea edx, [ebp-0xf70]
-	jmp R_VisitPortals_620
-R_VisitPortals_640:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_620
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_640:
 	mov eax, edx
 	add edx, 0xc
 	movaps xmm2, xmm3
@@ -3107,18 +3107,18 @@ R_VisitPortals_640:
 	addss xmm0, xmm1
 	addss xmm2, xmm0
 	ucomiss xmm2, xmm5
-	ja R_VisitPortals_630
-R_VisitPortals_620:
+	ja _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_630
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_620:
 	add ecx, 0x1
 	cmp [ebp-0x17ac], ecx
-	jnz R_VisitPortals_640
-R_VisitPortals_560:
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_640
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_560:
 	mov eax, r_showPortals
 	mov eax, [eax]
 	mov eax, [eax+0xc]
 	test eax, eax
-	jnz R_VisitPortals_650
-R_VisitPortals_680:
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_650
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_680:
 	lea eax, [edi+edi*2]
 	lea eax, [ebp+eax*4-0x970]
 	movss xmm2, dword [esi]
@@ -3152,14 +3152,14 @@ R_VisitPortals_680:
 	movss [ebp-0x17bc], xmm4
 	mov edx, [ebp-0x17bc]
 	test edx, edx
-	jle R_VisitPortals_660
+	jle _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_660
 	mov eax, 0x14
-R_VisitPortals_770:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_770:
 	mov [esi+0x12], al
 	add dword [ebp-0x1794], 0x1
 	add esi, 0x14
-	jmp R_VisitPortals_670
-R_VisitPortals_650:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_670
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_650:
 	mov eax, colorLtCyan
 	mov [esp+0xc], eax
 	lea eax, [edi+edi*2]
@@ -3173,17 +3173,17 @@ R_VisitPortals_650:
 	mov eax, [eax]
 	add eax, 0x11e71c
 	mov [esp], eax
-	call R_AddDebugLine
-	jmp R_VisitPortals_680
-R_VisitPortals_230:
+	call _Z14R_AddDebugLineP12DebugGlobalsPKfS2_S2_
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_680
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_230:
 	movaps xmm3, xmm2
-	jmp R_VisitPortals_250
-R_VisitPortals_100:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_250
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_100:
 	mov dword [esp], 0x8
-	call R_WarnOncePerFrame
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
 	mov dword [ebp-0x179c], 0x0
-	jmp R_VisitPortals_690
-R_VisitPortals_160:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_690
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_160:
 	mov edx, [ebp-0x17ac]
 	shl edx, 0x3
 	lea ecx, [ebp-0x970]
@@ -3200,11 +3200,11 @@ R_VisitPortals_160:
 	mov eax, [ebp-0x17ac]
 	pxor xmm1, xmm1
 	test eax, eax
-	jle R_VisitPortals_700
+	jle _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_700
 	mov edx, 0x1
 	pxor xmm2, xmm2
 	mov eax, 0x8
-R_VisitPortals_710:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_710:
 	movss xmm1, dword [eax+ebp-0x970]
 	add edx, 0x1
 	add eax, 0x8
@@ -3213,26 +3213,26 @@ R_VisitPortals_710:
 	mulss xmm1, xmm0
 	addss xmm2, xmm1
 	cmp [ebp-0x17ac], edx
-	jge R_VisitPortals_710
+	jge _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_710
 	movaps xmm1, xmm2
 	mulss xmm1, [_float_0_12500000]
-R_VisitPortals_700:
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_700:
 	mov eax, [ebx]
 	movss xmm0, dword [eax+0xc]
 	xor eax, eax
 	ucomiss xmm0, xmm1
 	setbe al
 	mov [ebp-0x17a0], eax
-	jmp R_VisitPortals_720
-R_VisitPortals_490:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_720
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_490:
 	xor esi, esi
 	mov dword [ebp-0x1788], 0x3f800000
 	mov dword [ebp-0x1780], 0x3f800000
 	movss xmm6, dword [_float__1_00000000]
 	movaps xmm7, xmm6
 	lea ebx, [ebp-0x550]
-	jmp R_VisitPortals_730
-R_VisitPortals_750:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_730
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_750:
 	movss xmm5, dword [ebx+0xc]
 	movss xmm4, dword [ebx+0x10]
 	movss xmm3, dword [ebx+0x14]
@@ -3248,8 +3248,8 @@ R_VisitPortals_750:
 	add ebx, 0xc
 	movss xmm0, dword [_float_0_12500000]
 	ucomiss xmm0, xmm2
-	ja R_VisitPortals_740
-R_VisitPortals_730:
+	ja _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_740
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_730:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm2
 	movaps xmm2, xmm0
@@ -3289,15 +3289,15 @@ R_VisitPortals_730:
 	movaps xmm6, xmm0
 	add esi, 0x1
 	cmp [ebp-0x17ac], esi
-	jnz R_VisitPortals_750
+	jnz _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_750
 	movaps xmm1, xmm7
 	subss xmm1, [ebp-0x1780]
 	subss xmm0, [ebp-0x1788]
-	jmp R_VisitPortals_760
-R_VisitPortals_660:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_760
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_660:
 	mov eax, 0x8
-	jmp R_VisitPortals_770
-R_VisitPortals_90:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_770
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_90:
 	lea ebx, [ebp-0x550]
 	mov [esp+0xc], ebx
 	mov edi, [ebp-0x17ac]
@@ -3307,21 +3307,21 @@ R_VisitPortals_90:
 	mov eax, [eax]
 	add eax, 0x11e71c
 	mov [esp], eax
-	call R_AddDebugPolygon
-	jmp R_VisitPortals_80
-R_VisitPortals_140:
+	call _Z17R_AddDebugPolygonP12DebugGlobalsPKfiPA3_f
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_80
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_140:
 	mov dword [ebp-0x1794], 0x0
 	mov dword [ebp-0x17a0], 0x1
-	jmp R_VisitPortals_590
-R_VisitPortals_120:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_590
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_120:
 	xor edi, edi
 	mov dword [ebp-0x178c], 0x0
-	jmp R_VisitPortals_460
-R_VisitPortals_340:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_460
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_340:
 	lea edx, [eax*8]
 	mov ebx, [dpvsGlob+0x50]
-	jmp R_VisitPortals_380
-R_VisitPortals_300:
+	jmp _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_380
+_Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i_300:
 	lea ecx, [ebp-0x20]
 	mov [esp], ecx
 	call _ZN10LargeLocalD1Ev
@@ -3341,7 +3341,7 @@ R_VisitPortals_300:
 
 
 ;R_SetVisData(unsigned int)
-R_SetVisData:
+_Z12R_SetVisDataj:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -3353,13 +3353,13 @@ R_SetVisData:
 	mov eax, [eax+0x20a0]
 	lea edx, [eax+ebx*4+0x2c4]
 	mov ecx, g_dynEntVisData
-R_SetVisData_10:
+_Z12R_SetVisDataj_10:
 	mov eax, [edx]
 	mov [ecx], eax
 	add edx, 0xc
 	add ecx, 0x4
 	cmp ecx, g_dynEntVisData+0x8
-	jnz R_SetVisData_10
+	jnz _Z12R_SetVisDataj_10
 	lea edx, [ebx+ebx*8]
 	mov eax, scene
 	mov eax, [eax+0x154c90]
@@ -3377,7 +3377,7 @@ R_SetVisData_10:
 
 
 ;R_AddSceneDObj(unsigned int, unsigned int)
-R_AddSceneDObj:
+_Z14R_AddSceneDObjjj:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0xc]
@@ -3391,7 +3391,7 @@ R_AddSceneDObj:
 
 
 ;R_CellForPoint(float const*)
-R_CellForPoint:
+_Z14R_CellForPointPKf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3406,13 +3406,13 @@ R_CellForPoint:
 	movzx eax, word [ecx]
 	mov edx, eax
 	sub edx, ebx
-	js R_CellForPoint_10
+	js _Z14R_CellForPointPKf_10
 	mov esi, [esi+0xf4]
 	movss xmm4, dword [edi]
 	movss xmm3, dword [edi+0x4]
 	movss xmm2, dword [edi+0x8]
 	pxor xmm5, xmm5
-R_CellForPoint_20:
+_Z14R_CellForPointPKf_20:
 	lea eax, [edx+edx*4]
 	lea eax, [esi+eax*4]
 	movaps xmm0, xmm4
@@ -3435,8 +3435,8 @@ R_CellForPoint_20:
 	movzx eax, word [edx+0x4]
 	mov edx, eax
 	sub edx, ebx
-	jns R_CellForPoint_20
-R_CellForPoint_10:
+	jns _Z14R_CellForPointPKf_20
+_Z14R_CellForPointPKf_10:
 	sub eax, 0x1
 	pop ebx
 	pop esi
@@ -3447,7 +3447,7 @@ R_CellForPoint_10:
 
 
 ;R_DrawAllDynEnt(GfxViewInfo const*)
-R_DrawAllDynEnt:
+_Z15R_DrawAllDynEntPK11GfxViewInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3457,16 +3457,16 @@ R_DrawAllDynEnt:
 	mov ebx, rgp
 	mov ecx, [ebx+0x20a0]
 	xor edx, edx
-R_DrawAllDynEnt_10:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_10:
 	mov eax, [ecx+edx*4+0x2c4]
 	mov [ebp+edx*4-0x24], eax
 	add edx, 0x1
 	cmp edx, 0x3
-	jnz R_DrawAllDynEnt_10
+	jnz _Z15R_DrawAllDynEntPK11GfxViewInfo_10
 	mov ecx, [ecx+0x2b4]
 	mov [ebp-0x54], ecx
 	test ecx, ecx
-	jz R_DrawAllDynEnt_20
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_20
 	mov eax, [ebp-0x24]
 	mov [ebp-0x30], eax
 	mov edx, [ebp-0x20]
@@ -3476,19 +3476,19 @@ R_DrawAllDynEnt_10:
 	xor edi, edi
 	mov ebx, eax
 	mov edx, ecx
-	jmp R_DrawAllDynEnt_30
-R_DrawAllDynEnt_70:
+	jmp _Z15R_DrawAllDynEntPK11GfxViewInfo_30
+_Z15R_DrawAllDynEntPK11GfxViewInfo_70:
 	mov [ebx+0x4], di
 	mov eax, scene
 	add dword [eax+0x154c38], 0x1
-R_DrawAllDynEnt_60:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_60:
 	add edi, 0x1
 	cmp [ebp-0x54], edi
-	jz R_DrawAllDynEnt_40
-R_DrawAllDynEnt_80:
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_40
+_Z15R_DrawAllDynEntPK11GfxViewInfo_80:
 	mov ebx, [ebp-0x30]
 	mov edx, [ebp-0x38]
-R_DrawAllDynEnt_30:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_30:
 	add ebx, edi
 	mov [ebp-0x6c], ebx
 	mov eax, [ebp-0x34]
@@ -3504,23 +3504,23 @@ R_DrawAllDynEnt_30:
 	movzx edx, byte [ebx]
 	or eax, edx
 	test al, 0x1
-	jnz R_DrawAllDynEnt_50
+	jnz _Z15R_DrawAllDynEntPK11GfxViewInfo_50
 	mov dword [esp+0x8], 0x0
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call R_IsDynEntVisibleToAnyShadowedPrimaryLight
+	call _Z42R_IsDynEntVisibleToAnyShadowedPrimaryLightPK11GfxViewInfoj17DynEntityDrawType
 	test eax, eax
-	jz R_DrawAllDynEnt_60
-R_DrawAllDynEnt_50:
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_60
+_Z15R_DrawAllDynEntPK11GfxViewInfo_50:
 	movzx ebx, di
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call DynEnt_GetClientPose
+	call _Z20DynEnt_GetClientPoset17DynEntityDrawType
 	mov esi, eax
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call DynEnt_GetEntityDef
+	call _Z19DynEnt_GetEntityDeft17DynEntityDrawType
 	mov edx, rgp
 	mov ecx, [edx+0x20a0]
 	mov ebx, scene
@@ -3535,9 +3535,9 @@ R_DrawAllDynEnt_50:
 	mov dword [esp+0x8], 0x0
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_SkinXModel
+	call _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj
 	test eax, eax
-	jnz R_DrawAllDynEnt_70
+	jnz _Z15R_DrawAllDynEntPK11GfxViewInfo_70
 	mov edx, [ebp-0x6c]
 	mov byte [edx], 0x0
 	mov ecx, [ebp-0x64]
@@ -3546,22 +3546,22 @@ R_DrawAllDynEnt_50:
 	mov byte [ebx], 0x0
 	add edi, 0x1
 	cmp [ebp-0x54], edi
-	jnz R_DrawAllDynEnt_80
-R_DrawAllDynEnt_40:
+	jnz _Z15R_DrawAllDynEntPK11GfxViewInfo_80
+_Z15R_DrawAllDynEntPK11GfxViewInfo_40:
 	mov ebx, rgp
-R_DrawAllDynEnt_20:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_20:
 	mov ecx, [ebx+0x20a0]
 	xor edx, edx
-R_DrawAllDynEnt_90:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_90:
 	mov eax, [ecx+edx*4+0x2d0]
 	mov [ebp+edx*4-0x24], eax
 	add edx, 0x1
 	cmp edx, 0x3
-	jnz R_DrawAllDynEnt_90
+	jnz _Z15R_DrawAllDynEntPK11GfxViewInfo_90
 	mov ecx, [ecx+0x2b8]
 	mov [ebp-0x2c], ecx
 	test ecx, ecx
-	jz R_DrawAllDynEnt_100
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_100
 	mov edi, [ebp-0x24]
 	mov [ebp-0x70], edi
 	mov eax, [ebp-0x20]
@@ -3571,15 +3571,15 @@ R_DrawAllDynEnt_90:
 	xor esi, esi
 	mov ecx, edi
 	mov ebx, eax
-	jmp R_DrawAllDynEnt_110
-R_DrawAllDynEnt_120:
+	jmp _Z15R_DrawAllDynEntPK11GfxViewInfo_110
+_Z15R_DrawAllDynEntPK11GfxViewInfo_120:
 	add esi, 0x1
 	cmp [ebp-0x2c], esi
-	jz R_DrawAllDynEnt_100
-R_DrawAllDynEnt_190:
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_100
+_Z15R_DrawAllDynEntPK11GfxViewInfo_190:
 	mov ecx, [ebp-0x70]
 	mov ebx, [ebp-0x68]
-R_DrawAllDynEnt_110:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_110:
 	add ecx, esi
 	mov [ebp-0x44], ecx
 	add ebx, esi
@@ -3593,23 +3593,23 @@ R_DrawAllDynEnt_110:
 	movzx edx, byte [edi]
 	or eax, edx
 	test al, 0x1
-	jz R_DrawAllDynEnt_120
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_120
 	mov [ebp-0x56], si
 	movzx ebx, si
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call DynEnt_GetClientPose
+	call _Z20DynEnt_GetClientPoset17DynEntityDrawType
 	mov edi, eax
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call DynEnt_GetEntityDef
+	call _Z19DynEnt_GetEntityDeft17DynEntityDrawType
 	movzx eax, word [eax+0x24]
 	mov [esp], eax
-	call R_GetBrushModel
+	call _Z15R_GetBrushModelj
 	mov [ebp-0x50], eax
 	movzx ecx, word [eax+0x30]
 	test cx, cx
-	jz R_DrawAllDynEnt_120
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_120
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov ebx, scene
@@ -3622,19 +3622,19 @@ R_DrawAllDynEnt_110:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_DrawAllDynEnt_130
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_130
 	movzx eax, cx
-R_DrawAllDynEnt_200:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_200:
 	lea ebx, [eax*8+0x20]
 	mov edx, frontEndDataOut
 	mov eax, [edx]
 	add eax, 0x118258
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call InterlockedExchangeAdd
+	call iInterlockedExchangeAdd
 	add ebx, eax
 	cmp ebx, 0x20000
-	ja R_DrawAllDynEnt_140
+	ja _Z15R_DrawAllDynEntPK11GfxViewInfo_140
 	mov edx, frontEndDataOut
 	add eax, [edx]
 	mov [ebp-0x48], eax
@@ -3664,7 +3664,7 @@ R_DrawAllDynEnt_200:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_DrawAllDynEnt_150
+	jnz _Z15R_DrawAllDynEntPK11GfxViewInfo_150
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov ecx, [ebp-0x50]
@@ -3675,45 +3675,45 @@ R_DrawAllDynEnt_200:
 	mov edi, [ebp-0x50]
 	movzx edx, word [edi+0x30]
 	test dx, dx
-	jz R_DrawAllDynEnt_160
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_160
 	xor edi, edi
-R_DrawAllDynEnt_180:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_180:
 	test byte [ecx+0x17], 0x2
-	jnz R_DrawAllDynEnt_170
+	jnz _Z15R_DrawAllDynEntPK11GfxViewInfo_170
 	mov eax, [ebp-0x48]
 	mov [ebx], eax
 	mov [ebx+0x4], ecx
 	add ebx, 0x8
 	mov eax, [ebp-0x50]
 	movzx edx, word [eax+0x30]
-R_DrawAllDynEnt_170:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_170:
 	add edi, 0x1
 	add ecx, 0x30
 	movzx eax, dx
 	cmp edi, eax
-	jb R_DrawAllDynEnt_180
-R_DrawAllDynEnt_160:
+	jb _Z15R_DrawAllDynEntPK11GfxViewInfo_180
+_Z15R_DrawAllDynEntPK11GfxViewInfo_160:
 	movzx edx, word [ebp-0x56]
 	mov eax, [ebp-0x4c]
 	mov [eax+0x2], dx
 	mov ecx, scene
 	add dword [ecx+0x154c3c], 0x1
-R_DrawAllDynEnt_220:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_220:
 	add esi, 0x1
 	cmp [ebp-0x2c], esi
-	jnz R_DrawAllDynEnt_190
-R_DrawAllDynEnt_100:
+	jnz _Z15R_DrawAllDynEntPK11GfxViewInfo_190
+_Z15R_DrawAllDynEntPK11GfxViewInfo_100:
 	add esp, 0x8c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawAllDynEnt_130:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_130:
 	mov ebx, [ebp-0x50]
 	movzx eax, word [ebx+0x34]
-	jmp R_DrawAllDynEnt_200
-R_DrawAllDynEnt_150:
+	jmp _Z15R_DrawAllDynEntPK11GfxViewInfo_200
+_Z15R_DrawAllDynEntPK11GfxViewInfo_150:
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov ecx, [ebp-0x50]
@@ -3723,9 +3723,9 @@ R_DrawAllDynEnt_150:
 	add ecx, [edx+0x294]
 	mov edi, [ebp-0x50]
 	cmp word [edi+0x30], 0x0
-	jz R_DrawAllDynEnt_160
+	jz _Z15R_DrawAllDynEntPK11GfxViewInfo_160
 	xor edx, edx
-R_DrawAllDynEnt_210:
+_Z15R_DrawAllDynEntPK11GfxViewInfo_210:
 	mov edi, [ebp-0x48]
 	mov [ebx], edi
 	mov [ebx+0x4], ecx
@@ -3735,28 +3735,28 @@ R_DrawAllDynEnt_210:
 	mov edi, [ebp-0x50]
 	movzx eax, word [edi+0x30]
 	cmp eax, edx
-	ja R_DrawAllDynEnt_210
+	ja _Z15R_DrawAllDynEntPK11GfxViewInfo_210
 	movzx edx, word [ebp-0x56]
 	mov eax, [ebp-0x4c]
 	mov [eax+0x2], dx
 	mov ecx, scene
 	add dword [ecx+0x154c3c], 0x1
-	jmp R_DrawAllDynEnt_220
-R_DrawAllDynEnt_140:
+	jmp _Z15R_DrawAllDynEntPK11GfxViewInfo_220
+_Z15R_DrawAllDynEntPK11GfxViewInfo_140:
 	mov dword [esp], 0x7
-	call R_WarnOncePerFrame
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
 	mov ecx, [ebp-0x44]
 	mov byte [ecx], 0x0
 	mov ebx, [ebp-0x40]
 	mov byte [ebx], 0x0
 	mov edi, [ebp-0x5c]
 	mov byte [edi], 0x0
-	jmp R_DrawAllDynEnt_120
+	jmp _Z15R_DrawAllDynEntPK11GfxViewInfo_120
 	add [eax], al
 
 
 ;R_InitSceneData(int)
-R_InitSceneData:
+_Z15R_InitSceneDatai:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3772,8 +3772,8 @@ R_InitSceneData:
 	mov eax, [eax+0xf0]
 	mov edi, eax
 	add edi, edi
-	jnz R_InitSceneData_10
-R_InitSceneData_40:
+	jnz _Z15R_InitSceneDatai_10
+_Z15R_InitSceneDatai_40:
 	mov edx, gfxCfg
 	mov eax, [edx+0x4]
 	shr eax, 0x5
@@ -3800,13 +3800,13 @@ R_InitSceneData_40:
 	pop edi
 	pop ebp
 	ret
-R_InitSceneData_10:
+_Z15R_InitSceneDatai_10:
 	lea ebx, [edx*4]
 	xor esi, esi
-	jmp R_InitSceneData_20
-R_InitSceneData_30:
+	jmp _Z15R_InitSceneDatai_20
+_Z15R_InitSceneDatai_30:
 	mov ecx, rgp
-R_InitSceneData_20:
+_Z15R_InitSceneDatai_20:
 	mov edx, gfxCfg
 	mov eax, [edx+0x4]
 	shr eax, 0x5
@@ -3817,16 +3817,16 @@ R_InitSceneData_20:
 	mov ecx, [eax+0xfc]
 	lea eax, [ebx+ecx]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	add esi, 0x1
 	add ebx, 0x200
 	cmp esi, edi
-	jnz R_InitSceneData_30
-	jmp R_InitSceneData_40
+	jnz _Z15R_InitSceneDatai_30
+	jmp _Z15R_InitSceneDatai_40
 
 
 ;R_ClearDpvsScene()
-R_ClearDpvsScene:
+_Z16R_ClearDpvsScenev:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3841,44 +3841,44 @@ R_ClearDpvsScene:
 	mov ebx, scene
 	mov eax, [ebx+0x154cb0]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov eax, [esi+0x4]
 	add eax, eax
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0xff
 	mov eax, [ebx+0x154cb4]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov eax, [esi+0x4]
 	shr eax, 0x3
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebx+0x12b428]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	lea edi, [ebx+0x154c94]
 	add ebx, 0x154cb0
-R_ClearDpvsScene_10:
+_Z16R_ClearDpvsScenev_10:
 	mov eax, [esi+0x4]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov eax, [edi]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	add edi, 0x4
 	cmp edi, ebx
-	jnz R_ClearDpvsScene_10
+	jnz _Z16R_ClearDpvsScenev_10
 	xor edi, edi
 	mov eax, rgp
 	mov [ebp-0x1c], eax
-R_ClearDpvsScene_40:
+_Z16R_ClearDpvsScenev_40:
 	mov edx, [eax+0x20a0]
 	mov eax, [edx+0x244]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov eax, [edx+edi*4+0x270]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov eax, [ebp-0x1c]
 	mov edx, [eax+0x20a0]
 	mov eax, [edx+0x154]
@@ -3887,10 +3887,10 @@ R_ClearDpvsScene_40:
 	mov dword [esp+0x4], 0x0
 	mov eax, [edx+edi*4+0x27c]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	xor esi, esi
 	mov ebx, edi
-R_ClearDpvsScene_20:
+_Z16R_ClearDpvsScenev_20:
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	mov edx, [eax+esi*4+0x2b4]
@@ -3898,17 +3898,17 @@ R_ClearDpvsScene_20:
 	mov dword [esp+0x4], 0x0
 	mov eax, [eax+ebx*4+0x2c4]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	add esi, 0x1
 	add ebx, 0x3
 	cmp esi, 0x2
-	jnz R_ClearDpvsScene_20
+	jnz _Z16R_ClearDpvsScenev_20
 	add edi, 0x1
 	cmp edi, 0x3
-	jz R_ClearDpvsScene_30
+	jz _Z16R_ClearDpvsScenev_30
 	mov eax, [ebp-0x1c]
-	jmp R_ClearDpvsScene_40
-R_ClearDpvsScene_30:
+	jmp _Z16R_ClearDpvsScenev_40
+_Z16R_ClearDpvsScenev_30:
 	mov ebx, scene
 	mov eax, [ebx+0x154c38]
 	lea eax, [eax+eax*2]
@@ -3919,7 +3919,7 @@ R_ClearDpvsScene_30:
 	mov eax, [edx+0x20a0]
 	mov eax, [eax+0x224]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov dword [ebx+0x154c38], 0x0
 	mov eax, [ebx+0x154c3c]
 	shl eax, 0x2
@@ -3929,19 +3929,19 @@ R_ClearDpvsScene_30:
 	mov eax, [edx+0x20a0]
 	mov eax, [eax+0x228]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov dword [ebx+0x154c3c], 0x0
 	mov dword [g_viewIndex], 0x0
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov ecx, g_dynEntVisData
-R_ClearDpvsScene_50:
+_Z16R_ClearDpvsScenev_50:
 	mov eax, [edx+0x2c4]
 	mov [ecx], eax
 	add edx, 0xc
 	add ecx, 0x4
 	cmp ecx, g_dynEntVisData+0x8
-	jnz R_ClearDpvsScene_50
+	jnz _Z16R_ClearDpvsScenev_50
 	mov eax, scene
 	mov eax, [eax+0x154c90]
 	lea eax, [eax+eax*2]
@@ -3959,7 +3959,7 @@ R_ClearDpvsScene_50:
 
 
 ;R_DrawAllSceneEnt(GfxViewInfo const*)
-R_DrawAllSceneEnt:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3973,12 +3973,12 @@ R_DrawAllSceneEnt:
 	mov [ebp-0x70], edx
 	xor edx, edx
 	add eax, 0x13ac30
-R_DrawAllSceneEnt_10:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_10:
 	mov [ebp+edx*4-0x34], eax
 	add edx, 0x1
 	add eax, 0x200
 	cmp edx, 0x7
-	jnz R_DrawAllSceneEnt_10
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_10
 	mov ebx, [ebp-0x94]
 	mov ebx, [ebx+0x12b42c]
 	mov [ebp-0x84], ebx
@@ -3988,13 +3988,13 @@ R_DrawAllSceneEnt_10:
 	add eax, dpvsGlob+0xa05c
 	mov [ebp-0x68], eax
 	test ebx, ebx
-	jz R_DrawAllSceneEnt_20
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_20
 	mov dword [ebp-0x88], 0x0
 	mov esi, scene
 	mov [ebp-0x8c], esi
 	mov dword [ebp-0x9c], 0x12b400
 	mov [ebp-0xa4], esi
-R_DrawAllSceneEnt_90:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_90:
 	mov eax, [ebp-0x9c]
 	mov edx, [ebp-0x94]
 	lea eax, [eax+edx+0x30]
@@ -4003,7 +4003,7 @@ R_DrawAllSceneEnt_90:
 	movzx eax, word [eax+0x6c]
 	movzx edx, ax
 	test ax, ax
-	jz R_DrawAllSceneEnt_30
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_30
 	lea edx, [edx*8+0x118260]
 	mov eax, frontEndDataOut
 	mov ecx, [eax]
@@ -4011,7 +4011,7 @@ R_DrawAllSceneEnt_90:
 	mov [ebp-0x50], edx
 	mov eax, gfxCfg
 	cmp edi, [eax+0x8]
-	jz R_DrawAllSceneEnt_40
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_40
 	mov edx, edi
 	shr edx, 0x5
 	mov ecx, edi
@@ -4020,34 +4020,34 @@ R_DrawAllSceneEnt_90:
 	shr eax, cl
 	mov ebx, [ebp-0x70]
 	test [ebx+edx*4], eax
-	jz R_DrawAllSceneEnt_50
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_50
 	mov edx, [ebp-0x68]
 	xor ecx, ecx
 	mov eax, [ebp-0x94]
 	lea esi, [eax+0x154c94]
-R_DrawAllSceneEnt_70:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_70:
 	mov ebx, [ebp-0x88]
 	add ebx, [ebp+ecx*4-0x34]
 	mov [ebp-0xac], ebx
 	mov ebx, [edx]
 	mov eax, [ebp-0x50]
 	test [eax], ebx
-	jz R_DrawAllSceneEnt_60
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_60
 	xor eax, eax
-R_DrawAllSceneEnt_490:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_490:
 	mov ebx, [ebp-0xac]
 	mov [ebx], al
 	add ecx, 0x1
 	add edx, 0x120
 	add esi, 0x4
 	cmp ecx, 0x3
-	jnz R_DrawAllSceneEnt_70
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_70
 	lea ebx, [ebp-0x34]
 	add ebx, 0xc
 	mov ecx, [ebp-0x94]
 	add ecx, 0x154ca0
 	mov esi, 0x4
-R_DrawAllSceneEnt_80:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_80:
 	mov eax, [ebp-0x88]
 	add eax, [ebx]
 	mov edx, edi
@@ -4057,34 +4057,34 @@ R_DrawAllSceneEnt_80:
 	add ebx, 0x4
 	add ecx, 0x4
 	sub esi, 0x1
-	jnz R_DrawAllSceneEnt_80
-R_DrawAllSceneEnt_560:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_80
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_560:
 	add dword [ebp-0x88], 0x1
 	add dword [ebp-0x9c], 0x7c
 	mov esi, [ebp-0x88]
 	cmp [ebp-0x84], esi
-	ja R_DrawAllSceneEnt_90
-R_DrawAllSceneEnt_20:
+	ja _Z17R_DrawAllSceneEntPK11GfxViewInfo_90
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_20:
 	xor edx, edx
 	mov eax, [ebp-0x94]
 	add eax, 0x14da34
-R_DrawAllSceneEnt_100:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_100:
 	mov [ebp+edx*4-0x34], eax
 	add edx, 0x1
 	add eax, 0x400
 	cmp edx, 0x7
-	jnz R_DrawAllSceneEnt_100
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_100
 	mov eax, [ebp-0x94]
 	mov eax, [eax+0x13ba30]
 	mov [ebp-0x48], eax
 	test eax, eax
-	jz R_DrawAllSceneEnt_110
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_110
 	mov dword [ebp-0x40], 0x0
 	mov edx, scene
 	mov [ebp-0x90], edx
 	mov dword [ebp-0x98], 0x13ba00
 	mov [ebp-0xa0], edx
-R_DrawAllSceneEnt_190:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_190:
 	mov ecx, [ebp-0x98]
 	mov ebx, [ebp-0x94]
 	lea ecx, [ecx+ebx+0x34]
@@ -4094,7 +4094,7 @@ R_DrawAllSceneEnt_190:
 	movzx eax, word [ecx+0x2c]
 	movzx edx, ax
 	test ax, ax
-	jz R_DrawAllSceneEnt_120
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_120
 	lea edx, [edx*8+0x118260]
 	mov eax, frontEndDataOut
 	mov esi, [eax]
@@ -4102,7 +4102,7 @@ R_DrawAllSceneEnt_190:
 	mov [ebp-0x6c], edx
 	mov eax, gfxCfg
 	cmp ebx, [eax+0x8]
-	jz R_DrawAllSceneEnt_130
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_130
 	mov edx, ebx
 	shr edx, 0x5
 	mov ecx, ebx
@@ -4111,22 +4111,22 @@ R_DrawAllSceneEnt_190:
 	shr eax, cl
 	mov ecx, [ebp-0x70]
 	test [ecx+edx*4], eax
-	jz R_DrawAllSceneEnt_140
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_140
 	mov edx, [ebp-0x68]
 	xor ebx, ebx
 	xor edi, edi
 	mov eax, [ebp-0x94]
 	lea esi, [eax+0x154c94]
-R_DrawAllSceneEnt_160:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_160:
 	mov ecx, [ebp-0x40]
 	add ecx, [ebp+ebx*4-0x34]
 	mov [ebp-0xb0], ecx
 	mov ecx, [edx]
 	mov eax, [ebp-0x6c]
 	test [eax], ecx
-	jz R_DrawAllSceneEnt_150
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_150
 	xor eax, eax
-R_DrawAllSceneEnt_500:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_500:
 	mov ecx, [ebp-0xb0]
 	mov [ecx], al
 	movzx eax, al
@@ -4135,13 +4135,13 @@ R_DrawAllSceneEnt_500:
 	add edx, 0x120
 	add esi, 0x4
 	cmp ebx, 0x3
-	jnz R_DrawAllSceneEnt_160
-R_DrawAllSceneEnt_520:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_160
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_520:
 	lea esi, [ebp-0x28]
 	mov eax, [ebp-0x94]
 	lea ebx, [eax+0x154ca0]
 	mov ecx, 0x4
-R_DrawAllSceneEnt_170:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_170:
 	mov edx, [ebp-0x40]
 	add edx, [esi]
 	mov eax, [ebp-0x4c]
@@ -4153,33 +4153,33 @@ R_DrawAllSceneEnt_170:
 	add esi, 0x4
 	add ebx, 0x4
 	sub ecx, 0x1
-	jnz R_DrawAllSceneEnt_170
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_170
 	and edi, 0x1
-	jnz R_DrawAllSceneEnt_180
-R_DrawAllSceneEnt_400:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_180
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_400:
 	add dword [ebp-0x40], 0x1
 	add dword [ebp-0x98], 0x48
 	mov eax, [ebp-0x40]
 	cmp [ebp-0x48], eax
-	ja R_DrawAllSceneEnt_190
-R_DrawAllSceneEnt_110:
+	ja _Z17R_DrawAllSceneEntPK11GfxViewInfo_190
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_110:
 	xor edx, edx
 	mov eax, [ebp-0x94]
 	add eax, 0x154638
-R_DrawAllSceneEnt_200:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_200:
 	mov [ebp+edx*4-0x34], eax
 	add edx, 0x1
 	add eax, 0x200
 	cmp edx, 0x3
-	jnz R_DrawAllSceneEnt_200
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_200
 	mov edx, [ebp-0x94]
 	mov edx, [edx+0x14f634]
 	mov [ebp-0x44], edx
 	test edx, edx
-	jz R_DrawAllSceneEnt_210
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_210
 	mov dword [ebp-0x3c], 0x0
 	mov esi, [ebp-0x94]
-R_DrawAllSceneEnt_310:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_310:
 	mov ebx, [ebp-0x3c]
 	lea eax, [ebx+ebx*4]
 	lea eax, [esi+eax*8+0x14f638]
@@ -4193,12 +4193,12 @@ R_DrawAllSceneEnt_310:
 	shr eax, cl
 	mov ecx, [ebp-0x70]
 	test [ecx+edx*4], eax
-	jz R_DrawAllSceneEnt_220
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_220
 	xor esi, esi
 	xor ecx, ecx
 	mov edi, scene
 	add edi, 0x154c94
-R_DrawAllSceneEnt_230:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_230:
 	mov edx, [ebp-0x3c]
 	add edx, [ecx+ebp-0x34]
 	mov eax, ebx
@@ -4209,10 +4209,10 @@ R_DrawAllSceneEnt_230:
 	or esi, eax
 	add ecx, 0x4
 	cmp ecx, 0xc
-	jnz R_DrawAllSceneEnt_230
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_230
 	and esi, 0x1
-	jz R_DrawAllSceneEnt_240
-R_DrawAllSceneEnt_330:
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_240
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_330:
 	mov esi, [ebp-0x78]
 	mov esi, [esi+0x4]
 	mov [ebp-0x64], esi
@@ -4221,20 +4221,20 @@ R_DrawAllSceneEnt_330:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_DrawAllSceneEnt_250
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_250
 	mov edx, [ebp-0x64]
 	movzx eax, word [edx+0x30]
-R_DrawAllSceneEnt_350:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_350:
 	lea ebx, [eax*8+0x20]
 	mov edx, frontEndDataOut
 	mov eax, [edx]
 	add eax, 0x118258
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call InterlockedExchangeAdd
+	call iInterlockedExchangeAdd
 	add ebx, eax
 	cmp ebx, 0x20000
-	ja R_DrawAllSceneEnt_260
+	ja _Z17R_DrawAllSceneEntPK11GfxViewInfo_260
 	mov edx, frontEndDataOut
 	mov edi, [edx]
 	add edi, eax
@@ -4262,7 +4262,7 @@ R_DrawAllSceneEnt_350:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_DrawAllSceneEnt_270
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_270
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov esi, [ebp-0x64]
@@ -4272,38 +4272,38 @@ R_DrawAllSceneEnt_350:
 	add ecx, [edx+0x294]
 	movzx edx, word [esi+0x30]
 	test dx, dx
-	jz R_DrawAllSceneEnt_280
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_280
 	xor esi, esi
-R_DrawAllSceneEnt_300:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_300:
 	test byte [ecx+0x17], 0x2
-	jnz R_DrawAllSceneEnt_290
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_290
 	mov [ebx], edi
 	mov [ebx+0x4], ecx
 	add ebx, 0x8
 	mov eax, [ebp-0x64]
 	movzx edx, word [eax+0x30]
-R_DrawAllSceneEnt_290:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_290:
 	add esi, 0x1
 	add ecx, 0x30
 	movzx eax, dx
 	cmp esi, eax
-	jb R_DrawAllSceneEnt_300
-R_DrawAllSceneEnt_280:
+	jb _Z17R_DrawAllSceneEntPK11GfxViewInfo_300
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_280:
 	add dword [ebp-0x3c], 0x1
 	mov eax, [ebp-0x3c]
 	cmp [ebp-0x44], eax
-	jbe R_DrawAllSceneEnt_210
-R_DrawAllSceneEnt_340:
+	jbe _Z17R_DrawAllSceneEntPK11GfxViewInfo_210
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_340:
 	mov ecx, scene
 	mov [ebp-0x94], ecx
 	mov esi, ecx
-	jmp R_DrawAllSceneEnt_310
-R_DrawAllSceneEnt_220:
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_310
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_220:
 	xor esi, esi
 	xor ecx, ecx
 	mov edi, scene
 	add edi, 0x154c94
-R_DrawAllSceneEnt_320:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_320:
 	mov eax, ebx
 	add eax, [ecx+edi]
 	movzx eax, byte [eax]
@@ -4317,36 +4317,36 @@ R_DrawAllSceneEnt_320:
 	or esi, eax
 	add ecx, 0x4
 	cmp ecx, 0xc
-	jnz R_DrawAllSceneEnt_320
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_320
 	and esi, 0x1
-	jnz R_DrawAllSceneEnt_330
-R_DrawAllSceneEnt_240:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_330
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_240:
 	mov [esp+0x4], ebx
 	mov ebx, [ebp+0x8]
 	mov [esp], ebx
-	call R_IsEntityVisibleToAnyShadowedPrimaryLight
+	call _Z42R_IsEntityVisibleToAnyShadowedPrimaryLightPK11GfxViewInfoj
 	test eax, eax
-	jnz R_DrawAllSceneEnt_330
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_330
 	add dword [ebp-0x3c], 0x1
 	mov eax, [ebp-0x3c]
 	cmp [ebp-0x44], eax
-	ja R_DrawAllSceneEnt_340
-R_DrawAllSceneEnt_210:
+	ja _Z17R_DrawAllSceneEntPK11GfxViewInfo_340
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_210:
 	add esp, 0xcc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawAllSceneEnt_250:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_250:
 	mov ecx, [ebp-0x64]
 	movzx eax, word [ecx+0x34]
-	jmp R_DrawAllSceneEnt_350
-R_DrawAllSceneEnt_120:
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_350
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_120:
 	mov edx, ebx
 	mov eax, gfxCfg
 	cmp ebx, [eax+0x8]
-	jz R_DrawAllSceneEnt_360
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_360
 	mov ecx, ebx
 	shr edx, 0x5
 	and ecx, 0x1f
@@ -4354,12 +4354,12 @@ R_DrawAllSceneEnt_120:
 	shr eax, cl
 	mov ecx, [ebp-0x70]
 	test [ecx+edx*4], eax
-	jz R_DrawAllSceneEnt_370
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_370
 	xor ecx, ecx
 	xor edi, edi
 	mov esi, [ebp-0x90]
 	lea ebx, [esi+0x154c94]
-R_DrawAllSceneEnt_380:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_380:
 	mov edx, [ebp-0x40]
 	add edx, [ebp+ecx*4-0x34]
 	mov eax, [ebp-0x4c]
@@ -4371,13 +4371,13 @@ R_DrawAllSceneEnt_380:
 	add ecx, 0x1
 	add ebx, 0x4
 	cmp ecx, 0x3
-	jnz R_DrawAllSceneEnt_380
-R_DrawAllSceneEnt_600:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_380
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_600:
 	lea esi, [ebp-0x28]
 	mov edx, [ebp-0x94]
 	lea ebx, [edx+0x154ca0]
 	mov ecx, 0x4
-R_DrawAllSceneEnt_390:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_390:
 	mov edx, [ebp-0x40]
 	add edx, [esi]
 	mov eax, [ebp-0x4c]
@@ -4389,10 +4389,10 @@ R_DrawAllSceneEnt_390:
 	add esi, 0x4
 	add ebx, 0x4
 	sub ecx, 0x1
-	jnz R_DrawAllSceneEnt_390
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_390
 	and edi, 0x1
-	jz R_DrawAllSceneEnt_400
-R_DrawAllSceneEnt_180:
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_400
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_180:
 	mov ecx, [ebp-0x7c]
 	movzx eax, word [ecx+0x2c]
 	mov [esp+0x14], eax
@@ -4406,24 +4406,24 @@ R_DrawAllSceneEnt_180:
 	mov eax, [ecx+0x4]
 	mov [esp+0x4], eax
 	mov [esp], ecx
-	call R_SkinXModel
+	call _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj
 	test eax, eax
-	jnz R_DrawAllSceneEnt_410
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_410
 	mov edx, 0x1
-R_DrawAllSceneEnt_420:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_420:
 	mov eax, [ebp-0x40]
 	add eax, [ebp+edx*4-0x38]
 	mov byte [eax], 0x0
 	add edx, 0x1
 	cmp edx, 0x8
-	jnz R_DrawAllSceneEnt_420
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_420
 	mov ebx, [ebp-0xa0]
 	mov [ebp-0x94], ebx
-	jmp R_DrawAllSceneEnt_400
-R_DrawAllSceneEnt_30:
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_400
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_30:
 	mov eax, gfxCfg
 	cmp edi, [eax+0x8]
-	jz R_DrawAllSceneEnt_430
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_430
 	mov edx, edi
 	shr edx, 0x5
 	mov ecx, edi
@@ -4432,11 +4432,11 @@ R_DrawAllSceneEnt_30:
 	shr eax, cl
 	mov ecx, [ebp-0x70]
 	test [ecx+edx*4], eax
-	jz R_DrawAllSceneEnt_440
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_440
 	xor ecx, ecx
 	mov esi, [ebp-0x8c]
 	lea ebx, [esi+0x154c94]
-R_DrawAllSceneEnt_450:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_450:
 	mov eax, [ebp-0x88]
 	add eax, [ebp+ecx*4-0x34]
 	mov edx, edi
@@ -4446,13 +4446,13 @@ R_DrawAllSceneEnt_450:
 	add ecx, 0x1
 	add ebx, 0x4
 	cmp ecx, 0x3
-	jnz R_DrawAllSceneEnt_450
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_450
 	lea ebx, [ebp-0x34]
 	add ebx, 0xc
 	mov ecx, [ebp-0x94]
 	add ecx, 0x154ca0
 	mov esi, 0x4
-R_DrawAllSceneEnt_460:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_460:
 	mov eax, [ebp-0x88]
 	add eax, [ebx]
 	mov edx, edi
@@ -4462,14 +4462,14 @@ R_DrawAllSceneEnt_460:
 	add ebx, 0x4
 	add ecx, 0x4
 	sub esi, 0x1
-	jnz R_DrawAllSceneEnt_460
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_460
 	add dword [ebp-0x88], 0x1
 	add dword [ebp-0x9c], 0x7c
 	mov esi, [ebp-0x88]
 	cmp [ebp-0x84], esi
-	ja R_DrawAllSceneEnt_90
-	jmp R_DrawAllSceneEnt_20
-R_DrawAllSceneEnt_270:
+	ja _Z17R_DrawAllSceneEntPK11GfxViewInfo_90
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_20
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_270:
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov ecx, [ebp-0x64]
@@ -4479,9 +4479,9 @@ R_DrawAllSceneEnt_270:
 	add ecx, [edx+0x294]
 	mov esi, [ebp-0x64]
 	cmp word [esi+0x30], 0x0
-	jz R_DrawAllSceneEnt_280
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_280
 	xor edx, edx
-R_DrawAllSceneEnt_470:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_470:
 	mov [ebx], edi
 	mov [ebx+0x4], ecx
 	add ebx, 0x8
@@ -4490,11 +4490,11 @@ R_DrawAllSceneEnt_470:
 	mov esi, [ebp-0x64]
 	movzx eax, word [esi+0x30]
 	cmp edx, eax
-	jb R_DrawAllSceneEnt_470
-	jmp R_DrawAllSceneEnt_280
-R_DrawAllSceneEnt_260:
+	jb _Z17R_DrawAllSceneEntPK11GfxViewInfo_470
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_280
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_260:
 	mov dword [esp], 0x7
-	call R_WarnOncePerFrame
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
 	mov ebx, [ebp-0x78]
 	movzx ecx, word [ebx+0x2]
 	mov esi, scene
@@ -4507,25 +4507,25 @@ R_DrawAllSceneEnt_260:
 	shl eax, cl
 	or [edx+ebx*4], eax
 	mov edx, 0x1
-R_DrawAllSceneEnt_480:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_480:
 	mov eax, [ebp-0x3c]
 	add eax, [ebp+edx*4-0x38]
 	mov byte [eax], 0x0
 	add edx, 0x1
 	cmp edx, 0x4
-	jnz R_DrawAllSceneEnt_480
-	jmp R_DrawAllSceneEnt_280
-R_DrawAllSceneEnt_60:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_480
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_280
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_60:
 	mov eax, edi
 	add eax, [esi]
 	movzx eax, byte [eax]
-	jmp R_DrawAllSceneEnt_490
-R_DrawAllSceneEnt_150:
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_490
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_150:
 	mov eax, [ebp-0x4c]
 	add eax, [esi]
 	movzx eax, byte [eax]
-	jmp R_DrawAllSceneEnt_500
-R_DrawAllSceneEnt_140:
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_500
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_140:
 	mov ebx, [ebp-0x68]
 	mov dword [ebp-0x54], 0x0
 	xor edi, edi
@@ -4538,10 +4538,10 @@ R_DrawAllSceneEnt_140:
 	movzx eax, byte [eax]
 	movzx esi, al
 	test al, al
-	jnz R_DrawAllSceneEnt_510
-R_DrawAllSceneEnt_530:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_510
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_530:
 	mov esi, 0x1
-R_DrawAllSceneEnt_510:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_510:
 	mov eax, [ebp-0x40]
 	mov ecx, [ebp-0x54]
 	add eax, [ebp+ecx*4-0x34]
@@ -4559,21 +4559,21 @@ R_DrawAllSceneEnt_510:
 	add dword [ebp-0x60], 0x4
 	add ebx, 0x120
 	cmp dword [ebp-0x54], 0x3
-	jz R_DrawAllSceneEnt_520
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_520
 	mov edx, [ebp-0x60]
 	mov eax, [ebp-0x4c]
 	add eax, [edx]
 	movzx eax, byte [eax]
 	movzx esi, al
 	test al, al
-	jnz R_DrawAllSceneEnt_510
-	jmp R_DrawAllSceneEnt_530
-R_DrawAllSceneEnt_440:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_510
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_530
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_440:
 	xor ecx, ecx
 	mov dword [ebp-0x74], 0x0
 	mov eax, [ebp-0x8c]
 	lea ebx, [eax+0x154c94]
-R_DrawAllSceneEnt_540:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_540:
 	mov eax, edi
 	add eax, [ebx]
 	movzx eax, byte [eax]
@@ -4588,13 +4588,13 @@ R_DrawAllSceneEnt_540:
 	add ecx, 0x1
 	add ebx, 0x4
 	cmp ecx, 0x3
-	jnz R_DrawAllSceneEnt_540
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_540
 	lea ebx, [ebp-0x34]
 	add ebx, 0xc
 	mov ecx, [ebp-0x94]
 	add ecx, 0x154ca0
 	mov esi, 0x4
-R_DrawAllSceneEnt_550:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_550:
 	mov edx, [ebp-0x88]
 	add edx, [ebx]
 	mov eax, edi
@@ -4606,37 +4606,37 @@ R_DrawAllSceneEnt_550:
 	add ebx, 0x4
 	add ecx, 0x4
 	sub esi, 0x1
-	jnz R_DrawAllSceneEnt_550
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_550
 	test byte [ebp-0x74], 0x1
-	jz R_DrawAllSceneEnt_560
-R_DrawAllSceneEnt_650:
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_560
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_650:
 	mov edx, [ebp-0x80]
 	mov [esp], edx
-	call R_SkinAndBoundSceneEnt
+	call _Z22R_SkinAndBoundSceneEntP14GfxSceneEntity
 	test eax, eax
-	jnz R_DrawAllSceneEnt_570
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_570
 	mov edx, 0x1
-R_DrawAllSceneEnt_580:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_580:
 	mov eax, [ebp-0x88]
 	add eax, [ebp+edx*4-0x38]
 	mov byte [eax], 0x0
 	add edx, 0x1
 	cmp edx, 0x8
-	jnz R_DrawAllSceneEnt_580
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_580
 	mov ecx, [ebp-0xa4]
 	mov [ebp-0x94], ecx
 	add dword [ebp-0x88], 0x1
 	add dword [ebp-0x9c], 0x7c
 	mov esi, [ebp-0x88]
 	cmp [ebp-0x84], esi
-	ja R_DrawAllSceneEnt_90
-	jmp R_DrawAllSceneEnt_20
-R_DrawAllSceneEnt_370:
+	ja _Z17R_DrawAllSceneEntPK11GfxViewInfo_90
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_20
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_370:
 	xor ecx, ecx
 	xor edi, edi
 	mov eax, [ebp-0x90]
 	lea ebx, [eax+0x154c94]
-R_DrawAllSceneEnt_590:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_590:
 	mov eax, [ebp-0x4c]
 	add eax, [ebx]
 	movzx eax, byte [eax]
@@ -4651,9 +4651,9 @@ R_DrawAllSceneEnt_590:
 	add ecx, 0x1
 	add ebx, 0x4
 	cmp ecx, 0x3
-	jnz R_DrawAllSceneEnt_590
-	jmp R_DrawAllSceneEnt_600
-R_DrawAllSceneEnt_50:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_590
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_600
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_50:
 	mov ebx, [ebp-0x68]
 	mov dword [ebp-0x58], 0x0
 	mov dword [ebp-0x74], 0x0
@@ -4666,10 +4666,10 @@ R_DrawAllSceneEnt_50:
 	movzx eax, byte [eax]
 	movzx esi, al
 	test al, al
-	jnz R_DrawAllSceneEnt_610
-R_DrawAllSceneEnt_630:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_610
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_630:
 	mov esi, 0x1
-R_DrawAllSceneEnt_610:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_610:
 	mov eax, [ebp-0x88]
 	mov ecx, [ebp-0x58]
 	add eax, [ebp+ecx*4-0x34]
@@ -4687,22 +4687,22 @@ R_DrawAllSceneEnt_610:
 	add dword [ebp-0x5c], 0x4
 	add ebx, 0x120
 	cmp dword [ebp-0x58], 0x3
-	jz R_DrawAllSceneEnt_620
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_620
 	mov edx, [ebp-0x5c]
 	mov eax, edi
 	add eax, [edx]
 	movzx eax, byte [eax]
 	movzx esi, al
 	test al, al
-	jnz R_DrawAllSceneEnt_610
-	jmp R_DrawAllSceneEnt_630
-R_DrawAllSceneEnt_620:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_610
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_630
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_620:
 	lea ebx, [ebp-0x34]
 	add ebx, 0xc
 	mov ecx, [ebp-0x94]
 	add ecx, 0x154ca0
 	mov esi, 0x4
-R_DrawAllSceneEnt_640:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_640:
 	mov edx, [ebp-0x88]
 	add edx, [ebx]
 	mov eax, edi
@@ -4714,19 +4714,19 @@ R_DrawAllSceneEnt_640:
 	add ebx, 0x4
 	add ecx, 0x4
 	sub esi, 0x1
-	jnz R_DrawAllSceneEnt_640
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_640
 	test byte [ebp-0x74], 0x1
-	jz R_DrawAllSceneEnt_560
-	jmp R_DrawAllSceneEnt_650
-R_DrawAllSceneEnt_410:
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_560
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_650
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_410:
 	mov esi, scene
 	mov [ebp-0x94], esi
-	jmp R_DrawAllSceneEnt_400
-R_DrawAllSceneEnt_40:
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_400
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_40:
 	mov ecx, [ebp-0x68]
 	xor ebx, ebx
 	mov dword [ebp-0x74], 0x0
-R_DrawAllSceneEnt_660:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_660:
 	mov edx, [ebp-0x88]
 	add edx, [ebp+ebx*4-0x34]
 	mov eax, [ecx]
@@ -4739,13 +4739,13 @@ R_DrawAllSceneEnt_660:
 	add ebx, 0x1
 	add ecx, 0x120
 	cmp ebx, 0x3
-	jnz R_DrawAllSceneEnt_660
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_660
 	lea ebx, [ebp-0x34]
 	add ebx, 0xc
 	mov ecx, [ebp-0x94]
 	add ecx, 0x154ca0
 	mov esi, 0x4
-R_DrawAllSceneEnt_670:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_670:
 	mov edx, [ebp-0x88]
 	add edx, [ebx]
 	mov eax, edi
@@ -4757,27 +4757,27 @@ R_DrawAllSceneEnt_670:
 	add ebx, 0x4
 	add ecx, 0x4
 	sub esi, 0x1
-	jnz R_DrawAllSceneEnt_670
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_670
 	test byte [ebp-0x74], 0x1
-	jz R_DrawAllSceneEnt_560
-	jmp R_DrawAllSceneEnt_650
-R_DrawAllSceneEnt_430:
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_560
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_650
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_430:
 	xor edx, edx
 	mov dword [ebp-0x74], 0x0
-R_DrawAllSceneEnt_680:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_680:
 	mov eax, [ebp-0x88]
 	add eax, [ebp+edx*4-0x34]
 	mov byte [eax], 0x1
 	or dword [ebp-0x74], 0x1
 	add edx, 0x1
 	cmp edx, 0x3
-	jnz R_DrawAllSceneEnt_680
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_680
 	lea ebx, [ebp-0x34]
 	add ebx, 0xc
 	mov ecx, [ebp-0x94]
 	add ecx, 0x154ca0
 	mov esi, 0x4
-R_DrawAllSceneEnt_690:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_690:
 	mov edx, [ebp-0x88]
 	add edx, [ebx]
 	mov eax, edi
@@ -4789,11 +4789,11 @@ R_DrawAllSceneEnt_690:
 	add ebx, 0x4
 	add ecx, 0x4
 	sub esi, 0x1
-	jnz R_DrawAllSceneEnt_690
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_690
 	test byte [ebp-0x74], 0x1
-	jz R_DrawAllSceneEnt_560
-	jmp R_DrawAllSceneEnt_650
-R_DrawAllSceneEnt_130:
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_560
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_650
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_130:
 	mov edx, [ebp-0x68]
 	xor ebx, ebx
 	xor edi, edi
@@ -4801,53 +4801,53 @@ R_DrawAllSceneEnt_130:
 	mov eax, [edx]
 	mov esi, [ebp-0x6c]
 	test [esi], eax
-	jnz R_DrawAllSceneEnt_700
-R_DrawAllSceneEnt_710:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_700
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_710:
 	mov eax, [ebp-0x40]
 	add eax, [ecx+ebp-0x34]
 	movzx eax, byte [eax]
 	or edi, eax
-R_DrawAllSceneEnt_720:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_720:
 	add ebx, 0x1
 	add ecx, 0x4
 	add edx, 0x120
 	cmp ebx, 0x3
-	jz R_DrawAllSceneEnt_520
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_520
 	mov eax, [edx]
 	mov esi, [ebp-0x6c]
 	test [esi], eax
-	jz R_DrawAllSceneEnt_710
-R_DrawAllSceneEnt_700:
+	jz _Z17R_DrawAllSceneEntPK11GfxViewInfo_710
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_700:
 	mov eax, [ebp-0x40]
 	add eax, [ecx+ebp-0x34]
 	mov byte [eax], 0x0
-	jmp R_DrawAllSceneEnt_720
-R_DrawAllSceneEnt_360:
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_720
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_360:
 	xor edx, edx
 	xor edi, edi
-R_DrawAllSceneEnt_730:
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_730:
 	mov eax, [ebp-0x40]
 	add eax, [ebp+edx*4-0x34]
 	movzx eax, byte [eax]
 	or edi, eax
 	add edx, 0x1
 	cmp edx, 0x3
-	jnz R_DrawAllSceneEnt_730
-	jmp R_DrawAllSceneEnt_600
-R_DrawAllSceneEnt_570:
+	jnz _Z17R_DrawAllSceneEntPK11GfxViewInfo_730
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_600
+_Z17R_DrawAllSceneEntPK11GfxViewInfo_570:
 	mov ebx, scene
 	mov [ebp-0x94], ebx
 	add dword [ebp-0x88], 0x1
 	add dword [ebp-0x9c], 0x7c
 	mov esi, [ebp-0x88]
 	cmp [ebp-0x84], esi
-	ja R_DrawAllSceneEnt_90
-	jmp R_DrawAllSceneEnt_20
+	ja _Z17R_DrawAllSceneEntPK11GfxViewInfo_90
+	jmp _Z17R_DrawAllSceneEntPK11GfxViewInfo_20
 	nop
 
 
 ;R_GetFarPlaneDist()
-R_GetFarPlaneDist:
+_Z17R_GetFarPlaneDistv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x4
@@ -4868,7 +4868,7 @@ R_GetFarPlaneDist:
 
 
 ;R_InitSceneBuffers()
-R_InitSceneBuffers:
+_Z18R_InitSceneBuffersv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4880,67 +4880,67 @@ R_InitSceneBuffers:
 	mov eax, [ebx+0x4]
 	shr eax, 0x3
 	mov [esp], eax
-	call R_AllocGlobalVariable
+	call _Z21R_AllocGlobalVariablejPKc
 	mov edx, scene
 	mov [edx+0x12b428], eax
 	lea esi, [edx+0x154c94]
 	lea edi, [edx+0x154cb0]
-R_InitSceneBuffers_10:
+_Z18R_InitSceneBuffersv_10:
 	mov dword [esp+0x4], _cstring_r_initscenebuffe
 	mov eax, [ebx+0x4]
 	mov [esp], eax
-	call R_AllocGlobalVariable
+	call _Z21R_AllocGlobalVariablejPKc
 	mov [esi], eax
 	add esi, 0x4
 	cmp esi, edi
-	jnz R_InitSceneBuffers_10
+	jnz _Z18R_InitSceneBuffersv_10
 	mov dword [esp+0x4], _cstring_r_initscenebuffe
 	mov eax, [ebx+0x4]
 	add eax, eax
 	mov [esp], eax
-	call R_AllocGlobalVariable
+	call _Z21R_AllocGlobalVariablejPKc
 	mov esi, scene
 	mov [esi+0x154cb0], eax
 	mov dword [esp+0x4], _cstring_r_initscenebuffe
 	mov eax, [ebx+0x4]
 	add eax, eax
 	mov [esp], eax
-	call R_AllocGlobalVariable
+	call _Z21R_AllocGlobalVariablejPKc
 	mov [esi+0x154cb4], eax
 	mov edx, [ebx]
 	test edx, edx
-	jnz R_InitSceneBuffers_20
+	jnz _Z18R_InitSceneBuffersv_20
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_InitSceneBuffers_20:
+_Z18R_InitSceneBuffersv_20:
 	mov dword [ebp-0x1c], 0x0
 	mov edi, dpvsGlob
 	add esi, 0x154cb8
 	mov ebx, gfxCfg
-R_InitSceneBuffers_30:
+_Z18R_InitSceneBuffersv_30:
 	mov dword [esp+0x4], _cstring_r_initscenebuffe
 	mov eax, [ebx+0x4]
 	shr eax, 0x5
 	shl eax, 0x2
 	mov [esp], eax
-	call R_AllocGlobalVariable
+	call _Z21R_AllocGlobalVariablejPKc
 	mov [edi+0xade4], eax
 	mov dword [esp+0x4], _cstring_r_initscenebuffe
 	mov eax, [ebx+0x4]
 	shl eax, 0x2
 	mov [esp], eax
-	call R_AllocGlobalVariable
+	call _Z21R_AllocGlobalVariablejPKc
 	mov [esi], eax
 	add dword [ebp-0x1c], 0x1
 	add edi, 0x4
 	add esi, 0x4
 	mov eax, [ebp-0x1c]
 	cmp eax, [ebx]
-	jb R_InitSceneBuffers_30
+	jb _Z18R_InitSceneBuffersv_30
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -4951,7 +4951,7 @@ R_InitSceneBuffers_30:
 
 
 ;DynEntCl_InitFilter()
-DynEntCl_InitFilter:
+_Z19DynEntCl_InitFilterv:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4962,7 +4962,7 @@ DynEntCl_InitFilter:
 	mov dword [eax+0x154c3c], 0x0
 	xor ebx, ebx
 	mov esi, rgp
-DynEntCl_InitFilter_10:
+_Z19DynEntCl_InitFilterv_10:
 	mov eax, [esi+0x20a0]
 	mov edx, [eax+ebx*4+0x2ac]
 	imul edx, [eax+0xf0]
@@ -4971,10 +4971,10 @@ DynEntCl_InitFilter_10:
 	mov dword [esp+0x4], 0x0
 	mov eax, [eax+ebx*4+0x2bc]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	add ebx, 0x1
 	cmp ebx, 0x2
-	jnz DynEntCl_InitFilter_10
+	jnz _Z19DynEntCl_InitFilterv_10
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -4983,7 +4983,7 @@ DynEntCl_InitFilter_10:
 
 
 ;R_FrustumClipPlanes(GfxMatrix const*, float const (*) [4], int, DpvsPlane*)
-R_FrustumClipPlanes:
+_Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4992,16 +4992,16 @@ R_FrustumClipPlanes:
 	sub esp, 0x4
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jle R_FrustumClipPlanes_10
+	jle _Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane_10
 	mov ecx, [ebp+0x14]
 	mov esi, [ebp+0xc]
 	xor edi, edi
 	movss xmm4, dword [_float_1_00000000]
-R_FrustumClipPlanes_30:
+_Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane_30:
 	mov edx, ecx
 	xor ebx, ebx
 	mov eax, [ebp+0x8]
-R_FrustumClipPlanes_20:
+_Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane_20:
 	movss xmm1, dword [esi]
 	mulss xmm1, [eax]
 	movss xmm0, dword [esi+0x4]
@@ -5018,7 +5018,7 @@ R_FrustumClipPlanes_20:
 	add eax, 0x10
 	add edx, 0x4
 	cmp ebx, 0x4
-	jnz R_FrustumClipPlanes_20
+	jnz _Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane_20
 	movss xmm0, dword [ecx]
 	movss xmm1, dword [ecx+0x4]
 	movss xmm2, dword [ecx+0x8]
@@ -5066,8 +5066,8 @@ R_FrustumClipPlanes_20:
 	add ecx, 0x14
 	add esi, 0x10
 	cmp [ebp+0x10], edi
-	jnz R_FrustumClipPlanes_30
-R_FrustumClipPlanes_10:
+	jnz _Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane_30
+_Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane_10:
 	add esp, 0x4
 	pop ebx
 	pop esi
@@ -5078,7 +5078,7 @@ R_FrustumClipPlanes_10:
 
 
 ;R_FilterDObjIntoCells(unsigned int, unsigned int, float*, float)
-R_FilterDObjIntoCells:
+_Z21R_FilterDObjIntoCellsjjPff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5111,17 +5111,17 @@ R_FilterDObjIntoCells:
 	and [eax], esi
 	mov ecx, ebx
 	add ecx, ecx
-	jz R_FilterDObjIntoCells_10
+	jz _Z21R_FilterDObjIntoCellsjjPff_10
 	mov eax, [ebp-0x4c]
 	add eax, edx
 	xor edx, edx
-R_FilterDObjIntoCells_20:
+_Z21R_FilterDObjIntoCellsjjPff_20:
 	and [eax], esi
 	add edx, 0x1
 	add eax, 0x200
 	cmp ecx, edx
-	jnz R_FilterDObjIntoCells_20
-R_FilterDObjIntoCells_10:
+	jnz _Z21R_FilterDObjIntoCellsjjPff_20
+_Z21R_FilterDObjIntoCellsjjPff_10:
 	movaps xmm0, xmm2
 	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
@@ -5154,7 +5154,7 @@ R_FilterDObjIntoCells_10:
 	lea eax, [ebp-0x40]
 	lea ebx, [ebp-0x30]
 	mov [esp], ebx
-	call R_FilterEntIntoCells_r
+	call _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4_
 	add esp, 0x5c
 	pop ebx
 	pop esi
@@ -5164,7 +5164,7 @@ R_FilterDObjIntoCells_10:
 
 
 ;R_AddWorldSurfacesDpvs(GfxViewParms const*, int)
-R_AddWorldSurfacesDpvs:
+_Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5189,7 +5189,7 @@ R_AddWorldSurfacesDpvs:
 	mov eax, r_skipPvs
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddWorldSurfacesDpvs_10
+	jnz _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_10
 	mov edx, scene
 	mov eax, [edx+0x154c90]
 	lea eax, [eax+eax*2]
@@ -5199,7 +5199,7 @@ R_AddWorldSurfacesDpvs:
 	lea eax, [esi+0xc]
 	mov [ebp-0x1c], eax
 	test ebx, ebx
-	js R_AddWorldSurfacesDpvs_20
+	js _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_20
 	mov edx, [edi+0x20a0]
 	lea eax, [ebx*8]
 	shl ebx, 0x6
@@ -5208,7 +5208,7 @@ R_AddWorldSurfacesDpvs:
 	mov eax, r_singleCell
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddWorldSurfacesDpvs_30
+	jnz _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_30
 	mov edx, [ebp-0x1c]
 	mov eax, [edx+0x11c]
 	mov [esp+0xc], eax
@@ -5216,8 +5216,8 @@ R_AddWorldSurfacesDpvs:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], dpvsGlob
 	mov [esp], ebx
-	call R_VisitPortals
-R_AddWorldSurfacesDpvs_10:
+	call _Z14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_i
+_Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_10:
 	mov edx, scene
 	mov eax, [edx+0x154c90]
 	lea eax, [eax+eax*2]
@@ -5227,19 +5227,19 @@ R_AddWorldSurfacesDpvs_10:
 	lea esi, [ebx+0xc]
 	mov eax, [dpvsGlob+0x2c]
 	test eax, eax
-	jz R_AddWorldSurfacesDpvs_40
+	jz _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_40
 	mov eax, [esi+0x11c]
 	sub eax, 0x1
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x10]
 	mov [esp], eax
-	call R_AddSkySurfacesDpvs
-R_AddWorldSurfacesDpvs_40:
+	call _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei
+_Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_40:
 	mov eax, r_vc_makelog
 	mov eax, [eax]
 	mov edi, [eax+0xc]
 	test edi, edi
-	jz R_AddWorldSurfacesDpvs_50
+	jz _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_50
 	mov eax, [esi+0x11c]
 	mov [esp+0x8], eax
 	lea eax, [ebx+0x10]
@@ -5247,22 +5247,22 @@ R_AddWorldSurfacesDpvs_40:
 	mov eax, [ebp+0x8]
 	add eax, 0x100
 	mov [esp], eax
-	call R_ShowLightVisCachePoints
-R_AddWorldSurfacesDpvs_50:
+	call _Z25R_ShowLightVisCachePointsPKfPK9DpvsPlanei
+_Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_50:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddWorldSurfacesDpvs_30:
+_Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_30:
 	mov dword [dpvsGlob+0x2c], 0x0
 	mov edx, [ebp-0x1c]
 	mov ecx, [edx+0x11c]
 	lea edx, [esi+0x10]
 	mov [esp], ecx
 	mov eax, ebx
-	call R_AddCellSurfacesAndCullGroupsInFrustumDelayed
+	call _Z46R_AddCellSurfacesAndCullGroupsInFrustumDelayedPK7GfxCellPK9DpvsPlaneii
 	mov eax, [edi+0x20a0]
 	mov edx, ebx
 	sub edx, [eax+0x104]
@@ -5284,23 +5284,23 @@ R_AddWorldSurfacesDpvs_30:
 	mov eax, 0x1
 	shl eax, cl
 	or [edx+ebx*4], eax
-	jmp R_AddWorldSurfacesDpvs_10
-R_AddWorldSurfacesDpvs_20:
+	jmp _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_10
+_Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_20:
 	mov eax, [edi+0x20a0]
 	mov ecx, [eax+0xf0]
 	test ecx, ecx
-	jle R_AddWorldSurfacesDpvs_10
+	jle _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_10
 	mov dword [ebp-0x20], 0x0
 	xor edi, edi
 	add esi, 0x10
-R_AddWorldSurfacesDpvs_60:
+_Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_60:
 	mov edx, [ebp-0x1c]
 	mov ecx, [edx+0x11c]
 	mov edx, [eax+0x104]
 	lea eax, [edi+edx]
 	mov [esp], ecx
 	mov edx, esi
-	call R_AddCellSurfacesAndCullGroupsInFrustumDelayed
+	call _Z46R_AddCellSurfacesAndCullGroupsInFrustumDelayedPK7GfxCellPK9DpvsPlaneii
 	mov edx, edi
 	sar edx, 0x3
 	lea ecx, [edx+edx*8]
@@ -5326,12 +5326,12 @@ R_AddWorldSurfacesDpvs_60:
 	add edi, 0x38
 	mov edx, [ebp-0x20]
 	cmp [eax+0xf0], edx
-	jg R_AddWorldSurfacesDpvs_60
-	jmp R_AddWorldSurfacesDpvs_10
+	jg _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_60
+	jmp _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi_10
 
 
 ;R_SetViewFrustumPlanes(GfxViewInfo*)
-R_SetViewFrustumPlanes:
+_Z22R_SetViewFrustumPlanesP11GfxViewInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5342,7 +5342,7 @@ R_SetViewFrustumPlanes:
 	xor ebx, ebx
 	mov ecx, [ebp+0x8]
 	add ecx, 0x55e0
-R_SetViewFrustumPlanes_10:
+_Z22R_SetViewFrustumPlanesP11GfxViewInfo_10:
 	mov eax, [edi+0x154c90]
 	lea eax, [eax+eax*2]
 	lea eax, [eax+eax*8]
@@ -5361,7 +5361,7 @@ R_SetViewFrustumPlanes_10:
 	add ecx, 0x10
 	add ebx, 0x14
 	cmp esi, 0x4
-	jnz R_SetViewFrustumPlanes_10
+	jnz _Z22R_SetViewFrustumPlanesP11GfxViewInfo_10
 	pop ebx
 	pop esi
 	pop edi
@@ -5371,7 +5371,7 @@ R_SetViewFrustumPlanes_10:
 
 
 ;R_ShutdownSceneBuffers()
-R_ShutdownSceneBuffers:
+_Z22R_ShutdownSceneBuffersv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5382,50 +5382,50 @@ R_ShutdownSceneBuffers:
 	add ebx, 0x154c94
 	mov eax, scene
 	lea esi, [eax+0x154cb0]
-R_ShutdownSceneBuffers_10:
+_Z22R_ShutdownSceneBuffersv_10:
 	mov eax, [ebx]
 	mov [esp], eax
-	call R_FreeGlobalVariable
+	call _Z20R_FreeGlobalVariablePv
 	add ebx, 0x4
 	cmp ebx, esi
-	jnz R_ShutdownSceneBuffers_10
+	jnz _Z22R_ShutdownSceneBuffersv_10
 	mov edx, scene
 	mov eax, [edx+0x154cb0]
 	mov [esp], eax
-	call R_FreeGlobalVariable
+	call _Z20R_FreeGlobalVariablePv
 	mov edx, scene
 	mov eax, [edx+0x154cb4]
 	mov [esp], eax
-	call R_FreeGlobalVariable
+	call _Z20R_FreeGlobalVariablePv
 	mov eax, gfxCfg
 	mov ecx, [eax]
 	test ecx, ecx
-	jnz R_ShutdownSceneBuffers_20
+	jnz _Z22R_ShutdownSceneBuffersv_20
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_ShutdownSceneBuffers_20:
+_Z22R_ShutdownSceneBuffersv_20:
 	xor edi, edi
 	mov esi, dpvsGlob
 	mov edx, scene
 	lea ebx, [edx+0x154cb8]
 	mov [ebp-0x1c], eax
-R_ShutdownSceneBuffers_30:
+_Z22R_ShutdownSceneBuffersv_30:
 	mov eax, [esi+0xade4]
 	mov [esp], eax
-	call R_FreeGlobalVariable
+	call _Z20R_FreeGlobalVariablePv
 	mov eax, [ebx]
 	mov [esp], eax
-	call R_FreeGlobalVariable
+	call _Z20R_FreeGlobalVariablePv
 	add edi, 0x1
 	add esi, 0x4
 	add ebx, 0x4
 	mov eax, [ebp-0x1c]
 	cmp edi, [eax]
-	jb R_ShutdownSceneBuffers_30
+	jb _Z22R_ShutdownSceneBuffersv_30
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -5435,7 +5435,7 @@ R_ShutdownSceneBuffers_30:
 
 
 ;R_UnfilterEntFromCells(unsigned int, unsigned int)
-R_UnfilterEntFromCells:
+_Z22R_UnfilterEntFromCellsjj:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5466,17 +5466,17 @@ R_UnfilterEntFromCells:
 	and [eax], edi
 	mov ecx, esi
 	add ecx, ecx
-	jz R_UnfilterEntFromCells_10
+	jz _Z22R_UnfilterEntFromCellsjj_10
 	mov eax, [ebp-0x10]
 	add eax, edx
 	xor edx, edx
-R_UnfilterEntFromCells_20:
+_Z22R_UnfilterEntFromCellsjj_20:
 	and [eax], edi
 	add edx, 0x1
 	add eax, 0x200
 	cmp ecx, edx
-	jnz R_UnfilterEntFromCells_20
-R_UnfilterEntFromCells_10:
+	jnz _Z22R_UnfilterEntFromCellsjj_20
+_Z22R_UnfilterEntFromCellsjj_10:
 	add esp, 0x4
 	pop ebx
 	pop esi
@@ -5487,7 +5487,7 @@ R_UnfilterEntFromCells_10:
 
 
 ;R_FilterBModelIntoCells(unsigned int, unsigned int, GfxBrushModel*)
-R_FilterBModelIntoCells:
+_Z23R_FilterBModelIntoCellsjjP13GfxBrushModel:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5519,17 +5519,17 @@ R_FilterBModelIntoCells:
 	and [eax], esi
 	mov ecx, ebx
 	add ecx, ecx
-	jz R_FilterBModelIntoCells_10
+	jz _Z23R_FilterBModelIntoCellsjjP13GfxBrushModel_10
 	mov eax, [ebp-0x2c]
 	add eax, edx
 	xor edx, edx
-R_FilterBModelIntoCells_20:
+_Z23R_FilterBModelIntoCellsjjP13GfxBrushModel_20:
 	and [eax], esi
 	add edx, 0x1
 	add eax, 0x200
 	cmp ecx, edx
-	jnz R_FilterBModelIntoCells_20
-R_FilterBModelIntoCells_10:
+	jnz _Z23R_FilterBModelIntoCellsjjP13GfxBrushModel_20
+_Z23R_FilterBModelIntoCellsjjP13GfxBrushModel_10:
 	mov eax, [ebp+0x8]
 	mov [ebp-0x28], eax
 	mov ecx, [ebp+0xc]
@@ -5544,7 +5544,7 @@ R_FilterBModelIntoCells_10:
 	lea ecx, [edi+0xc]
 	mov [esp], ecx
 	mov ecx, edi
-	call R_FilterEntIntoCells_r
+	call _Z22R_FilterEntIntoCells_rP13FilterEntInfoP7mnode_tPKfS4_
 	add esp, 0x3c
 	pop ebx
 	pop esi
@@ -5554,7 +5554,7 @@ R_FilterBModelIntoCells_10:
 
 
 ;R_FilterDynEntIntoCells(unsigned int, DynEntityDrawType, float*, float*)
-R_FilterDynEntIntoCells:
+_Z23R_FilterDynEntIntoCellsj17DynEntityDrawTypePfS0_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5583,15 +5583,15 @@ R_FilterDynEntIntoCells:
 	shr edx, cl
 	not edx
 	test esi, esi
-	jz R_FilterDynEntIntoCells_10
+	jz _Z23R_FilterDynEntIntoCellsj17DynEntityDrawTypePfS0__10
 	xor ecx, ecx
-R_FilterDynEntIntoCells_20:
+_Z23R_FilterDynEntIntoCellsj17DynEntityDrawTypePfS0__20:
 	and [ebx+eax*4], edx
 	add ecx, 0x1
 	add eax, edi
 	cmp esi, ecx
-	ja R_FilterDynEntIntoCells_20
-R_FilterDynEntIntoCells_10:
+	ja _Z23R_FilterDynEntIntoCellsj17DynEntityDrawTypePfS0__20
+_Z23R_FilterDynEntIntoCellsj17DynEntityDrawTypePfS0__10:
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	mov eax, [eax+0xf8]
@@ -5606,12 +5606,12 @@ R_FilterDynEntIntoCells_10:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_FilterDynEntIntoCells_r
+	jmp _Z25R_FilterDynEntIntoCells_rP7mnode_tj17DynEntityDrawTypePKfS3_
 	nop
 
 
 ;R_FilterXModelIntoScene(XModel const*, GfxScaledPlacement const*, unsigned short, unsigned short*)
-R_FilterXModelIntoScene:
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5628,7 +5628,7 @@ R_FilterXModelIntoScene:
 	movss xmm0, dword [esi+0x1c]
 	movss [ebp-0x30], xmm0
 	mov [esp], eax
-	call XModelGetRadius
+	call _Z15XModelGetRadiusPK6XModel
 	fstp dword [ebp-0x38]
 	movss xmm0, dword [ebp-0x30]
 	mulss xmm0, [ebp-0x38]
@@ -5648,29 +5648,29 @@ R_FilterXModelIntoScene:
 	lea edx, [esi+0x18]
 	mov [ebp-0x50], edx
 	pxor xmm4, xmm4
-R_FilterXModelIntoScene_20:
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_20:
 	mov ebx, [eax+0x11c]
 	lea edx, [eax+0x4]
 	test ebx, ebx
-	jg R_FilterXModelIntoScene_10
-R_FilterXModelIntoScene_70:
+	jg _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_10
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_70:
 	mov edi, [ebp-0x5c]
 	mov byte [edi+ebp-0x1c], 0x1
-R_FilterXModelIntoScene_90:
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_90:
 	add dword [ebp-0x5c], 0x1
 	add eax, 0x120
 	cmp dword [ebp-0x5c], 0x4
-	jnz R_FilterXModelIntoScene_20
+	jnz _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_20
 	cmp dword [ebp-0x34], 0x3
-	jz R_FilterXModelIntoScene_30
+	jz _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_30
 	cmp word [ebp-0x3e], 0x0
-	jnz R_FilterXModelIntoScene_40
+	jnz _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_40
 	mov dword [ebp-0x2c], 0x0
-R_FilterXModelIntoScene_110:
-	call R_AllocSceneModel
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_110:
+	call _Z17R_AllocSceneModelv
 	mov edi, eax
 	cmp eax, 0x3ff
-	ja R_FilterXModelIntoScene_30
+	ja _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_30
 	lea ecx, [eax+eax*8]
 	mov ebx, scene
 	lea ecx, [ebx+ecx*8+0x13ba00]
@@ -5713,21 +5713,21 @@ R_FilterXModelIntoScene_110:
 	movss [eax+0x40], xmm0
 	lea edx, [edi+ebx+0x14da34]
 	mov ecx, 0x1
-R_FilterXModelIntoScene_50:
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_50:
 	movzx eax, byte [ecx+ebp-0x1c]
 	mov [edx], al
 	add ecx, 0x1
 	add edx, 0x400
 	cmp ecx, 0x4
-	jnz R_FilterXModelIntoScene_50
-R_FilterXModelIntoScene_30:
+	jnz _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_50
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_30:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_FilterXModelIntoScene_10:
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_10:
 	movss xmm0, dword [esi+0x10]
 	movss xmm2, dword [esi+0x14]
 	movss xmm1, dword [esi+0x18]
@@ -5740,12 +5740,12 @@ R_FilterXModelIntoScene_10:
 	addss xmm1, [ebp-0x30]
 	movaps xmm3, xmm4
 	ucomiss xmm4, xmm1
-	jae R_FilterXModelIntoScene_60
+	jae _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_60
 	mov ecx, 0x1
-R_FilterXModelIntoScene_80:
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_80:
 	add edx, 0x14
 	cmp ecx, ebx
-	jz R_FilterXModelIntoScene_70
+	jz _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_70
 	mov edi, [ebp-0x48]
 	movss xmm0, dword [edi]
 	mov edi, [ebp-0x4c]
@@ -5761,29 +5761,29 @@ R_FilterXModelIntoScene_80:
 	addss xmm0, [edx+0xc]
 	addss xmm0, [ebp-0x30]
 	ucomiss xmm3, xmm0
-	jb R_FilterXModelIntoScene_80
-R_FilterXModelIntoScene_60:
+	jb _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_80
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_60:
 	add dword [ebp-0x34], 0x1
 	mov edx, [ebp-0x5c]
 	mov byte [edx+ebp-0x1c], 0x2
-	jmp R_FilterXModelIntoScene_90
-R_FilterXModelIntoScene_40:
+	jmp _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_90
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_40:
 	mov ebx, frontEndDataOut
 	mov eax, [ebx]
 	add eax, 0x11825c
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
-	call InterlockedExchangeAdd
+	call iInterlockedExchangeAdd
 	mov [ebp-0x2c], eax
 	cmp eax, 0x7f
-	ja R_FilterXModelIntoScene_100
+	ja _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_100
 	lea eax, [eax*8+0x118260]
 	add eax, [ebx]
 	mov dword [eax+0x4], 0x0
 	movzx edx, word [ebp-0x3e]
 	mov [eax], edx
-	jmp R_FilterXModelIntoScene_110
-R_FilterXModelIntoScene_100:
+	jmp _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_110
+_Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt_100:
 	mov eax, [ebx]
 	mov dword [eax+0x11825c], 0x80
 	mov dword [ebp+0xc], 0x80
@@ -5793,12 +5793,12 @@ R_FilterXModelIntoScene_100:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_WarnOncePerFrame
+	jmp _Z18R_WarnOncePerFrame14GfxWarningTypez
 	nop
 
 
 ;R_SetupWorldSurfacesDpvs(GfxViewParms const*)
-R_SetupWorldSurfacesDpvs:
+_Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5824,7 +5824,7 @@ R_SetupWorldSurfacesDpvs:
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], standardFrustumSidePlanes
 	mov [esp], ecx
-	call R_FrustumClipPlanes
+	call _Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane
 	lea edx, [esi+0x100]
 	mov eax, [esi+0x100]
 	mov [dpvsGlob+0x38], eax
@@ -5885,7 +5885,7 @@ R_SetupWorldSurfacesDpvs:
 	movaps xmm5, xmm1
 	orps xmm5, xmm0
 	ucomiss xmm2, xmm5
-	jae R_SetupWorldSurfacesDpvs_10
+	jae _Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms_10
 	movss xmm0, dword [_data16_80000000]
 	movss xmm2, dword [esi+0x110]
 	xorps xmm2, xmm0
@@ -5926,7 +5926,7 @@ R_SetupWorldSurfacesDpvs:
 	cmovle edx, eax
 	mov [dpvsGlob+0x26], dl
 	mov dword [dpvsGlob+0x2c], dpvsGlob+0x14
-R_SetupWorldSurfacesDpvs_30:
+_Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms_30:
 	mov [dpvsGlob+0xade0], ebx
 	mov edx, [dpvsGlob+0x28]
 	mov eax, [edx]
@@ -5941,7 +5941,7 @@ R_SetupWorldSurfacesDpvs_30:
 	mov [ebx+0x60], eax
 	mov edx, [dpvsGlob+0x2c]
 	test edx, edx
-	jz R_SetupWorldSurfacesDpvs_20
+	jz _Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms_20
 	mov eax, [edx]
 	mov [ebx+0x64], eax
 	mov eax, [edx+0x4]
@@ -5961,10 +5961,10 @@ R_SetupWorldSurfacesDpvs_30:
 	pop edi
 	pop ebp
 	ret
-R_SetupWorldSurfacesDpvs_10:
+_Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms_10:
 	mov dword [dpvsGlob+0x2c], 0x0
-	jmp R_SetupWorldSurfacesDpvs_30
-R_SetupWorldSurfacesDpvs_20:
+	jmp _Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms_30
+_Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms_20:
 	mov eax, 0x5
 	mov edx, [ebp-0x1c]
 	mov [edx+0x11c], eax
@@ -5978,7 +5978,7 @@ R_SetupWorldSurfacesDpvs_20:
 
 
 ;R_FilterEntitiesIntoCells(int)
-R_FilterEntitiesIntoCells:
+_Z25R_FilterEntitiesIntoCellsi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5999,19 +5999,19 @@ R_FilterEntitiesIntoCells:
 	mov [ebp-0x40], eax
 	mov eax, [edx+0x12b42c]
 	test eax, eax
-	jle R_FilterEntitiesIntoCells_10
+	jle _Z25R_FilterEntitiesIntoCellsi_10
 	mov dword [ebp-0x4c], 0x0
 	lea ecx, [edx+0x154ca0]
 	mov [ebp-0x54], ecx
 	add edx, 0x12b400
 	mov [ebp-0x58], edx
 	mov eax, edx
-R_FilterEntitiesIntoCells_70:
+_Z25R_FilterEntitiesIntoCellsi_70:
 	add eax, 0x30
 	mov [ebp-0x48], eax
 	mov eax, [eax+0x2c]
 	cmp eax, 0x4
-	jz R_FilterEntitiesIntoCells_20
+	jz _Z25R_FilterEntitiesIntoCellsi_20
 	mov ecx, [ebp-0x58]
 	movzx ecx, word [ecx+0x9e]
 	mov [ebp-0x18], ecx
@@ -6024,12 +6024,12 @@ R_FilterEntitiesIntoCells_70:
 	pxor xmm2, xmm2
 	mov ecx, [ebp-0x54]
 	mov [ebp-0x20], ecx
-R_FilterEntitiesIntoCells_60:
+_Z25R_FilterEntitiesIntoCellsi_60:
 	mov eax, [edi+0x11c]
 	mov [ebp-0x3c], eax
 	lea edx, [edi+0x4]
 	test eax, eax
-	jle R_FilterEntitiesIntoCells_30
+	jle _Z25R_FilterEntitiesIntoCellsi_30
 	movzx eax, byte [edx+0x10]
 	movss xmm1, dword [edi+0x4]
 	mulss xmm1, [eax+esi]
@@ -6045,12 +6045,12 @@ R_FilterEntitiesIntoCells_60:
 	addss xmm1, xmm0
 	movaps xmm6, xmm2
 	ucomiss xmm2, xmm1
-	jae R_FilterEntitiesIntoCells_40
+	jae _Z25R_FilterEntitiesIntoCellsi_40
 	lea ecx, [edi+0x24]
 	mov ebx, 0x1
-R_FilterEntitiesIntoCells_50:
+_Z25R_FilterEntitiesIntoCellsi_50:
 	cmp ebx, [ebp-0x3c]
-	jz R_FilterEntitiesIntoCells_30
+	jz _Z25R_FilterEntitiesIntoCellsi_30
 	mov eax, ecx
 	add ebx, 0x1
 	add ecx, 0x14
@@ -6067,32 +6067,32 @@ R_FilterEntitiesIntoCells_50:
 	mulss xmm0, [edx+esi]
 	addss xmm1, xmm0
 	ucomiss xmm6, xmm1
-	jb R_FilterEntitiesIntoCells_50
-R_FilterEntitiesIntoCells_40:
+	jb _Z25R_FilterEntitiesIntoCellsi_50
+_Z25R_FilterEntitiesIntoCellsi_40:
 	mov edx, [ebp-0x24]
 	mov eax, [edx]
 	mov ecx, [ebp-0x18]
 	mov byte [eax+ecx], 0x2
-R_FilterEntitiesIntoCells_30:
+_Z25R_FilterEntitiesIntoCellsi_30:
 	add edi, 0x120
 	add dword [ebp-0x24], 0x4
 	mov eax, [ebp-0x24]
 	cmp [ebp-0x20], eax
-	jnz R_FilterEntitiesIntoCells_60
-R_FilterEntitiesIntoCells_20:
+	jnz _Z25R_FilterEntitiesIntoCellsi_60
+_Z25R_FilterEntitiesIntoCellsi_20:
 	add dword [ebp-0x4c], 0x1
 	add dword [ebp-0x58], 0x7c
 	mov edx, scene
 	mov eax, [edx+0x12b42c]
 	cmp [ebp-0x4c], eax
-	jge R_FilterEntitiesIntoCells_10
+	jge _Z25R_FilterEntitiesIntoCellsi_10
 	mov eax, [ebp-0x58]
-	jmp R_FilterEntitiesIntoCells_70
-R_FilterEntitiesIntoCells_10:
+	jmp _Z25R_FilterEntitiesIntoCellsi_70
+_Z25R_FilterEntitiesIntoCellsi_10:
 	mov ecx, edx
 	mov eax, [edx+0x13ba30]
 	test eax, eax
-	jle R_FilterEntitiesIntoCells_80
+	jle _Z25R_FilterEntitiesIntoCellsi_80
 	mov dword [ebp-0x14], 0x0
 	mov eax, edx
 	add eax, 0x154ca0
@@ -6101,18 +6101,18 @@ R_FilterEntitiesIntoCells_10:
 	add esi, 0x13ba00
 	pxor xmm7, xmm7
 	mov ecx, scene
-R_FilterEntitiesIntoCells_140:
+_Z25R_FilterEntitiesIntoCellsi_140:
 	movzx edx, word [esi+0x62]
 	mov [ebp-0x1c], edx
 	mov ebx, [ebp-0x40]
 	add ecx, 0x154c94
 	mov [ebp-0x2c], ecx
-R_FilterEntitiesIntoCells_120:
+_Z25R_FilterEntitiesIntoCellsi_120:
 	mov edi, [ebx+0x11c]
 	movss xmm4, dword [esi+0x64]
 	lea eax, [ebx+0x4]
 	test edi, edi
-	jle R_FilterEntitiesIntoCells_90
+	jle _Z25R_FilterEntitiesIntoCellsi_90
 	movss xmm5, dword [esi+0x50]
 	movss xmm3, dword [esi+0x54]
 	movss xmm2, dword [esi+0x58]
@@ -6128,13 +6128,13 @@ R_FilterEntitiesIntoCells_120:
 	addss xmm0, xmm4
 	movaps xmm6, xmm7
 	ucomiss xmm7, xmm0
-	jae R_FilterEntitiesIntoCells_100
+	jae _Z25R_FilterEntitiesIntoCellsi_100
 	lea edx, [ebx+0x18]
 	mov ecx, 0x1
-R_FilterEntitiesIntoCells_110:
+_Z25R_FilterEntitiesIntoCellsi_110:
 	add eax, 0x14
 	cmp edi, ecx
-	jz R_FilterEntitiesIntoCells_90
+	jz _Z25R_FilterEntitiesIntoCellsi_90
 	movaps xmm0, xmm5
 	mulss xmm0, [eax]
 	movaps xmm1, xmm3
@@ -6148,32 +6148,32 @@ R_FilterEntitiesIntoCells_110:
 	add ecx, 0x1
 	add edx, 0x14
 	ucomiss xmm6, xmm0
-	jb R_FilterEntitiesIntoCells_110
-R_FilterEntitiesIntoCells_100:
+	jb _Z25R_FilterEntitiesIntoCellsi_110
+_Z25R_FilterEntitiesIntoCellsi_100:
 	mov edx, [ebp-0x2c]
 	mov eax, [edx]
 	mov ecx, [ebp-0x1c]
 	mov byte [eax+ecx], 0x2
-R_FilterEntitiesIntoCells_90:
+_Z25R_FilterEntitiesIntoCellsi_90:
 	add ebx, 0x120
 	add dword [ebp-0x2c], 0x4
 	mov eax, [ebp-0x2c]
 	cmp [ebp-0x28], eax
-	jnz R_FilterEntitiesIntoCells_120
+	jnz _Z25R_FilterEntitiesIntoCellsi_120
 	add dword [ebp-0x14], 0x1
 	add esi, 0x48
 	mov edx, scene
 	mov eax, [edx+0x13ba30]
 	cmp [ebp-0x14], eax
-	jge R_FilterEntitiesIntoCells_130
+	jge _Z25R_FilterEntitiesIntoCellsi_130
 	mov ecx, edx
-	jmp R_FilterEntitiesIntoCells_140
-R_FilterEntitiesIntoCells_130:
+	jmp _Z25R_FilterEntitiesIntoCellsi_140
+_Z25R_FilterEntitiesIntoCellsi_130:
 	mov ecx, edx
-R_FilterEntitiesIntoCells_80:
+_Z25R_FilterEntitiesIntoCellsi_80:
 	mov eax, [ecx+0x14f634]
 	test eax, eax
-	jle R_FilterEntitiesIntoCells_150
+	jle _Z25R_FilterEntitiesIntoCellsi_150
 	mov dword [ebp-0x10], 0x0
 	mov eax, ecx
 	add eax, 0x154ca0
@@ -6182,7 +6182,7 @@ R_FilterEntitiesIntoCells_80:
 	mov [ebp-0x50], ecx
 	pxor xmm2, xmm2
 	mov edx, ecx
-R_FilterEntitiesIntoCells_200:
+_Z25R_FilterEntitiesIntoCellsi_200:
 	movzx edx, word [edx+0x2]
 	mov [ebp-0x44], edx
 	mov ecx, [ebp-0x50]
@@ -6191,13 +6191,13 @@ R_FilterEntitiesIntoCells_200:
 	mov eax, scene
 	add eax, 0x154c94
 	mov [ebp-0x34], eax
-R_FilterEntitiesIntoCells_190:
+_Z25R_FilterEntitiesIntoCellsi_190:
 	mov edx, [edi+0x11c]
 	mov [ebp-0x38], edx
 	lea edx, [edi+0x4]
 	mov eax, [ebp-0x38]
 	test eax, eax
-	jle R_FilterEntitiesIntoCells_160
+	jle _Z25R_FilterEntitiesIntoCellsi_160
 	movzx eax, byte [edx+0x11]
 	movss xmm1, dword [eax+ebx]
 	mulss xmm1, [edx+0x4]
@@ -6212,12 +6212,12 @@ R_FilterEntitiesIntoCells_190:
 	addss xmm1, xmm0
 	movaps xmm6, xmm2
 	ucomiss xmm2, xmm1
-	jae R_FilterEntitiesIntoCells_170
+	jae _Z25R_FilterEntitiesIntoCellsi_170
 	lea ecx, [edi+0x24]
 	mov esi, 0x1
-R_FilterEntitiesIntoCells_180:
+_Z25R_FilterEntitiesIntoCellsi_180:
 	cmp [ebp-0x38], esi
-	jz R_FilterEntitiesIntoCells_160
+	jz _Z25R_FilterEntitiesIntoCellsi_160
 	mov eax, ecx
 	add esi, 0x1
 	add ecx, 0x14
@@ -6234,27 +6234,27 @@ R_FilterEntitiesIntoCells_180:
 	mulss xmm0, [edx+ebx]
 	addss xmm1, xmm0
 	ucomiss xmm6, xmm1
-	jb R_FilterEntitiesIntoCells_180
-R_FilterEntitiesIntoCells_170:
+	jb _Z25R_FilterEntitiesIntoCellsi_180
+_Z25R_FilterEntitiesIntoCellsi_170:
 	mov ecx, [ebp-0x34]
 	mov eax, [ecx]
 	mov edx, [ebp-0x44]
 	mov byte [eax+edx], 0x2
-R_FilterEntitiesIntoCells_160:
+_Z25R_FilterEntitiesIntoCellsi_160:
 	add edi, 0x120
 	add dword [ebp-0x34], 0x4
 	mov ecx, [ebp-0x30]
 	cmp [ebp-0x34], ecx
-	jnz R_FilterEntitiesIntoCells_190
+	jnz _Z25R_FilterEntitiesIntoCellsi_190
 	add dword [ebp-0x10], 0x1
 	add dword [ebp-0x50], 0x28
 	mov edx, scene
 	mov eax, [edx+0x14f634]
 	cmp [ebp-0x10], eax
-	jge R_FilterEntitiesIntoCells_150
+	jge _Z25R_FilterEntitiesIntoCellsi_150
 	mov edx, [ebp-0x50]
-	jmp R_FilterEntitiesIntoCells_200
-R_FilterEntitiesIntoCells_150:
+	jmp _Z25R_FilterEntitiesIntoCellsi_200
+_Z25R_FilterEntitiesIntoCellsi_150:
 	add esp, 0x4c
 	pop ebx
 	pop esi
@@ -6265,7 +6265,7 @@ R_FilterEntitiesIntoCells_150:
 
 
 ;R_SetupShadowSurfacesDpvs(GfxViewParms const*, float const (*) [4], unsigned int, int)
-R_SetupShadowSurfacesDpvs:
+_Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6292,7 +6292,7 @@ R_SetupShadowSurfacesDpvs:
 	mov [esp+0x4], eax
 	lea eax, [edi+0x80]
 	mov [esp], eax
-	call R_FrustumClipPlanes
+	call _Z19R_FrustumClipPlanesPK9GfxMatrixPA4_KfiP9DpvsPlane
 	lea eax, [edi+0x110]
 	mov [ebp-0x24], eax
 	mov edx, [ebp+0x14]
@@ -6316,21 +6316,21 @@ R_SetupShadowSurfacesDpvs:
 	addss xmm1, xmm0
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm1
-	ja R_SetupShadowSurfacesDpvs_10
-R_SetupShadowSurfacesDpvs_70:
+	ja _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_10
+_Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_70:
 	mov ecx, [ebp+0x14]
 	test ecx, ecx
-	jz R_SetupShadowSurfacesDpvs_20
+	jz _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_20
 	mov eax, rg
 	mov edx, [eax+0x22e0]
 	test edx, edx
-	jz R_SetupShadowSurfacesDpvs_20
-R_SetupShadowSurfacesDpvs_50:
+	jz _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_20
+_Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_50:
 	xor ebx, ebx
 	mov ecx, [ebp+0x10]
 	lea eax, [ecx+ecx*4]
 	lea ecx, [eax*4]
-R_SetupShadowSurfacesDpvs_40:
+_Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_40:
 	mov edx, ebx
 	add edx, [dpvsGlob+0xade0]
 	mov eax, [ebp-0x24]
@@ -6345,11 +6345,11 @@ R_SetupShadowSurfacesDpvs_40:
 	mulss xmm1, [edx+0x8]
 	addss xmm0, xmm1
 	ucomiss xmm2, xmm0
-	ja R_SetupShadowSurfacesDpvs_30
-R_SetupShadowSurfacesDpvs_60:
+	ja _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_30
+_Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_60:
 	add ebx, 0x14
 	cmp ebx, 0x50
-	jnz R_SetupShadowSurfacesDpvs_40
+	jnz _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_40
 	mov edx, [ebp+0x10]
 	mov [esi+0x11c], edx
 	add esp, 0x3c
@@ -6358,7 +6358,7 @@ R_SetupShadowSurfacesDpvs_60:
 	pop edi
 	pop ebp
 	ret
-R_SetupShadowSurfacesDpvs_20:
+_Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_20:
 	lea eax, [ebx+0x40]
 	movss xmm1, dword [edi+0x110]
 	mulss xmm1, [ebx+0x40]
@@ -6369,7 +6369,7 @@ R_SetupShadowSurfacesDpvs_20:
 	mulss xmm0, [eax+0x8]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jbe R_SetupShadowSurfacesDpvs_50
+	jbe _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_50
 	mov edx, [ebp+0x10]
 	lea eax, [edx+edx*4]
 	shl eax, 0x2
@@ -6387,8 +6387,8 @@ R_SetupShadowSurfacesDpvs_20:
 	mov edx, [ecx+0x50]
 	mov [eax+esi+0x14], edx
 	add dword [ebp+0x10], 0x1
-	jmp R_SetupShadowSurfacesDpvs_50
-R_SetupShadowSurfacesDpvs_30:
+	jmp _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_50
+_Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_30:
 	mov eax, [edx]
 	mov [ecx+esi+0x4], eax
 	mov eax, [edx+0x4]
@@ -6401,8 +6401,8 @@ R_SetupShadowSurfacesDpvs_30:
 	mov [ecx+esi+0x14], eax
 	add dword [ebp+0x10], 0x1
 	add ecx, 0x14
-	jmp R_SetupShadowSurfacesDpvs_60
-R_SetupShadowSurfacesDpvs_10:
+	jmp _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_60
+_Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_10:
 	mov edx, [ebp+0x10]
 	lea eax, [edx+edx*4]
 	shl eax, 0x2
@@ -6419,12 +6419,12 @@ R_SetupShadowSurfacesDpvs_10:
 	mov edx, [ebx+0x78]
 	mov [eax+esi+0x14], edx
 	add dword [ebp+0x10], 0x1
-	jmp R_SetupShadowSurfacesDpvs_70
+	jmp _Z25R_SetupShadowSurfacesDpvsPK12GfxViewParmsPA4_Kfji_70
 	nop
 
 
 ;R_UnfilterDynEntFromCells(unsigned int, DynEntityDrawType)
-R_UnfilterDynEntFromCells:
+_Z25R_UnfilterDynEntFromCellsj17DynEntityDrawType:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6446,15 +6446,15 @@ R_UnfilterDynEntFromCells:
 	shr ebx, cl
 	not ebx
 	test edi, edi
-	jz R_UnfilterDynEntFromCells_10
+	jz _Z25R_UnfilterDynEntFromCellsj17DynEntityDrawType_10
 	xor edx, edx
-R_UnfilterDynEntFromCells_20:
+_Z25R_UnfilterDynEntFromCellsj17DynEntityDrawType_20:
 	and [esi+eax*4], ebx
 	add edx, 0x1
 	add eax, [ebp-0x10]
 	cmp edi, edx
-	ja R_UnfilterDynEntFromCells_20
-R_UnfilterDynEntFromCells_10:
+	ja _Z25R_UnfilterDynEntFromCellsj17DynEntityDrawType_20
+_Z25R_UnfilterDynEntFromCellsj17DynEntityDrawType_10:
 	add esp, 0x4
 	pop ebx
 	pop esi
@@ -6465,7 +6465,7 @@ R_UnfilterDynEntFromCells_10:
 
 
 ;R_CalcReflectionProbeIndex(float const*)
-R_CalcReflectionProbeIndex:
+_Z26R_CalcReflectionProbeIndexPKf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6480,14 +6480,14 @@ R_CalcReflectionProbeIndex:
 	movzx eax, word [ecx]
 	mov edx, eax
 	sub edx, ebx
-	js R_CalcReflectionProbeIndex_10
+	js _Z26R_CalcReflectionProbeIndexPKf_10
 	mov edi, [esi+0xf4]
 	mov eax, [ebp+0x8]
 	movss xmm4, dword [eax]
 	movss xmm3, dword [eax+0x4]
 	movss xmm2, dword [eax+0x8]
 	pxor xmm5, xmm5
-R_CalcReflectionProbeIndex_20:
+_Z26R_CalcReflectionProbeIndexPKf_20:
 	lea eax, [edx+edx*4]
 	lea eax, [edi+eax*4]
 	movaps xmm0, xmm4
@@ -6510,11 +6510,11 @@ R_CalcReflectionProbeIndex_20:
 	movzx eax, word [edx+0x4]
 	mov edx, eax
 	sub edx, ebx
-	jns R_CalcReflectionProbeIndex_20
-R_CalcReflectionProbeIndex_10:
+	jns _Z26R_CalcReflectionProbeIndexPKf_20
+_Z26R_CalcReflectionProbeIndexPKf_10:
 	lea edx, [eax-0x1]
 	cmp edx, 0xffffffff
-	jz R_CalcReflectionProbeIndex_30
+	jz _Z26R_CalcReflectionProbeIndexPKf_30
 	lea eax, [edx*8]
 	shl edx, 0x6
 	sub edx, eax
@@ -6523,17 +6523,17 @@ R_CalcReflectionProbeIndex_10:
 	movzx ecx, al
 	mov [ebp-0x10], ecx
 	test al, al
-	jz R_CalcReflectionProbeIndex_40
+	jz _Z26R_CalcReflectionProbeIndexPKf_40
 	mov edi, [edx+0x34]
 	mov ebx, [esi+0xe8]
 	mov eax, [ebp+0x8]
 	movss xmm5, dword [eax]
 	movss xmm4, dword [eax+0x4]
 	movss xmm3, dword [eax+0x8]
-	movss xmm6, dword [_float_34028234663852885_float_3]
+	movss xmm6, dword [_float_3402823466385288598117041]
 	xor edx, edx
 	xor esi, esi
-R_CalcReflectionProbeIndex_60:
+_Z26R_CalcReflectionProbeIndexPKf_60:
 	movzx ecx, byte [edi+edx]
 	movzx eax, cl
 	shl eax, 0x4
@@ -6550,13 +6550,13 @@ R_CalcReflectionProbeIndex_60:
 	mulss xmm1, xmm1
 	addss xmm2, xmm1
 	ucomiss xmm6, xmm2
-	jbe R_CalcReflectionProbeIndex_50
+	jbe _Z26R_CalcReflectionProbeIndexPKf_50
 	mov esi, ecx
 	movaps xmm6, xmm2
-R_CalcReflectionProbeIndex_50:
+_Z26R_CalcReflectionProbeIndexPKf_50:
 	add edx, 0x1
 	cmp [ebp-0x10], edx
-	ja R_CalcReflectionProbeIndex_60
+	ja _Z26R_CalcReflectionProbeIndexPKf_60
 	mov edx, esi
 	movzx eax, dl
 	add esp, 0x4
@@ -6565,11 +6565,11 @@ R_CalcReflectionProbeIndex_50:
 	pop edi
 	pop ebp
 	ret
-R_CalcReflectionProbeIndex_30:
+_Z26R_CalcReflectionProbeIndexPKf_30:
 	mov ecx, [esi+0xe4]
 	cmp ecx, 0x1
-	ja R_CalcReflectionProbeIndex_70
-R_CalcReflectionProbeIndex_40:
+	ja _Z26R_CalcReflectionProbeIndexPKf_70
+_Z26R_CalcReflectionProbeIndexPKf_40:
 	xor eax, eax
 	add esp, 0x4
 	pop ebx
@@ -6577,17 +6577,17 @@ R_CalcReflectionProbeIndex_40:
 	pop edi
 	pop ebp
 	ret
-R_CalcReflectionProbeIndex_70:
+_Z26R_CalcReflectionProbeIndexPKf_70:
 	mov ebx, [esi+0xe8]
 	mov edx, [ebp+0x8]
 	movss xmm5, dword [edx]
 	movss xmm4, dword [edx+0x4]
 	movss xmm3, dword [edx+0x8]
-	movss xmm6, dword [_float_34028234663852885_float_3]
+	movss xmm6, dword [_float_3402823466385288598117041]
 	mov edx, 0x1
 	xor esi, esi
 	mov eax, 0x1
-R_CalcReflectionProbeIndex_90:
+_Z26R_CalcReflectionProbeIndexPKf_90:
 	shl eax, 0x4
 	lea eax, [ebx+eax]
 	movaps xmm2, xmm5
@@ -6602,14 +6602,14 @@ R_CalcReflectionProbeIndex_90:
 	mulss xmm1, xmm1
 	addss xmm2, xmm1
 	ucomiss xmm6, xmm2
-	jbe R_CalcReflectionProbeIndex_80
+	jbe _Z26R_CalcReflectionProbeIndexPKf_80
 	mov esi, edx
 	movaps xmm6, xmm2
-R_CalcReflectionProbeIndex_80:
+_Z26R_CalcReflectionProbeIndexPKf_80:
 	add dl, 0x1
 	movzx eax, dl
 	cmp ecx, eax
-	ja R_CalcReflectionProbeIndex_90
+	ja _Z26R_CalcReflectionProbeIndexPKf_90
 	mov ecx, esi
 	movzx eax, cl
 	add esp, 0x4
@@ -6621,7 +6621,7 @@ R_CalcReflectionProbeIndex_80:
 
 
 ;R_AddWorldSurfacesFrustumOnly()
-R_AddWorldSurfacesFrustumOnly:
+_Z29R_AddWorldSurfacesFrustumOnlyv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6635,29 +6635,29 @@ R_AddWorldSurfacesFrustumOnly:
 	mov eax, sm_strictCull
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddWorldSurfacesFrustumOnly_10
+	jnz _Z29R_AddWorldSurfacesFrustumOnlyv_10
 	mov esi, [ebp-0xb8]
 	test esi, esi
-	jz R_AddWorldSurfacesFrustumOnly_20
+	jz _Z29R_AddWorldSurfacesFrustumOnlyv_20
 	mov dword [ebp-0x9c], 0x0
 	mov dword [ebp-0xa8], 0x0
-	jmp R_AddWorldSurfacesFrustumOnly_30
-R_AddWorldSurfacesFrustumOnly_40:
+	jmp _Z29R_AddWorldSurfacesFrustumOnlyv_30
+_Z29R_AddWorldSurfacesFrustumOnlyv_40:
 	mov edx, eax
-R_AddWorldSurfacesFrustumOnly_80:
+_Z29R_AddWorldSurfacesFrustumOnlyv_80:
 	mov [esp], edx
 	mov ecx, edx
 	mov edx, edi
 	mov eax, ebx
-	call R_AddCellSurfacesAndCullGroupsInFrustumDelayed
-R_AddWorldSurfacesFrustumOnly_50:
+	call _Z46R_AddCellSurfacesAndCullGroupsInFrustumDelayedPK7GfxCellPK9DpvsPlaneii
+_Z29R_AddWorldSurfacesFrustumOnlyv_50:
 	add dword [ebp-0x9c], 0x1
 	add dword [ebp-0xa8], 0x38
 	mov ebx, [ebp-0x9c]
 	cmp [ebp-0xb8], ebx
-	jbe R_AddWorldSurfacesFrustumOnly_20
+	jbe _Z29R_AddWorldSurfacesFrustumOnlyv_20
 	mov ebx, rgp
-R_AddWorldSurfacesFrustumOnly_30:
+_Z29R_AddWorldSurfacesFrustumOnlyv_30:
 	mov eax, [ebx+0x20a0]
 	mov ebx, [ebp-0xa8]
 	add ebx, [eax+0x104]
@@ -6666,7 +6666,7 @@ R_AddWorldSurfacesFrustumOnly_30:
 	mov [ebp-0xb0], eax
 	lea edi, [edx+0x4]
 	test eax, eax
-	jle R_AddWorldSurfacesFrustumOnly_40
+	jle _Z29R_AddWorldSurfacesFrustumOnlyv_40
 	movzx eax, byte [edi+0x10]
 	movss xmm1, dword [edx+0x4]
 	mulss xmm1, [eax+ebx]
@@ -6681,11 +6681,11 @@ R_AddWorldSurfacesFrustumOnly_30:
 	addss xmm1, xmm0
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm1
-	jae R_AddWorldSurfacesFrustumOnly_50
+	jae _Z29R_AddWorldSurfacesFrustumOnlyv_50
 	lea ecx, [edx+0x24]
 	mov esi, 0x1
-	jmp R_AddWorldSurfacesFrustumOnly_60
-R_AddWorldSurfacesFrustumOnly_70:
+	jmp _Z29R_AddWorldSurfacesFrustumOnlyv_60
+_Z29R_AddWorldSurfacesFrustumOnlyv_70:
 	mov eax, ecx
 	add esi, 0x1
 	add ecx, 0x14
@@ -6702,13 +6702,13 @@ R_AddWorldSurfacesFrustumOnly_70:
 	mulss xmm0, [edx+ebx]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jae R_AddWorldSurfacesFrustumOnly_50
-R_AddWorldSurfacesFrustumOnly_60:
+	jae _Z29R_AddWorldSurfacesFrustumOnlyv_50
+_Z29R_AddWorldSurfacesFrustumOnlyv_60:
 	cmp esi, [ebp-0xb0]
-	jnz R_AddWorldSurfacesFrustumOnly_70
+	jnz _Z29R_AddWorldSurfacesFrustumOnlyv_70
 	mov edx, [ebp-0xb0]
-	jmp R_AddWorldSurfacesFrustumOnly_80
-R_AddWorldSurfacesFrustumOnly_10:
+	jmp _Z29R_AddWorldSurfacesFrustumOnlyv_80
+_Z29R_AddWorldSurfacesFrustumOnlyv_10:
 	mov esi, [ebp-0xb8]
 	add esi, 0x1f
 	shr esi, 0x5
@@ -6721,22 +6721,22 @@ R_AddWorldSurfacesFrustumOnly_10:
 	call memset
 	mov edi, [ebp-0xb8]
 	test edi, edi
-	jnz R_AddWorldSurfacesFrustumOnly_90
-R_AddWorldSurfacesFrustumOnly_20:
+	jnz _Z29R_AddWorldSurfacesFrustumOnlyv_90
+_Z29R_AddWorldSurfacesFrustumOnlyv_20:
 	add esp, 0xcc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddWorldSurfacesFrustumOnly_90:
+_Z29R_AddWorldSurfacesFrustumOnlyv_90:
 	mov ebx, [ebx+0x20a0]
 	mov [ebp-0xa4], ebx
 	xor edi, edi
 	mov dword [ebp-0xc0], 0x0
 	mov ebx, [ebp-0xbc]
 	mov [ebp-0xc4], ebx
-R_AddWorldSurfacesFrustumOnly_120:
+_Z29R_AddWorldSurfacesFrustumOnlyv_120:
 	mov eax, edi
 	shr eax, 0x5
 	mov ecx, edi
@@ -6744,44 +6744,44 @@ R_AddWorldSurfacesFrustumOnly_120:
 	mov edx, 0x1
 	shl edx, cl
 	test [eax*4+dpvsGlob+0xadf8], edx
-	jz R_AddWorldSurfacesFrustumOnly_100
+	jz _Z29R_AddWorldSurfacesFrustumOnlyv_100
 	mov ebx, [ebp-0xc0]
 	mov eax, [ebp-0xa4]
 	add ebx, [eax+0x220]
 	test esi, esi
-	jz R_AddWorldSurfacesFrustumOnly_100
+	jz _Z29R_AddWorldSurfacesFrustumOnlyv_100
 	xor ecx, ecx
 	lea edx, [ebp-0x98]
-R_AddWorldSurfacesFrustumOnly_110:
+_Z29R_AddWorldSurfacesFrustumOnlyv_110:
 	mov eax, [edx]
 	or eax, [ebx+ecx*4]
 	mov [edx], eax
 	add ecx, 0x1
 	add edx, 0x4
 	cmp esi, ecx
-	jnz R_AddWorldSurfacesFrustumOnly_110
-R_AddWorldSurfacesFrustumOnly_100:
+	jnz _Z29R_AddWorldSurfacesFrustumOnlyv_110
+_Z29R_AddWorldSurfacesFrustumOnlyv_100:
 	add edi, 0x1
 	mov edx, [ebp-0xc4]
 	add [ebp-0xc0], edx
 	cmp [ebp-0xb8], edi
-	ja R_AddWorldSurfacesFrustumOnly_120
+	ja _Z29R_AddWorldSurfacesFrustumOnlyv_120
 	mov dword [ebp-0xb4], 0x0
 	mov dword [ebp-0xac], 0x0
-	jmp R_AddWorldSurfacesFrustumOnly_130
-R_AddWorldSurfacesFrustumOnly_150:
+	jmp _Z29R_AddWorldSurfacesFrustumOnlyv_130
+_Z29R_AddWorldSurfacesFrustumOnlyv_150:
 	mov edx, ebx
-R_AddWorldSurfacesFrustumOnly_180:
+_Z29R_AddWorldSurfacesFrustumOnlyv_180:
 	mov [esp], ecx
 	mov eax, esi
-	call R_AddCellSurfacesAndCullGroupsInFrustumDelayed
-R_AddWorldSurfacesFrustumOnly_140:
+	call _Z46R_AddCellSurfacesAndCullGroupsInFrustumDelayedPK7GfxCellPK9DpvsPlaneii
+_Z29R_AddWorldSurfacesFrustumOnlyv_140:
 	add dword [ebp-0xb4], 0x1
 	add dword [ebp-0xac], 0x38
 	mov eax, [ebp-0xb4]
 	cmp [ebp-0xb8], eax
-	jbe R_AddWorldSurfacesFrustumOnly_20
-R_AddWorldSurfacesFrustumOnly_130:
+	jbe _Z29R_AddWorldSurfacesFrustumOnlyv_20
+_Z29R_AddWorldSurfacesFrustumOnlyv_130:
 	mov edx, [ebp-0xb4]
 	shr edx, 0x5
 	mov ecx, [ebp-0xb4]
@@ -6789,7 +6789,7 @@ R_AddWorldSurfacesFrustumOnly_130:
 	mov eax, 0x1
 	shl eax, cl
 	test [ebp+edx*4-0x98], eax
-	jz R_AddWorldSurfacesFrustumOnly_140
+	jz _Z29R_AddWorldSurfacesFrustumOnlyv_140
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov esi, [ebp-0xac]
@@ -6799,7 +6799,7 @@ R_AddWorldSurfacesFrustumOnly_130:
 	lea ebx, [edx+0x4]
 	mov [ebp-0xa0], ebx
 	test ecx, ecx
-	jle R_AddWorldSurfacesFrustumOnly_150
+	jle _Z29R_AddWorldSurfacesFrustumOnlyv_150
 	movzx eax, byte [ebx+0x10]
 	movss xmm1, dword [edx+0x4]
 	mulss xmm1, [eax+esi]
@@ -6814,11 +6814,11 @@ R_AddWorldSurfacesFrustumOnly_130:
 	addss xmm1, xmm0
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm1
-	jae R_AddWorldSurfacesFrustumOnly_140
+	jae _Z29R_AddWorldSurfacesFrustumOnlyv_140
 	lea ebx, [edx+0x24]
 	mov edi, 0x1
-	jmp R_AddWorldSurfacesFrustumOnly_160
-R_AddWorldSurfacesFrustumOnly_170:
+	jmp _Z29R_AddWorldSurfacesFrustumOnlyv_160
+_Z29R_AddWorldSurfacesFrustumOnlyv_170:
 	mov eax, ebx
 	add edi, 0x1
 	add ebx, 0x14
@@ -6835,16 +6835,16 @@ R_AddWorldSurfacesFrustumOnly_170:
 	mulss xmm0, [edx+esi]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jae R_AddWorldSurfacesFrustumOnly_140
-R_AddWorldSurfacesFrustumOnly_160:
+	jae _Z29R_AddWorldSurfacesFrustumOnlyv_140
+_Z29R_AddWorldSurfacesFrustumOnlyv_160:
 	cmp ecx, edi
-	jnz R_AddWorldSurfacesFrustumOnly_170
+	jnz _Z29R_AddWorldSurfacesFrustumOnlyv_170
 	mov edx, [ebp-0xa0]
-	jmp R_AddWorldSurfacesFrustumOnly_180
+	jmp _Z29R_AddWorldSurfacesFrustumOnlyv_180
 
 
 ;R_AddAllSceneEntSurfacesCamera(GfxViewInfo const*)
-R_AddAllSceneEntSurfacesCamera:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6872,27 +6872,27 @@ R_AddAllSceneEntSurfacesCamera:
 	mov eax, [ecx+0x12b42c]
 	mov [ebp-0x8c], eax
 	test eax, eax
-	jz R_AddAllSceneEntSurfacesCamera_10
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_10
 	xor edi, edi
 	lea esi, [ecx+0x13ac30]
 	mov dword [ebp-0xac], 0x12b400
-	jmp R_AddAllSceneEntSurfacesCamera_20
-R_AddAllSceneEntSurfacesCamera_30:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_20
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_30:
 	add edi, 0x1
 	add dword [ebp-0xac], 0x7c
 	add esi, 0x1
 	cmp [ebp-0x8c], edi
-	jbe R_AddAllSceneEntSurfacesCamera_10
-R_AddAllSceneEntSurfacesCamera_20:
+	jbe _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_10
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_20:
 	cmp byte [esi], 0x1
-	jnz R_AddAllSceneEntSurfacesCamera_30
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_30
 	mov ebx, [ebp-0xac]
 	add ebx, [ebp-0xa0]
 	lea edx, [ebx+0x30]
 	mov [ebp-0x84], edx
 	mov eax, [edx+0x74]
 	mov [esp], eax
-	call CG_GetPoseLightingHandle
+	call _Z24CG_GetPoseLightingHandlePK7cpose_t
 	lea edx, [ebp-0x1a]
 	mov [esp+0x14], edx
 	mov [esp+0x10], eax
@@ -6904,10 +6904,10 @@ R_AddAllSceneEntSurfacesCamera_20:
 	mov [esp+0x4], ecx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call R_AllocModelLighting_Box
+	call _Z24R_AllocModelLighting_BoxPK11GfxViewInfoPKfS3_S3_PtP15GfxLightingInfo
 	mov edx, eax
 	test eax, eax
-	jnz R_AddAllSceneEntSurfacesCamera_40
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_40
 	mov byte [esi], 0x0
 	mov edx, scene
 	mov [ebp-0xa0], edx
@@ -6915,27 +6915,27 @@ R_AddAllSceneEntSurfacesCamera_20:
 	add dword [ebp-0xac], 0x7c
 	add esi, 0x1
 	cmp [ebp-0x8c], edi
-	ja R_AddAllSceneEntSurfacesCamera_20
-R_AddAllSceneEntSurfacesCamera_10:
+	ja _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_20
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_10:
 	mov edx, [ebp-0xa0]
 	mov edx, [edx+0x13ba30]
 	mov [ebp-0x50], edx
 	test edx, edx
-	jz R_AddAllSceneEntSurfacesCamera_50
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_50
 	xor edi, edi
 	mov ecx, [ebp-0xa0]
 	lea ebx, [ecx+0x14da34]
 	mov dword [ebp-0xa8], 0x13ba00
-	jmp R_AddAllSceneEntSurfacesCamera_60
-R_AddAllSceneEntSurfacesCamera_70:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_60
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_70:
 	add edi, 0x1
 	add dword [ebp-0xa8], 0x48
 	add ebx, 0x1
 	cmp [ebp-0x50], edi
-	jbe R_AddAllSceneEntSurfacesCamera_50
-R_AddAllSceneEntSurfacesCamera_60:
+	jbe _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_50
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_60:
 	cmp byte [ebx], 0x1
-	jnz R_AddAllSceneEntSurfacesCamera_70
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_70
 	mov edx, [ebp-0xa8]
 	add edx, [ebp-0xa0]
 	lea esi, [edx+0x34]
@@ -6953,33 +6953,33 @@ R_AddAllSceneEntSurfacesCamera_60:
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call R_AllocModelLighting_Sphere
+	call _Z27R_AllocModelLighting_SpherePK11GfxViewInfoPKfS3_fPtP15GfxLightingInfo
 	mov ecx, eax
 	test eax, eax
-	jz R_AddAllSceneEntSurfacesCamera_80
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_80
 	movzx eax, word [esi+0x2c]
 	movzx edx, ax
 	test ax, ax
-	jz R_AddAllSceneEntSurfacesCamera_90
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_90
 	mov eax, frontEndDataOut
 	mov eax, [eax]
 	lea edx, [eax+edx*8+0x118260]
 	mov eax, sc_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_AddAllSceneEntSurfacesCamera_100
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_100
 	mov eax, [edx]
 	test ah, 0x1
-	jnz R_AddAllSceneEntSurfacesCamera_110
-R_AddAllSceneEntSurfacesCamera_470:
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_110
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_470:
 	xor edx, edx
-R_AddAllSceneEntSurfacesCamera_480:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_480:
 	test al, 0x2
 	setnz al
 	movzx eax, al
 	mov [ebp-0x7c], eax
-	jmp R_AddAllSceneEntSurfacesCamera_120
-R_AddAllSceneEntSurfacesCamera_50:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_120
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_50:
 	mov eax, [ebp-0xa0]
 	mov eax, [eax+0x154c38]
 	mov [ebp-0x4c], eax
@@ -6990,16 +6990,16 @@ R_AddAllSceneEntSurfacesCamera_50:
 	mov [ebp-0x88], eax
 	mov ebx, [ebp-0x4c]
 	test ebx, ebx
-	jz R_AddAllSceneEntSurfacesCamera_130
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_130
 	xor edi, edi
 	mov dword [ebp-0x5c], 0x0
-	jmp R_AddAllSceneEntSurfacesCamera_140
-R_AddAllSceneEntSurfacesCamera_160:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_140
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_160:
 	add edi, 0x1
 	add dword [ebp-0x5c], 0x6
 	cmp [ebp-0x4c], edi
-	jz R_AddAllSceneEntSurfacesCamera_150
-R_AddAllSceneEntSurfacesCamera_140:
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_150
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_140:
 	mov ecx, [ebp-0x9c]
 	mov eax, [ecx+0x20a0]
 	mov edx, [ebp-0x5c]
@@ -7008,14 +7008,14 @@ R_AddAllSceneEntSurfacesCamera_140:
 	movzx esi, word [edx+0x4]
 	mov ecx, [ebp-0x88]
 	cmp byte [ecx+esi], 0x1
-	jnz R_AddAllSceneEntSurfacesCamera_160
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_160
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call DynEnt_GetClientPose
+	call _Z20DynEnt_GetClientPoset17DynEntityDrawType
 	mov ebx, eax
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call DynEnt_GetClientEntity
+	call _Z22DynEnt_GetClientEntityt17DynEntityDrawType
 	add ebx, 0x10
 	mov [ebp-0x58], ebx
 	lea edx, [ebp-0x1a]
@@ -7024,10 +7024,10 @@ R_AddAllSceneEntSurfacesCamera_140:
 	mov [esp+0x8], eax
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call R_AllocModelLighting_PrimaryLight
+	call _Z33R_AllocModelLighting_PrimaryLightPKfjPtP15GfxLightingInfo
 	mov ebx, eax
 	test eax, eax
-	jnz R_AddAllSceneEntSurfacesCamera_170
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_170
 	mov edx, [ebp-0x88]
 	mov byte [edx+edi], 0x0
 	mov ecx, rgp
@@ -7035,16 +7035,16 @@ R_AddAllSceneEntSurfacesCamera_140:
 	add edi, 0x1
 	add dword [ebp-0x5c], 0x6
 	cmp [ebp-0x4c], edi
-	jnz R_AddAllSceneEntSurfacesCamera_140
-R_AddAllSceneEntSurfacesCamera_150:
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_140
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_150:
 	mov edx, scene
 	mov [ebp-0xa0], edx
 	mov ecx, edx
 	mov ecx, [ecx+0x14f634]
 	mov [ebp-0x48], ecx
 	test ecx, ecx
-	jnz R_AddAllSceneEntSurfacesCamera_180
-R_AddAllSceneEntSurfacesCamera_300:
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_180
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_300:
 	mov eax, [ebp-0xa0]
 	mov eax, [eax+0x154c3c]
 	mov [ebp-0x44], eax
@@ -7054,19 +7054,19 @@ R_AddAllSceneEntSurfacesCamera_300:
 	mov [ebp-0x54], eax
 	mov ecx, [ebp-0x44]
 	test ecx, ecx
-	jz R_AddAllSceneEntSurfacesCamera_190
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_190
 	mov dword [ebp-0x3c], 0x0
 	mov edx, [ebp-0x9c]
-	jmp R_AddAllSceneEntSurfacesCamera_200
-R_AddAllSceneEntSurfacesCamera_220:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_200
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_220:
 	add dword [ebp-0x3c], 0x1
 	mov edx, [ebp-0x3c]
 	cmp [ebp-0x44], edx
-	jz R_AddAllSceneEntSurfacesCamera_210
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_210
 	mov ecx, rgp
 	mov [ebp-0x9c], ecx
 	mov edx, ecx
-R_AddAllSceneEntSurfacesCamera_200:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_200:
 	mov eax, [edx+0x20a0]
 	mov eax, [eax+0x228]
 	mov ecx, [ebp-0x3c]
@@ -7075,17 +7075,17 @@ R_AddAllSceneEntSurfacesCamera_200:
 	movzx ebx, word [eax+0x2]
 	mov eax, [ebp-0x54]
 	cmp byte [eax+ebx], 0x1
-	jnz R_AddAllSceneEntSurfacesCamera_220
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_220
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call DynEnt_GetClientPose
+	call _Z20DynEnt_GetClientPoset17DynEntityDrawType
 	mov [ebp-0x70], eax
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call DynEnt_GetEntityDef
+	call _Z19DynEnt_GetEntityDeft17DynEntityDrawType
 	movzx eax, word [eax+0x24]
 	mov [esp], eax
-	call R_GetBrushModel
+	call _Z15R_GetBrushModelj
 	mov [ebp-0x6c], eax
 	mov edx, [ebp-0x70]
 	add edx, 0x10
@@ -7098,7 +7098,7 @@ R_AddAllSceneEntSurfacesCamera_200:
 	movzx eax, word [ecx]
 	mov edx, eax
 	sub edx, ebx
-	js R_AddAllSceneEntSurfacesCamera_230
+	js _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_230
 	mov edi, [esi+0xf4]
 	mov eax, [ebp-0x70]
 	movss xmm4, dword [eax+0x10]
@@ -7106,7 +7106,7 @@ R_AddAllSceneEntSurfacesCamera_200:
 	movss xmm3, dword [eax+0x4]
 	movss xmm2, dword [eax+0x8]
 	pxor xmm5, xmm5
-R_AddAllSceneEntSurfacesCamera_240:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_240:
 	lea eax, [edx+edx*4]
 	lea eax, [edi+eax*4]
 	movaps xmm0, xmm4
@@ -7129,11 +7129,11 @@ R_AddAllSceneEntSurfacesCamera_240:
 	movzx eax, word [edx+0x4]
 	mov edx, eax
 	sub edx, ebx
-	jns R_AddAllSceneEntSurfacesCamera_240
-R_AddAllSceneEntSurfacesCamera_230:
+	jns _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_240
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_230:
 	lea edx, [eax-0x1]
 	cmp edx, 0xffffffff
-	jz R_AddAllSceneEntSurfacesCamera_250
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_250
 	lea eax, [edx*8]
 	shl edx, 0x6
 	sub edx, eax
@@ -7142,17 +7142,17 @@ R_AddAllSceneEntSurfacesCamera_230:
 	movzx ecx, al
 	mov [ebp-0x60], ecx
 	test al, al
-	jz R_AddAllSceneEntSurfacesCamera_260
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_260
 	mov edi, [edx+0x34]
 	mov ebx, [esi+0xe8]
 	mov eax, [ebp-0x94]
 	movss xmm5, dword [eax]
 	movss xmm4, dword [eax+0x4]
 	movss xmm3, dword [eax+0x8]
-	movss xmm6, dword [_float_34028234663852885_float_3]
+	movss xmm6, dword [_float_3402823466385288598117041]
 	xor edx, edx
 	xor esi, esi
-R_AddAllSceneEntSurfacesCamera_280:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_280:
 	movzx ecx, byte [edi+edx]
 	movzx eax, cl
 	shl eax, 0x4
@@ -7169,38 +7169,38 @@ R_AddAllSceneEntSurfacesCamera_280:
 	mulss xmm1, xmm1
 	addss xmm2, xmm1
 	ucomiss xmm6, xmm2
-	jbe R_AddAllSceneEntSurfacesCamera_270
+	jbe _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_270
 	mov esi, ecx
 	movaps xmm6, xmm2
-R_AddAllSceneEntSurfacesCamera_270:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_270:
 	add edx, 0x1
 	cmp edx, [ebp-0x60]
-	jb R_AddAllSceneEntSurfacesCamera_280
+	jb _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_280
 	mov edx, esi
 	movzx eax, dl
-	jmp R_AddAllSceneEntSurfacesCamera_290
-R_AddAllSceneEntSurfacesCamera_130:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_290
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_130:
 	mov ecx, [ebp-0xa0]
 	mov ecx, [ecx+0x14f634]
 	mov [ebp-0x48], ecx
 	test ecx, ecx
-	jz R_AddAllSceneEntSurfacesCamera_300
-R_AddAllSceneEntSurfacesCamera_180:
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_300
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_180:
 	mov dword [ebp-0x40], 0x0
 	mov dword [ebp-0xa4], 0x14f600
 	mov edx, [ebp-0x40]
-	jmp R_AddAllSceneEntSurfacesCamera_310
-R_AddAllSceneEntSurfacesCamera_320:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_310
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_320:
 	add dword [ebp-0x40], 0x1
 	add dword [ebp-0xa4], 0x28
 	mov ecx, [ebp-0x40]
 	cmp [ebp-0x48], ecx
-	jbe R_AddAllSceneEntSurfacesCamera_300
+	jbe _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_300
 	mov edx, ecx
-R_AddAllSceneEntSurfacesCamera_310:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_310:
 	mov eax, [ebp-0xa0]
 	cmp byte [eax+edx+0x154638], 0x1
-	jnz R_AddAllSceneEntSurfacesCamera_320
+	jnz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_320
 	mov esi, [ebp-0xa4]
 	add esi, eax
 	lea ecx, [esi+0x38]
@@ -7215,7 +7215,7 @@ R_AddAllSceneEntSurfacesCamera_310:
 	movzx eax, word [ecx]
 	mov edx, eax
 	sub edx, ebx
-	js R_AddAllSceneEntSurfacesCamera_330
+	js _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_330
 	mov eax, [edi+0xf4]
 	mov [ebp-0x68], eax
 	movss xmm4, dword [esi+0x50]
@@ -7223,7 +7223,7 @@ R_AddAllSceneEntSurfacesCamera_310:
 	movss xmm3, dword [eax+0x4]
 	movss xmm2, dword [eax+0x8]
 	pxor xmm5, xmm5
-R_AddAllSceneEntSurfacesCamera_340:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_340:
 	lea eax, [edx+edx*4]
 	mov edx, [ebp-0x68]
 	lea eax, [edx+eax*4]
@@ -7247,11 +7247,11 @@ R_AddAllSceneEntSurfacesCamera_340:
 	movzx eax, word [edx+0x4]
 	mov edx, eax
 	sub edx, ebx
-	jns R_AddAllSceneEntSurfacesCamera_340
-R_AddAllSceneEntSurfacesCamera_330:
+	jns _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_340
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_330:
 	lea edx, [eax-0x1]
 	cmp edx, 0xffffffff
-	jz R_AddAllSceneEntSurfacesCamera_350
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_350
 	lea eax, [edx*8]
 	shl edx, 0x6
 	sub edx, eax
@@ -7260,17 +7260,17 @@ R_AddAllSceneEntSurfacesCamera_330:
 	movzx ecx, al
 	mov [ebp-0x64], ecx
 	test al, al
-	jz R_AddAllSceneEntSurfacesCamera_360
+	jz _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_360
 	mov esi, [edx+0x34]
 	mov ebx, [edi+0xe8]
 	mov eax, [ebp-0x90]
 	movss xmm5, dword [eax]
 	movss xmm4, dword [eax+0x4]
 	movss xmm3, dword [eax+0x8]
-	movss xmm6, dword [_float_34028234663852885_float_3]
+	movss xmm6, dword [_float_3402823466385288598117041]
 	xor edx, edx
 	xor edi, edi
-R_AddAllSceneEntSurfacesCamera_380:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_380:
 	movzx ecx, byte [edx+esi]
 	movzx eax, cl
 	shl eax, 0x4
@@ -7287,23 +7287,23 @@ R_AddAllSceneEntSurfacesCamera_380:
 	mulss xmm1, xmm1
 	addss xmm2, xmm1
 	ucomiss xmm6, xmm2
-	jbe R_AddAllSceneEntSurfacesCamera_370
+	jbe _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_370
 	mov edi, ecx
 	movaps xmm6, xmm2
-R_AddAllSceneEntSurfacesCamera_370:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_370:
 	add edx, 0x1
 	cmp edx, [ebp-0x64]
-	jb R_AddAllSceneEntSurfacesCamera_380
+	jb _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_380
 	mov edx, edi
 	movzx eax, dl
-	jmp R_AddAllSceneEntSurfacesCamera_390
-R_AddAllSceneEntSurfacesCamera_350:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_390
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_350:
 	mov ecx, [edi+0xe4]
 	cmp ecx, 0x1
-	ja R_AddAllSceneEntSurfacesCamera_400
-R_AddAllSceneEntSurfacesCamera_360:
+	ja _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_400
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_360:
 	xor eax, eax
-R_AddAllSceneEntSurfacesCamera_390:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_390:
 	mov ecx, [ebp-0x80]
 	mov [ecx+0x24], al
 	mov [esp+0x10], eax
@@ -7314,29 +7314,29 @@ R_AddAllSceneEntSurfacesCamera_390:
 	mov eax, [ecx+0x4]
 	mov [esp+0x4], eax
 	mov [esp], ecx
-	call R_AddBModelSurfacesCamera
+	call _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j
 	mov eax, scene
 	mov [ebp-0xa0], eax
 	mov edx, rgp
 	mov [ebp-0x9c], edx
-	jmp R_AddAllSceneEntSurfacesCamera_320
-R_AddAllSceneEntSurfacesCamera_210:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_320
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_210:
 	mov ecx, scene
 	mov [ebp-0xa0], ecx
 	mov eax, ecx
-R_AddAllSceneEntSurfacesCamera_420:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_420:
 	mov ebx, [ebp-0x28]
 	sub ebx, [eax+0xe4198]
 	sar ebx, 0x3
 	mov [eax+0xe4110], ebx
 	mov dword [esp+0x4], _cstring_sort_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov [esp+0x4], ebx
 	mov edx, [ebp-0xa0]
 	mov eax, [edx+0xe4198]
 	mov [esp], eax
-	call R_SortDrawSurfs
+	call _Z15R_SortDrawSurfsP11GfxDrawSurfi
 	mov ebx, [ebp-0x24]
 	mov ecx, [ebp-0xa0]
 	sub ebx, [ecx+0xe41a4]
@@ -7344,12 +7344,12 @@ R_AddAllSceneEntSurfacesCamera_420:
 	mov [ecx+0xe411c], ebx
 	mov dword [esp+0x4], _cstring_sort_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov [esp+0x4], ebx
 	mov edx, [ebp-0xa0]
 	mov eax, [edx+0xe41a4]
 	mov [esp], eax
-	call R_SortDrawSurfs
+	call _Z15R_SortDrawSurfsP11GfxDrawSurfi
 	mov ebx, [ebp-0x20]
 	mov ecx, [ebp-0xa0]
 	sub ebx, [ecx+0xe41bc]
@@ -7357,30 +7357,30 @@ R_AddAllSceneEntSurfacesCamera_420:
 	mov [ecx+0xe4134], ebx
 	mov dword [esp+0x4], _cstring_sort_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov [esp+0x4], ebx
 	mov edx, [ebp-0xa0]
 	mov eax, [edx+0xe41bc]
 	mov [esp], eax
-	call R_SortDrawSurfs
+	call _Z15R_SortDrawSurfsP11GfxDrawSurfi
 	add esp, 0xec
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddAllSceneEntSurfacesCamera_80:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_80:
 	mov byte [ebx], 0x0
 	mov edx, scene
 	mov [ebp-0xa0], edx
-	jmp R_AddAllSceneEntSurfacesCamera_70
-R_AddAllSceneEntSurfacesCamera_250:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_70
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_250:
 	mov ecx, [esi+0xe4]
 	cmp ecx, 0x1
-	ja R_AddAllSceneEntSurfacesCamera_410
-R_AddAllSceneEntSurfacesCamera_260:
+	ja _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_410
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_260:
 	xor eax, eax
-R_AddAllSceneEntSurfacesCamera_290:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_290:
 	mov [esp+0x10], eax
 	lea eax, [ebp-0x34]
 	mov [esp+0xc], eax
@@ -7390,12 +7390,12 @@ R_AddAllSceneEntSurfacesCamera_290:
 	mov [esp+0x4], ecx
 	mov eax, [ebp-0x74]
 	mov [esp], eax
-	call R_AddBModelSurfacesCamera
-	jmp R_AddAllSceneEntSurfacesCamera_220
-R_AddAllSceneEntSurfacesCamera_170:
+	call _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_220
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_170:
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call DynEnt_GetEntityDef
+	call _Z19DynEnt_GetEntityDeft17DynEntityDrawType
 	movzx edx, byte [ebp-0x19]
 	mov [esp+0x28], edx
 	lea edx, [ebp-0x34]
@@ -7414,11 +7414,11 @@ R_AddAllSceneEntSurfacesCamera_170:
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x78]
 	mov [esp], ecx
-	call R_AddXModelSurfacesCamera
+	call _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j
 	mov eax, rgp
 	mov [ebp-0x9c], eax
-	jmp R_AddAllSceneEntSurfacesCamera_160
-R_AddAllSceneEntSurfacesCamera_40:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_160
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_40:
 	movzx eax, byte [ebp-0x19]
 	mov ecx, [ebp-0x84]
 	mov [ecx+0x78], al
@@ -7430,24 +7430,24 @@ R_AddAllSceneEntSurfacesCamera_40:
 	mov [esp+0x8], eax
 	mov [esp+0x4], edx
 	mov [esp], ecx
-	call R_AddDObjSurfacesCamera
+	call _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3_
 	mov eax, scene
 	mov [ebp-0xa0], eax
-	jmp R_AddAllSceneEntSurfacesCamera_30
-R_AddAllSceneEntSurfacesCamera_190:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_30
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_190:
 	mov eax, [ebp-0xa0]
-	jmp R_AddAllSceneEntSurfacesCamera_420
-R_AddAllSceneEntSurfacesCamera_400:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_420
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_400:
 	mov ebx, [edi+0xe8]
 	mov eax, [ebp-0x90]
 	movss xmm5, dword [eax]
 	movss xmm4, dword [eax+0x4]
 	movss xmm3, dword [eax+0x8]
-	movss xmm6, dword [_float_34028234663852885_float_3]
+	movss xmm6, dword [_float_3402823466385288598117041]
 	mov edx, 0x1
 	xor esi, esi
 	mov eax, 0x1
-R_AddAllSceneEntSurfacesCamera_440:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_440:
 	shl eax, 0x4
 	lea eax, [ebx+eax]
 	movaps xmm2, xmm5
@@ -7462,21 +7462,21 @@ R_AddAllSceneEntSurfacesCamera_440:
 	mulss xmm1, xmm1
 	addss xmm2, xmm1
 	ucomiss xmm6, xmm2
-	jbe R_AddAllSceneEntSurfacesCamera_430
+	jbe _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_430
 	mov esi, edx
 	movaps xmm6, xmm2
-R_AddAllSceneEntSurfacesCamera_430:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_430:
 	add dl, 0x1
 	movzx eax, dl
 	cmp eax, ecx
-	jb R_AddAllSceneEntSurfacesCamera_440
+	jb _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_440
 	mov edx, esi
 	movzx eax, dl
-	jmp R_AddAllSceneEntSurfacesCamera_390
-R_AddAllSceneEntSurfacesCamera_90:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_390
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_90:
 	xor edx, edx
 	mov dword [ebp-0x7c], 0x0
-R_AddAllSceneEntSurfacesCamera_120:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_120:
 	movzx eax, byte [ebp-0x19]
 	mov [esi+0x44], al
 	movzx eax, byte [ebp-0x19]
@@ -7498,21 +7498,21 @@ R_AddAllSceneEntSurfacesCamera_120:
 	mov eax, [esi+0x4]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_AddXModelSurfacesCamera
+	call _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j
 	mov ecx, scene
 	mov [ebp-0xa0], ecx
-	jmp R_AddAllSceneEntSurfacesCamera_70
-R_AddAllSceneEntSurfacesCamera_410:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_70
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_410:
 	mov ebx, [esi+0xe8]
 	mov edx, [ebp-0x94]
 	movss xmm5, dword [edx]
 	movss xmm4, dword [edx+0x4]
 	movss xmm3, dword [edx+0x8]
-	movss xmm6, dword [_float_34028234663852885_float_3]
+	movss xmm6, dword [_float_3402823466385288598117041]
 	mov edx, 0x1
 	mov eax, 0x1
 	xor esi, esi
-R_AddAllSceneEntSurfacesCamera_460:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_460:
 	shl eax, 0x4
 	lea eax, [ebx+eax]
 	movaps xmm2, xmm5
@@ -7527,27 +7527,27 @@ R_AddAllSceneEntSurfacesCamera_460:
 	mulss xmm1, xmm1
 	addss xmm2, xmm1
 	ucomiss xmm6, xmm2
-	jbe R_AddAllSceneEntSurfacesCamera_450
+	jbe _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_450
 	mov esi, edx
 	movaps xmm6, xmm2
-R_AddAllSceneEntSurfacesCamera_450:
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_450:
 	add dl, 0x1
 	movzx eax, dl
 	cmp eax, ecx
-	jb R_AddAllSceneEntSurfacesCamera_460
+	jb _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_460
 	mov ecx, esi
 	movzx eax, cl
-	jmp R_AddAllSceneEntSurfacesCamera_290
-R_AddAllSceneEntSurfacesCamera_100:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_290
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_100:
 	mov eax, [edx]
-	jmp R_AddAllSceneEntSurfacesCamera_470
-R_AddAllSceneEntSurfacesCamera_110:
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_470
+_Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_110:
 	mov edx, 0x1
-	jmp R_AddAllSceneEntSurfacesCamera_480
+	jmp _Z30R_AddAllSceneEntSurfacesCameraPK11GfxViewInfo_480
 
 
 ;R_GenerateShadowMapCasterCells()
-R_GenerateShadowMapCasterCells:
+_Z30R_GenerateShadowMapCasterCellsv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -7570,7 +7570,7 @@ R_GenerateShadowMapCasterCells:
 	mov ecx, [ebx+0x20a0]
 	mov esi, [ecx+0xd8]
 	test esi, esi
-	jz R_GenerateShadowMapCasterCells_10
+	jz _Z30R_GenerateShadowMapCasterCellsv_10
 	mov eax, [ecx+0xc8]
 	lea edx, [eax+0x10]
 	movss xmm1, dword [_data16_80000000]
@@ -7591,19 +7591,19 @@ R_GenerateShadowMapCasterCells:
 	mov eax, ecx
 	mov ebx, [ecx+0xf0]
 	test ebx, ebx
-	jg R_GenerateShadowMapCasterCells_20
-R_GenerateShadowMapCasterCells_10:
+	jg _Z30R_GenerateShadowMapCasterCellsv_20
+_Z30R_GenerateShadowMapCasterCellsv_10:
 	add esp, 0x138c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_GenerateShadowMapCasterCells_20:
+_Z30R_GenerateShadowMapCasterCellsv_20:
 	mov dword [ebp-0x134c], 0x0
 	mov dword [ebp-0x132c], 0x0
 	mov dword [ebp-0x1354], 0x0
-R_GenerateShadowMapCasterCells_100:
+_Z30R_GenerateShadowMapCasterCellsv_100:
 	mov esi, [ebp-0x132c]
 	add esi, [eax+0x104]
 	mov eax, [eax+0x220]
@@ -7618,13 +7618,13 @@ R_GenerateShadowMapCasterCells_100:
 	mov ecx, eax
 	xor ebx, ebx
 	mov edx, eax
-R_GenerateShadowMapCasterCells_30:
+_Z30R_GenerateShadowMapCasterCellsv_30:
 	add ebx, 0x1
 	add edx, 0x200
 	mov [ecx], edx
 	add ecx, 0x200
 	cmp ebx, 0xff
-	jnz R_GenerateShadowMapCasterCells_30
+	jnz _Z30R_GenerateShadowMapCasterCellsv_30
 	mov dword [eax+0x1fe00], 0x0
 	mov [dpvsGlob+0x54], eax
 	lea ecx, [ebp-0x1320]
@@ -7637,12 +7637,12 @@ R_GenerateShadowMapCasterCells_30:
 	xor ecx, ecx
 	xor edx, edx
 	mov eax, esi
-	call R_VisitPortalsForCellNoFrustum
-R_GenerateShadowMapCasterCells_60:
+	call _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij
+_Z30R_GenerateShadowMapCasterCellsv_60:
 	mov eax, [dpvsGlob+0x4c]
 	test eax, eax
-	jz R_GenerateShadowMapCasterCells_40
-R_GenerateShadowMapCasterCells_90:
+	jz _Z30R_GenerateShadowMapCasterCellsv_40
+_Z30R_GenerateShadowMapCasterCellsv_90:
 	mov eax, [dpvsGlob+0x50]
 	mov edi, [eax]
 	mov byte [edi], 0x0
@@ -7650,12 +7650,12 @@ R_GenerateShadowMapCasterCells_90:
 	sub eax, 0x1
 	mov [dpvsGlob+0x4c], eax
 	test eax, eax
-	jg R_GenerateShadowMapCasterCells_50
+	jg _Z30R_GenerateShadowMapCasterCellsv_50
 	lea edx, [eax*8]
 	mov dword [ebp-0x137c], 0x0
 	mov ecx, [dpvsGlob+0x50]
 	mov ebx, [ebp-0x137c]
-R_GenerateShadowMapCasterCells_170:
+_Z30R_GenerateShadowMapCasterCellsv_170:
 	mov eax, [ecx+edx]
 	mov edx, [ecx+edx+0x4]
 	mov [ecx+ebx], eax
@@ -7666,7 +7666,7 @@ R_GenerateShadowMapCasterCells_170:
 	mov [esp+0x4], eax
 	mov eax, [edi+0x4]
 	mov [esp], eax
-	call Com_ConvexHull
+	call _Z14Com_ConvexHullPA2_fjS0_
 	mov [ebp-0x133c], eax
 	mov edx, [edi+0x4]
 	mov eax, [dpvsGlob+0x54]
@@ -7675,7 +7675,7 @@ R_GenerateShadowMapCasterCells_170:
 	mov dword [edi+0x4], 0x0
 	mov ecx, [ebp-0x133c]
 	test ecx, ecx
-	jz R_GenerateShadowMapCasterCells_60
+	jz _Z30R_GenerateShadowMapCasterCellsv_60
 	movss xmm0, dword [edi+0x18]
 	xorps xmm0, [_data16_80000000]
 	lea esi, [edi+0xc]
@@ -7691,7 +7691,7 @@ R_GenerateShadowMapCasterCells_170:
 	lea ebx, [edi+0x38]
 	xor edx, edx
 	lea eax, [ebp-0x520]
-R_GenerateShadowMapCasterCells_70:
+_Z30R_GenerateShadowMapCasterCellsv_70:
 	movss xmm1, dword [edx+ebp-0x220]
 	movaps xmm0, xmm1
 	mulss xmm0, [edi+0x2c]
@@ -7720,15 +7720,15 @@ R_GenerateShadowMapCasterCells_70:
 	add eax, 0xc
 	add edx, 0x8
 	cmp [ebp-0x133c], ecx
-	jnz R_GenerateShadowMapCasterCells_70
+	jnz _Z30R_GenerateShadowMapCasterCellsv_70
 	lea ecx, [ebp-0xb20]
 	mov edx, [ebp-0x133c]
 	lea eax, [ebp-0x520]
-	call R_GetSidePlaneNormals
+	call _Z21R_GetSidePlaneNormalsPA3_KfjPA3_f
 	cmp dword [ebp-0x133c], 0xa
-	jbe R_GenerateShadowMapCasterCells_80
+	jbe _Z30R_GenerateShadowMapCasterCellsv_80
 	xor ecx, ecx
-R_GenerateShadowMapCasterCells_210:
+_Z30R_GenerateShadowMapCasterCellsv_210:
 	mov eax, [edi+0x20]
 	movzx edx, byte [edi+0x2]
 	add edx, 0x1
@@ -7738,11 +7738,11 @@ R_GenerateShadowMapCasterCells_210:
 	mov dword [esp], dpvsGlob+0x5c
 	mov ecx, [ebp-0x1350]
 	mov edx, edi
-	call R_VisitPortalsForCellNoFrustum
+	call _Z30R_VisitPortalsForCellNoFrustumPK7GfxCellP9GfxPortalPK9DpvsPlaneS6_iij
 	mov eax, [dpvsGlob+0x4c]
 	test eax, eax
-	jnz R_GenerateShadowMapCasterCells_90
-R_GenerateShadowMapCasterCells_40:
+	jnz _Z30R_GenerateShadowMapCasterCellsv_90
+_Z30R_GenerateShadowMapCasterCellsv_40:
 	lea edx, [ebp-0x20]
 	mov [esp], edx
 	call _ZN10LargeLocalD1Ev
@@ -7756,31 +7756,31 @@ R_GenerateShadowMapCasterCells_40:
 	add dword [ebp-0x132c], 0x38
 	mov esi, [ebp-0x134c]
 	cmp esi, [eax+0xf0]
-	jl R_GenerateShadowMapCasterCells_100
+	jl _Z30R_GenerateShadowMapCasterCellsv_100
 	add esp, 0x138c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_GenerateShadowMapCasterCells_50:
+_Z30R_GenerateShadowMapCasterCellsv_50:
 	mov dword [ebp-0x1340], 0x0
 	mov ebx, 0x1
 	mov dword [ebp-0x1344], 0x0
-	jmp R_GenerateShadowMapCasterCells_110
-R_GenerateShadowMapCasterCells_140:
+	jmp _Z30R_GenerateShadowMapCasterCellsv_110
+_Z30R_GenerateShadowMapCasterCellsv_140:
 	lea esi, [ebx*8]
 	mov [ebp-0x137c], esi
 	mov ecx, [dpvsGlob+0x50]
-R_GenerateShadowMapCasterCells_150:
+_Z30R_GenerateShadowMapCasterCellsv_150:
 	lea edx, [eax*8]
 	mov eax, [ebp-0x137c]
 	add eax, ecx
 	mov [ebp-0x1380], eax
 	movss xmm0, dword [eax+0x4]
 	ucomiss xmm0, [ecx+edx+0x4]
-	jae R_GenerateShadowMapCasterCells_120
-R_GenerateShadowMapCasterCells_160:
+	jae _Z30R_GenerateShadowMapCasterCellsv_120
+_Z30R_GenerateShadowMapCasterCellsv_160:
 	mov edx, eax
 	mov eax, [eax]
 	mov edx, [edx+0x4]
@@ -7793,18 +7793,18 @@ R_GenerateShadowMapCasterCells_160:
 	add edx, 0x1
 	mov eax, [dpvsGlob+0x4c]
 	cmp eax, edx
-	jl R_GenerateShadowMapCasterCells_130
+	jl _Z30R_GenerateShadowMapCasterCellsv_130
 	mov [ebp-0x1344], ebx
 	mov ebx, edx
-R_GenerateShadowMapCasterCells_110:
+_Z30R_GenerateShadowMapCasterCellsv_110:
 	cmp ebx, eax
-	jge R_GenerateShadowMapCasterCells_140
+	jge _Z30R_GenerateShadowMapCasterCellsv_140
 	mov ecx, [dpvsGlob+0x50]
 	lea edx, [ebx*8]
 	mov [ebp-0x137c], edx
 	movss xmm0, dword [ecx+edx+0x4]
 	ucomiss xmm0, [ecx+edx+0xc]
-	jbe R_GenerateShadowMapCasterCells_150
+	jbe _Z30R_GenerateShadowMapCasterCellsv_150
 	mov ebx, [ebp-0x1340]
 	add ebx, 0x2
 	lea esi, [ebx*8]
@@ -7815,18 +7815,18 @@ R_GenerateShadowMapCasterCells_110:
 	mov [ebp-0x1380], eax
 	movss xmm0, dword [eax+0x4]
 	ucomiss xmm0, [ecx+edx+0x4]
-	jb R_GenerateShadowMapCasterCells_160
-R_GenerateShadowMapCasterCells_120:
+	jb _Z30R_GenerateShadowMapCasterCellsv_160
+_Z30R_GenerateShadowMapCasterCellsv_120:
 	mov ebx, [ebp-0x1344]
 	shl ebx, 0x3
 	mov [ebp-0x137c], ebx
-	jmp R_GenerateShadowMapCasterCells_170
-R_GenerateShadowMapCasterCells_130:
+	jmp _Z30R_GenerateShadowMapCasterCellsv_170
+_Z30R_GenerateShadowMapCasterCellsv_130:
 	lea edx, [eax*8]
 	mov ecx, [dpvsGlob+0x50]
 	mov ebx, [ebp-0x137c]
-	jmp R_GenerateShadowMapCasterCells_170
-R_GenerateShadowMapCasterCells_80:
+	jmp _Z30R_GenerateShadowMapCasterCellsv_170
+_Z30R_GenerateShadowMapCasterCellsv_80:
 	mov dword [ebp-0x1334], 0x0
 	mov dword [ebp-0x1338], 0x0
 	lea eax, [ebp-0x520]
@@ -7835,7 +7835,7 @@ R_GenerateShadowMapCasterCells_80:
 	movss xmm6, dword [_float_0_00100000]
 	lea ebx, [ebp-0xb20]
 	xor esi, esi
-R_GenerateShadowMapCasterCells_200:
+_Z30R_GenerateShadowMapCasterCellsv_200:
 	movss xmm4, dword [ebx]
 	movss xmm2, dword [ebx+0x4]
 	movss xmm3, dword [ebx+0x8]
@@ -7848,9 +7848,9 @@ R_GenerateShadowMapCasterCells_200:
 	mulss xmm1, xmm3
 	addss xmm0, xmm1
 	ucomiss xmm0, xmm5
-	jp R_GenerateShadowMapCasterCells_180
-	jz R_GenerateShadowMapCasterCells_190
-R_GenerateShadowMapCasterCells_180:
+	jp _Z30R_GenerateShadowMapCasterCellsv_180
+	jz _Z30R_GenerateShadowMapCasterCellsv_190
+_Z30R_GenerateShadowMapCasterCellsv_180:
 	lea ecx, [esi+dpvsGlob+0x5c]
 	movss [esi+dpvsGlob+0x5c], xmm4
 	movss [esi+dpvsGlob+0x60], xmm2
@@ -7886,15 +7886,15 @@ R_GenerateShadowMapCasterCells_180:
 	mov [ecx+0x12], al
 	add dword [ebp-0x1334], 0x1
 	add esi, 0x14
-R_GenerateShadowMapCasterCells_190:
+_Z30R_GenerateShadowMapCasterCellsv_190:
 	add dword [ebp-0x1338], 0x1
 	add ebx, 0xc
 	add dword [ebp-0x1330], 0xc
 	mov eax, [ebp-0x1338]
 	cmp [ebp-0x133c], eax
-	jnz R_GenerateShadowMapCasterCells_200
+	jnz _Z30R_GenerateShadowMapCasterCellsv_200
 	mov ecx, [ebp-0x1334]
-	jmp R_GenerateShadowMapCasterCells_210
+	jmp _Z30R_GenerateShadowMapCasterCellsv_210
 	mov ebx, eax
 	lea eax, [ebp-0x20]
 	mov [esp], eax
@@ -7904,7 +7904,7 @@ R_GenerateShadowMapCasterCells_190:
 
 
 ;R_AddAllSceneEntSurfacesSunShadow()
-R_AddAllSceneEntSurfacesSunShadow:
+_Z33R_AddAllSceneEntSurfacesSunShadowv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -7918,7 +7918,7 @@ R_AddAllSceneEntSurfacesSunShadow:
 	mov dword [ebp-0x34], 0x11
 	mov ecx, eax
 	mov ebx, eax
-R_AddAllSceneEntSurfacesSunShadow_220:
+_Z33R_AddAllSceneEntSurfacesSunShadowv_220:
 	add ecx, 0xe41d4
 	mov [ebp-0x30], ecx
 	mov ebx, [ebx+0xe41d4]
@@ -7937,19 +7937,19 @@ R_AddAllSceneEntSurfacesSunShadow_220:
 	lea eax, [eax+edx+0x13ac30]
 	mov [ebp-0x48], eax
 	test edi, edi
-	jz R_AddAllSceneEntSurfacesSunShadow_10
+	jz _Z33R_AddAllSceneEntSurfacesSunShadowv_10
 	xor ebx, ebx
 	mov esi, 0x12b400
-	jmp R_AddAllSceneEntSurfacesSunShadow_20
-R_AddAllSceneEntSurfacesSunShadow_30:
+	jmp _Z33R_AddAllSceneEntSurfacesSunShadowv_20
+_Z33R_AddAllSceneEntSurfacesSunShadowv_30:
 	add ebx, 0x1
 	add esi, 0x7c
 	cmp edi, ebx
-	jbe R_AddAllSceneEntSurfacesSunShadow_10
-R_AddAllSceneEntSurfacesSunShadow_20:
+	jbe _Z33R_AddAllSceneEntSurfacesSunShadowv_10
+_Z33R_AddAllSceneEntSurfacesSunShadowv_20:
 	mov eax, [ebp-0x48]
 	cmp byte [eax+ebx], 0x1
-	jnz R_AddAllSceneEntSurfacesSunShadow_30
+	jnz _Z33R_AddAllSceneEntSurfacesSunShadowv_30
 	mov ecx, [ebp-0x40]
 	mov [esp+0xc], ecx
 	mov eax, [ebp-0x44]
@@ -7958,33 +7958,33 @@ R_AddAllSceneEntSurfacesSunShadow_20:
 	mov [esp+0x4], ecx
 	lea eax, [esi+edx+0x30]
 	mov [esp], eax
-	call R_AddDObjSurfaces
+	call _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3_
 	mov [ebp-0x44], eax
 	mov edx, scene
 	add ebx, 0x1
 	add esi, 0x7c
 	cmp edi, ebx
-	ja R_AddAllSceneEntSurfacesSunShadow_20
-R_AddAllSceneEntSurfacesSunShadow_10:
+	ja _Z33R_AddAllSceneEntSurfacesSunShadowv_20
+_Z33R_AddAllSceneEntSurfacesSunShadowv_10:
 	mov edi, [edx+0x13ba30]
 	mov eax, [ebp-0x4c]
 	shl eax, 0xa
 	lea eax, [eax+edx+0x14da34]
 	mov [ebp-0x2c], eax
 	test edi, edi
-	jz R_AddAllSceneEntSurfacesSunShadow_40
+	jz _Z33R_AddAllSceneEntSurfacesSunShadowv_40
 	xor ebx, ebx
 	mov esi, 0x13ba00
-	jmp R_AddAllSceneEntSurfacesSunShadow_50
-R_AddAllSceneEntSurfacesSunShadow_60:
+	jmp _Z33R_AddAllSceneEntSurfacesSunShadowv_50
+_Z33R_AddAllSceneEntSurfacesSunShadowv_60:
 	add ebx, 0x1
 	add esi, 0x48
 	cmp edi, ebx
-	jbe R_AddAllSceneEntSurfacesSunShadow_40
-R_AddAllSceneEntSurfacesSunShadow_50:
+	jbe _Z33R_AddAllSceneEntSurfacesSunShadowv_40
+_Z33R_AddAllSceneEntSurfacesSunShadowv_50:
 	mov eax, [ebp-0x2c]
 	cmp byte [eax+ebx], 0x1
-	jnz R_AddAllSceneEntSurfacesSunShadow_60
+	jnz _Z33R_AddAllSceneEntSurfacesSunShadowv_60
 	lea edx, [esi+edx+0x34]
 	mov ecx, [ebp-0x40]
 	mov [esp+0x10], ecx
@@ -7995,14 +7995,14 @@ R_AddAllSceneEntSurfacesSunShadow_50:
 	mov eax, [edx+0x4]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call R_AddXModelSurfaces
+	call _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
 	mov [ebp-0x44], eax
 	mov edx, scene
 	add ebx, 0x1
 	add esi, 0x48
 	cmp edi, ebx
-	ja R_AddAllSceneEntSurfacesSunShadow_50
-R_AddAllSceneEntSurfacesSunShadow_40:
+	ja _Z33R_AddAllSceneEntSurfacesSunShadowv_50
+_Z33R_AddAllSceneEntSurfacesSunShadowv_40:
 	mov ebx, [edx+0x154c38]
 	mov [ebp-0x1c], ebx
 	mov ecx, rgp
@@ -8012,28 +8012,28 @@ R_AddAllSceneEntSurfacesSunShadow_40:
 	mov [ebp-0x28], eax
 	mov eax, [ebp-0x1c]
 	test eax, eax
-	jz R_AddAllSceneEntSurfacesSunShadow_70
+	jz _Z33R_AddAllSceneEntSurfacesSunShadowv_70
 	xor edi, edi
 	xor esi, esi
-	jmp R_AddAllSceneEntSurfacesSunShadow_80
-R_AddAllSceneEntSurfacesSunShadow_100:
+	jmp _Z33R_AddAllSceneEntSurfacesSunShadowv_80
+_Z33R_AddAllSceneEntSurfacesSunShadowv_100:
 	add edi, 0x1
 	add esi, 0x6
 	cmp [ebp-0x1c], edi
-	jz R_AddAllSceneEntSurfacesSunShadow_90
-R_AddAllSceneEntSurfacesSunShadow_110:
+	jz _Z33R_AddAllSceneEntSurfacesSunShadowv_90
+_Z33R_AddAllSceneEntSurfacesSunShadowv_110:
 	mov ecx, rgp
-R_AddAllSceneEntSurfacesSunShadow_80:
+_Z33R_AddAllSceneEntSurfacesSunShadowv_80:
 	mov eax, [ecx+0x20a0]
 	mov ebx, esi
 	add ebx, [eax+0x224]
 	movzx eax, word [ebx+0x4]
 	mov edx, [ebp-0x28]
 	cmp byte [edx+eax], 0x1
-	jnz R_AddAllSceneEntSurfacesSunShadow_100
+	jnz _Z33R_AddAllSceneEntSurfacesSunShadowv_100
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call DynEnt_GetEntityDef
+	call _Z19DynEnt_GetEntityDeft17DynEntityDrawType
 	mov ecx, [ebp-0x40]
 	mov [esp+0x10], ecx
 	mov edx, [ebp-0x44]
@@ -8043,13 +8043,13 @@ R_AddAllSceneEntSurfacesSunShadow_80:
 	mov eax, [eax+0x20]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_AddXModelSurfaces
+	call _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
 	mov [ebp-0x44], eax
 	add edi, 0x1
 	add esi, 0x6
 	cmp [ebp-0x1c], edi
-	jnz R_AddAllSceneEntSurfacesSunShadow_110
-R_AddAllSceneEntSurfacesSunShadow_90:
+	jnz _Z33R_AddAllSceneEntSurfacesSunShadowv_110
+_Z33R_AddAllSceneEntSurfacesSunShadowv_90:
 	mov edx, scene
 	mov eax, [ebp-0x4c]
 	mov edi, [edx+0x14f634]
@@ -8057,8 +8057,8 @@ R_AddAllSceneEntSurfacesSunShadow_90:
 	lea eax, [eax+edx+0x154638]
 	mov [ebp-0x24], eax
 	test edi, edi
-	jnz R_AddAllSceneEntSurfacesSunShadow_120
-R_AddAllSceneEntSurfacesSunShadow_190:
+	jnz _Z33R_AddAllSceneEntSurfacesSunShadowv_120
+_Z33R_AddAllSceneEntSurfacesSunShadowv_190:
 	mov edi, [edx+0x154c3c]
 	mov ecx, rgp
 	mov eax, [ecx+0x20a0]
@@ -8066,29 +8066,29 @@ R_AddAllSceneEntSurfacesSunShadow_190:
 	mov eax, [eax+ebx*4+0x2d0]
 	mov [ebp-0x20], eax
 	test edi, edi
-	jz R_AddAllSceneEntSurfacesSunShadow_130
+	jz _Z33R_AddAllSceneEntSurfacesSunShadowv_130
 	xor ebx, ebx
-	jmp R_AddAllSceneEntSurfacesSunShadow_140
-R_AddAllSceneEntSurfacesSunShadow_160:
+	jmp _Z33R_AddAllSceneEntSurfacesSunShadowv_140
+_Z33R_AddAllSceneEntSurfacesSunShadowv_160:
 	add ebx, 0x1
 	cmp edi, ebx
-	jz R_AddAllSceneEntSurfacesSunShadow_150
-R_AddAllSceneEntSurfacesSunShadow_170:
+	jz _Z33R_AddAllSceneEntSurfacesSunShadowv_150
+_Z33R_AddAllSceneEntSurfacesSunShadowv_170:
 	mov ecx, rgp
-R_AddAllSceneEntSurfacesSunShadow_140:
+_Z33R_AddAllSceneEntSurfacesSunShadowv_140:
 	mov eax, [ecx+0x20a0]
 	mov eax, [eax+0x228]
 	lea esi, [eax+ebx*4]
 	movzx eax, word [esi+0x2]
 	mov edx, [ebp-0x20]
 	cmp byte [edx+eax], 0x1
-	jnz R_AddAllSceneEntSurfacesSunShadow_160
+	jnz _Z33R_AddAllSceneEntSurfacesSunShadowv_160
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
-	call DynEnt_GetEntityDef
+	call _Z19DynEnt_GetEntityDeft17DynEntityDrawType
 	movzx eax, word [eax+0x24]
 	mov [esp], eax
-	call R_GetBrushModel
+	call _Z15R_GetBrushModelj
 	mov ecx, [ebp-0x40]
 	mov [esp+0x10], ecx
 	mov edx, [ebp-0x44]
@@ -8097,13 +8097,13 @@ R_AddAllSceneEntSurfacesSunShadow_140:
 	mov [esp+0x8], ecx
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_AddBModelSurfaces
+	call _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
 	add ebx, 0x1
 	cmp edi, ebx
-	jnz R_AddAllSceneEntSurfacesSunShadow_170
-R_AddAllSceneEntSurfacesSunShadow_150:
+	jnz _Z33R_AddAllSceneEntSurfacesSunShadowv_170
+_Z33R_AddAllSceneEntSurfacesSunShadowv_150:
 	mov edx, scene
-R_AddAllSceneEntSurfacesSunShadow_130:
+_Z33R_AddAllSceneEntSurfacesSunShadowv_130:
 	mov ebx, [ebp-0x44]
 	mov eax, [ebp-0x30]
 	sub ebx, [eax]
@@ -8112,43 +8112,43 @@ R_AddAllSceneEntSurfacesSunShadow_130:
 	mov [edx+ecx*4+0xe4108], ebx
 	mov dword [esp+0x4], _cstring_sort_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov [esp+0x4], ebx
 	mov ebx, [ebp-0x30]
 	mov eax, [ebx]
 	mov [esp], eax
-	call R_SortDrawSurfs
+	call _Z15R_SortDrawSurfsP11GfxDrawSurfi
 	add dword [ebp-0x38], 0xc
 	add dword [ebp-0x34], 0x3
 	cmp dword [ebp-0x4c], 0x2
-	jnz R_AddAllSceneEntSurfacesSunShadow_180
+	jnz _Z33R_AddAllSceneEntSurfacesSunShadowv_180
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddAllSceneEntSurfacesSunShadow_70:
+_Z33R_AddAllSceneEntSurfacesSunShadowv_70:
 	mov eax, ebx
 	mov edi, [edx+0x14f634]
 	shl eax, 0x9
 	lea eax, [eax+edx+0x154638]
 	mov [ebp-0x24], eax
 	test edi, edi
-	jz R_AddAllSceneEntSurfacesSunShadow_190
-R_AddAllSceneEntSurfacesSunShadow_120:
+	jz _Z33R_AddAllSceneEntSurfacesSunShadowv_190
+_Z33R_AddAllSceneEntSurfacesSunShadowv_120:
 	xor ebx, ebx
 	mov esi, 0x14f600
-	jmp R_AddAllSceneEntSurfacesSunShadow_200
-R_AddAllSceneEntSurfacesSunShadow_210:
+	jmp _Z33R_AddAllSceneEntSurfacesSunShadowv_200
+_Z33R_AddAllSceneEntSurfacesSunShadowv_210:
 	add ebx, 0x1
 	add esi, 0x28
 	cmp edi, ebx
-	jbe R_AddAllSceneEntSurfacesSunShadow_190
-R_AddAllSceneEntSurfacesSunShadow_200:
+	jbe _Z33R_AddAllSceneEntSurfacesSunShadowv_190
+_Z33R_AddAllSceneEntSurfacesSunShadowv_200:
 	mov eax, [ebp-0x24]
 	cmp byte [eax+ebx], 0x1
-	jnz R_AddAllSceneEntSurfacesSunShadow_210
+	jnz _Z33R_AddAllSceneEntSurfacesSunShadowv_210
 	lea edx, [esi+edx+0x38]
 	mov ecx, [ebp-0x40]
 	mov [esp+0x10], ecx
@@ -8159,19 +8159,19 @@ R_AddAllSceneEntSurfacesSunShadow_200:
 	mov eax, [edx+0x4]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call R_AddBModelSurfaces
+	call _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
 	mov [ebp-0x44], eax
 	mov edx, scene
-	jmp R_AddAllSceneEntSurfacesSunShadow_210
-R_AddAllSceneEntSurfacesSunShadow_180:
+	jmp _Z33R_AddAllSceneEntSurfacesSunShadowv_210
+_Z33R_AddAllSceneEntSurfacesSunShadowv_180:
 	mov edx, scene
 	mov ecx, [ebp-0x38]
 	mov ebx, [ebp-0x38]
-	jmp R_AddAllSceneEntSurfacesSunShadow_220
+	jmp _Z33R_AddAllSceneEntSurfacesSunShadowv_220
 
 
 ;R_AddAllSceneEntSurfacesSpotShadow(GfxViewInfo const*, unsigned int, unsigned int)
-R_AddAllSceneEntSurfacesSpotShadow:
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -8205,20 +8205,20 @@ R_AddAllSceneEntSurfacesSpotShadow:
 	mov [ebp-0x44], eax
 	mov eax, [ebp-0x48]
 	test eax, eax
-	jz R_AddAllSceneEntSurfacesSpotShadow_10
+	jz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_10
 	xor ebx, ebx
 	mov [ebp-0x5c], edi
 	mov esi, 0x12b400
-	jmp R_AddAllSceneEntSurfacesSpotShadow_20
-R_AddAllSceneEntSurfacesSpotShadow_30:
+	jmp _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_20
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_30:
 	add ebx, 0x1
 	add esi, 0x7c
 	cmp [ebp-0x48], ebx
-	jbe R_AddAllSceneEntSurfacesSpotShadow_10
-R_AddAllSceneEntSurfacesSpotShadow_20:
+	jbe _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_10
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_20:
 	mov edx, [ebp-0x44]
 	cmp byte [edx+ebx], 0x1
-	jnz R_AddAllSceneEntSurfacesSpotShadow_30
+	jnz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_30
 	mov ecx, [ebp-0x3c]
 	mov [esp+0xc], ecx
 	mov eax, [ebp-0x40]
@@ -8227,14 +8227,14 @@ R_AddAllSceneEntSurfacesSpotShadow_20:
 	mov [esp+0x4], edx
 	lea eax, [esi+edi+0x30]
 	mov [esp], eax
-	call R_AddDObjSurfaces
+	call _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3_
 	mov [ebp-0x40], eax
 	mov edi, [ebp-0x5c]
 	add ebx, 0x1
 	add esi, 0x7c
 	cmp [ebp-0x48], ebx
-	ja R_AddAllSceneEntSurfacesSpotShadow_20
-R_AddAllSceneEntSurfacesSpotShadow_10:
+	ja _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_20
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_10:
 	mov ecx, [edi+0x13ba30]
 	mov [ebp-0x34], ecx
 	shl dword [ebp-0x50], 0xa
@@ -8242,19 +8242,19 @@ R_AddAllSceneEntSurfacesSpotShadow_10:
 	lea eax, [eax+edi+0x14da34]
 	mov [ebp-0x24], eax
 	test ecx, ecx
-	jz R_AddAllSceneEntSurfacesSpotShadow_40
+	jz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_40
 	xor ebx, ebx
 	mov esi, 0x13ba00
-	jmp R_AddAllSceneEntSurfacesSpotShadow_50
-R_AddAllSceneEntSurfacesSpotShadow_60:
+	jmp _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_50
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_60:
 	add ebx, 0x1
 	add esi, 0x48
 	cmp [ebp-0x34], ebx
-	jbe R_AddAllSceneEntSurfacesSpotShadow_40
-R_AddAllSceneEntSurfacesSpotShadow_50:
+	jbe _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_40
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_50:
 	mov edx, [ebp-0x24]
 	cmp byte [edx+ebx], 0x1
-	jnz R_AddAllSceneEntSurfacesSpotShadow_60
+	jnz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_60
 	lea edx, [esi+edi+0x34]
 	mov ecx, [ebp-0x3c]
 	mov [esp+0x10], ecx
@@ -8265,28 +8265,28 @@ R_AddAllSceneEntSurfacesSpotShadow_50:
 	mov eax, [edx+0x4]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call R_AddXModelSurfaces
+	call _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
 	mov [ebp-0x40], eax
 	mov edi, scene
 	add ebx, 0x1
 	add esi, 0x48
 	cmp [ebp-0x34], ebx
-	ja R_AddAllSceneEntSurfacesSpotShadow_50
-R_AddAllSceneEntSurfacesSpotShadow_40:
+	ja _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_50
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_40:
 	mov eax, [edi+0x154c38]
 	mov [ebp-0x30], eax
 	test eax, eax
-	jnz R_AddAllSceneEntSurfacesSpotShadow_70
+	jnz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_70
 	mov eax, [edi+0x14f634]
 	mov [ebp-0x2c], eax
 	test eax, eax
-	jnz R_AddAllSceneEntSurfacesSpotShadow_80
-R_AddAllSceneEntSurfacesSpotShadow_130:
+	jnz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_80
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_130:
 	mov eax, [edi+0x154c3c]
 	mov [ebp-0x28], eax
 	test eax, eax
-	jnz R_AddAllSceneEntSurfacesSpotShadow_90
-R_AddAllSceneEntSurfacesSpotShadow_180:
+	jnz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_90
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_180:
 	mov ebx, [ebp-0x40]
 	mov ecx, [ebp-0x4c]
 	sub ebx, [edi+ecx*4+0xe4190]
@@ -8294,7 +8294,7 @@ R_AddAllSceneEntSurfacesSpotShadow_180:
 	mov [edi+ecx*4+0xe4108], ebx
 	mov dword [esp+0x4], _cstring_sort_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov [ebp+0xc], ebx
 	mov edx, [ebp-0x4c]
 	mov eax, [edi+edx*4+0xe4190]
@@ -8304,18 +8304,18 @@ R_AddAllSceneEntSurfacesSpotShadow_180:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_SortDrawSurfs
-R_AddAllSceneEntSurfacesSpotShadow_70:
+	jmp _Z15R_SortDrawSurfsP11GfxDrawSurfi
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_70:
 	mov dword [ebp-0x20], 0x0
 	xor edi, edi
-	jmp R_AddAllSceneEntSurfacesSpotShadow_100
-R_AddAllSceneEntSurfacesSpotShadow_120:
+	jmp _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_100
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_120:
 	add dword [ebp-0x20], 0x1
 	add edi, 0x6
 	mov ecx, [ebp-0x20]
 	cmp [ebp-0x30], ecx
-	jz R_AddAllSceneEntSurfacesSpotShadow_110
-R_AddAllSceneEntSurfacesSpotShadow_100:
+	jz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_110
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_100:
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	mov esi, edi
@@ -8326,12 +8326,12 @@ R_AddAllSceneEntSurfacesSpotShadow_100:
 	mov dword [esp+0x4], 0x0
 	mov ebx, eax
 	mov [esp], eax
-	call R_IsDynEntVisibleToPrimaryLight
+	call _Z31R_IsDynEntVisibleToPrimaryLightj17DynEntityDrawTypej
 	test eax, eax
-	jz R_AddAllSceneEntSurfacesSpotShadow_120
+	jz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_120
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call DynEnt_GetEntityDef
+	call _Z19DynEnt_GetEntityDeft17DynEntityDrawType
 	mov edx, [ebp-0x3c]
 	mov [esp+0x10], edx
 	mov ecx, [ebp-0x40]
@@ -8341,30 +8341,30 @@ R_AddAllSceneEntSurfacesSpotShadow_100:
 	mov eax, [eax+0x20]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_AddXModelSurfaces
+	call _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
 	mov [ebp-0x40], eax
 	add dword [ebp-0x20], 0x1
 	add edi, 0x6
 	mov ecx, [ebp-0x20]
 	cmp [ebp-0x30], ecx
-	jnz R_AddAllSceneEntSurfacesSpotShadow_100
-R_AddAllSceneEntSurfacesSpotShadow_110:
+	jnz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_100
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_110:
 	mov edi, scene
 	mov eax, [edi+0x14f634]
 	mov [ebp-0x2c], eax
 	test eax, eax
-	jz R_AddAllSceneEntSurfacesSpotShadow_130
-R_AddAllSceneEntSurfacesSpotShadow_80:
+	jz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_130
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_80:
 	mov dword [ebp-0x1c], 0x0
-	jmp R_AddAllSceneEntSurfacesSpotShadow_140
-R_AddAllSceneEntSurfacesSpotShadow_160:
+	jmp _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_140
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_160:
 	add dword [ebp-0x1c], 0x1
 	mov ecx, [ebp-0x1c]
 	cmp [ebp-0x2c], ecx
-	jbe R_AddAllSceneEntSurfacesSpotShadow_150
-R_AddAllSceneEntSurfacesSpotShadow_170:
+	jbe _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_150
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_170:
 	mov edi, scene
-R_AddAllSceneEntSurfacesSpotShadow_140:
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_140:
 	mov edx, [ebp-0x1c]
 	lea eax, [edx+edx*4]
 	lea esi, [edi+eax*8+0x14f638]
@@ -8375,9 +8375,9 @@ R_AddAllSceneEntSurfacesSpotShadow_140:
 	mov edx, [ebp-0x54]
 	mov eax, [edx+0x13a0]
 	mov [esp], eax
-	call R_IsEntityVisibleToPrimaryLight
+	call _Z31R_IsEntityVisibleToPrimaryLightjjj
 	test eax, eax
-	jz R_AddAllSceneEntSurfacesSpotShadow_160
+	jz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_160
 	movzx ecx, word [esi+0x2]
 	mov ebx, ecx
 	sar ebx, 0x5
@@ -8386,7 +8386,7 @@ R_AddAllSceneEntSurfacesSpotShadow_140:
 	mov eax, 0x1
 	shl eax, cl
 	test [edx+ebx*4], eax
-	jnz R_AddAllSceneEntSurfacesSpotShadow_160
+	jnz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_160
 	mov ecx, [ebp-0x3c]
 	mov [esp+0x10], ecx
 	mov eax, [ebp-0x40]
@@ -8396,26 +8396,26 @@ R_AddAllSceneEntSurfacesSpotShadow_140:
 	mov eax, [esi+0x4]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_AddBModelSurfaces
+	call _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
 	mov [ebp-0x40], eax
 	add dword [ebp-0x1c], 0x1
 	mov ecx, [ebp-0x1c]
 	cmp [ebp-0x2c], ecx
-	ja R_AddAllSceneEntSurfacesSpotShadow_170
-R_AddAllSceneEntSurfacesSpotShadow_150:
+	ja _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_170
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_150:
 	mov edi, scene
 	mov eax, [edi+0x154c3c]
 	mov [ebp-0x28], eax
 	test eax, eax
-	jz R_AddAllSceneEntSurfacesSpotShadow_180
-R_AddAllSceneEntSurfacesSpotShadow_90:
+	jz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_180
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_90:
 	xor esi, esi
-	jmp R_AddAllSceneEntSurfacesSpotShadow_190
-R_AddAllSceneEntSurfacesSpotShadow_210:
+	jmp _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_190
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_210:
 	add esi, 0x1
 	cmp [ebp-0x28], esi
-	jz R_AddAllSceneEntSurfacesSpotShadow_200
-R_AddAllSceneEntSurfacesSpotShadow_190:
+	jz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_200
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_190:
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	mov eax, [eax+0x228]
@@ -8426,15 +8426,15 @@ R_AddAllSceneEntSurfacesSpotShadow_190:
 	mov dword [esp+0x4], 0x1
 	mov ebx, eax
 	mov [esp], eax
-	call R_IsDynEntVisibleToPrimaryLight
+	call _Z31R_IsDynEntVisibleToPrimaryLightj17DynEntityDrawTypej
 	test eax, eax
-	jz R_AddAllSceneEntSurfacesSpotShadow_210
+	jz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_210
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call DynEnt_GetEntityDef
+	call _Z19DynEnt_GetEntityDeft17DynEntityDrawType
 	movzx eax, word [eax+0x24]
 	mov [esp], eax
-	call R_GetBrushModel
+	call _Z15R_GetBrushModelj
 	mov edx, [ebp-0x3c]
 	mov [esp+0x10], edx
 	mov ecx, [ebp-0x40]
@@ -8443,17 +8443,17 @@ R_AddAllSceneEntSurfacesSpotShadow_190:
 	mov [esp+0x8], edx
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call R_AddBModelSurfaces
+	call _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
 	add esi, 0x1
 	cmp [ebp-0x28], esi
-	jnz R_AddAllSceneEntSurfacesSpotShadow_190
-R_AddAllSceneEntSurfacesSpotShadow_200:
+	jnz _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_190
+_Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_200:
 	mov edi, scene
-	jmp R_AddAllSceneEntSurfacesSpotShadow_180
+	jmp _Z34R_AddAllSceneEntSurfacesSpotShadowPK11GfxViewInfojj_180
 
 
 ;R_CullDynamicSpotLightInCameraView()
-R_CullDynamicSpotLightInCameraView:
+_Z34R_CullDynamicSpotLightInCameraViewv:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -8467,23 +8467,23 @@ R_CullDynamicSpotLightInCameraView:
 	mov eax, [eax+dpvsGlob+0xa178]
 	mov ecx, [ebx+0x11422c]
 	test ecx, ecx
-	jz R_CullDynamicSpotLightInCameraView_10
+	jz _Z34R_CullDynamicSpotLightInCameraViewv_10
 	cmp byte [ebx+0x114230], 0x2
-	jz R_CullDynamicSpotLightInCameraView_20
-R_CullDynamicSpotLightInCameraView_10:
+	jz _Z34R_CullDynamicSpotLightInCameraViewv_20
+_Z34R_CullDynamicSpotLightInCameraViewv_10:
 	mov eax, 0x1
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-R_CullDynamicSpotLightInCameraView_20:
+_Z34R_CullDynamicSpotLightInCameraViewv_20:
 	mov [esp+0xc], eax
 	mov [esp+0x8], edx
 	mov eax, [ebx+0x114258]
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x11424c]
 	mov [esp], eax
-	call R_CullPointAndRadius
+	call _Z20R_CullPointAndRadiusPKffPK9DpvsPlanei
 	mov [ebx+0x114a30], al
 	movzx eax, al
 	add esp, 0x14
@@ -8494,7 +8494,7 @@ R_CullDynamicSpotLightInCameraView_20:
 
 
 ;R_CullDynamicPointLightsInCameraView()
-R_CullDynamicPointLightsInCameraView:
+_Z36R_CullDynamicPointLightsInCameraViewv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -8512,20 +8512,20 @@ R_CullDynamicPointLightsInCameraView:
 	mov [ebp-0x1c], eax
 	mov ebx, [ecx+0x11422c]
 	test ebx, ebx
-	jle R_CullDynamicPointLightsInCameraView_10
+	jle _Z36R_CullDynamicPointLightsInCameraViewv_10
 	xor ebx, ebx
 	lea eax, [ecx+0x114a30]
 	mov [ebp-0x24], eax
 	mov edi, ecx
 	mov esi, 0x114200
-R_CullDynamicPointLightsInCameraView_40:
+_Z36R_CullDynamicPointLightsInCameraViewv_40:
 	lea edx, [esi+ecx]
 	lea eax, [edx+0x30]
 	cmp byte [edx+0x30], 0x2
-	jnz R_CullDynamicPointLightsInCameraView_20
+	jnz _Z36R_CullDynamicPointLightsInCameraViewv_20
 	test ebx, ebx
-	jz R_CullDynamicPointLightsInCameraView_30
-R_CullDynamicPointLightsInCameraView_20:
+	jz _Z36R_CullDynamicPointLightsInCameraViewv_30
+_Z36R_CullDynamicPointLightsInCameraViewv_20:
 	mov ecx, [ebp-0x1c]
 	mov [esp+0xc], ecx
 	mov ecx, [ebp-0x20]
@@ -8534,16 +8534,16 @@ R_CullDynamicPointLightsInCameraView_20:
 	mov [esp+0x4], eax
 	lea eax, [edx+0x4c]
 	mov [esp], eax
-	call R_CullPointAndRadius
+	call _Z20R_CullPointAndRadiusPKffPK9DpvsPlanei
 	mov edx, [ebp-0x24]
 	mov [ebx+edx], al
 	mov ecx, edi
-R_CullDynamicPointLightsInCameraView_30:
+_Z36R_CullDynamicPointLightsInCameraViewv_30:
 	add ebx, 0x1
 	add esi, 0x40
 	cmp [ecx+0x11422c], ebx
-	jg R_CullDynamicPointLightsInCameraView_40
-R_CullDynamicPointLightsInCameraView_10:
+	jg _Z36R_CullDynamicPointLightsInCameraViewv_40
+_Z36R_CullDynamicPointLightsInCameraViewv_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -8553,7 +8553,7 @@ R_CullDynamicPointLightsInCameraView_10:
 
 
 ;R_AddCellDynBrushSurfacesInFrustumCmd(void*)
-R_AddCellDynBrushSurfacesInFrustumCmd:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -8570,13 +8570,13 @@ R_AddCellDynBrushSurfacesInFrustumCmd:
 	lea edx, [esi+ebx*4+0x2c4]
 	mov ecx, g_dynEntVisData
 	mov edi, g_dynEntVisData+0x8
-R_AddCellDynBrushSurfacesInFrustumCmd_10:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_10:
 	mov eax, [edx]
 	mov [ecx], eax
 	add edx, 0xc
 	add ecx, 0x4
 	cmp edi, ecx
-	jnz R_AddCellDynBrushSurfacesInFrustumCmd_10
+	jnz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_10
 	lea edx, [ebx+ebx*8]
 	mov ebx, scene
 	mov eax, [ebx+0x154c90]
@@ -8604,42 +8604,42 @@ R_AddCellDynBrushSurfacesInFrustumCmd_10:
 	mov [ebp-0x28], edx
 	mov eax, [ebp-0x2c]
 	test eax, eax
-	jz R_AddCellDynBrushSurfacesInFrustumCmd_20
+	jz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_20
 	mov dword [ebp-0x24], 0x0
 	mov eax, [ebp-0x24]
-R_AddCellDynBrushSurfacesInFrustumCmd_130:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_130:
 	mov edx, [ebp-0x28]
 	mov edi, [edx+eax*4]
 	mov ecx, eax
-R_AddCellDynBrushSurfacesInFrustumCmd_100:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_100:
 	shl ecx, 0x5
 	mov [ebp-0x3c], ecx
-R_AddCellDynBrushSurfacesInFrustumCmd_80:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_80:
 	test edi, 0xffff0000
-	jnz R_AddCellDynBrushSurfacesInFrustumCmd_30
+	jnz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_30
 	mov ecx, 0x10
 	mov esi, 0x10
-R_AddCellDynBrushSurfacesInFrustumCmd_160:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_160:
 	mov edx, edi
 	shl edx, cl
 	test edx, 0xff000000
-	jnz R_AddCellDynBrushSurfacesInFrustumCmd_40
+	jnz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_40
 	mov ebx, 0x8
 	mov eax, 0x8
-R_AddCellDynBrushSurfacesInFrustumCmd_150:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_150:
 	add esi, eax
 	mov ecx, ebx
 	shl edx, cl
 	test edx, 0xf0000000
-	jnz R_AddCellDynBrushSurfacesInFrustumCmd_50
+	jnz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_50
 	mov ebx, 0x4
 	mov eax, 0x4
-R_AddCellDynBrushSurfacesInFrustumCmd_140:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_140:
 	add esi, eax
 	mov ecx, ebx
 	shl edx, cl
 	test edx, 0xc0000000
-	jnz R_AddCellDynBrushSurfacesInFrustumCmd_60
+	jnz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_60
 	mov ebx, 0x2
 	mov eax, 0x2
 	lea eax, [esi+eax]
@@ -8654,8 +8654,8 @@ R_AddCellDynBrushSurfacesInFrustumCmd_140:
 	shr edx, 0x1f
 	lea ecx, [eax+edx]
 	cmp ecx, 0x1f
-	ja R_AddCellDynBrushSurfacesInFrustumCmd_70
-R_AddCellDynBrushSurfacesInFrustumCmd_110:
+	ja _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_70
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_110:
 	mov eax, [ebp-0x3c]
 	lea edx, [ecx+eax]
 	mov eax, 0x80000000
@@ -8666,24 +8666,24 @@ R_AddCellDynBrushSurfacesInFrustumCmd_110:
 	add ecx, edx
 	mov [ebp-0x34], ecx
 	cmp byte [ecx], 0x0
-	jnz R_AddCellDynBrushSurfacesInFrustumCmd_80
+	jnz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_80
 	mov dword [esp+0x4], 0x1
 	movzx eax, dx
 	mov [esp], eax
-	call DynEnt_GetEntityDef
+	call _Z19DynEnt_GetEntityDeft17DynEntityDrawType
 	movzx eax, word [eax+0x24]
 	mov [esp], eax
-	call R_GetBrushModel
+	call _Z15R_GetBrushModelj
 	mov esi, eax
 	mov eax, [ebp-0x20]
 	test eax, eax
-	jg R_AddCellDynBrushSurfacesInFrustumCmd_90
-R_AddCellDynBrushSurfacesInFrustumCmd_180:
+	jg _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_90
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_180:
 	mov eax, [ebp-0x34]
 	mov byte [eax], 0x1
 	mov ecx, [ebp-0x24]
-	jmp R_AddCellDynBrushSurfacesInFrustumCmd_100
-R_AddCellDynBrushSurfacesInFrustumCmd_60:
+	jmp _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_100
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_60:
 	xor ebx, ebx
 	xor eax, eax
 	lea eax, [esi+eax]
@@ -8698,27 +8698,27 @@ R_AddCellDynBrushSurfacesInFrustumCmd_60:
 	shr edx, 0x1f
 	lea ecx, [eax+edx]
 	cmp ecx, 0x1f
-	jbe R_AddCellDynBrushSurfacesInFrustumCmd_110
-R_AddCellDynBrushSurfacesInFrustumCmd_70:
+	jbe _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_110
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_70:
 	add dword [ebp-0x24], 0x1
 	mov edx, [ebp-0x24]
 	cmp [ebp-0x2c], edx
-	jz R_AddCellDynBrushSurfacesInFrustumCmd_120
+	jz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_120
 	mov eax, edx
-	jmp R_AddCellDynBrushSurfacesInFrustumCmd_130
-R_AddCellDynBrushSurfacesInFrustumCmd_50:
+	jmp _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_130
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_50:
 	xor ebx, ebx
 	xor eax, eax
-	jmp R_AddCellDynBrushSurfacesInFrustumCmd_140
-R_AddCellDynBrushSurfacesInFrustumCmd_40:
+	jmp _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_140
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_40:
 	xor ebx, ebx
 	xor eax, eax
-	jmp R_AddCellDynBrushSurfacesInFrustumCmd_150
-R_AddCellDynBrushSurfacesInFrustumCmd_30:
+	jmp _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_150
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_30:
 	xor ecx, ecx
 	xor esi, esi
-	jmp R_AddCellDynBrushSurfacesInFrustumCmd_160
-R_AddCellDynBrushSurfacesInFrustumCmd_90:
+	jmp _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_160
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_90:
 	mov edx, [ebp-0x1c]
 	movzx eax, byte [edx+0x10]
 	movss xmm1, dword [edx]
@@ -8734,13 +8734,13 @@ R_AddCellDynBrushSurfacesInFrustumCmd_90:
 	addss xmm1, xmm0
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm1
-	jae R_AddCellDynBrushSurfacesInFrustumCmd_170
+	jae _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_170
 	mov ebx, edx
 	add ebx, 0x20
 	mov ecx, 0x1
-R_AddCellDynBrushSurfacesInFrustumCmd_190:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_190:
 	cmp ecx, [ebp-0x20]
-	jz R_AddCellDynBrushSurfacesInFrustumCmd_180
+	jz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_180
 	mov eax, ebx
 	add ecx, 0x1
 	add ebx, 0x14
@@ -8757,27 +8757,27 @@ R_AddCellDynBrushSurfacesInFrustumCmd_190:
 	mulss xmm0, [esi+edx]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jb R_AddCellDynBrushSurfacesInFrustumCmd_190
-R_AddCellDynBrushSurfacesInFrustumCmd_170:
+	jb _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_190
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_170:
 	mov ecx, [ebp-0x24]
-	jmp R_AddCellDynBrushSurfacesInFrustumCmd_100
-R_AddCellDynBrushSurfacesInFrustumCmd_120:
+	jmp _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_100
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_120:
 	mov ebx, scene
-R_AddCellDynBrushSurfacesInFrustumCmd_20:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_20:
 	mov ecx, [ebp-0x38]
 	mov [g_viewIndex], ecx
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	lea edx, [eax+ecx*4+0x2c4]
 	mov ecx, g_dynEntVisData
-R_AddCellDynBrushSurfacesInFrustumCmd_200:
+_Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_200:
 	mov eax, [edx]
 	mov [ecx], eax
 	add edx, 0xc
 	add ecx, 0x4
 	mov eax, g_dynEntVisData+0x8
 	cmp eax, ecx
-	jnz R_AddCellDynBrushSurfacesInFrustumCmd_200
+	jnz _Z37R_AddCellDynBrushSurfacesInFrustumCmdPv_200
 	mov ecx, [ebp-0x38]
 	lea edx, [ecx+ecx*8]
 	mov eax, [ebx+0x154c90]
@@ -8834,7 +8834,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 standardFrustumSidePlanes: dd 0xbf800000, 0x0, 0x0, 0x3f800000, 0x3f800000, 0x0, 0x0, 0x3f800000, 0x0, 0xbf800000, 0x0, 0x3f800000, 0x0, 0x3f800000, 0x0, 0x3f800000, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
 _ZZ14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_iE5color: dd 0x0, 0x3f800000, 0x3f800000, 0x3e800000, 0x80000000, 0x0, 0x0, 0x0
 
@@ -8873,7 +8873,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x20
+g_fltMin: resb 0x10
 dpvsGlob: resb 0xae78
 g_viewIndex: resb 0x4
 g_dpvsView: resb 0x4
@@ -8904,5 +8904,5 @@ _float_0_25000000:		dd 0x3e800000	; 0.25
 _float_0_12500000:		dd 0x3e000000	; 0.125
 _float_4_00000000:		dd 0x40800000	; 4
 _float_0_10000000:		dd 0x3dcccccd	; 0.1
-_float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
+_float_3402823466385288598117041:		dd 0x7f7fffff	; 3.40282e+38
 

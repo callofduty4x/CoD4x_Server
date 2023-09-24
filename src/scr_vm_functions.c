@@ -874,6 +874,41 @@ void PlayerCmd_GetGeoLocation(scr_entref_t arg)
     Scr_AddString(countryname);
 }
 
+void PlayerCmd_Usercall(scr_entref_t arg) {
+    gentity_t *gentity;
+    int entityNum = 0;
+    mvabuf;
+
+    if (arg.classnum) {
+        Scr_ObjectError("Not an entity");
+        return;
+    }
+
+    entityNum = arg.entnum;
+    gentity = &g_entities[entityNum];
+
+    if (!gentity->client) {
+        Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        return;
+    }
+
+    if (Scr_GetNumParam() < 1) {
+        Scr_Error("Usage: self usercall(<syscall_name>, ...)\n");
+        return;
+    }
+    char* methodName = Scr_GetString(0);
+    PHandler_Event(PLUGINS_ONSCRUSERCALLMETHOD, methodName, entityNum);
+}
+
+void Scr_Usercall() {
+    if (Scr_GetNumParam() < 1) {
+        Scr_Error("Usage: usercall(<syscall_name>, ...)\n");
+        return;
+    }
+    char* functionName = Scr_GetString(0);
+    PHandler_Event(PLUGINS_ONSCRUSERCALLFUNCTION, functionName);
+}
+
 /*
 ============
 GScr_StrTokByPixLen
@@ -2236,6 +2271,96 @@ void HECmd_SetText(scr_entref_t entnum)
     Scr_ConstructMessageString(0, Scr_GetNumParam() -1, "Hud Elem String", buffer, sizeof(buffer));
     element->elem.type = HE_TYPE_TEXT;
     element->elem.text = G_LocalizedStringIndex(buffer);
+}
+
+void HECmd_SetPulseFX(scr_entref_t hud_elem_num)
+{
+	game_hudelem_t *hudelem_t = NULL;
+	int speed;
+	int decayStart;
+	int decayDuration;
+
+	if (Scr_GetNumParam() != 3)
+		Scr_Error("USAGE: <hudelem> SetPulseFX( <speed>, <decayStart>, <decayDuration> );");
+
+	if (hud_elem_num.classnum != 1)
+	{
+		Scr_ObjectError("not a hud element");
+		return;
+	}
+	hudelem_t = &g_hudelems[hud_elem_num.entnum];
+
+	speed = Scr_GetInt(0);
+	if (speed < 0)
+	{
+		Scr_ParamError(0, va("Time (%i) must be greater than zero.", speed));
+		return;
+	}
+
+	decayStart = Scr_GetInt(1);
+	if (decayStart < 0)
+	{
+		Scr_ParamError(0, va("Time (%i) must be greater than zero.", decayStart));
+		return;
+	}
+
+	decayDuration = Scr_GetInt(2);
+	if (decayDuration < 0)
+	{
+		Scr_ParamError(0, va("Time (%i) must be greater than zero.", decayDuration));
+		return;
+	}
+
+	hudelem_t->elem.fxBirthTime = level.time;
+	hudelem_t->elem.fxLetterTime = speed;
+	hudelem_t->elem.fxDecayStartTime = decayStart;
+	hudelem_t->elem.fxDecayDuration = decayDuration;
+}
+
+void HECmd_ScaleOverTime(scr_entref_t hud_elem_num)
+{
+    game_hudelem_t *hudelem_t = NULL;
+    if (hud_elem_num.classnum == 1)
+    {
+        hudelem_t = &g_hudelems[hud_elem_num.entnum];
+    }
+    else
+    {
+        Scr_ObjectError("not a hud element");
+        hudelem_t = 0;
+    }
+
+    if (Scr_GetNumParam() != 3)
+    {
+        Scr_Error("hudelem scaleOverTime(time_in_seconds, new_width, new_height)");
+    }
+
+    float time = Scr_GetFloat(0);
+    if (time <= 0.0)
+    {
+        Scr_ParamError(0, va("scale time %g <= 0", time));
+    }
+    else if (time > 60.0)
+    {
+        Scr_ParamError(0, va("scale time %g > 60", time));
+    }
+
+    int newWidth = Scr_GetInt(1u);
+    int newHeight = Scr_GetInt(2u);
+
+    extern level_locals_t level;
+    hudelem_t->elem.scaleStartTime = level.time;
+    int roundedTimeMs = floorf((float)(time * 1000.0) + 0.5);
+    hudelem_t->elem.scaleTime = roundedTimeMs;
+    hudelem_t->elem.fromWidth = hudelem_t->elem.width;
+    hudelem_t->elem.fromHeight = hudelem_t->elem.height;
+    hudelem_t->elem.width = newWidth;
+    hudelem_t->elem.height = newHeight;
+
+    // Bug fix: it doesn't contain the correct value of the hudelem so needs to be overwritten
+    // otherwise.. you get a 'jumpy' scaleovertime
+    hudelem_t->elem.fromAlignOrg = hudelem_t->elem.alignOrg;
+    hudelem_t->elem.fromAlignScreen = hudelem_t->elem.alignScreen;
 }
 
 void GScr_MakeCvarServerInfo(void)

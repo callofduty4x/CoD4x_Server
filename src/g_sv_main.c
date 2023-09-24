@@ -37,10 +37,12 @@
 
 
 /* G_Cvars */
+extern cvar_t*  g_motd;
 
 cvar_t*  g_speed;
 cvar_t*  g_disabledefcmdprefix;
 cvar_t*  g_allowConsoleSay;
+cvar_t*  g_conrichsay;
 cvar_t*  g_cheats;
 cvar_t*  g_gametype;
 cvar_t*  g_synchronousClients;
@@ -56,8 +58,6 @@ cvar_t*  g_debugDamage;
 cvar_t*  g_debugBullets;
 cvar_t*  bullet_penetrationEnabled;
 cvar_t*  g_entinfo;
-cvar_t*  g_motd;
-cvar_t*  g_playerCollisionEjectSpeed;
 cvar_t*  g_dropForwardSpeed;
 cvar_t*  g_dropUpSpeedBase;
 cvar_t*  g_dropUpSpeedRand;
@@ -676,6 +676,7 @@ void __cdecl G_RegisterCvars()
 	 g_speed = Cvar_RegisterInt("g_speed", 190, 1, 6000, 0, "Player's global movement speed is set here");
 	 g_disabledefcmdprefix = Cvar_RegisterBool("g_disabledefcmdprefix", qtrue, 0, "Disable the interpretation of the !-sign as command");
 	 g_allowConsoleSay = Cvar_RegisterBool("g_allowConsoleSay", qtrue, 0, "Flag whether to allow chat from ingame console");
+	 g_conrichsay = Cvar_RegisterBool("g_conrichsay", qtrue, 0, "Enable more informative output of in-game 'say' in the server console");
 	 g_cheats = Cvar_RegisterBool("sv_cheats", 0, 0, "Enable cheats");
 	 Cvar_RegisterString("gamename", "Call of Duty 4", 0x44u, "The name of the game");
 	 Cvar_RegisterString("gamedate", "Feb 12 2009", 0x40u, "The date compiled");
@@ -696,7 +697,6 @@ void __cdecl G_RegisterCvars()
 	 bullet_penetrationEnabled = Cvar_RegisterBool("bullet_penetrationEnabled", qtrue, 0x80u, "Enable/Disable bullet penetration.");
 	 g_entinfo = Cvar_RegisterEnum("g_entinfo", g_entinfoNames, 0, 0x80u, "Display entity information");
 	 g_motd = Cvar_RegisterString("g_motd", "", 0, "The message of the day");
-	 g_playerCollisionEjectSpeed = Cvar_RegisterInt("g_playerCollisionEjectSpeed", 25, 0, 32000, 1u, "Speed at which to push intersecting players away from each other");
 	 g_dropForwardSpeed = Cvar_RegisterFloat("g_dropForwardSpeed", 10.0, 0.0, 1000.0, 1u, "Forward speed of a dropped item");
 	 g_dropUpSpeedBase = Cvar_RegisterFloat("g_dropUpSpeedBase", 10.0, 0.0, 1000.0, 1u, "Base component of the initial vertical speed of a dropped item");
 	 g_dropUpSpeedRand = Cvar_RegisterFloat("g_dropUpSpeedRand", 5.0, 0.0, 1000.0, 1u, "Random component of the initial vertical speed of a dropped item");

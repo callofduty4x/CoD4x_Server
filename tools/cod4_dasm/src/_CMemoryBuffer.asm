@@ -2,7 +2,7 @@
 	extern __cxa_atexit
 	extern glFinish
 	extern _ZdaPv
-	extern _Znaj
+	extern _Znam
 	extern _ZNSt15_List_node_base6unhookEv
 	extern _ZdlPv
 	extern _Znwm
@@ -19,6 +19,7 @@
 	global _ZN13CMemoryBufferD0Ev
 	global _ZN13CMemoryBufferD1Ev
 	global _ZNSt10_List_baseIN13CMemoryBuffer11FreeRequestESaIS1_EE8_M_clearEv
+	global _ZTI13CMemoryBuffer
 	global _ZN13CMemoryBuffer20sDelayedFreeRequestsE
 	global _ZN13CMemoryBuffer31sMemoryDesignatedForDelayedFreeE
 	global _ZTV13CMemoryBuffer
@@ -34,22 +35,22 @@ _GLOBAL__I__ZN13CMemoryBuffer20sDelayedFreeRequestsE:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	leave
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov dword [_ZN13CMemoryBuffer20sDelayedFreeRequestsE], _ZN13CMemoryBuffer20sDelayedFreeRequestsE
 	mov dword [_ZN13CMemoryBuffer20sDelayedFreeRequestsE+0x4], _ZN13CMemoryBuffer20sDelayedFreeRequestsE
 	mov eax, [0xd5cc00c]
@@ -137,7 +138,7 @@ _ZN13CMemoryBuffer6ResizeEjj_10:
 	and eax, ebx
 	lea eax, [edi+eax-0x1]
 	mov [esp], eax
-	call _Znaj
+	call _Znam
 	mov [esi+0x4], eax
 	lea eax, [edi+eax-0x1]
 	and ebx, eax
@@ -217,7 +218,7 @@ _ZN13CMemoryBuffer8RecreateEv:
 	and eax, ecx
 	lea edx, [edx+eax-0x1]
 	mov [esp], edx
-	call _Znaj
+	call _Znam
 	mov [ebx+0x4], eax
 	mov edx, [ebx+0x14]
 	lea eax, [edx+eax-0x1]
@@ -313,7 +314,7 @@ _ZN13CMemoryBufferC1Ejj_10:
 	and eax, 0xffffffe0
 	add eax, 0x1f
 	mov [esp], eax
-	call _Znaj
+	call _Znam
 	mov edx, eax
 	mov [ebx+0x4], edx
 	mov [ebx+0xc], esi
@@ -420,8 +421,10 @@ _ZN13CMemoryBuffer31sMemoryDesignatedForDelayedFreeE: dd 0x0, 0x0
 
 ;Initialized constant data of CMemoryBuffer:
 SECTION .rdata
+;VTypeInfoTable for CMemoryBuffer:
+_ZTI13CMemoryBuffer: dd 0x8, _cstring_13cmemorybuffer, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CMemoryBuffer:
-_ZTV13CMemoryBuffer: dd 0x0, 0x3b4bc0, _ZN13CMemoryBufferD1Ev, _ZN13CMemoryBufferD0Ev, 0x0, 0x0, 0x0, 0x0
+_ZTV13CMemoryBuffer: dd 0x0, _ZTI13CMemoryBuffer, _ZN13CMemoryBufferD1Ev, _ZN13CMemoryBufferD0Ev, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of CMemoryBuffer:
@@ -431,6 +434,7 @@ _ZN13CMemoryBuffer20sDelayedFreeRequestsE: resb 0x80
 
 ;All cstrings:
 SECTION .rdata
+_cstring_13cmemorybuffer:		db "13CMemoryBuffer",0
 
 
 

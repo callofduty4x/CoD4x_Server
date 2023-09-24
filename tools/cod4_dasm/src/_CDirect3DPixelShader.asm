@@ -16,6 +16,7 @@
 	extern _ZN9__gnu_cxx18__exchange_and_addEPVii
 	extern _ZNSs4_Rep10_M_destroyERKSaIcE
 	extern glDeleteProgramsARB
+	extern _ZTI8IUnknown
 
 ;Exports of CDirect3DPixelShader:
 	global _ZN20CDirect3DPixelShader11GetFunctionEPvPj
@@ -32,6 +33,9 @@
 	global _ZN25COpenGLARBFragmentProgramC1EP15CDirect3DDeviceRKSsS3_
 	global _ZN25COpenGLARBFragmentProgramD0Ev
 	global _ZN25COpenGLARBFragmentProgramD1Ev
+	global _ZTI20CDirect3DPixelShader
+	global _ZTI21IDirect3DPixelShader9
+	global _ZTI25COpenGLARBFragmentProgram
 	global _ZTV20CDirect3DPixelShader
 	global _ZTV25COpenGLARBFragmentProgram
 
@@ -678,10 +682,16 @@ SECTION .data
 
 ;Initialized constant data of CDirect3DPixelShader:
 SECTION .rdata
+;VTypeInfoTable for CDirect3DPixelShader:
+_ZTI20CDirect3DPixelShader: dd 0x8, _cstring_20cdirect3dpixel, _ZTI21IDirect3DPixelShader9, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for IDirect3DPixelShader9:
+_ZTI21IDirect3DPixelShader9: dd 0x8, _cstring_21idirect3dpixel, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for COpenGLARBFragmentProgram:
+_ZTI25COpenGLARBFragmentProgram: dd 0x8, _cstring_25copenglarbfrag, _ZTI20CDirect3DPixelShader, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CDirect3DPixelShader:
-_ZTV20CDirect3DPixelShader: dd 0x0, 0x3b4920, _ZN20CDirect3DPixelShader14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DPixelShader6AddRefEv, _ZN20CDirect3DPixelShader7ReleaseEv, _ZN20CDirect3DPixelShader9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DPixelShader11GetFunctionEPvPj, _ZN20CDirect3DPixelShaderD1Ev, _ZN20CDirect3DPixelShaderD0Ev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+_ZTV20CDirect3DPixelShader: dd 0x0, _ZTI20CDirect3DPixelShader, _ZN20CDirect3DPixelShader14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DPixelShader6AddRefEv, _ZN20CDirect3DPixelShader7ReleaseEv, _ZN20CDirect3DPixelShader9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DPixelShader11GetFunctionEPvPj, _ZN20CDirect3DPixelShaderD1Ev, _ZN20CDirect3DPixelShaderD0Ev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for COpenGLARBFragmentProgram:
-_ZTV25COpenGLARBFragmentProgram: dd 0x0, 0x3b4960, _ZN20CDirect3DPixelShader14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DPixelShader6AddRefEv, _ZN20CDirect3DPixelShader7ReleaseEv, _ZN20CDirect3DPixelShader9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DPixelShader11GetFunctionEPvPj, _ZN25COpenGLARBFragmentProgramD1Ev, _ZN25COpenGLARBFragmentProgramD0Ev, _ZN25COpenGLARBFragmentProgram6EnableEv, _ZN25COpenGLARBFragmentProgram7DisableEv, _ZN25COpenGLARBFragmentProgram12SetConstantsEjPKfjj, 0x0, 0x0, 0x0, 0x0
+_ZTV25COpenGLARBFragmentProgram: dd 0x0, _ZTI25COpenGLARBFragmentProgram, _ZN20CDirect3DPixelShader14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DPixelShader6AddRefEv, _ZN20CDirect3DPixelShader7ReleaseEv, _ZN20CDirect3DPixelShader9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DPixelShader11GetFunctionEPvPj, _ZN25COpenGLARBFragmentProgramD1Ev, _ZN25COpenGLARBFragmentProgramD0Ev, _ZN25COpenGLARBFragmentProgram6EnableEv, _ZN25COpenGLARBFragmentProgram7DisableEv, _ZN25COpenGLARBFragmentProgram12SetConstantsEjPKfjj, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of CDirect3DPixelShader:
@@ -691,6 +701,9 @@ SECTION .bss
 ;All cstrings:
 SECTION .rdata
 _cstring_s:		db "%s",0ah,0
+_cstring_20cdirect3dpixel:		db "20CDirect3DPixelShader",0
+_cstring_21idirect3dpixel:		db "21IDirect3DPixelShader9",0
+_cstring_25copenglarbfrag:		db "25COpenGLARBFragmentProgram",0
 
 
 

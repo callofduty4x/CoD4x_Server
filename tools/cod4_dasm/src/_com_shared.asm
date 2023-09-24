@@ -1,7 +1,7 @@
 ;Imports of com_shared:
 	extern memcpy
-	extern I_stristr
-	extern __toupper
+	extern _Z9I_stristrPKcS0_
+	extern toupper
 	extern strstr
 	extern memset
 	extern time
@@ -9,11 +9,11 @@
 
 ;Exports of com_shared:
 	global Com_Memcpy
-	global Com_Filter
-	global Com_Memset
-	global Com_HashKey
-	global Com_RealTime
-	global Com_FilterPath
+	global _Z10Com_FilterPKcS0_i
+	global _Z10Com_MemsetPvii
+	global _Z11Com_HashKeyPKci
+	global _Z12Com_RealTimeP7qtime_s
+	global _Z14Com_FilterPathPKcS0_i
 
 
 SECTION .text
@@ -37,7 +37,7 @@ Com_Memcpy:
 
 
 ;Com_Filter(char const*, char const*, int)
-Com_Filter:
+_Z10Com_FilterPKcS0_i:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -45,32 +45,32 @@ Com_Filter:
 	push ebx
 	sub esp, 0x42c
 	mov esi, [ebp+0x8]
-Com_Filter_120:
+_Z10Com_FilterPKcS0_i_120:
 	movzx eax, byte [esi]
 	test al, al
-	jz Com_Filter_10
-Com_Filter_70:
+	jz _Z10Com_FilterPKcS0_i_10
+_Z10Com_FilterPKcS0_i_70:
 	cmp al, 0x2a
-	jz Com_Filter_20
+	jz _Z10Com_FilterPKcS0_i_20
 	cmp al, 0x3f
-	jz Com_Filter_30
+	jz _Z10Com_FilterPKcS0_i_30
 	cmp al, 0x5b
-	jz Com_Filter_40
+	jz _Z10Com_FilterPKcS0_i_40
 	mov edx, [ebp+0x10]
 	test edx, edx
-	jz Com_Filter_50
+	jz _Z10Com_FilterPKcS0_i_50
 	mov ecx, [ebp+0xc]
 	cmp al, [ecx]
-	jnz Com_Filter_60
-Com_Filter_30:
+	jnz _Z10Com_FilterPKcS0_i_60
+_Z10Com_FilterPKcS0_i_30:
 	add esi, 0x1
-Com_Filter_210:
+_Z10Com_FilterPKcS0_i_210:
 	add dword [ebp+0xc], 0x1
-Com_Filter_240:
+_Z10Com_FilterPKcS0_i_240:
 	movzx eax, byte [esi]
 	test al, al
-	jnz Com_Filter_70
-Com_Filter_10:
+	jnz _Z10Com_FilterPKcS0_i_70
+_Z10Com_FilterPKcS0_i_10:
 	mov eax, 0x1
 	add esp, 0x42c
 	pop ebx
@@ -78,11 +78,11 @@ Com_Filter_10:
 	pop edi
 	pop ebp
 	ret
-Com_Filter_160:
+_Z10Com_FilterPKcS0_i_160:
 	lea edi, [esi+0x1]
 	cmp byte [esi+0x1], 0x5d
-	jz Com_Filter_80
-Com_Filter_60:
+	jz _Z10Com_FilterPKcS0_i_80
+_Z10Com_FilterPKcS0_i_60:
 	xor eax, eax
 	add esp, 0x42c
 	pop ebx
@@ -90,47 +90,47 @@ Com_Filter_60:
 	pop edi
 	pop ebp
 	ret
-Com_Filter_20:
+_Z10Com_FilterPKcS0_i_20:
 	add esi, 0x1
 	movzx eax, byte [esi]
 	test al, al
-	jz Com_Filter_90
+	jz _Z10Com_FilterPKcS0_i_90
 	cmp al, 0x2a
-	jz Com_Filter_90
+	jz _Z10Com_FilterPKcS0_i_90
 	cmp al, 0x3f
-	jz Com_Filter_90
+	jz _Z10Com_FilterPKcS0_i_90
 	xor edx, edx
 	lea ebx, [ebp-0x418]
-Com_Filter_110:
+_Z10Com_FilterPKcS0_i_110:
 	mov [edx+ebx], al
 	add esi, 0x1
 	add edx, 0x1
 	movzx eax, byte [esi]
 	test al, al
-	jz Com_Filter_100
+	jz _Z10Com_FilterPKcS0_i_100
 	cmp al, 0x2a
-	jz Com_Filter_100
+	jz _Z10Com_FilterPKcS0_i_100
 	cmp al, 0x3f
-	jnz Com_Filter_110
-	jmp Com_Filter_100
-Com_Filter_90:
+	jnz _Z10Com_FilterPKcS0_i_110
+	jmp _Z10Com_FilterPKcS0_i_100
+_Z10Com_FilterPKcS0_i_90:
 	xor edx, edx
-Com_Filter_100:
+_Z10Com_FilterPKcS0_i_100:
 	mov byte [ebp+edx-0x418], 0x0
 	cmp byte [ebp-0x418], 0x0
-	jz Com_Filter_120
+	jz _Z10Com_FilterPKcS0_i_120
 	mov edi, [ebp+0x10]
 	test edi, edi
-	jz Com_Filter_130
+	jz _Z10Com_FilterPKcS0_i_130
 	lea ebx, [ebp-0x418]
 	mov [esp+0x4], ebx
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call I_stristr
+	call _Z9I_stristrPKcS0_
 	mov edx, eax
-Com_Filter_330:
+_Z10Com_FilterPKcS0_i_330:
 	test edx, edx
-	jz Com_Filter_60
+	jz _Z10Com_FilterPKcS0_i_60
 	cld
 	mov ecx, 0xffffffff
 	xor eax, eax
@@ -139,155 +139,155 @@ Com_Filter_330:
 	not ecx
 	lea ecx, [ecx+edx-0x1]
 	mov [ebp+0xc], ecx
-	jmp Com_Filter_120
-Com_Filter_40:
+	jmp _Z10Com_FilterPKcS0_i_120
+_Z10Com_FilterPKcS0_i_40:
 	add esi, 0x1
 	cmp byte [esi], 0x5b
-	jz Com_Filter_120
+	jz _Z10Com_FilterPKcS0_i_120
 	xor edx, edx
 	movzx eax, byte [esi]
 	test al, al
-	jz Com_Filter_140
-Com_Filter_200:
+	jz _Z10Com_FilterPKcS0_i_140
+_Z10Com_FilterPKcS0_i_200:
 	test edx, edx
-	jnz Com_Filter_150
+	jnz _Z10Com_FilterPKcS0_i_150
 	cmp al, 0x5d
-	jz Com_Filter_160
+	jz _Z10Com_FilterPKcS0_i_160
 	lea edi, [esi+0x1]
-Com_Filter_80:
+_Z10Com_FilterPKcS0_i_80:
 	cmp byte [edi], 0x2d
-	jz Com_Filter_170
-Com_Filter_270:
+	jz _Z10Com_FilterPKcS0_i_170
+_Z10Com_FilterPKcS0_i_270:
 	mov ecx, [ebp+0x10]
 	test ecx, ecx
-	jz Com_Filter_180
+	jz _Z10Com_FilterPKcS0_i_180
 	mov ecx, [ebp+0xc]
 	cmp al, [ecx]
-	jz Com_Filter_190
-Com_Filter_250:
+	jz _Z10Com_FilterPKcS0_i_190
+_Z10Com_FilterPKcS0_i_250:
 	xor edx, edx
 	mov esi, edi
-Com_Filter_260:
+_Z10Com_FilterPKcS0_i_260:
 	movzx eax, byte [esi]
 	test al, al
-	jnz Com_Filter_200
-Com_Filter_140:
+	jnz _Z10Com_FilterPKcS0_i_200
+_Z10Com_FilterPKcS0_i_140:
 	test edx, edx
-	jz Com_Filter_60
+	jz _Z10Com_FilterPKcS0_i_60
 	add esi, 0x1
-	jmp Com_Filter_210
-Com_Filter_220:
+	jmp _Z10Com_FilterPKcS0_i_210
+_Z10Com_FilterPKcS0_i_220:
 	add esi, 0x1
-Com_Filter_230:
+_Z10Com_FilterPKcS0_i_230:
 	movzx eax, byte [esi]
 	test al, al
-	jz Com_Filter_30
-Com_Filter_150:
+	jz _Z10Com_FilterPKcS0_i_30
+_Z10Com_FilterPKcS0_i_150:
 	cmp al, 0x5d
-	jnz Com_Filter_220
+	jnz _Z10Com_FilterPKcS0_i_220
 	add esi, 0x1
 	cmp byte [esi], 0x5d
-	jz Com_Filter_230
+	jz _Z10Com_FilterPKcS0_i_230
 	add dword [ebp+0xc], 0x1
-	jmp Com_Filter_240
-Com_Filter_180:
+	jmp _Z10Com_FilterPKcS0_i_240
+_Z10Com_FilterPKcS0_i_180:
 	movsx eax, al
 	mov [esp], eax
-	call __toupper
+	call toupper
 	mov ebx, eax
 	mov edx, [ebp+0xc]
 	movsx eax, byte [edx]
 	mov [esp], eax
-	call __toupper
+	call toupper
 	cmp ebx, eax
-	jnz Com_Filter_250
-Com_Filter_190:
+	jnz _Z10Com_FilterPKcS0_i_250
+_Z10Com_FilterPKcS0_i_190:
 	mov edx, 0x1
 	mov esi, edi
-	jmp Com_Filter_260
-Com_Filter_170:
+	jmp _Z10Com_FilterPKcS0_i_260
+_Z10Com_FilterPKcS0_i_170:
 	lea ecx, [esi+0x2]
 	mov [ebp-0x420], ecx
 	movzx edx, byte [esi+0x2]
 	test dl, dl
-	jz Com_Filter_270
+	jz _Z10Com_FilterPKcS0_i_270
 	cmp dl, 0x5d
-	jz Com_Filter_280
+	jz _Z10Com_FilterPKcS0_i_280
 	lea ebx, [esi+0x3]
 	mov [ebp-0x41c], ebx
-Com_Filter_340:
+_Z10Com_FilterPKcS0_i_340:
 	mov ebx, [ebp+0x10]
 	test ebx, ebx
-	jz Com_Filter_290
+	jz _Z10Com_FilterPKcS0_i_290
 	mov ebx, [ebp+0xc]
 	movzx ecx, byte [ebx]
 	cmp al, cl
-	jg Com_Filter_300
+	jg _Z10Com_FilterPKcS0_i_300
 	cmp dl, cl
-	jge Com_Filter_310
-Com_Filter_300:
+	jge _Z10Com_FilterPKcS0_i_310
+_Z10Com_FilterPKcS0_i_300:
 	xor edx, edx
-Com_Filter_320:
+_Z10Com_FilterPKcS0_i_320:
 	mov edi, [ebp-0x41c]
 	mov esi, edi
-	jmp Com_Filter_260
-Com_Filter_290:
+	jmp _Z10Com_FilterPKcS0_i_260
+_Z10Com_FilterPKcS0_i_290:
 	mov edx, [ebp+0xc]
 	movsx eax, byte [edx]
 	mov [esp], eax
-	call __toupper
+	call toupper
 	mov ebx, eax
 	movsx eax, byte [esi]
 	mov [esp], eax
-	call __toupper
+	call toupper
 	cmp ebx, eax
-	jl Com_Filter_300
+	jl _Z10Com_FilterPKcS0_i_300
 	mov ecx, [ebp+0xc]
 	movsx eax, byte [ecx]
 	mov [esp], eax
-	call __toupper
+	call toupper
 	mov ebx, eax
 	mov edx, [ebp-0x420]
 	movsx eax, byte [edx]
 	mov [esp], eax
-	call __toupper
+	call toupper
 	cmp ebx, eax
-	jg Com_Filter_300
-Com_Filter_310:
+	jg _Z10Com_FilterPKcS0_i_300
+_Z10Com_FilterPKcS0_i_310:
 	mov edx, 0x1
-	jmp Com_Filter_320
-Com_Filter_50:
+	jmp _Z10Com_FilterPKcS0_i_320
+_Z10Com_FilterPKcS0_i_50:
 	movsx eax, al
 	mov [esp], eax
-	call __toupper
+	call toupper
 	mov ebx, eax
 	mov edx, [ebp+0xc]
 	movsx eax, byte [edx]
 	mov [esp], eax
-	call __toupper
+	call toupper
 	cmp ebx, eax
-	jnz Com_Filter_60
+	jnz _Z10Com_FilterPKcS0_i_60
 	add esi, 0x1
-	jmp Com_Filter_210
-Com_Filter_130:
+	jmp _Z10Com_FilterPKcS0_i_210
+_Z10Com_FilterPKcS0_i_130:
 	lea ebx, [ebp-0x418]
 	mov [esp+0x4], ebx
 	mov edx, [ebp+0xc]
 	mov [esp], edx
 	call strstr
 	mov edx, eax
-	jmp Com_Filter_330
-Com_Filter_280:
+	jmp _Z10Com_FilterPKcS0_i_330
+_Z10Com_FilterPKcS0_i_280:
 	lea ecx, [esi+0x3]
 	mov [ebp-0x41c], ecx
 	cmp byte [esi+0x3], 0x5d
-	jnz Com_Filter_270
-	jmp Com_Filter_340
+	jnz _Z10Com_FilterPKcS0_i_270
+	jmp _Z10Com_FilterPKcS0_i_340
 	nop
 
 
 ;Com_Memset(void*, int, int)
-Com_Memset:
+_Z10Com_MemsetPvii:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -303,7 +303,7 @@ Com_Memset:
 
 
 ;Com_HashKey(char const*, int)
-Com_HashKey:
+_Z11Com_HashKeyPKci:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -312,24 +312,24 @@ Com_HashKey:
 	mov edi, [ebp+0x8]
 	mov esi, [ebp+0xc]
 	test esi, esi
-	jle Com_HashKey_10
+	jle _Z11Com_HashKeyPKci_10
 	movzx eax, byte [edi]
 	test al, al
-	jz Com_HashKey_10
+	jz _Z11Com_HashKeyPKci_10
 	xor ecx, ecx
 	xor ebx, ebx
-Com_HashKey_30:
+_Z11Com_HashKeyPKci_30:
 	movsx eax, al
 	lea edx, [ecx+0x77]
 	imul eax, edx
 	add ebx, eax
 	add ecx, 0x1
 	cmp esi, ecx
-	jz Com_HashKey_20
+	jz _Z11Com_HashKeyPKci_20
 	movzx eax, byte [edi+ecx]
 	test al, al
-	jnz Com_HashKey_30
-Com_HashKey_20:
+	jnz _Z11Com_HashKeyPKci_30
+_Z11Com_HashKeyPKci_20:
 	mov edx, ebx
 	sar edx, 0xa
 	mov eax, ebx
@@ -342,7 +342,7 @@ Com_HashKey_20:
 	pop edi
 	pop ebp
 	ret
-Com_HashKey_10:
+_Z11Com_HashKeyPKci_10:
 	xor ebx, ebx
 	xor edx, edx
 	xor eax, eax
@@ -358,7 +358,7 @@ Com_HashKey_10:
 
 
 ;Com_RealTime(qtime_s*)
-Com_RealTime:
+_Z12Com_RealTimeP7qtime_s:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -368,13 +368,13 @@ Com_RealTime:
 	call time
 	mov [ebp-0xc], eax
 	test ebx, ebx
-	jz Com_RealTime_10
+	jz _Z12Com_RealTimeP7qtime_s_10
 	lea eax, [ebp-0xc]
 	mov [esp], eax
 	call localtime
 	mov edx, eax
 	test eax, eax
-	jz Com_RealTime_20
+	jz _Z12Com_RealTimeP7qtime_s_20
 	mov eax, [eax]
 	mov [ebx], eax
 	mov eax, [edx+0x4]
@@ -393,9 +393,9 @@ Com_RealTime:
 	mov [ebx+0x1c], eax
 	mov eax, [edx+0x20]
 	mov [ebx+0x20], eax
-Com_RealTime_20:
+_Z12Com_RealTimeP7qtime_s_20:
 	mov eax, [ebp-0xc]
-Com_RealTime_10:
+_Z12Com_RealTimeP7qtime_s_10:
 	add esp, 0x24
 	pop ebx
 	pop ebp
@@ -404,7 +404,7 @@ Com_RealTime_10:
 
 
 ;Com_FilterPath(char const*, char const*, int)
-Com_FilterPath:
+_Z14Com_FilterPathPKcS0_i:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -414,55 +414,55 @@ Com_FilterPath:
 	mov esi, [ebp+0xc]
 	xor edx, edx
 	lea ebx, [ebp-0x48]
-	jmp Com_FilterPath_10
-Com_FilterPath_40:
+	jmp _Z14Com_FilterPathPKcS0_i_10
+_Z14Com_FilterPathPKcS0_i_40:
 	cmp al, 0x3a
-	jz Com_FilterPath_20
+	jz _Z14Com_FilterPathPKcS0_i_20
 	mov [edx+ebx], al
 	add edx, 0x1
 	cmp edx, 0x3f
-	jz Com_FilterPath_30
-Com_FilterPath_10:
+	jz _Z14Com_FilterPathPKcS0_i_30
+_Z14Com_FilterPathPKcS0_i_10:
 	movzx eax, byte [ecx+edx]
 	test al, al
-	jz Com_FilterPath_30
+	jz _Z14Com_FilterPathPKcS0_i_30
 	cmp al, 0x5c
-	jnz Com_FilterPath_40
-Com_FilterPath_20:
+	jnz _Z14Com_FilterPathPKcS0_i_40
+_Z14Com_FilterPathPKcS0_i_20:
 	mov byte [edx+ebx], 0x2f
 	add edx, 0x1
 	cmp edx, 0x3f
-	jnz Com_FilterPath_10
-Com_FilterPath_30:
+	jnz _Z14Com_FilterPathPKcS0_i_10
+_Z14Com_FilterPathPKcS0_i_30:
 	mov byte [ebp+edx-0x48], 0x0
 	xor edx, edx
 	lea ecx, [ebp-0x88]
-	jmp Com_FilterPath_50
-Com_FilterPath_80:
+	jmp _Z14Com_FilterPathPKcS0_i_50
+_Z14Com_FilterPathPKcS0_i_80:
 	cmp al, 0x3a
-	jz Com_FilterPath_60
+	jz _Z14Com_FilterPathPKcS0_i_60
 	mov [edx+ecx], al
 	add edx, 0x1
 	cmp edx, 0x3f
-	jz Com_FilterPath_70
-Com_FilterPath_50:
+	jz _Z14Com_FilterPathPKcS0_i_70
+_Z14Com_FilterPathPKcS0_i_50:
 	movzx eax, byte [esi+edx]
 	test al, al
-	jz Com_FilterPath_70
+	jz _Z14Com_FilterPathPKcS0_i_70
 	cmp al, 0x5c
-	jnz Com_FilterPath_80
-Com_FilterPath_60:
+	jnz _Z14Com_FilterPathPKcS0_i_80
+_Z14Com_FilterPathPKcS0_i_60:
 	mov byte [edx+ecx], 0x2f
 	add edx, 0x1
 	cmp edx, 0x3f
-	jnz Com_FilterPath_50
-Com_FilterPath_70:
+	jnz _Z14Com_FilterPathPKcS0_i_50
+_Z14Com_FilterPathPKcS0_i_70:
 	mov byte [ebp+edx-0x88], 0x0
 	mov eax, [ebp+0x10]
 	mov [esp+0x8], eax
 	mov [esp+0x4], ecx
 	mov [esp], ebx
-	call Com_Filter
+	call _Z10Com_FilterPKcS0_i
 	movzx eax, al
 	add esp, 0x90
 	pop ebx

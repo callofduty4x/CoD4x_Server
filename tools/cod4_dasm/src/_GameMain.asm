@@ -20,9 +20,9 @@
 	extern _ZN10MacBuilder14GetControlTextEP15OpaqueWindowPtrlsPc
 	extern strcpy
 	extern strcat
-	extern strupr
+	extern _Z6struprPc
 	extern sprintf
-	extern Q_stricmpn
+	extern _Z10I_strnicmpPKcS0_i
 	extern _ZN14MacPreferences9PutStringEPKcS1_
 	extern _ZN10MacBuilder13ReleaseWindowEP15OpaqueWindowPtr
 	extern DRInitializeWrapAPI
@@ -42,7 +42,7 @@
 	extern exit
 	extern _ZN14CMacGameEngine6DoQuitEv
 	extern _ZNK14CMacGameEngine10IsQuittingEv
-	extern Com_Quit_f
+	extern _Z10Com_Quit_fv
 	extern _ZN14CMacGameEngine7MacMainEv
 	extern _ZNSs6appendEPKcm
 	extern strstr
@@ -53,6 +53,7 @@
 	extern _ZN9__gnu_cxx18__exchange_and_addEPVii
 	extern _ZNSs4_Rep10_M_destroyERKSaIcE
 	extern _ZdlPv
+	extern _ZTI14CMacGameEngine
 	extern _ZN14CMacGameEngine11HandleEventEP14OpaqueEventRef
 	extern _ZN17CCallOfDutyEngine11DoMouseDownEt5Pointmm
 	extern _ZN17CCallOfDutyEngine9DoMouseUpEt5Pointmm
@@ -68,8 +69,8 @@
 ;Exports of GameMain:
 	global _ZGVZ16GetMacGameEnginevE13theGameEngine
 	global _ZZ16GetMacGameEnginevE13theGameEngine
-	global ScreenSleepProc
-	global GetMacGameEngine
+	global _Z15ScreenSleepProcP16__EventLoopTimerPv
+	global _Z16GetMacGameEnginev
 	global _ZN17CCallOfDutyEngine10InitializeEv
 	global _ZN17CCallOfDutyEngine19WaitForParentToQuitEv
 	global _ZN17CCallOfDutyEngine6DoQuitEv
@@ -77,6 +78,7 @@
 	global _ZN17CCallOfDutyEngine8GameMainEv
 	global _ZN17CCallOfDutyEngineD0Ev
 	global _ZN17CCallOfDutyEngineD1Ev
+	global _ZTI17CCallOfDutyEngine
 	global _ZTV17CCallOfDutyEngine
 
 
@@ -94,7 +96,7 @@ __tcf_0:
 
 
 ;ScreenSleepProc(__EventLoopTimer*, void*)
-ScreenSleepProc:
+_Z15ScreenSleepProcP16__EventLoopTimerPv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
@@ -105,24 +107,24 @@ ScreenSleepProc:
 
 
 ;GetMacGameEngine()
-GetMacGameEngine:
+_Z16GetMacGameEnginev:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	cmp byte [_ZGVZ16GetMacGameEnginevE13theGameEngine], 0x0
-	jz GetMacGameEngine_10
-GetMacGameEngine_20:
+	jz _Z16GetMacGameEnginev_10
+_Z16GetMacGameEnginev_20:
 	mov eax, _ZZ16GetMacGameEnginevE13theGameEngine
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-GetMacGameEngine_10:
+_Z16GetMacGameEnginev_10:
 	mov dword [esp], _ZGVZ16GetMacGameEnginevE13theGameEngine
 	call __cxa_guard_acquire
 	test eax, eax
-	jz GetMacGameEngine_20
+	jz _Z16GetMacGameEnginev_20
 	mov dword [esp], _ZZ16GetMacGameEnginevE13theGameEngine
 	call _ZN14CMacGameEngineC2Ev
 	mov dword [_ZZ16GetMacGameEnginevE13theGameEngine], _ZTV17CCallOfDutyEngine+0x8
@@ -319,10 +321,10 @@ _ZN17CCallOfDutyEngine10InitializeEv_50:
 	jnz _ZN17CCallOfDutyEngine10InitializeEv_70
 	lea eax, [ebp-0xa2]
 	mov [esp], eax
-	call strupr
+	call _Z6struprPc
 	lea eax, [ebp-0x1d]
 	mov [esp], eax
-	call strupr
+	call _Z6struprPc
 	xor edx, edx
 	xor ecx, ecx
 _ZN17CCallOfDutyEngine10InitializeEv_110:
@@ -355,7 +357,7 @@ _ZN17CCallOfDutyEngine10InitializeEv_90:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x22]
 	mov [esp], eax
-	call Q_stricmpn
+	call _Z10I_strnicmpPKcS0_i
 	test eax, eax
 	jnz _ZN17CCallOfDutyEngine10InitializeEv_70
 	lea eax, [ebp-0x1d]
@@ -412,7 +414,7 @@ _ZN17CCallOfDutyEngine10InitializeEv_20:
 	call GetMainEventLoop
 	mov dword [esp+0x1c], 0x0
 	mov [esp+0x18], ebx
-	mov dword [esp+0x14], ScreenSleepProc
+	mov dword [esp+0x14], _Z15ScreenSleepProcP16__EventLoopTimerPv
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x10], 0x0
 	mov dword [esp+0x4], 0x0
@@ -447,9 +449,9 @@ _ZN17CCallOfDutyEngine10InitializeEv_140:
 	call strcpy
 	lea eax, [ebp-0xa2]
 	mov [esp], eax
-	call strupr
+	call _Z6struprPc
 	mov [esp], esi
-	call strupr
+	call _Z6struprPc
 	xor edx, edx
 	mov ecx, 0x1
 _ZN17CCallOfDutyEngine10InitializeEv_180:
@@ -480,7 +482,7 @@ _ZN17CCallOfDutyEngine10InitializeEv_160:
 	mov dword [esp+0x8], 0x4
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call Q_stricmpn
+	call _Z10I_strnicmpPKcS0_i
 	test eax, eax
 	jnz _ZN17CCallOfDutyEngine10InitializeEv_130
 	mov [esp+0x4], esi
@@ -590,7 +592,7 @@ _ZN17CCallOfDutyEngine6DoQuitEv_10:
 	add esp, 0x14
 	pop ebx
 	pop ebp
-	jmp Com_Quit_f
+	jmp _Z10Com_Quit_fv
 
 
 ;CCallOfDutyEngine::MacMain()
@@ -761,8 +763,10 @@ SECTION .data
 
 ;Initialized constant data of GameMain:
 SECTION .rdata
+;VTypeInfoTable for CCallOfDutyEngine:
+_ZTI17CCallOfDutyEngine: dd 0x8, _cstring_17ccallofdutyeng, _ZTI14CMacGameEngine, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CCallOfDutyEngine:
-_ZTV17CCallOfDutyEngine: dd 0x0, 0x3b4c40, _ZN17CCallOfDutyEngineD1Ev, _ZN17CCallOfDutyEngineD0Ev, _ZN17CCallOfDutyEngine10InitializeEv, _ZN17CCallOfDutyEngine7MacMainEv, _ZN17CCallOfDutyEngine8GameMainEv, _ZN14CMacGameEngine11HandleEventEP14OpaqueEventRef, _ZN17CCallOfDutyEngine11DoMouseDownEt5Pointmm, _ZN17CCallOfDutyEngine9DoMouseUpEt5Pointmm, _ZN17CCallOfDutyEngine12DoMouseMovedE5PointS0_m, _ZN17CCallOfDutyEngine12DoMouseWheelEl5Pointm, _ZN17CCallOfDutyEngine9DoKeyDownEhm, _ZN17CCallOfDutyEngine7DoKeyUpEhm, _ZN17CCallOfDutyEngine11DoTextInputEt, _ZN17CCallOfDutyEngine10DoActivateEv, _ZN17CCallOfDutyEngine12DoDeactivateEv, _ZN14CMacGameEngine15IsQuitAvailableEv, _ZN17CCallOfDutyEngine6DoQuitEv, 0x0, 0x0, 0x0, 0x0, 0x0
+_ZTV17CCallOfDutyEngine: dd 0x0, _ZTI17CCallOfDutyEngine, _ZN17CCallOfDutyEngineD1Ev, _ZN17CCallOfDutyEngineD0Ev, _ZN17CCallOfDutyEngine10InitializeEv, _ZN17CCallOfDutyEngine7MacMainEv, _ZN17CCallOfDutyEngine8GameMainEv, _ZN14CMacGameEngine11HandleEventEP14OpaqueEventRef, _ZN17CCallOfDutyEngine11DoMouseDownEt5Pointmm, _ZN17CCallOfDutyEngine9DoMouseUpEt5Pointmm, _ZN17CCallOfDutyEngine12DoMouseMovedE5PointS0_m, _ZN17CCallOfDutyEngine12DoMouseWheelEl5Pointm, _ZN17CCallOfDutyEngine9DoKeyDownEhm, _ZN17CCallOfDutyEngine7DoKeyUpEhm, _ZN17CCallOfDutyEngine11DoTextInputEt, _ZN17CCallOfDutyEngine10DoActivateEv, _ZN17CCallOfDutyEngine12DoDeactivateEv, _ZN14CMacGameEngine15IsQuitAvailableEv, _ZN17CCallOfDutyEngine6DoQuitEv, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of GameMain:
@@ -835,6 +839,7 @@ _cstring_space:		db " ",0
 _cstring_r_fullscreen:		db "r_fullscreen",0
 _cstring_set_r_fullscreen:		db "+set r_fullscreen 0",0
 _cstring_set_r_fullscreen1:		db "+set r_fullscreen 1",0
+_cstring_17ccallofdutyeng:		db "17CCallOfDutyEngine",0
 _cstring_game:		db "Game",0
 _cstring_keycode:		db "KeyCode",0
 _cstring_badkeycode:		db "bad-key-code",0

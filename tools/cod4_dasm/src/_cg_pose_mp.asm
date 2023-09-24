@@ -1,32 +1,32 @@
 ;Imports of cg_pose_mp:
-	extern CL_DObjCreateSkelForBones
-	extern DObjCompleteHierarchyBits
-	extern DObjCalcSkel
-	extern DObjGetSetBones
-	extern DObjGetRootBoneCount
-	extern DObjGetRotTransArray
-	extern AnglesToQuat
-	extern R_GetLocalClientNum
+	extern _Z25CL_DObjCreateSkelForBonesPK6DObj_sPiPP11DObjAnimMat
+	extern _Z25DObjCompleteHierarchyBitsPK6DObj_sPi
+	extern _Z12DObjCalcSkelPK6DObj_sPi
+	extern _Z15DObjGetSetBonesPK6DObj_sPi
+	extern _Z20DObjGetRootBoneCountPK6DObj_s
+	extern _Z20DObjGetRotTransArrayPK6DObj_s
+	extern _Z12AnglesToQuatPKfPf
+	extern _Z19R_GetLocalClientNumv
 	extern cgArray
-	extern DObjSetRotTransIndex
-	extern DObjSetTrans
-	extern Ragdoll_DoControllers
-	extern DObjSetControlTagAngles
-	extern DObjSetLocalTag
+	extern _Z20DObjSetRotTransIndexPK6DObj_sPKii
+	extern _Z12DObjSetTransP11DObjAnimMatPKf
+	extern _Z21Ragdoll_DoControllersPK7cpose_tPK6DObj_sPi
+	extern _Z23DObjSetControlTagAnglesPK6DObj_sPijPf
+	extern _Z15DObjSetLocalTagPK6DObj_sPijPKfS4_
 	extern floorf
 	extern vec3_origin
-	extern AnglesToAxis
-	extern DObjGetModel
-	extern XModelNumBones
-	extern XModelGetBasePose
-	extern DObjSetLocalTagInternal
+	extern _Z12AnglesToAxisPKfPA3_f
+	extern _Z12DObjGetModelPK6DObj_si
+	extern _Z14XModelNumBonesPK6XModel
+	extern _Z17XModelGetBasePosePK6XModel
+	extern _Z23DObjSetLocalTagInternalPK6DObj_sPKfS3_i
 
 ;Exports of cg_pose_mp:
 	global _GLOBAL__I__Z23BG_Player_DoControllersPK14CEntPlayerInfoPK6DObj_sPi
-	global CG_DObjCalcPose
-	global CG_DoControllers
-	global CG_VehPoseControllers
-	global BG_Player_DoControllers
+	global _Z15CG_DObjCalcPosePK7cpose_tPK6DObj_sPi
+	global _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi
+	global _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi
+	global _Z23BG_Player_DoControllersPK14CEntPlayerInfoPK6DObj_sPi
 
 
 SECTION .text
@@ -39,21 +39,21 @@ _GLOBAL__I__Z23BG_Player_DoControllersPK14CEntPlayerInfoPK6DObj_sPi:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -323,7 +323,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;CG_DObjCalcPose(cpose_t const*, DObj_s const*, int*)
-CG_DObjCalcPose:
+_Z15CG_DObjCalcPosePK7cpose_tPK6DObj_sPi:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -335,27 +335,27 @@ CG_DObjCalcPose:
 	mov [esp+0x8], eax
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call CL_DObjCreateSkelForBones
+	call _Z25CL_DObjCreateSkelForBonesPK6DObj_sPiPP11DObjAnimMat
 	test eax, eax
-	jz CG_DObjCalcPose_10
+	jz _Z15CG_DObjCalcPosePK7cpose_tPK6DObj_sPi_10
 	mov eax, [ebp-0xc]
 	add esp, 0x20
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-CG_DObjCalcPose_10:
+_Z15CG_DObjCalcPosePK7cpose_tPK6DObj_sPi_10:
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call DObjCompleteHierarchyBits
+	call _Z25DObjCompleteHierarchyBitsPK6DObj_sPi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_DoControllers
+	call _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call DObjCalcSkel
+	call _Z12DObjCalcSkelPK6DObj_sPi
 	mov eax, [ebp-0xc]
 	add esp, 0x20
 	pop ebx
@@ -365,7 +365,7 @@ CG_DObjCalcPose_10:
 
 
 ;CG_DoControllers(cpose_t const*, DObj_s const*, int*)
-CG_DoControllers:
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -376,38 +376,38 @@ CG_DoControllers:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjGetSetBones
+	call _Z15DObjGetSetBonesPK6DObj_sPi
 	mov edx, [ebp+0x8]
 	movzx eax, byte [edx+0x2]
 	cmp al, 0xb
-	jz CG_DoControllers_10
-	ja CG_DoControllers_20
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_10
+	ja _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_20
 	sub al, 0x1
-	jz CG_DoControllers_30
-CG_DoControllers_130:
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_30
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_130:
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjGetRootBoneCount
+	call _Z20DObjGetRootBoneCountPK6DObj_s
 	lea edi, [eax-0x1]
 	mov edx, edi
 	sar edx, 0x5
-	jz CG_DoControllers_40
-CG_DoControllers_140:
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_40
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_140:
 	cmp dword [ebp-0x34], 0xffffffff
-	jz CG_DoControllers_50
-CG_DoControllers_150:
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_50
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_150:
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjGetRotTransArray
+	call _Z20DObjGetRotTransArrayPK6DObj_s
 	mov ebx, eax
 	test eax, eax
-	jz CG_DoControllers_60
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_60
 	lea eax, [ebp-0x44]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	add eax, 0x28
 	mov [esp], eax
-	call AnglesToQuat
+	call _Z12AnglesToQuatPKfPf
 	mov dword [ebp-0x60], 0x0
 	mov dword [ebp-0x5c], 0x0
 	mov dword [ebp-0x58], 0x0
@@ -415,7 +415,7 @@ CG_DoControllers_150:
 	mov dword [ebp-0x50], 0x0
 	mov dword [ebp-0x4c], 0x0
 	mov dword [ebp-0x48], 0x0
-	call R_GetLocalClientNum
+	call _Z19R_GetLocalClientNumv
 	mov eax, cgArray
 	movss xmm0, dword [eax+0x49310]
 	movss [ebp-0x8c], xmm0
@@ -424,25 +424,25 @@ CG_DoControllers_150:
 	movss xmm0, dword [eax+0x49318]
 	movss [ebp-0x94], xmm0
 	test edi, edi
-	js CG_DoControllers_60
+	js _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_60
 	xor esi, esi
 	mov eax, [ebp-0x54]
 	mov edx, [ebp+0x8]
 	add edx, 0x1c
 	mov [ebp-0xac], edx
-	jmp CG_DoControllers_70
-CG_DoControllers_80:
+	jmp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_70
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_80:
 	add esi, 0x1
 	ror eax, 1
 	mov [ebp-0x54], eax
 	add ebx, 0x20
 	cmp edi, esi
-	jl CG_DoControllers_60
-CG_DoControllers_70:
+	jl _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_60
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_70:
 	mov edx, esi
 	sar edx, 0x5
 	test [ebp+edx*4-0x34], eax
-	jnz CG_DoControllers_80
+	jnz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_80
 	mov [esp+0x8], esi
 	mov eax, 0x3
 	sub eax, edx
@@ -450,9 +450,9 @@ CG_DoControllers_70:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjSetRotTransIndex
+	call _Z20DObjSetRotTransIndexPK6DObj_sPKii
 	test eax, eax
-	jz CG_DoControllers_90
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_90
 	mov eax, [ebp-0x44]
 	mov [ebx], eax
 	mov eax, [ebp-0x40]
@@ -470,7 +470,7 @@ CG_DoControllers_70:
 	mov eax, [edx+0x8]
 	mov [ebp-0x1c], eax
 	movss xmm0, dword [ebp-0x24]
-CG_DoControllers_190:
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_190:
 	subss xmm0, [ebp-0x8c]
 	movss [ebp-0x24], xmm0
 	movss xmm0, dword [ebp-0x20]
@@ -482,60 +482,60 @@ CG_DoControllers_190:
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call DObjSetTrans
+	call _Z12DObjSetTransP11DObjAnimMatPKf
 	mov eax, [ebp-0x54]
 	add esi, 0x1
 	ror eax, 1
 	mov [ebp-0x54], eax
 	add ebx, 0x20
 	cmp edi, esi
-	jge CG_DoControllers_70
-CG_DoControllers_60:
+	jge _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_70
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_60:
 	mov eax, [ebp+0x8]
 	cmp byte [eax+0xc], 0x0
-	jz CG_DoControllers_100
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_100
 	mov edx, [eax+0x10]
 	test edx, edx
-	jnz CG_DoControllers_110
+	jnz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_110
 	mov eax, [eax+0x14]
 	test eax, eax
-	jz CG_DoControllers_100
-CG_DoControllers_110:
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_100
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_110:
 	mov edx, [ebp+0x10]
 	mov [esp+0x8], edx
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Ragdoll_DoControllers
-CG_DoControllers_100:
+	call _Z21Ragdoll_DoControllersPK7cpose_tPK6DObj_sPi
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_100:
 	add esp, 0xfc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_DoControllers_20:
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_20:
 	cmp al, 0xc
-	jz CG_DoControllers_120
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_120
 	cmp al, 0xe
-	jnz CG_DoControllers_130
-CG_DoControllers_120:
+	jnz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_130
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_120:
 	mov eax, [ebp+0x10]
 	mov [esp+0x8], eax
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_VehPoseControllers
+	call _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjGetRootBoneCount
+	call _Z20DObjGetRootBoneCountPK6DObj_s
 	lea edi, [eax-0x1]
 	mov edx, edi
 	sar edx, 0x5
-	jnz CG_DoControllers_140
-CG_DoControllers_40:
+	jnz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_140
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_40:
 	mov ecx, edi
 	and ecx, 0x1f
 	add ecx, 0x1
@@ -543,16 +543,16 @@ CG_DoControllers_40:
 	shr eax, cl
 	or eax, [ebp+edx*4-0x34]
 	add eax, 0x1
-	jnz CG_DoControllers_150
-	jmp CG_DoControllers_60
-CG_DoControllers_10:
+	jnz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_150
+	jmp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_60
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_10:
 	cmp byte [edx+0x4c], 0x0
-	jnz CG_DoControllers_160
+	jnz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_160
 	mov eax, [edx+0x40]
 	mov [ebp-0x24], eax
 	mov eax, [edx+0x44]
 	mov [ebp-0x20], eax
-CG_DoControllers_240:
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_240:
 	xor esi, esi
 	mov [ebp-0x1c], esi
 	lea ebx, [ebp-0x24]
@@ -563,7 +563,7 @@ CG_DoControllers_240:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjSetControlTagAngles
+	call _Z23DObjSetControlTagAnglesPK6DObj_sPijPf
 	mov [esp+0xc], ebx
 	mov edx, [ebp+0x8]
 	movzx eax, byte [edx+0x4e]
@@ -572,7 +572,7 @@ CG_DoControllers_240:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjSetControlTagAngles
+	call _Z23DObjSetControlTagAnglesPK6DObj_sPijPf
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x48]
 	mov [ebp-0x24], eax
@@ -584,9 +584,9 @@ CG_DoControllers_240:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjSetControlTagAngles
-	jmp CG_DoControllers_130
-CG_DoControllers_90:
+	call _Z23DObjSetControlTagAnglesPK6DObj_sPijPf
+	jmp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_130
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_90:
 	mov eax, [ebp-0x44]
 	mov [ebp-0x80], eax
 	mov eax, [ebp-0x40]
@@ -599,7 +599,7 @@ CG_DoControllers_90:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x80]
 	mov [esp], eax
-	call DObjSetTrans
+	call _Z12DObjSetTransP11DObjAnimMatPKf
 	movss xmm3, dword [ebp-0x80]
 	movss xmm0, dword [ebp-0x7c]
 	movss xmm1, dword [ebp-0x78]
@@ -612,15 +612,15 @@ CG_DoControllers_90:
 	mulss xmm2, xmm2
 	addss xmm3, xmm2
 	ucomiss xmm3, [_float_0_00000000]
-	jp CG_DoControllers_170
-	jz CG_DoControllers_180
-CG_DoControllers_170:
+	jp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_170
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_180
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_170:
 	movss xmm0, dword [_float_2_00000000]
 	divss xmm0, xmm3
 	movss [ebp-0x64], xmm0
 	movss xmm0, dword [_float_1_00000000]
 	movss [ebp-0xbc], xmm0
-CG_DoControllers_200:
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_200:
 	movss xmm4, dword [ebx]
 	movss xmm2, dword [ebp-0x38]
 	movss xmm5, dword [ebx+0xc]
@@ -744,35 +744,35 @@ CG_DoControllers_200:
 	addss xmm4, [ebp-0x68]
 	movss [ebp-0x1c], xmm4
 	movaps xmm0, xmm1
-	jmp CG_DoControllers_190
-CG_DoControllers_180:
+	jmp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_190
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_180:
 	movss xmm6, dword [_float_1_00000000]
 	movss [ebp-0xbc], xmm6
 	movss [ebp-0x74], xmm6
 	mov dword [ebp-0x64], 0x40000000
-	jmp CG_DoControllers_200
-CG_DoControllers_50:
+	jmp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_200
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_50:
 	xor eax, eax
-	jmp CG_DoControllers_210
-CG_DoControllers_220:
+	jmp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_210
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_220:
 	cmp dword [ebp+eax*4-0x34], 0xffffffff
-	jnz CG_DoControllers_150
-CG_DoControllers_210:
+	jnz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_150
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_210:
 	add eax, 0x1
 	cmp edx, eax
-	ja CG_DoControllers_220
-	jmp CG_DoControllers_40
-CG_DoControllers_30:
+	ja _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_220
+	jmp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_40
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_30:
 	mov eax, [ebp+0x8]
 	mov ecx, [eax+0x40]
 	test ecx, ecx
-	jz CG_DoControllers_130
+	jz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_130
 	mov edx, [eax+0x40]
 	mov [ebp-0xb0], edx
 	lea esi, [eax+0x40]
 	xor edi, edi
 	mov ebx, edx
-CG_DoControllers_230:
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_230:
 	mov [esp+0xc], ebx
 	movzx eax, byte [esi+0x4]
 	mov [esp+0x8], eax
@@ -780,12 +780,12 @@ CG_DoControllers_230:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjSetControlTagAngles
+	call _Z23DObjSetControlTagAnglesPK6DObj_sPijPf
 	add edi, 0x1
 	add ebx, 0xc
 	add esi, 0x1
 	cmp edi, 0x6
-	jnz CG_DoControllers_230
+	jnz _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_230
 	mov eax, [ebp-0xb0]
 	add eax, 0x48
 	mov [esp+0x10], eax
@@ -797,9 +797,9 @@ CG_DoControllers_230:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjSetLocalTag
-	jmp CG_DoControllers_130
-CG_DoControllers_160:
+	call _Z15DObjSetLocalTagPK6DObj_sPijPKfS4_
+	jmp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_130
+_Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_160:
 	mov ebx, [edx+0x40]
 	movss xmm0, dword [ebx]
 	subss xmm0, [edx+0x28]
@@ -831,12 +831,12 @@ CG_DoControllers_160:
 	mulss xmm0, [_float_360_00000000]
 	movss [ebp-0x20], xmm0
 	mov edx, [ebp+0x8]
-	jmp CG_DoControllers_240
+	jmp _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi_240
 	nop
 
 
 ;CG_VehPoseControllers(cpose_t const*, DObj_s const*, int*)
-CG_VehPoseControllers:
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -868,8 +868,8 @@ CG_VehPoseControllers:
 	mulss xmm0, xmm1
 	movss [ebp-0x30], xmm0
 	cmp byte [edi+0x2], 0xc
-	jz CG_VehPoseControllers_10
-CG_VehPoseControllers_80:
+	jz _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_10
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_80:
 	movsx eax, word [edi+0x42]
 	cvtsi2ss xmm0, eax
 	mulss xmm0, xmm1
@@ -888,7 +888,7 @@ CG_VehPoseControllers_80:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjSetLocalTag
+	call _Z15DObjSetLocalTagPK6DObj_sPijPKfS4_
 	lea eax, [ebp-0x24]
 	mov [esp+0x10], eax
 	mov [esp+0xc], ebx
@@ -898,7 +898,7 @@ CG_VehPoseControllers_80:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjSetLocalTag
+	call _Z15DObjSetLocalTagPK6DObj_sPijPKfS4_
 	lea eax, [ebp-0x30]
 	mov [esp+0x10], eax
 	mov [esp+0xc], ebx
@@ -908,14 +908,14 @@ CG_VehPoseControllers_80:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjSetLocalTag
+	call _Z15DObjSetLocalTagPK6DObj_sPijPKfS4_
 	movss xmm0, dword [edi+0x50]
 	movss [ebp-0x1bc], xmm0
 	lea eax, [ebp-0xd8]
 	mov [esp+0x4], eax
 	lea eax, [edi+0x28]
 	mov [esp], eax
-	call AnglesToAxis
+	call _Z12AnglesToAxisPKfPA3_f
 	lea eax, [edi+0x1c]
 	mov ebx, [edi+0x1c]
 	mov [ebp-0xb4], ebx
@@ -990,12 +990,12 @@ CG_VehPoseControllers_80:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov ebx, eax
 	mov [esp], eax
-	call XModelNumBones
+	call _Z14XModelNumBonesPK6XModel
 	mov [esp], ebx
-	call XModelGetBasePose
+	call _Z17XModelGetBasePosePK6XModel
 	mov [ebp-0x1c0], eax
 	movss xmm0, dword [ebp-0x128]
 	movss [ebp-0x1b4], xmm0
@@ -1053,31 +1053,31 @@ CG_VehPoseControllers_80:
 	movss xmm1, dword [ebp-0x1bc]
 	addss xmm1, xmm0
 	movss [ebp-0x1f0], xmm1
-CG_VehPoseControllers_30:
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_30:
 	movzx esi, byte [ebx+0x5c]
 	cmp esi, 0xfd
-	jbe CG_VehPoseControllers_20
-CG_VehPoseControllers_40:
+	jbe _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_20
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_40:
 	add dword [ebp-0x1b8], 0x1
 	add ebx, 0x1
 	add edi, 0x2
 	cmp dword [ebp-0x1b8], 0x4
-	jnz CG_VehPoseControllers_30
+	jnz _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_30
 	add esp, 0x20c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_VehPoseControllers_20:
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_20:
 	mov [esp+0x8], esi
 	mov eax, [ebp+0x10]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjSetRotTransIndex
+	call _Z20DObjSetRotTransIndexPK6DObj_sPKii
 	test eax, eax
-	jz CG_VehPoseControllers_40
+	jz _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_40
 	mov eax, esi
 	shl eax, 0x5
 	add eax, [ebp-0x1c0]
@@ -1203,35 +1203,35 @@ CG_VehPoseControllers_20:
 	mov [ebp-0x7c], eax
 	pxor xmm0, xmm0
 	ucomiss xmm0, [ebp-0x44]
-	jp CG_VehPoseControllers_50
-	jz CG_VehPoseControllers_60
-CG_VehPoseControllers_50:
+	jp _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_50
+	jz _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_60
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_50:
 	cmp dword [ebp-0x1b8], 0x1
-	jbe CG_VehPoseControllers_70
-CG_VehPoseControllers_60:
+	jbe _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_70
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_60:
 	mov [esp+0xc], esi
 	mov dword [esp+0x8], 0x0
-CG_VehPoseControllers_90:
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_90:
 	lea eax, [ebp-0x88]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjSetLocalTagInternal
-	jmp CG_VehPoseControllers_40
-CG_VehPoseControllers_10:
+	call _Z23DObjSetLocalTagInternalPK6DObj_sPKfS3_i
+	jmp _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_40
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_10:
 	mov eax, [edi+0x48]
 	mov [ebp-0x28], eax
-	jmp CG_VehPoseControllers_80
-CG_VehPoseControllers_70:
+	jmp _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_80
+_Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_70:
 	mov [esp+0xc], esi
 	lea eax, [ebp-0x48]
 	mov [esp+0x8], eax
-	jmp CG_VehPoseControllers_90
+	jmp _Z21CG_VehPoseControllersPK7cpose_tPK6DObj_sPi_90
 	nop
 
 
 ;BG_Player_DoControllers(CEntPlayerInfo const*, DObj_s const*, int*)
-BG_Player_DoControllers:
+_Z23BG_Player_DoControllersPK14CEntPlayerInfoPK6DObj_sPi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1244,7 +1244,7 @@ BG_Player_DoControllers:
 	mov esi, eax
 	xor edi, edi
 	mov ebx, edx
-BG_Player_DoControllers_10:
+_Z23BG_Player_DoControllersPK14CEntPlayerInfoPK6DObj_sPi_10:
 	mov [esp+0xc], ebx
 	movzx eax, byte [esi+0x4]
 	mov [esp+0x8], eax
@@ -1252,12 +1252,12 @@ BG_Player_DoControllers_10:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjSetControlTagAngles
+	call _Z23DObjSetControlTagAnglesPK6DObj_sPijPf
 	add edi, 0x1
 	add ebx, 0xc
 	add esi, 0x1
 	cmp edi, 0x6
-	jnz BG_Player_DoControllers_10
+	jnz _Z23BG_Player_DoControllersPK14CEntPlayerInfoPK6DObj_sPi_10
 	mov eax, [ebp-0x1c]
 	add eax, 0x48
 	mov [esp+0x10], eax
@@ -1269,7 +1269,7 @@ BG_Player_DoControllers_10:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjSetLocalTag
+	call _Z15DObjSetLocalTagPK6DObj_sPijPKfS4_
 	add esp, 0x3c
 	pop ebx
 	pop esi
@@ -1317,7 +1317,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7cb4d, 0x7c994, 0x7cba4, 0x7cbc1, 0x7cbde, 0x7cc1d, 0x7ccc9, 0x7c9d1, 0x7c9ea, 0x7c925, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7e559, 0x7e52d, 0x7e616, 0x7e5e5, 0x7e52d, 0x7e5bf, 0x7e589, 0x7f1fb, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7fc19, 0x7f323, 0x7f368, 0x7f38e, 0x7f3dd, 0x7f3b4, 0x7f403, 0x7f42c, 0x7fb0e, 0x7f5ee, 0x7f613, 0x7f206, 0x7f4af, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f206, 0x7f507, 0x7f620, 0x7fa73, 0x7f530, 0x7f2e4, 0x7f2e4, 0x7fe63, 0x7fcb2, 0x7fe8a, 0x7f033, 0x7fbe2, 0x7f206, 0x7f206, 0x7fc04, 0x7fdc1, 0x7fc4e, 0x7fd4e, 0x7fc8c, 0x7fe35, 0x7fab2, 0x7fc2e, 0x7fb37, 0x0, 0x0, 0x816a2, 0x816d9, 0x81585, 0x816cb, 0x816a2, 0x816cb, 0x817a1, 0x816cb, 0x81672, 0x81672, 0x816cb, 0x817d9, 0x816cb, 0x817a1, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of cg_pose_mp:
@@ -1354,7 +1354,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

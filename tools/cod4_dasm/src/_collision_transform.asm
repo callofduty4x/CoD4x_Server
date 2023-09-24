@@ -5,11 +5,13 @@
 	extern ODE_GeomDestruct
 	extern _ZN6dxGeomC2EP7dxSpaceiP6dxBody
 	extern dRSetIdentity
+	extern _ZTV6dxGeom
 	extern _Unwind_Resume
 	extern dFree
-	extern ODE_AllocateGeom
+	extern _Z16ODE_AllocateGeomv
 	extern dSpaceRemove
 	extern _ZN6dxGeom10bodyRemoveEv
+	extern _ZTI6dxGeom
 	extern _ZN6dxGeom8AABBTestEPS_Pf
 
 ;Exports of collision_transform:
@@ -17,13 +19,14 @@
 	global ODE_GeomTransformGetOffset
 	global ODE_GeomTransformSetOffset
 	global ODE_GeomTransformSetRotation
-	global dCollideTransform
+	global _Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi
 	global _ZN15dxGeomTransform11computeAABBEv
 	global _ZN15dxGeomTransform14computeFinalTxEv
 	global _ZN15dxGeomTransform8DestructEv
 	global _ZN15dxGeomTransformC1EP7dxSpaceP6dxBody
 	global _ZN15dxGeomTransformD0Ev
 	global _ZN15dxGeomTransformD1Ev
+	global _ZTI15dxGeomTransform
 	global dCreateGeomTransform
 	global dGeomTransformSetGeom
 	global _ZTV15dxGeomTransform
@@ -153,7 +156,7 @@ ODE_GeomTransformSetRotation_10:
 
 
 ;dCollideTransform(dxGeom*, dxGeom*, int, dContactGeom*, int)
-dCollideTransform:
+_Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -165,7 +168,7 @@ dCollideTransform:
 	mov esi, [ebp+0x18]
 	mov edx, [ebx+0x4c]
 	test edx, edx
-	jz dCollideTransform_10
+	jz _Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_10
 	mov eax, [edx+0x18]
 	mov [ebp-0x24], eax
 	mov eax, [edx+0x1c]
@@ -173,8 +176,8 @@ dCollideTransform:
 	mov eax, [edx+0x10]
 	mov [ebp-0x1c], eax
 	test byte [ebx+0x8], 0x2
-	jnz dCollideTransform_20
-dCollideTransform_50:
+	jnz _Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_20
+_Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_50:
 	lea eax, [ebx+0xc4]
 	mov [edx+0x18], eax
 	mov edx, [ebx+0x4c]
@@ -195,18 +198,18 @@ dCollideTransform_50:
 	mov ecx, eax
 	mov eax, [ebx+0x54]
 	test eax, eax
-	jz dCollideTransform_30
+	jz _Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_30
 	test ecx, ecx
-	jle dCollideTransform_30
+	jle _Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_30
 	xor edx, edx
-dCollideTransform_40:
+_Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_40:
 	mov eax, edx
 	imul eax, esi
 	mov [eax+edi+0x24], ebx
 	add edx, 0x1
 	cmp ecx, edx
-	jnz dCollideTransform_40
-dCollideTransform_30:
+	jnz _Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_40
+_Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_30:
 	mov eax, [ebx+0x4c]
 	mov edx, [ebp-0x24]
 	mov [eax+0x18], edx
@@ -223,12 +226,12 @@ dCollideTransform_30:
 	pop edi
 	pop ebp
 	ret
-dCollideTransform_20:
+_Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_20:
 	mov [esp], ebx
 	call _ZN15dxGeomTransform14computeFinalTxEv
 	mov edx, [ebx+0x4c]
-	jmp dCollideTransform_50
-dCollideTransform_10:
+	jmp _Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_50
+_Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi_10:
 	xor ecx, ecx
 	mov eax, ecx
 	add esp, 0x3c
@@ -496,7 +499,7 @@ _ZN15dxGeomTransformC1EP7dxSpaceP6dxBody:
 	pop ebx
 	pop ebp
 	ret
-	mov edx, [0xd5ccae8]
+	mov edx, _ZTV6dxGeom
 	add edx, 0x8
 	mov [ebx], edx
 	mov [esp], eax
@@ -518,7 +521,7 @@ _ZN15dxGeomTransformD0Ev:
 	test edx, edx
 	jnz _ZN15dxGeomTransformD0Ev_20
 _ZN15dxGeomTransformD0Ev_10:
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [ebx], eax
 	mov dword [esp+0x4], 0xd0
@@ -531,7 +534,7 @@ _ZN15dxGeomTransformD0Ev_10:
 _ZN15dxGeomTransformD0Ev_20:
 	mov [esp], eax
 	call ODE_GeomDestruct
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [ebx], eax
 	mov dword [esp+0x4], 0xd0
@@ -541,7 +544,7 @@ _ZN15dxGeomTransformD0Ev_20:
 	pop ebx
 	pop ebp
 	ret
-	mov edx, [0xd5ccae8]
+	mov edx, _ZTV6dxGeom
 	add edx, 0x8
 	mov [ebx], edx
 	mov [esp], eax
@@ -564,7 +567,7 @@ _ZN15dxGeomTransformD1Ev:
 	test ecx, ecx
 	jnz _ZN15dxGeomTransformD1Ev_20
 _ZN15dxGeomTransformD1Ev_10:
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [ebx], eax
 	add esp, 0x14
@@ -574,14 +577,14 @@ _ZN15dxGeomTransformD1Ev_10:
 _ZN15dxGeomTransformD1Ev_20:
 	mov [esp], eax
 	call ODE_GeomDestruct
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [ebx], eax
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-	mov edx, [0xd5ccae8]
+	mov edx, _ZTV6dxGeom
 	add edx, 0x8
 	mov [ebx], edx
 	mov [esp], eax
@@ -595,7 +598,7 @@ dCreateGeomTransform:
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
-	call ODE_AllocateGeom
+	call _Z16ODE_AllocateGeomv
 	mov ebx, eax
 	test eax, eax
 	jz dCreateGeomTransform_10
@@ -673,8 +676,10 @@ SECTION .data
 
 ;Initialized constant data of collision_transform:
 SECTION .rdata
+;VTypeInfoTable for dxGeomTransform:
+_ZTI15dxGeomTransform: dd 0x8, _cstring_15dxgeomtransfor, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for dxGeomTransform:
-_ZTV15dxGeomTransform: dd 0x0, 0x3b4e80, _ZN15dxGeomTransformD1Ev, _ZN15dxGeomTransformD0Ev, _ZN15dxGeomTransform11computeAABBEv, _ZN6dxGeom8AABBTestEPS_Pf, 0x0, 0x0
+_ZTV15dxGeomTransform: dd 0x0, _ZTI15dxGeomTransform, _ZN15dxGeomTransformD1Ev, _ZN15dxGeomTransformD0Ev, _ZN15dxGeomTransform11computeAABBEv, _ZN6dxGeom8AABBTestEPS_Pf, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of collision_transform:
@@ -683,6 +688,7 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
+_cstring_15dxgeomtransfor:		db "15dxGeomTransform",0
 
 
 

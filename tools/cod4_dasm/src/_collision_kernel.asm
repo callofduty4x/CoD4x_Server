@@ -2,46 +2,53 @@
 	extern dSpaceCollide2
 	extern _ZZ9Phys_InitvE15Phys_Stop_f_VAR
 	extern memset
-	extern dCollideTransform
-	extern dCollideSphereSphere
-	extern dCollideRayPlane
-	extern dCollideRayCCylinder
-	extern dCollideRayBox
-	extern dCollideRaySphere
-	extern dCollideCCylinderPlane
-	extern dCollideCCylinderCCylinder
-	extern dCollideCCylinderBox
-	extern dCollideCCylinderSphere
-	extern dCollideBoxPlane
-	extern dCollideBoxBox
-	extern dCollideSpherePlane
-	extern dCollideSphereBox
-	extern ODE_AllocateGeom
+	extern _Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi
+	extern _Z20dCollideSphereSphereP6dxGeomS0_iP12dContactGeomi
+	extern _Z16dCollideRayPlaneP6dxGeomS0_iP12dContactGeomi
+	extern _Z20dCollideRayCCylinderP6dxGeomS0_iP12dContactGeomi
+	extern _Z14dCollideRayBoxP6dxGeomS0_iP12dContactGeomi
+	extern _Z17dCollideRaySphereP6dxGeomS0_iP12dContactGeomi
+	extern _Z22dCollideCCylinderPlaneP6dxGeomS0_iP12dContactGeomi
+	extern _Z26dCollideCCylinderCCylinderP6dxGeomS0_iP12dContactGeomi
+	extern _Z20dCollideCCylinderBoxP6dxGeomS0_iP12dContactGeomi
+	extern _Z23dCollideCCylinderSphereP6dxGeomS0_iP12dContactGeomi
+	extern _Z16dCollideBoxPlaneP6dxGeomS0_iP12dContactGeomi
+	extern _Z14dCollideBoxBoxP6dxGeomS0_iP12dContactGeomi
+	extern _Z19dCollideSpherePlaneP6dxGeomS0_iP12dContactGeomi
+	extern _Z17dCollideSphereBoxP6dxGeomS0_iP12dContactGeomi
+	extern _Z16ODE_AllocateGeomv
 	extern _Unwind_Resume
 	extern dSpaceRemove
 	extern dGeomBoxGetLengths
 	extern ODE_GeomTransformGetAAContainedBox
-	extern Phys_GeomUserGetAAContainedBox
+	extern _Z30Phys_GeomUserGetAAContainedBoxP6dxGeomPfS1_
 	extern odeGlob
 	extern dFree
 	extern dSetZero
 	extern dSpaceAdd
 	extern dGeomMoved
 	extern _ZN15dxGeomTransform8DestructEv
-	extern Sys_EnterCriticalSection
-	extern Pool_Free
-	extern Sys_LeaveCriticalSection
+	extern _Z24Sys_EnterCriticalSection15CriticalSection
+	extern _Z9Pool_FreePvP10pooldata_t
+	extern _Z24Sys_LeaveCriticalSection15CriticalSection
 	extern _ZN7dxSpace5clearEv
+	extern _ZTI7dxSpace
+	extern _ZTI7CThread
+	extern _ZTI12CSoundObject
+	extern _ZTI15IDirect3DQuery9
+	extern _ZTI8IUnknown
 
 ;Exports of collision_kernel:
+	global _ZTV6dxGeom
+	global _ZTI6dxGeom
 	global num_user_classes
 	global colliders_initialized
 	global user_classes
 	global colliders
-	global dCollideSpaceGeom
-	global space_geom_collider
-	global dCollideUserGeomWithGeom
-	global initColliders
+	global _Z17dCollideSpaceGeomP6dxGeomS0_iP12dContactGeomi
+	global _Z19space_geom_colliderPvP6dxGeomS1_
+	global _Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi
+	global _Z13initCollidersv
 	global ODE_BodyGetFirstGeom
 	global ODE_CreateGeom
 	global ODE_GeomDestruct
@@ -56,6 +63,8 @@
 	global _ZN6dxGeomC2EP7dxSpaceiP6dxBody
 	global _ZN6dxGeomD0Ev
 	global _ZN6dxGeomD1Ev
+	global _ZTI10dxUserGeom
+	global _ZTI5dBase
 	global dCloseODE
 	global dCollide
 	global dCreateGeomClass
@@ -76,7 +85,7 @@ SECTION .text
 
 
 ;dCollideSpaceGeom(dxGeom*, dxGeom*, int, dContactGeom*, int)
-dCollideSpaceGeom:
+_Z17dCollideSpaceGeomP6dxGeomS0_iP12dContactGeomi:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -87,7 +96,7 @@ dCollideSpaceGeom:
 	mov [ebp-0x10], eax
 	mov eax, [ebp+0x18]
 	mov [ebp-0xc], eax
-	mov dword [esp+0xc], space_geom_collider
+	mov dword [esp+0xc], _Z19space_geom_colliderPvP6dxGeomS1_
 	lea eax, [ebp-0x14]
 	mov [esp+0x8], eax
 	mov eax, [ebp+0xc]
@@ -107,7 +116,7 @@ dCollideSpaceGeom:
 
 
 ;space_geom_collider(void*, dxGeom*, dxGeom*)
-space_geom_collider:
+_Z19space_geom_colliderPvP6dxGeomS1_:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -115,7 +124,7 @@ space_geom_collider:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	test dx, dx
-	jz space_geom_collider_10
+	jz _Z19space_geom_colliderPvP6dxGeomS1__10
 	mov eax, [ebx+0x8]
 	mov [esp+0x10], eax
 	mov eax, [ebx+0x4]
@@ -130,7 +139,7 @@ space_geom_collider:
 	imul edx, [ebx+0x8]
 	add [ebx+0x4], edx
 	sub [ebx], eax
-space_geom_collider_10:
+_Z19space_geom_colliderPvP6dxGeomS1__10:
 	add esp, 0x24
 	pop ebx
 	pop ebp
@@ -138,7 +147,7 @@ space_geom_collider_10:
 
 
 ;dCollideUserGeomWithGeom(dxGeom*, dxGeom*, int, dContactGeom*, int)
-dCollideUserGeomWithGeom:
+_Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -164,10 +173,10 @@ dCollideUserGeomWithGeom:
 	call dword [eax*4+_ZZ9Phys_InitvE15Phys_Stop_f_VAR+0x30]
 	mov esi, eax
 	test eax, eax
-	jz dCollideUserGeomWithGeom_10
-dCollideUserGeomWithGeom_40:
+	jz _Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_10
+_Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_40:
 	mov dword [ebp-0x1c], 0x0
-dCollideUserGeomWithGeom_50:
+_Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_50:
 	mov eax, edi
 	shl eax, 0x4
 	add eax, ebx
@@ -198,25 +207,25 @@ dCollideUserGeomWithGeom_50:
 	pop edi
 	pop ebp
 	jmp dCollide
-dCollideUserGeomWithGeom_10:
+_Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_10:
 	cmp ebx, 0xa
-	jle dCollideUserGeomWithGeom_20
+	jle _Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_20
 	cmp ebx, 0xf
-	jle dCollideUserGeomWithGeom_30
-dCollideUserGeomWithGeom_20:
+	jle _Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_30
+_Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_20:
 	xor esi, esi
-	jmp dCollideUserGeomWithGeom_40
-dCollideUserGeomWithGeom_30:
+	jmp _Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_40
+_Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_30:
 	lea eax, [ebx+ebx*4]
 	mov [esp], edi
 	call dword [eax*4+_ZZ9Phys_InitvE15Phys_Stop_f_VAR+0x30]
 	mov esi, eax
 	mov dword [ebp-0x1c], 0x1
-	jmp dCollideUserGeomWithGeom_50
+	jmp _Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi_50
 
 
 ;initColliders()
-initColliders:
+_Z13initCollidersv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -225,15 +234,15 @@ initColliders:
 	sub esp, 0x1c
 	mov eax, [colliders_initialized]
 	test eax, eax
-	jz initColliders_10
-initColliders_360:
+	jz _Z13initCollidersv_10
+_Z13initCollidersv_360:
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-initColliders_10:
+_Z13initCollidersv_10:
 	mov dword [colliders_initialized], 0x1
 	mov dword [esp+0x8], 0x800
 	mov dword [esp+0x4], 0x0
@@ -242,299 +251,299 @@ initColliders_10:
 	mov edi, 0x8
 	mov esi, colliders+0x400
 	mov ebx, colliders+0x40
-initColliders_70:
+_Z13initCollidersv_70:
 	lea edx, [ebx+0x4]
 	lea eax, [esi+0x4]
 	mov ecx, 0x10
-	jmp initColliders_20
-initColliders_50:
+	jmp _Z13initCollidersv_20
+_Z13initCollidersv_50:
 	cmp dword [edx-0x4], 0x0
-	jz initColliders_30
-initColliders_60:
+	jz _Z13initCollidersv_30
+_Z13initCollidersv_60:
 	sub edx, 0xffffff80
 	add eax, 0x8
 	sub ecx, 0x1
-	jz initColliders_40
-initColliders_20:
+	jz _Z13initCollidersv_40
+_Z13initCollidersv_20:
 	cmp dword [eax-0x4], 0x0
-	jnz initColliders_50
-	mov dword [eax-0x4], dCollideSpaceGeom
+	jnz _Z13initCollidersv_50
+	mov dword [eax-0x4], _Z17dCollideSpaceGeomP6dxGeomS0_iP12dContactGeomi
 	mov dword [eax], 0x0
 	cmp dword [edx-0x4], 0x0
-	jnz initColliders_60
-initColliders_30:
-	mov dword [edx-0x4], dCollideSpaceGeom
+	jnz _Z13initCollidersv_60
+_Z13initCollidersv_30:
+	mov dword [edx-0x4], _Z17dCollideSpaceGeomP6dxGeomS0_iP12dContactGeomi
 	mov dword [edx], 0x1
 	sub edx, 0xffffff80
 	add eax, 0x8
 	sub ecx, 0x1
-	jnz initColliders_20
-initColliders_40:
+	jnz _Z13initCollidersv_20
+_Z13initCollidersv_40:
 	add edi, 0x1
 	add ebx, 0x8
 	sub esi, 0xffffff80
 	cmp edi, 0xb
-	jnz initColliders_70
+	jnz _Z13initCollidersv_70
 	mov eax, [colliders]
 	test eax, eax
-	jz initColliders_80
-initColliders_390:
+	jz _Z13initCollidersv_80
+_Z13initCollidersv_390:
 	mov eax, [colliders]
 	test eax, eax
-	jz initColliders_90
-initColliders_640:
+	jz _Z13initCollidersv_90
+_Z13initCollidersv_640:
 	mov eax, [colliders+0x8]
 	test eax, eax
-	jz initColliders_100
-initColliders_630:
+	jz _Z13initCollidersv_100
+_Z13initCollidersv_630:
 	mov edi, [colliders+0x80]
 	test edi, edi
-	jz initColliders_110
-initColliders_620:
+	jz _Z13initCollidersv_110
+_Z13initCollidersv_620:
 	mov esi, [colliders+0x20]
 	test esi, esi
-	jz initColliders_120
-initColliders_610:
+	jz _Z13initCollidersv_120
+_Z13initCollidersv_610:
 	mov ebx, [colliders+0x200]
 	test ebx, ebx
-	jz initColliders_130
-initColliders_600:
+	jz _Z13initCollidersv_130
+_Z13initCollidersv_600:
 	mov ecx, [colliders+0x88]
 	test ecx, ecx
-	jz initColliders_140
-initColliders_590:
+	jz _Z13initCollidersv_140
+_Z13initCollidersv_590:
 	mov edx, [colliders+0x88]
 	test edx, edx
-	jz initColliders_150
-initColliders_580:
+	jz _Z13initCollidersv_150
+_Z13initCollidersv_580:
 	mov eax, [colliders+0xa0]
 	test eax, eax
-	jz initColliders_160
-initColliders_570:
+	jz _Z13initCollidersv_160
+_Z13initCollidersv_570:
 	mov eax, [colliders+0x208]
 	test eax, eax
-	jz initColliders_170
-initColliders_560:
+	jz _Z13initCollidersv_170
+_Z13initCollidersv_560:
 	mov eax, [colliders+0x100]
 	test eax, eax
-	jz initColliders_180
-initColliders_550:
+	jz _Z13initCollidersv_180
+_Z13initCollidersv_550:
 	mov eax, [colliders+0x10]
 	test eax, eax
-	jz initColliders_190
-initColliders_540:
+	jz _Z13initCollidersv_190
+_Z13initCollidersv_540:
 	mov eax, [colliders+0x108]
 	test eax, eax
-	jz initColliders_200
-initColliders_530:
+	jz _Z13initCollidersv_200
+_Z13initCollidersv_530:
 	mov eax, [colliders+0x90]
 	test eax, eax
-	jz initColliders_210
-initColliders_520:
+	jz _Z13initCollidersv_210
+_Z13initCollidersv_520:
 	mov edi, [colliders+0x110]
 	test edi, edi
-	jz initColliders_220
-initColliders_510:
+	jz _Z13initCollidersv_220
+_Z13initCollidersv_510:
 	mov esi, [colliders+0x110]
 	test esi, esi
-	jz initColliders_230
-initColliders_500:
+	jz _Z13initCollidersv_230
+_Z13initCollidersv_500:
 	mov ebx, [colliders+0x120]
 	test ebx, ebx
-	jz initColliders_240
-initColliders_490:
+	jz _Z13initCollidersv_240
+_Z13initCollidersv_490:
 	mov ecx, [colliders+0x210]
 	test ecx, ecx
-	jz initColliders_250
-initColliders_480:
+	jz _Z13initCollidersv_250
+_Z13initCollidersv_480:
 	mov edx, [colliders+0x280]
 	test edx, edx
-	jz initColliders_260
-initColliders_470:
+	jz _Z13initCollidersv_260
+_Z13initCollidersv_470:
 	mov eax, [colliders+0x28]
 	test eax, eax
-	jz initColliders_270
-initColliders_460:
+	jz _Z13initCollidersv_270
+_Z13initCollidersv_460:
 	mov eax, [colliders+0x288]
 	test eax, eax
-	jz initColliders_280
-initColliders_450:
+	jz _Z13initCollidersv_280
+_Z13initCollidersv_450:
 	mov eax, [colliders+0xa8]
 	test eax, eax
-	jz initColliders_290
-initColliders_440:
+	jz _Z13initCollidersv_290
+_Z13initCollidersv_440:
 	mov eax, [colliders+0x290]
 	test eax, eax
-	jz initColliders_300
-initColliders_430:
+	jz _Z13initCollidersv_300
+_Z13initCollidersv_430:
 	mov eax, [colliders+0x128]
 	test eax, eax
-	jz initColliders_310
-initColliders_420:
+	jz _Z13initCollidersv_310
+_Z13initCollidersv_420:
 	mov eax, [colliders+0x2a0]
 	test eax, eax
-	jz initColliders_320
-initColliders_410:
+	jz _Z13initCollidersv_320
+_Z13initCollidersv_410:
 	mov edi, [colliders+0x228]
 	test edi, edi
-	jz initColliders_330
-initColliders_400:
+	jz _Z13initCollidersv_330
+_Z13initCollidersv_400:
 	mov eax, colliders
 	mov edx, colliders
-	mov ecx, dCollideTransform
-	jmp initColliders_340
-initColliders_370:
+	mov ecx, _Z17dCollideTransformP6dxGeomS0_iP12dContactGeomi
+	jmp _Z13initCollidersv_340
+_Z13initCollidersv_370:
 	mov ebx, [edx+0x30]
 	test ebx, ebx
-	jz initColliders_350
-initColliders_380:
+	jz _Z13initCollidersv_350
+_Z13initCollidersv_380:
 	add eax, 0x8
 	sub edx, 0xffffff80
 	cmp eax, colliders+0x80
-	jz initColliders_360
-initColliders_340:
+	jz _Z13initCollidersv_360
+_Z13initCollidersv_340:
 	mov esi, [eax+0x300]
 	test esi, esi
-	jnz initColliders_370
+	jnz _Z13initCollidersv_370
 	mov [eax+0x300], ecx
 	mov dword [eax+0x304], 0x0
 	mov ebx, [edx+0x30]
 	test ebx, ebx
-	jnz initColliders_380
-initColliders_350:
+	jnz _Z13initCollidersv_380
+_Z13initCollidersv_350:
 	mov [edx+0x30], ecx
 	mov dword [edx+0x34], 0x1
-	jmp initColliders_380
-initColliders_80:
-	mov eax, dCollideSphereSphere
+	jmp _Z13initCollidersv_380
+_Z13initCollidersv_80:
+	mov eax, _Z20dCollideSphereSphereP6dxGeomS0_iP12dContactGeomi
 	mov [colliders], eax
 	mov dword [colliders+0x4], 0x0
-	jmp initColliders_390
-initColliders_330:
-	mov eax, dCollideRayPlane
+	jmp _Z13initCollidersv_390
+_Z13initCollidersv_330:
+	mov eax, _Z16dCollideRayPlaneP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x228], eax
 	mov dword [colliders+0x22c], 0x1
-	jmp initColliders_400
-initColliders_320:
-	mov eax, dCollideRayPlane
+	jmp _Z13initCollidersv_400
+_Z13initCollidersv_320:
+	mov eax, _Z16dCollideRayPlaneP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x2a0], eax
 	mov dword [colliders+0x2a4], 0x0
-	jmp initColliders_410
-initColliders_310:
-	mov eax, dCollideRayCCylinder
+	jmp _Z13initCollidersv_410
+_Z13initCollidersv_310:
+	mov eax, _Z20dCollideRayCCylinderP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x128], eax
 	mov dword [colliders+0x12c], 0x1
-	jmp initColliders_420
-initColliders_300:
-	mov eax, dCollideRayCCylinder
+	jmp _Z13initCollidersv_420
+_Z13initCollidersv_300:
+	mov eax, _Z20dCollideRayCCylinderP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x290], eax
 	mov dword [colliders+0x294], 0x0
-	jmp initColliders_430
-initColliders_290:
-	mov eax, dCollideRayBox
+	jmp _Z13initCollidersv_430
+_Z13initCollidersv_290:
+	mov eax, _Z14dCollideRayBoxP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0xa8], eax
 	mov dword [colliders+0xac], 0x1
-	jmp initColliders_440
-initColliders_280:
-	mov eax, dCollideRayBox
+	jmp _Z13initCollidersv_440
+_Z13initCollidersv_280:
+	mov eax, _Z14dCollideRayBoxP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x288], eax
 	mov dword [colliders+0x28c], 0x0
-	jmp initColliders_450
-initColliders_270:
-	mov eax, dCollideRaySphere
+	jmp _Z13initCollidersv_450
+_Z13initCollidersv_270:
+	mov eax, _Z17dCollideRaySphereP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x28], eax
 	mov dword [colliders+0x2c], 0x1
-	jmp initColliders_460
-initColliders_260:
-	mov eax, dCollideRaySphere
+	jmp _Z13initCollidersv_460
+_Z13initCollidersv_260:
+	mov eax, _Z17dCollideRaySphereP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x280], eax
 	mov dword [colliders+0x284], 0x0
-	jmp initColliders_470
-initColliders_250:
-	mov eax, dCollideCCylinderPlane
+	jmp _Z13initCollidersv_470
+_Z13initCollidersv_250:
+	mov eax, _Z22dCollideCCylinderPlaneP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x210], eax
 	mov dword [colliders+0x214], 0x1
-	jmp initColliders_480
-initColliders_240:
-	mov eax, dCollideCCylinderPlane
+	jmp _Z13initCollidersv_480
+_Z13initCollidersv_240:
+	mov eax, _Z22dCollideCCylinderPlaneP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x120], eax
 	mov dword [colliders+0x124], 0x0
-	jmp initColliders_490
-initColliders_230:
-	mov eax, dCollideCCylinderCCylinder
+	jmp _Z13initCollidersv_490
+_Z13initCollidersv_230:
+	mov eax, _Z26dCollideCCylinderCCylinderP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x110], eax
 	mov dword [colliders+0x114], 0x1
-	jmp initColliders_500
-initColliders_220:
-	mov eax, dCollideCCylinderCCylinder
+	jmp _Z13initCollidersv_500
+_Z13initCollidersv_220:
+	mov eax, _Z26dCollideCCylinderCCylinderP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x110], eax
 	mov dword [colliders+0x114], 0x0
-	jmp initColliders_510
-initColliders_210:
-	mov eax, dCollideCCylinderBox
+	jmp _Z13initCollidersv_510
+_Z13initCollidersv_210:
+	mov eax, _Z20dCollideCCylinderBoxP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x90], eax
 	mov dword [colliders+0x94], 0x1
-	jmp initColliders_520
-initColliders_200:
-	mov eax, dCollideCCylinderBox
+	jmp _Z13initCollidersv_520
+_Z13initCollidersv_200:
+	mov eax, _Z20dCollideCCylinderBoxP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x108], eax
 	mov dword [colliders+0x10c], 0x0
-	jmp initColliders_530
-initColliders_190:
-	mov eax, dCollideCCylinderSphere
+	jmp _Z13initCollidersv_530
+_Z13initCollidersv_190:
+	mov eax, _Z23dCollideCCylinderSphereP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x10], eax
 	mov dword [colliders+0x14], 0x1
-	jmp initColliders_540
-initColliders_180:
-	mov eax, dCollideCCylinderSphere
+	jmp _Z13initCollidersv_540
+_Z13initCollidersv_180:
+	mov eax, _Z23dCollideCCylinderSphereP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x100], eax
 	mov dword [colliders+0x104], 0x0
-	jmp initColliders_550
-initColliders_170:
-	mov eax, dCollideBoxPlane
+	jmp _Z13initCollidersv_550
+_Z13initCollidersv_170:
+	mov eax, _Z16dCollideBoxPlaneP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x208], eax
 	mov dword [colliders+0x20c], 0x1
-	jmp initColliders_560
-initColliders_160:
-	mov eax, dCollideBoxPlane
+	jmp _Z13initCollidersv_560
+_Z13initCollidersv_160:
+	mov eax, _Z16dCollideBoxPlaneP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0xa0], eax
 	mov dword [colliders+0xa4], 0x0
-	jmp initColliders_570
-initColliders_150:
-	mov eax, dCollideBoxBox
+	jmp _Z13initCollidersv_570
+_Z13initCollidersv_150:
+	mov eax, _Z14dCollideBoxBoxP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x88], eax
 	mov dword [colliders+0x8c], 0x1
-	jmp initColliders_580
-initColliders_140:
-	mov eax, dCollideBoxBox
+	jmp _Z13initCollidersv_580
+_Z13initCollidersv_140:
+	mov eax, _Z14dCollideBoxBoxP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x88], eax
 	mov dword [colliders+0x8c], 0x0
-	jmp initColliders_590
-initColliders_130:
-	mov eax, dCollideSpherePlane
+	jmp _Z13initCollidersv_590
+_Z13initCollidersv_130:
+	mov eax, _Z19dCollideSpherePlaneP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x200], eax
 	mov dword [colliders+0x204], 0x1
-	jmp initColliders_600
-initColliders_120:
-	mov eax, dCollideSpherePlane
+	jmp _Z13initCollidersv_600
+_Z13initCollidersv_120:
+	mov eax, _Z19dCollideSpherePlaneP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x20], eax
 	mov dword [colliders+0x24], 0x0
-	jmp initColliders_610
-initColliders_110:
-	mov eax, dCollideSphereBox
+	jmp _Z13initCollidersv_610
+_Z13initCollidersv_110:
+	mov eax, _Z17dCollideSphereBoxP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x80], eax
 	mov dword [colliders+0x84], 0x1
-	jmp initColliders_620
-initColliders_100:
-	mov eax, dCollideSphereBox
+	jmp _Z13initCollidersv_620
+_Z13initCollidersv_100:
+	mov eax, _Z17dCollideSphereBoxP6dxGeomS0_iP12dContactGeomi
 	mov [colliders+0x8], eax
 	mov dword [colliders+0xc], 0x0
-	jmp initColliders_630
-initColliders_90:
-	mov eax, dCollideSphereSphere
+	jmp _Z13initCollidersv_630
+_Z13initCollidersv_90:
+	mov eax, _Z20dCollideSphereSphereP6dxGeomS0_iP12dContactGeomi
 	mov [colliders], eax
 	mov dword [colliders+0x4], 0x1
-	jmp initColliders_640
+	jmp _Z13initCollidersv_640
 
 
 ;ODE_BodyGetFirstGeom
@@ -557,7 +566,7 @@ ODE_CreateGeom:
 	push ebx
 	sub esp, 0x1c
 	mov edi, [ebp+0x8]
-	call ODE_AllocateGeom
+	call _Z16ODE_AllocateGeomv
 	mov ebx, eax
 	test eax, eax
 	jz ODE_CreateGeom_10
@@ -697,7 +706,7 @@ ODE_GeomGetAAContainedBox_30:
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call Phys_GeomUserGetAAContainedBox
+	call _Z30Phys_GeomUserGetAAContainedBoxP6dxGeomPfS1_
 	leave
 	ret
 
@@ -761,7 +770,7 @@ _ZN10dxUserGeomD0Ev:
 	sub esp, 0x18
 	mov edx, [ebp+0x8]
 	mov dword [edx], _ZTV10dxUserGeom+0x8
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [edx], eax
 	mov dword [esp+0x4], 0x5c
@@ -778,7 +787,7 @@ _ZN10dxUserGeomD1Ev:
 	mov ebp, esp
 	mov edx, [ebp+0x8]
 	mov dword [edx], _ZTV10dxUserGeom+0x8
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [edx], eax
 	pop ebp
@@ -836,10 +845,10 @@ _ZN6dxGeomC2EP7dxSpaceiP6dxBody:
 	mov ebx, [ebp+0x8]
 	mov edi, [ebp+0xc]
 	mov esi, [ebp+0x10]
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [ebx], eax
-	call initColliders
+	call _Z13initCollidersv
 	mov dword [ebx+0x4], 0xffffffff
 	cmp esi, 0x1
 	sbb eax, eax
@@ -928,7 +937,7 @@ _ZN6dxGeomD0Ev:
 	mov ebp, esp
 	sub esp, 0x18
 	mov edx, [ebp+0x8]
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [edx], eax
 	mov dword [esp+0x4], 0x4c
@@ -943,7 +952,7 @@ _ZN6dxGeomD0Ev:
 _ZN6dxGeomD1Ev:
 	push ebp
 	mov ebp, esp
-	mov edx, [0xd5ccae8]
+	mov edx, _ZTV6dxGeom
 	add edx, 0x8
 	mov eax, [ebp+0x8]
 	mov [eax], edx
@@ -1082,7 +1091,7 @@ dCreateGeomClass:
 	lea esi, [ebx+0xb]
 	add ebx, 0x1
 	mov [num_user_classes], ebx
-	call initColliders
+	call _Z13initCollidersv
 	lea edx, [esi*8+colliders+0x4]
 	mov eax, esi
 	shl eax, 0x7
@@ -1102,13 +1111,13 @@ dCreateGeomClass_10:
 	mov ebx, [eax-0x4]
 	test ebx, ebx
 	jnz dCreateGeomClass_40
-	mov dword [eax-0x4], dCollideUserGeomWithGeom
+	mov dword [eax-0x4], _Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi
 	mov dword [eax], 0x0
 	mov ebx, [edx-0x4]
 	test ebx, ebx
 	jnz dCreateGeomClass_50
 dCreateGeomClass_20:
-	mov dword [edx-0x4], dCollideUserGeomWithGeom
+	mov dword [edx-0x4], _Z24dCollideUserGeomWithGeomP6dxGeomS0_iP12dContactGeomi
 	mov dword [edx], 0x1
 	sub edx, 0xffffff80
 	add eax, 0x8
@@ -1170,17 +1179,17 @@ dGeomFree_40:
 	call _ZN15dxGeomTransform8DestructEv
 dGeomFree_20:
 	mov dword [esp], 0xb
-	call Sys_EnterCriticalSection
+	call _Z24Sys_EnterCriticalSection15CriticalSection
 	mov eax, odeGlob
 	add eax, 0x2c6478
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call Pool_Free
+	call _Z9Pool_FreePvP10pooldata_t
 	mov dword [ebp+0x8], 0xb
 	add esp, 0x14
 	pop ebx
 	pop ebp
-	jmp Sys_LeaveCriticalSection
+	jmp _Z24Sys_LeaveCriticalSection15CriticalSection
 dGeomFree_50:
 	mov [ebp+0x8], ebx
 	add esp, 0x14
@@ -1322,8 +1331,20 @@ SECTION .data
 
 ;Initialized constant data of collision_kernel:
 SECTION .rdata
+;VTable for dxGeom:
+_ZTV6dxGeom: dd 0x0, _ZTI6dxGeom, _ZN6dxGeomD1Ev, _ZN6dxGeomD0Ev, 0x0, _ZN6dxGeom8AABBTestEPS_Pf, 0x0, 0x0, 0x8, _cstring_7dxspace, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_13dxsimplespace, _ZTI7dxSpace, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_5dxbox, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15dxgeomtransfor, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csoundengine, _ZTI7CThread, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csoundobject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csamplesound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12cstreamsound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_14cdirect3dquery, _ZTI15IDirect3DQuery9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15idirect3dquery, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_19copenglbuffero, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15textureinfotyp, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_14copengltexture, 0x0, 0x0, 0x0, 0x0, 0x0
+		db 0x0, 0x0, 0x0
+;VTypeInfoTable for dxGeom:
+_ZTI6dxGeom: dd 0x8, _cstring_6dxgeom, _ZTI5dBase, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_5dbase, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI6dxGeom, _ZN6dxGeomD1Ev, _ZN6dxGeomD0Ev, 0x0, _ZN6dxGeom8AABBTestEPS_Pf, 0x0, 0x0, 0x8, _cstring_7dxspace, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_13dxsimplespace, _ZTI7dxSpace, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_5dxbox, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15dxgeomtransfor, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csoundengine, _ZTI7CThread, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csoundobject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csamplesound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12cstreamsound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_14cdirect3dquery, _ZTI15IDirect3DQuery9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15idirect3dquery, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_19copenglbuffero, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15textureinfotyp, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_14copengltexture, 0x0, 0x0, 0x0, 0x0, 0x0
+		db 0x0, 0x0, 0x0
+;VTypeInfoTable for dxUserGeom:
+_ZTI10dxUserGeom: dd 0x8, _cstring_10dxusergeom, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_6dxgeom, _ZTI5dBase, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_5dbase, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI6dxGeom, _ZN6dxGeomD1Ev, _ZN6dxGeomD0Ev, 0x0, _ZN6dxGeom8AABBTestEPS_Pf, 0x0, 0x0, 0x8, _cstring_7dxspace, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_13dxsimplespace, _ZTI7dxSpace, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_5dxbox, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15dxgeomtransfor, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csoundengine, _ZTI7CThread, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csoundobject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csamplesound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12cstreamsound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_14cdirect3dquery, _ZTI15IDirect3DQuery9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15idirect3dquery, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_19copenglbuffero, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15textureinfotyp, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_14copengltexture, 0x0, 0x0, 0x0, 0x0, 0x0
+		db 0x0, 0x0, 0x0
+;VTypeInfoTable for dBase:
+_ZTI5dBase: dd 0x8, _cstring_5dbase, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI6dxGeom, _ZN6dxGeomD1Ev, _ZN6dxGeomD0Ev, 0x0, _ZN6dxGeom8AABBTestEPS_Pf, 0x0, 0x0, 0x8, _cstring_7dxspace, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_13dxsimplespace, _ZTI7dxSpace, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_5dxbox, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15dxgeomtransfor, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csoundengine, _ZTI7CThread, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csoundobject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12csamplesound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_12cstreamsound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_14cdirect3dquery, _ZTI15IDirect3DQuery9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15idirect3dquery, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_19copenglbuffero, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_15textureinfotyp, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8, _cstring_14copengltexture, 0x0, 0x0, 0x0, 0x0, 0x0
+		db 0x0, 0x0, 0x0
 ;VTable for dxUserGeom:
-_ZTV10dxUserGeom: dd 0x0, 0x3b4da0, _ZN10dxUserGeomD1Ev, _ZN10dxUserGeomD0Ev, _ZN10dxUserGeom11computeAABBEv, _ZN10dxUserGeom8AABBTestEP6dxGeomPf, 0x0, 0x0
+_ZTV10dxUserGeom: dd 0x0, _ZTI10dxUserGeom, _ZN10dxUserGeomD1Ev, _ZN10dxUserGeomD0Ev, _ZN10dxUserGeom11computeAABBEv, _ZN10dxUserGeom8AABBTestEP6dxGeomPf, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of collision_kernel:
@@ -1336,6 +1357,22 @@ colliders: resb 0x860
 
 ;All cstrings:
 SECTION .rdata
+_cstring_7dxspace:		db "7dxSpace",0
+_cstring_13dxsimplespace:		db "13dxSimpleSpace",0
+_cstring_5dxbox:		db "5dxBox",0
+_cstring_15dxgeomtransfor:		db "15dxGeomTransform",0
+_cstring_12csoundengine:		db "12CSoundEngine",0
+_cstring_12csoundobject:		db "12CSoundObject",0
+_cstring_12csamplesound:		db "12CSampleSound",0
+_cstring_12cstreamsound:		db "12CStreamSound",0
+_cstring_14cdirect3dquery:		db "14CDirect3DQuery",0
+_cstring_15idirect3dquery:		db "15IDirect3DQuery9",0
+_cstring_19copenglbuffero:		db "19COpenGLBufferObject",0
+_cstring_15textureinfotyp:		db "15TextureInfoType",0
+_cstring_14copengltexture:		db "14COpenGLTexture",0
+_cstring_6dxgeom:		db "6dxGeom",0
+_cstring_5dbase:		db "5dBase",0
+_cstring_10dxusergeom:		db "10dxUserGeom",0
 
 
 

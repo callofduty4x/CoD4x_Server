@@ -1,36 +1,36 @@
 ;Imports of snd_driver_load_obj:
-	extern Hunk_AllocInternal
+	extern _Z18Hunk_AllocInternali
 	extern Z_MallocInternal
 	extern useFastFile
 	extern Com_Memcpy
-	extern Com_sprintf
+	extern _Z11Com_sprintfPciPKcz
 	extern FS_ReadFile
-	extern AIL_WAV_info
-	extern Com_PrintError
+	extern iAIL_WAV_info
+	extern _Z14Com_PrintErroriPKcz
 	extern FS_FreeFile
 
 ;Exports of snd_driver_load_obj:
-	global MSS_Alloc_LoadObj
-	global MSS_Alloc_FastFile
-	global SND_SetData
-	global Load_SetSoundData
-	global SND_LoadSoundFile
+	global _Z17MSS_Alloc_LoadObjij
+	global _Z18MSS_Alloc_FastFileij
+	global _Z11SND_SetDataP8MssSoundPKv
+	global _Z17Load_SetSoundDataPPhP8MssSound
+	global _Z17SND_LoadSoundFilePKc
 
 
 SECTION .text
 
 
 ;MSS_Alloc_LoadObj(int, unsigned int)
-MSS_Alloc_LoadObj:
+_Z17MSS_Alloc_LoadObjij:
 	push ebp
 	mov ebp, esp
 	pop ebp
-	jmp Hunk_AllocInternal
+	jmp _Z18Hunk_AllocInternali
 	nop
 
 
 ;MSS_Alloc_FastFile(int, unsigned int)
-MSS_Alloc_FastFile:
+_Z18MSS_Alloc_FastFileij:
 	push ebp
 	mov ebp, esp
 	pop ebp
@@ -39,7 +39,7 @@ MSS_Alloc_FastFile:
 
 
 ;SND_SetData(MssSound*, void const*)
-SND_SetData:
+_Z11SND_SetDataP8MssSoundPKv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -52,9 +52,9 @@ SND_SetData:
 	mov ecx, [eax+0x8]
 	mov eax, useFastFile
 	mov eax, [eax]
-	mov edx, MSS_Alloc_FastFile
+	mov edx, _Z18MSS_Alloc_FastFileij
 	cmp byte [eax+0xc], 0x0
-	mov eax, MSS_Alloc_LoadObj
+	mov eax, _Z17MSS_Alloc_LoadObjij
 	cmovz edx, eax
 	mov [esp+0x4], esi
 	mov [esp], ecx
@@ -78,19 +78,19 @@ SND_SetData:
 
 
 ;Load_SetSoundData(unsigned char**, MssSound*)
-Load_SetSoundData:
+_Z17Load_SetSoundDataPPhP8MssSound:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0xc]
 	mov edx, [ebp+0x8]
 	mov edx, [edx]
 	pop ebp
-	jmp SND_SetData
+	jmp _Z11SND_SetDataP8MssSoundPKv
 	nop
 
 
 ;SND_LoadSoundFile(char const*)
-SND_LoadSoundFile:
+_Z17SND_LoadSoundFilePKc:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -102,42 +102,42 @@ SND_LoadSoundFile:
 	mov dword [esp+0x4], 0x100
 	lea ebx, [ebp-0x130]
 	mov [esp], ebx
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	lea eax, [ebp-0xc]
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call FS_ReadFile
 	test eax, eax
-	js SND_LoadSoundFile_10
+	js _Z17SND_LoadSoundFilePKc_10
 	lea eax, [ebp-0x30]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0xc]
 	mov [esp], eax
-	call AIL_WAV_info
+	call iAIL_WAV_info
 	test eax, eax
-	jz SND_LoadSoundFile_20
+	jz _Z17SND_LoadSoundFilePKc_20
 	mov eax, [ebp-0x28]
 	test eax, eax
-	jnz SND_LoadSoundFile_30
+	jnz _Z17SND_LoadSoundFilePKc_30
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_error_sound_file
 	mov dword [esp], 0x1
-	call Com_PrintError
+	call _Z14Com_PrintErroriPKcz
 	xor ebx, ebx
-SND_LoadSoundFile_40:
+_Z17SND_LoadSoundFilePKc_40:
 	mov eax, [ebp-0xc]
 	mov [esp], eax
 	call FS_FreeFile
-SND_LoadSoundFile_50:
+_Z17SND_LoadSoundFilePKc_50:
 	mov eax, ebx
 	add esp, 0x140
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-SND_LoadSoundFile_30:
+_Z17SND_LoadSoundFilePKc_30:
 	mov dword [esp], 0x2c
-	call Hunk_AllocInternal
+	call _Z18Hunk_AllocInternali
 	mov ebx, eax
 	mov [eax], esi
 	mov eax, [ebp-0x30]
@@ -160,22 +160,22 @@ SND_LoadSoundFile_30:
 	mov [ebx+0x24], eax
 	mov edx, [ebp-0x2c]
 	lea eax, [ebx+0x4]
-	call SND_SetData
-	jmp SND_LoadSoundFile_40
-SND_LoadSoundFile_20:
+	call _Z11SND_SetDataP8MssSoundPKv
+	jmp _Z17SND_LoadSoundFilePKc_40
+_Z17SND_LoadSoundFilePKc_20:
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_error_sound_file1
 	mov dword [esp], 0x1
-	call Com_PrintError
+	call _Z14Com_PrintErroriPKcz
 	xor ebx, ebx
-	jmp SND_LoadSoundFile_40
-SND_LoadSoundFile_10:
+	jmp _Z17SND_LoadSoundFilePKc_40
+_Z17SND_LoadSoundFilePKc_10:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_error_sound_file2
 	mov dword [esp], 0x1
-	call Com_PrintError
+	call _Z14Com_PrintErroriPKcz
 	xor ebx, ebx
-	jmp SND_LoadSoundFile_50
+	jmp _Z17SND_LoadSoundFilePKc_50
 
 
 ;Initialized global or static variables of snd_driver_load_obj:

@@ -7,6 +7,8 @@
 	extern _ZN19COpenGLBufferObjectD2Ev
 	extern _ZdlPv
 	extern _Unwind_Resume
+	extern _ZTI19COpenGLBufferObject
+	extern _ZTI18IDirect3DResource9
 
 ;Exports of CDirect3DIndexBuffer:
 	global _ZN20CDirect3DIndexBuffer11GetPriorityEv
@@ -26,7 +28,11 @@
 	global _ZN20CDirect3DIndexBufferC1Ej10_D3DFORMATm8_D3DPOOL
 	global _ZN20CDirect3DIndexBufferD0Ev
 	global _ZN20CDirect3DIndexBufferD1Ev
+	global _ZTI20CDirect3DIndexBuffer
+	global _ZTI21IDirect3DIndexBuffer9
 	global _ZTV20CDirect3DIndexBuffer
+	global _ZThn4_N20CDirect3DIndexBufferD0Ev
+	global _ZThn4_N20CDirect3DIndexBufferD1Ev
 
 
 SECTION .text
@@ -190,10 +196,6 @@ _ZN20CDirect3DIndexBuffer7GetDescEP20_D3DINDEXBUFFER_DESC:
 	mov eax, 0x8876086c
 	pop ebp
 	ret
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN20CDirect3DIndexBufferD1Ev
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN20CDirect3DIndexBufferD0Ev
 
 
 ;CDirect3DIndexBuffer::GetType()
@@ -345,14 +347,30 @@ _ZN20CDirect3DIndexBufferD1Ev:
 	nop
 
 
+;non-virtual thunk to CDirect3DIndexBuffer::~CDirect3DIndexBuffer()
+_ZThn4_N20CDirect3DIndexBufferD0Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN20CDirect3DIndexBufferD0Ev
+
+
+;non-virtual thunk to CDirect3DIndexBuffer::~CDirect3DIndexBuffer()
+_ZThn4_N20CDirect3DIndexBufferD1Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN20CDirect3DIndexBufferD1Ev
+
+
 ;Initialized global or static variables of CDirect3DIndexBuffer:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DIndexBuffer:
 SECTION .rdata
+;VTypeInfoTable for CDirect3DIndexBuffer:
+_ZTI20CDirect3DIndexBuffer: dd 0x8, _cstring_20cdirect3dindex, 0x0, 0x2, _ZTI21IDirect3DIndexBuffer9, 0x2, _ZTI19COpenGLBufferObject, 0x402
+;VTypeInfoTable for IDirect3DIndexBuffer9:
+_ZTI21IDirect3DIndexBuffer9: dd 0x8, _cstring_21idirect3dindex, _ZTI18IDirect3DResource9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI21IDirect3DIndexBuffer9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CDirect3DIndexBuffer:
-_ZTV20CDirect3DIndexBuffer: dd 0x0, 0x3b48a0, _ZN20CDirect3DIndexBuffer14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DIndexBuffer6AddRefEv, _ZN20CDirect3DIndexBuffer7ReleaseEv, _ZN20CDirect3DIndexBuffer9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DIndexBuffer14SetPrivateDataERK5_GUIDPKvmm, _ZN20CDirect3DIndexBuffer14GetPrivateDataERK5_GUIDPvPm, _ZN20CDirect3DIndexBuffer15FreePrivateDataERK5_GUID, _ZN20CDirect3DIndexBuffer11SetPriorityEm, _ZN20CDirect3DIndexBuffer11GetPriorityEv, _ZN20CDirect3DIndexBuffer7PreLoadEv, _ZN20CDirect3DIndexBuffer7GetTypeEv, _ZN20CDirect3DIndexBuffer4LockEjjPPvm, _ZN20CDirect3DIndexBuffer6UnlockEv, _ZN20CDirect3DIndexBuffer7GetDescEP20_D3DINDEXBUFFER_DESC, _ZN20CDirect3DIndexBufferD1Ev, _ZN20CDirect3DIndexBufferD0Ev, 0xfffffffc, 0x3b48a0, 0x330c8c, 0x330c96, 0x0, 0x0
+_ZTV20CDirect3DIndexBuffer: dd 0x0, _ZTI20CDirect3DIndexBuffer, _ZN20CDirect3DIndexBuffer14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DIndexBuffer6AddRefEv, _ZN20CDirect3DIndexBuffer7ReleaseEv, _ZN20CDirect3DIndexBuffer9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DIndexBuffer14SetPrivateDataERK5_GUIDPKvmm, _ZN20CDirect3DIndexBuffer14GetPrivateDataERK5_GUIDPvPm, _ZN20CDirect3DIndexBuffer15FreePrivateDataERK5_GUID, _ZN20CDirect3DIndexBuffer11SetPriorityEm, _ZN20CDirect3DIndexBuffer11GetPriorityEv, _ZN20CDirect3DIndexBuffer7PreLoadEv, _ZN20CDirect3DIndexBuffer7GetTypeEv, _ZN20CDirect3DIndexBuffer4LockEjjPPvm, _ZN20CDirect3DIndexBuffer6UnlockEv, _ZN20CDirect3DIndexBuffer7GetDescEP20_D3DINDEXBUFFER_DESC, _ZN20CDirect3DIndexBufferD1Ev, _ZN20CDirect3DIndexBufferD0Ev, 0xfffffffc, _ZTI20CDirect3DIndexBuffer, _ZThn4_N20CDirect3DIndexBufferD1Ev, _ZThn4_N20CDirect3DIndexBufferD0Ev, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of CDirect3DIndexBuffer:
@@ -361,6 +379,8 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
+_cstring_20cdirect3dindex:		db "20CDirect3DIndexBuffer",0
+_cstring_21idirect3dindex:		db "21IDirect3DIndexBuffer9",0
 
 
 

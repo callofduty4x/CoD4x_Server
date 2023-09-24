@@ -1,40 +1,40 @@
 ;Imports of r_model:
-	extern Hunk_AllocInternal
+	extern _Z18Hunk_AllocInternali
 	extern useFastFile
-	extern XModelBad
-	extern R_GetBaseLodDist
-	extern XModelGetLodRampType
-	extern R_GetAdjustedLodDist
-	extern XModelGetLodForDist
-	extern XModelGetSurfaces
-	extern DObjGetHidePartBits
+	extern _Z9XModelBadPK6XModel
+	extern _Z16R_GetBaseLodDistPKf
+	extern _Z20XModelGetLodRampTypePK6XModel
+	extern _Z20R_GetAdjustedLodDistf17XModelLodRampType
+	extern _Z19XModelGetLodForDistPK6XModelf
+	extern _Z17XModelGetSurfacesPK6XModelPP8XSurfacei
+	extern _Z19DObjGetHidePartBitsPK6DObj_sPj
 	extern frontEndDataOut
-	extern InterlockedExchangeAdd
-	extern R_WarnOncePerFrame
+	extern iInterlockedExchangeAdd
+	extern _Z18R_WarnOncePerFrame14GfxWarningTypez
 	extern memcpy
-	extern DObjGetRotTransArray
-	extern CG_CullIn
-	extern R_SkinSceneDObj
-	extern XModelPrecache
+	extern _Z20DObjGetRotTransArrayPK6DObj_s
+	extern _Z9CG_CullInPK7cpose_t
+	extern _Z15R_SkinSceneDObjP14GfxSceneEntityS0_PK6DObj_sP11DObjAnimMati
+	extern _Z14XModelPrecachePKcPFPviES3_
 	extern dx_ctx
-	extern R_LockVertexBuffer
+	extern _Z18R_LockVertexBufferP22IDirect3DVertexBuffer9iii
 	extern gfxBuf
-	extern R_UnlockVertexBuffer
+	extern _Z20R_UnlockVertexBufferP22IDirect3DVertexBuffer9
 	extern _ZN14MacOpenGLUtils13SetBufferHintEj
 	extern _ZN14MacOpenGLUtils16ClearBufferHintsEv
-	extern R_UpdateSceneEntBounds
-	extern CG_UsedDObjCalcPose
+	extern _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si
+	extern _Z19CG_UsedDObjCalcPosePK7cpose_t
 
 ;Exports of r_model:
 	global _GLOBAL__I__Z15R_RegisterModelPKc
-	global Hunk_AllocXModelPrecache
-	global Hunk_AllocXModelPrecacheColl
-	global R_SkinXModel
-	global R_SkinSceneEnt
-	global R_RegisterModel
-	global R_LockSkinnedCache
-	global R_UnlockSkinnedCache
-	global R_SkinAndBoundSceneEnt
+	global _Z24Hunk_AllocXModelPrecachei
+	global _Z28Hunk_AllocXModelPrecacheColli
+	global _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj
+	global _Z14R_SkinSceneEntP14GfxSceneEntity
+	global _Z15R_RegisterModelPKc
+	global _Z18R_LockSkinnedCachev
+	global _Z20R_UnlockSkinnedCachev
+	global _Z22R_SkinAndBoundSceneEntP14GfxSceneEntity
 
 
 SECTION .text
@@ -47,39 +47,39 @@ _GLOBAL__I__Z15R_RegisterModelPKc:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;Hunk_AllocXModelPrecache(int)
-Hunk_AllocXModelPrecache:
+_Z24Hunk_AllocXModelPrecachei:
 	push ebp
 	mov ebp, esp
 	pop ebp
-	jmp Hunk_AllocInternal
+	jmp _Z18Hunk_AllocInternali
 	nop
 
 
 ;Hunk_AllocXModelPrecacheColl(int)
-Hunk_AllocXModelPrecacheColl:
+_Z28Hunk_AllocXModelPrecacheColli:
 	push ebp
 	mov ebp, esp
 	pop ebp
-	jmp Hunk_AllocInternal
+	jmp _Z18Hunk_AllocInternali
 	nop
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -349,7 +349,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_SkinXModel(XModelDrawInfo*, XModel const*, DObj_s const*, GfxPlacement const*, float, unsigned int)
-R_SkinXModel:
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -362,48 +362,48 @@ R_SkinXModel:
 	mov edx, useFastFile
 	mov eax, [edx]
 	cmp byte [eax+0xc], 0x0
-	jnz R_SkinXModel_10
+	jnz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_10
 	mov [esp], ebx
-	call XModelBad
+	call _Z9XModelBadPK6XModel
 	test eax, eax
-	jnz R_SkinXModel_20
-R_SkinXModel_10:
+	jnz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_20
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_10:
 	lea eax, [esi+0x10]
 	mov [esp], eax
-	call R_GetBaseLodDist
+	call _Z16R_GetBaseLodDistPKf
 	fstp dword [ebp-0xe48]
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, dword [ebp+0x18]
 	mulss xmm0, [ebp-0xe48]
 	movss [ebp-0xe48], xmm0
 	mov [esp], ebx
-	call XModelGetLodRampType
+	call _Z20XModelGetLodRampTypePK6XModel
 	mov [esp+0x4], eax
 	movss xmm0, dword [ebp-0xe48]
 	movss [esp], xmm0
-	call R_GetAdjustedLodDist
+	call _Z20R_GetAdjustedLodDistf17XModelLodRampType
 	fstp dword [esp+0x4]
 	mov [esp], ebx
-	call XModelGetLodForDist
+	call _Z19XModelGetLodForDistPK6XModelf
 	mov [ebp-0xe4c], eax
 	test eax, eax
-	js R_SkinXModel_20
+	js _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_20
 	mov [esp+0x8], eax
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call XModelGetSurfaces
+	call _Z17XModelGetSurfacesPK6XModelPP8XSurfacei
 	mov [ebp-0xe44], eax
 	test edi, edi
-	jz R_SkinXModel_30
+	jz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_30
 	lea eax, [ebp-0x2c]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call DObjGetHidePartBits
-R_SkinXModel_30:
+	call _Z19DObjGetHidePartBitsPK6DObj_sPj
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_30:
 	mov ecx, [ebp-0xe44]
 	test ecx, ecx
-	jle R_SkinXModel_40
+	jle _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_40
 	mov eax, [ebp-0x1c]
 	mov edx, useFastFile
 	mov edx, [edx]
@@ -416,7 +416,7 @@ R_SkinXModel_30:
 	mov [ebp-0xe50], ecx
 	mov ebx, [ebp-0x20]
 	test edi, edi
-	jnz R_SkinXModel_50
+	jnz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_50
 	xor ebx, ebx
 	lea ecx, [ebp-0xe38]
 	mov edx, [esi]
@@ -431,19 +431,19 @@ R_SkinXModel_30:
 	mov [ebp-0xe6c], edx
 	mov edi, [esi+0x14]
 	mov esi, [esi+0x18]
-R_SkinXModel_90:
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_90:
 	cmp byte [eax+0x1], 0x0
-	jnz R_SkinXModel_60
+	jnz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_60
 	mov edx, [ebp-0xe3c]
 	cmp byte [edx+0xc], 0x0
-	jnz R_SkinXModel_70
-R_SkinXModel_60:
+	jnz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_70
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_60:
 	xor edx, edx
 	test edx, edx
-	jz R_SkinXModel_80
-R_SkinXModel_120:
+	jz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_80
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_120:
 	mov edx, 0xfffffffe
-R_SkinXModel_130:
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_130:
 	mov [ecx], edx
 	mov [ecx+0x4], eax
 	movzx edx, word [ebp+0x1c]
@@ -467,11 +467,11 @@ R_SkinXModel_130:
 	add ebx, 0x1
 	add eax, 0x38
 	cmp [ebp-0xe44], ebx
-	jnz R_SkinXModel_90
-	jmp R_SkinXModel_100
-R_SkinXModel_40:
+	jnz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_90
+	jmp _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_100
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_40:
 	lea ecx, [ebp-0xe38]
-R_SkinXModel_100:
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_100:
 	mov ebx, ecx
 	lea edx, [ebp-0xe38]
 	sub ebx, edx
@@ -480,14 +480,14 @@ R_SkinXModel_100:
 	add eax, 0x118258
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call InterlockedExchangeAdd
+	call iInterlockedExchangeAdd
 	mov edx, eax
 	lea eax, [ebx+eax]
 	cmp eax, 0x20000
-	jbe R_SkinXModel_110
+	jbe _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_110
 	mov dword [esp], 0x7
-	call R_WarnOncePerFrame
-R_SkinXModel_20:
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_20:
 	xor eax, eax
 	add esp, 0xe7c
 	pop ebx
@@ -495,14 +495,14 @@ R_SkinXModel_20:
 	pop edi
 	pop ebp
 	ret
-R_SkinXModel_70:
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_70:
 	mov edx, 0x1
 	test edx, edx
-	jnz R_SkinXModel_120
-R_SkinXModel_80:
+	jnz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_120
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_80:
 	mov edx, 0xffffffff
-	jmp R_SkinXModel_130
-R_SkinXModel_110:
+	jmp _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_130
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_110:
 	mov eax, edx
 	shr eax, 0x2
 	mov ecx, [ebp+0x8]
@@ -523,11 +523,11 @@ R_SkinXModel_110:
 	pop edi
 	pop ebp
 	ret
-R_SkinXModel_50:
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_50:
 	mov edi, eax
 	mov dword [ebp-0xe40], 0x0
 	lea ecx, [ebp-0xe38]
-R_SkinXModel_150:
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_150:
 	mov eax, [ebp-0xe58]
 	and eax, [edi+0x28]
 	mov edx, [ebp-0xe54]
@@ -539,24 +539,24 @@ R_SkinXModel_150:
 	mov edx, ebx
 	and edx, [edi+0x34]
 	or eax, edx
-	jz R_SkinXModel_140
+	jz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_140
 	mov dword [ecx], 0xfffffffd
 	add ecx, 0x4
-R_SkinXModel_170:
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_170:
 	add dword [ebp-0xe40], 0x1
 	add edi, 0x38
 	mov eax, [ebp-0xe40]
 	cmp [ebp-0xe44], eax
-	jnz R_SkinXModel_150
-	jmp R_SkinXModel_100
-R_SkinXModel_140:
+	jnz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_150
+	jmp _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_100
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_140:
 	cmp byte [edi+0x1], 0x0
-	jnz R_SkinXModel_160
+	jnz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_160
 	mov eax, [ebp-0xe3c]
 	cmp byte [eax+0xc], 0x0
-	jz R_SkinXModel_160
+	jz _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_160
 	mov eax, 0x1
-R_SkinXModel_180:
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_180:
 	cmp al, 0x1
 	sbb eax, eax
 	or eax, 0xfffffffe
@@ -582,14 +582,14 @@ R_SkinXModel_180:
 	movss xmm0, dword [ebp+0x18]
 	movss [ecx+0x34], xmm0
 	add ecx, 0x38
-	jmp R_SkinXModel_170
-R_SkinXModel_160:
+	jmp _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_170
+_Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_160:
 	xor eax, eax
-	jmp R_SkinXModel_180
+	jmp _Z12R_SkinXModelP14XModelDrawInfoPK6XModelPK6DObj_sPK12GfxPlacementfj_180
 
 
 ;R_SkinSceneEnt(GfxSceneEntity*)
-R_SkinSceneEnt:
+_Z14R_SkinSceneEntP14GfxSceneEntity:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -599,20 +599,20 @@ R_SkinSceneEnt:
 	mov esi, [ebp+0x8]
 	mov edi, [esi+0x70]
 	mov [esp], edi
-	call DObjGetRotTransArray
+	call _Z20DObjGetRotTransArrayPK6DObj_s
 	mov ebx, eax
 	test eax, eax
-	jz R_SkinSceneEnt_10
+	jz _Z14R_SkinSceneEntP14GfxSceneEntity_10
 	mov eax, [esi+0x74]
 	mov [esp], eax
-	call CG_CullIn
+	call _Z9CG_CullInPK7cpose_t
 	mov dword [esp+0x10], 0x1
 	mov [esp+0xc], ebx
 	mov [esp+0x8], edi
 	mov [esp+0x4], esi
 	mov [esp], esi
-	call R_SkinSceneDObj
-R_SkinSceneEnt_10:
+	call _Z15R_SkinSceneDObjP14GfxSceneEntityS0_PK6DObj_sP11DObjAnimMati
+_Z14R_SkinSceneEntP14GfxSceneEntity_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -622,22 +622,22 @@ R_SkinSceneEnt_10:
 
 
 ;R_RegisterModel(char const*)
-R_RegisterModel:
+_Z15R_RegisterModelPKc:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
-	mov dword [esp+0x8], Hunk_AllocXModelPrecacheColl
-	mov dword [esp+0x4], Hunk_AllocXModelPrecache
+	mov dword [esp+0x8], _Z28Hunk_AllocXModelPrecacheColli
+	mov dword [esp+0x4], _Z24Hunk_AllocXModelPrecachei
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call XModelPrecache
+	call _Z14XModelPrecachePKcPFPviES3_
 	leave
 	ret
 	nop
 
 
 ;R_LockSkinnedCache()
-R_LockSkinnedCache:
+_Z18R_LockSkinnedCachev:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -645,13 +645,13 @@ R_LockSkinnedCache:
 	sub esp, 0x10
 	mov eax, dx_ctx
 	cmp byte [eax+0x2c6c], 0x0
-	jz R_LockSkinnedCache_10
+	jz _Z18R_LockSkinnedCachev_10
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-R_LockSkinnedCache_10:
+_Z18R_LockSkinnedCachev_10:
 	mov eax, frontEndDataOut
 	mov eax, [eax]
 	mov eax, [eax+0x11e690]
@@ -660,12 +660,12 @@ R_LockSkinnedCache_10:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call R_LockVertexBuffer
+	call _Z18R_LockVertexBufferP22IDirect3DVertexBuffer9iii
 	mov ebx, gfxBuf
 	mov [ebx+0x5c], eax
 	test al, 0xf
-	jnz R_LockSkinnedCache_20
-R_LockSkinnedCache_30:
+	jnz _Z18R_LockSkinnedCachev_20
+_Z18R_LockSkinnedCachev_30:
 	mov edx, [ebx+0x240088]
 	mov ecx, edx
 	and ecx, 0x1
@@ -687,16 +687,16 @@ R_LockSkinnedCache_30:
 	pop esi
 	pop ebp
 	ret
-R_LockSkinnedCache_20:
+_Z18R_LockSkinnedCachev_20:
 	mov [esp], esi
-	call R_UnlockVertexBuffer
+	call _Z20R_UnlockVertexBufferP22IDirect3DVertexBuffer9
 	mov dword [ebx+0x5c], 0x0
-	jmp R_LockSkinnedCache_30
+	jmp _Z18R_LockSkinnedCachev_30
 	nop
 
 
 ;R_UnlockSkinnedCache()
-R_UnlockSkinnedCache:
+_Z20R_UnlockSkinnedCachev:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -704,7 +704,7 @@ R_UnlockSkinnedCache:
 	mov eax, gfxBuf
 	mov edx, [eax+0x5c]
 	test edx, edx
-	jz R_UnlockSkinnedCache_10
+	jz _Z20R_UnlockSkinnedCachev_10
 	mov dword [eax+0x5c], 0x0
 	mov eax, frontEndDataOut
 	mov edx, [eax]
@@ -716,27 +716,27 @@ R_UnlockSkinnedCache:
 	mov eax, [eax]
 	mov [ebp-0xc], eax
 	cmp ecx, eax
-	jge R_UnlockSkinnedCache_20
+	jge _Z20R_UnlockSkinnedCachev_20
 	lea eax, [ebp-0x10]
-R_UnlockSkinnedCache_30:
+_Z20R_UnlockSkinnedCachev_30:
 	mov eax, [eax]
 	mov [esp], eax
 	call _ZN14MacOpenGLUtils13SetBufferHintEj
 	mov [esp], ebx
-	call R_UnlockVertexBuffer
+	call _Z20R_UnlockVertexBufferP22IDirect3DVertexBuffer9
 	call _ZN14MacOpenGLUtils16ClearBufferHintsEv
-R_UnlockSkinnedCache_10:
+_Z20R_UnlockSkinnedCachev_10:
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-R_UnlockSkinnedCache_20:
+_Z20R_UnlockSkinnedCachev_20:
 	lea eax, [ebp-0xc]
-	jmp R_UnlockSkinnedCache_30
+	jmp _Z20R_UnlockSkinnedCachev_30
 
 
 ;R_SkinAndBoundSceneEnt(GfxSceneEntity*)
-R_SkinAndBoundSceneEnt:
+_Z22R_SkinAndBoundSceneEntP14GfxSceneEntity:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -749,14 +749,14 @@ R_SkinAndBoundSceneEnt:
 	lea eax, [ebp-0x10]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_UpdateSceneEntBounds
+	call _Z22R_UpdateSceneEntBoundsP14GfxSceneEntityPS0_PPK6DObj_si
 	mov ebx, eax
 	test eax, eax
-	jz R_SkinAndBoundSceneEnt_10
+	jz _Z22R_SkinAndBoundSceneEntP14GfxSceneEntity_10
 	mov eax, [ebp-0x10]
 	mov eax, [eax+0x74]
 	mov [esp], eax
-	call CG_CullIn
+	call _Z9CG_CullInPK7cpose_t
 	mov dword [esp+0x10], 0x0
 	mov [esp+0xc], ebx
 	mov eax, [ebp-0xc]
@@ -764,21 +764,21 @@ R_SkinAndBoundSceneEnt:
 	mov eax, [ebp-0x10]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_SkinSceneDObj
+	call _Z15R_SkinSceneDObjP14GfxSceneEntityS0_PK6DObj_sP11DObjAnimMati
 	mov eax, 0x1
-R_SkinAndBoundSceneEnt_20:
+_Z22R_SkinAndBoundSceneEntP14GfxSceneEntity_20:
 	add esp, 0x30
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-R_SkinAndBoundSceneEnt_10:
+_Z22R_SkinAndBoundSceneEntP14GfxSceneEntity_10:
 	mov eax, [ebp-0x10]
 	test eax, eax
-	jz R_SkinAndBoundSceneEnt_20
+	jz _Z22R_SkinAndBoundSceneEntP14GfxSceneEntity_20
 	mov eax, [eax+0x74]
 	mov [esp], eax
-	call CG_UsedDObjCalcPose
+	call _Z19CG_UsedDObjCalcPosePK7cpose_t
 	xor eax, eax
 	add esp, 0x30
 	pop ebx
@@ -825,7 +825,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of r_model:
@@ -862,7 +862,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

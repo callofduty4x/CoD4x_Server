@@ -20,6 +20,8 @@
 	extern memmove
 	extern _ZSt17__throw_bad_allocv
 	extern _ZSt20__throw_length_errorPKc
+	extern _ZTI8IUnknown
+	extern _ZTI14COpenGLTexture
 
 ;Exports of CDirect3DCubeTexture:
 	global _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv
@@ -51,7 +53,13 @@
 	global _ZN20CDirect3DCubeTextureD1Ev
 	global _ZNSt6vectorIP16CDirect3DSurfaceSaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_
 	global _ZNSt6vectorIP16CDirect3DSurfaceSaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EES7_
+	global _ZTI18IDirect3DResource9
+	global _ZTI20CDirect3DCubeTexture
+	global _ZTI21IDirect3DBaseTexture9
+	global _ZTI21IDirect3DCubeTexture9
 	global _ZTV20CDirect3DCubeTexture
+	global _ZThn4_N20CDirect3DCubeTextureD0Ev
+	global _ZThn4_N20CDirect3DCubeTextureD1Ev
 
 
 SECTION .text
@@ -266,10 +274,6 @@ _ZN20CDirect3DCubeTexture20GenerateMipSubLevelsEv:
 	pop ebp
 	ret
 	nop
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN20CDirect3DCubeTextureD0Ev
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN20CDirect3DCubeTextureD1Ev
 
 
 ;CDirect3DCubeTexture::GetAutoGenFilterType()
@@ -1218,14 +1222,34 @@ _ZNSt6vectorIP16CDirect3DSurfaceSaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS
 	ret
 
 
+;non-virtual thunk to CDirect3DCubeTexture::~CDirect3DCubeTexture()
+_ZThn4_N20CDirect3DCubeTextureD0Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN20CDirect3DCubeTextureD0Ev
+
+
+;non-virtual thunk to CDirect3DCubeTexture::~CDirect3DCubeTexture()
+_ZThn4_N20CDirect3DCubeTextureD1Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN20CDirect3DCubeTextureD1Ev
+
+
 ;Initialized global or static variables of CDirect3DCubeTexture:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DCubeTexture:
 SECTION .rdata
+;VTypeInfoTable for IDirect3DResource9:
+_ZTI18IDirect3DResource9: dd 0x8, _cstring_18idirect3dresou, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI21IDirect3DCubeTexture9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI21IDirect3DBaseTexture9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI18IDirect3DResource9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for CDirect3DCubeTexture:
+_ZTI20CDirect3DCubeTexture: dd 0x8, _cstring_20cdirect3dcubet, 0x0, 0x2, _ZTI21IDirect3DCubeTexture9, 0x2, _ZTI14COpenGLTexture, 0x402
+;VTypeInfoTable for IDirect3DBaseTexture9:
+_ZTI21IDirect3DBaseTexture9: dd 0x8, _cstring_21idirect3dbaset, _ZTI18IDirect3DResource9, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for IDirect3DCubeTexture9:
+_ZTI21IDirect3DCubeTexture9: dd 0x8, _cstring_21idirect3dcubet, _ZTI21IDirect3DBaseTexture9, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CDirect3DCubeTexture:
-_ZTV20CDirect3DCubeTexture: dd 0x0, 0x3b46e0, _ZN20CDirect3DCubeTexture14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DCubeTexture6AddRefEv, _ZN20CDirect3DCubeTexture7ReleaseEv, _ZN20CDirect3DCubeTexture9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DCubeTexture14SetPrivateDataERK5_GUIDPKvmm, _ZN20CDirect3DCubeTexture14GetPrivateDataERK5_GUIDPvPm, _ZN20CDirect3DCubeTexture15FreePrivateDataERK5_GUID, _ZN20CDirect3DCubeTexture11SetPriorityEm, _ZN20CDirect3DCubeTexture11GetPriorityEv, _ZN20CDirect3DCubeTexture7PreLoadEv, _ZN20CDirect3DCubeTexture7GetTypeEv, _ZN20CDirect3DCubeTexture6SetLODEm, _ZN20CDirect3DCubeTexture6GetLODEv, _ZN20CDirect3DCubeTexture13GetLevelCountEv, _ZN20CDirect3DCubeTexture20SetAutoGenFilterTypeE21_D3DTEXTUREFILTERTYPE, _ZN20CDirect3DCubeTexture20GetAutoGenFilterTypeEv, _ZN20CDirect3DCubeTexture20GenerateMipSubLevelsEv, _ZN20CDirect3DCubeTexture12GetLevelDescEjP16_D3DSURFACE_DESC, _ZN20CDirect3DCubeTexture17GetCubeMapSurfaceE17_D3DCUBEMAP_FACESjPP17IDirect3DSurface9, _ZN20CDirect3DCubeTexture8LockRectE17_D3DCUBEMAP_FACESjP15_D3DLOCKED_RECTPK7tagRECTm, _ZN20CDirect3DCubeTexture10UnlockRectE17_D3DCUBEMAP_FACESj, _ZN20CDirect3DCubeTexture12AddDirtyRectE17_D3DCUBEMAP_FACESPK7tagRECT, _ZN20CDirect3DCubeTextureD1Ev, _ZN20CDirect3DCubeTextureD0Ev, 0xfffffffc, 0x3b46e0, 0x32fcc6, 0x32fcbc, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0
+_ZTV20CDirect3DCubeTexture: dd 0x0, _ZTI20CDirect3DCubeTexture, _ZN20CDirect3DCubeTexture14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DCubeTexture6AddRefEv, _ZN20CDirect3DCubeTexture7ReleaseEv, _ZN20CDirect3DCubeTexture9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DCubeTexture14SetPrivateDataERK5_GUIDPKvmm, _ZN20CDirect3DCubeTexture14GetPrivateDataERK5_GUIDPvPm, _ZN20CDirect3DCubeTexture15FreePrivateDataERK5_GUID, _ZN20CDirect3DCubeTexture11SetPriorityEm, _ZN20CDirect3DCubeTexture11GetPriorityEv, _ZN20CDirect3DCubeTexture7PreLoadEv, _ZN20CDirect3DCubeTexture7GetTypeEv, _ZN20CDirect3DCubeTexture6SetLODEm, _ZN20CDirect3DCubeTexture6GetLODEv, _ZN20CDirect3DCubeTexture13GetLevelCountEv, _ZN20CDirect3DCubeTexture20SetAutoGenFilterTypeE21_D3DTEXTUREFILTERTYPE, _ZN20CDirect3DCubeTexture20GetAutoGenFilterTypeEv, _ZN20CDirect3DCubeTexture20GenerateMipSubLevelsEv, _ZN20CDirect3DCubeTexture12GetLevelDescEjP16_D3DSURFACE_DESC, _ZN20CDirect3DCubeTexture17GetCubeMapSurfaceE17_D3DCUBEMAP_FACESjPP17IDirect3DSurface9, _ZN20CDirect3DCubeTexture8LockRectE17_D3DCUBEMAP_FACESjP15_D3DLOCKED_RECTPK7tagRECTm, _ZN20CDirect3DCubeTexture10UnlockRectE17_D3DCUBEMAP_FACESj, _ZN20CDirect3DCubeTexture12AddDirtyRectE17_D3DCUBEMAP_FACESPK7tagRECT, _ZN20CDirect3DCubeTextureD1Ev, _ZN20CDirect3DCubeTextureD0Ev, 0xfffffffc, _ZTI20CDirect3DCubeTexture, _ZThn4_N20CDirect3DCubeTextureD1Ev, _ZThn4_N20CDirect3DCubeTextureD0Ev, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0
 
 
 ;Zero initialized global or static variables of CDirect3DCubeTexture:
@@ -1235,6 +1259,10 @@ SECTION .bss
 ;All cstrings:
 SECTION .rdata
 _cstring_vector_m_fill_in:		db "vector::_M_fill_insert",0
+_cstring_18idirect3dresou:		db "18IDirect3DResource9",0
+_cstring_20cdirect3dcubet:		db "20CDirect3DCubeTexture",0
+_cstring_21idirect3dbaset:		db "21IDirect3DBaseTexture9",0
+_cstring_21idirect3dcubet:		db "21IDirect3DCubeTexture9",0
 
 
 

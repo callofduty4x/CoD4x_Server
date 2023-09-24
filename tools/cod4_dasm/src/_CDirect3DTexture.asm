@@ -22,6 +22,8 @@
 	extern memmove
 	extern _ZSt17__throw_bad_allocv
 	extern _ZSt20__throw_length_errorPKc
+	extern _ZTI14COpenGLTexture
+	extern _ZTI21IDirect3DBaseTexture9
 	extern _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv
 
 ;Exports of CDirect3DTexture:
@@ -53,7 +55,11 @@
 	global _ZN16CDirect3DTextureD1Ev
 	global _ZNSt6vectorIP16CDirect3DSurfaceSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_
 	global _ZNSt6vectorIP16CDirect3DSurfaceSaIS1_EE7reserveEm
+	global _ZTI16CDirect3DTexture
+	global _ZTI17IDirect3DTexture9
 	global _ZTV16CDirect3DTexture
+	global _ZThn4_N16CDirect3DTextureD0Ev
+	global _ZThn4_N16CDirect3DTextureD1Ev
 
 
 SECTION .text
@@ -255,8 +261,6 @@ _ZN16CDirect3DTexture20GenerateMipSubLevelsEv:
 	pop ebp
 	ret
 	nop
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN16CDirect3DTextureD0Ev
 
 
 ;CDirect3DTexture::GetAutoGenFilterType()
@@ -1229,6 +1233,16 @@ _ZNSt6vectorIP16CDirect3DSurfaceSaIS1_EE7reserveEm_10:
 	call _ZSt20__throw_length_errorPKc
 _ZNSt6vectorIP16CDirect3DSurfaceSaIS1_EE7reserveEm_30:
 	call _ZSt17__throw_bad_allocv
+
+
+;non-virtual thunk to CDirect3DTexture::~CDirect3DTexture()
+_ZThn4_N16CDirect3DTextureD0Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN16CDirect3DTextureD0Ev
+
+
+;non-virtual thunk to CDirect3DTexture::~CDirect3DTexture()
+_ZThn4_N16CDirect3DTextureD1Ev:
 	add dword [esp+0x4], 0xfffffffc
 	jmp _ZN16CDirect3DTextureD1Ev
 
@@ -1239,8 +1253,12 @@ SECTION .data
 
 ;Initialized constant data of CDirect3DTexture:
 SECTION .rdata
+;VTypeInfoTable for CDirect3DTexture:
+_ZTI16CDirect3DTexture: dd 0x8, _cstring_16cdirect3dtextu, 0x0, 0x2, _ZTI17IDirect3DTexture9, 0x2, _ZTI14COpenGLTexture, 0x402
+;VTypeInfoTable for IDirect3DTexture9:
+_ZTI17IDirect3DTexture9: dd 0x8, _cstring_17idirect3dtextu, _ZTI21IDirect3DBaseTexture9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI17IDirect3DTexture9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CDirect3DTexture:
-_ZTV16CDirect3DTexture: dd 0x0, 0x3b4a00, _ZN16CDirect3DTexture14QueryInterfaceERK5_GUIDPPv, _ZN16CDirect3DTexture6AddRefEv, _ZN16CDirect3DTexture7ReleaseEv, _ZN16CDirect3DTexture9GetDeviceEPP16IDirect3DDevice9, _ZN16CDirect3DTexture14SetPrivateDataERK5_GUIDPKvmm, _ZN16CDirect3DTexture14GetPrivateDataERK5_GUIDPvPm, _ZN16CDirect3DTexture15FreePrivateDataERK5_GUID, _ZN16CDirect3DTexture11SetPriorityEm, _ZN16CDirect3DTexture11GetPriorityEv, _ZN16CDirect3DTexture7PreLoadEv, _ZN16CDirect3DTexture7GetTypeEv, _ZN16CDirect3DTexture6SetLODEm, _ZN16CDirect3DTexture6GetLODEv, _ZN16CDirect3DTexture13GetLevelCountEv, _ZN16CDirect3DTexture20SetAutoGenFilterTypeE21_D3DTEXTUREFILTERTYPE, _ZN16CDirect3DTexture20GetAutoGenFilterTypeEv, _ZN16CDirect3DTexture20GenerateMipSubLevelsEv, _ZN16CDirect3DTexture12GetLevelDescEjP16_D3DSURFACE_DESC, _ZN16CDirect3DTexture15GetSurfaceLevelEjPP17IDirect3DSurface9, _ZN16CDirect3DTexture8LockRectEjP15_D3DLOCKED_RECTPK7tagRECTm, _ZN16CDirect3DTexture10UnlockRectEj, _ZN16CDirect3DTexture12AddDirtyRectEPK7tagRECT, _ZN16CDirect3DTextureD1Ev, _ZN16CDirect3DTextureD0Ev, 0xfffffffc, 0x3b4a00, 0x330fd8, 0x330de4, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0
+_ZTV16CDirect3DTexture: dd 0x0, _ZTI16CDirect3DTexture, _ZN16CDirect3DTexture14QueryInterfaceERK5_GUIDPPv, _ZN16CDirect3DTexture6AddRefEv, _ZN16CDirect3DTexture7ReleaseEv, _ZN16CDirect3DTexture9GetDeviceEPP16IDirect3DDevice9, _ZN16CDirect3DTexture14SetPrivateDataERK5_GUIDPKvmm, _ZN16CDirect3DTexture14GetPrivateDataERK5_GUIDPvPm, _ZN16CDirect3DTexture15FreePrivateDataERK5_GUID, _ZN16CDirect3DTexture11SetPriorityEm, _ZN16CDirect3DTexture11GetPriorityEv, _ZN16CDirect3DTexture7PreLoadEv, _ZN16CDirect3DTexture7GetTypeEv, _ZN16CDirect3DTexture6SetLODEm, _ZN16CDirect3DTexture6GetLODEv, _ZN16CDirect3DTexture13GetLevelCountEv, _ZN16CDirect3DTexture20SetAutoGenFilterTypeE21_D3DTEXTUREFILTERTYPE, _ZN16CDirect3DTexture20GetAutoGenFilterTypeEv, _ZN16CDirect3DTexture20GenerateMipSubLevelsEv, _ZN16CDirect3DTexture12GetLevelDescEjP16_D3DSURFACE_DESC, _ZN16CDirect3DTexture15GetSurfaceLevelEjPP17IDirect3DSurface9, _ZN16CDirect3DTexture8LockRectEjP15_D3DLOCKED_RECTPK7tagRECTm, _ZN16CDirect3DTexture10UnlockRectEj, _ZN16CDirect3DTexture12AddDirtyRectEPK7tagRECT, _ZN16CDirect3DTextureD1Ev, _ZN16CDirect3DTextureD0Ev, 0xfffffffc, _ZTI16CDirect3DTexture, _ZThn4_N16CDirect3DTextureD1Ev, _ZThn4_N16CDirect3DTextureD0Ev, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0
 
 
 ;Zero initialized global or static variables of CDirect3DTexture:
@@ -1251,6 +1269,8 @@ SECTION .bss
 SECTION .rdata
 _cstring_vector_m_insert_:		db "vector::_M_insert_aux",0
 _cstring_vectorreserve:		db "vector::reserve",0
+_cstring_16cdirect3dtextu:		db "16CDirect3DTexture",0
+_cstring_17idirect3dtextu:		db "17IDirect3DTexture9",0
 
 
 

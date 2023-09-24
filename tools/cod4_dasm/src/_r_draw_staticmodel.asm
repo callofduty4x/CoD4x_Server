@@ -1,37 +1,37 @@
 ;Imports of r_draw_staticmodel:
-	extern R_GetActiveWorldMatrix
-	extern MatrixSet44
-	extern R_DeriveOpenGLMatrices
-	extern DB_GetIndexBufferAndBase
-	extern DB_GetVertexBufferAndOffset
+	extern _Z22R_GetActiveWorldMatrixP20GfxCmdBufSourceState
+	extern _Z11MatrixSet44PA4_fPKfPA3_S1_f
+	extern _Z22R_DeriveOpenGLMatricesP20GfxCmdBufSourceState
+	extern _Z24DB_GetIndexBufferAndBasehPvS_Pi
+	extern _Z27DB_GetVertexBufferAndOffsethPvS_Pi
 	extern rgp
-	extern R_SetupPassPerPrimArgs
-	extern R_DrawIndexedPrimitive
-	extern R_SetReflectionProbe
-	extern R_SetModelLightingCoordsForSource
-	extern R_SetupPassPerObjectArgs
-	extern R_GetCachedSModelSurf
+	extern _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
+	extern _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
+	extern _Z20R_SetReflectionProbe16GfxCmdBufContextj
+	extern _Z33R_SetModelLightingCoordsForSourcetP20GfxCmdBufSourceState
+	extern _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
+	extern _Z21R_GetCachedSModelSurfj
 	extern gfxBuf
-	extern R_ReserveIndexData
-	extern R_SetIndexData
-	extern R_ReadPrimDrawSurfInt
-	extern XModelGetSurface
-	extern XSurfaceGetNumTris
-	extern XSurfaceGetNumVerts
-	extern R_SetVertexData
-	extern R_SetupCachedStaticModelLighting
+	extern _Z18R_ReserveIndexDataP18GfxCmdBufPrimStatei
+	extern _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
+	extern _Z21R_ReadPrimDrawSurfIntP13GfxReadCmdBuf
+	extern _Z16XModelGetSurfacePK6XModelii
+	extern _Z18XSurfaceGetNumTrisPK8XSurface
+	extern _Z19XSurfaceGetNumVertsPK8XSurface
+	extern _Z15R_SetVertexDataP14GfxCmdBufStatePKvii
+	extern _Z32R_SetupCachedStaticModelLightingP20GfxCmdBufSourceState
 
 ;Exports of r_draw_staticmodel:
 	global _GLOBAL__I__Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo
-	global R_DrawStaticModelDrawSurfPlacement
-	global R_DrawStaticModelSurf
-	global R_DrawStaticModelSurfLit
-	global R_DrawStaticModelCachedSurf
-	global R_DrawStaticModelPreTessSurf
-	global R_DrawStaticModelSkinnedSurf
-	global R_DrawStaticModelCachedSurfLit
-	global R_DrawStaticModelPreTessSurfLit
-	global R_DrawStaticModelSkinnedSurfLit
+	global _Z34R_DrawStaticModelDrawSurfPlacementPK22GfxStaticModelDrawInstP20GfxCmdBufSourceState
+	global _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo
+	global _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo
+	global _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext
+	global _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext
+	global _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext
+	global _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext
+	global _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext
+	global _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext
 
 
 SECTION .text
@@ -44,21 +44,21 @@ _GLOBAL__I__Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfLi
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -328,7 +328,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_DrawStaticModelDrawSurfPlacement(GfxStaticModelDrawInst const*, GfxCmdBufSourceState*)
-R_DrawStaticModelDrawSurfPlacement:
+_Z34R_DrawStaticModelDrawSurfPlacementPK22GfxStaticModelDrawInstP20GfxCmdBufSourceState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -376,7 +376,7 @@ R_DrawStaticModelDrawSurfPlacement:
 	mov esi, [ebx+0x34]
 	mov eax, [ebp-0x7c]
 	mov [esp], eax
-	call R_GetActiveWorldMatrix
+	call _Z22R_GetActiveWorldMatrixP20GfxCmdBufSourceState
 	lea edx, [ebx+0x4]
 	mov ecx, [ebp-0x7c]
 	add ecx, 0xef4
@@ -396,9 +396,9 @@ R_DrawStaticModelDrawSurfPlacement:
 	lea edx, [ebp-0x24]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call MatrixSet44
+	call _Z11MatrixSet44PA4_fPKfPA3_S1_f
 	mov [esp], ebx
-	call R_DeriveOpenGLMatrices
+	call _Z22R_DeriveOpenGLMatricesP20GfxCmdBufSourceState
 	add esp, 0x8c
 	pop ebx
 	pop esi
@@ -408,7 +408,7 @@ R_DrawStaticModelDrawSurfPlacement:
 
 
 ;R_DrawStaticModelSurf(unsigned int const*, GfxCmdBufContext, GfxDrawSurfListInfo const*)
-R_DrawStaticModelSurf:
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -426,8 +426,8 @@ R_DrawStaticModelSurf:
 	mov [ebp-0x44], eax
 	lea ecx, [edx+0x4]
 	test eax, eax
-	jz R_DrawStaticModelSurf_10
-R_DrawStaticModelSurf_60:
+	jz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_10
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_60:
 	add eax, 0x1
 	shr eax, 1
 	lea eax, [ecx+eax*4+0x4]
@@ -454,10 +454,10 @@ R_DrawStaticModelSurf_60:
 	mov [esp+0x4], eax
 	movzx eax, byte [ebx+0x6]
 	mov [esp], eax
-	call DB_GetIndexBufferAndBase
+	call _Z24DB_GetIndexBufferAndBasehPvS_Pi
 	mov ecx, [ebp-0x1c]
 	cmp ecx, [esi+0x4]
-	jz R_DrawStaticModelSurf_20
+	jz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20
 	mov [esi+0x4], ecx
 	mov edx, [ebp-0x50]
 	mov eax, [edx+0x90]
@@ -465,7 +465,7 @@ R_DrawStaticModelSurf_60:
 	mov [esp+0x4], ecx
 	mov [esp], eax
 	call dword [edx+0x1a0]
-R_DrawStaticModelSurf_20:
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20:
 	lea eax, [ebp-0x20]
 	mov [esp+0xc], eax
 	mov [esp+0x8], edi
@@ -473,12 +473,12 @@ R_DrawStaticModelSurf_20:
 	mov [esp+0x4], eax
 	movzx eax, byte [ebx+0x6]
 	mov [esp], eax
-	call DB_GetVertexBufferAndOffset
+	call _Z27DB_GetVertexBufferAndOffsethPvS_Pi
 	mov ebx, [ebp-0x20]
 	mov ecx, [ebp-0x1c]
 	cmp ecx, [esi+0x10]
-	jz R_DrawStaticModelSurf_30
-R_DrawStaticModelSurf_70:
+	jz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_30
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_70:
 	mov [esi+0x10], ecx
 	mov [esi+0x14], ebx
 	mov dword [esi+0xc], 0x20
@@ -490,11 +490,11 @@ R_DrawStaticModelSurf_70:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelSurf_80:
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_80:
 	mov edi, [esi+0x1c]
 	test edi, edi
-	jz R_DrawStaticModelSurf_40
-R_DrawStaticModelSurf_90:
+	jz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_40
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_90:
 	mov dword [esi+0x1c], 0x0
 	mov dword [esi+0x20], 0x0
 	mov dword [esi+0x18], 0x0
@@ -506,19 +506,19 @@ R_DrawStaticModelSurf_90:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelSurf_100:
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_100:
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov edi, [eax+0x29c]
 	xor ebx, ebx
-R_DrawStaticModelSurf_50:
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_50:
 	mov eax, [ebp-0x48]
 	movzx edx, word [eax+ebx*2]
 	lea eax, [edx+edx*8]
 	lea eax, [edx+eax*2]
 	lea eax, [edi+eax*4]
 	mov edx, [ebp-0x40]
-	call R_DrawStaticModelDrawSurfPlacement
+	call _Z34R_DrawStaticModelDrawSurfPlacementPK22GfxStaticModelDrawInstP20GfxCmdBufSourceState
 	mov edx, [ebp-0x40]
 	mov [ebp-0x58], edx
 	mov eax, [ebp-0x50]
@@ -527,45 +527,45 @@ R_DrawStaticModelSurf_50:
 	mov edx, [ebp-0x54]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	lea edx, [ebp-0x2c]
 	mov [esp+0x4], edx
 	mov [esp], esi
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	add ebx, 0x1
 	cmp [ebp-0x44], ebx
-	jnz R_DrawStaticModelSurf_50
+	jnz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_50
 	mov edx, [ebp-0x3c]
 	mov eax, [edx]
 	mov [ebp-0x44], eax
 	lea ecx, [edx+0x4]
 	test eax, eax
-	jnz R_DrawStaticModelSurf_60
-R_DrawStaticModelSurf_10:
+	jnz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_60
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_10:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawStaticModelSurf_30:
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_30:
 	cmp ebx, [esi+0x14]
-	jnz R_DrawStaticModelSurf_70
+	jnz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_70
 	cmp dword [esi+0xc], 0x20
-	jnz R_DrawStaticModelSurf_70
-	jmp R_DrawStaticModelSurf_80
-R_DrawStaticModelSurf_40:
+	jnz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_70
+	jmp _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_80
+_Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_40:
 	mov ebx, [esi+0x20]
 	test ebx, ebx
-	jnz R_DrawStaticModelSurf_90
+	jnz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_90
 	mov ecx, [esi+0x18]
 	test ecx, ecx
-	jz R_DrawStaticModelSurf_100
-	jmp R_DrawStaticModelSurf_90
+	jz _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_100
+	jmp _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo_90
 
 
 ;R_DrawStaticModelSurfLit(unsigned int const*, GfxCmdBufContext, GfxCmdBufContext, GfxDrawSurfListInfo const*)
-R_DrawStaticModelSurfLit:
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -585,8 +585,8 @@ R_DrawStaticModelSurfLit:
 	mov [ebp-0x44], eax
 	lea ecx, [edx+0x4]
 	test eax, eax
-	jz R_DrawStaticModelSurfLit_10
-R_DrawStaticModelSurfLit_60:
+	jz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_10
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_60:
 	add eax, 0x1
 	shr eax, 1
 	lea eax, [ecx+eax*4+0x4]
@@ -613,10 +613,10 @@ R_DrawStaticModelSurfLit_60:
 	mov [esp+0x4], eax
 	movzx eax, byte [ebx+0x6]
 	mov [esp], eax
-	call DB_GetIndexBufferAndBase
+	call _Z24DB_GetIndexBufferAndBasehPvS_Pi
 	mov ecx, [ebp-0x1c]
 	cmp ecx, [edi+0x4]
-	jz R_DrawStaticModelSurfLit_20
+	jz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_20
 	mov [edi+0x4], ecx
 	mov edx, [ebp-0x50]
 	mov eax, [edx+0x90]
@@ -624,7 +624,7 @@ R_DrawStaticModelSurfLit_60:
 	mov [esp+0x4], ecx
 	mov [esp], eax
 	call dword [edx+0x1a0]
-R_DrawStaticModelSurfLit_20:
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_20:
 	lea eax, [ebp-0x20]
 	mov [esp+0xc], eax
 	mov [esp+0x8], esi
@@ -632,12 +632,12 @@ R_DrawStaticModelSurfLit_20:
 	mov [esp+0x4], eax
 	movzx eax, byte [ebx+0x6]
 	mov [esp], eax
-	call DB_GetVertexBufferAndOffset
+	call _Z27DB_GetVertexBufferAndOffsethPvS_Pi
 	mov ebx, [ebp-0x20]
 	mov ecx, [ebp-0x1c]
 	cmp ecx, [edi+0x10]
-	jz R_DrawStaticModelSurfLit_30
-R_DrawStaticModelSurfLit_70:
+	jz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_30
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_70:
 	mov [edi+0x10], ecx
 	mov [edi+0x14], ebx
 	mov dword [edi+0xc], 0x20
@@ -649,11 +649,11 @@ R_DrawStaticModelSurfLit_70:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelSurfLit_80:
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_80:
 	mov eax, [edi+0x1c]
 	test eax, eax
-	jz R_DrawStaticModelSurfLit_40
-R_DrawStaticModelSurfLit_90:
+	jz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_40
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_90:
 	mov dword [edi+0x1c], 0x0
 	mov dword [edi+0x20], 0x0
 	mov dword [edi+0x18], 0x0
@@ -665,13 +665,13 @@ R_DrawStaticModelSurfLit_90:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelSurfLit_100:
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_100:
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov eax, [eax+0x29c]
 	mov [ebp-0x54], eax
 	xor esi, esi
-R_DrawStaticModelSurfLit_50:
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_50:
 	mov edx, [ebp-0x48]
 	movzx eax, word [edx+esi*2]
 	lea ebx, [eax+eax*8]
@@ -688,15 +688,15 @@ R_DrawStaticModelSurfLit_50:
 	mov edx, [ebp-0x64]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetReflectionProbe
+	call _Z20R_SetReflectionProbe16GfxCmdBufContextj
 	mov edx, [ebp-0x40]
 	mov eax, ebx
-	call R_DrawStaticModelDrawSurfPlacement
+	call _Z34R_DrawStaticModelDrawSurfPlacementPK22GfxStaticModelDrawInstP20GfxCmdBufSourceState
 	mov edx, [ebp-0x40]
 	mov [esp+0x4], edx
 	movzx eax, word [ebx+0x46]
 	mov [esp], eax
-	call R_SetModelLightingCoordsForSource
+	call _Z33R_SetModelLightingCoordsForSourcetP20GfxCmdBufSourceState
 	mov eax, [ebp-0x40]
 	mov [ebp-0x60], eax
 	mov edx, [ebp-0x50]
@@ -705,46 +705,46 @@ R_DrawStaticModelSurfLit_50:
 	mov edx, [ebp-0x5c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	lea edx, [ebp-0x2c]
 	mov [esp+0x4], edx
 	mov [esp], edi
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	add esi, 0x1
 	cmp [ebp-0x44], esi
-	jnz R_DrawStaticModelSurfLit_50
+	jnz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_50
 	mov edx, [ebp-0x3c]
 	mov eax, [edx]
 	mov [ebp-0x44], eax
 	lea ecx, [edx+0x4]
 	test eax, eax
-	jnz R_DrawStaticModelSurfLit_60
-R_DrawStaticModelSurfLit_10:
+	jnz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_60
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_10:
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawStaticModelSurfLit_30:
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_30:
 	cmp ebx, [edi+0x14]
-	jnz R_DrawStaticModelSurfLit_70
+	jnz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_70
 	cmp dword [edi+0xc], 0x20
-	jnz R_DrawStaticModelSurfLit_70
-	jmp R_DrawStaticModelSurfLit_80
-R_DrawStaticModelSurfLit_40:
+	jnz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_70
+	jmp _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_80
+_Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_40:
 	mov eax, [edi+0x20]
 	test eax, eax
-	jnz R_DrawStaticModelSurfLit_90
+	jnz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_90
 	mov eax, [edi+0x18]
 	test eax, eax
-	jz R_DrawStaticModelSurfLit_100
-	jmp R_DrawStaticModelSurfLit_90
+	jz _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_100
+	jmp _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo_90
 	nop
 
 
 ;R_DrawStaticModelCachedSurf(unsigned int const*, GfxCmdBufContext)
-R_DrawStaticModelCachedSurf:
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -759,23 +759,23 @@ R_DrawStaticModelCachedSurf:
 	mov [ebp-0x40], ebx
 	mov [esp], ecx
 	mov [esp+0x4], ebx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov eax, [ebp+0x8]
 	mov [ebp-0x30], eax
 	mov esi, ebx
 	add esi, 0x90
 	mov ebx, eax
-R_DrawStaticModelCachedSurf_50:
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_50:
 	mov edi, [ebx]
 	test edi, edi
-	jnz R_DrawStaticModelCachedSurf_10
+	jnz _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_10
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawStaticModelCachedSurf_10:
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_10:
 	mov eax, [ebx+0x4]
 	mov [ebp-0x38], eax
 	add ebx, 0x8
@@ -786,7 +786,7 @@ R_DrawStaticModelCachedSurf_10:
 	mov [ebp-0x30], eax
 	movzx eax, word [ebx]
 	mov [esp], eax
-	call R_GetCachedSModelSurf
+	call _Z21R_GetCachedSModelSurfj
 	mov edx, [ebp-0x3c]
 	mov [ebp+0xc], edx
 	mov ecx, [ebp-0x40]
@@ -804,8 +804,8 @@ R_DrawStaticModelCachedSurf_10:
 	mov eax, gfxBuf
 	mov ebx, [eax+0xc]
 	cmp ebx, [esi+0x10]
-	jz R_DrawStaticModelCachedSurf_20
-R_DrawStaticModelCachedSurf_60:
+	jz _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_20
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_60:
 	mov [esi+0x10], ebx
 	mov [esi+0x14], ecx
 	mov dword [esi+0xc], 0x20
@@ -817,11 +817,11 @@ R_DrawStaticModelCachedSurf_60:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelCachedSurf_70:
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_70:
 	mov ebx, [esi+0x1c]
 	test ebx, ebx
-	jz R_DrawStaticModelCachedSurf_30
-R_DrawStaticModelCachedSurf_80:
+	jz _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_30
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_80:
 	mov dword [esi+0x1c], 0x0
 	mov dword [esi+0x20], 0x0
 	mov dword [esi+0x18], 0x0
@@ -833,7 +833,7 @@ R_DrawStaticModelCachedSurf_80:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelCachedSurf_90:
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_90:
 	mov edx, [ebp-0x34]
 	mov [ebp-0x48], edx
 	mov ecx, [ebp-0x40]
@@ -842,7 +842,7 @@ R_DrawStaticModelCachedSurf_90:
 	mov edx, [ebp-0x44]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov edx, [ebp-0x38]
 	movzx eax, word [edx+0x8]
 	lea eax, [eax+eax*2]
@@ -852,14 +852,14 @@ R_DrawStaticModelCachedSurf_90:
 	mov [ebp-0x20], eax
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_ReserveIndexData
+	call _Z18R_ReserveIndexDataP18GfxCmdBufPrimStatei
 	mov [ebp-0x1c], eax
 	xor ebx, ebx
-R_DrawStaticModelCachedSurf_40:
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_40:
 	mov ecx, [ebp-0x2c]
 	movzx eax, word [ecx+ebx*2]
 	mov [esp], eax
-	call R_GetCachedSModelSurf
+	call _Z21R_GetCachedSModelSurfj
 	mov ecx, [ebp-0x38]
 	movzx edx, word [ecx+0x4]
 	mov [esp+0x8], edx
@@ -871,35 +871,35 @@ R_DrawStaticModelCachedSurf_40:
 	lea eax, [edx+eax*2]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	add ebx, 0x1
 	cmp edi, ebx
-	jnz R_DrawStaticModelCachedSurf_40
+	jnz _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_40
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	mov ebx, [ebp-0x30]
-	jmp R_DrawStaticModelCachedSurf_50
-R_DrawStaticModelCachedSurf_20:
+	jmp _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_50
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_20:
 	cmp ecx, [esi+0x14]
-	jnz R_DrawStaticModelCachedSurf_60
+	jnz _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_60
 	cmp dword [esi+0xc], 0x20
-	jnz R_DrawStaticModelCachedSurf_60
-	jmp R_DrawStaticModelCachedSurf_70
-R_DrawStaticModelCachedSurf_30:
+	jnz _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_60
+	jmp _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_70
+_Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_30:
 	mov ecx, [esi+0x20]
 	test ecx, ecx
-	jnz R_DrawStaticModelCachedSurf_80
+	jnz _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_80
 	mov edx, [esi+0x18]
 	test edx, edx
-	jz R_DrawStaticModelCachedSurf_90
-	jmp R_DrawStaticModelCachedSurf_80
+	jz _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_90
+	jmp _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext_80
 	add [eax], al
 
 
 ;R_DrawStaticModelPreTessSurf(unsigned int const*, GfxCmdBufContext)
-R_DrawStaticModelPreTessSurf:
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -912,32 +912,32 @@ R_DrawStaticModelPreTessSurf:
 	mov esi, [ebp+0x10]
 	mov [esp], ebx
 	mov [esp+0x4], esi
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov eax, [ebp+0x8]
 	mov [ebp-0x1c], eax
 	mov [ebp-0x3c], ebx
 	mov [ebp-0x40], esi
-R_DrawStaticModelPreTessSurf_50:
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_50:
 	lea edx, [ebp-0x1c]
 	mov [esp], edx
-	call R_ReadPrimDrawSurfInt
+	call _Z21R_ReadPrimDrawSurfIntP13GfxReadCmdBuf
 	mov [ebp-0x34], eax
 	test eax, eax
-	jnz R_DrawStaticModelPreTessSurf_10
+	jnz _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_10
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawStaticModelPreTessSurf_10:
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_10:
 	lea eax, [ebp-0x1c]
 	mov [esp], eax
-	call R_ReadPrimDrawSurfInt
+	call _Z21R_ReadPrimDrawSurfIntP13GfxReadCmdBuf
 	mov edi, eax
 	lea edx, [ebp-0x1c]
 	mov [esp], edx
-	call R_ReadPrimDrawSurfInt
+	call _Z21R_ReadPrimDrawSurfIntP13GfxReadCmdBuf
 	mov [ebp-0x38], eax
 	mov eax, edi
 	movzx ebx, al
@@ -945,7 +945,7 @@ R_DrawStaticModelPreTessSurf_10:
 	movzx esi, dh
 	shr edi, 0x10
 	mov [esp], edi
-	call R_GetCachedSModelSurf
+	call _Z21R_GetCachedSModelSurfj
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov edx, rgp
@@ -956,7 +956,7 @@ R_DrawStaticModelPreTessSurf_10:
 	lea eax, [edx+eax*2]
 	mov eax, [ecx+eax*4+0x38]
 	mov [esp], eax
-	call XModelGetSurface
+	call _Z16XModelGetSurfacePK6XModelii
 	mov dword [ebp-0x28], 0x10000
 	movzx eax, word [eax+0x4]
 	imul eax, [ebp-0x34]
@@ -969,8 +969,8 @@ R_DrawStaticModelPreTessSurf_10:
 	mov edi, [ebp-0x40]
 	add edi, 0x90
 	cmp ebx, [edi+0x10]
-	jz R_DrawStaticModelPreTessSurf_20
-R_DrawStaticModelPreTessSurf_60:
+	jz _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_20
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_60:
 	mov [edi+0x10], ebx
 	mov [edi+0x14], ecx
 	mov dword [edi+0xc], 0x20
@@ -982,11 +982,11 @@ R_DrawStaticModelPreTessSurf_60:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelPreTessSurf_70:
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_70:
 	mov ecx, [edi+0x1c]
 	test ecx, ecx
-	jz R_DrawStaticModelPreTessSurf_30
-R_DrawStaticModelPreTessSurf_80:
+	jz _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_30
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_80:
 	mov dword [edi+0x1c], 0x0
 	mov dword [edi+0x20], 0x0
 	mov dword [edi+0x18], 0x0
@@ -998,7 +998,7 @@ R_DrawStaticModelPreTessSurf_80:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelPreTessSurf_90:
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_90:
 	mov eax, [ebp-0x3c]
 	mov [ebp-0x30], eax
 	mov edx, [ebp-0x40]
@@ -1007,45 +1007,45 @@ R_DrawStaticModelPreTessSurf_90:
 	mov edx, [ebp-0x2c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov edx, [ebp-0x3c]
 	mov eax, [edx+0xca8]
 	mov ecx, [eax+0x11e6a0]
 	cmp ecx, [edi+0x4]
-	jz R_DrawStaticModelPreTessSurf_40
+	jz _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_40
 	mov [edi+0x4], ecx
 	mov eax, [edi]
 	mov edx, [eax]
 	mov [esp+0x4], ecx
 	mov [esp], eax
 	call dword [edx+0x1a0]
-R_DrawStaticModelPreTessSurf_40:
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_40:
 	mov eax, [ebp-0x38]
 	mov [ebp-0x20], eax
 	lea eax, [ebp-0x28]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call R_DrawIndexedPrimitive
-	jmp R_DrawStaticModelPreTessSurf_50
-R_DrawStaticModelPreTessSurf_20:
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
+	jmp _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_50
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_20:
 	cmp ecx, [edi+0x14]
-	jnz R_DrawStaticModelPreTessSurf_60
+	jnz _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_60
 	cmp dword [edi+0xc], 0x20
-	jnz R_DrawStaticModelPreTessSurf_60
-	jmp R_DrawStaticModelPreTessSurf_70
-R_DrawStaticModelPreTessSurf_30:
+	jnz _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_60
+	jmp _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_70
+_Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_30:
 	mov edx, [edi+0x20]
 	test edx, edx
-	jnz R_DrawStaticModelPreTessSurf_80
+	jnz _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_80
 	mov eax, [edi+0x18]
 	test eax, eax
-	jz R_DrawStaticModelPreTessSurf_90
-	jmp R_DrawStaticModelPreTessSurf_80
+	jz _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_90
+	jmp _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext_80
 	nop
 
 
 ;R_DrawStaticModelSkinnedSurf(unsigned int const*, GfxCmdBufContext)
-R_DrawStaticModelSkinnedSurf:
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1060,14 +1060,14 @@ R_DrawStaticModelSkinnedSurf:
 	mov [ebp-0x44], ebx
 	mov [esp], ecx
 	mov [esp+0x4], ebx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp+0x8]
 	mov ebx, [edx]
 	mov [ebp-0x38], ebx
 	lea ecx, [edx+0x4]
 	test ebx, ebx
-	jz R_DrawStaticModelSkinnedSurf_10
-R_DrawStaticModelSkinnedSurf_60:
+	jz _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_10
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_60:
 	mov eax, ebx
 	add eax, 0x1
 	shr eax, 1
@@ -1086,11 +1086,11 @@ R_DrawStaticModelSkinnedSurf_60:
 	add ecx, 0x90
 	mov [ebp-0x58], ecx
 	mov [esp], eax
-	call XSurfaceGetNumTris
+	call _Z18XSurfaceGetNumTrisPK8XSurface
 	mov [ebp-0x20], eax
 	mov eax, [ebp-0x34]
 	mov [esp], eax
-	call XSurfaceGetNumVerts
+	call _Z19XSurfaceGetNumVertsPK8XSurface
 	mov [ebp-0x24], eax
 	mov eax, [ebp-0x20]
 	mov [esp+0x8], eax
@@ -1099,7 +1099,7 @@ R_DrawStaticModelSkinnedSurf_60:
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x58]
 	mov [esp], ecx
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	mov eax, gfxBuf
 	mov edi, [eax+0x70]
@@ -1109,10 +1109,10 @@ R_DrawStaticModelSkinnedSurf_60:
 	shl eax, 0x5
 	add eax, edx
 	cmp eax, [edi+0x4]
-	jle R_DrawStaticModelSkinnedSurf_20
+	jle _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_20
 	mov dword [edi], 0x0
 	mov ecx, [ebp-0x24]
-R_DrawStaticModelSkinnedSurf_20:
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_20:
 	mov dword [esp+0xc], 0x20
 	mov [esp+0x8], ecx
 	mov edx, [ebp-0x34]
@@ -1120,16 +1120,16 @@ R_DrawStaticModelSkinnedSurf_20:
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x44]
 	mov [esp], ecx
-	call R_SetVertexData
+	call _Z15R_SetVertexDataP14GfxCmdBufStatePKvii
 	mov edi, eax
 	mov eax, gfxBuf
 	mov eax, [eax+0x70]
 	mov ecx, [eax+0x8]
 	mov eax, [ebp-0x58]
 	cmp ecx, [eax+0x10]
-	jz R_DrawStaticModelSkinnedSurf_30
+	jz _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_30
 	mov edx, eax
-R_DrawStaticModelSkinnedSurf_80:
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_80:
 	mov [edx+0x10], ecx
 	mov [edx+0x14], edi
 	mov dword [edx+0xc], 0x20
@@ -1141,13 +1141,13 @@ R_DrawStaticModelSkinnedSurf_80:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelSkinnedSurf_120:
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_120:
 	mov ecx, [ebp-0x58]
 	mov eax, [ecx+0x1c]
 	test eax, eax
-	jz R_DrawStaticModelSkinnedSurf_40
+	jz _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_40
 	mov eax, ecx
-R_DrawStaticModelSkinnedSurf_100:
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_100:
 	mov dword [eax+0x1c], 0x0
 	mov dword [eax+0x20], 0x0
 	mov dword [eax+0x18], 0x0
@@ -1160,13 +1160,13 @@ R_DrawStaticModelSkinnedSurf_100:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelSkinnedSurf_110:
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_110:
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov eax, [eax+0x29c]
 	mov [ebp-0x54], eax
 	xor edi, edi
-R_DrawStaticModelSkinnedSurf_50:
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_50:
 	mov ecx, [ebp-0x3c]
 	movzx edx, word [ecx+edi*2]
 	lea eax, [edx+edx*8]
@@ -1175,7 +1175,7 @@ R_DrawStaticModelSkinnedSurf_50:
 	lea eax, [edx+eax*4]
 	mov ebx, [ebp-0x30]
 	mov edx, ebx
-	call R_DrawStaticModelDrawSurfPlacement
+	call _Z34R_DrawStaticModelDrawSurfPlacementPK22GfxStaticModelDrawInstP20GfxCmdBufSourceState
 	mov ecx, [ebp-0x44]
 	mov [ebp-0x4c], ecx
 	mov [ebp-0x50], ebx
@@ -1183,54 +1183,54 @@ R_DrawStaticModelSkinnedSurf_50:
 	mov edx, [ebp-0x4c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	lea edx, [ebp-0x24]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x58]
 	mov [esp], ecx
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	add edi, 0x1
 	cmp [ebp-0x38], edi
-	jnz R_DrawStaticModelSkinnedSurf_50
+	jnz _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_50
 	mov edx, [ebp-0x2c]
 	mov ebx, [edx]
 	mov [ebp-0x38], ebx
 	lea ecx, [edx+0x4]
 	test ebx, ebx
-	jnz R_DrawStaticModelSkinnedSurf_60
-R_DrawStaticModelSkinnedSurf_10:
+	jnz _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_60
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_10:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawStaticModelSkinnedSurf_30:
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_30:
 	cmp edi, [eax+0x14]
-	jz R_DrawStaticModelSkinnedSurf_70
+	jz _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_70
 	mov edx, [ebp-0x58]
-	jmp R_DrawStaticModelSkinnedSurf_80
-R_DrawStaticModelSkinnedSurf_40:
+	jmp _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_80
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_40:
 	mov eax, [ecx+0x20]
 	test eax, eax
-	jz R_DrawStaticModelSkinnedSurf_90
+	jz _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_90
 	mov eax, [ebp-0x58]
-	jmp R_DrawStaticModelSkinnedSurf_100
-R_DrawStaticModelSkinnedSurf_90:
+	jmp _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_100
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_90:
 	mov eax, [ecx+0x18]
 	test eax, eax
-	jz R_DrawStaticModelSkinnedSurf_110
+	jz _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_110
 	mov eax, [ebp-0x58]
-	jmp R_DrawStaticModelSkinnedSurf_100
-R_DrawStaticModelSkinnedSurf_70:
+	jmp _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_100
+_Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_70:
 	cmp dword [eax+0xc], 0x20
-	jz R_DrawStaticModelSkinnedSurf_120
+	jz _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_120
 	mov edx, [ebp-0x58]
-	jmp R_DrawStaticModelSkinnedSurf_80
+	jmp _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext_80
 
 
 ;R_DrawStaticModelCachedSurfLit(unsigned int const*, GfxCmdBufContext)
-R_DrawStaticModelCachedSurfLit:
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1250,23 +1250,23 @@ R_DrawStaticModelCachedSurfLit:
 	mov [edx+0xc60], eax
 	mov ecx, [ebp+0xc]
 	mov [esp], ecx
-	call R_SetupCachedStaticModelLighting
+	call _Z32R_SetupCachedStaticModelLightingP20GfxCmdBufSourceState
 	mov esi, [ebp+0x10]
 	mov ebx, [ebp+0xc]
 	mov [esp], ebx
 	mov [esp+0x4], esi
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov eax, [ebp-0x48]
 	mov eax, [eax+0x54]
 	mov [ebp-0x34], eax
 	mov edx, [ebp+0x8]
 	mov [ebp-0x2c], edx
 	mov eax, edx
-R_DrawStaticModelCachedSurfLit_50:
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_50:
 	mov eax, [eax]
 	mov [ebp-0x40], eax
 	test eax, eax
-	jnz R_DrawStaticModelCachedSurfLit_10
+	jnz _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_10
 	mov eax, [ebp-0x34]
 	mov ecx, [ebp-0x48]
 	mov [ecx+0x54], eax
@@ -1276,7 +1276,7 @@ R_DrawStaticModelCachedSurfLit_50:
 	pop edi
 	pop ebp
 	ret
-R_DrawStaticModelCachedSurfLit_10:
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_10:
 	mov edx, [ebp-0x2c]
 	mov edx, [edx+0x4]
 	mov [ebp-0x3c], edx
@@ -1289,7 +1289,7 @@ R_DrawStaticModelCachedSurfLit_10:
 	mov [ebp-0x2c], eax
 	movzx eax, word [ecx]
 	mov [esp], eax
-	call R_GetCachedSModelSurf
+	call _Z21R_GetCachedSModelSurfj
 	mov edx, rgp
 	mov ecx, [edx+0x20a0]
 	movzx edx, word [eax+0x6]
@@ -1316,8 +1316,8 @@ R_DrawStaticModelCachedSurfLit_10:
 	mov ebx, [eax+0xc]
 	lea esi, [edi+0x90]
 	cmp ebx, [esi+0x10]
-	jz R_DrawStaticModelCachedSurfLit_20
-R_DrawStaticModelCachedSurfLit_60:
+	jz _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_20
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_60:
 	mov [esi+0x10], ebx
 	mov [esi+0x14], ecx
 	mov dword [esi+0xc], 0x20
@@ -1329,11 +1329,11 @@ R_DrawStaticModelCachedSurfLit_60:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelCachedSurfLit_70:
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_70:
 	mov edx, [esi+0x1c]
 	test edx, edx
-	jz R_DrawStaticModelCachedSurfLit_30
-R_DrawStaticModelCachedSurfLit_80:
+	jz _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_30
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_80:
 	mov dword [esi+0x1c], 0x0
 	mov dword [esi+0x20], 0x0
 	mov dword [esi+0x18], 0x0
@@ -1345,7 +1345,7 @@ R_DrawStaticModelCachedSurfLit_80:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelCachedSurfLit_90:
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_90:
 	mov ecx, [ebp-0x44]
 	mov [ebp-0x58], ecx
 	mov [ebp-0x54], edi
@@ -1353,7 +1353,7 @@ R_DrawStaticModelCachedSurfLit_90:
 	mov edx, [ebp-0x54]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov edx, [ebp-0x44]
 	mov [ebp-0x50], edx
 	mov [ebp-0x4c], edi
@@ -1363,7 +1363,7 @@ R_DrawStaticModelCachedSurfLit_90:
 	mov edx, [ebp-0x4c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetReflectionProbe
+	call _Z20R_SetReflectionProbe16GfxCmdBufContextj
 	mov edx, [ebp-0x3c]
 	movzx eax, word [edx+0x8]
 	lea edi, [eax+eax*2]
@@ -1372,14 +1372,14 @@ R_DrawStaticModelCachedSurfLit_90:
 	mov [ebp-0x20], eax
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_ReserveIndexData
+	call _Z18R_ReserveIndexDataP18GfxCmdBufPrimStatei
 	mov [ebp-0x1c], eax
 	xor ebx, ebx
-R_DrawStaticModelCachedSurfLit_40:
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_40:
 	mov ecx, [ebp-0x30]
 	movzx eax, word [ecx+ebx*2]
 	mov [esp], eax
-	call R_GetCachedSModelSurf
+	call _Z21R_GetCachedSModelSurfj
 	mov ecx, [ebp-0x3c]
 	movzx edx, word [ecx+0x4]
 	mov [esp+0x8], edx
@@ -1390,35 +1390,35 @@ R_DrawStaticModelCachedSurfLit_40:
 	lea eax, [edx+eax*2]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	add ebx, 0x1
 	cmp [ebp-0x40], ebx
-	jnz R_DrawStaticModelCachedSurfLit_40
+	jnz _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_40
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	mov eax, [ebp-0x2c]
-	jmp R_DrawStaticModelCachedSurfLit_50
-R_DrawStaticModelCachedSurfLit_20:
+	jmp _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_50
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_20:
 	cmp ecx, [esi+0x14]
-	jnz R_DrawStaticModelCachedSurfLit_60
+	jnz _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_60
 	cmp dword [esi+0xc], 0x20
-	jnz R_DrawStaticModelCachedSurfLit_60
-	jmp R_DrawStaticModelCachedSurfLit_70
-R_DrawStaticModelCachedSurfLit_30:
+	jnz _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_60
+	jmp _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_70
+_Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_30:
 	mov eax, [esi+0x20]
 	test eax, eax
-	jnz R_DrawStaticModelCachedSurfLit_80
+	jnz _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_80
 	mov eax, [esi+0x18]
 	test eax, eax
-	jz R_DrawStaticModelCachedSurfLit_90
-	jmp R_DrawStaticModelCachedSurfLit_80
+	jz _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_90
+	jmp _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext_80
 	nop
 
 
 ;R_DrawStaticModelPreTessSurfLit(unsigned int const*, GfxCmdBufContext)
-R_DrawStaticModelPreTessSurfLit:
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1438,35 +1438,35 @@ R_DrawStaticModelPreTessSurfLit:
 	mov [edx+0xc60], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call R_SetupCachedStaticModelLighting
+	call _Z32R_SetupCachedStaticModelLightingP20GfxCmdBufSourceState
 	mov esi, [ebp+0x10]
 	mov ebx, [ebp+0xc]
 	mov [esp], ebx
 	mov [esp+0x4], esi
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov eax, [ebp+0x8]
 	mov [ebp-0x1c], eax
-R_DrawStaticModelPreTessSurfLit_50:
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_50:
 	lea edx, [ebp-0x1c]
 	mov [esp], edx
-	call R_ReadPrimDrawSurfInt
+	call _Z21R_ReadPrimDrawSurfIntP13GfxReadCmdBuf
 	mov [ebp-0x4c], eax
 	test eax, eax
-	jnz R_DrawStaticModelPreTessSurfLit_10
+	jnz _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_10
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawStaticModelPreTessSurfLit_10:
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_10:
 	lea eax, [ebp-0x1c]
 	mov [esp], eax
-	call R_ReadPrimDrawSurfInt
+	call _Z21R_ReadPrimDrawSurfIntP13GfxReadCmdBuf
 	mov edi, eax
 	lea edx, [ebp-0x1c]
 	mov [esp], edx
-	call R_ReadPrimDrawSurfInt
+	call _Z21R_ReadPrimDrawSurfIntP13GfxReadCmdBuf
 	mov [ebp-0x50], eax
 	mov eax, [ebp-0x30]
 	mov [ebp+0x10], eax
@@ -1479,7 +1479,7 @@ R_DrawStaticModelPreTessSurfLit_10:
 	movzx esi, ah
 	shr edi, 0x10
 	mov [esp], edi
-	call R_GetCachedSModelSurf
+	call _Z21R_GetCachedSModelSurfj
 	mov edx, rgp
 	mov ecx, [edx+0x20a0]
 	movzx eax, word [eax+0x6]
@@ -1492,7 +1492,7 @@ R_DrawStaticModelPreTessSurfLit_10:
 	mov [esp+0x4], esi
 	mov eax, [edx+0x38]
 	mov [esp], eax
-	call XModelGetSurface
+	call _Z16XModelGetSurfacePK6XModelii
 	mov dword [ebp-0x28], 0x10000
 	movzx eax, word [eax+0x4]
 	imul eax, [ebp-0x4c]
@@ -1505,8 +1505,8 @@ R_DrawStaticModelPreTessSurfLit_10:
 	mov ebx, [ebp-0x2c]
 	add ebx, 0x90
 	cmp esi, [ebx+0x10]
-	jz R_DrawStaticModelPreTessSurfLit_20
-R_DrawStaticModelPreTessSurfLit_60:
+	jz _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_20
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_60:
 	mov [ebx+0x10], esi
 	mov [ebx+0x14], ecx
 	mov dword [ebx+0xc], 0x20
@@ -1518,11 +1518,11 @@ R_DrawStaticModelPreTessSurfLit_60:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelPreTessSurfLit_70:
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_70:
 	mov eax, [ebx+0x1c]
 	test eax, eax
-	jz R_DrawStaticModelPreTessSurfLit_30
-R_DrawStaticModelPreTessSurfLit_80:
+	jz _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_30
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_80:
 	mov dword [ebx+0x1c], 0x0
 	mov dword [ebx+0x20], 0x0
 	mov dword [ebx+0x18], 0x0
@@ -1534,7 +1534,7 @@ R_DrawStaticModelPreTessSurfLit_80:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelPreTessSurfLit_90:
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_90:
 	mov edx, [ebp-0x34]
 	mov [ebp-0x48], edx
 	mov eax, [ebp-0x2c]
@@ -1543,7 +1543,7 @@ R_DrawStaticModelPreTessSurfLit_90:
 	mov edx, [ebp-0x44]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov edx, [ebp-0x38]
 	movzx eax, byte [edx+0x44]
 	mov edx, [ebp-0x34]
@@ -1555,44 +1555,44 @@ R_DrawStaticModelPreTessSurfLit_90:
 	mov edx, [ebp-0x3c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetReflectionProbe
+	call _Z20R_SetReflectionProbe16GfxCmdBufContextj
 	mov edx, [ebp-0x34]
 	mov eax, [edx+0xca8]
 	mov ecx, [eax+0x11e6a0]
 	cmp ecx, [ebx+0x4]
-	jz R_DrawStaticModelPreTessSurfLit_40
+	jz _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_40
 	mov [ebx+0x4], ecx
 	mov eax, [ebx]
 	mov edx, [eax]
 	mov [esp+0x4], ecx
 	mov [esp], eax
 	call dword [edx+0x1a0]
-R_DrawStaticModelPreTessSurfLit_40:
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_40:
 	mov eax, [ebp-0x50]
 	mov [ebp-0x20], eax
 	lea eax, [ebp-0x28]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_DrawIndexedPrimitive
-	jmp R_DrawStaticModelPreTessSurfLit_50
-R_DrawStaticModelPreTessSurfLit_20:
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
+	jmp _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_50
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_20:
 	cmp ecx, [ebx+0x14]
-	jnz R_DrawStaticModelPreTessSurfLit_60
+	jnz _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_60
 	cmp dword [ebx+0xc], 0x20
-	jnz R_DrawStaticModelPreTessSurfLit_60
-	jmp R_DrawStaticModelPreTessSurfLit_70
-R_DrawStaticModelPreTessSurfLit_30:
+	jnz _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_60
+	jmp _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_70
+_Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_30:
 	mov edi, [ebx+0x20]
 	test edi, edi
-	jnz R_DrawStaticModelPreTessSurfLit_80
+	jnz _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_80
 	mov esi, [ebx+0x18]
 	test esi, esi
-	jz R_DrawStaticModelPreTessSurfLit_90
-	jmp R_DrawStaticModelPreTessSurfLit_80
+	jz _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_90
+	jmp _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext_80
 
 
 ;R_DrawStaticModelSkinnedSurfLit(unsigned int const*, GfxCmdBufContext)
-R_DrawStaticModelSkinnedSurfLit:
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1614,7 +1614,7 @@ R_DrawStaticModelSkinnedSurfLit:
 	mov eax, [ebp+0xc]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov eax, [ebp-0x44]
 	mov eax, [eax+0x54]
 	mov [ebp-0x34], eax
@@ -1623,8 +1623,8 @@ R_DrawStaticModelSkinnedSurfLit:
 	mov [ebp-0x38], ebx
 	lea ecx, [edx+0x4]
 	test ebx, ebx
-	jz R_DrawStaticModelSkinnedSurfLit_10
-R_DrawStaticModelSkinnedSurfLit_70:
+	jz _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_10
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_70:
 	mov eax, ebx
 	add eax, 0x1
 	shr eax, 1
@@ -1645,17 +1645,17 @@ R_DrawStaticModelSkinnedSurfLit_70:
 	add ebx, 0x90
 	mov [ebp-0x6c], ebx
 	mov [esp], esi
-	call XSurfaceGetNumTris
+	call _Z18XSurfaceGetNumTrisPK8XSurface
 	mov [ebp-0x20], eax
 	mov [esp], esi
-	call XSurfaceGetNumVerts
+	call _Z19XSurfaceGetNumVertsPK8XSurface
 	mov [ebp-0x24], eax
 	mov eax, [ebp-0x20]
 	mov [esp+0x8], eax
 	mov eax, [esi+0xc]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	mov eax, gfxBuf
 	mov ebx, [eax+0x70]
@@ -1665,26 +1665,26 @@ R_DrawStaticModelSkinnedSurfLit_70:
 	shl eax, 0x5
 	add eax, edx
 	cmp eax, [ebx+0x4]
-	jle R_DrawStaticModelSkinnedSurfLit_20
+	jle _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_20
 	mov dword [ebx], 0x0
 	mov ecx, [ebp-0x24]
-R_DrawStaticModelSkinnedSurfLit_20:
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_20:
 	mov dword [esp+0xc], 0x20
 	mov [esp+0x8], ecx
 	mov eax, [esi+0x1c]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x30]
 	mov [esp], edx
-	call R_SetVertexData
+	call _Z15R_SetVertexDataP14GfxCmdBufStatePKvii
 	mov ebx, eax
 	mov eax, gfxBuf
 	mov eax, [eax+0x70]
 	mov ecx, [eax+0x8]
 	mov eax, [ebp-0x6c]
 	cmp ecx, [eax+0x10]
-	jz R_DrawStaticModelSkinnedSurfLit_30
+	jz _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_30
 	mov edx, eax
-R_DrawStaticModelSkinnedSurfLit_90:
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_90:
 	mov [edx+0x10], ecx
 	mov [edx+0x14], ebx
 	mov dword [edx+0xc], 0x20
@@ -1696,13 +1696,13 @@ R_DrawStaticModelSkinnedSurfLit_90:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelSkinnedSurfLit_130:
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_130:
 	mov ecx, [ebp-0x6c]
 	mov eax, [ecx+0x1c]
 	test eax, eax
-	jz R_DrawStaticModelSkinnedSurfLit_40
+	jz _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_40
 	mov ebx, ecx
-R_DrawStaticModelSkinnedSurfLit_110:
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_110:
 	mov dword [ebx+0x1c], 0x0
 	mov dword [ebx+0x20], 0x0
 	mov dword [ebx+0x18], 0x0
@@ -1714,17 +1714,17 @@ R_DrawStaticModelSkinnedSurfLit_110:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawStaticModelSkinnedSurfLit_120:
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_120:
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov eax, [eax+0x29c]
 	mov [ebp-0x5c], eax
 	xor edi, edi
 	mov ecx, eax
-	jmp R_DrawStaticModelSkinnedSurfLit_50
-R_DrawStaticModelSkinnedSurfLit_60:
+	jmp _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_50
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_60:
 	mov ecx, [ebp-0x5c]
-R_DrawStaticModelSkinnedSurfLit_50:
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_50:
 	mov edx, [ebp-0x3c]
 	movzx eax, word [edx+edi*2]
 	lea ebx, [eax+eax*8]
@@ -1744,14 +1744,14 @@ R_DrawStaticModelSkinnedSurfLit_50:
 	mov edx, [ebp-0x54]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetReflectionProbe
+	call _Z20R_SetReflectionProbe16GfxCmdBufContextj
 	mov edx, [ebp-0x68]
 	mov eax, ebx
-	call R_DrawStaticModelDrawSurfPlacement
+	call _Z34R_DrawStaticModelDrawSurfPlacementPK22GfxStaticModelDrawInstP20GfxCmdBufSourceState
 	mov edx, [ebp-0x68]
 	mov [esp+0x4], edx
 	mov [esp], esi
-	call R_SetModelLightingCoordsForSource
+	call _Z33R_SetModelLightingCoordsForSourcetP20GfxCmdBufSourceState
 	mov ecx, [ebp-0x30]
 	mov [ebp-0x4c], ecx
 	mov ebx, [ebp-0x68]
@@ -1760,22 +1760,22 @@ R_DrawStaticModelSkinnedSurfLit_50:
 	mov edx, [ebp-0x4c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	lea edx, [ebp-0x24]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x6c]
 	mov [esp], ecx
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	add edi, 0x1
 	cmp [ebp-0x38], edi
-	jnz R_DrawStaticModelSkinnedSurfLit_60
+	jnz _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_60
 	mov edx, [ebp-0x2c]
 	mov ebx, [edx]
 	mov [ebp-0x38], ebx
 	lea ecx, [edx+0x4]
 	test ebx, ebx
-	jnz R_DrawStaticModelSkinnedSurfLit_70
-R_DrawStaticModelSkinnedSurfLit_10:
+	jnz _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_70
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_10:
 	mov eax, [ebp-0x34]
 	mov ebx, [ebp-0x44]
 	mov [ebx+0x54], eax
@@ -1785,28 +1785,28 @@ R_DrawStaticModelSkinnedSurfLit_10:
 	pop edi
 	pop ebp
 	ret
-R_DrawStaticModelSkinnedSurfLit_30:
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_30:
 	cmp ebx, [eax+0x14]
-	jz R_DrawStaticModelSkinnedSurfLit_80
+	jz _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_80
 	mov edx, [ebp-0x6c]
-	jmp R_DrawStaticModelSkinnedSurfLit_90
-R_DrawStaticModelSkinnedSurfLit_40:
+	jmp _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_90
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_40:
 	mov eax, [ecx+0x20]
 	test eax, eax
-	jz R_DrawStaticModelSkinnedSurfLit_100
+	jz _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_100
 	mov ebx, [ebp-0x6c]
-	jmp R_DrawStaticModelSkinnedSurfLit_110
-R_DrawStaticModelSkinnedSurfLit_100:
+	jmp _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_110
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_100:
 	mov eax, [ecx+0x18]
 	test eax, eax
-	jz R_DrawStaticModelSkinnedSurfLit_120
+	jz _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_120
 	mov ebx, [ebp-0x6c]
-	jmp R_DrawStaticModelSkinnedSurfLit_110
-R_DrawStaticModelSkinnedSurfLit_80:
+	jmp _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_110
+_Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_80:
 	cmp dword [eax+0xc], 0x20
-	jz R_DrawStaticModelSkinnedSurfLit_130
+	jz _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_130
 	mov edx, [ebp-0x6c]
-	jmp R_DrawStaticModelSkinnedSurfLit_90
+	jmp _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext_90
 
 
 ;Initialized global or static variables of r_draw_staticmodel:
@@ -1847,7 +1847,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of r_draw_staticmodel:
@@ -1884,7 +1884,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

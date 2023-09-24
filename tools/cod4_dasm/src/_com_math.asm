@@ -3,114 +3,114 @@
 	extern sinf
 	extern cosf
 	extern atan2
-	extern ms_rand
+	extern _Z7ms_randv
 	extern log
 	extern atan
-	extern AngleVectors
+	extern _Z12AngleVectorsPKfPfS1_S1_
 	extern acosf
 
 ;Exports of com_math:
 	global _GLOBAL__I_vec2_origin
 	global holdrand
 	global ClearBounds
-	global AngleDelta
-	global AxisToQuat
-	global QuatToAxis
-	global Vec3Rotate
-	global YawVectors
-	global vectopitch
-	global MatrixSet44
-	global vectoangles
-	global AxisToAngles
-	global ExpandBounds
-	global ExtendBounds
-	global RandWithSeed
-	global Vec2Distance
-	global YawVectors2D
-	global AxisTranspose
-	global BoundsOverlap
-	global ClearBounds2D
-	global PointInBounds
-	global RotationToYaw
-	global Vec2Normalize
-	global AnglesSubtract
-	global BoxOnPlaneSide
-	global ColorNormalize
-	global DiffTrackAngle
-	global GaussianRandom
-	global MatrixMultiply
-	global UnitQuatToAxis
-	global Vec2DistanceSq
-	global vectosignedyaw
-	global CullBoxFromCone
-	global IntersectPlanes
-	global MatrixForViewer
-	global MatrixInverse44
-	global MatrixTranspose
-	global PlaneFromPoints
-	global Vec2NormalizeTo
-	global Vec3NormalizeTo
-	global AddPointToBounds
-	global LinearTrackAngle
-	global MatrixIdentity33
-	global MatrixIdentity44
-	global MatrixMultiply43
-	global MatrixMultiply44
-	global PointToBoxDistSq
-	global RadiusFromBounds
-	global UnitQuatToAngles
-	global AngleNormalize360
-	global AxisTransformVec3
-	global CullBoxFromSphere
-	global MatrixTranspose44
-	global UnitQuatToForward
-	global AddPointToBounds2D
-	global BoxDistSqrdExceeds
-	global CullSphereFromCone
-	global OrthographicMatrix
-	global RadiusFromBounds2D
-	global ExpandBoundsToWidth
-	global PerpendicularVector
-	global PitchForYawOnNormal
-	global ProjectPointOnPlane
-	global Vec3RotateTranspose
-	global VectorAngleMultiply
-	global ShrinkBoundsToHeight
-	global Vec3ProjectionCoords
-	global Vec3Basis_RightHanded
-	global FinitePerspectiveMatrix
-	global MatrixTransformVector43
-	global MatrixTransformVector44
-	global RotatePointAroundVector
-	global VecNCompareCustomEpsilon
-	global ClosestApproachOfTwoLines
-	global GraphGetValueFromFraction
-	global InfinitePerspectiveMatrix
-	global MatrixInverseOrthogonal43
-	global NearestPitchAndYawOnPlane
-	global SnapPointToIntersectingPlanes
-	global MatrixTransposeTransformVector
-	global CullBoxFromConicSectionOfSphere
-	global MatrixTransposeTransformVector43
-	global PointInCircleFromUniformDeviates
-	global ProjectedWindingContainsCoplanarPoint
-	global irand
-	global Q_acos
-	global Q_rint
-	global flrand
-	global crandom
-	global randomf
-	global AxisCopy
-	global QuatLerp
-	global vectoyaw
-	global AxisClear
-	global ByteToDir
-	global ClampChar
-	global DiffTrack
-	global DirToByte
-	global QuatSlerp
-	global Rand_Init
-	global YawToAxis
+	global _Z10AngleDeltaff
+	global _Z10AxisToQuatPA3_KfPf
+	global _Z10QuatToAxisPKfPA3_f
+	global _Z10Vec3RotatePKfPA3_S_Pf
+	global _Z10YawVectorsfPfS_
+	global _Z10vectopitchPKf
+	global _Z11MatrixSet44PA4_fPKfPA3_S1_f
+	global _Z11vectoanglesPKfPf
+	global _Z12AxisToAnglesPA3_KfPf
+	global _Z12ExpandBoundsPKfS0_PfS1_
+	global _Z12ExtendBoundsPfS_PKf
+	global _Z12RandWithSeedPi
+	global _Z12Vec2DistancePKfS0_
+	global _Z12YawVectors2DfPfS_
+	global _Z13AxisTransposePA3_KfPA3_f
+	global _Z13BoundsOverlapPKfS0_S0_S0_
+	global _Z13ClearBounds2DPfS_
+	global _Z13PointInBoundsPKfS0_S0_
+	global _Z13RotationToYawPKf
+	global _Z13Vec2NormalizePf
+	global _Z14AnglesSubtractPKfS0_Pf
+	global _Z14BoxOnPlaneSidePKfS0_PK8cplane_s
+	global _Z14ColorNormalizePKfPf
+	global _Z14DiffTrackAngleffff
+	global _Z14GaussianRandomPfS_
+	global _Z14MatrixMultiplyPA3_KfS1_PA3_f
+	global _Z14UnitQuatToAxisPKfPA3_f
+	global _Z14Vec2DistanceSqPKfS0_
+	global _Z14vectosignedyawPKf
+	global _Z15CullBoxFromConePKfS0_fS0_S0_
+	global _Z15IntersectPlanesPPKfPf
+	global _Z15MatrixForViewerPA4_fPKfPA3_S1_
+	global _Z15MatrixInverse44PKfPf
+	global _Z15MatrixTransposePA3_KfPA3_f
+	global _Z15PlaneFromPointsPfPKfS1_S1_
+	global _Z15Vec2NormalizeToPKfPf
+	global _Z15Vec3NormalizeToPKfPf
+	global _Z16AddPointToBoundsPKfPfS1_
+	global _Z16LinearTrackAngleffff
+	global _Z16MatrixIdentity33PA3_f
+	global _Z16MatrixIdentity44PA4_f
+	global _Z16MatrixMultiply43PA3_KfS1_PA3_f
+	global _Z16MatrixMultiply44PA4_KfS1_PA4_f
+	global _Z16PointToBoxDistSqPKfS0_S0_
+	global _Z16RadiusFromBoundsPKfS0_
+	global _Z16UnitQuatToAnglesPKfPf
+	global _Z17AngleNormalize360f
+	global _Z17AxisTransformVec3PA3_KfPS_Pf
+	global _Z17CullBoxFromSpherePKffS0_S0_
+	global _Z17MatrixTranspose44PKfPf
+	global _Z17UnitQuatToForwardPKfPf
+	global _Z18AddPointToBounds2DPKfPfS1_
+	global _Z18BoxDistSqrdExceedsPKfS0_S0_f
+	global _Z18CullSphereFromConePKfS0_fS0_f
+	global _Z18OrthographicMatrixPA4_ffff
+	global _Z18RadiusFromBounds2DPKfS0_
+	global _Z19ExpandBoundsToWidthPfS_
+	global _Z19PerpendicularVectorPKfPf
+	global _Z19PitchForYawOnNormalfPKf
+	global _Z19ProjectPointOnPlanePKfS0_Pf
+	global _Z19Vec3RotateTransposePKfPA3_S_Pf
+	global _Z19VectorAngleMultiplyPff
+	global _Z20ShrinkBoundsToHeightPfS_
+	global _Z20Vec3ProjectionCoordsPKfPiS1_
+	global _Z21Vec3Basis_RightHandedPKfPfS1_
+	global _Z23FinitePerspectiveMatrixPA4_fffff
+	global _Z23MatrixTransformVector43PKfPA3_S_Pf
+	global _Z23MatrixTransformVector44PKfPA4_S_Pf
+	global _Z23RotatePointAroundVectorPfPKfS1_f
+	global _Z24VecNCompareCustomEpsilonPKfS0_fi
+	global _Z25ClosestApproachOfTwoLinesPKfS0_S0_S0_PfS1_
+	global _Z25GraphGetValueFromFractioniPA2_Kff
+	global _Z25InfinitePerspectiveMatrixPA4_ffff
+	global _Z25MatrixInverseOrthogonal43PA3_KfPA3_f
+	global _Z25NearestPitchAndYawOnPlanePKfS0_Pf
+	global _Z29SnapPointToIntersectingPlanesPPKfPfff
+	global _Z30MatrixTransposeTransformVectorPKfPA3_S_Pf
+	global _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0_
+	global _Z32MatrixTransposeTransformVector43PKfPA3_S_Pf
+	global _Z32PointInCircleFromUniformDeviatesffPf
+	global _Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS_
+	global _Z5irandii
+	global _Z6Q_acosf
+	global _Z6Q_rintf
+	global _Z6flrandff
+	global _Z7crandomv
+	global _Z7randomfv
+	global _Z8AxisCopyPA3_KfPA3_f
+	global _Z8QuatLerpPKfS0_fPf
+	global _Z8vectoyawPKf
+	global _Z9AxisClearPA3_f
+	global _Z9ByteToDiriPf
+	global _Z9ClampChari
+	global _Z9DiffTrackffff
+	global _Z9DirToBytePKf
+	global _Z9QuatSlerpPKfS0_fPf
+	global _Z9Rand_Initi
+	global _Z9YawToAxisfPA3_f
 	global vec3_origin
 	global vec2_origin
 	global bytedirs
@@ -118,6 +118,297 @@
 
 
 SECTION .text
+
+
+;global constructors keyed to vec2_origin
+_GLOBAL__I_vec2_origin:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp _Z41__static_initialization_and_destruction_0ii
+
+
+;__static_initialization_and_destruction_0(int, int)
+_Z41__static_initialization_and_destruction_0ii:
+	push ebp
+	mov ebp, esp
+	cmp edx, 0xffff
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
+	pop ebp
+	ret
+_Z41__static_initialization_and_destruction_0ii_10:
+	sub eax, 0x1
+	jnz _Z41__static_initialization_and_destruction_0ii_20
+	mov eax, [g_fltMin__uint4]
+	mov [g_fltMin], eax
+	mov eax, [g_fltMin__uint4+0x4]
+	mov [g_fltMin+0x4], eax
+	mov eax, [g_fltMin__uint4+0x8]
+	mov [g_fltMin+0x8], eax
+	mov eax, [g_fltMin__uint4+0xc]
+	mov [g_fltMin+0xc], eax
+	mov eax, [g_negativeZero__uint4]
+	mov [g_negativeZero], eax
+	mov eax, [g_negativeZero__uint4+0x4]
+	mov [g_negativeZero+0x4], eax
+	mov eax, [g_negativeZero__uint4+0x8]
+	mov [g_negativeZero+0x8], eax
+	mov eax, [g_negativeZero__uint4+0xc]
+	mov [g_negativeZero+0xc], eax
+	mov eax, [g_inc__uint4]
+	mov [g_inc], eax
+	mov eax, [g_inc__uint4+0x4]
+	mov [g_inc+0x4], eax
+	mov eax, [g_inc__uint4+0x8]
+	mov [g_inc+0x8], eax
+	mov eax, [g_inc__uint4+0xc]
+	mov [g_inc+0xc], eax
+	mov eax, [g_swizzleXYZW__uint4]
+	mov [g_swizzleXYZW], eax
+	mov eax, [g_swizzleXYZW__uint4+0x4]
+	mov [g_swizzleXYZW+0x4], eax
+	mov eax, [g_swizzleXYZW__uint4+0x8]
+	mov [g_swizzleXYZW+0x8], eax
+	mov eax, [g_swizzleXYZW__uint4+0xc]
+	mov [g_swizzleXYZW+0xc], eax
+	mov eax, [g_swizzleYXZW__uint4]
+	mov [g_swizzleYXZW], eax
+	mov eax, [g_swizzleYXZW__uint4+0x4]
+	mov [g_swizzleYXZW+0x4], eax
+	mov eax, [g_swizzleYXZW__uint4+0x8]
+	mov [g_swizzleYXZW+0x8], eax
+	mov eax, [g_swizzleYXZW__uint4+0xc]
+	mov [g_swizzleYXZW+0xc], eax
+	mov eax, [g_swizzleXZYW__uint4]
+	mov [g_swizzleXZYW], eax
+	mov eax, [g_swizzleXZYW__uint4+0x4]
+	mov [g_swizzleXZYW+0x4], eax
+	mov eax, [g_swizzleXZYW__uint4+0x8]
+	mov [g_swizzleXZYW+0x8], eax
+	mov eax, [g_swizzleXZYW__uint4+0xc]
+	mov [g_swizzleXZYW+0xc], eax
+	mov eax, [g_swizzleYXWZ__uint4]
+	mov [g_swizzleYXWZ], eax
+	mov eax, [g_swizzleYXWZ__uint4+0x4]
+	mov [g_swizzleYXWZ+0x4], eax
+	mov eax, [g_swizzleYXWZ__uint4+0x8]
+	mov [g_swizzleYXWZ+0x8], eax
+	mov eax, [g_swizzleYXWZ__uint4+0xc]
+	mov [g_swizzleYXWZ+0xc], eax
+	mov eax, [g_swizzleXAZC__uint4]
+	mov [g_swizzleXAZC], eax
+	mov eax, [g_swizzleXAZC__uint4+0x4]
+	mov [g_swizzleXAZC+0x4], eax
+	mov eax, [g_swizzleXAZC__uint4+0x8]
+	mov [g_swizzleXAZC+0x8], eax
+	mov eax, [g_swizzleXAZC__uint4+0xc]
+	mov [g_swizzleXAZC+0xc], eax
+	mov eax, [g_swizzleYBWD__uint4]
+	mov [g_swizzleYBWD], eax
+	mov eax, [g_swizzleYBWD__uint4+0x4]
+	mov [g_swizzleYBWD+0x4], eax
+	mov eax, [g_swizzleYBWD__uint4+0x8]
+	mov [g_swizzleYBWD+0x8], eax
+	mov eax, [g_swizzleYBWD__uint4+0xc]
+	mov [g_swizzleYBWD+0xc], eax
+	mov eax, [g_swizzleXYAB__uint4]
+	mov [g_swizzleXYAB], eax
+	mov eax, [g_swizzleXYAB__uint4+0x4]
+	mov [g_swizzleXYAB+0x4], eax
+	mov eax, [g_swizzleXYAB__uint4+0x8]
+	mov [g_swizzleXYAB+0x8], eax
+	mov eax, [g_swizzleXYAB__uint4+0xc]
+	mov [g_swizzleXYAB+0xc], eax
+	mov eax, [g_swizzleZWCD__uint4]
+	mov [g_swizzleZWCD], eax
+	mov eax, [g_swizzleZWCD__uint4+0x4]
+	mov [g_swizzleZWCD+0x4], eax
+	mov eax, [g_swizzleZWCD__uint4+0x8]
+	mov [g_swizzleZWCD+0x8], eax
+	mov eax, [g_swizzleZWCD__uint4+0xc]
+	mov [g_swizzleZWCD+0xc], eax
+	mov eax, [g_swizzleXYZA__uint4]
+	mov [g_swizzleXYZA], eax
+	mov eax, [g_swizzleXYZA__uint4+0x4]
+	mov [g_swizzleXYZA+0x4], eax
+	mov eax, [g_swizzleXYZA__uint4+0x8]
+	mov [g_swizzleXYZA+0x8], eax
+	mov eax, [g_swizzleXYZA__uint4+0xc]
+	mov [g_swizzleXYZA+0xc], eax
+	mov eax, [g_swizzleYZXW__uint4]
+	mov [g_swizzleYZXW], eax
+	mov eax, [g_swizzleYZXW__uint4+0x4]
+	mov [g_swizzleYZXW+0x4], eax
+	mov eax, [g_swizzleYZXW__uint4+0x8]
+	mov [g_swizzleYZXW+0x8], eax
+	mov eax, [g_swizzleYZXW__uint4+0xc]
+	mov [g_swizzleYZXW+0xc], eax
+	mov eax, [g_swizzleZXYW__uint4]
+	mov [g_swizzleZXYW], eax
+	mov eax, [g_swizzleZXYW__uint4+0x4]
+	mov [g_swizzleZXYW+0x4], eax
+	mov eax, [g_swizzleZXYW__uint4+0x8]
+	mov [g_swizzleZXYW+0x8], eax
+	mov eax, [g_swizzleZXYW__uint4+0xc]
+	mov [g_swizzleZXYW+0xc], eax
+	mov eax, [g_swizzleWABW__uint4]
+	mov [g_swizzleWABW], eax
+	mov eax, [g_swizzleWABW__uint4+0x4]
+	mov [g_swizzleWABW+0x4], eax
+	mov eax, [g_swizzleWABW__uint4+0x8]
+	mov [g_swizzleWABW+0x8], eax
+	mov eax, [g_swizzleWABW__uint4+0xc]
+	mov [g_swizzleWABW+0xc], eax
+	mov eax, [g_swizzleZWAW__uint4]
+	mov [g_swizzleZWAW], eax
+	mov eax, [g_swizzleZWAW__uint4+0x4]
+	mov [g_swizzleZWAW+0x4], eax
+	mov eax, [g_swizzleZWAW__uint4+0x8]
+	mov [g_swizzleZWAW+0x8], eax
+	mov eax, [g_swizzleZWAW__uint4+0xc]
+	mov [g_swizzleZWAW+0xc], eax
+	mov eax, [g_swizzleYZWA__uint4]
+	mov [g_swizzleYZWA], eax
+	mov eax, [g_swizzleYZWA__uint4+0x4]
+	mov [g_swizzleYZWA+0x4], eax
+	mov eax, [g_swizzleYZWA__uint4+0x8]
+	mov [g_swizzleYZWA+0x8], eax
+	mov eax, [g_swizzleYZWA__uint4+0xc]
+	mov [g_swizzleYZWA+0xc], eax
+	mov eax, [g_swizzleXXXX__uint4]
+	mov [g_swizzleXXXX], eax
+	mov eax, [g_swizzleXXXX__uint4+0x4]
+	mov [g_swizzleXXXX+0x4], eax
+	mov eax, [g_swizzleXXXX__uint4+0x8]
+	mov [g_swizzleXXXX+0x8], eax
+	mov eax, [g_swizzleXXXX__uint4+0xc]
+	mov [g_swizzleXXXX+0xc], eax
+	mov eax, [g_swizzleYYYY__uint4]
+	mov [g_swizzleYYYY], eax
+	mov eax, [g_swizzleYYYY__uint4+0x4]
+	mov [g_swizzleYYYY+0x4], eax
+	mov eax, [g_swizzleYYYY__uint4+0x8]
+	mov [g_swizzleYYYY+0x8], eax
+	mov eax, [g_swizzleYYYY__uint4+0xc]
+	mov [g_swizzleYYYY+0xc], eax
+	mov eax, [g_swizzleZZZZ__uint4]
+	mov [g_swizzleZZZZ], eax
+	mov eax, [g_swizzleZZZZ__uint4+0x4]
+	mov [g_swizzleZZZZ+0x4], eax
+	mov eax, [g_swizzleZZZZ__uint4+0x8]
+	mov [g_swizzleZZZZ+0x8], eax
+	mov eax, [g_swizzleZZZZ__uint4+0xc]
+	mov [g_swizzleZZZZ+0xc], eax
+	mov eax, [g_swizzleWWWW__uint4]
+	mov [g_swizzleWWWW], eax
+	mov eax, [g_swizzleWWWW__uint4+0x4]
+	mov [g_swizzleWWWW+0x4], eax
+	mov eax, [g_swizzleWWWW__uint4+0x8]
+	mov [g_swizzleWWWW+0x8], eax
+	mov eax, [g_swizzleWWWW__uint4+0xc]
+	mov [g_swizzleWWWW+0xc], eax
+	mov eax, [g_selectX__uint4]
+	mov [g_selectX], eax
+	mov eax, [g_selectX__uint4+0x4]
+	mov [g_selectX+0x4], eax
+	mov eax, [g_selectX__uint4+0x8]
+	mov [g_selectX+0x8], eax
+	mov eax, [g_selectX__uint4+0xc]
+	mov [g_selectX+0xc], eax
+	mov eax, [g_selectY__uint4]
+	mov [g_selectY], eax
+	mov eax, [g_selectY__uint4+0x4]
+	mov [g_selectY+0x4], eax
+	mov eax, [g_selectY__uint4+0x8]
+	mov [g_selectY+0x8], eax
+	mov eax, [g_selectY__uint4+0xc]
+	mov [g_selectY+0xc], eax
+	mov eax, [g_selectZ__uint4]
+	mov [g_selectZ], eax
+	mov eax, [g_selectZ__uint4+0x4]
+	mov [g_selectZ+0x4], eax
+	mov eax, [g_selectZ__uint4+0x8]
+	mov [g_selectZ+0x8], eax
+	mov eax, [g_selectZ__uint4+0xc]
+	mov [g_selectZ+0xc], eax
+	mov eax, [g_selectW__uint4]
+	mov [g_selectW], eax
+	mov eax, [g_selectW__uint4+0x4]
+	mov [g_selectW+0x4], eax
+	mov eax, [g_selectW__uint4+0x8]
+	mov [g_selectW+0x8], eax
+	mov eax, [g_selectW__uint4+0xc]
+	mov [g_selectW+0xc], eax
+	mov eax, [g_keepYZW__uint4]
+	mov [g_keepYZW], eax
+	mov eax, [g_keepYZW__uint4+0x4]
+	mov [g_keepYZW+0x4], eax
+	mov eax, [g_keepYZW__uint4+0x8]
+	mov [g_keepYZW+0x8], eax
+	mov eax, [g_keepYZW__uint4+0xc]
+	mov [g_keepYZW+0xc], eax
+	mov eax, [g_keepXZW__uint4]
+	mov [g_keepXZW], eax
+	mov eax, [g_keepXZW__uint4+0x4]
+	mov [g_keepXZW+0x4], eax
+	mov eax, [g_keepXZW__uint4+0x8]
+	mov [g_keepXZW+0x8], eax
+	mov eax, [g_keepXZW__uint4+0xc]
+	mov [g_keepXZW+0xc], eax
+	mov eax, [g_keepXYW__uint4]
+	mov [g_keepXYW], eax
+	mov eax, [g_keepXYW__uint4+0x4]
+	mov [g_keepXYW+0x4], eax
+	mov eax, [g_keepXYW__uint4+0x8]
+	mov [g_keepXYW+0x8], eax
+	mov eax, [g_keepXYW__uint4+0xc]
+	mov [g_keepXYW+0xc], eax
+	mov eax, [g_keepXYZ__uint4]
+	mov [g_keepXYZ], eax
+	mov eax, [g_keepXYZ__uint4+0x4]
+	mov [g_keepXYZ+0x4], eax
+	mov eax, [g_keepXYZ__uint4+0x8]
+	mov [g_keepXYZ+0x8], eax
+	mov eax, [g_keepXYZ__uint4+0xc]
+	mov [g_keepXYZ+0xc], eax
+	mov eax, [g_keepXY__uint4]
+	mov [g_keepXY], eax
+	mov eax, [g_keepXY__uint4+0x4]
+	mov [g_keepXY+0x4], eax
+	mov eax, [g_keepXY__uint4+0x8]
+	mov [g_keepXY+0x8], eax
+	mov eax, [g_keepXY__uint4+0xc]
+	mov [g_keepXY+0xc], eax
+	mov eax, [g_keepZW__uint4]
+	mov [g_keepZW], eax
+	mov eax, [g_keepZW__uint4+0x4]
+	mov [g_keepZW+0x4], eax
+	mov eax, [g_keepZW__uint4+0x8]
+	mov [g_keepZW+0x8], eax
+	mov eax, [g_keepZW__uint4+0xc]
+	mov [g_keepZW+0xc], eax
+	mov eax, [g_keepX__uint4]
+	mov [g_keepX], eax
+	mov eax, [g_keepX__uint4+0x4]
+	mov [g_keepX+0x4], eax
+	mov eax, [g_keepX__uint4+0x8]
+	mov [g_keepX+0x8], eax
+	mov eax, [g_keepX__uint4+0xc]
+	mov [g_keepX+0xc], eax
+	mov eax, [g_keepZ__uint4]
+	mov [g_keepZ], eax
+	mov eax, [g_keepZ__uint4+0x4]
+	mov [g_keepZ+0x4], eax
+	mov eax, [g_keepZ__uint4+0x8]
+	mov [g_keepZ+0x8], eax
+	mov eax, [g_keepZ__uint4+0xc]
+	mov [g_keepZ+0xc], eax
+	pop ebp
+	ret
+
 
 ;ClearBounds
 ClearBounds:
@@ -139,7 +430,7 @@ ClearBounds:
 
 
 ;AngleDelta(float, float)
-AngleDelta:
+_Z10AngleDeltaff:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x48
@@ -163,7 +454,7 @@ AngleDelta:
 
 
 ;AxisToQuat(float const (*) [3], float*)
-AxisToQuat:
+_Z10AxisToQuatPA3_KfPf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -203,9 +494,9 @@ AxisToQuat:
 	mulss xmm0, xmm0
 	addss xmm1, xmm0
 	ucomiss xmm1, xmm6
-	jb AxisToQuat_10
+	jb _Z10AxisToQuatPA3_KfPf_10
 	xor eax, eax
-AxisToQuat_30:
+_Z10AxisToQuatPA3_KfPf_30:
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm6
 	divss xmm0, xmm1
@@ -226,7 +517,7 @@ AxisToQuat_30:
 	pop ebx
 	pop ebp
 	ret
-AxisToQuat_10:
+_Z10AxisToQuatPA3_KfPf_10:
 	addss xmm5, [eax+0x8]
 	movss [ebp-0x38], xmm5
 	movss xmm7, dword [ecx+0x4]
@@ -250,10 +541,10 @@ AxisToQuat_10:
 	addss xmm1, xmm0
 	addss xmm1, [ebp-0x58]
 	ucomiss xmm1, xmm6
-	jb AxisToQuat_20
+	jb _Z10AxisToQuatPA3_KfPf_20
 	mov eax, 0x1
-	jmp AxisToQuat_30
-AxisToQuat_20:
+	jmp _Z10AxisToQuatPA3_KfPf_30
+_Z10AxisToQuatPA3_KfPf_20:
 	movss xmm0, dword [ebp-0x4c]
 	subss xmm0, [edx+0x4]
 	subss xmm0, [ecx+0x8]
@@ -272,10 +563,10 @@ AxisToQuat_20:
 	addss xmm1, [ebp-0x5c]
 	addss xmm1, [ebp-0x50]
 	ucomiss xmm1, xmm6
-	jb AxisToQuat_40
+	jb _Z10AxisToQuatPA3_KfPf_40
 	mov eax, 0x2
-	jmp AxisToQuat_30
-AxisToQuat_40:
+	jmp _Z10AxisToQuatPA3_KfPf_30
+_Z10AxisToQuatPA3_KfPf_40:
 	movss [ebp-0x18], xmm2
 	movss xmm0, dword [edx+0x4]
 	subss xmm0, [eax]
@@ -290,13 +581,13 @@ AxisToQuat_40:
 	addss xmm1, [ebp-0x60]
 	addss xmm1, [ebp-0x54]
 	mov eax, 0x3
-	jmp AxisToQuat_30
+	jmp _Z10AxisToQuatPA3_KfPf_30
 	nop
 	add [eax], al
 
 
 ;QuatToAxis(float const*, float (*) [3])
-QuatToAxis:
+_Z10QuatToAxisPKfPA3_f:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x14
@@ -377,7 +668,7 @@ QuatToAxis:
 
 
 ;Vec3Rotate(float const*, float const (*) [3], float*)
-Vec3Rotate:
+_Z10Vec3RotatePKfPA3_S_Pf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -419,7 +710,7 @@ Vec3Rotate:
 
 
 ;YawVectors(float, float*, float*)
-YawVectors:
+_Z10YawVectorsfPfS_:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -438,14 +729,14 @@ YawVectors:
 	movss [esp], xmm0
 	call cosf
 	test ebx, ebx
-	jz YawVectors_10
+	jz _Z10YawVectorsfPfS__10
 	fst dword [ebx]
 	movss xmm0, dword [ebp-0xc]
 	movss [ebx+0x4], xmm0
 	mov dword [ebx+0x8], 0x0
-YawVectors_10:
+_Z10YawVectorsfPfS__10:
 	test esi, esi
-	jz YawVectors_20
+	jz _Z10YawVectorsfPfS__20
 	movss xmm0, dword [ebp-0xc]
 	movss [esi], xmm0
 	fstp dword [ebp-0x1c]
@@ -453,10 +744,10 @@ YawVectors_10:
 	xor eax, 0x80000000
 	mov [esi+0x4], eax
 	mov dword [esi+0x8], 0x0
-	jmp YawVectors_30
-YawVectors_20:
+	jmp _Z10YawVectorsfPfS__30
+_Z10YawVectorsfPfS__20:
 	fstp st0
-YawVectors_30:
+_Z10YawVectorsfPfS__30:
 	add esp, 0x30
 	pop ebx
 	pop esi
@@ -465,7 +756,7 @@ YawVectors_30:
 
 
 ;vectopitch(float const*)
-vectopitch:
+_Z10vectopitchPKf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x38
@@ -473,11 +764,11 @@ vectopitch:
 	movss xmm1, dword [eax+0x4]
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
-	jnz vectopitch_10
-	jp vectopitch_10
+	jnz _Z10vectopitchPKf_10
+	jp _Z10vectopitchPKf_10
 	ucomiss xmm2, [eax]
-	jz vectopitch_20
-vectopitch_10:
+	jz _Z10vectopitchPKf_20
+_Z10vectopitchPKf_10:
 	movss xmm0, dword [eax]
 	mulss xmm0, xmm0
 	mulss xmm1, xmm1
@@ -496,39 +787,39 @@ vectopitch_10:
 	cvtsd2ss xmm0, xmm0
 	movss xmm2, dword [ebp-0x18]
 	ucomiss xmm0, xmm2
-	jb vectopitch_30
+	jb _Z10vectopitchPKf_30
 	movaps xmm1, xmm2
-vectopitch_50:
+_Z10vectopitchPKf_50:
 	addss xmm1, xmm0
 	movss [ebp-0x24], xmm1
 	mov eax, [ebp-0x24]
-vectopitch_60:
+_Z10vectopitchPKf_60:
 	mov [ebp-0x24], eax
 	fld dword [ebp-0x24]
 	leave
 	ret
-vectopitch_20:
-	jp vectopitch_10
+_Z10vectopitchPKf_20:
+	jp _Z10vectopitchPKf_10
 	movss xmm0, dword [eax+0x8]
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm2
-	jb vectopitch_40
+	jb _Z10vectopitchPKf_40
 	mov eax, 0x42b40000
 	mov [ebp-0x24], eax
 	fld dword [ebp-0x24]
 	leave
 	ret
-vectopitch_30:
+_Z10vectopitchPKf_30:
 	movss xmm1, dword [_float_360_00000000]
-	jmp vectopitch_50
-vectopitch_40:
+	jmp _Z10vectopitchPKf_50
+_Z10vectopitchPKf_40:
 	mov eax, 0x43870000
-	jmp vectopitch_60
+	jmp _Z10vectopitchPKf_60
 	add [eax], al
 
 
 ;MatrixSet44(float (*) [4], float const*, float const (*) [3], float)
-MatrixSet44:
+_Z11MatrixSet44PA4_fPKfPA3_S1_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -590,7 +881,7 @@ MatrixSet44:
 
 
 ;vectoangles(float const*, float*)
-vectoangles:
+_Z11vectoanglesPKfPf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -601,11 +892,11 @@ vectoangles:
 	movss xmm2, dword [ebx+0x4]
 	pxor xmm3, xmm3
 	ucomiss xmm2, xmm3
-	jnz vectoangles_10
-	jp vectoangles_10
+	jnz _Z11vectoanglesPKfPf_10
+	jp _Z11vectoanglesPKfPf_10
 	ucomiss xmm3, [ebx]
-	jz vectoangles_20
-vectoangles_10:
+	jz _Z11vectoanglesPKfPf_20
+_Z11vectoanglesPKfPf_10:
 	movss xmm1, dword [ebx]
 	cvtss2sd xmm0, xmm1
 	movsd [esp+0x8], xmm0
@@ -624,9 +915,9 @@ vectoangles_10:
 	ucomiss xmm0, xmm3
 	movss xmm1, dword [ebp-0x28]
 	movss xmm2, dword [ebp-0x38]
-	jb vectoangles_30
+	jb _Z11vectoanglesPKfPf_30
 	movaps xmm4, xmm3
-vectoangles_70:
+_Z11vectoanglesPKfPf_70:
 	addss xmm4, xmm0
 	movss [ebp-0xc], xmm4
 	mulss xmm1, xmm1
@@ -646,11 +937,11 @@ vectoangles_70:
 	cvtsd2ss xmm0, xmm0
 	movss xmm3, dword [ebp-0x48]
 	ucomiss xmm0, xmm3
-	jb vectoangles_40
+	jb _Z11vectoanglesPKfPf_40
 	movaps xmm1, xmm3
-vectoangles_60:
+_Z11vectoanglesPKfPf_60:
 	addss xmm0, xmm1
-vectoangles_80:
+_Z11vectoanglesPKfPf_80:
 	movss [esi], xmm0
 	movss xmm0, dword [ebp-0xc]
 	movss [esi+0x4], xmm0
@@ -660,12 +951,12 @@ vectoangles_80:
 	pop esi
 	pop ebp
 	ret
-vectoangles_20:
-	jp vectoangles_10
+_Z11vectoanglesPKfPf_20:
+	jp _Z11vectoanglesPKfPf_10
 	movss xmm0, dword [ebx+0x8]
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm3
-	jb vectoangles_50
+	jb _Z11vectoanglesPKfPf_50
 	movss [ebp-0xc], xmm3
 	movss xmm0, dword [_float_90_00000000]
 	movss [esi], xmm0
@@ -677,20 +968,20 @@ vectoangles_20:
 	pop esi
 	pop ebp
 	ret
-vectoangles_40:
+_Z11vectoanglesPKfPf_40:
 	movss xmm1, dword [_float_360_00000000]
-	jmp vectoangles_60
-vectoangles_30:
+	jmp _Z11vectoanglesPKfPf_60
+_Z11vectoanglesPKfPf_30:
 	movss xmm4, dword [_float_360_00000000]
-	jmp vectoangles_70
-vectoangles_50:
+	jmp _Z11vectoanglesPKfPf_70
+_Z11vectoanglesPKfPf_50:
 	movss [ebp-0xc], xmm3
 	movss xmm0, dword [_float_270_00000000]
-	jmp vectoangles_80
+	jmp _Z11vectoanglesPKfPf_80
 
 
 ;AxisToAngles(float const (*) [3], float*)
-AxisToAngles:
+_Z12AxisToAnglesPA3_KfPf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -700,7 +991,7 @@ AxisToAngles:
 	mov esi, [ebp+0xc]
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call vectoangles
+	call _Z11vectoanglesPKfPf
 	lea eax, [ebx+0xc]
 	movss xmm0, dword [ebx+0xc]
 	movss [ebp-0x14], xmm0
@@ -763,23 +1054,23 @@ AxisToAngles:
 	pxor xmm3, xmm3
 	movss xmm0, dword [ebp-0xc]
 	ucomiss xmm0, xmm3
-	jnz AxisToAngles_10
-	jp AxisToAngles_10
+	jnz _Z12AxisToAnglesPA3_KfPf_10
+	jp _Z12AxisToAnglesPA3_KfPf_10
 	ucomiss xmm2, xmm3
-	jnz AxisToAngles_20
-	jp AxisToAngles_20
+	jnz _Z12AxisToAnglesPA3_KfPf_20
+	jp _Z12AxisToAnglesPA3_KfPf_20
 	xorps xmm1, [_data16_80000000]
 	ucomiss xmm1, xmm3
-	jb AxisToAngles_30
+	jb _Z12AxisToAnglesPA3_KfPf_30
 	movss xmm0, dword [_float_90_00000000]
 	ucomiss xmm3, [ebp-0xc]
-	jbe AxisToAngles_40
-AxisToAngles_60:
+	jbe _Z12AxisToAnglesPA3_KfPf_40
+_Z12AxisToAnglesPA3_KfPf_60:
 	lea eax, [esi+0x8]
 	ucomiss xmm3, xmm0
-	ja AxisToAngles_50
+	ja _Z12AxisToAnglesPA3_KfPf_50
 	movss xmm1, dword [_float__180_00000000]
-AxisToAngles_80:
+_Z12AxisToAnglesPA3_KfPf_80:
 	addss xmm0, xmm1
 	movss [eax], xmm0
 	add esp, 0x60
@@ -787,9 +1078,9 @@ AxisToAngles_80:
 	pop esi
 	pop ebp
 	ret
-AxisToAngles_20:
+_Z12AxisToAnglesPA3_KfPf_20:
 	movss xmm0, dword [ebp-0xc]
-AxisToAngles_10:
+_Z12AxisToAnglesPA3_KfPf_10:
 	mulss xmm2, xmm2
 	mulss xmm0, xmm0
 	addss xmm2, xmm0
@@ -806,10 +1097,10 @@ AxisToAngles_10:
 	divsd xmm0, qword [_double_3_14159265]
 	cvtsd2ss xmm0, xmm0
 	movss xmm3, dword [ebp-0x48]
-AxisToAngles_70:
+_Z12AxisToAnglesPA3_KfPf_70:
 	ucomiss xmm3, [ebp-0xc]
-	ja AxisToAngles_60
-AxisToAngles_40:
+	ja _Z12AxisToAnglesPA3_KfPf_60
+_Z12AxisToAnglesPA3_KfPf_40:
 	xorps xmm0, [_data16_80000000]
 	movss [esi+0x8], xmm0
 	add esp, 0x60
@@ -817,16 +1108,16 @@ AxisToAngles_40:
 	pop esi
 	pop ebp
 	ret
-AxisToAngles_30:
+_Z12AxisToAnglesPA3_KfPf_30:
 	movss xmm0, dword [_float__90_00000000]
-	jmp AxisToAngles_70
-AxisToAngles_50:
+	jmp _Z12AxisToAnglesPA3_KfPf_70
+_Z12AxisToAnglesPA3_KfPf_50:
 	movss xmm1, dword [_float_180_00000000]
-	jmp AxisToAngles_80
+	jmp _Z12AxisToAnglesPA3_KfPf_80
 
 
 ;ExpandBounds(float const*, float const*, float*, float*)
-ExpandBounds:
+_Z12ExpandBoundsPKfS0_PfS1_:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -837,36 +1128,36 @@ ExpandBounds:
 	movss xmm1, dword [ecx]
 	movss xmm0, dword [eax]
 	ucomiss xmm0, xmm1
-	jbe ExpandBounds_10
+	jbe _Z12ExpandBoundsPKfS0_PfS1__10
 	movss [eax], xmm1
-ExpandBounds_10:
+_Z12ExpandBoundsPKfS0_PfS1__10:
 	movss xmm0, dword [ebx]
 	ucomiss xmm0, [edx]
-	jbe ExpandBounds_20
+	jbe _Z12ExpandBoundsPKfS0_PfS1__20
 	movss [edx], xmm0
-ExpandBounds_20:
+_Z12ExpandBoundsPKfS0_PfS1__20:
 	movss xmm1, dword [ecx+0x4]
 	movss xmm0, dword [eax+0x4]
 	ucomiss xmm0, xmm1
-	jbe ExpandBounds_30
+	jbe _Z12ExpandBoundsPKfS0_PfS1__30
 	movss [eax+0x4], xmm1
-ExpandBounds_30:
+_Z12ExpandBoundsPKfS0_PfS1__30:
 	movss xmm0, dword [ebx+0x4]
 	ucomiss xmm0, [edx+0x4]
-	jbe ExpandBounds_40
+	jbe _Z12ExpandBoundsPKfS0_PfS1__40
 	movss [edx+0x4], xmm0
-ExpandBounds_40:
+_Z12ExpandBoundsPKfS0_PfS1__40:
 	movss xmm1, dword [ecx+0x8]
 	movss xmm0, dword [eax+0x8]
 	ucomiss xmm0, xmm1
-	jbe ExpandBounds_50
+	jbe _Z12ExpandBoundsPKfS0_PfS1__50
 	movss [eax+0x8], xmm1
-ExpandBounds_50:
+_Z12ExpandBoundsPKfS0_PfS1__50:
 	movss xmm0, dword [ebx+0x8]
 	ucomiss xmm0, [edx+0x8]
-	jbe ExpandBounds_60
+	jbe _Z12ExpandBoundsPKfS0_PfS1__60
 	movss [edx+0x8], xmm0
-ExpandBounds_60:
+_Z12ExpandBoundsPKfS0_PfS1__60:
 	pop ebx
 	pop ebp
 	ret
@@ -874,7 +1165,7 @@ ExpandBounds_60:
 
 
 ;ExtendBounds(float*, float*, float const*)
-ExtendBounds:
+_Z12ExtendBoundsPfS_PKf:
 	push ebp
 	mov ebp, esp
 	mov ecx, [ebp+0x8]
@@ -883,36 +1174,36 @@ ExtendBounds:
 	movss xmm0, dword [edx]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jbe ExtendBounds_10
+	jbe _Z12ExtendBoundsPfS_PKf_10
 	addss xmm0, [eax]
 	movss [eax], xmm0
 	movss xmm0, dword [edx+0x4]
 	ucomiss xmm0, xmm1
-	jbe ExtendBounds_20
-ExtendBounds_40:
+	jbe _Z12ExtendBoundsPfS_PKf_20
+_Z12ExtendBoundsPfS_PKf_40:
 	addss xmm0, [eax+0x4]
 	movss [eax+0x4], xmm0
 	movss xmm0, dword [edx+0x8]
 	ucomiss xmm0, xmm1
-	jbe ExtendBounds_30
-ExtendBounds_50:
+	jbe _Z12ExtendBoundsPfS_PKf_30
+_Z12ExtendBoundsPfS_PKf_50:
 	addss xmm0, [eax+0x8]
 	movss [eax+0x8], xmm0
 	pop ebp
 	ret
-ExtendBounds_10:
+_Z12ExtendBoundsPfS_PKf_10:
 	addss xmm0, [ecx]
 	movss [ecx], xmm0
 	movss xmm0, dword [edx+0x4]
 	ucomiss xmm0, xmm1
-	ja ExtendBounds_40
-ExtendBounds_20:
+	ja _Z12ExtendBoundsPfS_PKf_40
+_Z12ExtendBoundsPfS_PKf_20:
 	addss xmm0, [ecx+0x4]
 	movss [ecx+0x4], xmm0
 	movss xmm0, dword [edx+0x8]
 	ucomiss xmm0, xmm1
-	ja ExtendBounds_50
-ExtendBounds_30:
+	ja _Z12ExtendBoundsPfS_PKf_50
+_Z12ExtendBoundsPfS_PKf_30:
 	addss xmm0, [ecx+0x8]
 	movss [ecx+0x8], xmm0
 	pop ebp
@@ -922,7 +1213,7 @@ ExtendBounds_30:
 
 
 ;RandWithSeed(int*)
-RandWithSeed:
+_Z12RandWithSeedPi:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -956,7 +1247,7 @@ RandWithSeed:
 
 
 ;Vec2Distance(float const*, float const*)
-Vec2Distance:
+_Z12Vec2DistancePKfS0_:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x4
@@ -977,7 +1268,7 @@ Vec2Distance:
 
 
 ;YawVectors2D(float, float*, float*)
-YawVectors2D:
+_Z12YawVectors2DfPfS_:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -996,23 +1287,23 @@ YawVectors2D:
 	movss [esp], xmm0
 	call cosf
 	test ebx, ebx
-	jz YawVectors2D_10
+	jz _Z12YawVectors2DfPfS__10
 	fst dword [ebx]
 	movss xmm0, dword [ebp-0xc]
 	movss [ebx+0x4], xmm0
-YawVectors2D_10:
+_Z12YawVectors2DfPfS__10:
 	test esi, esi
-	jz YawVectors2D_20
+	jz _Z12YawVectors2DfPfS__20
 	movss xmm0, dword [ebp-0xc]
 	movss [esi], xmm0
 	fstp dword [ebp-0x1c]
 	mov eax, [ebp-0x1c]
 	xor eax, 0x80000000
 	mov [esi+0x4], eax
-	jmp YawVectors2D_30
-YawVectors2D_20:
+	jmp _Z12YawVectors2DfPfS__30
+_Z12YawVectors2DfPfS__20:
 	fstp st0
-YawVectors2D_30:
+_Z12YawVectors2DfPfS__30:
 	add esp, 0x30
 	pop ebx
 	pop esi
@@ -1021,7 +1312,7 @@ YawVectors2D_30:
 
 
 ;AxisTranspose(float const (*) [3], float (*) [3])
-AxisTranspose:
+_Z13AxisTransposePA3_KfPA3_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1061,7 +1352,7 @@ AxisTranspose:
 
 
 ;BoundsOverlap(float const*, float const*, float const*, float const*)
-BoundsOverlap:
+_Z13BoundsOverlapPKfS0_S0_S0_:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1071,28 +1362,28 @@ BoundsOverlap:
 	mov eax, [ebp+0x14]
 	movss xmm0, dword [edx]
 	ucomiss xmm0, [eax]
-	ja BoundsOverlap_10
+	ja _Z13BoundsOverlapPKfS0_S0_S0__10
 	movss xmm0, dword [ecx]
 	ucomiss xmm0, [ebx]
-	ja BoundsOverlap_10
+	ja _Z13BoundsOverlapPKfS0_S0_S0__10
 	movss xmm0, dword [edx+0x4]
 	ucomiss xmm0, [eax+0x4]
-	ja BoundsOverlap_10
+	ja _Z13BoundsOverlapPKfS0_S0_S0__10
 	movss xmm0, dword [ecx+0x4]
 	ucomiss xmm0, [ebx+0x4]
-	ja BoundsOverlap_10
+	ja _Z13BoundsOverlapPKfS0_S0_S0__10
 	movss xmm0, dword [edx+0x8]
 	ucomiss xmm0, [eax+0x8]
-	jbe BoundsOverlap_20
-BoundsOverlap_10:
+	jbe _Z13BoundsOverlapPKfS0_S0_S0__20
+_Z13BoundsOverlapPKfS0_S0_S0__10:
 	xor eax, eax
 	pop ebx
 	pop ebp
 	ret
-BoundsOverlap_20:
+_Z13BoundsOverlapPKfS0_S0_S0__20:
 	movss xmm0, dword [ecx+0x8]
 	ucomiss xmm0, [ebx+0x8]
-	ja BoundsOverlap_10
+	ja _Z13BoundsOverlapPKfS0_S0_S0__10
 	mov eax, 0x1
 	pop ebx
 	pop ebp
@@ -1102,7 +1393,7 @@ BoundsOverlap_20:
 
 
 ;ClearBounds2D(float*, float*)
-ClearBounds2D:
+_Z13ClearBounds2DPfS_:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0x8]
@@ -1120,7 +1411,7 @@ ClearBounds2D:
 
 
 ;PointInBounds(float const*, float const*, float const*)
-PointInBounds:
+_Z13PointInBoundsPKfS0_S0_:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -1129,26 +1420,26 @@ PointInBounds:
 	movss xmm1, dword [eax]
 	movss xmm0, dword [edx]
 	ucomiss xmm0, xmm1
-	ja PointInBounds_10
+	ja _Z13PointInBoundsPKfS0_S0__10
 	ucomiss xmm1, [ecx]
-	ja PointInBounds_10
+	ja _Z13PointInBoundsPKfS0_S0__10
 	movss xmm1, dword [eax+0x4]
 	movss xmm0, dword [edx+0x4]
 	ucomiss xmm0, xmm1
-	ja PointInBounds_10
+	ja _Z13PointInBoundsPKfS0_S0__10
 	ucomiss xmm1, [ecx+0x4]
-	ja PointInBounds_10
+	ja _Z13PointInBoundsPKfS0_S0__10
 	movss xmm1, dword [eax+0x8]
 	movss xmm0, dword [edx+0x8]
 	ucomiss xmm0, xmm1
-	jbe PointInBounds_20
-PointInBounds_10:
+	jbe _Z13PointInBoundsPKfS0_S0__20
+_Z13PointInBoundsPKfS0_S0__10:
 	xor eax, eax
 	pop ebp
 	ret
-PointInBounds_20:
+_Z13PointInBoundsPKfS0_S0__20:
 	ucomiss xmm1, [ecx+0x8]
-	ja PointInBounds_10
+	ja _Z13PointInBoundsPKfS0_S0__10
 	mov eax, 0x1
 	pop ebp
 	ret
@@ -1157,7 +1448,7 @@ PointInBounds_20:
 
 
 ;RotationToYaw(float const*)
-RotationToYaw:
+_Z13RotationToYawPKf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x38
@@ -1192,7 +1483,7 @@ RotationToYaw:
 
 
 ;Vec2Normalize(float*)
-Vec2Normalize:
+_Z13Vec2NormalizePf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -1208,7 +1499,7 @@ Vec2Normalize:
 	movaps xmm0, xmm1
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
-	jb Vec2Normalize_10
+	jb _Z13Vec2NormalizePf_10
 	movss xmm0, dword [_float_1_00000000]
 	mulss xmm2, xmm0
 	movss [eax], xmm2
@@ -1218,7 +1509,7 @@ Vec2Normalize:
 	fld dword [ebp-0xc]
 	leave
 	ret
-Vec2Normalize_10:
+_Z13Vec2NormalizePf_10:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm1
 	mulss xmm2, xmm0
@@ -1233,7 +1524,7 @@ Vec2Normalize_10:
 
 
 ;AnglesSubtract(float const*, float const*, float*)
-AnglesSubtract:
+_Z14AnglesSubtractPKfS0_Pf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1291,7 +1582,7 @@ AnglesSubtract:
 
 
 ;BoxOnPlaneSide(float const*, float const*, cplane_s const*)
-BoxOnPlaneSide:
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1300,13 +1591,13 @@ BoxOnPlaneSide:
 	mov edx, [ebp+0x10]
 	movzx eax, byte [edx+0x10]
 	cmp al, 0x2
-	ja BoxOnPlaneSide_10
+	ja _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_10
 	movss xmm3, dword [edx+0xc]
 	movzx eax, al
 	shl eax, 0x2
 	movss xmm0, dword [ecx+eax]
 	ucomiss xmm0, xmm3
-	jae BoxOnPlaneSide_20
+	jae _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_20
 	ucomiss xmm3, [ebx+eax]
 	sbb edx, edx
 	not edx
@@ -1315,13 +1606,13 @@ BoxOnPlaneSide:
 	pop ebx
 	pop ebp
 	ret
-BoxOnPlaneSide_10:
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_10:
 	movzx eax, byte [edx+0x11]
 	cmp eax, 0x7
-	jbe BoxOnPlaneSide_30
+	jbe _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_30
 	pxor xmm3, xmm3
 	movaps xmm4, xmm3
-BoxOnPlaneSide_40:
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_40:
 	movss xmm0, dword [edx+0xc]
 	xor edx, edx
 	ucomiss xmm4, xmm0
@@ -1334,9 +1625,9 @@ BoxOnPlaneSide_40:
 	pop ebx
 	pop ebp
 	ret
-BoxOnPlaneSide_30:
-	jmp dword [eax*4+BoxOnPlaneSide_jumptab_0]
-BoxOnPlaneSide_50:
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_30:
+	jmp dword [eax*4+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_jumptab_0]
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_50:
 	movss xmm3, dword [edx]
 	movss xmm1, dword [edx+0x4]
 	movss xmm2, dword [edx+0x8]
@@ -1353,8 +1644,8 @@ BoxOnPlaneSide_50:
 	addss xmm3, xmm1
 	mulss xmm2, [ecx+0x8]
 	addss xmm3, xmm2
-	jmp BoxOnPlaneSide_40
-BoxOnPlaneSide_120:
+	jmp _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_40
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_120:
 	movss xmm3, dword [edx]
 	movss xmm1, dword [edx+0x4]
 	movss xmm2, dword [edx+0x8]
@@ -1371,8 +1662,8 @@ BoxOnPlaneSide_120:
 	addss xmm3, xmm1
 	mulss xmm2, [ebx+0x8]
 	addss xmm3, xmm2
-	jmp BoxOnPlaneSide_40
-BoxOnPlaneSide_110:
+	jmp _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_40
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_110:
 	movss xmm3, dword [edx]
 	movss xmm1, dword [edx+0x4]
 	movss xmm2, dword [edx+0x8]
@@ -1389,8 +1680,8 @@ BoxOnPlaneSide_110:
 	addss xmm3, xmm1
 	mulss xmm2, [ebx+0x8]
 	addss xmm3, xmm2
-	jmp BoxOnPlaneSide_40
-BoxOnPlaneSide_100:
+	jmp _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_40
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_100:
 	movss xmm3, dword [edx]
 	movss xmm1, dword [edx+0x4]
 	movss xmm2, dword [edx+0x8]
@@ -1407,8 +1698,8 @@ BoxOnPlaneSide_100:
 	addss xmm3, xmm1
 	mulss xmm2, [ebx+0x8]
 	addss xmm3, xmm2
-	jmp BoxOnPlaneSide_40
-BoxOnPlaneSide_90:
+	jmp _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_40
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_90:
 	movss xmm3, dword [edx]
 	movss xmm1, dword [edx+0x4]
 	movss xmm2, dword [edx+0x8]
@@ -1425,8 +1716,8 @@ BoxOnPlaneSide_90:
 	addss xmm3, xmm1
 	mulss xmm2, [ebx+0x8]
 	addss xmm3, xmm2
-	jmp BoxOnPlaneSide_40
-BoxOnPlaneSide_80:
+	jmp _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_40
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_80:
 	movss xmm3, dword [edx]
 	movss xmm1, dword [edx+0x4]
 	movss xmm2, dword [edx+0x8]
@@ -1443,8 +1734,8 @@ BoxOnPlaneSide_80:
 	addss xmm3, xmm1
 	mulss xmm2, [ecx+0x8]
 	addss xmm3, xmm2
-	jmp BoxOnPlaneSide_40
-BoxOnPlaneSide_70:
+	jmp _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_40
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_70:
 	movss xmm3, dword [edx]
 	movss xmm1, dword [edx+0x4]
 	movss xmm2, dword [edx+0x8]
@@ -1461,8 +1752,8 @@ BoxOnPlaneSide_70:
 	addss xmm3, xmm1
 	mulss xmm2, [ecx+0x8]
 	addss xmm3, xmm2
-	jmp BoxOnPlaneSide_40
-BoxOnPlaneSide_60:
+	jmp _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_40
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_60:
 	movss xmm3, dword [edx]
 	movss xmm1, dword [edx+0x4]
 	movss xmm2, dword [edx+0x8]
@@ -1479,8 +1770,8 @@ BoxOnPlaneSide_60:
 	addss xmm3, xmm1
 	mulss xmm2, [ecx+0x8]
 	addss xmm3, xmm2
-	jmp BoxOnPlaneSide_40
-BoxOnPlaneSide_20:
+	jmp _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_40
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_20:
 	mov edx, 0x1
 	mov eax, edx
 	pop ebx
@@ -1489,19 +1780,19 @@ BoxOnPlaneSide_20:
 	nop
 	
 	
-BoxOnPlaneSide_jumptab_0:
-	dd BoxOnPlaneSide_50
-	dd BoxOnPlaneSide_60
-	dd BoxOnPlaneSide_70
-	dd BoxOnPlaneSide_80
-	dd BoxOnPlaneSide_90
-	dd BoxOnPlaneSide_100
-	dd BoxOnPlaneSide_110
-	dd BoxOnPlaneSide_120
+_Z14BoxOnPlaneSidePKfS0_PK8cplane_s_jumptab_0:
+	dd _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_50
+	dd _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_60
+	dd _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_70
+	dd _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_80
+	dd _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_90
+	dd _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_100
+	dd _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_110
+	dd _Z14BoxOnPlaneSidePKfS0_PK8cplane_s_120
 
 
 ;ColorNormalize(float const*, float*)
-ColorNormalize:
+_Z14ColorNormalizePKfPf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1517,8 +1808,8 @@ ColorNormalize:
 	maxss xmm2, xmm0
 	pxor xmm0, xmm0
 	ucomiss xmm2, xmm0
-	jnz ColorNormalize_10
-	jp ColorNormalize_10
+	jnz _Z14ColorNormalizePKfPf_10
+	jp _Z14ColorNormalizePKfPf_10
 	mov eax, 0x3f800000
 	mov [edx+0x8], eax
 	mov [edx+0x4], eax
@@ -1530,7 +1821,7 @@ ColorNormalize:
 	pop ebx
 	pop ebp
 	ret
-ColorNormalize_10:
+_Z14ColorNormalizePKfPf_10:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm2
 	mulss xmm1, xmm0
@@ -1550,7 +1841,7 @@ ColorNormalize_10:
 
 
 ;DiffTrackAngle(float, float, float, float)
-DiffTrackAngle:
+_Z14DiffTrackAngleffff:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x58
@@ -1559,25 +1850,25 @@ DiffTrackAngle:
 	movaps xmm0, xmm1
 	subss xmm0, xmm5
 	ucomiss xmm0, [_float_180_00000000]
-	jbe DiffTrackAngle_10
+	jbe _Z14DiffTrackAngleffff_10
 	movss xmm6, dword [_float_360_00000000]
-DiffTrackAngle_20:
+_Z14DiffTrackAngleffff_20:
 	subss xmm1, xmm6
 	movaps xmm0, xmm1
 	subss xmm0, xmm5
 	ucomiss xmm0, [_float_180_00000000]
-	ja DiffTrackAngle_20
-DiffTrackAngle_70:
+	ja _Z14DiffTrackAngleffff_20
+_Z14DiffTrackAngleffff_70:
 	movss xmm2, dword [_float__180_00000000]
 	ucomiss xmm2, xmm0
-	jbe DiffTrackAngle_30
-DiffTrackAngle_40:
+	jbe _Z14DiffTrackAngleffff_30
+_Z14DiffTrackAngleffff_40:
 	addss xmm1, xmm6
 	movaps xmm0, xmm1
 	subss xmm0, xmm5
 	ucomiss xmm2, xmm0
-	ja DiffTrackAngle_40
-DiffTrackAngle_30:
+	ja _Z14DiffTrackAngleffff_40
+_Z14DiffTrackAngleffff_30:
 	movaps xmm3, xmm0
 	mulss xmm3, [ebp+0x10]
 	mulss xmm3, [ebp+0x14]
@@ -1585,17 +1876,17 @@ DiffTrackAngle_30:
 	movaps xmm4, xmm0
 	andps xmm4, xmm2
 	ucomiss xmm4, [_float_0_00100000]
-	jbe DiffTrackAngle_50
+	jbe _Z14DiffTrackAngleffff_50
 	movaps xmm0, xmm3
 	andps xmm0, xmm2
 	ucomiss xmm0, xmm4
-	ja DiffTrackAngle_50
+	ja _Z14DiffTrackAngleffff_50
 	movaps xmm0, xmm5
 	addss xmm0, xmm3
-	jmp DiffTrackAngle_60
-DiffTrackAngle_50:
+	jmp _Z14DiffTrackAngleffff_60
+_Z14DiffTrackAngleffff_50:
 	movaps xmm0, xmm1
-DiffTrackAngle_60:
+_Z14DiffTrackAngleffff_60:
 	mulss xmm0, [_float_0_00277778]
 	movaps xmm1, xmm0
 	addss xmm1, [_float_0_50000000]
@@ -1612,24 +1903,24 @@ DiffTrackAngle_60:
 	fld dword [ebp-0x3c]
 	leave
 	ret
-DiffTrackAngle_10:
+_Z14DiffTrackAngleffff_10:
 	movss xmm6, dword [_float_360_00000000]
-	jmp DiffTrackAngle_70
+	jmp _Z14DiffTrackAngleffff_70
 
 
 ;GaussianRandom(float*, float*)
-GaussianRandom:
+_Z14GaussianRandomPfS_:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x58
-GaussianRandom_10:
-	call ms_rand
+_Z14GaussianRandomPfS__10:
+	call _Z7ms_randv
 	cvtsi2ss xmm3, eax
 	mulss xmm3, [_float_0_00003052]
 	addss xmm3, xmm3
 	subss xmm3, [_float_1_00000000]
 	movss [ebp-0x38], xmm3
-	call ms_rand
+	call _Z7ms_randv
 	cvtsi2ss xmm2, eax
 	mulss xmm2, [_float_0_00003052]
 	addss xmm2, xmm2
@@ -1641,7 +1932,7 @@ GaussianRandom_10:
 	mulss xmm0, xmm2
 	addss xmm1, xmm0
 	ucomiss xmm1, [_float_1_00000000]
-	ja GaussianRandom_10
+	ja _Z14GaussianRandomPfS__10
 	cvtss2sd xmm1, xmm1
 	movsd [ebp-0x10], xmm1
 	movsd [esp], xmm1
@@ -1668,7 +1959,7 @@ GaussianRandom_10:
 
 
 ;MatrixMultiply(float const (*) [3], float const (*) [3], float (*) [3])
-MatrixMultiply:
+_Z14MatrixMultiplyPA3_KfS1_PA3_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1784,7 +2075,7 @@ MatrixMultiply:
 
 
 ;UnitQuatToAxis(float const*, float (*) [3])
-UnitQuatToAxis:
+_Z14UnitQuatToAxisPKfPA3_f:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x10
@@ -1853,7 +2144,7 @@ UnitQuatToAxis:
 
 
 ;Vec2DistanceSq(float const*, float const*)
-Vec2DistanceSq:
+_Z14Vec2DistanceSqPKfS0_:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x4
@@ -1873,7 +2164,7 @@ Vec2DistanceSq:
 
 
 ;vectosignedyaw(float const*)
-vectosignedyaw:
+_Z14vectosignedyawPKf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -1881,11 +2172,11 @@ vectosignedyaw:
 	movss xmm1, dword [eax+0x4]
 	pxor xmm0, xmm0
 	ucomiss xmm1, xmm0
-	jnz vectosignedyaw_10
-	jp vectosignedyaw_10
+	jnz _Z14vectosignedyawPKf_10
+	jp _Z14vectosignedyawPKf_10
 	ucomiss xmm0, [eax]
-	jz vectosignedyaw_20
-vectosignedyaw_10:
+	jz _Z14vectosignedyawPKf_20
+_Z14vectosignedyawPKf_10:
 	cvtss2sd xmm0, [eax]
 	movsd [esp+0x8], xmm0
 	cvtss2sd xmm1, xmm1
@@ -1902,8 +2193,8 @@ vectosignedyaw_10:
 	fld dword [ebp-0xc]
 	leave
 	ret
-vectosignedyaw_20:
-	jp vectosignedyaw_10
+_Z14vectosignedyawPKf_20:
+	jp _Z14vectosignedyawPKf_10
 	movss [ebp-0xc], xmm0
 	mov eax, [ebp-0xc]
 	mov [ebp-0xc], eax
@@ -1913,7 +2204,7 @@ vectosignedyaw_20:
 
 
 ;CullBoxFromCone(float const*, float const*, float, float const*, float const*)
-CullBoxFromCone:
+_Z15CullBoxFromConePKfS0_fS0_S0_:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1938,9 +2229,9 @@ CullBoxFromCone:
 	movss [ebp-0x1c], xmm0
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jb CullBoxFromCone_10
+	jb _Z15CullBoxFromConePKfS0_fS0_S0__10
 	movss xmm0, dword [_float_1_00000000]
-CullBoxFromCone_80:
+_Z15CullBoxFromConePKfS0_fS0_S0__80:
 	mulss xmm0, [ebp-0x28]
 	movaps xmm2, xmm5
 	subss xmm2, xmm0
@@ -1950,9 +2241,9 @@ CullBoxFromCone_80:
 	movss [ebp-0x18], xmm0
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jb CullBoxFromCone_20
+	jb _Z15CullBoxFromConePKfS0_fS0_S0__20
 	movss xmm0, dword [_float_1_00000000]
-CullBoxFromCone_70:
+_Z15CullBoxFromConePKfS0_fS0_S0__70:
 	mulss xmm0, [ebp-0x24]
 	movss xmm6, dword [ebp-0x10]
 	subss xmm6, xmm0
@@ -1961,9 +2252,9 @@ CullBoxFromCone_70:
 	movss xmm7, dword [ebx+0x8]
 	pxor xmm0, xmm0
 	ucomiss xmm7, xmm0
-	jb CullBoxFromCone_30
+	jb _Z15CullBoxFromConePKfS0_fS0_S0__30
 	movss xmm0, dword [_float_1_00000000]
-CullBoxFromCone_60:
+_Z15CullBoxFromConePKfS0_fS0_S0__60:
 	mulss xmm0, [ebp-0x20]
 	movss xmm4, dword [ebp-0x14]
 	subss xmm4, xmm0
@@ -1977,14 +2268,14 @@ CullBoxFromCone_60:
 	addss xmm3, xmm0
 	pxor xmm1, xmm1
 	ucomiss xmm3, xmm1
-	jb CullBoxFromCone_40
-CullBoxFromCone_90:
+	jb _Z15CullBoxFromConePKfS0_fS0_S0__40
+_Z15CullBoxFromConePKfS0_fS0_S0__90:
 	mov eax, 0x1
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-CullBoxFromCone_40:
+_Z15CullBoxFromConePKfS0_fS0_S0__40:
 	movaps xmm0, xmm3
 	xorps xmm0, [_data16_80000000]
 	movss xmm1, dword [ebp-0x1c]
@@ -2012,23 +2303,23 @@ CullBoxFromCone_40:
 	mulss xmm3, xmm3
 	mulss xmm3, xmm6
 	ucomiss xmm3, xmm0
-	jb CullBoxFromCone_50
+	jb _Z15CullBoxFromConePKfS0_fS0_S0__50
 	xor eax, eax
-CullBoxFromCone_100:
+_Z15CullBoxFromConePKfS0_fS0_S0__100:
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-CullBoxFromCone_30:
+_Z15CullBoxFromConePKfS0_fS0_S0__30:
 	movss xmm0, dword [_float__1_00000000]
-	jmp CullBoxFromCone_60
-CullBoxFromCone_20:
+	jmp _Z15CullBoxFromConePKfS0_fS0_S0__60
+_Z15CullBoxFromConePKfS0_fS0_S0__20:
 	movss xmm0, dword [_float__1_00000000]
-	jmp CullBoxFromCone_70
-CullBoxFromCone_10:
+	jmp _Z15CullBoxFromConePKfS0_fS0_S0__70
+_Z15CullBoxFromConePKfS0_fS0_S0__10:
 	movss xmm0, dword [_float__1_00000000]
-	jmp CullBoxFromCone_80
-CullBoxFromCone_50:
+	jmp _Z15CullBoxFromConePKfS0_fS0_S0__80
+_Z15CullBoxFromConePKfS0_fS0_S0__50:
 	mulss xmm4, xmm6
 	sqrtss xmm0, xmm4
 	movss xmm3, dword [ebp+0x10]
@@ -2061,13 +2352,13 @@ CullBoxFromCone_50:
 	subss xmm5, [ebp-0x20]
 	pxor xmm0, xmm0
 	ucomiss xmm5, xmm0
-	jae CullBoxFromCone_90
+	jae _Z15CullBoxFromConePKfS0_fS0_S0__90
 	xor eax, eax
-	jmp CullBoxFromCone_100
+	jmp _Z15CullBoxFromConePKfS0_fS0_S0__100
 
 
 ;IntersectPlanes(float const**, float*)
-IntersectPlanes:
+_Z15IntersectPlanesPPKfPf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -2110,8 +2401,8 @@ IntersectPlanes:
 	movapd xmm0, xmm2
 	andpd xmm0, [_data16_ffffffff]
 	ucomisd xmm0, [_double_0_00100000]
-	jb IntersectPlanes_10
-IntersectPlanes_20:
+	jb _Z15IntersectPlanesPPKfPf_10
+_Z15IntersectPlanesPPKfPf_20:
 	movsd xmm5, qword [_double_1_00000000]
 	divsd xmm5, xmm2
 	mulss xmm6, [eax+0xc]
@@ -2193,8 +2484,8 @@ IntersectPlanes_20:
 	pop esi
 	pop ebp
 	ret
-IntersectPlanes_10:
-	jp IntersectPlanes_20
+_Z15IntersectPlanesPPKfPf_10:
+	jp _Z15IntersectPlanesPPKfPf_20
 	xor eax, eax
 	add esp, 0x10
 	pop ebx
@@ -2204,7 +2495,7 @@ IntersectPlanes_10:
 
 
 ;MatrixForViewer(float (*) [4], float const*, float const (*) [3])
-MatrixForViewer:
+_Z15MatrixForViewerPA4_fPKfPA3_S1_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2289,7 +2580,7 @@ MatrixForViewer:
 
 
 ;MatrixInverse44(float const*, float*)
-MatrixInverse44:
+_Z15MatrixInverse44PKfPf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -2299,7 +2590,7 @@ MatrixInverse44:
 	xor ecx, ecx
 	lea ebx, [ebp-0x48]
 	mov edx, [ebp+0x8]
-MatrixInverse44_10:
+_Z15MatrixInverse44PKfPf_10:
 	mov eax, [edx]
 	mov [ecx+ebx], eax
 	mov eax, [edx+0x4]
@@ -2311,7 +2602,7 @@ MatrixInverse44_10:
 	add ecx, 0x4
 	add edx, 0x10
 	cmp ecx, 0x10
-	jnz MatrixInverse44_10
+	jnz _Z15MatrixInverse44PKfPf_10
 	movss xmm0, dword [ebp-0x20]
 	movss [ebp-0xbc], xmm0
 	movss xmm1, dword [ebp-0xc]
@@ -2706,14 +2997,14 @@ MatrixInverse44_10:
 	divss xmm1, xmm3
 	mov edx, 0x1
 	lea eax, [esi+0x4]
-MatrixInverse44_20:
+_Z15MatrixInverse44PKfPf_20:
 	movaps xmm0, xmm1
 	mulss xmm0, [eax-0x4]
 	movss [eax-0x4], xmm0
 	add edx, 0x1
 	add eax, 0x4
 	cmp edx, 0x11
-	jnz MatrixInverse44_20
+	jnz _Z15MatrixInverse44PKfPf_20
 	add esp, 0xc0
 	pop ebx
 	pop esi
@@ -2723,7 +3014,7 @@ MatrixInverse44_20:
 
 
 ;MatrixTranspose(float const (*) [3], float (*) [3])
-MatrixTranspose:
+_Z15MatrixTransposePA3_KfPA3_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2762,7 +3053,7 @@ MatrixTranspose:
 
 
 ;PlaneFromPoints(float*, float const*, float const*, float const*)
-PlaneFromPoints:
+_Z15PlaneFromPointsPfPKfS1_S1_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2820,12 +3111,12 @@ PlaneFromPoints:
 	addss xmm0, xmm1
 	movss [ebp-0x20], xmm0
 	ucomiss xmm0, [_float_2_00000000]
-	jae PlaneFromPoints_10
-	jp PlaneFromPoints_10
+	jae _Z15PlaneFromPointsPfPKfS1_S1__10
+	jp _Z15PlaneFromPointsPfPKfS1_S1__10
 	ucomiss xmm0, [_float_0_00000000]
-	jp PlaneFromPoints_20
-	jz PlaneFromPoints_30
-PlaneFromPoints_20:
+	jp _Z15PlaneFromPointsPfPKfS1_S1__20
+	jz _Z15PlaneFromPointsPfPKfS1_S1__30
+_Z15PlaneFromPointsPfPKfS1_S1__20:
 	mulss xmm4, xmm4
 	movss xmm0, dword [ebp-0x10]
 	mulss xmm0, xmm0
@@ -2841,7 +3132,7 @@ PlaneFromPoints_20:
 	mulss xmm4, xmm5
 	mulss xmm4, [_float_0_00000100]
 	ucomiss xmm4, [ebp-0x20]
-	jb PlaneFromPoints_10
+	jb _Z15PlaneFromPointsPfPKfS1_S1__10
 	movss xmm4, dword [ecx]
 	movss xmm2, dword [ebx]
 	subss xmm2, xmm4
@@ -2888,8 +3179,8 @@ PlaneFromPoints_20:
 	mulss xmm2, xmm3
 	mulss xmm2, [_float_0_00000100]
 	ucomiss xmm2, [ebp-0x20]
-	jae PlaneFromPoints_30
-PlaneFromPoints_10:
+	jae _Z15PlaneFromPointsPfPKfS1_S1__30
+_Z15PlaneFromPointsPfPKfS1_S1__10:
 	sqrtss xmm1, [ebp-0x20]
 	movss xmm0, dword [eax]
 	divss xmm0, xmm1
@@ -2918,7 +3209,7 @@ PlaneFromPoints_10:
 	pop edi
 	pop ebp
 	ret
-PlaneFromPoints_30:
+_Z15PlaneFromPointsPfPKfS1_S1__30:
 	xor eax, eax
 	add esp, 0x14
 	pop ebx
@@ -2929,7 +3220,7 @@ PlaneFromPoints_30:
 
 
 ;Vec2NormalizeTo(float const*, float*)
-Vec2NormalizeTo:
+_Z15Vec2NormalizeToPKfPf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -2946,7 +3237,7 @@ Vec2NormalizeTo:
 	movaps xmm0, xmm1
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
-	jb Vec2NormalizeTo_10
+	jb _Z15Vec2NormalizeToPKfPf_10
 	movss xmm0, dword [_float_1_00000000]
 	mulss xmm2, xmm0
 	movss [ecx], xmm2
@@ -2956,7 +3247,7 @@ Vec2NormalizeTo:
 	fld dword [ebp-0xc]
 	leave
 	ret
-Vec2NormalizeTo_10:
+_Z15Vec2NormalizeToPKfPf_10:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm1
 	mulss xmm2, xmm0
@@ -2970,7 +3261,7 @@ Vec2NormalizeTo_10:
 
 
 ;Vec3NormalizeTo(float const*, float*)
-Vec3NormalizeTo:
+_Z15Vec3NormalizeToPKfPf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -2992,9 +3283,9 @@ Vec3NormalizeTo:
 	movaps xmm0, xmm1
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
-	jb Vec3NormalizeTo_10
+	jb _Z15Vec3NormalizeToPKfPf_10
 	movss xmm2, dword [_float_1_00000000]
-Vec3NormalizeTo_20:
+_Z15Vec3NormalizeToPKfPf_20:
 	mulss xmm3, xmm2
 	movss [edx], xmm3
 	movaps xmm0, xmm2
@@ -3008,14 +3299,14 @@ Vec3NormalizeTo_20:
 	pop ebx
 	pop ebp
 	ret
-Vec3NormalizeTo_10:
+_Z15Vec3NormalizeToPKfPf_10:
 	movss xmm2, dword [_float_1_00000000]
 	divss xmm2, xmm1
-	jmp Vec3NormalizeTo_20
+	jmp _Z15Vec3NormalizeToPKfPf_20
 
 
 ;AddPointToBounds(float const*, float*, float*)
-AddPointToBounds:
+_Z16AddPointToBoundsPKfPfS1_:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0x8]
@@ -3024,42 +3315,42 @@ AddPointToBounds:
 	movss xmm1, dword [edx]
 	movss xmm0, dword [eax]
 	ucomiss xmm0, xmm1
-	jbe AddPointToBounds_10
+	jbe _Z16AddPointToBoundsPKfPfS1__10
 	movss [eax], xmm1
 	movss xmm1, dword [edx]
-AddPointToBounds_10:
+_Z16AddPointToBoundsPKfPfS1__10:
 	ucomiss xmm1, [ecx]
-	jbe AddPointToBounds_20
+	jbe _Z16AddPointToBoundsPKfPfS1__20
 	movss [ecx], xmm1
-AddPointToBounds_20:
+_Z16AddPointToBoundsPKfPfS1__20:
 	movss xmm1, dword [edx+0x4]
 	movss xmm0, dword [eax+0x4]
 	ucomiss xmm0, xmm1
-	jbe AddPointToBounds_30
+	jbe _Z16AddPointToBoundsPKfPfS1__30
 	movss [eax+0x4], xmm1
 	movss xmm1, dword [edx+0x4]
-AddPointToBounds_30:
+_Z16AddPointToBoundsPKfPfS1__30:
 	ucomiss xmm1, [ecx+0x4]
-	jbe AddPointToBounds_40
+	jbe _Z16AddPointToBoundsPKfPfS1__40
 	movss [ecx+0x4], xmm1
-AddPointToBounds_40:
+_Z16AddPointToBoundsPKfPfS1__40:
 	movss xmm1, dword [edx+0x8]
 	movss xmm0, dword [eax+0x8]
 	ucomiss xmm0, xmm1
-	jbe AddPointToBounds_50
+	jbe _Z16AddPointToBoundsPKfPfS1__50
 	movss [eax+0x8], xmm1
 	movss xmm1, dword [edx+0x8]
-AddPointToBounds_50:
+_Z16AddPointToBoundsPKfPfS1__50:
 	ucomiss xmm1, [ecx+0x8]
-	jbe AddPointToBounds_60
+	jbe _Z16AddPointToBoundsPKfPfS1__60
 	movss [ecx+0x8], xmm1
-AddPointToBounds_60:
+_Z16AddPointToBoundsPKfPfS1__60:
 	pop ebp
 	ret
 
 
 ;LinearTrackAngle(float, float, float, float)
-LinearTrackAngle:
+_Z16LinearTrackAngleffff:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x58
@@ -3070,43 +3361,43 @@ LinearTrackAngle:
 	movaps xmm1, xmm2
 	subss xmm1, xmm4
 	ucomiss xmm1, [_float_180_00000000]
-	jbe LinearTrackAngle_10
+	jbe _Z16LinearTrackAngleffff_10
 	movss xmm5, dword [_float_360_00000000]
-LinearTrackAngle_20:
+_Z16LinearTrackAngleffff_20:
 	subss xmm2, xmm5
 	movaps xmm1, xmm2
 	subss xmm1, xmm4
 	ucomiss xmm1, [_float_180_00000000]
-	ja LinearTrackAngle_20
-LinearTrackAngle_80:
+	ja _Z16LinearTrackAngleffff_20
+_Z16LinearTrackAngleffff_80:
 	movss xmm3, dword [_float__180_00000000]
 	ucomiss xmm3, xmm1
-	jbe LinearTrackAngle_30
-LinearTrackAngle_40:
+	jbe _Z16LinearTrackAngleffff_30
+_Z16LinearTrackAngleffff_40:
 	addss xmm2, xmm5
 	movaps xmm1, xmm2
 	subss xmm1, xmm4
 	ucomiss xmm3, xmm1
-	ja LinearTrackAngle_40
-LinearTrackAngle_30:
+	ja _Z16LinearTrackAngleffff_40
+_Z16LinearTrackAngleffff_30:
 	ucomiss xmm1, [_float_0_00000000]
-	jbe LinearTrackAngle_50
+	jbe _Z16LinearTrackAngleffff_50
 	movaps xmm3, xmm0
 	mulss xmm3, xmm6
-LinearTrackAngle_90:
+_Z16LinearTrackAngleffff_90:
 	movss xmm0, dword [_data16_7fffffff]
 	andps xmm1, xmm0
 	ucomiss xmm1, [_float_0_00100000]
-	jbe LinearTrackAngle_60
+	jbe _Z16LinearTrackAngleffff_60
 	andps xmm0, xmm3
 	ucomiss xmm0, xmm1
-	ja LinearTrackAngle_60
+	ja _Z16LinearTrackAngleffff_60
 	movaps xmm0, xmm3
 	addss xmm0, xmm4
-	jmp LinearTrackAngle_70
-LinearTrackAngle_60:
+	jmp _Z16LinearTrackAngleffff_70
+_Z16LinearTrackAngleffff_60:
 	movaps xmm0, xmm2
-LinearTrackAngle_70:
+_Z16LinearTrackAngleffff_70:
 	mulss xmm0, [_float_0_00277778]
 	movaps xmm1, xmm0
 	addss xmm1, [_float_0_50000000]
@@ -3123,18 +3414,18 @@ LinearTrackAngle_70:
 	fld dword [ebp-0x3c]
 	leave
 	ret
-LinearTrackAngle_10:
+_Z16LinearTrackAngleffff_10:
 	movss xmm5, dword [_float_360_00000000]
-	jmp LinearTrackAngle_80
-LinearTrackAngle_50:
+	jmp _Z16LinearTrackAngleffff_80
+_Z16LinearTrackAngleffff_50:
 	movaps xmm3, xmm0
 	xorps xmm3, [_data16_80000000]
 	mulss xmm3, xmm6
-	jmp LinearTrackAngle_90
+	jmp _Z16LinearTrackAngleffff_90
 
 
 ;MatrixIdentity33(float (*) [3])
-MatrixIdentity33:
+_Z16MatrixIdentity33PA3_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3155,7 +3446,7 @@ MatrixIdentity33:
 
 
 ;MatrixIdentity44(float (*) [4])
-MatrixIdentity44:
+_Z16MatrixIdentity44PA4_f:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -3197,7 +3488,7 @@ MatrixIdentity44:
 
 
 ;MatrixMultiply43(float const (*) [3], float const (*) [3], float (*) [3])
-MatrixMultiply43:
+_Z16MatrixMultiply43PA3_KfS1_PA3_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3370,7 +3661,7 @@ MatrixMultiply43:
 
 
 ;MatrixMultiply44(float const (*) [4], float const (*) [4], float (*) [4])
-MatrixMultiply44:
+_Z16MatrixMultiply44PA4_KfS1_PA4_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3618,7 +3909,7 @@ MatrixMultiply44:
 
 
 ;PointToBoxDistSq(float const*, float const*, float const*)
-PointToBoxDistSq:
+_Z16PointToBoxDistSqPKfS0_S0_:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -3629,20 +3920,20 @@ PointToBoxDistSq:
 	pxor xmm2, xmm2
 	mov edx, 0x1
 	movaps xmm3, xmm2
-PointToBoxDistSq_20:
+_Z16PointToBoxDistSqPKfS0_S0__20:
 	lea eax, [edx*4]
 	movss xmm1, dword [ebx+eax-0x4]
 	movss xmm0, dword [ecx+eax-0x4]
 	subss xmm0, xmm1
 	ucomiss xmm0, xmm3
-	jbe PointToBoxDistSq_10
-PointToBoxDistSq_30:
+	jbe _Z16PointToBoxDistSqPKfS0_S0__10
+_Z16PointToBoxDistSqPKfS0_S0__30:
 	mulss xmm0, xmm0
 	addss xmm2, xmm0
-PointToBoxDistSq_40:
+_Z16PointToBoxDistSqPKfS0_S0__40:
 	add edx, 0x1
 	cmp edx, 0x4
-	jnz PointToBoxDistSq_20
+	jnz _Z16PointToBoxDistSqPKfS0_S0__20
 	movss [ebp-0xc], xmm2
 	fld dword [ebp-0xc]
 	add esp, 0x4
@@ -3650,17 +3941,17 @@ PointToBoxDistSq_40:
 	pop esi
 	pop ebp
 	ret
-PointToBoxDistSq_10:
+_Z16PointToBoxDistSqPKfS0_S0__10:
 	movaps xmm0, xmm1
 	mov esi, [ebp+0x10]
 	subss xmm0, [eax+esi-0x4]
 	ucomiss xmm0, xmm3
-	ja PointToBoxDistSq_30
-	jmp PointToBoxDistSq_40
+	ja _Z16PointToBoxDistSqPKfS0_S0__30
+	jmp _Z16PointToBoxDistSqPKfS0_S0__40
 
 
 ;RadiusFromBounds(float const*, float const*)
-RadiusFromBounds:
+_Z16RadiusFromBoundsPKfS0_:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -3671,7 +3962,7 @@ RadiusFromBounds:
 	mov edx, 0x1
 	movss xmm2, dword [_data16_7fffffff]
 	lea ecx, [ebp-0x14]
-RadiusFromBounds_10:
+_Z16RadiusFromBoundsPKfS0__10:
 	lea eax, [edx*4]
 	movss xmm1, dword [esi+eax-0x4]
 	andps xmm1, xmm2
@@ -3681,7 +3972,7 @@ RadiusFromBounds_10:
 	movss [ecx+eax-0x4], xmm1
 	add edx, 0x1
 	cmp edx, 0x4
-	jnz RadiusFromBounds_10
+	jnz _Z16RadiusFromBoundsPKfS0__10
 	movss xmm2, dword [ebp-0x14]
 	movss xmm0, dword [ebp-0x10]
 	movss xmm1, dword [ebp-0xc]
@@ -3702,7 +3993,7 @@ RadiusFromBounds_10:
 
 
 ;UnitQuatToAngles(float const*, float*)
-UnitQuatToAngles:
+_Z16UnitQuatToAnglesPKfPf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x68
@@ -3767,14 +4058,14 @@ UnitQuatToAngles:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x2c]
 	mov [esp], eax
-	call AxisToAngles
+	call _Z12AxisToAnglesPA3_KfPf
 	leave
 	ret
 	add [eax], al
 
 
 ;AngleNormalize360(float)
-AngleNormalize360:
+_Z17AngleNormalize360f:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x48
@@ -3802,7 +4093,7 @@ AngleNormalize360:
 
 
 ;AxisTransformVec3(float const (*) [3], float const*, float*)
-AxisTransformVec3:
+_Z17AxisTransformVec3PA3_KfPS_Pf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -3846,7 +4137,7 @@ AxisTransformVec3:
 
 
 ;CullBoxFromSphere(float const*, float, float const*, float const*)
-CullBoxFromSphere:
+_Z17CullBoxFromSpherePKffS0_S0_:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
@@ -3861,7 +4152,7 @@ CullBoxFromSphere:
 	subss xmm0, [ecx]
 	pxor xmm4, xmm4
 	ucomiss xmm0, xmm4
-	jb CullBoxFromSphere_10
+	jb _Z17CullBoxFromSpherePKffS0_S0__10
 	movaps xmm5, xmm0
 	mulss xmm5, xmm0
 	movss xmm0, dword [edx+0x4]
@@ -3869,8 +4160,8 @@ CullBoxFromSphere:
 	andps xmm0, xmm1
 	subss xmm0, [ecx+0x4]
 	ucomiss xmm0, xmm4
-	jb CullBoxFromSphere_20
-CullBoxFromSphere_40:
+	jb _Z17CullBoxFromSpherePKffS0_S0__20
+_Z17CullBoxFromSpherePKffS0_S0__40:
 	movaps xmm2, xmm0
 	mulss xmm2, xmm0
 	movss xmm0, dword [edx+0x8]
@@ -3878,8 +4169,8 @@ CullBoxFromSphere_40:
 	andps xmm0, xmm1
 	subss xmm0, [ecx+0x8]
 	ucomiss xmm0, xmm4
-	jb CullBoxFromSphere_30
-CullBoxFromSphere_50:
+	jb _Z17CullBoxFromSpherePKffS0_S0__30
+_Z17CullBoxFromSpherePKffS0_S0__50:
 	mulss xmm0, xmm0
 	addss xmm2, xmm5
 	addss xmm2, xmm0
@@ -3889,23 +4180,23 @@ CullBoxFromSphere_50:
 	seta al
 	leave
 	ret
-CullBoxFromSphere_10:
+_Z17CullBoxFromSpherePKffS0_S0__10:
 	movaps xmm5, xmm4
 	movss xmm0, dword [edx+0x4]
 	subss xmm0, [eax+0x4]
 	andps xmm0, xmm1
 	subss xmm0, [ecx+0x4]
 	ucomiss xmm0, xmm4
-	jae CullBoxFromSphere_40
-CullBoxFromSphere_20:
+	jae _Z17CullBoxFromSpherePKffS0_S0__40
+_Z17CullBoxFromSpherePKffS0_S0__20:
 	movaps xmm2, xmm4
 	movss xmm0, dword [edx+0x8]
 	subss xmm0, [eax+0x8]
 	andps xmm0, xmm1
 	subss xmm0, [ecx+0x8]
 	ucomiss xmm0, xmm4
-	jae CullBoxFromSphere_50
-CullBoxFromSphere_30:
+	jae _Z17CullBoxFromSpherePKffS0_S0__50
+_Z17CullBoxFromSpherePKffS0_S0__30:
 	movaps xmm0, xmm4
 	addss xmm2, xmm5
 	addss xmm2, xmm0
@@ -3919,7 +4210,7 @@ CullBoxFromSphere_30:
 
 
 ;MatrixTranspose44(float const*, float*)
-MatrixTranspose44:
+_Z17MatrixTranspose44PKfPf:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -3962,7 +4253,7 @@ MatrixTranspose44:
 
 
 ;UnitQuatToForward(float const*, float*)
-UnitQuatToForward:
+_Z17UnitQuatToForwardPKfPf:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -3995,7 +4286,7 @@ UnitQuatToForward:
 
 
 ;AddPointToBounds2D(float const*, float*, float*)
-AddPointToBounds2D:
+_Z18AddPointToBounds2DPKfPfS1_:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0x8]
@@ -4004,31 +4295,31 @@ AddPointToBounds2D:
 	movss xmm1, dword [edx]
 	movss xmm0, dword [eax]
 	ucomiss xmm0, xmm1
-	jbe AddPointToBounds2D_10
+	jbe _Z18AddPointToBounds2DPKfPfS1__10
 	movss [eax], xmm1
 	movss xmm1, dword [edx]
-AddPointToBounds2D_10:
+_Z18AddPointToBounds2DPKfPfS1__10:
 	ucomiss xmm1, [ecx]
-	jbe AddPointToBounds2D_20
+	jbe _Z18AddPointToBounds2DPKfPfS1__20
 	movss [ecx], xmm1
-AddPointToBounds2D_20:
+_Z18AddPointToBounds2DPKfPfS1__20:
 	movss xmm1, dword [edx+0x4]
 	movss xmm0, dword [eax+0x4]
 	ucomiss xmm0, xmm1
-	jbe AddPointToBounds2D_30
+	jbe _Z18AddPointToBounds2DPKfPfS1__30
 	movss [eax+0x4], xmm1
 	movss xmm1, dword [edx+0x4]
-AddPointToBounds2D_30:
+_Z18AddPointToBounds2DPKfPfS1__30:
 	ucomiss xmm1, [ecx+0x4]
-	jbe AddPointToBounds2D_40
+	jbe _Z18AddPointToBounds2DPKfPfS1__40
 	movss [ecx+0x4], xmm1
-AddPointToBounds2D_40:
+_Z18AddPointToBounds2DPKfPfS1__40:
 	pop ebp
 	ret
 
 
 ;BoxDistSqrdExceeds(float const*, float const*, float const*, float)
-BoxDistSqrdExceeds:
+_Z18BoxDistSqrdExceedsPKfS0_S0_f:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -4062,23 +4353,23 @@ BoxDistSqrdExceeds:
 	mov edx, 0x1
 	lea ebx, [ebp-0x14]
 	lea ecx, [ebp-0x20]
-BoxDistSqrdExceeds_20:
+_Z18BoxDistSqrdExceedsPKfS0_S0_f_20:
 	lea eax, [edx*4]
 	movss xmm2, dword [ebx+eax-0x4]
 	movss xmm1, dword [ecx+eax-0x4]
 	movaps xmm0, xmm2
 	mulss xmm0, xmm1
 	ucomiss xmm4, xmm0
-	jae BoxDistSqrdExceeds_10
+	jae _Z18BoxDistSqrdExceedsPKfS0_S0_f_10
 	mulss xmm2, xmm2
 	movaps xmm0, xmm1
 	mulss xmm0, xmm1
 	minss xmm0, xmm2
 	addss xmm3, xmm0
-BoxDistSqrdExceeds_10:
+_Z18BoxDistSqrdExceedsPKfS0_S0_f_10:
 	add edx, 0x1
 	cmp edx, 0x4
-	jnz BoxDistSqrdExceeds_20
+	jnz _Z18BoxDistSqrdExceedsPKfS0_S0_f_20
 	xor eax, eax
 	ucomiss xmm3, [ebp+0x14]
 	seta al
@@ -4090,7 +4381,7 @@ BoxDistSqrdExceeds_10:
 
 
 ;CullSphereFromCone(float const*, float const*, float, float const*, float)
-CullSphereFromCone:
+_Z18CullSphereFromConePKfS0_fS0_f:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
@@ -4115,12 +4406,12 @@ CullSphereFromCone:
 	mulss xmm0, xmm1
 	addss xmm2, xmm0
 	ucomiss xmm2, [ebp+0x18]
-	jb CullSphereFromCone_10
-CullSphereFromCone_20:
+	jb _Z18CullSphereFromConePKfS0_fS0_f_10
+_Z18CullSphereFromConePKfS0_fS0_f_20:
 	mov eax, 0x1
 	leave
 	ret
-CullSphereFromCone_10:
+_Z18CullSphereFromConePKfS0_fS0_f_10:
 	movaps xmm0, xmm2
 	xorps xmm0, [_data16_80000000]
 	mulss xmm6, xmm0
@@ -4144,14 +4435,14 @@ CullSphereFromCone_10:
 	mulss xmm3, xmm1
 	mulss xmm2, xmm2
 	ucomiss xmm3, xmm2
-	jae CullSphereFromCone_20
+	jae _Z18CullSphereFromConePKfS0_fS0_f_20
 	xor eax, eax
 	leave
 	ret
 
 
 ;OrthographicMatrix(float (*) [4], float, float, float)
-OrthographicMatrix:
+_Z18OrthographicMatrixPA4_ffff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4180,7 +4471,7 @@ OrthographicMatrix:
 
 
 ;RadiusFromBounds2D(float const*, float const*)
-RadiusFromBounds2D:
+_Z18RadiusFromBounds2DPKfS0_:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4191,7 +4482,7 @@ RadiusFromBounds2D:
 	mov edx, 0x1
 	movss xmm2, dword [_data16_7fffffff]
 	lea ecx, [ebp-0x10]
-RadiusFromBounds2D_10:
+_Z18RadiusFromBounds2DPKfS0__10:
 	lea eax, [edx*4]
 	movss xmm1, dword [esi+eax-0x4]
 	andps xmm1, xmm2
@@ -4201,7 +4492,7 @@ RadiusFromBounds2D_10:
 	movss [ecx+eax-0x4], xmm1
 	add edx, 0x1
 	cmp edx, 0x3
-	jnz RadiusFromBounds2D_10
+	jnz _Z18RadiusFromBounds2DPKfS0__10
 	movss xmm1, dword [ebp-0x10]
 	movss xmm0, dword [ebp-0xc]
 	mulss xmm1, xmm1
@@ -4218,7 +4509,7 @@ RadiusFromBounds2D_10:
 
 
 ;ExpandBoundsToWidth(float*, float*)
-ExpandBoundsToWidth:
+_Z19ExpandBoundsToWidthPfS_:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -4237,7 +4528,7 @@ ExpandBoundsToWidth:
 	andnps xmm0, xmm2
 	orps xmm0, xmm1
 	ucomiss xmm0, xmm4
-	jbe ExpandBoundsToWidth_10
+	jbe _Z19ExpandBoundsToWidthPfS__10
 	movaps xmm1, xmm0
 	subss xmm1, xmm4
 	mulss xmm1, [_float_0_50000000]
@@ -4246,13 +4537,13 @@ ExpandBoundsToWidth:
 	movss [eax+0x8], xmm0
 	addss xmm1, [edx+0x8]
 	movss [edx+0x8], xmm1
-ExpandBoundsToWidth_10:
+_Z19ExpandBoundsToWidthPfS__10:
 	pop ebp
 	ret
 
 
 ;PerpendicularVector(float const*, float*)
-PerpendicularVector:
+_Z19PerpendicularVectorPKfPf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4308,7 +4599,7 @@ PerpendicularVector:
 	movaps xmm0, xmm1
 	xorps xmm0, xmm4
 	ucomiss xmm0, [_float_0_00000000]
-	jb PerpendicularVector_10
+	jb _Z19PerpendicularVectorPKfPf_10
 	movaps xmm2, xmm5
 	mulss xmm3, xmm2
 	movss [ebx], xmm3
@@ -4322,7 +4613,7 @@ PerpendicularVector:
 	pop esi
 	pop ebp
 	ret
-PerpendicularVector_10:
+_Z19PerpendicularVectorPKfPf_10:
 	movaps xmm2, xmm5
 	divss xmm2, xmm1
 	mulss xmm3, xmm2
@@ -4341,7 +4632,7 @@ PerpendicularVector_10:
 
 
 ;PitchForYawOnNormal(float, float const*)
-PitchForYawOnNormal:
+_Z19PitchForYawOnNormalfPKf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -4359,15 +4650,15 @@ PitchForYawOnNormal:
 	call cosf
 	movss xmm2, dword [ebx+0x8]
 	ucomiss xmm2, [_float_0_00000000]
-	jnz PitchForYawOnNormal_10
-	jp PitchForYawOnNormal_10
+	jnz _Z19PitchForYawOnNormalfPKf_10
+	jp _Z19PitchForYawOnNormalfPKf_10
 	fstp st0
 	fld dword [_float_270_00000000]
 	add esp, 0x34
 	pop ebx
 	pop ebp
 	ret
-PitchForYawOnNormal_10:
+_Z19PitchForYawOnNormalfPKf_10:
 	fstp dword [ebp-0x1c]
 	movss xmm0, dword [ebp-0x1c]
 	mulss xmm0, [ebx]
@@ -4392,7 +4683,7 @@ PitchForYawOnNormal_10:
 
 
 ;ProjectPointOnPlane(float const*, float const*, float*)
-ProjectPointOnPlane:
+_Z19ProjectPointOnPlanePKfS0_Pf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
@@ -4425,7 +4716,7 @@ ProjectPointOnPlane:
 
 
 ;Vec3RotateTranspose(float const*, float const (*) [3], float*)
-Vec3RotateTranspose:
+_Z19Vec3RotateTransposePKfPA3_S_Pf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4469,7 +4760,7 @@ Vec3RotateTranspose:
 
 
 ;VectorAngleMultiply(float*, float)
-VectorAngleMultiply:
+_Z19VectorAngleMultiplyPff:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -4508,7 +4799,7 @@ VectorAngleMultiply:
 
 
 ;ShrinkBoundsToHeight(float*, float*)
-ShrinkBoundsToHeight:
+_Z20ShrinkBoundsToHeightPfS_:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -4520,7 +4811,7 @@ ShrinkBoundsToHeight:
 	movss xmm2, dword [edx+0x8]
 	subss xmm2, [eax+0x8]
 	ucomiss xmm0, xmm2
-	jbe ShrinkBoundsToHeight_10
+	jbe _Z20ShrinkBoundsToHeightPfS__10
 	subss xmm0, xmm2
 	mulss xmm0, [_float_0_50000000]
 	movaps xmm1, xmm0
@@ -4529,9 +4820,9 @@ ShrinkBoundsToHeight:
 	movss xmm1, dword [edx]
 	subss xmm1, xmm0
 	movss [edx], xmm1
-ShrinkBoundsToHeight_10:
+_Z20ShrinkBoundsToHeightPfS__10:
 	ucomiss xmm3, xmm2
-	jbe ShrinkBoundsToHeight_20
+	jbe _Z20ShrinkBoundsToHeightPfS__20
 	movaps xmm0, xmm3
 	subss xmm0, xmm2
 	mulss xmm0, [_float_0_50000000]
@@ -4541,13 +4832,13 @@ ShrinkBoundsToHeight_10:
 	movss xmm1, dword [edx+0x4]
 	subss xmm1, xmm0
 	movss [edx+0x4], xmm1
-ShrinkBoundsToHeight_20:
+_Z20ShrinkBoundsToHeightPfS__20:
 	pop ebp
 	ret
 
 
 ;Vec3ProjectionCoords(float const*, int*, int*)
-Vec3ProjectionCoords:
+_Z20Vec3ProjectionCoordsPKfPiS1_:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -4561,56 +4852,56 @@ Vec3ProjectionCoords:
 	movaps xmm1, xmm0
 	mulss xmm1, xmm0
 	ucomiss xmm1, xmm5
-	jb Vec3ProjectionCoords_10
+	jb _Z20Vec3ProjectionCoordsPKfPiS1__10
 	ucomiss xmm1, xmm2
-	jae Vec3ProjectionCoords_20
-Vec3ProjectionCoords_10:
+	jae _Z20Vec3ProjectionCoordsPKfPiS1__20
+_Z20Vec3ProjectionCoordsPKfPiS1__10:
 	ucomiss xmm2, xmm5
-	jae Vec3ProjectionCoords_30
-Vec3ProjectionCoords_50:
+	jae _Z20Vec3ProjectionCoordsPKfPiS1__30
+_Z20Vec3ProjectionCoordsPKfPiS1__50:
 	ucomiss xmm4, [_float_0_00000000]
-	jbe Vec3ProjectionCoords_40
+	jbe _Z20Vec3ProjectionCoordsPKfPiS1__40
 	mov eax, [ebp+0xc]
 	mov dword [eax], 0x1
 	mov edx, [ebp+0x10]
 	mov dword [edx], 0x2
 	pop ebp
 	ret
-Vec3ProjectionCoords_30:
+_Z20Vec3ProjectionCoordsPKfPiS1__30:
 	ucomiss xmm2, xmm1
-	jb Vec3ProjectionCoords_50
+	jb _Z20Vec3ProjectionCoordsPKfPiS1__50
 	ucomiss xmm3, [_float_0_00000000]
-	jbe Vec3ProjectionCoords_60
+	jbe _Z20Vec3ProjectionCoordsPKfPiS1__60
 	mov eax, [ebp+0xc]
 	mov dword [eax], 0x2
 	mov edx, [ebp+0x10]
 	mov dword [edx], 0x0
 	pop ebp
 	ret
-Vec3ProjectionCoords_20:
+_Z20Vec3ProjectionCoordsPKfPiS1__20:
 	ucomiss xmm0, [_float_0_00000000]
-	jbe Vec3ProjectionCoords_70
+	jbe _Z20Vec3ProjectionCoordsPKfPiS1__70
 	mov eax, [ebp+0xc]
 	mov dword [eax], 0x0
 	mov edx, [ebp+0x10]
 	mov dword [edx], 0x1
 	pop ebp
 	ret
-Vec3ProjectionCoords_40:
+_Z20Vec3ProjectionCoordsPKfPiS1__40:
 	mov eax, [ebp+0xc]
 	mov dword [eax], 0x2
 	mov edx, [ebp+0x10]
 	mov dword [edx], 0x1
 	pop ebp
 	ret
-Vec3ProjectionCoords_70:
+_Z20Vec3ProjectionCoordsPKfPiS1__70:
 	mov eax, [ebp+0xc]
 	mov dword [eax], 0x1
 	mov edx, [ebp+0x10]
 	mov dword [edx], 0x0
 	pop ebp
 	ret
-Vec3ProjectionCoords_60:
+_Z20Vec3ProjectionCoordsPKfPiS1__60:
 	mov eax, [ebp+0xc]
 	mov dword [eax], 0x0
 	mov edx, [ebp+0x10]
@@ -4620,7 +4911,7 @@ Vec3ProjectionCoords_60:
 
 
 ;Vec3Basis_RightHanded(float const*, float*, float*)
-Vec3Basis_RightHanded:
+_Z21Vec3Basis_RightHandedPKfPfS1_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4682,9 +4973,9 @@ Vec3Basis_RightHanded:
 	movaps xmm0, xmm1
 	xorps xmm0, xmm4
 	ucomiss xmm0, [_float_0_00000000]
-	jb Vec3Basis_RightHanded_10
+	jb _Z21Vec3Basis_RightHandedPKfPfS1__10
 	movaps xmm2, xmm5
-Vec3Basis_RightHanded_20:
+_Z21Vec3Basis_RightHandedPKfPfS1__20:
 	mulss xmm3, xmm2
 	movss [ecx], xmm3
 	movaps xmm0, xmm2
@@ -4720,14 +5011,14 @@ Vec3Basis_RightHanded_20:
 	pop edi
 	pop ebp
 	ret
-Vec3Basis_RightHanded_10:
+_Z21Vec3Basis_RightHandedPKfPfS1__10:
 	movaps xmm2, xmm5
 	divss xmm2, xmm1
-	jmp Vec3Basis_RightHanded_20
+	jmp _Z21Vec3Basis_RightHandedPKfPfS1__20
 
 
 ;FinitePerspectiveMatrix(float (*) [4], float, float, float, float)
-FinitePerspectiveMatrix:
+_Z23FinitePerspectiveMatrixPA4_fffff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4765,7 +5056,7 @@ FinitePerspectiveMatrix:
 
 
 ;MatrixTransformVector43(float const*, float const (*) [3], float*)
-MatrixTransformVector43:
+_Z23MatrixTransformVector43PKfPA3_S_Pf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4816,7 +5107,7 @@ MatrixTransformVector43:
 
 
 ;MatrixTransformVector44(float const*, float const (*) [4], float*)
-MatrixTransformVector44:
+_Z23MatrixTransformVector44PKfPA4_S_Pf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4885,7 +5176,7 @@ MatrixTransformVector44:
 
 
 ;RotatePointAroundVector(float*, float const*, float const*, float)
-RotatePointAroundVector:
+_Z23RotatePointAroundVectorPfPKfS1_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4941,8 +5232,8 @@ RotatePointAroundVector:
 	movaps xmm0, xmm1
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
-	jb RotatePointAroundVector_10
-RotatePointAroundVector_30:
+	jb _Z23RotatePointAroundVectorPfPKfS1_f_10
+_Z23RotatePointAroundVectorPfPKfS1_f_30:
 	movaps xmm2, xmm5
 	mulss xmm2, xmm3
 	movss [ebp-0x24], xmm2
@@ -5019,20 +5310,20 @@ RotatePointAroundVector_30:
 	mov [esp+0x4], esi
 	lea eax, [ebp-0x78]
 	mov [esp], eax
-	call MatrixMultiply
+	call _Z14MatrixMultiplyPA3_KfS1_PA3_f
 	lea esi, [ebp-0x9c]
 	mov [esp+0x8], esi
 	lea edi, [ebp-0xe4]
 	mov [esp+0x4], edi
 	mov [esp], ebx
-	call MatrixMultiply
+	call _Z14MatrixMultiplyPA3_KfS1_PA3_f
 	mov ebx, [ebp+0x10]
 	add ebx, 0x4
 	mov ecx, [ebp+0x10]
 	add ecx, 0x8
 	mov edx, [ebp+0x8]
 	mov eax, esi
-RotatePointAroundVector_20:
+_Z23RotatePointAroundVectorPfPKfS1_f_20:
 	movss xmm0, dword [eax]
 	mov esi, [ebp+0x10]
 	mulss xmm0, [esi]
@@ -5047,21 +5338,21 @@ RotatePointAroundVector_20:
 	add edx, 0x4
 	lea edi, [ebp-0x78]
 	cmp eax, edi
-	jnz RotatePointAroundVector_20
+	jnz _Z23RotatePointAroundVectorPfPKfS1_f_20
 	add esp, 0xfc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RotatePointAroundVector_10:
+_Z23RotatePointAroundVectorPfPKfS1_f_10:
 	divss xmm3, xmm1
-	jmp RotatePointAroundVector_30
+	jmp _Z23RotatePointAroundVectorPfPKfS1_f_30
 	nop
 
 
 ;VecNCompareCustomEpsilon(float const*, float const*, float, int)
-VecNCompareCustomEpsilon:
+_Z24VecNCompareCustomEpsilonPKfS0_fi:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -5070,29 +5361,29 @@ VecNCompareCustomEpsilon:
 	movss xmm1, dword [ebp+0x10]
 	mov edx, [ebp+0x14]
 	test edx, edx
-	jle VecNCompareCustomEpsilon_10
+	jle _Z24VecNCompareCustomEpsilonPKfS0_fi_10
 	movss xmm0, dword [ebx]
 	subss xmm0, [ecx]
 	mulss xmm1, xmm1
 	mulss xmm0, xmm0
 	ucomiss xmm0, xmm1
-	ja VecNCompareCustomEpsilon_20
+	ja _Z24VecNCompareCustomEpsilonPKfS0_fi_20
 	xor eax, eax
-VecNCompareCustomEpsilon_30:
+_Z24VecNCompareCustomEpsilonPKfS0_fi_30:
 	add eax, 0x1
 	cmp edx, eax
-	jz VecNCompareCustomEpsilon_10
+	jz _Z24VecNCompareCustomEpsilonPKfS0_fi_10
 	movss xmm0, dword [ebx+eax*4]
 	subss xmm0, [ecx+eax*4]
 	mulss xmm0, xmm0
 	ucomiss xmm0, xmm1
-	jbe VecNCompareCustomEpsilon_30
-VecNCompareCustomEpsilon_20:
+	jbe _Z24VecNCompareCustomEpsilonPKfS0_fi_30
+_Z24VecNCompareCustomEpsilonPKfS0_fi_20:
 	xor eax, eax
 	pop ebx
 	pop ebp
 	ret
-VecNCompareCustomEpsilon_10:
+_Z24VecNCompareCustomEpsilonPKfS0_fi_10:
 	mov eax, 0x1
 	pop ebx
 	pop ebp
@@ -5100,7 +5391,7 @@ VecNCompareCustomEpsilon_10:
 
 
 ;ClosestApproachOfTwoLines(float const*, float const*, float const*, float const*, float*, float*)
-ClosestApproachOfTwoLines:
+_Z25ClosestApproachOfTwoLinesPKfS0_S0_S0_PfS1_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5180,7 +5471,7 @@ ClosestApproachOfTwoLines:
 	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [_float_0_00010000]
 	ucomiss xmm1, xmm0
-	jbe ClosestApproachOfTwoLines_10
+	jbe _Z25ClosestApproachOfTwoLinesPKfS0_S0_S0_PfS1__10
 	movss xmm0, dword [ebp-0x1c]
 	mulss xmm0, [ebp-0x30]
 	movss xmm1, dword [ebp-0x20]
@@ -5209,7 +5500,7 @@ ClosestApproachOfTwoLines:
 	pop edi
 	pop ebp
 	ret
-ClosestApproachOfTwoLines_10:
+_Z25ClosestApproachOfTwoLinesPKfS0_S0_S0_PfS1__10:
 	xorps xmm3, xmm7
 	divss xmm3, dword [ebp-0x34]
 	movss [esi], xmm3
@@ -5224,7 +5515,7 @@ ClosestApproachOfTwoLines_10:
 
 
 ;GraphGetValueFromFraction(int, float const (*) [2], float)
-GraphGetValueFromFraction:
+_Z25GraphGetValueFromFractioniPA2_Kff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5234,28 +5525,28 @@ GraphGetValueFromFraction:
 	mov edi, [ebp+0xc]
 	movss xmm3, dword [ebp+0x10]
 	cmp dword [ebp+0x8], 0x1
-	jle GraphGetValueFromFraction_10
+	jle _Z25GraphGetValueFromFractioniPA2_Kff_10
 	lea esi, [edi+0x8]
 	movss xmm0, dword [edi+0x8]
 	ucomiss xmm0, xmm3
-	jae GraphGetValueFromFraction_20
+	jae _Z25GraphGetValueFromFractioniPA2_Kff_20
 	lea ebx, [edi+0x10]
 	mov ecx, 0x1
 	mov eax, 0x10
-	jmp GraphGetValueFromFraction_30
-GraphGetValueFromFraction_50:
+	jmp _Z25GraphGetValueFromFractioniPA2_Kff_30
+_Z25GraphGetValueFromFractioniPA2_Kff_50:
 	lea edx, [edi+eax]
 	mov esi, edx
 	movss xmm0, dword [ebx]
 	add eax, 0x8
 	add ebx, 0x8
 	ucomiss xmm0, xmm3
-	jae GraphGetValueFromFraction_40
-GraphGetValueFromFraction_30:
+	jae _Z25GraphGetValueFromFractioniPA2_Kff_40
+_Z25GraphGetValueFromFractioniPA2_Kff_30:
 	add ecx, 0x1
 	cmp [ebp+0x8], ecx
-	jnz GraphGetValueFromFraction_50
-GraphGetValueFromFraction_10:
+	jnz _Z25GraphGetValueFromFractioniPA2_Kff_50
+_Z25GraphGetValueFromFractioniPA2_Kff_10:
 	movss xmm3, dword [_float__1_00000000]
 	movss [ebp-0x10], xmm3
 	fld dword [ebp-0x10]
@@ -5265,9 +5556,9 @@ GraphGetValueFromFraction_10:
 	pop edi
 	pop ebp
 	ret
-GraphGetValueFromFraction_20:
+_Z25GraphGetValueFromFractioniPA2_Kff_20:
 	mov edx, esi
-GraphGetValueFromFraction_40:
+_Z25GraphGetValueFromFractioniPA2_Kff_40:
 	movss xmm1, dword [edx-0x8]
 	movss xmm2, dword [edx-0x4]
 	subss xmm3, xmm1
@@ -5290,7 +5581,7 @@ GraphGetValueFromFraction_40:
 
 
 ;InfinitePerspectiveMatrix(float (*) [4], float, float, float)
-InfinitePerspectiveMatrix:
+_Z25InfinitePerspectiveMatrixPA4_ffff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5323,7 +5614,7 @@ InfinitePerspectiveMatrix:
 
 
 ;MatrixInverseOrthogonal43(float const (*) [3], float (*) [3])
-MatrixInverseOrthogonal43:
+_Z25MatrixInverseOrthogonal43PA3_KfPA3_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5398,7 +5689,7 @@ MatrixInverseOrthogonal43:
 
 
 ;NearestPitchAndYawOnPlane(float const*, float const*, float*)
-NearestPitchAndYawOnPlane:
+_Z25NearestPitchAndYawOnPlanePKfS0_Pf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -5410,7 +5701,7 @@ NearestPitchAndYawOnPlane:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call AngleVectors
+	call _Z12AngleVectorsPKfPfS1_S1_
 	movss xmm2, dword [ebx]
 	movss xmm3, dword [ebp-0x14]
 	movss xmm4, dword [ebp-0x10]
@@ -5438,7 +5729,7 @@ NearestPitchAndYawOnPlane:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x20]
 	mov [esp], eax
-	call vectoangles
+	call _Z11vectoanglesPKfPf
 	add esp, 0x34
 	pop ebx
 	pop ebp
@@ -5447,7 +5738,7 @@ NearestPitchAndYawOnPlane:
 
 
 ;SnapPointToIntersectingPlanes(float const**, float*, float, float)
-SnapPointToIntersectingPlanes:
+_Z29SnapPointToIntersectingPlanesPPKfPfff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5457,7 +5748,7 @@ SnapPointToIntersectingPlanes:
 	mov edi, [ebp+0xc]
 	mov ebx, 0x1
 	lea esi, [ebp-0x24]
-SnapPointToIntersectingPlanes_10:
+_Z29SnapPointToIntersectingPlanesPPKfPfff_10:
 	movss xmm2, dword [edi+ebx*4-0x4]
 	movaps xmm0, xmm2
 	divss xmm0, dword [ebp+0x10]
@@ -5481,19 +5772,19 @@ SnapPointToIntersectingPlanes_10:
 	add ebx, 0x1
 	add esi, 0x4
 	cmp ebx, 0x4
-	jnz SnapPointToIntersectingPlanes_10
+	jnz _Z29SnapPointToIntersectingPlanesPPKfPfff_10
 	movss xmm0, dword [ebp-0x24]
 	movss [ebp-0x38], xmm0
 	ucomiss xmm0, [edi]
-	jp SnapPointToIntersectingPlanes_20
-	jz SnapPointToIntersectingPlanes_30
-SnapPointToIntersectingPlanes_20:
+	jp _Z29SnapPointToIntersectingPlanesPPKfPfff_20
+	jz _Z29SnapPointToIntersectingPlanesPPKfPfff_30
+_Z29SnapPointToIntersectingPlanesPPKfPfff_20:
 	lea edx, [edi+0x4]
 	lea eax, [edi+0x8]
 	movss xmm0, dword [ebp-0x20]
 	movss [ebp-0x44], xmm0
 	movss xmm7, dword [ebp-0x1c]
-SnapPointToIntersectingPlanes_80:
+_Z29SnapPointToIntersectingPlanesPPKfPfff_80:
 	movss xmm0, dword [edi]
 	movss [ebp-0x34], xmm0
 	movss xmm0, dword [edx]
@@ -5504,7 +5795,7 @@ SnapPointToIntersectingPlanes_80:
 	pxor xmm0, xmm0
 	movss [ebp-0x3c], xmm0
 	mov edx, 0x1
-SnapPointToIntersectingPlanes_50:
+_Z29SnapPointToIntersectingPlanesPPKfPfff_50:
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+edx*4-0x4]
 	movss xmm2, dword [eax]
@@ -5522,9 +5813,9 @@ SnapPointToIntersectingPlanes_50:
 	subss xmm1, xmm5
 	andps xmm1, [_data16_7fffffff]
 	ucomiss xmm1, [ebp-0x3c]
-	jbe SnapPointToIntersectingPlanes_40
+	jbe _Z29SnapPointToIntersectingPlanesPPKfPfff_40
 	movss [ebp-0x3c], xmm1
-SnapPointToIntersectingPlanes_40:
+_Z29SnapPointToIntersectingPlanesPPKfPfff_40:
 	mulss xmm2, [ebp-0x34]
 	mulss xmm3, [ebp-0x30]
 	addss xmm2, xmm3
@@ -5536,49 +5827,49 @@ SnapPointToIntersectingPlanes_40:
 	movaps xmm6, xmm2
 	add edx, 0x1
 	cmp edx, 0x4
-	jnz SnapPointToIntersectingPlanes_50
+	jnz _Z29SnapPointToIntersectingPlanesPPKfPfff_50
 	ucomiss xmm2, [ebp-0x3c]
-	jbe SnapPointToIntersectingPlanes_60
+	jbe _Z29SnapPointToIntersectingPlanesPPKfPfff_60
 	movss xmm0, dword [ebp-0x38]
 	movss [edi], xmm0
 	movss xmm0, dword [ebp-0x44]
 	movss [edi+0x4], xmm0
 	movss [edi+0x8], xmm7
-SnapPointToIntersectingPlanes_60:
+_Z29SnapPointToIntersectingPlanesPPKfPfff_60:
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-SnapPointToIntersectingPlanes_30:
+_Z29SnapPointToIntersectingPlanesPPKfPfff_30:
 	lea edx, [edi+0x4]
 	movss xmm0, dword [ebp-0x20]
 	movss [ebp-0x44], xmm0
 	ucomiss xmm0, [edi+0x4]
-	jp SnapPointToIntersectingPlanes_70
-	jnz SnapPointToIntersectingPlanes_70
+	jp _Z29SnapPointToIntersectingPlanesPPKfPfff_70
+	jnz _Z29SnapPointToIntersectingPlanesPPKfPfff_70
 	lea eax, [edi+0x8]
 	movss xmm7, dword [ebp-0x1c]
 	ucomiss xmm7, [edi+0x8]
-	jnz SnapPointToIntersectingPlanes_80
-	jp SnapPointToIntersectingPlanes_80
+	jnz _Z29SnapPointToIntersectingPlanesPPKfPfff_80
+	jp _Z29SnapPointToIntersectingPlanesPPKfPfff_80
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-SnapPointToIntersectingPlanes_70:
+_Z29SnapPointToIntersectingPlanesPPKfPfff_70:
 	lea eax, [edi+0x8]
 	movss xmm7, dword [ebp-0x1c]
-	jmp SnapPointToIntersectingPlanes_80
+	jmp _Z29SnapPointToIntersectingPlanesPPKfPfff_80
 	nop
 	add [eax], al
 
 
 ;MatrixTransposeTransformVector(float const*, float const (*) [3], float*)
-MatrixTransposeTransformVector:
+_Z30MatrixTransposeTransformVectorPKfPA3_S_Pf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -5620,7 +5911,7 @@ MatrixTransposeTransformVector:
 
 
 ;CullBoxFromConicSectionOfSphere(float const*, float const*, float, float, float const*, float const*)
-CullBoxFromConicSectionOfSphere:
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0_:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -5646,10 +5937,10 @@ CullBoxFromConicSectionOfSphere:
 	subss xmm0, xmm1
 	pxor xmm3, xmm3
 	ucomiss xmm0, xmm3
-	jb CullBoxFromConicSectionOfSphere_10
+	jb _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__10
 	movaps xmm3, xmm0
 	mulss xmm3, xmm0
-CullBoxFromConicSectionOfSphere_10:
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__10:
 	movss xmm4, dword [ecx+0x4]
 	movss [ebp-0x2c], xmm4
 	movaps xmm0, xmm7
@@ -5657,10 +5948,10 @@ CullBoxFromConicSectionOfSphere_10:
 	subss xmm0, xmm4
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jb CullBoxFromConicSectionOfSphere_20
+	jb _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__20
 	movaps xmm1, xmm0
 	mulss xmm1, xmm0
-CullBoxFromConicSectionOfSphere_20:
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__20:
 	movss xmm4, dword [ecx+0x8]
 	movss [ebp-0x28], xmm4
 	movss xmm0, dword [ebp-0x18]
@@ -5668,19 +5959,19 @@ CullBoxFromConicSectionOfSphere_20:
 	subss xmm0, xmm4
 	pxor xmm4, xmm4
 	ucomiss xmm0, xmm4
-	jb CullBoxFromConicSectionOfSphere_30
+	jb _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__30
 	mulss xmm0, xmm0
-CullBoxFromConicSectionOfSphere_100:
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__100:
 	addss xmm1, xmm3
 	addss xmm1, xmm0
 	mulss xmm2, xmm2
 	ucomiss xmm1, xmm2
-	ja CullBoxFromConicSectionOfSphere_40
+	ja _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__40
 	movss xmm0, dword [ebx]
 	movss [ebp-0x24], xmm0
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jb CullBoxFromConicSectionOfSphere_50
+	jb _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__50
 	movss xmm0, dword [_float_1_00000000]
 	mulss xmm0, [ebp-0x30]
 	movaps xmm3, xmm5
@@ -5690,8 +5981,8 @@ CullBoxFromConicSectionOfSphere_100:
 	movss [ebp-0x20], xmm4
 	pxor xmm0, xmm0
 	ucomiss xmm4, xmm0
-	jb CullBoxFromConicSectionOfSphere_60
-CullBoxFromConicSectionOfSphere_120:
+	jb _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__60
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__120:
 	movss xmm0, dword [_float_1_00000000]
 	mulss xmm0, [ebp-0x2c]
 	movaps xmm4, xmm7
@@ -5700,10 +5991,10 @@ CullBoxFromConicSectionOfSphere_120:
 	movss [ebp-0x1c], xmm1
 	pxor xmm3, xmm3
 	ucomiss xmm1, xmm3
-	jb CullBoxFromConicSectionOfSphere_70
-CullBoxFromConicSectionOfSphere_130:
+	jb _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__70
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__130:
 	movss xmm0, dword [_float_1_00000000]
-CullBoxFromConicSectionOfSphere_140:
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__140:
 	mulss xmm0, [ebp-0x28]
 	movss xmm1, dword [ebp-0x18]
 	subss xmm1, xmm0
@@ -5717,14 +6008,14 @@ CullBoxFromConicSectionOfSphere_140:
 	addss xmm3, xmm0
 	pxor xmm0, xmm0
 	ucomiss xmm3, xmm0
-	jb CullBoxFromConicSectionOfSphere_80
-CullBoxFromConicSectionOfSphere_40:
+	jb _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__80
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__40:
 	mov eax, 0x1
 	add esp, 0x44
 	pop ebx
 	pop ebp
 	ret
-CullBoxFromConicSectionOfSphere_80:
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__80:
 	movaps xmm0, xmm3
 	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x3c], xmm0
@@ -5755,17 +6046,17 @@ CullBoxFromConicSectionOfSphere_80:
 	mulss xmm3, xmm3
 	mulss xmm3, xmm1
 	ucomiss xmm3, xmm0
-	jb CullBoxFromConicSectionOfSphere_90
+	jb _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__90
 	xor eax, eax
-CullBoxFromConicSectionOfSphere_110:
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__110:
 	add esp, 0x44
 	pop ebx
 	pop ebp
 	ret
-CullBoxFromConicSectionOfSphere_30:
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__30:
 	pxor xmm0, xmm0
-	jmp CullBoxFromConicSectionOfSphere_100
-CullBoxFromConicSectionOfSphere_90:
+	jmp _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__100
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__90:
 	mulss xmm4, xmm1
 	sqrtss xmm0, xmm4
 	movss xmm1, dword [ebp+0x10]
@@ -5799,10 +6090,10 @@ CullBoxFromConicSectionOfSphere_90:
 	subss xmm5, [ebp-0x28]
 	pxor xmm4, xmm4
 	ucomiss xmm5, xmm4
-	jae CullBoxFromConicSectionOfSphere_40
+	jae _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__40
 	xor eax, eax
-	jmp CullBoxFromConicSectionOfSphere_110
-CullBoxFromConicSectionOfSphere_50:
+	jmp _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__110
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__50:
 	movss xmm0, dword [_float__1_00000000]
 	mulss xmm0, [ebp-0x30]
 	movaps xmm3, xmm5
@@ -5812,8 +6103,8 @@ CullBoxFromConicSectionOfSphere_50:
 	movss [ebp-0x20], xmm4
 	pxor xmm0, xmm0
 	ucomiss xmm4, xmm0
-	jae CullBoxFromConicSectionOfSphere_120
-CullBoxFromConicSectionOfSphere_60:
+	jae _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__120
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__60:
 	movss xmm0, dword [_float__1_00000000]
 	mulss xmm0, [ebp-0x2c]
 	movaps xmm4, xmm7
@@ -5822,14 +6113,14 @@ CullBoxFromConicSectionOfSphere_60:
 	movss [ebp-0x1c], xmm1
 	pxor xmm3, xmm3
 	ucomiss xmm1, xmm3
-	jae CullBoxFromConicSectionOfSphere_130
-CullBoxFromConicSectionOfSphere_70:
+	jae _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__130
+_Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__70:
 	movss xmm0, dword [_float__1_00000000]
-	jmp CullBoxFromConicSectionOfSphere_140
+	jmp _Z31CullBoxFromConicSectionOfSpherePKfS0_ffS0_S0__140
 
 
 ;MatrixTransposeTransformVector43(float const*, float const (*) [3], float*)
-MatrixTransposeTransformVector43:
+_Z32MatrixTransposeTransformVector43PKfPA3_S_Pf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -5875,7 +6166,7 @@ MatrixTransposeTransformVector43:
 
 
 ;PointInCircleFromUniformDeviates(float, float, float*)
-PointInCircleFromUniformDeviates:
+_Z32PointInCircleFromUniformDeviatesffPf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -5907,7 +6198,7 @@ PointInCircleFromUniformDeviates:
 
 
 ;ProjectedWindingContainsCoplanarPoint(float const (*) [3], int, int, int, float const*)
-ProjectedWindingContainsCoplanarPoint:
+_Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5917,7 +6208,7 @@ ProjectedWindingContainsCoplanarPoint:
 	mov esi, [ebp+0xc]
 	lea edx, [esi-0x1]
 	test esi, esi
-	jle ProjectedWindingContainsCoplanarPoint_10
+	jle _Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS__10
 	mov eax, [ebp+0x10]
 	mov ecx, [ebp+0x18]
 	movss xmm5, dword [ecx+eax*4]
@@ -5930,10 +6221,10 @@ ProjectedWindingContainsCoplanarPoint:
 	mov [ebp-0x10], eax
 	mov edi, [ebp+0x10]
 	shl edi, 0x2
-	jmp ProjectedWindingContainsCoplanarPoint_20
-ProjectedWindingContainsCoplanarPoint_40:
+	jmp _Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS__20
+_Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS__40:
 	mov ecx, eax
-ProjectedWindingContainsCoplanarPoint_20:
+_Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS__20:
 	lea eax, [edx+edx*2]
 	mov edx, [ebp+0x8]
 	lea eax, [edx+eax*4]
@@ -5955,13 +6246,13 @@ ProjectedWindingContainsCoplanarPoint_20:
 	mulss xmm2, xmm1
 	addss xmm0, xmm2
 	ucomiss xmm6, xmm0
-	ja ProjectedWindingContainsCoplanarPoint_30
+	ja _Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS__30
 	lea eax, [ecx+0x1]
 	add ebx, 0xc
 	mov edx, ecx
 	cmp esi, eax
-	jnz ProjectedWindingContainsCoplanarPoint_40
-ProjectedWindingContainsCoplanarPoint_10:
+	jnz _Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS__40
+_Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS__10:
 	mov eax, 0x1
 	add esp, 0x4
 	pop ebx
@@ -5969,7 +6260,7 @@ ProjectedWindingContainsCoplanarPoint_10:
 	pop edi
 	pop ebp
 	ret
-ProjectedWindingContainsCoplanarPoint_30:
+_Z37ProjectedWindingContainsCoplanarPointPA3_KfiiiPS__30:
 	xor eax, eax
 	add esp, 0x4
 	pop ebx
@@ -5982,7 +6273,7 @@ ProjectedWindingContainsCoplanarPoint_30:
 
 
 ;irand(int, int)
-irand:
+_Z5irandii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6025,7 +6316,7 @@ irand:
 
 
 ;Q_acos(float)
-Q_acos:
+_Z6Q_acosf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -6036,21 +6327,21 @@ Q_acos:
 	movss xmm1, dword [ebp-0xc]
 	cvtss2sd xmm0, xmm1
 	ucomisd xmm0, [_double_3_14159265]
-	ja Q_acos_10
+	ja _Z6Q_acosf_10
 	ucomisd xmm0, [_double__3_14159265]
-	jae Q_acos_20
-	jp Q_acos_20
-Q_acos_10:
+	jae _Z6Q_acosf_20
+	jp _Z6Q_acosf_20
+_Z6Q_acosf_10:
 	fstp st0
 	fld dword [_float_3_14159274]
-Q_acos_20:
+_Z6Q_acosf_20:
 	leave
 	ret
 	nop
 
 
 ;Q_rint(float)
-Q_rint:
+_Z6Q_rintf:
 	push ebp
 	mov ebp, esp
 	movss xmm0, dword [_float_0_50000000]
@@ -6062,7 +6353,7 @@ Q_rint:
 
 
 ;flrand(float, float)
-flrand:
+_Z6flrandff:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x4
@@ -6079,7 +6370,7 @@ flrand:
 	mov [holdrand], eax
 	mov edx, eax
 	shr edx, 0x11
-	js flrand_10
+	js _Z6flrandff_10
 	cvtsi2ss xmm0, edx
 	subss xmm2, xmm1
 	mulss xmm0, xmm2
@@ -6089,7 +6380,7 @@ flrand:
 	fld dword [ebp-0x4]
 	leave
 	ret
-flrand_10:
+_Z6flrandff_10:
 	shr eax, 0x12
 	and edx, 0x1
 	or eax, edx
@@ -6107,11 +6398,11 @@ flrand_10:
 
 
 ;crandom()
-crandom:
+_Z7crandomv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
-	call ms_rand
+	call _Z7ms_randv
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [_float_0_00003052]
 	addss xmm0, xmm0
@@ -6124,11 +6415,11 @@ crandom:
 
 
 ;randomf()
-randomf:
+_Z7randomfv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
-	call ms_rand
+	call _Z7ms_randv
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [_float_0_00003052]
 	movss [ebp-0xc], xmm0
@@ -6139,7 +6430,7 @@ randomf:
 
 
 ;AxisCopy(float const (*) [3], float (*) [3])
-AxisCopy:
+_Z8AxisCopyPA3_KfPA3_f:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -6177,7 +6468,7 @@ AxisCopy:
 
 
 ;QuatLerp(float const*, float const*, float, float*)
-QuatLerp:
+_Z8QuatLerpPKfS0_fPf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
@@ -6199,7 +6490,7 @@ QuatLerp:
 	mulss xmm0, [eax+0xc]
 	addss xmm1, xmm0
 	ucomiss xmm1, [_float_0_00000000]
-	jb QuatLerp_10
+	jb _Z8QuatLerpPKfS0_fPf_10
 	subss xmm2, xmm3
 	mulss xmm2, xmm5
 	addss xmm3, xmm2
@@ -6224,7 +6515,7 @@ QuatLerp:
 	movss [ecx+0xc], xmm1
 	leave
 	ret
-QuatLerp_10:
+_Z8QuatLerpPKfS0_fPf_10:
 	movss xmm0, dword [_data16_80000000]
 	movaps xmm1, xmm2
 	xorps xmm1, xmm0
@@ -6263,7 +6554,7 @@ QuatLerp_10:
 
 
 ;vectoyaw(float const*)
-vectoyaw:
+_Z8vectoyawPKf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x38
@@ -6271,11 +6562,11 @@ vectoyaw:
 	movss xmm1, dword [eax+0x4]
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
-	jnz vectoyaw_10
-	jp vectoyaw_10
+	jnz _Z8vectoyawPKf_10
+	jp _Z8vectoyawPKf_10
 	ucomiss xmm2, [eax]
-	jz vectoyaw_20
-vectoyaw_10:
+	jz _Z8vectoyawPKf_20
+_Z8vectoyawPKf_10:
 	cvtss2sd xmm0, [eax]
 	movsd [esp+0x8], xmm0
 	cvtss2sd xmm1, xmm1
@@ -6289,9 +6580,9 @@ vectoyaw_10:
 	cvtsd2ss xmm0, xmm0
 	movss xmm2, dword [ebp-0x18]
 	ucomiss xmm0, xmm2
-	jb vectoyaw_30
+	jb _Z8vectoyawPKf_30
 	movaps xmm1, xmm2
-vectoyaw_40:
+_Z8vectoyawPKf_40:
 	addss xmm1, xmm0
 	movss [ebp-0x1c], xmm1
 	mov eax, [ebp-0x1c]
@@ -6299,21 +6590,21 @@ vectoyaw_40:
 	fld dword [ebp-0x1c]
 	leave
 	ret
-vectoyaw_20:
-	jp vectoyaw_10
+_Z8vectoyawPKf_20:
+	jp _Z8vectoyawPKf_10
 	movss [ebp-0x1c], xmm2
 	mov eax, [ebp-0x1c]
 	mov [ebp-0x1c], eax
 	fld dword [ebp-0x1c]
 	leave
 	ret
-vectoyaw_30:
+_Z8vectoyawPKf_30:
 	movss xmm1, dword [_float_360_00000000]
-	jmp vectoyaw_40
+	jmp _Z8vectoyawPKf_40
 
 
 ;AxisClear(float (*) [3])
-AxisClear:
+_Z9AxisClearPA3_f:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -6338,20 +6629,20 @@ AxisClear:
 
 
 ;ByteToDir(int, float*)
-ByteToDir:
+_Z9ByteToDiriPf:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	mov ecx, [ebp+0xc]
 	cmp eax, 0xa1
-	jbe ByteToDir_10
+	jbe _Z9ByteToDiriPf_10
 	xor eax, eax
 	mov [ecx], eax
 	mov [ecx+0x4], eax
 	mov [ecx+0x8], eax
 	pop ebp
 	ret
-ByteToDir_10:
+_Z9ByteToDiriPf_10:
 	lea eax, [eax+eax*2]
 	shl eax, 0x2
 	lea edx, [eax+bytedirs]
@@ -6367,22 +6658,22 @@ ByteToDir_10:
 
 
 ;ClampChar(int)
-ClampChar:
+_Z9ClampChari:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	cmp eax, 0xffffff80
-	jl ClampChar_10
+	jl _Z9ClampChari_10
 	cmp eax, 0x7f
-	jg ClampChar_20
+	jg _Z9ClampChari_20
 	movsx eax, al
 	pop ebp
 	ret
-ClampChar_20:
+_Z9ClampChari_20:
 	mov eax, 0x7f
 	pop ebp
 	ret
-ClampChar_10:
+_Z9ClampChari_10:
 	mov eax, 0xffffff80
 	pop ebp
 	ret
@@ -6391,7 +6682,7 @@ ClampChar_10:
 
 
 ;DiffTrack(float, float, float, float)
-DiffTrack:
+_Z9DiffTrackffff:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
@@ -6405,14 +6696,14 @@ DiffTrack:
 	movaps xmm3, xmm0
 	andps xmm3, xmm1
 	ucomiss xmm3, [_float_0_00100000]
-	jbe DiffTrack_10
+	jbe _Z9DiffTrackffff_10
 	movaps xmm0, xmm2
 	andps xmm0, xmm1
 	ucomiss xmm0, xmm3
-	ja DiffTrack_10
+	ja _Z9DiffTrackffff_10
 	addss xmm4, xmm2
 	movss [ebp+0x8], xmm4
-DiffTrack_10:
+_Z9DiffTrackffff_10:
 	fld dword [ebp+0x8]
 	leave
 	ret
@@ -6420,12 +6711,12 @@ DiffTrack_10:
 
 
 ;DirToByte(float const*)
-DirToByte:
+_Z9DirToBytePKf:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	test eax, eax
-	jz DirToByte_10
+	jz _Z9DirToBytePKf_10
 	movss xmm4, dword [eax]
 	movss xmm3, dword [eax+0x4]
 	movss xmm2, dword [eax+0x8]
@@ -6433,7 +6724,7 @@ DirToByte:
 	xor eax, eax
 	xor ecx, ecx
 	xor edx, edx
-DirToByte_30:
+_Z9DirToBytePKf_30:
 	movaps xmm1, xmm4
 	mulss xmm1, [edx+bytedirs]
 	movaps xmm0, xmm3
@@ -6443,22 +6734,22 @@ DirToByte_30:
 	mulss xmm0, [edx+bytedirs+0x8]
 	addss xmm1, xmm0
 	ucomiss xmm1, xmm5
-	jbe DirToByte_20
+	jbe _Z9DirToBytePKf_20
 	movaps xmm5, xmm1
 	mov eax, ecx
-DirToByte_20:
+_Z9DirToBytePKf_20:
 	add ecx, 0x1
 	add edx, 0xc
 	cmp ecx, 0xa2
-	jnz DirToByte_30
+	jnz _Z9DirToBytePKf_30
 	movzx eax, al
-DirToByte_10:
+_Z9DirToBytePKf_10:
 	pop ebp
 	ret
 
 
 ;QuatSlerp(float const*, float const*, float, float*)
-QuatSlerp:
+_Z9QuatSlerpPKfS0_fPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6495,20 +6786,20 @@ QuatSlerp:
 	mulss xmm0, [edx+0xc]
 	addss xmm1, xmm0
 	ucomiss xmm1, [_float_0_00000000]
-	jp QuatSlerp_10
-	jb QuatSlerp_20
-QuatSlerp_10:
+	jp _Z9QuatSlerpPKfS0_fPf_10
+	jb _Z9QuatSlerpPKfS0_fPf_20
+_Z9QuatSlerpPKfS0_fPf_10:
 	xor esi, esi
 	ucomiss xmm1, [_float_0_94999999]
-	jbe QuatSlerp_30
-QuatSlerp_50:
+	jbe _Z9QuatSlerpPKfS0_fPf_30
+_Z9QuatSlerpPKfS0_fPf_50:
 	movss xmm3, dword [_float_1_00000000]
 	subss xmm3, [ebp+0x10]
 	movss xmm2, dword [ebp+0x10]
-QuatSlerp_60:
+_Z9QuatSlerpPKfS0_fPf_60:
 	mov eax, esi
 	test al, al
-	jz QuatSlerp_40
+	jz _Z9QuatSlerpPKfS0_fPf_40
 	movss xmm0, dword [ebp-0x34]
 	mulss xmm0, xmm3
 	movss [ebp-0x34], xmm0
@@ -6545,7 +6836,7 @@ QuatSlerp_60:
 	pop edi
 	pop ebp
 	ret
-QuatSlerp_40:
+_Z9QuatSlerpPKfS0_fPf_40:
 	movss xmm0, dword [ebp-0x34]
 	mulss xmm0, xmm3
 	movss [ebp-0x34], xmm0
@@ -6582,12 +6873,12 @@ QuatSlerp_40:
 	pop edi
 	pop ebp
 	ret
-QuatSlerp_20:
+_Z9QuatSlerpPKfS0_fPf_20:
 	xorps xmm1, [_data16_80000000]
 	mov esi, 0x1
 	ucomiss xmm1, [_float_0_94999999]
-	ja QuatSlerp_50
-QuatSlerp_30:
+	ja _Z9QuatSlerpPKfS0_fPf_50
+_Z9QuatSlerpPKfS0_fPf_30:
 	movss [esp], xmm1
 	call acosf
 	fstp dword [ebp-0x38]
@@ -6613,12 +6904,12 @@ QuatSlerp_30:
 	movss xmm2, dword [ebp-0x6c]
 	divss xmm2, dword [ebp-0x3c]
 	movss xmm3, dword [ebp-0x68]
-	jmp QuatSlerp_60
+	jmp _Z9QuatSlerpPKfS0_fPf_60
 	nop
 
 
 ;Rand_Init(int)
-Rand_Init:
+_Z9Rand_Initi:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -6629,7 +6920,7 @@ Rand_Init:
 
 
 ;YawToAxis(float, float (*) [3])
-YawToAxis:
+_Z9YawToAxisfPA3_f:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -6648,14 +6939,14 @@ YawToAxis:
 	fstp dword [ebp-0x10]
 	pxor xmm1, xmm1
 	test ebx, ebx
-	jz YawToAxis_10
+	jz _Z9YawToAxisfPA3_f_10
 	movss xmm0, dword [ebp-0x10]
 	movss [ebx], xmm0
 	movss xmm0, dword [ebp-0x14]
 	movss [ebx+0x4], xmm0
 	pxor xmm1, xmm1
 	movss [ebx+0x8], xmm1
-YawToAxis_10:
+_Z9YawToAxisfPA3_f_10:
 	lea eax, [ebx+0x18]
 	mov dword [ebx+0x18], 0x0
 	mov dword [eax+0x4], 0x0
@@ -6681,9 +6972,39 @@ bytedirs: dd 0xbf06964f, 0x0, 0x3f59c444, 0xbee2bef0, 0x3e7496ab, 0x3f5d3b6d, 0x
 
 ;Initialized constant data of com_math:
 SECTION .rdata
+g_keepZ__uint4: dd 0x0, 0x0, 0xffffffff, 0x0
+g_keepX__uint4: dd 0xffffffff, 0x0, 0x0, 0x0
+g_keepZW__uint4: dd 0x0, 0x0, 0xffffffff, 0xffffffff
+g_keepXY__uint4: dd 0xffffffff, 0xffffffff, 0x0, 0x0
+g_keepXYZ__uint4: dd 0xffffffff, 0xffffffff, 0xffffffff, 0x0
+g_keepXYW__uint4: dd 0xffffffff, 0xffffffff, 0x0, 0xffffffff
+g_keepXZW__uint4: dd 0xffffffff, 0x0, 0xffffffff, 0xffffffff
+g_keepYZW__uint4: dd 0x0, 0xffffffff, 0xffffffff, 0xffffffff
+g_selectW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0x1c1d1e1f
+g_selectZ__uint4: dd 0x10203, 0x4050607, 0x18191a1b, 0xc0d0e0f
+g_selectY__uint4: dd 0x10203, 0x14151617, 0x8090a0b, 0xc0d0e0f
+g_selectX__uint4: dd 0x10111213, 0x4050607, 0x8090a0b, 0xc0d0e0f
+g_swizzleWWWW__uint4: dd 0xc0d0e0f, 0xc0d0e0f, 0xc0d0e0f, 0xc0d0e0f
+g_swizzleZZZZ__uint4: dd 0x8090a0b, 0x8090a0b, 0x8090a0b, 0x8090a0b
+g_swizzleYYYY__uint4: dd 0x4050607, 0x4050607, 0x4050607, 0x4050607
+g_swizzleXXXX__uint4: dd 0x10203, 0x10203, 0x10203, 0x10203
+g_swizzleYZWA__uint4: dd 0x4050607, 0x8090a0b, 0xc0d0e0f, 0x10111213
+g_swizzleZWAW__uint4: dd 0x8090a0b, 0xc0d0e0f, 0x10111213, 0xc0d0e0f
+g_swizzleWABW__uint4: dd 0xc0d0e0f, 0x10111213, 0x14151617, 0xc0d0e0f
+g_swizzleZXYW__uint4: dd 0x8090a0b, 0x10203, 0x4050607, 0xc0d0e0f
+g_swizzleYZXW__uint4: dd 0x4050607, 0x8090a0b, 0x10203, 0xc0d0e0f
+g_swizzleXYZA__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0x10111213
+g_swizzleZWCD__uint4: dd 0x8090a0b, 0xc0d0e0f, 0x18191a1b, 0x1c1d1e1f
+g_swizzleXYAB__uint4: dd 0x10203, 0x4050607, 0x10111213, 0x14151617
+g_swizzleYBWD__uint4: dd 0x4050607, 0x14151617, 0xc0d0e0f, 0x1c1d1e1f
+g_swizzleXAZC__uint4: dd 0x10203, 0x10111213, 0x8090a0b, 0x18191a1b
+g_swizzleYXWZ__uint4: dd 0x4050607, 0x10203, 0xc0d0e0f, 0x8090a0b
+g_swizzleXZYW__uint4: dd 0x10203, 0x8090a0b, 0x4050607, 0xc0d0e0f
+g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
+g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0xffffffff, 0x7fffffff, 0x0, 0x0, 0x1c97e0, 0x1c99d5, 0x1c998d, 0x1c9945, 0x1c98fd, 0x1c98b5, 0x1c986d, 0x1c9825, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 vec3_origin: dd 0x0, 0x0, 0x0
 vec2_origin: dd 0x0, 0x0
 identityMatrix44: dd 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x0
@@ -6691,9 +7012,39 @@ identityMatrix44: dd 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 
 
 ;Zero initialized global or static variables of com_math:
 SECTION .bss
+g_keepZ: resb 0x10
+g_keepX: resb 0x10
+g_keepZW: resb 0x10
+g_keepXY: resb 0x10
+g_keepXYZ: resb 0x10
+g_keepXYW: resb 0x10
+g_keepXZW: resb 0x10
+g_keepYZW: resb 0x10
+g_selectW: resb 0x10
+g_selectZ: resb 0x10
+g_selectY: resb 0x10
+g_selectX: resb 0x10
+g_swizzleWWWW: resb 0x10
+g_swizzleZZZZ: resb 0x10
+g_swizzleYYYY: resb 0x10
+g_swizzleXXXX: resb 0x10
+g_swizzleYZWA: resb 0x10
+g_swizzleZWAW: resb 0x10
+g_swizzleWABW: resb 0x10
+g_swizzleZXYW: resb 0x10
+g_swizzleYZXW: resb 0x10
+g_swizzleXYZA: resb 0x10
+g_swizzleZWCD: resb 0x10
+g_swizzleXYAB: resb 0x10
+g_swizzleYBWD: resb 0x10
+g_swizzleXAZC: resb 0x10
+g_swizzleYXWZ: resb 0x10
+g_swizzleXZYW: resb 0x10
+g_swizzleYXZW: resb 0x10
+g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

@@ -1,13 +1,13 @@
 ;Imports of com_pack:
-	extern Vec3NormalizeTo
+	extern _Z15Vec3NormalizeToPKfPf
 
 ;Exports of com_pack:
 	global _GLOBAL__I__Z15Vec3PackUnitVecPKf
-	global Vec3PackUnitVec
-	global Vec3PackNormAxis
-	global Vec2PackTexCoords
-	global Vec3UnpackUnitVec
-	global Vec2UnpackTexCoords
+	global _Z15Vec3PackUnitVecPKf
+	global _Z16Vec3PackNormAxisPA3_KfPA3_f
+	global _Z17Vec2PackTexCoordsPKf
+	global _Z17Vec3UnpackUnitVec13PackedUnitVecPf
+	global _Z19Vec2UnpackTexCoords15PackedTexCoordsPf
 
 
 SECTION .text
@@ -20,21 +20,21 @@ _GLOBAL__I__Z15Vec3PackUnitVecPKf:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -304,7 +304,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;Vec3PackUnitVec(float const*)
-Vec3PackUnitVec:
+_Z15Vec3PackUnitVecPKf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -315,7 +315,7 @@ Vec3PackUnitVec:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Vec3NormalizeTo
+	call _Z15Vec3NormalizeToPKfPf
 	fstp st0
 	mov dword [ebp-0x1c], 0x0
 	mov byte [ebp-0x1d], 0x0
@@ -325,16 +325,16 @@ Vec3PackUnitVec:
 	movss [ebp-0x48], xmm1
 	movss xmm2, dword [ebp-0x24]
 	movss [ebp-0x44], xmm2
-	movss xmm0, dword [_float_34028234663852885_float_3]
+	movss xmm0, dword [_float_3402823466385288598117041]
 	movss [ebp-0x3c], xmm0
 	movss [ebp-0x40], xmm0
 	movss xmm7, dword [_float_127_00000000]
 	movss xmm6, dword [_data16_7fffffff]
 	movzx esi, byte [ebp-0x1d]
-	jmp Vec3PackUnitVec_10
-Vec3PackUnitVec_60:
+	jmp _Z15Vec3PackUnitVecPKf_10
+_Z15Vec3PackUnitVecPKf_60:
 	movss xmm0, dword [_float_1_00000000]
-Vec3PackUnitVec_70:
+_Z15Vec3PackUnitVecPKf_70:
 	mulss xmm4, xmm0
 	movaps xmm1, xmm3
 	mulss xmm1, xmm0
@@ -344,7 +344,7 @@ Vec3PackUnitVec_70:
 	andps xmm3, xmm6
 	movss xmm2, dword [_float_0_00100000]
 	ucomiss xmm2, xmm3
-	jbe Vec3PackUnitVec_20
+	jbe _Z15Vec3PackUnitVecPKf_20
 	movss xmm2, dword [ebp-0x4c]
 	mulss xmm2, xmm4
 	mulss xmm1, [ebp-0x48]
@@ -355,31 +355,31 @@ Vec3PackUnitVec_70:
 	andps xmm2, xmm6
 	movss xmm0, dword [ebp-0x40]
 	ucomiss xmm0, xmm2
-	ja Vec3PackUnitVec_30
+	ja _Z15Vec3PackUnitVecPKf_30
 	ucomiss xmm0, xmm2
-	jnz Vec3PackUnitVec_20
-	jp Vec3PackUnitVec_20
+	jnz _Z15Vec3PackUnitVecPKf_20
+	jp _Z15Vec3PackUnitVecPKf_20
 	movss xmm1, dword [ebp-0x3c]
 	ucomiss xmm1, xmm3
-	jbe Vec3PackUnitVec_20
-Vec3PackUnitVec_30:
+	jbe _Z15Vec3PackUnitVecPKf_20
+_Z15Vec3PackUnitVecPKf_30:
 	mov eax, [ebp-0x20]
 	mov [ebp-0x1c], eax
 	movaps xmm0, xmm3
 	addss xmm0, xmm2
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jz Vec3PackUnitVec_40
-Vec3PackUnitVec_80:
+	jz _Z15Vec3PackUnitVecPKf_40
+_Z15Vec3PackUnitVecPKf_80:
 	movss [ebp-0x40], xmm2
 	movss [ebp-0x3c], xmm3
-Vec3PackUnitVec_20:
+_Z15Vec3PackUnitVecPKf_20:
 	lea eax, [esi+0x1]
 	mov [ebp-0x1d], al
 	test al, al
-	jz Vec3PackUnitVec_50
+	jz _Z15Vec3PackUnitVecPKf_50
 	mov esi, eax
-Vec3PackUnitVec_10:
+_Z15Vec3PackUnitVecPKf_10:
 	movzx eax, byte [ebp-0x1d]
 	cvtsi2ss xmm0, eax
 	addss xmm0, [_float_192_00000000]
@@ -429,11 +429,11 @@ Vec3PackUnitVec_10:
 	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jae Vec3PackUnitVec_60
+	jae _Z15Vec3PackUnitVecPKf_60
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm5
-	jmp Vec3PackUnitVec_70
-Vec3PackUnitVec_50:
+	jmp _Z15Vec3PackUnitVecPKf_70
+_Z15Vec3PackUnitVecPKf_50:
 	mov eax, [ebp-0x1c]
 	add esp, 0x5c
 	pop ebx
@@ -441,8 +441,8 @@ Vec3PackUnitVec_50:
 	pop edi
 	pop ebp
 	ret
-Vec3PackUnitVec_40:
-	jp Vec3PackUnitVec_80
+_Z15Vec3PackUnitVecPKf_40:
+	jp _Z15Vec3PackUnitVecPKf_80
 	add esp, 0x5c
 	pop ebx
 	pop esi
@@ -452,7 +452,7 @@ Vec3PackUnitVec_40:
 
 
 ;Vec3PackNormAxis(float const (*) [3], float (*) [3])
-Vec3PackNormAxis:
+_Z16Vec3PackNormAxisPA3_KfPA3_f:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -490,7 +490,7 @@ Vec3PackNormAxis:
 
 
 ;Vec2PackTexCoords(float const*)
-Vec2PackTexCoords:
+_Z17Vec2PackTexCoordsPKf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -506,9 +506,9 @@ Vec2PackTexCoords:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle Vec2PackTexCoords_10
+	jle _Z17Vec2PackTexCoordsPKf_10
 	mov eax, 0x3fff
-Vec2PackTexCoords_40:
+_Z17Vec2PackTexCoordsPKf_40:
 	mov ecx, edx
 	or ecx, eax
 	mov [ebp-0x8], ebx
@@ -519,9 +519,9 @@ Vec2PackTexCoords_40:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle Vec2PackTexCoords_20
+	jle _Z17Vec2PackTexCoordsPKf_20
 	mov eax, 0x3fff
-Vec2PackTexCoords_60:
+_Z17Vec2PackTexCoordsPKf_60:
 	or edx, eax
 	shl ecx, 0x10
 	lea eax, [edx+ecx]
@@ -529,14 +529,14 @@ Vec2PackTexCoords_60:
 	pop ebx
 	pop ebp
 	ret
-Vec2PackTexCoords_10:
+_Z17Vec2PackTexCoordsPKf_10:
 	cmp eax, 0xffffc000
-	jg Vec2PackTexCoords_30
+	jg _Z17Vec2PackTexCoordsPKf_30
 	xor eax, eax
-	jmp Vec2PackTexCoords_40
-Vec2PackTexCoords_20:
+	jmp _Z17Vec2PackTexCoordsPKf_40
+_Z17Vec2PackTexCoordsPKf_20:
 	cmp eax, 0xffffc000
-	jg Vec2PackTexCoords_50
+	jg _Z17Vec2PackTexCoordsPKf_50
 	xor eax, eax
 	or edx, eax
 	shl ecx, 0x10
@@ -545,16 +545,16 @@ Vec2PackTexCoords_20:
 	pop ebx
 	pop ebp
 	ret
-Vec2PackTexCoords_30:
+_Z17Vec2PackTexCoordsPKf_30:
 	and eax, 0x3fff
-	jmp Vec2PackTexCoords_40
-Vec2PackTexCoords_50:
+	jmp _Z17Vec2PackTexCoordsPKf_40
+_Z17Vec2PackTexCoordsPKf_50:
 	and eax, 0x3fff
-	jmp Vec2PackTexCoords_60
+	jmp _Z17Vec2PackTexCoordsPKf_60
 
 
 ;Vec3UnpackUnitVec(PackedUnitVec, float*)
-Vec3UnpackUnitVec:
+_Z17Vec3UnpackUnitVec13PackedUnitVecPf:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0x8]
@@ -586,7 +586,7 @@ Vec3UnpackUnitVec:
 
 
 ;Vec2UnpackTexCoords(PackedTexCoords, float*)
-Vec2UnpackTexCoords:
+_Z19Vec2UnpackTexCoords15PackedTexCoordsPf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -596,14 +596,14 @@ Vec2UnpackTexCoords:
 	mov esi, [ebp+0xc]
 	mov ecx, ebx
 	shr ecx, 0x10
-	jnz Vec2UnpackTexCoords_10
+	jnz _Z19Vec2UnpackTexCoords15PackedTexCoordsPf_10
 	xor eax, eax
 	mov [esi], eax
 	add esi, 0x4
 	mov ecx, ebx
 	and ecx, 0xffff
-	jz Vec2UnpackTexCoords_20
-Vec2UnpackTexCoords_30:
+	jz _Z19Vec2UnpackTexCoords15PackedTexCoordsPf_20
+_Z19Vec2UnpackTexCoords15PackedTexCoordsPf_30:
 	mov edx, ecx
 	shl edx, 0xe
 	shl ecx, 0x10
@@ -624,7 +624,7 @@ Vec2UnpackTexCoords_30:
 	pop esi
 	pop ebp
 	ret
-Vec2UnpackTexCoords_10:
+_Z19Vec2UnpackTexCoords15PackedTexCoordsPf_10:
 	mov edx, ecx
 	shl edx, 0xe
 	shl ecx, 0x10
@@ -643,8 +643,8 @@ Vec2UnpackTexCoords_10:
 	add esi, 0x4
 	mov ecx, ebx
 	and ecx, 0xffff
-	jnz Vec2UnpackTexCoords_30
-Vec2UnpackTexCoords_20:
+	jnz _Z19Vec2UnpackTexCoords15PackedTexCoordsPf_30
+_Z19Vec2UnpackTexCoords15PackedTexCoordsPf_20:
 	xor eax, eax
 	mov [esi], eax
 	add esp, 0x10
@@ -694,7 +694,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x1d2904, 0x1d2947, 0x1d3103, 0x1d3056, 0x1d309a, 0x1d2803, 0x1d2e4c, 0x1d2df6, 0x1d2db8, 0x1d2d8f, 0x1d2fda, 0x1d2fb1, 0x1d2f6b, 0x1d2f3e, 0x1d302c, 0x1d3003, 0x1d2d76, 0x1d2d45, 0x1d2b6d, 0x1d2aed, 0x1d2ad0, 0x1d2ab7, 0x1d2d28, 0x1d2beb, 0x1d2c36, 0x1d29c5, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1d4fd2, 0x1d5118, 0x1d50f0, 0x1d50bd, 0x1d507f, 0x1d506c, 0x1d4fbe, 0x1d5059, 0x1d4fe7, 0x1d52af, 0x1d524f, 0x1d528e, 0x1d5265, 0x1d520b, 0x1d5241, 0x1d5241, 0x1d52be, 0x1d5241, 0x1d53b6, 0x1d544c, 0x1d5420, 0x1d53f4, 0x1d53bd, 0x1d5391, 0x1d53a2, 0x1d53b6, 0x1d53b6, 0x1d59e4, 0x1d5b11, 0x1d5ae7, 0x1d5aaa, 0x1d5a6c, 0x1d5a5a, 0x1d5a09, 0x1d5a02, 0x1d59f6, 0x1d61d8, 0x1d62dc, 0x1d6310, 0x1d61f7, 0x1d623d, 0x1d6281, 0x1d62ab, 0x1d6ac4, 0x1d6b93, 0x1d6b5f, 0x1d6b1d, 0x1d6ae5, 0x1d6a7e, 0x1d6ad1, 0x1d6c46, 0x1d6e61, 0x1d6dfe, 0x1d6d9b, 0x1d6d38, 0x1d6cff, 0x1d6c88, 0x1d6c72, 0x1d6c5c, 0x1d7403, 0x1d72b4, 0x1d73a9, 0x1d7821, 0x1d77cf, 0x1d77b4, 0x1d7794, 0x1d7403, 0x1d7403, 0x0, 0x0, 0x0, 0x0, 0x1db1a8, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1c2, 0x1db2ea, 0x1db1a4, 0x1db2ca, 0x1db2da, 0x1db28a, 0x1db29a, 0x1db1a4, 0x1db2aa, 0x1db1a4, 0x1db2ba, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1d2, 0x1db1a4, 0x1db1e2, 0x1db206, 0x1db21c, 0x1db240, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db250, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db1a4, 0x1db260, 0x1db1a4, 0x1db27a, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x1db3be, 0x1db3be, 0x1db3d5, 0x1db3be, 0x1db8d0, 0x1db886, 0x1db3c8, 0x1db843, 0x1db7f9, 0x1dba17, 0x1db975, 0x1dba79, 0x1db776, 0x1dbada, 0x1dbac0, 0x1dbacd, 0x1db7ba, 0x1db71d, 0x1db6db, 0x1db936, 0x1db640, 0x1db5d7, 0x1db54d, 0x1db592, 0x1db50b, 0x1db49a, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of com_pack:
@@ -731,7 +731,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:
@@ -741,7 +741,7 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
-_float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
+_float_3402823466385288598117041:		dd 0x7f7fffff	; 3.40282e+38
 _float_127_00000000:		dd 0x42fe0000	; 127
 _data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1

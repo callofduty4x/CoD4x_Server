@@ -1,14 +1,14 @@
 ;Imports of fx_beam:
-	extern R_GetLocalClientNum
+	extern _Z19R_GetLocalClientNumv
 	extern cgArray
-	extern MatrixInverse44
-	extern R_ReserveCodeMeshIndices
-	extern R_ReserveCodeMeshVerts
-	extern R_ReserveCodeMeshArgs
-	extern R_AddCodeMeshDrawSurf
-	extern R_GetCodeMeshArgs
-	extern R_GetCodeMeshVerts
-	extern Vec3NormalizeTo
+	extern _Z15MatrixInverse44PKfPf
+	extern _Z24R_ReserveCodeMeshIndicesiPP16r_double_index_t
+	extern _Z22R_ReserveCodeMeshVertsiPt
+	extern _Z21R_ReserveCodeMeshArgsiPj
+	extern _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
+	extern _Z17R_GetCodeMeshArgsj
+	extern _Z18R_GetCodeMeshVertst
+	extern _Z15Vec3NormalizeToPKfPf
 
 ;Exports of fx_beam:
 	global _GLOBAL__I__Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd
@@ -17,10 +17,10 @@
 	global coeffZGtW.138963
 	global _ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE6wiggle
 	global _ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE15templateIndices
-	global FX_Beam_Add
-	global FX_Beam_Begin
-	global FX_Beam_GetInfo
-	global FX_Beam_GenerateVerts
+	global _Z11FX_Beam_AddP6FxBeam
+	global _Z13FX_Beam_Beginv
+	global _Z15FX_Beam_GetInfov
+	global _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd
 
 
 SECTION .text
@@ -33,21 +33,21 @@ _GLOBAL__I__Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -317,14 +317,14 @@ __static_initialization_and_destruction_0_10:
 
 
 ;FX_Beam_Add(FxBeam*)
-FX_Beam_Add:
+_Z11FX_Beam_AddP6FxBeam:
 	push ebp
 	mov ebp, esp
 	push ebx
 	mov ecx, [ebp+0x8]
 	mov ebx, [g_beamInfo+0x1380]
 	cmp ebx, 0x60
-	jz FX_Beam_Add_10
+	jz _Z11FX_Beam_AddP6FxBeam_10
 	lea eax, [ebx+ebx*2]
 	lea eax, [ebx+eax*4]
 	shl eax, 0x2
@@ -356,14 +356,14 @@ FX_Beam_Add:
 	mov [eax+g_beamInfo+0x30], edx
 	lea eax, [ebx+0x1]
 	mov [g_beamInfo+0x1380], eax
-FX_Beam_Add_10:
+_Z11FX_Beam_AddP6FxBeam_10:
 	pop ebx
 	pop ebp
 	ret
 
 
 ;FX_Beam_Begin()
-FX_Beam_Begin:
+_Z13FX_Beam_Beginv:
 	push ebp
 	mov ebp, esp
 	mov dword [g_beamInfo+0x1380], 0x0
@@ -373,7 +373,7 @@ FX_Beam_Begin:
 
 
 ;FX_Beam_GetInfo()
-FX_Beam_GetInfo:
+_Z15FX_Beam_GetInfov:
 	push ebp
 	mov ebp, esp
 	mov eax, g_beamInfo
@@ -382,7 +382,7 @@ FX_Beam_GetInfo:
 
 
 ;FX_Beam_GenerateVerts(FxGenerateVertsCmd*)
-FX_Beam_GenerateVerts:
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -754,11 +754,11 @@ FX_Beam_GenerateVerts:
 	mov [ebp-0x3e0], eax
 	mov eax, [ebp-0x10c]
 	mov [ebp-0x3dc], eax
-	call R_GetLocalClientNum
+	call _Z19R_GetLocalClientNumv
 	mov ebx, cgArray
 	movss xmm0, dword [ebx+0x492dc]
 	movss [ebp-0x568], xmm0
-	call R_GetLocalClientNum
+	call _Z19R_GetLocalClientNumv
 	movss xmm0, dword [ebx+0x492d8]
 	mov dword [ebp-0x248], 0x0
 	mov dword [ebp-0x244], 0x0
@@ -1016,7 +1016,7 @@ FX_Beam_GenerateVerts:
 	lea edx, [ebp-0x398]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call MatrixInverse44
+	call _Z15MatrixInverse44PKfPf
 	mov eax, [ebp+0x8]
 	movss xmm0, dword [eax+0x20]
 	movss [ebp-0x58c], xmm0
@@ -1032,7 +1032,7 @@ FX_Beam_GenerateVerts:
 	mov eax, [ebp-0x570]
 	mov ebx, [eax+0x1380]
 	test ebx, ebx
-	jz FX_Beam_GenerateVerts_10
+	jz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_10
 	mov dword [ebp-0x574], 0x0
 	mov [ebp-0x620], esi
 	mov [ebp-0x63c], edi
@@ -1046,10 +1046,10 @@ FX_Beam_GenerateVerts:
 	mov [ebp-0x654], edx
 	mov [ebp-0x658], ecx
 	mov edi, eax
-	jmp FX_Beam_GenerateVerts_20
-FX_Beam_GenerateVerts_130:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_20
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_130:
 	mov eax, 0xffffffff
-FX_Beam_GenerateVerts_140:
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_140:
 	mov [ebp-0x498], eax
 	movss xmm0, dword [ebp-0x354]
 	movss [ebp-0x520], xmm0
@@ -1115,34 +1115,34 @@ FX_Beam_GenerateVerts_140:
 	mov [ebp-0x4cc], eax
 	pxor xmm2, xmm2
 	ucomiss xmm4, xmm2
-	jnz FX_Beam_GenerateVerts_30
-	jp FX_Beam_GenerateVerts_30
-	movss xmm4, dword [_float_34028234663852885_float_3]
-FX_Beam_GenerateVerts_180:
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_30
+	jp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_30
+	movss xmm4, dword [_float_3402823466385288598117041]
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_180:
 	movss [ebp-0x308], xmm4
 	movss xmm0, dword [ebp-0x304]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jnz FX_Beam_GenerateVerts_40
-	jp FX_Beam_GenerateVerts_40
-	movss xmm0, dword [_float_34028234663852885_float_3]
-FX_Beam_GenerateVerts_170:
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_40
+	jp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_40
+	movss xmm0, dword [_float_3402823466385288598117041]
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_170:
 	movss [ebp-0x304], xmm0
 	movss xmm0, dword [ebp-0x300]
 	pxor xmm6, xmm6
 	ucomiss xmm0, xmm6
-	jnz FX_Beam_GenerateVerts_50
-	jp FX_Beam_GenerateVerts_50
-	movss xmm0, dword [_float_34028234663852885_float_3]
-FX_Beam_GenerateVerts_160:
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_50
+	jp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_50
+	movss xmm0, dword [_float_3402823466385288598117041]
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_160:
 	movss [ebp-0x300], xmm0
 	movss xmm0, dword [ebp-0x2fc]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jnz FX_Beam_GenerateVerts_60
-	jp FX_Beam_GenerateVerts_60
-	movss xmm0, dword [_float_34028234663852885_float_3]
-FX_Beam_GenerateVerts_150:
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_60
+	jp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_60
+	movss xmm0, dword [_float_3402823466385288598117041]
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_150:
 	movaps xmm1, xmm7
 	mulss xmm1, [ebp-0x308]
 	movss [ebp-0x308], xmm1
@@ -1335,7 +1335,7 @@ FX_Beam_GenerateVerts_150:
 	and eax, [ebp-0x4cc]
 	mov [ebp-0x2cc], eax
 	test edi, edi
-	jnz FX_Beam_GenerateVerts_70
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_70
 	mov ebx, [coeffZGtW.138963]
 	mov [ebp-0x178], ebx
 	mov ecx, [coeffZGtW.138963+0x4]
@@ -1437,34 +1437,34 @@ FX_Beam_GenerateVerts_150:
 	mov [ebp-0x30c], eax
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jnz FX_Beam_GenerateVerts_80
-	jp FX_Beam_GenerateVerts_80
-	movss xmm0, dword [_float_34028234663852885_float_3]
-FX_Beam_GenerateVerts_220:
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_80
+	jp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_80
+	movss xmm0, dword [_float_3402823466385288598117041]
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_220:
 	movss [ebp-0x498], xmm0
 	movss xmm0, dword [ebp-0x494]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jnz FX_Beam_GenerateVerts_90
-	jp FX_Beam_GenerateVerts_90
-	movss xmm0, dword [_float_34028234663852885_float_3]
-FX_Beam_GenerateVerts_210:
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_90
+	jp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_90
+	movss xmm0, dword [_float_3402823466385288598117041]
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_210:
 	movss [ebp-0x494], xmm0
 	movss xmm0, dword [ebp-0x490]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jnz FX_Beam_GenerateVerts_100
-	jp FX_Beam_GenerateVerts_100
-	movss xmm0, dword [_float_34028234663852885_float_3]
-FX_Beam_GenerateVerts_200:
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_100
+	jp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_100
+	movss xmm0, dword [_float_3402823466385288598117041]
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_200:
 	movss [ebp-0x490], xmm0
 	movss xmm0, dword [ebp-0x48c]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jnz FX_Beam_GenerateVerts_110
-	jp FX_Beam_GenerateVerts_110
-	movss xmm0, dword [_float_34028234663852885_float_3]
-FX_Beam_GenerateVerts_190:
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_110
+	jp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_110
+	movss xmm0, dword [_float_3402823466385288598117041]
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_190:
 	movaps xmm1, xmm5
 	mulss xmm1, [ebp-0x498]
 	movss [ebp-0x498], xmm1
@@ -1636,16 +1636,16 @@ FX_Beam_GenerateVerts_190:
 	and esi, [ebp-0x30c]
 	mov [ebp-0x3cc], esi
 	test eax, eax
-	jz FX_Beam_GenerateVerts_120
-FX_Beam_GenerateVerts_70:
+	jz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_120
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_70:
 	add dword [ebp-0x574], 0x1
 	add dword [ebp-0x650], 0x34
 	mov edi, [ebp-0x574]
 	mov ebx, [ebp-0x570]
 	cmp edi, [ebx+0x1380]
-	jz FX_Beam_GenerateVerts_10
+	jz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_10
 	mov edi, [ebp-0x650]
-FX_Beam_GenerateVerts_20:
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_20:
 	movss xmm0, dword [edi+0x20]
 	movss [ebp-0x53c], xmm0
 	movss xmm1, dword [edi+0x24]
@@ -1905,57 +1905,57 @@ FX_Beam_GenerateVerts_20:
 	movss [ebp-0x418], xmm6
 	movss xmm0, dword [g_zero]
 	ucomiss xmm0, xmm7
-	ja FX_Beam_GenerateVerts_130
+	ja _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_130
 	xor eax, eax
-	jmp FX_Beam_GenerateVerts_140
-FX_Beam_GenerateVerts_60:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_140
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_60:
 	movss xmm6, dword [_float_1_00000000]
 	divss xmm6, xmm0
 	movaps xmm0, xmm6
-	jmp FX_Beam_GenerateVerts_150
-FX_Beam_GenerateVerts_50:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_150
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_50:
 	movss xmm1, dword [_float_1_00000000]
 	divss xmm1, xmm0
 	movaps xmm0, xmm1
-	jmp FX_Beam_GenerateVerts_160
-FX_Beam_GenerateVerts_40:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_160
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_40:
 	movss xmm2, dword [_float_1_00000000]
 	divss xmm2, xmm0
 	movaps xmm0, xmm2
-	jmp FX_Beam_GenerateVerts_170
-FX_Beam_GenerateVerts_30:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_170
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_30:
 	movss xmm6, dword [_float_1_00000000]
 	divss xmm6, xmm4
 	movaps xmm4, xmm6
-	jmp FX_Beam_GenerateVerts_180
-FX_Beam_GenerateVerts_110:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_180
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_110:
 	movss xmm6, dword [_float_1_00000000]
 	divss xmm6, xmm0
 	movaps xmm0, xmm6
-	jmp FX_Beam_GenerateVerts_190
-FX_Beam_GenerateVerts_100:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_190
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_100:
 	movss xmm6, dword [_float_1_00000000]
 	divss xmm6, xmm0
 	movaps xmm0, xmm6
-	jmp FX_Beam_GenerateVerts_200
-FX_Beam_GenerateVerts_90:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_200
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_90:
 	movss xmm6, dword [_float_1_00000000]
 	divss xmm6, xmm0
 	movaps xmm0, xmm6
-	jmp FX_Beam_GenerateVerts_210
-FX_Beam_GenerateVerts_80:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_210
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_80:
 	movss xmm6, dword [_float_1_00000000]
 	divss xmm6, xmm0
 	movaps xmm0, xmm6
-	jmp FX_Beam_GenerateVerts_220
-FX_Beam_GenerateVerts_10:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_220
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_10:
 	add esp, 0x6bc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_Beam_GenerateVerts_120:
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_120:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, dword [ebp-0x24c]
 	movaps xmm1, xmm0
@@ -2094,9 +2094,9 @@ FX_Beam_GenerateVerts_120:
 	addss xmm0, xmm3
 	cvtss2sd xmm0, xmm0
 	ucomisd xmm0, [_double_0_00000200]
-	jp FX_Beam_GenerateVerts_230
-	jb FX_Beam_GenerateVerts_70
-FX_Beam_GenerateVerts_230:
+	jp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_230
+	jb _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_70
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_230:
 	movss xmm4, dword [ebp-0x188]
 	movss xmm1, dword [ebp-0x184]
 	movss xmm2, dword [ebp-0x180]
@@ -2134,21 +2134,21 @@ FX_Beam_GenerateVerts_230:
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x528]
 	mov [esp], edx
-	call R_ReserveCodeMeshIndices
+	call _Z24R_ReserveCodeMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_Beam_GenerateVerts_10
+	jz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_10
 	lea eax, [ebp-0x1a]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ReserveCodeMeshVerts
+	call _Z22R_ReserveCodeMeshVertsiPt
 	test al, al
-	jz FX_Beam_GenerateVerts_10
+	jz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_10
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x2
-	call R_ReserveCodeMeshArgs
+	call _Z21R_ReserveCodeMeshArgsiPj
 	test al, al
-	jz FX_Beam_GenerateVerts_10
+	jz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_10
 	mov ebx, [ebp-0x28]
 	movzx eax, word [ebp-0x1a]
 	mov [ebx], ax
@@ -2159,13 +2159,13 @@ FX_Beam_GenerateVerts_230:
 	mov [ebp-0x4de], cx
 	mov ecx, [ebp-0x530]
 	test ecx, ecx
-	jz FX_Beam_GenerateVerts_240
+	jz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_240
 	lea eax, [ebx+0x4]
 	mov [ebp-0x4e8], eax
 	lea edi, [ebx+0x8]
 	lea esi, [ebx+0xc]
 	mov dword [ebp-0x52c], 0x0
-FX_Beam_GenerateVerts_250:
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_250:
 	movzx ecx, word [ebp-0x52c]
 	add ecx, ecx
 	lea edx, [edx+ecx+0x2]
@@ -2194,16 +2194,16 @@ FX_Beam_GenerateVerts_250:
 	add esi, 0xc
 	mov ecx, [ebp-0x52c]
 	cmp [ebp-0x530], ecx
-	jnz FX_Beam_GenerateVerts_250
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_250
 	mov edi, [ebp-0x530]
 	lea eax, [edi+edi*2]
 	lea edi, [eax+0x1]
 	lea esi, [eax+0x2]
-	jmp FX_Beam_GenerateVerts_260
-FX_Beam_GenerateVerts_240:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_260
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_240:
 	mov edi, 0x1
 	mov esi, 0x2
-FX_Beam_GenerateVerts_260:
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_260:
 	movzx ecx, word [ebp-0x618]
 	sub ecx, 0x2
 	lea edx, [edx+ecx+0x3]
@@ -2228,14 +2228,14 @@ FX_Beam_GenerateVerts_260:
 	mov edx, [ebp-0x650]
 	mov eax, [edx+0x28]
 	mov [esp], eax
-	call R_AddCodeMeshDrawSurf
+	call _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
 	mov eax, [ebp-0x24]
 	mov [esp], eax
-	call R_GetCodeMeshArgs
+	call _Z17R_GetCodeMeshArgsj
 	mov ebx, eax
 	movzx eax, word [ebp-0x1a]
 	mov [esp], eax
-	call R_GetCodeMeshVerts
+	call _Z18R_GetCodeMeshVertst
 	mov [ebp-0x524], eax
 	movss xmm0, dword [ebp-0x594]
 	mulss xmm0, [ebp-0x184]
@@ -2258,7 +2258,7 @@ FX_Beam_GenerateVerts_260:
 	lea eax, [ebp-0x1a8]
 	mov [esp+0x4], eax
 	mov [esp], eax
-	call Vec3NormalizeTo
+	call _Z15Vec3NormalizeToPKfPf
 	fstp st0
 	movss xmm0, dword [ebp-0x1c8]
 	movss [ebp-0x510], xmm0
@@ -2284,7 +2284,7 @@ FX_Beam_GenerateVerts_260:
 	movss [ebp-0x668], xmm3
 	movss [ebp-0x678], xmm4
 	movss [ebp-0x688], xmm5
-	call Vec3NormalizeTo
+	call _Z15Vec3NormalizeToPKfPf
 	fstp st0
 	movss xmm3, dword [ebp-0x668]
 	movaps xmm0, xmm3
@@ -2455,7 +2455,7 @@ FX_Beam_GenerateVerts_260:
 	mov dword [ebp-0x108], 0xffffffff
 	mov edx, [ebp-0x530]
 	test edx, edx
-	js FX_Beam_GenerateVerts_270
+	js _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_270
 	cvtsi2ss xmm1, dword [ebp-0x530]
 	movss [ebp-0x4f8], xmm1
 	add ecx, 0x50
@@ -2472,7 +2472,7 @@ FX_Beam_GenerateVerts_260:
 	mov eax, [ebp-0x524]
 	add eax, 0x40
 	mov [ebp-0x628], eax
-FX_Beam_GenerateVerts_300:
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_300:
 	cvtsi2ss xmm6, dword [ebp-0x4dc]
 	divss xmm6, dword [ebp-0x4f8]
 	mov edx, [ebp-0x4dc]
@@ -2509,7 +2509,7 @@ FX_Beam_GenerateVerts_300:
 	movss [ebp-0x210], xmm1
 	movss [ebp-0x20c], xmm1
 	mov ecx, 0x1
-FX_Beam_GenerateVerts_290:
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_290:
 	movzx edx, byte [ecx+ebp-0x21]
 	cvtsi2ss xmm1, edx
 	movzx eax, byte [ecx+ebp-0x119]
@@ -2519,15 +2519,15 @@ FX_Beam_GenerateVerts_290:
 	addss xmm1, xmm0
 	cvttss2si eax, xmm1
 	test eax, eax
-	js FX_Beam_GenerateVerts_280
+	js _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_280
 	mov edx, 0xffffffff
 	cmp eax, 0x100
 	cmovl edx, eax
-FX_Beam_GenerateVerts_310:
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_310:
 	mov [ecx+ebp-0x109], dl
 	add ecx, 0x1
 	cmp ecx, 0x5
-	jnz FX_Beam_GenerateVerts_290
+	jnz _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_290
 	mov esi, [ebp-0x1c8]
 	mov [ebp-0xa8], esi
 	mov edi, [ebp-0x1c4]
@@ -2692,8 +2692,8 @@ FX_Beam_GenerateVerts_310:
 	mov [ebp-0x4ec], eax
 	mov ebx, [ebp-0x4dc]
 	cmp [ebp-0x530], ebx
-	jge FX_Beam_GenerateVerts_300
-FX_Beam_GenerateVerts_320:
+	jge _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_300
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_320:
 	movss xmm1, dword [ebp-0x538]
 	mulss xmm1, [ebp-0x188]
 	addss xmm1, [ebp-0x510]
@@ -2724,13 +2724,13 @@ FX_Beam_GenerateVerts_320:
 	mov dword [edx+0x18], 0x3ffe7f7f
 	mov dword [edx+0x1c], 0x3f7f7ffe
 	mov dword [edx+0x14], 0x3c003c00
-	jmp FX_Beam_GenerateVerts_70
-FX_Beam_GenerateVerts_280:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_70
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_280:
 	xor edx, edx
-	jmp FX_Beam_GenerateVerts_310
-FX_Beam_GenerateVerts_270:
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_310
+_Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_270:
 	mov [ebp-0x4e4], eax
-	jmp FX_Beam_GenerateVerts_320
+	jmp _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd_320
 	add [eax], al
 
 
@@ -2778,7 +2778,7 @@ g_zero: dd 0x0, 0x0, 0x0, 0x0
 g_2xunit: dd 0x0, 0x0, 0x0, 0x40000000
 coeffZGtW.138963: dd 0x0, 0x0, 0xbf800000, 0x3f800000, 0x0, 0x0, 0x0, 0x0
 _ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE6wiggle: dd 0x0, 0x3f800000, 0x0, 0x0, 0x3f35c28f, 0x3f35c28f, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x3f35c28f, 0xbf35c28f, 0x0, 0x0, 0x0, 0xbf800000, 0x0, 0x0, 0xbf35c28f, 0xbf35c28f, 0x0, 0x0, 0xbf800000, 0x0, 0x0, 0x0, 0xbf35c28f, 0x3f35c28f, 0x0, 0x0
-_ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE15templateIndices: dd 0x20000, 0x20001, 0x10004, 0x40001, 0x30003, 0x50004, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0xc7089, 0xc7089, 0xc7089, 0xc7089, 0xc7f87, 0xc7f37, 0xc7f5f, 0xc7f0f, 0xc7f37, 0xc7f0f, 0xc7ee7, 0xc91df, 0xc91df, 0xc91df, 0xc91df, 0xc8a6e, 0xc91b7, 0xc913f, 0xc9167, 0xc91b7, 0xc9167, 0xc918f, 0xc8bf7, 0xc90f5, 0xc911a, 0xc90a4, 0xc90c9, 0x0
+_ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE15templateIndices: dd 0x20000, 0x20001, 0x10004, 0x40001, 0x30003, 0x50004, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of fx_beam:
@@ -2815,7 +2815,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 g_beamInfo: resb 0x1400
 
 
@@ -2828,7 +2828,7 @@ _cstring_beam:		db "Beam",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_99951172:		dd 0x3f7fe000	; 0.999512
-_float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
+_float_3402823466385288598117041:		dd 0x7f7fffff	; 3.40282e+38
 _float_1_00000000:		dd 0x3f800000	; 1
 _double_0_00000200:		dq 0x3ec0c6f7a0b5ed8d	; 2e-06
 

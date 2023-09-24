@@ -1,63 +1,63 @@
 ;Imports of fx_marks:
-	extern FX_GetSystem
+	extern _Z12FX_GetSystemi
 	extern fx_marks
-	extern R_MarkFragments_Begin
+	extern _Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material
 	extern fx_marks_ents
-	extern R_MarkFragments_Go
+	extern _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5_
 	extern fx_marks_smodels
 	extern cg_entitiesArray
-	extern R_GetBrushModel
-	extern AnglesToAxis
-	extern BoundsOverlap
-	extern R_MarkFragments_AddBModel
-	extern Com_GetClientDObj
-	extern DObjGetRadius
-	extern R_MarkFragments_AddDObj
+	extern _Z15R_GetBrushModelj
+	extern _Z12AnglesToAxisPKfPA3_f
+	extern _Z13BoundsOverlapPKfS0_S0_S0_
+	extern _Z25R_MarkFragments_AddBModelP8MarkInfoP13GfxBrushModelP7cpose_tt
+	extern _Z17Com_GetClientDObjii
+	extern _Z13DObjGetRadiusPK6DObj_s
+	extern _Z23R_MarkFragments_AddDObjP8MarkInfoP6DObj_sP7cpose_tt
 	extern fx_marksSystemPool
-	extern R_AddMarkMeshDrawSurf
-	extern R_GetMarkMeshVerts
-	extern MatrixTransformVector43
-	extern FX_SetupVisualState
+	extern _Z21R_AddMarkMeshDrawSurfP8MaterialPK14GfxMarkContextPtj
+	extern _Z18R_GetMarkMeshVertst
+	extern _Z23MatrixTransformVector43PKfPA3_S_Pf
+	extern _Z19FX_SetupVisualStatePK9FxElemDefPK8FxEffectifP20FxElemPreVisualState
 	extern fx_randomTable
-	extern FX_EvaluateVisualState
-	extern UnitQuatToAxis
-	extern RotatePointAroundVector
-	extern DObjGetNumModels
-	extern DObjGetModel
-	extern DObjGetModelParentBoneName
-	extern R_BeginMarkMeshVerts
-	extern FX_CullSphere
-	extern R_EndMarkMeshVerts
-	extern R_ReserveMarkMeshVerts
-	extern R_ReserveMarkMeshIndices
-	extern R_MarkUtil_GetDObjAnimMatAndHideParts
-	extern XModelNumBones
-	extern XModelGetBasePose
-	extern MatrixMultiply43
+	extern _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState
+	extern _Z14UnitQuatToAxisPKfPA3_f
+	extern _Z23RotatePointAroundVectorPfPKfS1_f
+	extern _Z16DObjGetNumModelsPK6DObj_s
+	extern _Z12DObjGetModelPK6DObj_si
+	extern _Z26DObjGetModelParentBoneNamePK6DObj_si
+	extern _Z20R_BeginMarkMeshVertsv
+	extern _Z13FX_CullSpherePK8FxCamerajPKff
+	extern _Z18R_EndMarkMeshVertsv
+	extern _Z22R_ReserveMarkMeshVertsiPt
+	extern _Z24R_ReserveMarkMeshIndicesiPP16r_double_index_t
+	extern _Z37R_MarkUtil_GetDObjAnimMatAndHidePartsPK6DObj_sPK7cpose_tPPK11DObjAnimMatPj
+	extern _Z14XModelNumBonesPK6XModel
+	extern _Z17XModelGetBasePosePK6XModel
+	extern _Z16MatrixMultiply43PA3_KfS1_PA3_f
 	extern vec3_origin
 
 ;Exports of fx_marks:
 	global _GLOBAL__I__Z18FX_InitMarksSystemP13FxMarksSystem
 	global g_fxMarkPoints
-	global FX_CompareMarkTris
-	global FX_ImpactMark_Generate
-	global FX_ImpactMark_Generate_Callback
-	global FX_LinkMarkIntoList
-	global FX_GenerateMarkVertsForMark_FinishAnimated
-	global FX_BeginMarks
-	global FX_InitMarksSystem
-	global FX_CreateImpactMark
-	global FX_MarkEntDetachAll
-	global FX_MarkEntUpdateEnd
-	global FX_MarkEntUpdateBegin
-	global FX_GenerateMarkVertsForWorld
-	global FX_MarkEntUpdateHidePartBits
-	global FX_GenerateMarkVertsForEntDObj
-	global FX_GenerateMarkVertsForEntBrush
-	global FX_GenerateMarkVertsForEntXModel
-	global FX_GenerateMarkVertsForStaticModels
-	global FX_EndGeneratingMarkVertsForEntModels
-	global FX_BeginGeneratingMarkVertsForEntModels
+	global _Z18FX_CompareMarkTrisRK9FxMarkTriS1_
+	global _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj
+	global _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5_
+	global _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark
+	global _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf
+	global _Z13FX_BeginMarksi
+	global _Z18FX_InitMarksSystemP13FxMarksSystem
+	global _Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij
+	global _Z19FX_MarkEntDetachAllii
+	global _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht
+	global _Z21FX_MarkEntUpdateBeginP23FxMarkDObjUpdateContextP6DObj_sht
+	global _Z28FX_GenerateMarkVertsForWorldi
+	global _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii
+	global _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t
+	global _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement
+	global _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement
+	global _Z35FX_GenerateMarkVertsForStaticModelsiiPKh
+	global _Z37FX_EndGeneratingMarkVertsForEntModelsi
+	global _Z39FX_BeginGeneratingMarkVertsForEntModelsiPj
 	global _ZSt13__adjust_heapIP9FxMarkTriiS0_PFhRKS0_S3_EEvT_T0_S7_T1_T2_
 	global _ZSt16__introsort_loopIP9FxMarkTriiPFhRKS0_S3_EEvT_S6_T0_T1_
 
@@ -72,11 +72,11 @@ _GLOBAL__I__Z18FX_InitMarksSystemP13FxMarksSystem:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;FX_CompareMarkTris(FxMarkTri const&, FxMarkTri const&)
-FX_CompareMarkTris:
+_Z18FX_CompareMarkTrisRK9FxMarkTriS1_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -94,11 +94,11 @@ FX_CompareMarkTris:
 	mov edx, edi
 	and edx, 0xc0
 	cmp ecx, edx
-	jz FX_CompareMarkTris_10
+	jz _Z18FX_CompareMarkTrisRK9FxMarkTriS1__10
 	sub edx, ecx
-FX_CompareMarkTris_40:
+_Z18FX_CompareMarkTrisRK9FxMarkTriS1__40:
 	cmp edx, 0x0
-	jz FX_CompareMarkTris_20
+	jz _Z18FX_CompareMarkTrisRK9FxMarkTriS1__20
 	setg al
 	movzx eax, al
 	add esp, 0x4
@@ -107,7 +107,7 @@ FX_CompareMarkTris_40:
 	pop edi
 	pop ebp
 	ret
-FX_CompareMarkTris_20:
+_Z18FX_CompareMarkTrisRK9FxMarkTriS1__20:
 	mov edx, [ebp+0x8]
 	movzx eax, word [edx]
 	mov edx, [ebp+0xc]
@@ -120,57 +120,57 @@ FX_CompareMarkTris_20:
 	pop edi
 	pop ebp
 	ret
-FX_CompareMarkTris_10:
+_Z18FX_CompareMarkTrisRK9FxMarkTriS1__10:
 	movzx ecx, byte [eax+0x1]
 	movzx edx, byte [ebx+0x1]
 	cmp cl, dl
-	jz FX_CompareMarkTris_30
-FX_CompareMarkTris_50:
+	jz _Z18FX_CompareMarkTrisRK9FxMarkTriS1__30
+_Z18FX_CompareMarkTrisRK9FxMarkTriS1__50:
 	movzx edx, dl
 	movzx eax, cl
 	sub edx, eax
-	jmp FX_CompareMarkTris_40
-FX_CompareMarkTris_30:
+	jmp _Z18FX_CompareMarkTrisRK9FxMarkTriS1__40
+_Z18FX_CompareMarkTrisRK9FxMarkTriS1__30:
 	movzx ecx, byte [eax+0x2]
 	movzx edx, byte [ebx+0x2]
 	cmp cl, dl
-	jnz FX_CompareMarkTris_50
+	jnz _Z18FX_CompareMarkTrisRK9FxMarkTriS1__50
 	mov edx, [ebp+0x8]
 	movzx ecx, byte [edx+0x6]
 	mov edx, [ebp+0xc]
 	movzx edx, byte [edx+0x6]
 	mov [ebp-0xd], dl
 	cmp cl, dl
-	jnz FX_CompareMarkTris_50
+	jnz _Z18FX_CompareMarkTrisRK9FxMarkTriS1__50
 	movzx eax, word [eax+0x4]
 	movzx edx, word [ebx+0x4]
 	cmp ax, dx
-	jz FX_CompareMarkTris_60
+	jz _Z18FX_CompareMarkTrisRK9FxMarkTriS1__60
 	movzx edx, dx
 	movzx eax, ax
 	sub edx, eax
-	jmp FX_CompareMarkTris_40
-FX_CompareMarkTris_60:
+	jmp _Z18FX_CompareMarkTrisRK9FxMarkTriS1__40
+_Z18FX_CompareMarkTrisRK9FxMarkTriS1__60:
 	mov edx, edi
 	and edx, 0x3f
 	and esi, 0x3f
 	sub edx, esi
-	jmp FX_CompareMarkTris_40
+	jmp _Z18FX_CompareMarkTrisRK9FxMarkTriS1__40
 	nop
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -440,7 +440,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;FX_ImpactMark_Generate(int, MarkFragmentsAgainstEnum, Material*, float const*, float const (*) [3], float, unsigned char const*, float, unsigned int)
-FX_ImpactMark_Generate:
+_Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -452,7 +452,7 @@ FX_ImpactMark_Generate:
 	mov edi, ecx
 	movss [ebp-0x1208], xmm1
 	mov [esp], eax
-	call FX_GetSystem
+	call _Z12FX_GetSystemi
 	mov edx, eax
 	mov [ebp-0x50], esi
 	mov [ebp-0x4c], edi
@@ -463,10 +463,10 @@ FX_ImpactMark_Generate:
 	mov eax, fx_marks
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_ImpactMark_Generate_10
+	jz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_10
 	cmp ebx, 0x1
-	jz FX_ImpactMark_Generate_20
-FX_ImpactMark_Generate_40:
+	jz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_20
+_Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_40:
 	mov [esp+0x18], edi
 	lea eax, [edx+0x98]
 	mov [esp+0x14], eax
@@ -479,12 +479,12 @@ FX_ImpactMark_Generate_40:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x5f4]
 	mov [esp], eax
-	call R_MarkFragments_Begin
+	call _Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material
 	mov eax, fx_marks_ents
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz FX_ImpactMark_Generate_30
-FX_ImpactMark_Generate_60:
+	jnz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_30
+_Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60:
 	mov dword [esp+0x18], g_fxMarkPoints
 	mov dword [esp+0x14], 0x2fd
 	lea eax, [ebp-0x11e8]
@@ -492,32 +492,32 @@ FX_ImpactMark_Generate_60:
 	mov dword [esp+0xc], 0xff
 	lea eax, [ebp-0x50]
 	mov [esp+0x8], eax
-	mov dword [esp+0x4], FX_ImpactMark_Generate_Callback
+	mov dword [esp+0x4], _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5_
 	lea eax, [ebp-0x5f4]
 	mov [esp], eax
-	call R_MarkFragments_Go
-FX_ImpactMark_Generate_10:
+	call _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5_
+_Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_10:
 	add esp, 0x126c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_ImpactMark_Generate_20:
+_Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_20:
 	mov eax, fx_marks_ents
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz FX_ImpactMark_Generate_40
+	jnz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_40
 	mov eax, fx_marks_smodels
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz FX_ImpactMark_Generate_40
-	jmp FX_ImpactMark_Generate_10
-FX_ImpactMark_Generate_30:
+	jnz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_40
+	jmp _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_10
+_Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_30:
 	sub ebx, 0x1
-	jz FX_ImpactMark_Generate_50
+	jz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_50
 	cmp dword [ebp+0x14], 0x3ff
-	jz FX_ImpactMark_Generate_60
+	jz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
 	movss xmm0, dword [ebp-0x1208]
 	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
@@ -550,20 +550,20 @@ FX_ImpactMark_Generate_30:
 	add eax, edx
 	mov [ebp-0x1200], eax
 	cmp byte [eax+0x1c0], 0x0
-	jz FX_ImpactMark_Generate_60
+	jz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
 	cmp dword [eax+0x164], 0xffffff
-	jnz FX_ImpactMark_Generate_60
+	jnz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
 	mov ebx, eax
 	mov eax, [eax+0x154]
 	mov [esp], eax
-	call R_GetBrushModel
+	call _Z15R_GetBrushModelj
 	mov [ebp-0x11fc], eax
 	lea eax, [ebp-0x1ac]
 	mov [esp+0x4], eax
 	mov eax, ebx
 	add eax, 0x28
 	mov [esp], eax
-	call AnglesToAxis
+	call _Z12AnglesToAxisPKfPA3_f
 	mov eax, [ebp-0x11fc]
 	add eax, 0x18
 	mov edx, [ebp-0x11fc]
@@ -995,9 +995,9 @@ FX_ImpactMark_Generate_30:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x30]
 	mov [esp], eax
-	call BoundsOverlap
+	call _Z13BoundsOverlapPKfS0_S0_S0_
 	test eax, eax
-	jz FX_ImpactMark_Generate_60
+	jz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
 	movzx eax, word [ebp+0x14]
 	mov [esp+0xc], eax
 	mov eax, [ebp-0x1200]
@@ -1006,11 +1006,11 @@ FX_ImpactMark_Generate_30:
 	mov [esp+0x4], edx
 	lea ebx, [ebp-0x5f4]
 	mov [esp], ebx
-	call R_MarkFragments_AddBModel
-	jmp FX_ImpactMark_Generate_60
-FX_ImpactMark_Generate_50:
+	call _Z25R_MarkFragments_AddBModelP8MarkInfoP13GfxBrushModelP7cpose_tt
+	jmp _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
+_Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_50:
 	cmp dword [ebp+0x14], 0x3ff
-	jz FX_ImpactMark_Generate_60
+	jz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
 	mov eax, [ebp+0x14]
 	shl eax, 0x2
 	mov edx, [ebp+0x14]
@@ -1021,16 +1021,16 @@ FX_ImpactMark_Generate_50:
 	lea ebx, [edx+eax]
 	add ebx, cg_entitiesArray
 	cmp byte [ebx+0x1c0], 0x0
-	jz FX_ImpactMark_Generate_60
+	jz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
 	mov [esp+0x4], esi
 	mov eax, [ebx+0xcc]
 	mov [esp], eax
-	call Com_GetClientDObj
+	call _Z17Com_GetClientDObjii
 	mov esi, eax
 	test eax, eax
-	jz FX_ImpactMark_Generate_60
+	jz _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
 	mov [esp], eax
-	call DObjGetRadius
+	call _Z13DObjGetRadiusPK6DObj_s
 	fstp dword [ebp-0x1204]
 	movss xmm0, dword [ebp-0x1208]
 	addss xmm0, [ebp-0x1204]
@@ -1051,20 +1051,20 @@ FX_ImpactMark_Generate_50:
 	mulss xmm2, xmm2
 	addss xmm0, xmm2
 	ucomiss xmm0, xmm3
-	ja FX_ImpactMark_Generate_60
+	ja _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
 	movzx eax, word [ebp+0x14]
 	mov [esp+0xc], eax
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	lea eax, [ebp-0x5f4]
 	mov [esp], eax
-	call R_MarkFragments_AddDObj
-	jmp FX_ImpactMark_Generate_60
+	call _Z23R_MarkFragments_AddDObjP8MarkInfoP6DObj_sP7cpose_tt
+	jmp _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj_60
 	nop
 
 
 ;FX_ImpactMark_Generate_Callback(void*, int, FxMarkTri*, int, FxMarkPoint*, float const*, float const*)
-FX_ImpactMark_Generate_Callback:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1086,7 +1086,7 @@ FX_ImpactMark_Generate_Callback:
 	lea eax, [ecx+eax*4]
 	mov [ebp-0x9c], eax
 	cmp ecx, eax
-	jz FX_ImpactMark_Generate_Callback_10
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__10
 	mov ebx, eax
 	sub ebx, ecx
 	mov ecx, ebx
@@ -1103,16 +1103,16 @@ FX_ImpactMark_Generate_Callback:
 	add eax, edx
 	lea eax, [ecx+eax*2]
 	cmp eax, 0x1
-	jz FX_ImpactMark_Generate_Callback_20
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__20
 	xor edx, edx
-FX_ImpactMark_Generate_Callback_30:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__30:
 	add edx, 0x1
 	sar eax, 1
 	cmp eax, 0x1
-	jnz FX_ImpactMark_Generate_Callback_30
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__30
 	lea eax, [edx+edx]
-FX_ImpactMark_Generate_Callback_1210:
-	mov dword [esp+0xc], FX_CompareMarkTris
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1210:
+	mov dword [esp+0xc], _Z18FX_CompareMarkTrisRK9FxMarkTriS1_
 	mov [esp+0x8], eax
 	mov esi, [ebp-0x9c]
 	mov [esp+0x4], esi
@@ -1120,12 +1120,12 @@ FX_ImpactMark_Generate_Callback_1210:
 	mov [esp], edi
 	call _ZSt16__introsort_loopIP9FxMarkTriiPFhRKS0_S3_EEvT_S6_T0_T1_
 	cmp ebx, 0xcb
-	jg FX_ImpactMark_Generate_Callback_40
+	jg _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__40
 	mov edi, [ebp+0x10]
 	add edi, 0xc
 	cmp [ebp-0x9c], edi
-	jz FX_ImpactMark_Generate_Callback_50
-FX_ImpactMark_Generate_Callback_90:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__50
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__90:
 	mov eax, [edi]
 	mov [ebp-0x26], eax
 	mov eax, [edi+0x4]
@@ -1136,9 +1136,9 @@ FX_ImpactMark_Generate_Callback_90:
 	mov [esp+0x4], edx
 	lea ecx, [ebp-0x26]
 	mov [esp], ecx
-	call FX_CompareMarkTris
+	call _Z18FX_CompareMarkTrisRK9FxMarkTriS1_
 	test al, al
-	jz FX_ImpactMark_Generate_Callback_60
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__60
 	lea ebx, [edi+0xc]
 	mov [ebp-0x4c], ebx
 	mov ecx, edi
@@ -1156,11 +1156,11 @@ FX_ImpactMark_Generate_Callback_90:
 	add eax, edx
 	lea esi, [ecx+eax*2]
 	test esi, esi
-	jle FX_ImpactMark_Generate_Callback_70
+	jle _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__70
 	mov ecx, edi
 	mov edx, ebx
 	xor ebx, ebx
-FX_ImpactMark_Generate_Callback_80:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__80:
 	mov eax, [ecx-0xc]
 	mov [edx-0xc], eax
 	mov eax, [ecx-0x8]
@@ -1171,8 +1171,8 @@ FX_ImpactMark_Generate_Callback_80:
 	sub ecx, 0xc
 	sub edx, 0xc
 	cmp ebx, esi
-	jnz FX_ImpactMark_Generate_Callback_80
-FX_ImpactMark_Generate_Callback_70:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__80
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__70:
 	mov eax, [ebp-0x26]
 	mov esi, [ebp+0x10]
 	mov [esi], eax
@@ -1181,19 +1181,19 @@ FX_ImpactMark_Generate_Callback_70:
 	mov eax, [ebp-0x1e]
 	mov [esi+0x8], eax
 	mov edx, [ebp-0x4c]
-FX_ImpactMark_Generate_Callback_490:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__490:
 	cmp [ebp-0x9c], edx
-	jz FX_ImpactMark_Generate_Callback_50
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__50
 	mov edi, edx
-	jmp FX_ImpactMark_Generate_Callback_90
-FX_ImpactMark_Generate_Callback_40:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__90
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__40:
 	lea eax, [edi+0xc0]
 	mov [ebp-0xa0], eax
 	mov edi, [ebp+0x10]
 	add edi, 0xc
 	cmp eax, edi
-	jz FX_ImpactMark_Generate_Callback_100
-FX_ImpactMark_Generate_Callback_140:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__100
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__140:
 	mov eax, [edi]
 	mov [ebp-0x32], eax
 	mov eax, [edi+0x4]
@@ -1204,9 +1204,9 @@ FX_ImpactMark_Generate_Callback_140:
 	mov [esp+0x4], edx
 	lea ecx, [ebp-0x32]
 	mov [esp], ecx
-	call FX_CompareMarkTris
+	call _Z18FX_CompareMarkTrisRK9FxMarkTriS1_
 	test al, al
-	jz FX_ImpactMark_Generate_Callback_110
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__110
 	lea ebx, [edi+0xc]
 	mov [ebp-0x50], ebx
 	mov ecx, edi
@@ -1224,11 +1224,11 @@ FX_ImpactMark_Generate_Callback_140:
 	add eax, edx
 	lea esi, [ecx+eax*2]
 	test esi, esi
-	jle FX_ImpactMark_Generate_Callback_120
+	jle _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__120
 	mov ecx, edi
 	mov edx, ebx
 	xor ebx, ebx
-FX_ImpactMark_Generate_Callback_130:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__130:
 	mov eax, [ecx-0xc]
 	mov [edx-0xc], eax
 	mov eax, [ecx-0x8]
@@ -1239,8 +1239,8 @@ FX_ImpactMark_Generate_Callback_130:
 	sub ecx, 0xc
 	sub edx, 0xc
 	cmp ebx, esi
-	jnz FX_ImpactMark_Generate_Callback_130
-FX_ImpactMark_Generate_Callback_120:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__130
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__120:
 	mov eax, [ebp-0x32]
 	mov esi, [ebp+0x10]
 	mov [esi], eax
@@ -1250,11 +1250,11 @@ FX_ImpactMark_Generate_Callback_120:
 	mov [esi+0x8], eax
 	mov edx, [ebp-0xa0]
 	cmp [ebp-0x50], edx
-	jz FX_ImpactMark_Generate_Callback_100
-FX_ImpactMark_Generate_Callback_170:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__100
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__170:
 	mov edi, [ebp-0x50]
-	jmp FX_ImpactMark_Generate_Callback_140
-FX_ImpactMark_Generate_Callback_110:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__140
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__110:
 	movzx eax, word [ebp-0x28]
 	mov [ebp-0x1c], ax
 	movzx eax, byte [ebp-0x29]
@@ -1273,8 +1273,8 @@ FX_ImpactMark_Generate_Callback_110:
 	mov [ebp-0x26], ax
 	lea ebx, [edi-0xc]
 	mov esi, edi
-	jmp FX_ImpactMark_Generate_Callback_150
-FX_ImpactMark_Generate_Callback_160:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__150
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__160:
 	mov eax, [ebx]
 	mov [esi], eax
 	mov eax, [ebx+0x4]
@@ -1283,13 +1283,13 @@ FX_ImpactMark_Generate_Callback_160:
 	mov [esi+0x8], eax
 	mov esi, ebx
 	sub ebx, 0xc
-FX_ImpactMark_Generate_Callback_150:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__150:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x26]
 	mov [esp], eax
-	call FX_CompareMarkTris
+	call _Z18FX_CompareMarkTrisRK9FxMarkTriS1_
 	test al, al
-	jnz FX_ImpactMark_Generate_Callback_160
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__160
 	mov eax, [ebp-0x26]
 	mov [esi], eax
 	mov eax, [ebp-0x22]
@@ -1300,12 +1300,12 @@ FX_ImpactMark_Generate_Callback_150:
 	mov [ebp-0x50], edi
 	mov edx, [ebp-0xa0]
 	cmp [ebp-0x50], edx
-	jnz FX_ImpactMark_Generate_Callback_170
-FX_ImpactMark_Generate_Callback_100:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__170
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__100:
 	mov ecx, [ebp-0xa0]
 	cmp [ebp-0x9c], ecx
-	jz FX_ImpactMark_Generate_Callback_50
-FX_ImpactMark_Generate_Callback_200:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__50
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__200:
 	mov ebx, [ebp-0xa0]
 	movzx edx, byte [ebx+0x9]
 	movzx ecx, byte [ebx+0x8]
@@ -1336,8 +1336,8 @@ FX_ImpactMark_Generate_Callback_200:
 	mov ebx, [ebp-0xa0]
 	sub ebx, 0xc
 	mov esi, [ebp-0xa0]
-	jmp FX_ImpactMark_Generate_Callback_180
-FX_ImpactMark_Generate_Callback_190:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__180
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__190:
 	mov eax, [ebx]
 	mov [esi], eax
 	mov eax, [ebx+0x4]
@@ -1346,13 +1346,13 @@ FX_ImpactMark_Generate_Callback_190:
 	mov [esi+0x8], eax
 	mov esi, ebx
 	sub ebx, 0xc
-FX_ImpactMark_Generate_Callback_180:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__180:
 	mov [esp+0x4], ebx
 	lea edi, [ebp-0x26]
 	mov [esp], edi
-	call FX_CompareMarkTris
+	call _Z18FX_CompareMarkTrisRK9FxMarkTriS1_
 	test al, al
-	jnz FX_ImpactMark_Generate_Callback_190
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__190
 	mov eax, [ebp-0x26]
 	mov [esi], eax
 	mov eax, [ebp-0x22]
@@ -1362,19 +1362,19 @@ FX_ImpactMark_Generate_Callback_180:
 	add dword [ebp-0xa0], 0xc
 	mov eax, [ebp-0xa0]
 	cmp [ebp-0x9c], eax
-	jnz FX_ImpactMark_Generate_Callback_200
-FX_ImpactMark_Generate_Callback_50:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__200
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__50:
 	mov ecx, [ebp+0x10]
 	mov ebx, [ebp+0xc]
-FX_ImpactMark_Generate_Callback_1220:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1220:
 	mov [ebp-0x98], ecx
 	mov [ebp-0x48], ebx
 	mov dword [ebp-0x94], 0xffff
 	mov esi, fx_marksSystemPool
 	mov [ebp-0xbc], esi
 	mov edi, esi
-	jmp FX_ImpactMark_Generate_Callback_210
-FX_ImpactMark_Generate_Callback_260:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__210
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__260:
 	mov ecx, [ebp-0x98]
 	add ecx, 0x6
 	mov [ebp-0xe8], ecx
@@ -1388,13 +1388,13 @@ FX_ImpactMark_Generate_Callback_260:
 	mov ecx, ebx
 	repe cmpsb
 	mov eax, 0x0
-	jz FX_ImpactMark_Generate_Callback_220
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__220
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-FX_ImpactMark_Generate_Callback_220:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__220:
 	test eax, eax
-	jnz FX_ImpactMark_Generate_Callback_230
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__230
 	mov edx, 0x2
 	mov al, 0x2
 	lea eax, [eax+eax*2]
@@ -1402,14 +1402,14 @@ FX_ImpactMark_Generate_Callback_220:
 	lea ecx, [ecx+eax*4]
 	mov [ebp-0x98], ecx
 	sub [ebp-0x48], edx
-	jz FX_ImpactMark_Generate_Callback_240
-FX_ImpactMark_Generate_Callback_270:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__240
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__270:
 	mov edi, [ebp-0xbc]
-FX_ImpactMark_Generate_Callback_210:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__210:
 	mov esi, [edi+0x808]
 	test esi, esi
-	jz FX_ImpactMark_Generate_Callback_250
-FX_ImpactMark_Generate_Callback_630:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__250
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__630:
 	mov eax, [edi+0x808]
 	mov edx, [eax]
 	mov [edi+0x808], edx
@@ -1419,8 +1419,8 @@ FX_ImpactMark_Generate_Callback_630:
 	sub eax, edx
 	mov [ebp-0x94], eax
 	cmp dword [ebp-0x48], 0x1
-	jg FX_ImpactMark_Generate_Callback_260
-FX_ImpactMark_Generate_Callback_230:
+	jg _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__260
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__230:
 	mov edx, 0x1
 	mov eax, 0x1
 	lea eax, [eax+eax*2]
@@ -1428,8 +1428,8 @@ FX_ImpactMark_Generate_Callback_230:
 	lea ecx, [ecx+eax*4]
 	mov [ebp-0x98], ecx
 	sub [ebp-0x48], edx
-	jnz FX_ImpactMark_Generate_Callback_270
-FX_ImpactMark_Generate_Callback_240:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__270
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__240:
 	mov edx, [ebp+0x14]
 	add edx, 0x1
 	mov eax, edx
@@ -1447,11 +1447,11 @@ FX_ImpactMark_Generate_Callback_240:
 	mov esi, fx_marksSystemPool
 	add esi, 0x15010
 	mov [ebp-0x6c], esi
-	jmp FX_ImpactMark_Generate_Callback_280
-FX_ImpactMark_Generate_Callback_300:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__280
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__300:
 	mov edx, eax
 	mov ecx, eax
-FX_ImpactMark_Generate_Callback_460:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__460:
 	mov eax, [edx+0x80c]
 	mov edx, [eax]
 	mov [ecx+0x80c], edx
@@ -1461,50 +1461,50 @@ FX_ImpactMark_Generate_Callback_460:
 	mov [ebp-0x8c], eax
 	add edi, 0x1
 	cmp [ebp-0xb0], edi
-	jz FX_ImpactMark_Generate_Callback_290
-FX_ImpactMark_Generate_Callback_280:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__290
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__280:
 	mov eax, [ebp-0xbc]
 	mov edx, [eax+0x80c]
 	test edx, edx
-	jnz FX_ImpactMark_Generate_Callback_300
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__300
 	lea edx, [eax+0x810]
 	xor esi, esi
 	lea ecx, [eax+0x814]
-	jmp FX_ImpactMark_Generate_Callback_310
-FX_ImpactMark_Generate_Callback_360:
-	jz FX_ImpactMark_Generate_Callback_320
-FX_ImpactMark_Generate_Callback_340:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__310
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__360:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__320
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__340:
 	add edx, 0x44
 	add ecx, 0x44
 	mov eax, [ebp-0xbc]
 	lea ebx, [eax+0x9010]
 	cmp ebx, edx
-	jz FX_ImpactMark_Generate_Callback_330
-FX_ImpactMark_Generate_Callback_310:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__330
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__310:
 	mov eax, [ecx]
 	cmp eax, 0xffffffff
-	jz FX_ImpactMark_Generate_Callback_340
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__340
 	test esi, esi
-	jz FX_ImpactMark_Generate_Callback_350
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__350
 	cmp eax, [esi+0x4]
-	jge FX_ImpactMark_Generate_Callback_360
-FX_ImpactMark_Generate_Callback_350:
+	jge _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__360
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__350:
 	mov esi, edx
-FX_ImpactMark_Generate_Callback_650:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__650:
 	add edx, 0x44
 	add ecx, 0x44
 	mov eax, [ebp-0xbc]
 	lea ebx, [eax+0x9010]
 	cmp ebx, edx
-	jnz FX_ImpactMark_Generate_Callback_310
-FX_ImpactMark_Generate_Callback_330:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__310
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__330:
 	movzx eax, byte [esi+0x33]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz FX_ImpactMark_Generate_Callback_370
-	jg FX_ImpactMark_Generate_Callback_380
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__370
+	jg _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__380
 	test eax, eax
-	jnz FX_ImpactMark_Generate_Callback_390
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__390
 	mov eax, esi
 	sub eax, [ebp-0x84]
 	sar eax, 0x2
@@ -1519,10 +1519,10 @@ FX_ImpactMark_Generate_Callback_330:
 	mov ecx, [esi+0x3c]
 	mov [ebp-0xe0], ebx
 	mov edx, ebx
-	jmp FX_ImpactMark_Generate_Callback_400
-FX_ImpactMark_Generate_Callback_410:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__400
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__410:
 	mov edx, [ebp-0xe0]
-FX_ImpactMark_Generate_Callback_400:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__400:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x14]
 	mov ebx, [ebp-0xbc]
@@ -1530,15 +1530,15 @@ FX_ImpactMark_Generate_Callback_400:
 	mov [eax], edx
 	mov [ebx+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_410
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__410
 	mov ecx, [esi+0x40]
 	lea eax, [ebx+0x15010]
 	mov [ebp-0xe0], eax
 	mov edx, eax
-	jmp FX_ImpactMark_Generate_Callback_420
-FX_ImpactMark_Generate_Callback_430:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__420
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__430:
 	mov edx, [ebp-0xe0]
-FX_ImpactMark_Generate_Callback_420:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__420:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x40]
 	mov ebx, [ebp-0xbc]
@@ -1546,40 +1546,40 @@ FX_ImpactMark_Generate_Callback_420:
 	mov [eax], edx
 	mov [ebx+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_430
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__430
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_ImpactMark_Generate_Callback_440
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__440
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [esi]
 	mov [ebx+eax], dx
-FX_ImpactMark_Generate_Callback_440:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__440:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_ImpactMark_Generate_Callback_450
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__450
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xbc]
 	mov [edx+eax+0x2], cx
-FX_ImpactMark_Generate_Callback_1340:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1340:
 	mov dword [esi+0x4], 0xffffffff
 	mov eax, [ebp-0xbc]
 	movzx ecx, word [eax+0x4]
 	mov [esi+0x2], cx
 	movzx edx, word [ebp-0x86]
 	mov [eax+0x4], dx
-FX_ImpactMark_Generate_Callback_390:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__390:
 	mov esi, [ebp-0xbc]
 	add dword [esi+0x48018], 0x1
 	mov edx, [ebp-0xbc]
 	mov ecx, [ebp-0xbc]
-	jmp FX_ImpactMark_Generate_Callback_460
-FX_ImpactMark_Generate_Callback_60:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__460
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__60:
 	movzx eax, word [ebp-0x1c]
 	mov [ebp-0x28], ax
 	movzx eax, byte [ebp-0x1d]
@@ -1598,8 +1598,8 @@ FX_ImpactMark_Generate_Callback_60:
 	mov [ebp-0x32], ax
 	lea ebx, [edi-0xc]
 	mov esi, edi
-	jmp FX_ImpactMark_Generate_Callback_470
-FX_ImpactMark_Generate_Callback_480:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__470
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__480:
 	mov eax, [ebx]
 	mov [esi], eax
 	mov eax, [ebx+0x4]
@@ -1608,13 +1608,13 @@ FX_ImpactMark_Generate_Callback_480:
 	mov [esi+0x8], eax
 	mov esi, ebx
 	sub ebx, 0xc
-FX_ImpactMark_Generate_Callback_470:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__470:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x32]
 	mov [esp], eax
-	call FX_CompareMarkTris
+	call _Z18FX_CompareMarkTrisRK9FxMarkTriS1_
 	test al, al
-	jnz FX_ImpactMark_Generate_Callback_480
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__480
 	mov eax, [ebp-0x32]
 	mov [esi], eax
 	mov eax, [ebp-0x2e]
@@ -1624,46 +1624,46 @@ FX_ImpactMark_Generate_Callback_470:
 	add edi, 0xc
 	mov [ebp-0x4c], edi
 	mov edx, edi
-	jmp FX_ImpactMark_Generate_Callback_490
-FX_ImpactMark_Generate_Callback_250:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__490
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__250:
 	lea edx, [edi+0x810]
 	xor esi, esi
 	lea ecx, [edi+0x814]
-	jmp FX_ImpactMark_Generate_Callback_500
-FX_ImpactMark_Generate_Callback_550:
-	jz FX_ImpactMark_Generate_Callback_510
-FX_ImpactMark_Generate_Callback_530:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__500
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__550:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__510
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__530:
 	add edx, 0x44
 	add ecx, 0x44
 	mov eax, [ebp-0xbc]
 	lea ebx, [eax+0x9010]
 	cmp ebx, edx
-	jz FX_ImpactMark_Generate_Callback_520
-FX_ImpactMark_Generate_Callback_500:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__520
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__500:
 	mov eax, [ecx]
 	cmp eax, 0xffffffff
-	jz FX_ImpactMark_Generate_Callback_530
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__530
 	test esi, esi
-	jz FX_ImpactMark_Generate_Callback_540
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__540
 	cmp eax, [esi+0x4]
-	jge FX_ImpactMark_Generate_Callback_550
-FX_ImpactMark_Generate_Callback_540:
+	jge _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__550
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__540:
 	mov esi, edx
-FX_ImpactMark_Generate_Callback_640:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__640:
 	add edx, 0x44
 	add ecx, 0x44
 	mov eax, [ebp-0xbc]
 	lea ebx, [eax+0x9010]
 	cmp ebx, edx
-	jnz FX_ImpactMark_Generate_Callback_500
-FX_ImpactMark_Generate_Callback_520:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__500
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__520:
 	movzx eax, byte [esi+0x33]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz FX_ImpactMark_Generate_Callback_560
-	jg FX_ImpactMark_Generate_Callback_570
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__560
+	jg _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__570
 	test eax, eax
-	jnz FX_ImpactMark_Generate_Callback_580
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__580
 	mov edx, [ebp-0xbc]
 	lea eax, [edx+0x810]
 	mov edx, esi
@@ -1678,7 +1678,7 @@ FX_ImpactMark_Generate_Callback_520:
 	neg eax
 	mov [ebp-0xe2], ax
 	mov ecx, [esi+0x3c]
-FX_ImpactMark_Generate_Callback_590:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__590:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov edi, [ebp-0xbc]
@@ -1686,10 +1686,10 @@ FX_ImpactMark_Generate_Callback_590:
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_590
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__590
 	mov ecx, [esi+0x40]
 	lea ebx, [edi+0x15010]
-FX_ImpactMark_Generate_Callback_600:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__600:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov edi, [ebp-0xbc]
@@ -1697,55 +1697,55 @@ FX_ImpactMark_Generate_Callback_600:
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_600
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__600
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_ImpactMark_Generate_Callback_610
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__610
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [esi]
 	mov [edi+eax], dx
-FX_ImpactMark_Generate_Callback_610:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__610:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_ImpactMark_Generate_Callback_620
-FX_ImpactMark_Generate_Callback_920:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__620
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__920:
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xbc]
 	mov [edx+eax+0x2], cx
-FX_ImpactMark_Generate_Callback_930:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__930:
 	mov dword [esi+0x4], 0xffffffff
 	mov edi, [ebp-0xbc]
 	movzx ecx, word [edi+0x4]
 	mov [esi+0x2], cx
 	movzx eax, word [ebp-0xe2]
 	mov [edi+0x4], ax
-FX_ImpactMark_Generate_Callback_580:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__580:
 	mov esi, [ebp-0xbc]
 	add dword [esi+0x48018], 0x1
 	mov edi, [ebp-0xbc]
-	jmp FX_ImpactMark_Generate_Callback_630
-FX_ImpactMark_Generate_Callback_510:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__630
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__510:
 	mov eax, [ecx+0x4]
 	cmp eax, [esi+0x8]
-	jge FX_ImpactMark_Generate_Callback_530
+	jge _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__530
 	mov esi, edx
-	jmp FX_ImpactMark_Generate_Callback_640
-FX_ImpactMark_Generate_Callback_320:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__640
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__320:
 	mov eax, [ecx+0x4]
 	cmp eax, [esi+0x8]
-	jge FX_ImpactMark_Generate_Callback_340
+	jge _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__340
 	mov esi, edx
-	jmp FX_ImpactMark_Generate_Callback_650
-FX_ImpactMark_Generate_Callback_290:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__650
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__290:
 	cmp word [ecx+0x4], 0xffff
-	jz FX_ImpactMark_Generate_Callback_660
-FX_ImpactMark_Generate_Callback_1270:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__660
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1270:
 	mov esi, [ebp-0xbc]
 	movzx eax, word [esi+0x4]
 	mov edx, eax
@@ -1788,11 +1788,11 @@ FX_ImpactMark_Generate_Callback_1270:
 	movzx eax, byte [edi+0x33]
 	and eax, 0xc0
 	cmp eax, 0xc0
-	jz FX_ImpactMark_Generate_Callback_670
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__670
 	cmp eax, 0x80
-	jz FX_ImpactMark_Generate_Callback_670
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__670
 	cmp eax, 0x40
-	jnz FX_ImpactMark_Generate_Callback_680
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__680
 	mov ebx, [ebp-0xa4]
 	movzx esi, word [ebx+0x34]
 	mov edi, [ebp-0xbc]
@@ -1800,23 +1800,23 @@ FX_ImpactMark_Generate_Callback_1270:
 	lea ecx, [edi+0x814]
 	mov ebx, fx_marksSystemPool
 	add ebx, 0x9010
-	jmp FX_ImpactMark_Generate_Callback_690
-FX_ImpactMark_Generate_Callback_710:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__690
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__710:
 	add edx, 0x44
 	add ecx, 0x44
 	cmp edx, ebx
-	jz FX_ImpactMark_Generate_Callback_700
-FX_ImpactMark_Generate_Callback_690:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__700
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__690:
 	cmp dword [ecx], 0xffffffff
-	jz FX_ImpactMark_Generate_Callback_710
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__710
 	cmp word [ecx-0x4], 0xffff
-	jnz FX_ImpactMark_Generate_Callback_710
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__710
 	movzx eax, byte [ecx+0x2f]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jnz FX_ImpactMark_Generate_Callback_710
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__710
 	cmp si, [ecx+0x30]
-	jnz FX_ImpactMark_Generate_Callback_710
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__710
 	mov ecx, [ebp-0xbc]
 	lea eax, [ecx+0x810]
 	sub edx, eax
@@ -1828,13 +1828,13 @@ FX_ImpactMark_Generate_Callback_690:
 	shl edx, 0x8
 	add eax, edx
 	neg eax
-FX_ImpactMark_Generate_Callback_1330:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1330:
 	mov [ebp-0x1a], ax
 	lea edx, [ebp-0x1a]
 	mov ecx, [ebp-0xa4]
 	mov eax, [ebp-0xbc]
-	call FX_LinkMarkIntoList
-FX_ImpactMark_Generate_Callback_1040:
+	call _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1040:
 	mov edx, fx_marksSystemPool
 	mov [ebp-0xbc], edx
 	mov eax, [edx]
@@ -1858,7 +1858,7 @@ FX_ImpactMark_Generate_Callback_1040:
 	add edi, 0x9010
 	mov [ebp-0x58], edi
 	mov edx, esi
-FX_ImpactMark_Generate_Callback_770:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__770:
 	add ecx, [ebp-0x58]
 	mov [ebp-0x3c], ecx
 	cmp dword [ebp+0xc], 0x2
@@ -1876,10 +1876,10 @@ FX_ImpactMark_Generate_Callback_770:
 	add ecx, 0xc
 	mov [ebp-0xb4], ecx
 	mov ecx, edx
-	jmp FX_ImpactMark_Generate_Callback_720
-FX_ImpactMark_Generate_Callback_750:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__720
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__750:
 	mov ecx, [ebp-0xdc]
-FX_ImpactMark_Generate_Callback_720:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__720:
 	movzx eax, word [ecx-0xc]
 	mov [ebx], ax
 	movzx eax, word [ecx-0xa]
@@ -1889,7 +1889,7 @@ FX_ImpactMark_Generate_Callback_720:
 	add dword [ebp-0x40], 0x1
 	mov eax, [ebp-0x40]
 	cmp [ebp-0x44], eax
-	jz FX_ImpactMark_Generate_Callback_730
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__730
 	add ecx, 0x6
 	mov [ebp-0xe8], ecx
 	mov dword [ebp-0xb8], 0x6
@@ -1899,18 +1899,18 @@ FX_ImpactMark_Generate_Callback_720:
 	mov ecx, 0x6
 	repe cmpsb
 	mov eax, 0x0
-	jz FX_ImpactMark_Generate_Callback_740
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__740
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-FX_ImpactMark_Generate_Callback_740:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__740:
 	test eax, eax
 	setz al
 	add ebx, 0x6
 	add dword [ebp-0xdc], 0xc
 	test al, al
-	jnz FX_ImpactMark_Generate_Callback_750
-FX_ImpactMark_Generate_Callback_730:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__750
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__730:
 	mov eax, [ebp-0x3c]
 	mov ecx, [eax+0x14]
 	movzx edx, byte [ebp-0x40]
@@ -1921,16 +1921,16 @@ FX_ImpactMark_Generate_Callback_730:
 	lea ebx, [ebx+edx*4]
 	mov [ebp-0x60], ebx
 	sub [ebp+0xc], eax
-	jz FX_ImpactMark_Generate_Callback_760
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__760
 	mov edx, [ebp-0x60]
-	jmp FX_ImpactMark_Generate_Callback_770
-FX_ImpactMark_Generate_Callback_760:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__770
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__760:
 	mov ebx, [ebp-0xa4]
 	mov ecx, [ebx+0x40]
 	mov esi, [ebp-0xbc]
 	add esi, 0x15010
 	mov [ebp-0x54], esi
-FX_ImpactMark_Generate_Callback_790:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__790:
 	add ecx, [ebp-0x54]
 	mov edx, 0x2
 	cmp dword [ebp+0x14], 0x2
@@ -1938,7 +1938,7 @@ FX_ImpactMark_Generate_Callback_790:
 	mov esi, [ebp-0x5c]
 	mov ebx, ecx
 	xor edi, edi
-FX_ImpactMark_Generate_Callback_780:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__780:
 	mov eax, [esi]
 	mov [ebx], eax
 	mov eax, [esi+0x4]
@@ -1959,13 +1959,13 @@ FX_ImpactMark_Generate_Callback_780:
 	add esi, 0x20
 	add ebx, 0x20
 	cmp edx, edi
-	jg FX_ImpactMark_Generate_Callback_780
+	jg _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__780
 	mov ecx, [ecx+0x40]
 	mov eax, edx
 	shl eax, 0x5
 	add [ebp-0x5c], eax
 	sub [ebp+0x14], edx
-	jnz FX_ImpactMark_Generate_Callback_790
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__790
 	mov edi, [ebp-0xbc]
 	add dword [edi+0x48014], 0x1
 	add esp, 0x12c
@@ -1974,12 +1974,12 @@ FX_ImpactMark_Generate_Callback_780:
 	pop edi
 	pop ebp
 	ret
-FX_ImpactMark_Generate_Callback_380:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__380:
 	cmp eax, 0x80
-	jz FX_ImpactMark_Generate_Callback_800
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__800
 	cmp eax, 0xc0
-	jnz FX_ImpactMark_Generate_Callback_390
-FX_ImpactMark_Generate_Callback_800:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__390
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__800:
 	movzx eax, word [esi+0x34]
 	mov ecx, [ebp-0xbc]
 	lea eax, [ecx+eax*2+0x8]
@@ -2000,10 +2000,10 @@ FX_ImpactMark_Generate_Callback_800:
 	add ebx, 0x9010
 	mov [ebp-0xe0], ebx
 	mov edx, ebx
-	jmp FX_ImpactMark_Generate_Callback_810
-FX_ImpactMark_Generate_Callback_820:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__810
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__820:
 	mov edx, [ebp-0xe0]
-FX_ImpactMark_Generate_Callback_810:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__810:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x14]
 	mov ebx, [ebp-0xbc]
@@ -2011,15 +2011,15 @@ FX_ImpactMark_Generate_Callback_810:
 	mov [eax], edx
 	mov [ebx+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_820
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__820
 	mov ecx, [esi+0x40]
 	lea eax, [ebx+0x15010]
 	mov [ebp-0xe0], eax
 	mov edx, eax
-	jmp FX_ImpactMark_Generate_Callback_830
-FX_ImpactMark_Generate_Callback_840:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__830
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__840:
 	mov edx, [ebp-0xe0]
-FX_ImpactMark_Generate_Callback_830:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__830:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x40]
 	mov ebx, [ebp-0xbc]
@@ -2027,40 +2027,40 @@ FX_ImpactMark_Generate_Callback_830:
 	mov [eax], edx
 	mov [ebx+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_840
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__840
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_ImpactMark_Generate_Callback_850
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__850
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [esi]
 	mov [ebx+eax], dx
-FX_ImpactMark_Generate_Callback_850:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__850:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_ImpactMark_Generate_Callback_860
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__860
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xbc]
 	mov [edx+eax+0x2], cx
-FX_ImpactMark_Generate_Callback_1320:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1320:
 	mov dword [esi+0x4], 0xffffffff
 	mov eax, [ebp-0xbc]
 	movzx ecx, word [eax+0x4]
 	mov [esi+0x2], cx
 	movzx edx, word [ebp-0x7a]
 	mov [eax+0x4], dx
-	jmp FX_ImpactMark_Generate_Callback_390
-FX_ImpactMark_Generate_Callback_570:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__390
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__570:
 	cmp eax, 0x80
-	jz FX_ImpactMark_Generate_Callback_870
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__870
 	cmp eax, 0xc0
-	jnz FX_ImpactMark_Generate_Callback_580
-FX_ImpactMark_Generate_Callback_870:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__580
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__870:
 	movzx eax, word [esi+0x34]
 	mov edx, [ebp-0xbc]
 	lea eax, [edx+eax*2+0x8]
@@ -2080,20 +2080,20 @@ FX_ImpactMark_Generate_Callback_870:
 	mov ecx, [esi+0x3c]
 	mov edi, [ebp-0xbc]
 	lea ebx, [edi+0x9010]
-	jmp FX_ImpactMark_Generate_Callback_880
-FX_ImpactMark_Generate_Callback_890:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__880
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__890:
 	mov edi, [ebp-0xbc]
-FX_ImpactMark_Generate_Callback_880:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__880:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov edx, [edi+0x808]
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_890
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__890
 	mov ecx, [esi+0x40]
 	lea ebx, [edi+0x15010]
-FX_ImpactMark_Generate_Callback_900:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__900:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov edi, [ebp-0xbc]
@@ -2101,27 +2101,27 @@ FX_ImpactMark_Generate_Callback_900:
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_900
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__900
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_ImpactMark_Generate_Callback_910
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__910
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [esi]
 	mov [edi+eax], dx
-FX_ImpactMark_Generate_Callback_910:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__910:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_920
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__920
 	mov ebx, [ebp-0x90]
 	test ebx, ebx
-	jz FX_ImpactMark_Generate_Callback_930
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__930
 	mov ebx, [ebp-0x90]
 	mov [ebx], cx
-	jmp FX_ImpactMark_Generate_Callback_930
-FX_ImpactMark_Generate_Callback_370:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__930
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__370:
 	mov eax, esi
 	sub eax, [ebp-0x70]
 	sar eax, 0x2
@@ -2135,10 +2135,10 @@ FX_ImpactMark_Generate_Callback_370:
 	mov [ebp-0x72], dx
 	mov ecx, [esi+0x3c]
 	mov [ebp-0xe0], ebx
-	jmp FX_ImpactMark_Generate_Callback_940
-FX_ImpactMark_Generate_Callback_950:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__940
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__950:
 	mov ebx, [ebp-0xe0]
-FX_ImpactMark_Generate_Callback_940:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__940:
 	lea eax, [ecx+ebx]
 	mov ecx, [eax+0x14]
 	mov ebx, [ebp-0xbc]
@@ -2146,15 +2146,15 @@ FX_ImpactMark_Generate_Callback_940:
 	mov [eax], edx
 	mov [ebx+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_950
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__950
 	mov ecx, [esi+0x40]
 	lea eax, [ebx+0x15010]
 	mov [ebp-0xe0], eax
 	mov edx, eax
-	jmp FX_ImpactMark_Generate_Callback_960
-FX_ImpactMark_Generate_Callback_970:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__960
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__970:
 	mov edx, [ebp-0xe0]
-FX_ImpactMark_Generate_Callback_960:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__960:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x40]
 	mov ebx, [ebp-0xbc]
@@ -2162,35 +2162,35 @@ FX_ImpactMark_Generate_Callback_960:
 	mov [eax], edx
 	mov [ebx+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_970
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__970
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_ImpactMark_Generate_Callback_980
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__980
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [esi]
 	mov [ebx+eax], dx
-FX_ImpactMark_Generate_Callback_980:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__980:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_ImpactMark_Generate_Callback_990
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__990
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xbc]
 	mov [edx+eax+0x2], cx
-FX_ImpactMark_Generate_Callback_990:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__990:
 	mov dword [esi+0x4], 0xffffffff
 	mov ecx, [ebp-0xbc]
 	movzx eax, word [ecx+0x4]
 	mov [esi+0x2], ax
 	movzx ebx, word [ebp-0x72]
 	mov [ecx+0x4], bx
-	jmp FX_ImpactMark_Generate_Callback_390
-FX_ImpactMark_Generate_Callback_560:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__390
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__560:
 	mov edx, [ebp-0xbc]
 	lea eax, [edx+0x810]
 	mov edx, esi
@@ -2205,7 +2205,7 @@ FX_ImpactMark_Generate_Callback_560:
 	neg eax
 	mov [ebp-0xe2], ax
 	mov ecx, [esi+0x3c]
-FX_ImpactMark_Generate_Callback_1000:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1000:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov edi, [ebp-0xbc]
@@ -2213,10 +2213,10 @@ FX_ImpactMark_Generate_Callback_1000:
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_1000
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1000
 	mov ecx, [esi+0x40]
 	lea ebx, [edi+0x15010]
-FX_ImpactMark_Generate_Callback_1010:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1010:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov edi, [ebp-0xbc]
@@ -2224,49 +2224,49 @@ FX_ImpactMark_Generate_Callback_1010:
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_1010
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1010
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_ImpactMark_Generate_Callback_1020
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1020
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [esi]
 	mov [edi+eax], dx
-FX_ImpactMark_Generate_Callback_1020:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1020:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_ImpactMark_Generate_Callback_1030
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1030
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xbc]
 	mov [edx+eax+0x2], cx
-FX_ImpactMark_Generate_Callback_1030:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1030:
 	mov dword [esi+0x4], 0xffffffff
 	mov ecx, [ebp-0xbc]
 	movzx eax, word [ecx+0x4]
 	mov [esi+0x2], ax
 	movzx ebx, word [ebp-0xe2]
 	mov [ecx+0x4], bx
-	jmp FX_ImpactMark_Generate_Callback_580
-FX_ImpactMark_Generate_Callback_670:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__580
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__670:
 	mov edi, [ebp-0xa4]
 	movzx edx, word [edi+0x34]
 	mov eax, [ebp-0xbc]
 	lea edx, [eax+edx*2+0x8]
 	mov ecx, edi
-	call FX_LinkMarkIntoList
-	jmp FX_ImpactMark_Generate_Callback_1040
-FX_ImpactMark_Generate_Callback_680:
+	call _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1040
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__680:
 	mov eax, [ebp-0xbc]
 	lea edx, [eax+0x6]
 	mov ecx, [ebp-0xa4]
-	call FX_LinkMarkIntoList
-	jmp FX_ImpactMark_Generate_Callback_1040
-FX_ImpactMark_Generate_Callback_660:
+	call _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1040
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__660:
 	mov esi, [ebp-0xbc]
 	lea ecx, [esi+0x810]
 	xor esi, esi
@@ -2274,40 +2274,40 @@ FX_ImpactMark_Generate_Callback_660:
 	lea edx, [edi+0x814]
 	mov ebx, fx_marksSystemPool
 	add ebx, 0x9010
-	jmp FX_ImpactMark_Generate_Callback_1050
-FX_ImpactMark_Generate_Callback_1100:
-	jz FX_ImpactMark_Generate_Callback_1060
-FX_ImpactMark_Generate_Callback_1080:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1050
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1100:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1060
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1080:
 	add ecx, 0x44
 	add edx, 0x44
 	cmp ecx, ebx
-	jz FX_ImpactMark_Generate_Callback_1070
-FX_ImpactMark_Generate_Callback_1050:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1070
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1050:
 	mov eax, [edx]
 	cmp eax, 0xffffffff
-	jz FX_ImpactMark_Generate_Callback_1080
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1080
 	test esi, esi
-	jz FX_ImpactMark_Generate_Callback_1090
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1090
 	cmp eax, [esi+0x4]
-	jge FX_ImpactMark_Generate_Callback_1100
-FX_ImpactMark_Generate_Callback_1090:
+	jge _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1100
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1090:
 	mov esi, ecx
-FX_ImpactMark_Generate_Callback_1200:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1200:
 	add ecx, 0x44
 	add edx, 0x44
 	cmp ecx, ebx
-	jnz FX_ImpactMark_Generate_Callback_1050
-FX_ImpactMark_Generate_Callback_1070:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1050
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1070:
 	movzx eax, byte [esi+0x33]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz FX_ImpactMark_Generate_Callback_1110
-	jle FX_ImpactMark_Generate_Callback_1120
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1110
+	jle _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1120
 	cmp eax, 0x80
-	jz FX_ImpactMark_Generate_Callback_1130
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1130
 	cmp eax, 0xc0
-	jnz FX_ImpactMark_Generate_Callback_1140
-FX_ImpactMark_Generate_Callback_1130:
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1140
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1130:
 	movzx eax, word [esi+0x34]
 	mov edx, [ebp-0xbc]
 	lea eax, [edx+eax*2+0x8]
@@ -2327,7 +2327,7 @@ FX_ImpactMark_Generate_Callback_1130:
 	mov ecx, [esi+0x3c]
 	mov eax, [ebp-0xbc]
 	lea ebx, [eax+0x9010]
-FX_ImpactMark_Generate_Callback_1150:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1150:
 	lea eax, [ecx+ebx]
 	mov ecx, [eax+0x14]
 	mov edx, [ebp-0xbc]
@@ -2336,10 +2336,10 @@ FX_ImpactMark_Generate_Callback_1150:
 	mov edx, [ebp-0xbc]
 	mov [edx+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_1150
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1150
 	mov ecx, [esi+0x40]
 	lea ebx, [edx+0x15010]
-FX_ImpactMark_Generate_Callback_1160:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1160:
 	lea eax, [ecx+ebx]
 	mov ecx, [eax+0x40]
 	mov edx, [ebp-0xbc]
@@ -2348,10 +2348,10 @@ FX_ImpactMark_Generate_Callback_1160:
 	mov edx, [ebp-0xbc]
 	mov [edx+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_1160
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1160
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_ImpactMark_Generate_Callback_1170
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1170
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
@@ -2359,31 +2359,31 @@ FX_ImpactMark_Generate_Callback_1160:
 	movzx edx, word [esi]
 	mov ebx, [ebp-0xbc]
 	mov [ebx+eax], dx
-FX_ImpactMark_Generate_Callback_1170:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1170:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_1180
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1180
 	mov eax, [ebp-0x68]
 	test eax, eax
-	jz FX_ImpactMark_Generate_Callback_1190
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1190
 	mov ebx, [ebp-0x68]
 	mov [ebx], cx
-	jmp FX_ImpactMark_Generate_Callback_1190
-FX_ImpactMark_Generate_Callback_1060:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1190
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1060:
 	mov eax, [edx+0x4]
 	cmp eax, [esi+0x8]
-	jge FX_ImpactMark_Generate_Callback_1080
+	jge _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1080
 	mov esi, ecx
-	jmp FX_ImpactMark_Generate_Callback_1200
-FX_ImpactMark_Generate_Callback_20:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1200
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__20:
 	and eax, 0xffffff00
-	jmp FX_ImpactMark_Generate_Callback_1210
-FX_ImpactMark_Generate_Callback_10:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1210
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__10:
 	mov ebx, edx
-	jmp FX_ImpactMark_Generate_Callback_1220
-FX_ImpactMark_Generate_Callback_1120:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1220
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1120:
 	test eax, eax
-	jnz FX_ImpactMark_Generate_Callback_1140
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1140
 	mov edx, [ebp-0xbc]
 	lea eax, [edx+0x810]
 	mov edx, esi
@@ -2398,7 +2398,7 @@ FX_ImpactMark_Generate_Callback_1120:
 	mov edi, eax
 	neg edi
 	mov ebx, [esi+0x3c]
-FX_ImpactMark_Generate_Callback_1230:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1230:
 	lea eax, [ebx+ecx]
 	mov ebx, [eax+0x14]
 	mov edx, [ebp-0xbc]
@@ -2407,10 +2407,10 @@ FX_ImpactMark_Generate_Callback_1230:
 	mov edx, [ebp-0xbc]
 	mov [edx+0x808], eax
 	cmp ebx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_1230
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1230
 	mov ecx, [esi+0x40]
 	lea ebx, [edx+0x15010]
-FX_ImpactMark_Generate_Callback_1240:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1240:
 	lea eax, [ecx+ebx]
 	mov ecx, [eax+0x40]
 	mov edx, [ebp-0xbc]
@@ -2419,10 +2419,10 @@ FX_ImpactMark_Generate_Callback_1240:
 	mov edx, [ebp-0xbc]
 	mov [edx+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_1240
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1240
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_ImpactMark_Generate_Callback_1250
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1250
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
@@ -2430,28 +2430,28 @@ FX_ImpactMark_Generate_Callback_1240:
 	movzx edx, word [esi]
 	mov ebx, [ebp-0xbc]
 	mov [ebx+eax], dx
-FX_ImpactMark_Generate_Callback_1250:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1250:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_ImpactMark_Generate_Callback_1260
-FX_ImpactMark_Generate_Callback_1180:
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1260
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1180:
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xbc]
 	mov [edx+eax+0x2], cx
-FX_ImpactMark_Generate_Callback_1190:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1190:
 	mov dword [esi+0x4], 0xffffffff
 	mov eax, [ebp-0xbc]
 	movzx ecx, word [eax+0x4]
 	mov [esi+0x2], cx
 	mov [eax+0x4], di
-FX_ImpactMark_Generate_Callback_1140:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1140:
 	mov ebx, [ebp-0xbc]
 	add dword [ebx+0x48018], 0x1
-	jmp FX_ImpactMark_Generate_Callback_1270
-FX_ImpactMark_Generate_Callback_1110:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1270
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1110:
 	mov edx, [ebp-0xbc]
 	lea eax, [edx+0x810]
 	mov edx, esi
@@ -2466,7 +2466,7 @@ FX_ImpactMark_Generate_Callback_1110:
 	mov edi, eax
 	neg edi
 	mov ebx, [esi+0x3c]
-FX_ImpactMark_Generate_Callback_1280:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1280:
 	lea eax, [ebx+ecx]
 	mov ebx, [eax+0x14]
 	mov edx, [ebp-0xbc]
@@ -2475,10 +2475,10 @@ FX_ImpactMark_Generate_Callback_1280:
 	mov edx, [ebp-0xbc]
 	mov [edx+0x808], eax
 	cmp ebx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_1280
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1280
 	mov ecx, [esi+0x40]
 	lea ebx, [edx+0x15010]
-FX_ImpactMark_Generate_Callback_1290:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1290:
 	lea eax, [ecx+ebx]
 	mov ecx, [eax+0x40]
 	mov edx, [ebp-0xbc]
@@ -2487,10 +2487,10 @@ FX_ImpactMark_Generate_Callback_1290:
 	mov edx, [ebp-0xbc]
 	mov [edx+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_ImpactMark_Generate_Callback_1290
+	jnz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1290
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_ImpactMark_Generate_Callback_1300
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1300
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
@@ -2498,50 +2498,50 @@ FX_ImpactMark_Generate_Callback_1290:
 	movzx edx, word [esi]
 	mov ebx, [ebp-0xbc]
 	mov [ebx+eax], dx
-FX_ImpactMark_Generate_Callback_1300:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1300:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_ImpactMark_Generate_Callback_1310
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1310
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xbc]
 	mov [edx+eax+0x2], cx
-FX_ImpactMark_Generate_Callback_1310:
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1310:
 	mov dword [esi+0x4], 0xffffffff
 	mov ecx, [ebp-0xbc]
 	movzx eax, word [ecx+0x4]
 	mov [esi+0x2], ax
 	mov [ecx+0x4], di
-	jmp FX_ImpactMark_Generate_Callback_1140
-FX_ImpactMark_Generate_Callback_860:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1140
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__860:
 	mov eax, [ebp-0x80]
 	test eax, eax
-	jz FX_ImpactMark_Generate_Callback_1320
+	jz _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1320
 	mov ebx, [ebp-0x80]
 	mov [ebx], cx
-	jmp FX_ImpactMark_Generate_Callback_1320
-FX_ImpactMark_Generate_Callback_700:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1320
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__700:
 	mov eax, 0xffffffff
-	jmp FX_ImpactMark_Generate_Callback_1330
-FX_ImpactMark_Generate_Callback_450:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1330
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__450:
 	mov ebx, [ebp-0xbc]
 	mov [ebx+0x6], cx
-	jmp FX_ImpactMark_Generate_Callback_1340
-FX_ImpactMark_Generate_Callback_620:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1340
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__620:
 	mov ebx, [ebp-0xbc]
 	mov [ebx+0x6], cx
-	jmp FX_ImpactMark_Generate_Callback_930
-FX_ImpactMark_Generate_Callback_1260:
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__930
+_Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1260:
 	mov ebx, [ebp-0xbc]
 	mov [ebx+0x6], cx
-	jmp FX_ImpactMark_Generate_Callback_1190
+	jmp _Z31FX_ImpactMark_Generate_CallbackPviP9FxMarkTriiP11FxMarkPointPKfS5__1190
 	nop
 
 
 ;FX_LinkMarkIntoList(FxMarksSystem*, unsigned short*, FxMark*)
-FX_LinkMarkIntoList:
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2553,17 +2553,17 @@ FX_LinkMarkIntoList:
 	mov [ebp-0x2c], ecx
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_LinkMarkIntoList_10
+	jz _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_10
 	mov edx, [ecx+0x2c]
 	mov [ebp-0x18], edx
 	mov ecx, [ebp-0x20]
 	mov [ebp-0x14], ecx
 	mov word [ebp-0xe], 0xffff
 	mov esi, edx
-	jmp FX_LinkMarkIntoList_20
-FX_LinkMarkIntoList_50:
+	jmp _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_20
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_50:
 	mov esi, [ebp-0x18]
-FX_LinkMarkIntoList_20:
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_20:
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
@@ -2571,8 +2571,8 @@ FX_LinkMarkIntoList_20:
 	mov ebx, [ebp-0x1c]
 	add ebx, eax
 	cmp [ebx+0x2c], esi
-	jz FX_LinkMarkIntoList_30
-FX_LinkMarkIntoList_80:
+	jz _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_30
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_80:
 	mov edx, [ebp-0x2c]
 	add edx, 0xc
 	lea eax, [ebx+0xc]
@@ -2592,7 +2592,7 @@ FX_LinkMarkIntoList_80:
 	addss xmm0, xmm2
 	mulss xmm3, xmm3
 	ucomiss xmm3, xmm0
-	ja FX_LinkMarkIntoList_40
+	ja _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_40
 	mov ecx, [ebp-0x14]
 	movzx ecx, word [ecx]
 	mov [ebp-0xe], cx
@@ -2600,8 +2600,8 @@ FX_LinkMarkIntoList_80:
 	mov [ebp-0x14], esi
 	movzx eax, word [ebx+0x2]
 	cmp ax, 0xffff
-	jnz FX_LinkMarkIntoList_50
-FX_LinkMarkIntoList_90:
+	jnz _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_50
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_90:
 	mov eax, [ebp-0x1c]
 	add eax, 0x810
 	mov edx, [ebp-0x2c]
@@ -2622,14 +2622,14 @@ FX_LinkMarkIntoList_90:
 	movzx esi, word [ebp-0xe]
 	mov [ebx], si
 	cmp ax, 0xffff
-	jz FX_LinkMarkIntoList_60
+	jz _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_60
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edi, [ebp-0x1c]
 	mov [edi+eax], cx
-FX_LinkMarkIntoList_60:
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_60:
 	mov eax, [ebp-0x14]
 	mov [eax], cx
 	add esp, 0x30
@@ -2638,7 +2638,7 @@ FX_LinkMarkIntoList_60:
 	pop edi
 	pop ebp
 	ret
-FX_LinkMarkIntoList_30:
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_30:
 	lea edi, [ebx+0x30]
 	mov [ebp-0x30], edi
 	mov eax, [ebp-0x2c]
@@ -2650,28 +2650,28 @@ FX_LinkMarkIntoList_30:
 	mov ecx, 0x6
 	repe cmpsb
 	mov eax, 0x0
-	jz FX_LinkMarkIntoList_70
+	jz _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_70
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-FX_LinkMarkIntoList_70:
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_70:
 	test eax, eax
-	jnz FX_LinkMarkIntoList_80
-	jmp FX_LinkMarkIntoList_90
-FX_LinkMarkIntoList_10:
+	jnz _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_80
+	jmp _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_90
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_10:
 	mov edi, edx
-FX_LinkMarkIntoList_100:
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_100:
 	mov [ebp-0x14], edi
 	mov word [ebp-0xe], 0xffff
-	jmp FX_LinkMarkIntoList_90
-FX_LinkMarkIntoList_40:
+	jmp _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_90
+_Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_40:
 	mov edi, [ebp-0x20]
-	jmp FX_LinkMarkIntoList_100
+	jmp _Z19FX_LinkMarkIntoListP13FxMarksSystemPtP6FxMark_100
 	nop
 
 
 ;FX_GenerateMarkVertsForMark_FinishAnimated(FxMarksSystem*, FxMark*, unsigned short, FxActiveMarkSurf*, float const (*) [3])
-FX_GenerateMarkVertsForMark_FinishAnimated:
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2696,12 +2696,12 @@ FX_GenerateMarkVertsForMark_FinishAnimated:
 	mov [esp+0x4], eax
 	mov eax, [edx]
 	mov [esp], eax
-	call R_AddMarkMeshDrawSurf
+	call _Z21R_AddMarkMeshDrawSurfP8MaterialPK14GfxMarkContextPtj
 	add ebx, 0xffffff80
-	jz FX_GenerateMarkVertsForMark_FinishAnimated_10
+	jz _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_10
 	movzx eax, si
 	mov [esp], eax
-	call R_GetMarkMeshVerts
+	call _Z18R_GetMarkMeshVertst
 	mov esi, eax
 	movss xmm0, dword [_float_0_50000000]
 	movaps xmm1, xmm0
@@ -2733,16 +2733,16 @@ FX_GenerateMarkVertsForMark_FinishAnimated:
 	mov edx, [eax+0x40]
 	mov [ebp-0x94], edx
 	cmp dword [ebp-0x9c], 0x2
-	jg FX_GenerateMarkVertsForMark_FinishAnimated_20
-FX_GenerateMarkVertsForMark_FinishAnimated_120:
+	jg _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_20
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_120:
 	mov dword [ebp-0x40], 0x0
-FX_GenerateMarkVertsForMark_FinishAnimated_130:
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_130:
 	mov ebx, eax
 	mov dword [ebp-0x44], 0x0
-	jmp FX_GenerateMarkVertsForMark_FinishAnimated_30
-FX_GenerateMarkVertsForMark_FinishAnimated_60:
+	jmp _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_30
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_60:
 	mov eax, 0x3fff
-FX_GenerateMarkVertsForMark_FinishAnimated_80:
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_80:
 	mov ecx, edx
 	or ecx, eax
 	movss [ebp-0x1c], xmm2
@@ -2753,9 +2753,9 @@ FX_GenerateMarkVertsForMark_FinishAnimated_80:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenerateMarkVertsForMark_FinishAnimated_40
+	jle _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_40
 	mov eax, 0x3fff
-FX_GenerateMarkVertsForMark_FinishAnimated_100:
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_100:
 	or edx, eax
 	shl ecx, 0x10
 	lea eax, [edx+ecx]
@@ -2821,8 +2821,8 @@ FX_GenerateMarkVertsForMark_FinishAnimated_100:
 	add dword [ebp-0x44], 0x1
 	mov eax, [ebp-0x44]
 	cmp [ebp-0x9c], eax
-	jz FX_GenerateMarkVertsForMark_FinishAnimated_50
-FX_GenerateMarkVertsForMark_FinishAnimated_30:
+	jz _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_50
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_30:
 	movss xmm5, dword [ebx]
 	mov eax, [ebp-0xd4]
 	subss xmm5, [eax+0xc]
@@ -2960,7 +2960,7 @@ FX_GenerateMarkVertsForMark_FinishAnimated_30:
 	movss [ebp-0x118], xmm4
 	movss [ebp-0x128], xmm5
 	movss [ebp-0x138], xmm6
-	call MatrixTransformVector43
+	call _Z23MatrixTransformVector43PKfPA3_S_Pf
 	mov dword [esi+0xc], 0xbf800000
 	mov edx, [ebp-0xd4]
 	mov eax, [edx+0x28]
@@ -3006,20 +3006,20 @@ FX_GenerateMarkVertsForMark_FinishAnimated_30:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jg FX_GenerateMarkVertsForMark_FinishAnimated_60
+	jg _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_60
 	cmp eax, 0xffffc000
-	jg FX_GenerateMarkVertsForMark_FinishAnimated_70
+	jg _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_70
 	xor eax, eax
-	jmp FX_GenerateMarkVertsForMark_FinishAnimated_80
-FX_GenerateMarkVertsForMark_FinishAnimated_40:
+	jmp _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_80
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_40:
 	cmp eax, 0xffffc000
-	jg FX_GenerateMarkVertsForMark_FinishAnimated_90
+	jg _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_90
 	xor eax, eax
-	jmp FX_GenerateMarkVertsForMark_FinishAnimated_100
-FX_GenerateMarkVertsForMark_FinishAnimated_50:
+	jmp _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_100
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_50:
 	mov eax, [ebp-0x40]
 	test eax, eax
-	jz FX_GenerateMarkVertsForMark_FinishAnimated_110
+	jz _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_110
 	mov edx, [ebp-0x40]
 	mov [ebp-0x9c], edx
 	mov eax, [ebp-0xe0]
@@ -3027,24 +3027,24 @@ FX_GenerateMarkVertsForMark_FinishAnimated_50:
 	mov edx, [eax+0x40]
 	mov [ebp-0x94], edx
 	cmp dword [ebp-0x9c], 0x2
-	jle FX_GenerateMarkVertsForMark_FinishAnimated_120
-FX_GenerateMarkVertsForMark_FinishAnimated_20:
+	jle _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_120
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_20:
 	mov edx, [ebp-0x9c]
 	sub edx, 0x2
 	mov [ebp-0x40], edx
 	mov dword [ebp-0x9c], 0x2
-	jmp FX_GenerateMarkVertsForMark_FinishAnimated_130
-FX_GenerateMarkVertsForMark_FinishAnimated_110:
+	jmp _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_130
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_110:
 	add esp, 0x14c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForMark_FinishAnimated_10:
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_10:
 	movzx eax, si
 	mov [esp], eax
-	call R_GetMarkMeshVerts
+	call _Z18R_GetMarkMeshVertst
 	mov esi, eax
 	movss xmm0, dword [_float_0_50000000]
 	movaps xmm1, xmm0
@@ -3076,14 +3076,14 @@ FX_GenerateMarkVertsForMark_FinishAnimated_10:
 	mov edx, [eax+0x40]
 	mov [ebp-0xb8], edx
 	cmp dword [ebp-0xc0], 0x2
-	jg FX_GenerateMarkVertsForMark_FinishAnimated_140
-FX_GenerateMarkVertsForMark_FinishAnimated_160:
+	jg _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_140
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_160:
 	mov dword [ebp-0x3c], 0x0
-FX_GenerateMarkVertsForMark_FinishAnimated_170:
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_170:
 	mov edi, eax
 	mov dword [ebp-0x48], 0x0
 	lea ebx, [eax+0x14]
-FX_GenerateMarkVertsForMark_FinishAnimated_150:
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_150:
 	movss xmm7, dword [ebx-0x14]
 	mov eax, [ebp-0xd4]
 	subss xmm7, [eax+0xc]
@@ -3201,7 +3201,7 @@ FX_GenerateMarkVertsForMark_FinishAnimated_150:
 	movss [ebp-0x128], xmm5
 	movss [ebp-0x138], xmm6
 	movss [ebp-0x148], xmm7
-	call MatrixTransformVector43
+	call _Z23MatrixTransformVector43PKfPA3_S_Pf
 	mov dword [esi+0xc], 0xbf800000
 	mov edx, [ebp-0xd4]
 	mov eax, [edx+0x28]
@@ -3304,10 +3304,10 @@ FX_GenerateMarkVertsForMark_FinishAnimated_150:
 	add dword [ebp-0x48], 0x1
 	mov eax, [ebp-0x48]
 	cmp [ebp-0xc0], eax
-	jnz FX_GenerateMarkVertsForMark_FinishAnimated_150
+	jnz _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_150
 	mov eax, [ebp-0x3c]
 	test eax, eax
-	jz FX_GenerateMarkVertsForMark_FinishAnimated_110
+	jz _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_110
 	mov edx, [ebp-0x3c]
 	mov [ebp-0xc0], edx
 	mov eax, [ebp-0xe0]
@@ -3315,23 +3315,23 @@ FX_GenerateMarkVertsForMark_FinishAnimated_150:
 	mov edx, [eax+0x40]
 	mov [ebp-0xb8], edx
 	cmp dword [ebp-0xc0], 0x2
-	jle FX_GenerateMarkVertsForMark_FinishAnimated_160
-FX_GenerateMarkVertsForMark_FinishAnimated_140:
+	jle _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_160
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_140:
 	mov edx, [ebp-0xc0]
 	sub edx, 0x2
 	mov [ebp-0x3c], edx
 	mov dword [ebp-0xc0], 0x2
-	jmp FX_GenerateMarkVertsForMark_FinishAnimated_170
-FX_GenerateMarkVertsForMark_FinishAnimated_90:
+	jmp _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_170
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_90:
 	and eax, 0x3fff
-	jmp FX_GenerateMarkVertsForMark_FinishAnimated_100
-FX_GenerateMarkVertsForMark_FinishAnimated_70:
+	jmp _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_100
+_Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_70:
 	and eax, 0x3fff
-	jmp FX_GenerateMarkVertsForMark_FinishAnimated_80
+	jmp _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf_80
 
 
 ;FX_BeginMarks(int)
-FX_BeginMarks:
+_Z13FX_BeginMarksi:
 	push ebp
 	mov ebp, esp
 	mov ecx, fx_marksSystemPool
@@ -3346,7 +3346,7 @@ FX_BeginMarks:
 
 
 ;FX_InitMarksSystem(FxMarksSystem*)
-FX_InitMarksSystem:
+_Z18FX_InitMarksSystemP13FxMarksSystem:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3355,16 +3355,16 @@ FX_InitMarksSystem:
 	mov edi, [ebp+0x8]
 	mov eax, edi
 	mov edx, 0x400
-FX_InitMarksSystem_10:
+_Z18FX_InitMarksSystemP13FxMarksSystem_10:
 	mov word [eax+0x8], 0xffff
 	add eax, 0x2
 	sub edx, 0x1
-	jnz FX_InitMarksSystem_10
+	jnz _Z18FX_InitMarksSystemP13FxMarksSystem_10
 	mov word [edi+0x4], 0x0
 	mov ecx, edi
 	xor esi, esi
 	xor ebx, ebx
-FX_InitMarksSystem_20:
+_Z18FX_InitMarksSystemP13FxMarksSystem_20:
 	mov word [ecx+0x810], 0xffff
 	add esi, 0x1
 	add ebx, 0x44
@@ -3381,7 +3381,7 @@ FX_InitMarksSystem_20:
 	mov dword [ecx+0x814], 0xffffffff
 	add ecx, 0x44
 	cmp esi, 0x1ff
-	jnz FX_InitMarksSystem_20
+	jnz _Z18FX_InitMarksSystemP13FxMarksSystem_20
 	mov word [edi+0x8fcc], 0xffff
 	mov word [edi+0x8fce], 0xffff
 	mov dword [edi+0x8fd0], 0xffffffff
@@ -3389,25 +3389,25 @@ FX_InitMarksSystem_20:
 	mov [edi+0x808], eax
 	mov edx, edi
 	xor ecx, ecx
-FX_InitMarksSystem_30:
+_Z18FX_InitMarksSystemP13FxMarksSystem_30:
 	add ecx, 0x1
 	add eax, 0x18
 	mov [edx+0x9010], eax
 	add edx, 0x18
 	cmp ecx, 0x7ff
-	jnz FX_InitMarksSystem_30
+	jnz _Z18FX_InitMarksSystemP13FxMarksSystem_30
 	mov dword [edi+0x14ff8], 0x0
 	lea eax, [edi+0x15010]
 	mov [edi+0x80c], eax
 	mov edx, edi
 	xor cx, cx
-FX_InitMarksSystem_40:
+_Z18FX_InitMarksSystemP13FxMarksSystem_40:
 	add ecx, 0x1
 	add eax, 0x44
 	mov [edx+0x15010], eax
 	add edx, 0x44
 	cmp ecx, 0xbff
-	jnz FX_InitMarksSystem_40
+	jnz _Z18FX_InitMarksSystemP13FxMarksSystem_40
 	mov dword [edi+0x47fcc], 0x0
 	mov word [edi+0x6], 0xffff
 	mov dword [edi+0x48014], 0x0
@@ -3420,7 +3420,7 @@ FX_InitMarksSystem_40:
 
 
 ;FX_CreateImpactMark(int, FxElemDef const*, FxSpatialFrame const*, int, unsigned int)
-FX_CreateImpactMark:
+_Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3435,7 +3435,7 @@ FX_CreateImpactMark:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call FX_SetupVisualState
+	call _Z19FX_SetupVisualStatePK9FxElemDefPK8FxEffectifP20FxElemPreVisualState
 	mov eax, [ebp-0x3c]
 	mov edi, fx_randomTable
 	movss xmm0, dword [edi+ebx*4+0x68]
@@ -3452,7 +3452,7 @@ FX_CreateImpactMark:
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x3f800000
 	mov [esp], esi
-	call FX_EvaluateVisualState
+	call _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState
 	mov ecx, [ebp+0xc]
 	movzx eax, byte [ecx+0xb1]
 	movzx edx, word [edi+ebx*4+0x54]
@@ -3472,20 +3472,20 @@ FX_CreateImpactMark:
 	mov eax, fx_marks
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_CreateImpactMark_10
+	jz _Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij_10
 	mov eax, fx_marksSystemPool
 	cmp byte [eax+0x48010], 0x0
-	jnz FX_CreateImpactMark_10
+	jnz _Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij_10
 	movss xmm0, dword [ebp-0x84]
 	ucomiss xmm0, [_float_0_10000000]
-	jp FX_CreateImpactMark_20
-	jb FX_CreateImpactMark_10
-FX_CreateImpactMark_20:
+	jp _Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij_20
+	jb _Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij_10
+_Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij_20:
 	lea edi, [ebp-0x70]
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x10]
 	mov [esp], eax
-	call UnitQuatToAxis
+	call _Z14UnitQuatToAxisPKfPA3_f
 	cvtss2sd xmm0, [ebp-0x80]
 	mulsd xmm0, [_double_57_29577951]
 	cvtsd2ss xmm0, xmm0
@@ -3495,7 +3495,7 @@ FX_CreateImpactMark_20:
 	mov [esp+0x4], edi
 	lea eax, [ebp-0x58]
 	mov [esp], eax
-	call RotatePointAroundVector
+	call _Z23RotatePointAroundVectorPfPKfS1_f
 	movss xmm3, dword [ebp-0x6c]
 	movaps xmm0, xmm3
 	mulss xmm0, [ebp-0x50]
@@ -3525,16 +3525,16 @@ FX_CreateImpactMark_20:
 	mov ecx, ebx
 	xor edx, edx
 	mov eax, [ebp+0x8]
-	call FX_ImpactMark_Generate
+	call _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj
 	mov eax, fx_marks_smodels
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz FX_CreateImpactMark_30
+	jnz _Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij_30
 	mov eax, fx_marks_ents
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_CreateImpactMark_10
-FX_CreateImpactMark_30:
+	jz _Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij_10
+_Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij_30:
 	mov eax, [ebp+0x18]
 	mov [esp+0xc], eax
 	lea edx, [ebp-0x30]
@@ -3546,8 +3546,8 @@ FX_CreateImpactMark_30:
 	mov ecx, [ebp-0x7c]
 	mov edx, 0x1
 	mov eax, [ebp+0x8]
-	call FX_ImpactMark_Generate
-FX_CreateImpactMark_10:
+	call _Z22FX_ImpactMark_Generatei24MarkFragmentsAgainstEnumP8MaterialPKfPA3_S2_fPKhfj
+_Z19FX_CreateImpactMarkiPK9FxElemDefPK14FxSpatialFrameij_10:
 	add esp, 0x9c
 	pop ebx
 	pop esi
@@ -3558,7 +3558,7 @@ FX_CreateImpactMark_10:
 
 
 ;FX_MarkEntDetachAll(int, int)
-FX_MarkEntDetachAll:
+_Z19FX_MarkEntDetachAllii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3569,13 +3569,13 @@ FX_MarkEntDetachAll:
 	mov edx, [ebp+0xc]
 	movzx eax, word [ebx+edx*2+0x8]
 	cmp ax, 0xffff
-	jz FX_MarkEntDetachAll_10
+	jz _Z19FX_MarkEntDetachAllii_10
 	mov [ebp-0x2c], ebx
 	lea edx, [ebx+0x810]
 	mov [ebp-0x24], edx
 	mov [ebp-0x18], edx
 	mov [ebp-0x10], edx
-FX_MarkEntDetachAll_110:
+_Z19FX_MarkEntDetachAllii_110:
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
@@ -3584,10 +3584,10 @@ FX_MarkEntDetachAll_110:
 	movzx eax, byte [esi+0x33]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz FX_MarkEntDetachAll_20
-	jg FX_MarkEntDetachAll_30
+	jz _Z19FX_MarkEntDetachAllii_20
+	jg _Z19FX_MarkEntDetachAllii_30
 	test eax, eax
-	jnz FX_MarkEntDetachAll_40
+	jnz _Z19FX_MarkEntDetachAllii_40
 	mov eax, esi
 	sub eax, [ebp-0x24]
 	sar eax, 0x2
@@ -3603,72 +3603,72 @@ FX_MarkEntDetachAll_110:
 	mov eax, [ebp-0x2c]
 	lea edi, [eax+0x9010]
 	mov edx, [ebx+0x808]
-	jmp FX_MarkEntDetachAll_50
-FX_MarkEntDetachAll_60:
+	jmp _Z19FX_MarkEntDetachAllii_50
+_Z19FX_MarkEntDetachAllii_60:
 	mov edx, eax
-FX_MarkEntDetachAll_50:
+_Z19FX_MarkEntDetachAllii_50:
 	lea eax, [ecx+edi]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [ebx+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntDetachAll_60
+	jnz _Z19FX_MarkEntDetachAllii_60
 	mov ecx, [esi+0x40]
 	lea edi, [ebx+0x15010]
 	mov edx, [ebx+0x80c]
-	jmp FX_MarkEntDetachAll_70
-FX_MarkEntDetachAll_80:
+	jmp _Z19FX_MarkEntDetachAllii_70
+_Z19FX_MarkEntDetachAllii_80:
 	mov edx, eax
-FX_MarkEntDetachAll_70:
+_Z19FX_MarkEntDetachAllii_70:
 	lea eax, [edi+ecx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [ebx+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntDetachAll_80
+	jnz _Z19FX_MarkEntDetachAllii_80
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_MarkEntDetachAll_90
+	jz _Z19FX_MarkEntDetachAllii_90
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [esi]
 	mov [ebx+eax], dx
-FX_MarkEntDetachAll_90:
+_Z19FX_MarkEntDetachAllii_90:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_MarkEntDetachAll_100
+	jz _Z19FX_MarkEntDetachAllii_100
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [ebx+eax+0x2], cx
-FX_MarkEntDetachAll_250:
+_Z19FX_MarkEntDetachAllii_250:
 	mov dword [esi+0x4], 0xffffffff
 	movzx ecx, word [ebx+0x4]
 	mov [esi+0x2], cx
 	movzx edx, word [ebp-0x26]
 	mov [ebx+0x4], dx
-FX_MarkEntDetachAll_40:
+_Z19FX_MarkEntDetachAllii_40:
 	add dword [ebx+0x48018], 0x1
 	mov edx, [ebp+0xc]
 	movzx eax, word [ebx+edx*2+0x8]
 	cmp ax, 0xffff
-	jnz FX_MarkEntDetachAll_110
-FX_MarkEntDetachAll_10:
+	jnz _Z19FX_MarkEntDetachAllii_110
+_Z19FX_MarkEntDetachAllii_10:
 	add esp, 0x20
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_MarkEntDetachAll_30:
+_Z19FX_MarkEntDetachAllii_30:
 	cmp eax, 0x80
-	jz FX_MarkEntDetachAll_120
+	jz _Z19FX_MarkEntDetachAllii_120
 	cmp eax, 0xc0
-	jnz FX_MarkEntDetachAll_40
-FX_MarkEntDetachAll_120:
+	jnz _Z19FX_MarkEntDetachAllii_40
+_Z19FX_MarkEntDetachAllii_120:
 	movzx eax, word [esi+0x34]
 	lea eax, [ebx+eax*2+0x8]
 	mov [ebp-0x20], eax
@@ -3686,55 +3686,55 @@ FX_MarkEntDetachAll_120:
 	mov ecx, [esi+0x3c]
 	lea edi, [ebx+0x9010]
 	mov edx, [ebx+0x808]
-	jmp FX_MarkEntDetachAll_130
-FX_MarkEntDetachAll_140:
+	jmp _Z19FX_MarkEntDetachAllii_130
+_Z19FX_MarkEntDetachAllii_140:
 	mov edx, eax
-FX_MarkEntDetachAll_130:
+_Z19FX_MarkEntDetachAllii_130:
 	lea eax, [ecx+edi]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [ebx+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntDetachAll_140
+	jnz _Z19FX_MarkEntDetachAllii_140
 	mov ecx, [esi+0x40]
 	lea edi, [ebx+0x15010]
 	mov edx, [ebx+0x80c]
-	jmp FX_MarkEntDetachAll_150
-FX_MarkEntDetachAll_160:
+	jmp _Z19FX_MarkEntDetachAllii_150
+_Z19FX_MarkEntDetachAllii_160:
 	mov edx, eax
-FX_MarkEntDetachAll_150:
+_Z19FX_MarkEntDetachAllii_150:
 	lea eax, [edi+ecx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [ebx+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntDetachAll_160
+	jnz _Z19FX_MarkEntDetachAllii_160
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_MarkEntDetachAll_170
+	jz _Z19FX_MarkEntDetachAllii_170
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [esi]
 	mov [ebx+eax], dx
-FX_MarkEntDetachAll_170:
+_Z19FX_MarkEntDetachAllii_170:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_MarkEntDetachAll_180
+	jz _Z19FX_MarkEntDetachAllii_180
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [ebx+eax+0x2], cx
-FX_MarkEntDetachAll_260:
+_Z19FX_MarkEntDetachAllii_260:
 	mov dword [esi+0x4], 0xffffffff
 	movzx ecx, word [ebx+0x4]
 	mov [esi+0x2], cx
 	movzx edx, word [ebp-0x1a]
 	mov [ebx+0x4], dx
-	jmp FX_MarkEntDetachAll_40
-FX_MarkEntDetachAll_20:
+	jmp _Z19FX_MarkEntDetachAllii_40
+_Z19FX_MarkEntDetachAllii_20:
 	mov eax, esi
 	sub eax, [ebp-0x10]
 	sar eax, 0x2
@@ -3750,68 +3750,68 @@ FX_MarkEntDetachAll_20:
 	mov eax, [ebp-0x2c]
 	lea edi, [eax+0x9010]
 	mov edx, [ebx+0x808]
-	jmp FX_MarkEntDetachAll_190
-FX_MarkEntDetachAll_200:
+	jmp _Z19FX_MarkEntDetachAllii_190
+_Z19FX_MarkEntDetachAllii_200:
 	mov edx, eax
-FX_MarkEntDetachAll_190:
+_Z19FX_MarkEntDetachAllii_190:
 	lea eax, [ecx+edi]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [ebx+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntDetachAll_200
+	jnz _Z19FX_MarkEntDetachAllii_200
 	mov ecx, [esi+0x40]
 	lea edi, [ebx+0x15010]
 	mov edx, [ebx+0x80c]
-	jmp FX_MarkEntDetachAll_210
-FX_MarkEntDetachAll_220:
+	jmp _Z19FX_MarkEntDetachAllii_210
+_Z19FX_MarkEntDetachAllii_220:
 	mov edx, eax
-FX_MarkEntDetachAll_210:
+_Z19FX_MarkEntDetachAllii_210:
 	lea eax, [ecx+edi]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [ebx+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntDetachAll_220
+	jnz _Z19FX_MarkEntDetachAllii_220
 	movzx ecx, word [esi+0x2]
 	cmp cx, 0xffff
-	jz FX_MarkEntDetachAll_230
+	jz _Z19FX_MarkEntDetachAllii_230
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [esi]
 	mov [ebx+eax], dx
-FX_MarkEntDetachAll_230:
+_Z19FX_MarkEntDetachAllii_230:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_MarkEntDetachAll_240
+	jz _Z19FX_MarkEntDetachAllii_240
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [ebx+eax+0x2], cx
-FX_MarkEntDetachAll_240:
+_Z19FX_MarkEntDetachAllii_240:
 	mov dword [esi+0x4], 0xffffffff
 	movzx eax, word [ebx+0x4]
 	mov [esi+0x2], ax
 	movzx edx, word [ebp-0x12]
 	mov [ebx+0x4], dx
-	jmp FX_MarkEntDetachAll_40
-FX_MarkEntDetachAll_100:
+	jmp _Z19FX_MarkEntDetachAllii_40
+_Z19FX_MarkEntDetachAllii_100:
 	mov [ebx+0x6], cx
-	jmp FX_MarkEntDetachAll_250
-FX_MarkEntDetachAll_180:
+	jmp _Z19FX_MarkEntDetachAllii_250
+_Z19FX_MarkEntDetachAllii_180:
 	mov edi, [ebp-0x20]
 	test edi, edi
-	jz FX_MarkEntDetachAll_260
+	jz _Z19FX_MarkEntDetachAllii_260
 	mov eax, [ebp-0x20]
 	mov [eax], cx
-	jmp FX_MarkEntDetachAll_260
+	jmp _Z19FX_MarkEntDetachAllii_260
 
 
 ;FX_MarkEntUpdateEnd(FxMarkDObjUpdateContext*, int, int, DObj_s*, unsigned char, unsigned short)
-FX_MarkEntUpdateEnd:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3822,22 +3822,22 @@ FX_MarkEntUpdateEnd:
 	movzx edx, word [ebp+0x1c]
 	mov ecx, [ebp+0x8]
 	cmp byte [ecx+0x104], 0x0
-	jz FX_MarkEntUpdateEnd_10
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_10
 	test al, al
-	jnz FX_MarkEntUpdateEnd_20
-FX_MarkEntUpdateEnd_210:
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_20
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_210:
 	mov esi, [ebp+0x10]
 	mov eax, fx_marksSystemPool
 	movzx edi, word [eax+esi*2+0x8]
 	cmp di, 0xffff
-	jz FX_MarkEntUpdateEnd_30
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_30
 	lea edx, [eax+0x810]
 	mov [ebp-0x5c], edx
-	jmp FX_MarkEntUpdateEnd_40
-FX_MarkEntUpdateEnd_50:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_40
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_50:
 	cmp di, 0xffff
-	jz FX_MarkEntUpdateEnd_30
-FX_MarkEntUpdateEnd_40:
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_30
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_40:
 	movzx eax, di
 	mov edx, eax
 	shl edx, 0x6
@@ -3848,7 +3848,7 @@ FX_MarkEntUpdateEnd_40:
 	movzx eax, byte [ebx+0x33]
 	and eax, 0xc0
 	add eax, 0xffffff80
-	jnz FX_MarkEntUpdateEnd_50
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_50
 	mov esi, ecx
 	movzx eax, word [ebx+0x34]
 	lea eax, [ecx+eax*2+0x8]
@@ -3869,53 +3869,53 @@ FX_MarkEntUpdateEnd_40:
 	mov [ebp-0x7c], esi
 	mov edx, esi
 	mov esi, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_60
-FX_MarkEntUpdateEnd_70:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_60
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_70:
 	mov edx, [ebp-0x7c]
-FX_MarkEntUpdateEnd_60:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_60:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x14]
 	mov edx, [esi+0x808]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateEnd_70
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_70
 	mov ecx, [ebx+0x40]
 	lea eax, [esi+0x15010]
 	mov [ebp-0x7c], eax
 	mov edx, eax
 	mov esi, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_80
-FX_MarkEntUpdateEnd_90:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_80
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_90:
 	mov edx, [ebp-0x7c]
-FX_MarkEntUpdateEnd_80:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_80:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x40]
 	mov edx, [esi+0x80c]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateEnd_90
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_90
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_MarkEntUpdateEnd_100
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_100
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
-FX_MarkEntUpdateEnd_100:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_100:
 	movzx eax, word [ebx]
 	cmp ax, 0xffff
-	jz FX_MarkEntUpdateEnd_110
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_110
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, fx_marksSystemPool
 	mov [edx+eax+0x2], cx
-FX_MarkEntUpdateEnd_400:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_400:
 	mov dword [ebx+0x4], 0xffffffff
 	movzx eax, word [edx+0x4]
 	mov [ebx+0x2], ax
@@ -3923,40 +3923,40 @@ FX_MarkEntUpdateEnd_400:
 	mov [edx+0x4], cx
 	add dword [edx+0x48018], 0x1
 	cmp di, 0xffff
-	jnz FX_MarkEntUpdateEnd_40
-FX_MarkEntUpdateEnd_30:
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_40
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_30:
 	mov esi, [ebp+0x8]
-FX_MarkEntUpdateEnd_220:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_220:
 	mov esi, [esi+0x100]
 	mov [ebp-0x68], esi
 	test esi, esi
-	jnz FX_MarkEntUpdateEnd_120
-FX_MarkEntUpdateEnd_130:
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_120
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_130:
 	add esp, 0x8c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_MarkEntUpdateEnd_10:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_10:
 	mov esi, ecx
 	mov esi, [esi+0x100]
 	mov [ebp-0x68], esi
 	test esi, esi
-	jz FX_MarkEntUpdateEnd_130
-FX_MarkEntUpdateEnd_120:
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_130
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_120:
 	mov eax, [ebp+0x14]
 	test eax, eax
-	jz FX_MarkEntUpdateEnd_140
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_140
 	mov edi, [ebp+0x14]
 	mov [esp], edi
-	call DObjGetNumModels
+	call _Z16DObjGetNumModelsPK6DObj_s
 	mov [ebp-0x58], eax
 	test eax, eax
-	jnz FX_MarkEntUpdateEnd_150
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_150
 	mov dword [ebp-0x1c], 0x0
 	mov dword [ebp-0x4c], 0x0
-FX_MarkEntUpdateEnd_460:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_460:
 	mov edx, [ebp-0x1c]
 	mov [ebp-0x50], edx
 	mov ecx, fx_marksSystemPool
@@ -3965,21 +3965,21 @@ FX_MarkEntUpdateEnd_460:
 	mov esi, [ebp-0x68]
 	mov [ebp-0x6c], esi
 	mov edi, edx
-FX_MarkEntUpdateEnd_200:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_200:
 	sub edi, [ebp-0x4c]
 	mov [ebp-0x48], edi
 	mov eax, [ebp+0x10]
 	mov edx, fx_marksSystemPool
 	movzx esi, word [edx+eax*2+0x8]
 	cmp si, 0xffff
-	jz FX_MarkEntUpdateEnd_160
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_160
 	mov ecx, [ebp-0x70]
 	mov [ebp-0x3c], ecx
-	jmp FX_MarkEntUpdateEnd_170
-FX_MarkEntUpdateEnd_180:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_170
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_180:
 	cmp si, 0xffff
-	jz FX_MarkEntUpdateEnd_160
-FX_MarkEntUpdateEnd_170:
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_160
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_170:
 	movzx eax, si
 	mov edx, eax
 	shl edx, 0x6
@@ -3992,41 +3992,41 @@ FX_MarkEntUpdateEnd_170:
 	mov eax, edx
 	and eax, 0xc0
 	cmp eax, 0xc0
-	jnz FX_MarkEntUpdateEnd_180
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_180
 	and edx, 0x3f
 	cmp [ebp-0x48], edx
-	jz FX_MarkEntUpdateEnd_190
-	jge FX_MarkEntUpdateEnd_180
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_190
+	jge _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_180
 	lea eax, [ecx-0x1]
 	mov [ebx+0x33], al
 	cmp si, 0xffff
-	jnz FX_MarkEntUpdateEnd_170
-FX_MarkEntUpdateEnd_160:
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_170
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_160:
 	add dword [ebp-0x4c], 0x1
 	add dword [ebp-0x50], 0x1
 	mov esi, [ebp-0x50]
 	cmp [ebp-0x6c], esi
-	jz FX_MarkEntUpdateEnd_130
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_130
 	mov edi, esi
-	jmp FX_MarkEntUpdateEnd_200
-FX_MarkEntUpdateEnd_20:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_200
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_20:
 	cmp [ecx+0x106], dx
-	jnz FX_MarkEntUpdateEnd_210
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_210
 	mov esi, [ebp+0x8]
-	jmp FX_MarkEntUpdateEnd_220
-FX_MarkEntUpdateEnd_140:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_220
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_140:
 	mov eax, [ebp+0x10]
 	mov edx, fx_marksSystemPool
 	movzx edi, word [edx+eax*2+0x8]
 	cmp di, 0xffff
-	jz FX_MarkEntUpdateEnd_130
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_130
 	lea ecx, [edx+0x810]
 	mov [ebp-0x24], ecx
-	jmp FX_MarkEntUpdateEnd_230
-FX_MarkEntUpdateEnd_240:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_230
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_240:
 	cmp di, 0xffff
-	jz FX_MarkEntUpdateEnd_130
-FX_MarkEntUpdateEnd_230:
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_130
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_230:
 	movzx eax, di
 	mov edx, eax
 	shl edx, 0x6
@@ -4037,7 +4037,7 @@ FX_MarkEntUpdateEnd_230:
 	movzx eax, byte [ebx+0x33]
 	and eax, 0xc0
 	cmp eax, 0xc0
-	jnz FX_MarkEntUpdateEnd_240
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_240
 	movzx eax, word [ebx+0x34]
 	lea eax, [esi+eax*2+0x8]
 	mov [ebp-0x2c], eax
@@ -4057,61 +4057,61 @@ FX_MarkEntUpdateEnd_230:
 	mov [ebp-0x7c], eax
 	mov edx, eax
 	mov esi, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_250
-FX_MarkEntUpdateEnd_260:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_250
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_260:
 	mov edx, [ebp-0x7c]
-FX_MarkEntUpdateEnd_250:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_250:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x14]
 	mov edx, [esi+0x808]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateEnd_260
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_260
 	mov ecx, [ebx+0x40]
 	lea eax, [esi+0x15010]
 	mov [ebp-0x7c], eax
 	mov edx, eax
 	mov esi, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_270
-FX_MarkEntUpdateEnd_280:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_270
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_280:
 	mov edx, [ebp-0x7c]
-FX_MarkEntUpdateEnd_270:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_270:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x40]
 	mov edx, [esi+0x80c]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateEnd_280
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_280
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_MarkEntUpdateEnd_290
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_290
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
-FX_MarkEntUpdateEnd_290:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_290:
 	movzx eax, word [ebx]
 	cmp ax, 0xffff
-	jz FX_MarkEntUpdateEnd_300
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_300
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, fx_marksSystemPool
 	mov [edx+eax+0x2], cx
-FX_MarkEntUpdateEnd_580:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_580:
 	mov dword [ebx+0x4], 0xffffffff
 	movzx eax, word [edx+0x4]
 	mov [ebx+0x2], ax
 	movzx ecx, word [ebp-0x26]
 	mov [edx+0x4], cx
 	add dword [edx+0x48018], 0x1
-	jmp FX_MarkEntUpdateEnd_240
-FX_MarkEntUpdateEnd_190:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_240
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_190:
 	movzx eax, word [ebx+0x34]
 	mov edi, fx_marksSystemPool
 	lea eax, [edi+eax*2+0x8]
@@ -4131,77 +4131,77 @@ FX_MarkEntUpdateEnd_190:
 	lea eax, [edi+0x9010]
 	mov [ebp-0x80], eax
 	mov edx, eax
-	jmp FX_MarkEntUpdateEnd_310
-FX_MarkEntUpdateEnd_320:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_310
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_320:
 	mov edx, [ebp-0x80]
-FX_MarkEntUpdateEnd_310:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_310:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x14]
 	mov edx, [edi+0x808]
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateEnd_320
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_320
 	mov ecx, [ebx+0x40]
 	lea eax, [edi+0x15010]
 	mov [ebp-0x80], eax
 	mov edx, eax
 	mov edi, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_330
-FX_MarkEntUpdateEnd_340:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_330
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_340:
 	mov edx, [ebp-0x80]
-FX_MarkEntUpdateEnd_330:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_330:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x40]
 	mov edx, [edi+0x80c]
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateEnd_340
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_340
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_MarkEntUpdateEnd_350
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_350
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [ebx]
 	mov [edi+eax], dx
-FX_MarkEntUpdateEnd_350:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_350:
 	movzx eax, word [ebx]
 	cmp ax, 0xffff
-	jz FX_MarkEntUpdateEnd_360
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_360
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, fx_marksSystemPool
 	mov [edx+eax+0x2], cx
-FX_MarkEntUpdateEnd_380:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_380:
 	mov dword [ebx+0x4], 0xffffffff
 	movzx eax, word [edx+0x4]
 	mov [ebx+0x2], ax
 	movzx ecx, word [ebp-0x3e]
 	mov [edx+0x4], cx
 	add dword [edx+0x48018], 0x1
-	jmp FX_MarkEntUpdateEnd_180
-FX_MarkEntUpdateEnd_360:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_180
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_360:
 	mov eax, [ebp-0x44]
 	test eax, eax
-	jz FX_MarkEntUpdateEnd_370
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_370
 	mov edi, [ebp-0x44]
 	mov [edi], cx
 	mov edx, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_380
-FX_MarkEntUpdateEnd_110:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_380
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_110:
 	mov eax, [ebp-0x64]
 	test eax, eax
-	jz FX_MarkEntUpdateEnd_390
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_390
 	mov esi, [ebp-0x64]
 	mov [esi], cx
 	mov edx, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_400
-FX_MarkEntUpdateEnd_150:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_400
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_150:
 	mov edi, [ebp+0x8]
 	mov [ebp-0x20], edi
 	mov dword [ebp-0x4c], 0x0
@@ -4211,11 +4211,11 @@ FX_MarkEntUpdateEnd_150:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x14]
 	mov [esp], edx
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov ecx, [ebp-0x20]
 	cmp eax, [ecx]
-	jz FX_MarkEntUpdateEnd_410
-FX_MarkEntUpdateEnd_470:
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_410
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_470:
 	mov ecx, [ebp-0x1c]
 	sub ecx, [ebp-0x4c]
 	mov [ebp-0x38], ecx
@@ -4223,12 +4223,12 @@ FX_MarkEntUpdateEnd_470:
 	mov eax, fx_marksSystemPool
 	movzx esi, word [eax+edi*2+0x8]
 	cmp si, 0xffff
-	jnz FX_MarkEntUpdateEnd_420
-	jmp FX_MarkEntUpdateEnd_430
-FX_MarkEntUpdateEnd_440:
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_420
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_430
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_440:
 	cmp si, 0xffff
-	jz FX_MarkEntUpdateEnd_430
-FX_MarkEntUpdateEnd_420:
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_430
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_420:
 	movzx eax, si
 	mov edx, eax
 	shl edx, 0x6
@@ -4241,46 +4241,46 @@ FX_MarkEntUpdateEnd_420:
 	mov eax, edx
 	and eax, 0xc0
 	cmp eax, 0xc0
-	jnz FX_MarkEntUpdateEnd_440
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_440
 	and edx, 0x3f
 	cmp [ebp-0x38], edx
-	jz FX_MarkEntUpdateEnd_450
-	jge FX_MarkEntUpdateEnd_440
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_450
+	jge _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_440
 	lea eax, [ecx-0x1]
 	mov [ebx+0x33], al
 	cmp si, 0xffff
-	jnz FX_MarkEntUpdateEnd_420
-FX_MarkEntUpdateEnd_430:
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_420
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_430:
 	add dword [ebp-0x4c], 0x1
-FX_MarkEntUpdateEnd_480:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_480:
 	add dword [ebp-0x1c], 0x1
 	mov esi, [ebp-0x1c]
 	cmp [ebp-0x68], esi
-	jz FX_MarkEntUpdateEnd_130
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_130
 	add dword [ebp-0x20], 0x4
 	mov eax, [ebp-0x58]
 	cmp [ebp-0x54], eax
-	jz FX_MarkEntUpdateEnd_460
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_460
 	mov eax, [ebp-0x54]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x14]
 	mov [esp], edx
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov ecx, [ebp-0x20]
 	cmp eax, [ecx]
-	jnz FX_MarkEntUpdateEnd_470
-FX_MarkEntUpdateEnd_410:
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_470
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_410:
 	mov esi, [ebp-0x54]
 	mov [esp+0x4], esi
 	mov edi, [ebp+0x14]
 	mov [esp], edi
-	call DObjGetModelParentBoneName
+	call _Z26DObjGetModelParentBoneNamePK6DObj_si
 	mov edx, [ebp-0x20]
 	cmp eax, [edx+0x80]
-	jnz FX_MarkEntUpdateEnd_470
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_470
 	add dword [ebp-0x54], 0x1
-	jmp FX_MarkEntUpdateEnd_480
-FX_MarkEntUpdateEnd_450:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_480
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_450:
 	movzx eax, word [ebx+0x34]
 	mov ecx, fx_marksSystemPool
 	lea eax, [ecx+eax*2+0x8]
@@ -4303,92 +4303,92 @@ FX_MarkEntUpdateEnd_450:
 	mov [ebp-0x80], edi
 	mov edx, edi
 	mov edi, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_490
-FX_MarkEntUpdateEnd_500:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_490
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_500:
 	mov edx, [ebp-0x80]
-FX_MarkEntUpdateEnd_490:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_490:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x14]
 	mov edx, [edi+0x808]
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateEnd_500
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_500
 	mov ecx, [ebx+0x40]
 	lea eax, [edi+0x15010]
 	mov [ebp-0x80], eax
 	mov edx, eax
 	mov edi, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_510
-FX_MarkEntUpdateEnd_520:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_510
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_520:
 	mov edx, [ebp-0x80]
-FX_MarkEntUpdateEnd_510:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_510:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x40]
 	mov edx, [edi+0x80c]
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateEnd_520
+	jnz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_520
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_MarkEntUpdateEnd_530
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_530
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [ebx]
 	mov [edi+eax], dx
-FX_MarkEntUpdateEnd_530:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_530:
 	movzx eax, word [ebx]
 	cmp ax, 0xffff
-	jz FX_MarkEntUpdateEnd_540
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_540
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, fx_marksSystemPool
 	mov [edx+eax+0x2], cx
-FX_MarkEntUpdateEnd_560:
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_560:
 	mov dword [ebx+0x4], 0xffffffff
 	movzx eax, word [edx+0x4]
 	mov [ebx+0x2], ax
 	movzx ecx, word [ebp-0x2e]
 	mov [edx+0x4], cx
 	add dword [edx+0x48018], 0x1
-	jmp FX_MarkEntUpdateEnd_440
-FX_MarkEntUpdateEnd_540:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_440
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_540:
 	mov eax, [ebp-0x34]
 	test eax, eax
-	jz FX_MarkEntUpdateEnd_550
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_550
 	mov edi, [ebp-0x34]
 	mov [edi], cx
 	mov edx, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_560
-FX_MarkEntUpdateEnd_300:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_560
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_300:
 	mov eax, [ebp-0x2c]
 	test eax, eax
-	jz FX_MarkEntUpdateEnd_570
+	jz _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_570
 	mov esi, [ebp-0x2c]
 	mov [esi], cx
 	mov edx, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_580
-FX_MarkEntUpdateEnd_370:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_580
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_370:
 	mov edx, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_380
-FX_MarkEntUpdateEnd_390:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_380
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_390:
 	mov edx, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_400
-FX_MarkEntUpdateEnd_550:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_400
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_550:
 	mov edx, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_560
-FX_MarkEntUpdateEnd_570:
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_560
+_Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_570:
 	mov edx, fx_marksSystemPool
-	jmp FX_MarkEntUpdateEnd_580
+	jmp _Z19FX_MarkEntUpdateEndP23FxMarkDObjUpdateContextiiP6DObj_sht_580
 
 
 ;FX_MarkEntUpdateBegin(FxMarkDObjUpdateContext*, DObj_s*, unsigned char, unsigned short)
-FX_MarkEntUpdateBegin:
+_Z21FX_MarkEntUpdateBeginP23FxMarkDObjUpdateContextP6DObj_sht:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4401,33 +4401,33 @@ FX_MarkEntUpdateBegin:
 	mov [ebp-0x1c], dx
 	mov eax, [ebp+0xc]
 	test eax, eax
-	jz FX_MarkEntUpdateBegin_10
+	jz _Z21FX_MarkEntUpdateBeginP23FxMarkDObjUpdateContextP6DObj_sht_10
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjGetNumModels
+	call _Z16DObjGetNumModelsPK6DObj_s
 	mov edi, eax
 	mov eax, [ebp+0x8]
 	mov [eax+0x100], edi
 	test edi, edi
-	jz FX_MarkEntUpdateBegin_20
+	jz _Z21FX_MarkEntUpdateBeginP23FxMarkDObjUpdateContextP6DObj_sht_20
 	mov ebx, eax
 	xor esi, esi
-FX_MarkEntUpdateBegin_30:
+_Z21FX_MarkEntUpdateBeginP23FxMarkDObjUpdateContextP6DObj_sht_30:
 	mov [esp+0x4], esi
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov [ebx], eax
 	mov [esp+0x4], esi
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjGetModelParentBoneName
+	call _Z26DObjGetModelParentBoneNamePK6DObj_si
 	mov [ebx+0x80], eax
 	add esi, 0x1
 	add ebx, 0x4
 	cmp edi, esi
-	jnz FX_MarkEntUpdateBegin_30
-FX_MarkEntUpdateBegin_20:
+	jnz _Z21FX_MarkEntUpdateBeginP23FxMarkDObjUpdateContextP6DObj_sht_30
+_Z21FX_MarkEntUpdateBeginP23FxMarkDObjUpdateContextP6DObj_sht_20:
 	movzx edx, byte [ebp-0x19]
 	mov eax, [ebp+0x8]
 	mov [eax+0x104], dl
@@ -4439,7 +4439,7 @@ FX_MarkEntUpdateBegin_20:
 	pop edi
 	pop ebp
 	ret
-FX_MarkEntUpdateBegin_10:
+_Z21FX_MarkEntUpdateBeginP23FxMarkDObjUpdateContextP6DObj_sht_10:
 	mov eax, [ebp+0x8]
 	mov dword [eax+0x100], 0x0
 	movzx edx, byte [ebp-0x19]
@@ -4456,7 +4456,7 @@ FX_MarkEntUpdateBegin_10:
 
 
 ;FX_GenerateMarkVertsForWorld(int)
-FX_GenerateMarkVertsForWorld:
+_Z28FX_GenerateMarkVertsForWorldi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4470,30 +4470,30 @@ FX_GenerateMarkVertsForWorld:
 	mov eax, fx_marks
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz FX_GenerateMarkVertsForWorld_10
+	jnz _Z28FX_GenerateMarkVertsForWorldi_10
 	add esp, 0x12c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForWorld_10:
-	call R_BeginMarkMeshVerts
+_Z28FX_GenerateMarkVertsForWorldi_10:
+	call _Z20R_BeginMarkMeshVertsv
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call FX_GetSystem
+	call _Z12FX_GetSystemi
 	mov [ebp-0xa8], eax
 	mov edx, fx_marksSystemPool
 	mov [ebp-0xdc], edx
 	mov byte [edx+0x48011], 0x0
 	movzx eax, word [edx+0x6]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForWorld_20
+	jz _Z28FX_GenerateMarkVertsForWorldi_20
 	mov dword [ebp-0xa4], 0x0
 	mov [ebp-0xbc], edx
 	mov ecx, [ebp-0xdc]
 	mov [ebp-0xe0], ecx
-FX_GenerateMarkVertsForWorld_40:
+_Z28FX_GenerateMarkVertsForWorldi_40:
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
@@ -4510,30 +4510,30 @@ FX_GenerateMarkVertsForWorld_40:
 	mov eax, [edi+0x94]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call FX_CullSphere
+	call _Z13FX_CullSpherePK8FxCamerajPKff
 	test al, al
-	jz FX_GenerateMarkVertsForWorld_30
+	jz _Z28FX_GenerateMarkVertsForWorldi_30
 	mov edi, fx_marksSystemPool
 	mov [ebp-0xdc], edi
-FX_GenerateMarkVertsForWorld_460:
+_Z28FX_GenerateMarkVertsForWorldi_460:
 	mov edx, [ebp-0x90]
 	movzx eax, word [edx+0x2]
 	cmp ax, 0xffff
-	jnz FX_GenerateMarkVertsForWorld_40
-FX_GenerateMarkVertsForWorld_20:
+	jnz _Z28FX_GenerateMarkVertsForWorldi_40
+_Z28FX_GenerateMarkVertsForWorldi_20:
 	mov ecx, [ebp-0xdc]
 	cmp byte [ecx+0x48011], 0x0
-	jnz FX_GenerateMarkVertsForWorld_50
-FX_GenerateMarkVertsForWorld_260:
-	call R_EndMarkMeshVerts
-FX_GenerateMarkVertsForWorld_160:
+	jnz _Z28FX_GenerateMarkVertsForWorldi_50
+_Z28FX_GenerateMarkVertsForWorldi_260:
+	call _Z18R_EndMarkMeshVertsv
+_Z28FX_GenerateMarkVertsForWorldi_160:
 	add esp, 0x12c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForWorld_30:
+_Z28FX_GenerateMarkVertsForWorldi_30:
 	mov edx, [ebp-0x90]
 	movzx eax, byte [edx+0x36]
 	lea eax, [eax+eax*2]
@@ -4550,18 +4550,18 @@ FX_GenerateMarkVertsForWorld_30:
 	mov [esp+0x4], eax
 	movzx eax, word [edx+0x38]
 	mov [esp], eax
-	call R_ReserveMarkMeshVerts
+	call _Z22R_ReserveMarkMeshVertsiPt
 	test al, al
-	jnz FX_GenerateMarkVertsForWorld_60
-FX_GenerateMarkVertsForWorld_170:
+	jnz _Z28FX_GenerateMarkVertsForWorldi_60
+_Z28FX_GenerateMarkVertsForWorldi_170:
 	mov ecx, [ebp-0x90]
 	movzx eax, byte [ecx+0x33]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz FX_GenerateMarkVertsForWorld_70
-	jg FX_GenerateMarkVertsForWorld_80
+	jz _Z28FX_GenerateMarkVertsForWorldi_70
+	jg _Z28FX_GenerateMarkVertsForWorldi_80
 	test eax, eax
-	jnz FX_GenerateMarkVertsForWorld_90
+	jnz _Z28FX_GenerateMarkVertsForWorldi_90
 	mov edi, [ebp-0xbc]
 	lea eax, [edi+0x810]
 	mov edx, [ebp-0x90]
@@ -4581,21 +4581,21 @@ FX_GenerateMarkVertsForWorld_170:
 	mov edx, fx_marksSystemPool
 	mov [ebp-0xdc], edx
 	mov edi, edx
-	jmp FX_GenerateMarkVertsForWorld_100
-FX_GenerateMarkVertsForWorld_110:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_100
+_Z28FX_GenerateMarkVertsForWorldi_110:
 	mov edi, [ebp-0xdc]
-FX_GenerateMarkVertsForWorld_100:
+_Z28FX_GenerateMarkVertsForWorldi_100:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov edx, [edi+0x808]
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForWorld_110
+	jnz _Z28FX_GenerateMarkVertsForWorldi_110
 	mov eax, [ebp-0x90]
 	mov ecx, [eax+0x40]
 	lea ebx, [edi+0x15010]
-FX_GenerateMarkVertsForWorld_120:
+_Z28FX_GenerateMarkVertsForWorldi_120:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov edi, [ebp-0xdc]
@@ -4603,11 +4603,11 @@ FX_GenerateMarkVertsForWorld_120:
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForWorld_120
+	jnz _Z28FX_GenerateMarkVertsForWorldi_120
 	mov eax, [ebp-0x90]
 	movzx ecx, word [eax+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForWorld_130
+	jz _Z28FX_GenerateMarkVertsForWorldi_130
 	mov ebx, eax
 	movzx eax, cx
 	mov edx, eax
@@ -4616,17 +4616,17 @@ FX_GenerateMarkVertsForWorld_120:
 	movzx edx, word [ebx]
 	mov [edi+eax], dx
 	mov edi, [ebp-0x90]
-FX_GenerateMarkVertsForWorld_610:
+_Z28FX_GenerateMarkVertsForWorldi_610:
 	movzx eax, word [edi]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForWorld_140
+	jz _Z28FX_GenerateMarkVertsForWorldi_140
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xdc]
 	mov [edx+eax+0x2], cx
-FX_GenerateMarkVertsForWorld_330:
+_Z28FX_GenerateMarkVertsForWorldi_330:
 	mov edi, [ebp-0x90]
 	mov dword [edi+0x4], 0xffffffff
 	mov eax, [ebp-0xdc]
@@ -4634,12 +4634,12 @@ FX_GenerateMarkVertsForWorld_330:
 	mov [edi+0x2], cx
 	mov [eax+0x4], si
 	mov edi, [ebp-0xdc]
-	jmp FX_GenerateMarkVertsForWorld_150
-FX_GenerateMarkVertsForWorld_50:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_150
+_Z28FX_GenerateMarkVertsForWorldi_50:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x0
-	call R_ReserveMarkMeshIndices
+	call _Z24R_ReserveMarkMeshIndicesiPP16r_double_index_t
 	mov ecx, [ebp-0x20]
 	lea eax, [ecx-0x4]
 	mov [ebp-0x20], eax
@@ -4647,15 +4647,15 @@ FX_GenerateMarkVertsForWorld_50:
 	movzx edx, word [ebx+0x48012]
 	mov word [eax+0x2], 0x0
 	mov [ecx-0x4], dx
-	call R_EndMarkMeshVerts
-	jmp FX_GenerateMarkVertsForWorld_160
-FX_GenerateMarkVertsForWorld_60:
+	call _Z18R_EndMarkMeshVertsv
+	jmp _Z28FX_GenerateMarkVertsForWorldi_160
+_Z28FX_GenerateMarkVertsForWorldi_60:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ReserveMarkMeshIndices
+	call _Z24R_ReserveMarkMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_GenerateMarkVertsForWorld_170
+	jz _Z28FX_GenerateMarkVertsForWorldi_170
 	and dword [ebp-0xa4], 0x1
 	mov ecx, [ebp-0xa4]
 	add ecx, ecx
@@ -4687,7 +4687,7 @@ FX_GenerateMarkVertsForWorld_60:
 	movzx ecx, word [ebp-0x1a]
 	mov [ebp-0x52], cx
 	mov eax, edx
-FX_GenerateMarkVertsForWorld_420:
+_Z28FX_GenerateMarkVertsForWorldi_420:
 	add eax, [ebp-0x94]
 	mov [ebp-0xa0], eax
 	mov edx, [eax+0x14]
@@ -4699,13 +4699,13 @@ FX_GenerateMarkVertsForWorld_420:
 	lea ebx, [ecx+0xc]
 	mov [ebp-0xcc], ebx
 	mov ebx, ecx
-	jmp FX_GenerateMarkVertsForWorld_180
-FX_GenerateMarkVertsForWorld_230:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_180
+_Z28FX_GenerateMarkVertsForWorldi_230:
 	mov edi, [ebp-0xc8]
 	test edi, edi
-	jnz FX_GenerateMarkVertsForWorld_190
+	jnz _Z28FX_GenerateMarkVertsForWorldi_190
 	mov edx, [ebp-0x34]
-FX_GenerateMarkVertsForWorld_400:
+_Z28FX_GenerateMarkVertsForWorldi_400:
 	mov edi, [ebp-0xa0]
 	mov eax, [edi+0xc]
 	mov [ebp-0x40], eax
@@ -4715,8 +4715,8 @@ FX_GenerateMarkVertsForWorld_400:
 	mov edi, [ebp-0xe0]
 	mov [ebp-0xdc], edi
 	cmp byte [edi+0x48011], 0x0
-	jnz FX_GenerateMarkVertsForWorld_200
-FX_GenerateMarkVertsForWorld_240:
+	jnz _Z28FX_GenerateMarkVertsForWorldi_200
+_Z28FX_GenerateMarkVertsForWorldi_240:
 	movzx ecx, word [ebp-0x52]
 	add cx, [ebx]
 	mov eax, [ebp-0xc8]
@@ -4729,7 +4729,7 @@ FX_GenerateMarkVertsForWorld_240:
 	movzx eax, word [ebp-0x52]
 	add ax, [ebx+0x4]
 	mov [edi+0x48012], ax
-FX_GenerateMarkVertsForWorld_250:
+_Z28FX_GenerateMarkVertsForWorldi_250:
 	mov edx, [ebp-0x38]
 	add edx, 0x3
 	mov [ebp-0xc8], edx
@@ -4739,27 +4739,27 @@ FX_GenerateMarkVertsForWorld_250:
 	mov ecx, [ebp-0xa0]
 	movzx eax, byte [ecx+0x12]
 	cmp [ebp-0x98], eax
-	jz FX_GenerateMarkVertsForWorld_210
-FX_GenerateMarkVertsForWorld_180:
+	jz _Z28FX_GenerateMarkVertsForWorldi_210
+_Z28FX_GenerateMarkVertsForWorldi_180:
 	mov ecx, 0x6
 	cld
 	lea esi, [ebp-0x40]
 	mov edi, [ebp-0xcc]
 	repe cmpsb
 	mov eax, 0x0
-	jz FX_GenerateMarkVertsForWorld_220
+	jz _Z28FX_GenerateMarkVertsForWorldi_220
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-FX_GenerateMarkVertsForWorld_220:
+_Z28FX_GenerateMarkVertsForWorldi_220:
 	test eax, eax
-	jnz FX_GenerateMarkVertsForWorld_230
+	jnz _Z28FX_GenerateMarkVertsForWorldi_230
 	mov edx, [ebp-0x34]
 	mov edi, [ebp-0xe0]
 	mov [ebp-0xdc], edi
 	cmp byte [edi+0x48011], 0x0
-	jz FX_GenerateMarkVertsForWorld_240
-FX_GenerateMarkVertsForWorld_200:
+	jz _Z28FX_GenerateMarkVertsForWorldi_240
+_Z28FX_GenerateMarkVertsForWorldi_200:
 	movzx ecx, word [edi+0x48012]
 	mov eax, [ebp-0xc8]
 	lea edx, [edx+eax*2]
@@ -4774,23 +4774,23 @@ FX_GenerateMarkVertsForWorld_200:
 	mov [edx+0x4], ax
 	mov [edx+0x2], cx
 	mov byte [edi+0x48011], 0x0
-	jmp FX_GenerateMarkVertsForWorld_250
-FX_GenerateMarkVertsForWorld_90:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_250
+_Z28FX_GenerateMarkVertsForWorldi_90:
 	mov ebx, fx_marksSystemPool
 	mov [ebp-0xdc], ebx
 	mov edi, ebx
-FX_GenerateMarkVertsForWorld_150:
+_Z28FX_GenerateMarkVertsForWorldi_150:
 	add dword [edi+0x48018], 0x1
 	mov ecx, [ebp-0xdc]
 	cmp byte [ecx+0x48011], 0x0
-	jz FX_GenerateMarkVertsForWorld_260
-	jmp FX_GenerateMarkVertsForWorld_50
-FX_GenerateMarkVertsForWorld_80:
+	jz _Z28FX_GenerateMarkVertsForWorldi_260
+	jmp _Z28FX_GenerateMarkVertsForWorldi_50
+_Z28FX_GenerateMarkVertsForWorldi_80:
 	cmp eax, 0x80
-	jz FX_GenerateMarkVertsForWorld_270
+	jz _Z28FX_GenerateMarkVertsForWorldi_270
 	cmp eax, 0xc0
-	jnz FX_GenerateMarkVertsForWorld_90
-FX_GenerateMarkVertsForWorld_270:
+	jnz _Z28FX_GenerateMarkVertsForWorldi_90
+_Z28FX_GenerateMarkVertsForWorldi_270:
 	mov edx, [ebp-0x90]
 	movzx eax, word [edx+0x34]
 	mov ecx, fx_marksSystemPool
@@ -4812,22 +4812,22 @@ FX_GenerateMarkVertsForWorld_270:
 	mov ecx, [ebx+0x3c]
 	mov edi, [ebp-0xdc]
 	lea ebx, [edi+0x9010]
-	jmp FX_GenerateMarkVertsForWorld_280
-FX_GenerateMarkVertsForWorld_290:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_280
+_Z28FX_GenerateMarkVertsForWorldi_290:
 	mov edi, [ebp-0xdc]
-FX_GenerateMarkVertsForWorld_280:
+_Z28FX_GenerateMarkVertsForWorldi_280:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov edx, [edi+0x808]
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForWorld_290
+	jnz _Z28FX_GenerateMarkVertsForWorldi_290
 	mov eax, [ebp-0x90]
 	mov ecx, [eax+0x40]
 	lea ebx, [edi+0x15010]
 	mov [ebp-0xc0], edi
-FX_GenerateMarkVertsForWorld_300:
+_Z28FX_GenerateMarkVertsForWorldi_300:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov edi, [ebp-0xdc]
@@ -4835,11 +4835,11 @@ FX_GenerateMarkVertsForWorld_300:
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForWorld_300
+	jnz _Z28FX_GenerateMarkVertsForWorldi_300
 	mov eax, [ebp-0x90]
 	movzx ecx, word [eax+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForWorld_310
+	jz _Z28FX_GenerateMarkVertsForWorldi_310
 	mov ebx, eax
 	movzx eax, cx
 	mov edx, eax
@@ -4848,18 +4848,18 @@ FX_GenerateMarkVertsForWorld_300:
 	movzx edx, word [ebx]
 	mov [edi+eax], dx
 	mov edi, [ebp-0x90]
-FX_GenerateMarkVertsForWorld_620:
+_Z28FX_GenerateMarkVertsForWorldi_620:
 	movzx eax, word [edi]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForWorld_320
+	jz _Z28FX_GenerateMarkVertsForWorldi_320
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xc0]
 	mov [edx+eax+0x2], cx
-	jmp FX_GenerateMarkVertsForWorld_330
-FX_GenerateMarkVertsForWorld_70:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_330
+_Z28FX_GenerateMarkVertsForWorldi_70:
 	mov edx, [ebp-0xbc]
 	lea eax, [edx+0x810]
 	mov edx, [ebp-0x90]
@@ -4879,21 +4879,21 @@ FX_GenerateMarkVertsForWorld_70:
 	mov eax, fx_marksSystemPool
 	mov [ebp-0xdc], eax
 	mov edi, eax
-	jmp FX_GenerateMarkVertsForWorld_340
-FX_GenerateMarkVertsForWorld_350:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_340
+_Z28FX_GenerateMarkVertsForWorldi_350:
 	mov edi, [ebp-0xdc]
-FX_GenerateMarkVertsForWorld_340:
+_Z28FX_GenerateMarkVertsForWorldi_340:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov edx, [edi+0x808]
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForWorld_350
+	jnz _Z28FX_GenerateMarkVertsForWorldi_350
 	mov eax, [ebp-0x90]
 	mov ecx, [eax+0x40]
 	lea ebx, [edi+0x15010]
-FX_GenerateMarkVertsForWorld_360:
+_Z28FX_GenerateMarkVertsForWorldi_360:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov edi, [ebp-0xdc]
@@ -4901,11 +4901,11 @@ FX_GenerateMarkVertsForWorld_360:
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForWorld_360
+	jnz _Z28FX_GenerateMarkVertsForWorldi_360
 	mov eax, [ebp-0x90]
 	movzx ecx, word [eax+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForWorld_370
+	jz _Z28FX_GenerateMarkVertsForWorldi_370
 	mov ebx, eax
 	movzx eax, cx
 	mov edx, eax
@@ -4914,10 +4914,10 @@ FX_GenerateMarkVertsForWorld_360:
 	movzx edx, word [ebx]
 	mov [edi+eax], dx
 	mov edi, [ebp-0x90]
-FX_GenerateMarkVertsForWorld_390:
+_Z28FX_GenerateMarkVertsForWorldi_390:
 	movzx eax, word [edi]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForWorld_380
+	jz _Z28FX_GenerateMarkVertsForWorldi_380
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
@@ -4925,18 +4925,18 @@ FX_GenerateMarkVertsForWorld_390:
 	mov edx, [ebp-0xdc]
 	mov [edx+eax+0x2], cx
 	mov ecx, [ebp-0x90]
-FX_GenerateMarkVertsForWorld_600:
+_Z28FX_GenerateMarkVertsForWorldi_600:
 	mov dword [ecx+0x4], 0xffffffff
 	mov ebx, [ebp-0xdc]
 	movzx eax, word [ebx+0x4]
 	mov [ecx+0x2], ax
 	mov [ebx+0x4], si
 	mov edi, [ebp-0xdc]
-	jmp FX_GenerateMarkVertsForWorld_150
-FX_GenerateMarkVertsForWorld_370:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_150
+_Z28FX_GenerateMarkVertsForWorldi_370:
 	mov edi, eax
-	jmp FX_GenerateMarkVertsForWorld_390
-FX_GenerateMarkVertsForWorld_190:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_390
+_Z28FX_GenerateMarkVertsForWorldi_190:
 	mov edi, [ebp-0xc8]
 	mov [esp+0xc], edi
 	mov eax, [ebp-0x34]
@@ -4945,7 +4945,7 @@ FX_GenerateMarkVertsForWorld_190:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x44]
 	mov [esp], eax
-	call R_AddMarkMeshDrawSurf
+	call _Z21R_AddMarkMeshDrawSurfP8MaterialPK14GfxMarkContextPtj
 	mov edx, [ebp-0x38]
 	mov [ebp-0xc8], edx
 	mov edx, [ebp-0x34]
@@ -4954,14 +4954,14 @@ FX_GenerateMarkVertsForWorld_190:
 	mov [ebp-0x34], edx
 	mov dword [ebp-0xc8], 0x0
 	mov dword [ebp-0x38], 0x0
-	jmp FX_GenerateMarkVertsForWorld_400
-FX_GenerateMarkVertsForWorld_210:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_400
+_Z28FX_GenerateMarkVertsForWorldi_210:
 	mov esi, [ebp-0x9c]
 	test esi, esi
-	jz FX_GenerateMarkVertsForWorld_410
+	jz _Z28FX_GenerateMarkVertsForWorldi_410
 	mov eax, [ebp-0x58]
-	jmp FX_GenerateMarkVertsForWorld_420
-FX_GenerateMarkVertsForWorld_410:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_420
+_Z28FX_GenerateMarkVertsForWorldi_410:
 	mov ebx, [ebp-0x4c]
 	mov [ebp-0xa4], ebx
 	movzx esi, word [ebp-0x1a]
@@ -4974,12 +4974,12 @@ FX_GenerateMarkVertsForWorld_410:
 	mov [esp+0x4], edi
 	mov eax, [ebp-0x44]
 	mov [esp], eax
-	call R_AddMarkMeshDrawSurf
+	call _Z21R_AddMarkMeshDrawSurfP8MaterialPK14GfxMarkContextPtj
 	test ebx, ebx
-	jnz FX_GenerateMarkVertsForWorld_430
+	jnz _Z28FX_GenerateMarkVertsForWorldi_430
 	movzx eax, si
 	mov [esp], eax
-	call R_GetMarkMeshVerts
+	call _Z18R_GetMarkMeshVertst
 	mov ecx, eax
 	mov eax, [ebp-0x90]
 	movzx esi, word [eax+0x38]
@@ -4993,17 +4993,17 @@ FX_GenerateMarkVertsForWorld_410:
 	lea ebx, [edx+0x15010]
 	mov [ebp-0x5c], ebx
 	mov eax, ebx
-FX_GenerateMarkVertsForWorld_470:
+_Z28FX_GenerateMarkVertsForWorldi_470:
 	add eax, [ebp-0x88]
 	mov edi, [eax+0x40]
 	mov [ebp-0x88], edi
 	cmp esi, 0x2
-	jg FX_GenerateMarkVertsForWorld_440
+	jg _Z28FX_GenerateMarkVertsForWorldi_440
 	mov dword [ebp-0xec], 0x0
-FX_GenerateMarkVertsForWorld_480:
+_Z28FX_GenerateMarkVertsForWorldi_480:
 	mov edx, eax
 	mov dword [ebp-0x11c], 0x0
-FX_GenerateMarkVertsForWorld_450:
+_Z28FX_GenerateMarkVertsForWorldi_450:
 	movss xmm0, dword [edx]
 	movaps xmm2, xmm0
 	mov eax, [ebp-0x90]
@@ -5127,22 +5127,22 @@ FX_GenerateMarkVertsForWorld_450:
 	add ecx, 0x2c
 	add dword [ebp-0x11c], 0x1
 	cmp esi, [ebp-0x11c]
-	jnz FX_GenerateMarkVertsForWorld_450
+	jnz _Z28FX_GenerateMarkVertsForWorldi_450
 	mov ebx, [ebp-0xec]
 	test ebx, ebx
-	jz FX_GenerateMarkVertsForWorld_460
+	jz _Z28FX_GenerateMarkVertsForWorldi_460
 	mov esi, [ebp-0xec]
 	mov eax, [ebp-0x5c]
-	jmp FX_GenerateMarkVertsForWorld_470
-FX_GenerateMarkVertsForWorld_440:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_470
+_Z28FX_GenerateMarkVertsForWorldi_440:
 	sub esi, 0x2
 	mov [ebp-0xec], esi
 	mov esi, 0x2
-	jmp FX_GenerateMarkVertsForWorld_480
-FX_GenerateMarkVertsForWorld_430:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_480
+_Z28FX_GenerateMarkVertsForWorldi_430:
 	movzx eax, si
 	mov [esp], eax
-	call R_GetMarkMeshVerts
+	call _Z18R_GetMarkMeshVertst
 	mov esi, eax
 	mov edi, [ebp-0x90]
 	movzx edi, word [edi+0x38]
@@ -5166,21 +5166,21 @@ FX_GenerateMarkVertsForWorld_430:
 	mov eax, [ebp-0x90]
 	add eax, 0x24
 	mov [ebp-0xd8], eax
-FX_GenerateMarkVertsForWorld_580:
+_Z28FX_GenerateMarkVertsForWorldi_580:
 	mov eax, [ebp-0x70]
 	add eax, [ebp-0x60]
 	mov edx, [eax+0x40]
 	mov [ebp-0x70], edx
 	cmp dword [ebp-0x78], 0x2
-	jg FX_GenerateMarkVertsForWorld_490
+	jg _Z28FX_GenerateMarkVertsForWorldi_490
 	mov dword [ebp-0x50], 0x0
-FX_GenerateMarkVertsForWorld_590:
+_Z28FX_GenerateMarkVertsForWorldi_590:
 	xor edi, edi
 	mov ebx, eax
-	jmp FX_GenerateMarkVertsForWorld_500
-FX_GenerateMarkVertsForWorld_530:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_500
+_Z28FX_GenerateMarkVertsForWorldi_530:
 	mov eax, 0x3fff
-FX_GenerateMarkVertsForWorld_550:
+_Z28FX_GenerateMarkVertsForWorldi_550:
 	mov ecx, edx
 	or ecx, eax
 	movss xmm1, dword [ebp-0x64]
@@ -5192,9 +5192,9 @@ FX_GenerateMarkVertsForWorld_550:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenerateMarkVertsForWorld_510
+	jle _Z28FX_GenerateMarkVertsForWorldi_510
 	mov eax, 0x3fff
-FX_GenerateMarkVertsForWorld_570:
+_Z28FX_GenerateMarkVertsForWorldi_570:
 	or edx, eax
 	shl ecx, 0x10
 	lea eax, [edx+ecx]
@@ -5262,8 +5262,8 @@ FX_GenerateMarkVertsForWorld_570:
 	add esi, 0x2c
 	add edi, 0x1
 	cmp [ebp-0x78], edi
-	jz FX_GenerateMarkVertsForWorld_520
-FX_GenerateMarkVertsForWorld_500:
+	jz _Z28FX_GenerateMarkVertsForWorldi_520
+_Z28FX_GenerateMarkVertsForWorldi_500:
 	movss xmm3, dword [ebx]
 	mov eax, [ebp-0x90]
 	subss xmm3, [eax+0xc]
@@ -5329,60 +5329,60 @@ FX_GenerateMarkVertsForWorld_500:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jg FX_GenerateMarkVertsForWorld_530
+	jg _Z28FX_GenerateMarkVertsForWorldi_530
 	cmp eax, 0xffffc000
-	jg FX_GenerateMarkVertsForWorld_540
+	jg _Z28FX_GenerateMarkVertsForWorldi_540
 	xor eax, eax
-	jmp FX_GenerateMarkVertsForWorld_550
-FX_GenerateMarkVertsForWorld_510:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_550
+_Z28FX_GenerateMarkVertsForWorldi_510:
 	cmp eax, 0xffffc000
-	jg FX_GenerateMarkVertsForWorld_560
+	jg _Z28FX_GenerateMarkVertsForWorldi_560
 	xor eax, eax
-	jmp FX_GenerateMarkVertsForWorld_570
-FX_GenerateMarkVertsForWorld_520:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_570
+_Z28FX_GenerateMarkVertsForWorldi_520:
 	mov ecx, [ebp-0x50]
 	test ecx, ecx
-	jz FX_GenerateMarkVertsForWorld_460
+	jz _Z28FX_GenerateMarkVertsForWorldi_460
 	mov ebx, [ebp-0x50]
 	mov [ebp-0x78], ebx
-	jmp FX_GenerateMarkVertsForWorld_580
-FX_GenerateMarkVertsForWorld_490:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_580
+_Z28FX_GenerateMarkVertsForWorldi_490:
 	mov ecx, [ebp-0x78]
 	sub ecx, 0x2
 	mov [ebp-0x50], ecx
 	mov dword [ebp-0x78], 0x2
-	jmp FX_GenerateMarkVertsForWorld_590
-FX_GenerateMarkVertsForWorld_380:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_590
+_Z28FX_GenerateMarkVertsForWorldi_380:
 	mov ecx, edi
-	jmp FX_GenerateMarkVertsForWorld_600
-FX_GenerateMarkVertsForWorld_140:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_600
+_Z28FX_GenerateMarkVertsForWorldi_140:
 	mov ebx, [ebp-0xdc]
 	mov [ebx+0x6], cx
-	jmp FX_GenerateMarkVertsForWorld_330
-FX_GenerateMarkVertsForWorld_130:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_330
+_Z28FX_GenerateMarkVertsForWorldi_130:
 	mov edi, eax
-	jmp FX_GenerateMarkVertsForWorld_610
-FX_GenerateMarkVertsForWorld_320:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_610
+_Z28FX_GenerateMarkVertsForWorldi_320:
 	mov eax, [ebp-0xec]
 	test eax, eax
-	jz FX_GenerateMarkVertsForWorld_330
+	jz _Z28FX_GenerateMarkVertsForWorldi_330
 	mov ebx, [ebp-0xec]
 	mov [ebx], cx
-	jmp FX_GenerateMarkVertsForWorld_330
-FX_GenerateMarkVertsForWorld_310:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_330
+_Z28FX_GenerateMarkVertsForWorldi_310:
 	mov edi, eax
-	jmp FX_GenerateMarkVertsForWorld_620
-FX_GenerateMarkVertsForWorld_540:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_620
+_Z28FX_GenerateMarkVertsForWorldi_540:
 	and eax, 0x3fff
-	jmp FX_GenerateMarkVertsForWorld_550
-FX_GenerateMarkVertsForWorld_560:
+	jmp _Z28FX_GenerateMarkVertsForWorldi_550
+_Z28FX_GenerateMarkVertsForWorldi_560:
 	and eax, 0x3fff
-	jmp FX_GenerateMarkVertsForWorld_570
+	jmp _Z28FX_GenerateMarkVertsForWorldi_570
 	nop
 
 
 ;FX_MarkEntUpdateHidePartBits(unsigned int const*, unsigned int const*, int, int)
-FX_MarkEntUpdateHidePartBits:
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5393,7 +5393,7 @@ FX_MarkEntUpdateHidePartBits:
 	mov esi, [ebp+0xc]
 	xor ebx, ebx
 	mov ecx, 0x1
-FX_MarkEntUpdateHidePartBits_10:
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_10:
 	lea edx, [ecx*4]
 	mov eax, [edx+edi-0x4]
 	not eax
@@ -5402,21 +5402,21 @@ FX_MarkEntUpdateHidePartBits_10:
 	or ebx, eax
 	add ecx, 0x1
 	cmp ecx, 0x5
-	jnz FX_MarkEntUpdateHidePartBits_10
+	jnz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_10
 	test ebx, ebx
-	jz FX_MarkEntUpdateHidePartBits_20
+	jz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_20
 	mov esi, fx_marksSystemPool
 	mov eax, [ebp+0x14]
 	movzx edi, word [esi+eax*2+0x8]
 	cmp di, 0xffff
-	jz FX_MarkEntUpdateHidePartBits_20
+	jz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_20
 	lea edx, [esi+0x810]
 	mov [ebp-0x34], edx
-	jmp FX_MarkEntUpdateHidePartBits_30
-FX_MarkEntUpdateHidePartBits_40:
+	jmp _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_30
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_40:
 	cmp di, 0xffff
-	jz FX_MarkEntUpdateHidePartBits_20
-FX_MarkEntUpdateHidePartBits_30:
+	jz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_20
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_30:
 	movzx eax, di
 	mov edx, eax
 	shl edx, 0x6
@@ -5426,7 +5426,7 @@ FX_MarkEntUpdateHidePartBits_30:
 	movzx eax, byte [ebx+0x33]
 	and eax, 0xc0
 	cmp eax, 0xc0
-	jnz FX_MarkEntUpdateHidePartBits_40
+	jnz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_40
 	movzx ecx, byte [ebx+0x30]
 	mov edx, ecx
 	sar edx, 0x5
@@ -5434,7 +5434,7 @@ FX_MarkEntUpdateHidePartBits_30:
 	mov eax, 0x80000000
 	shr eax, cl
 	test [ebp+edx*4-0x28], eax
-	jz FX_MarkEntUpdateHidePartBits_40
+	jz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_40
 	movzx eax, word [ebx+0x34]
 	lea eax, [esi+eax*2+0x8]
 	mov [ebp-0x3c], eax
@@ -5453,51 +5453,51 @@ FX_MarkEntUpdateHidePartBits_30:
 	lea eax, [esi+0x9010]
 	mov [ebp-0x30], eax
 	mov edx, eax
-	jmp FX_MarkEntUpdateHidePartBits_50
-FX_MarkEntUpdateHidePartBits_60:
+	jmp _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_50
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_60:
 	mov edx, [ebp-0x30]
-FX_MarkEntUpdateHidePartBits_50:
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_50:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x14]
 	mov edx, [esi+0x808]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateHidePartBits_60
+	jnz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_60
 	mov ecx, [ebx+0x40]
 	lea eax, [esi+0x15010]
 	mov [ebp-0x2c], eax
 	mov edx, eax
-	jmp FX_MarkEntUpdateHidePartBits_70
-FX_MarkEntUpdateHidePartBits_80:
+	jmp _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_70
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_80:
 	mov edx, [ebp-0x2c]
-FX_MarkEntUpdateHidePartBits_70:
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_70:
 	lea eax, [ecx+edx]
 	mov ecx, [eax+0x40]
 	mov edx, [esi+0x80c]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_MarkEntUpdateHidePartBits_80
+	jnz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_80
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_MarkEntUpdateHidePartBits_90
+	jz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_90
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
-FX_MarkEntUpdateHidePartBits_90:
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_90:
 	movzx eax, word [ebx]
 	cmp ax, 0xffff
-	jz FX_MarkEntUpdateHidePartBits_100
+	jz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_100
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [esi+eax+0x2], cx
-FX_MarkEntUpdateHidePartBits_110:
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_110:
 	mov dword [ebx+0x4], 0xffffffff
 	movzx eax, word [esi+0x4]
 	mov [ebx+0x2], ax
@@ -5505,25 +5505,25 @@ FX_MarkEntUpdateHidePartBits_110:
 	mov [esi+0x4], dx
 	add dword [esi+0x48018], 0x1
 	cmp di, 0xffff
-	jnz FX_MarkEntUpdateHidePartBits_30
-FX_MarkEntUpdateHidePartBits_20:
+	jnz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_30
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_20:
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_MarkEntUpdateHidePartBits_100:
+_Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_100:
 	mov eax, [ebp-0x3c]
 	test eax, eax
-	jz FX_MarkEntUpdateHidePartBits_110
+	jz _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_110
 	mov eax, [ebp-0x3c]
 	mov [eax], cx
-	jmp FX_MarkEntUpdateHidePartBits_110
+	jmp _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii_110
 
 
 ;FX_GenerateMarkVertsForEntDObj(int, int, unsigned int*, unsigned short, unsigned char, DObj_s const*, cpose_t const*)
-FX_GenerateMarkVertsForEntDObj:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5536,10 +5536,10 @@ FX_GenerateMarkVertsForEntDObj:
 	mov edx, fx_marksSystemPool
 	movzx ebx, word [edx+eax*2+0x8]
 	cmp bx, 0xffff
-	jz FX_GenerateMarkVertsForEntDObj_10
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_10
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_GetSystem
+	call _Z12FX_GetSystemi
 	mov [ebp-0x13c], eax
 	lea eax, [ebp-0x34]
 	mov [esp+0xc], eax
@@ -5549,7 +5549,7 @@ FX_GenerateMarkVertsForEntDObj:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x1c]
 	mov [esp], edx
-	call R_MarkUtil_GetDObjAnimMatAndHideParts
+	call _Z37R_MarkUtil_GetDObjAnimMatAndHidePartsPK6DObj_sPK7cpose_tPPK11DObjAnimMatPj
 	mov ecx, [ebp-0x24]
 	mov [ebp-0x120], ecx
 	mov eax, ebx
@@ -5557,14 +5557,14 @@ FX_GenerateMarkVertsForEntDObj:
 	mov ebx, edi
 	mov [ebp-0x137], bl
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntDObj_10
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_10
 	mov edx, fx_marksSystemPool
 	mov [ebp-0x140], edx
 	mov ecx, [ebp-0x13c]
 	add ecx, 0x98
 	mov [ebp-0x150], ecx
 	mov [ebp-0x154], edx
-FX_GenerateMarkVertsForEntDObj_30:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_30:
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
@@ -5575,20 +5575,20 @@ FX_GenerateMarkVertsForEntDObj_30:
 	movzx eax, byte [eax+0x33]
 	and eax, 0xc0
 	cmp eax, 0xc0
-	jz FX_GenerateMarkVertsForEntDObj_20
-FX_GenerateMarkVertsForEntDObj_420:
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_20
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_420:
 	mov ecx, [ebp-0x11c]
 	movzx eax, word [ecx+0x2]
 	cmp ax, 0xffff
-	jnz FX_GenerateMarkVertsForEntDObj_30
-FX_GenerateMarkVertsForEntDObj_10:
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_30
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_10:
 	add esp, 0x16c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForEntDObj_20:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_20:
 	mov eax, [ebp+0x10]
 	mov edx, [eax]
 	movzx eax, byte [ebx+0x36]
@@ -5604,23 +5604,23 @@ FX_GenerateMarkVertsForEntDObj_20:
 	mov edx, [ebp-0x11c]
 	movzx eax, word [edx+0x38]
 	mov [esp], eax
-	call R_ReserveMarkMeshVerts
+	call _Z22R_ReserveMarkMeshVertsiPt
 	test al, al
-	jnz FX_GenerateMarkVertsForEntDObj_40
-FX_GenerateMarkVertsForEntDObj_160:
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_40
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_160:
 	mov ecx, [ebp-0x11c]
 	movzx eax, byte [ecx+0x33]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz FX_GenerateMarkVertsForEntDObj_50
-	jle FX_GenerateMarkVertsForEntDObj_60
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_50
+	jle _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_60
 	cmp eax, 0x80
-	jz FX_GenerateMarkVertsForEntDObj_70
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_70
 	cmp eax, 0xc0
-	jz FX_GenerateMarkVertsForEntDObj_70
-FX_GenerateMarkVertsForEntDObj_80:
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_70
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_80:
 	mov esi, fx_marksSystemPool
-FX_GenerateMarkVertsForEntDObj_150:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_150:
 	add dword [esi+0x48018], 0x1
 	add esp, 0x16c
 	pop ebx
@@ -5628,9 +5628,9 @@ FX_GenerateMarkVertsForEntDObj_150:
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForEntDObj_60:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_60:
 	test eax, eax
-	jnz FX_GenerateMarkVertsForEntDObj_80
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_80
 	mov ecx, [ebp-0x140]
 	lea eax, [ecx+0x810]
 	mov edx, [ebp-0x11c]
@@ -5650,34 +5650,34 @@ FX_GenerateMarkVertsForEntDObj_60:
 	lea ebx, [eax+0x9010]
 	mov esi, fx_marksSystemPool
 	mov edx, [esi+0x808]
-	jmp FX_GenerateMarkVertsForEntDObj_90
-FX_GenerateMarkVertsForEntDObj_100:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_90
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_100:
 	mov edx, eax
-FX_GenerateMarkVertsForEntDObj_90:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_90:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntDObj_100
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_100
 	mov edx, [ebp-0x11c]
 	mov ecx, [edx+0x40]
 	lea ebx, [esi+0x15010]
 	mov edx, [esi+0x80c]
-	jmp FX_GenerateMarkVertsForEntDObj_110
-FX_GenerateMarkVertsForEntDObj_120:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_110
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_120:
 	mov edx, eax
-FX_GenerateMarkVertsForEntDObj_110:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_110:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntDObj_120
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_120
 	mov ebx, [ebp-0x11c]
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForEntDObj_130
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_130
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
@@ -5685,30 +5685,30 @@ FX_GenerateMarkVertsForEntDObj_110:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov edx, [ebp-0x11c]
-FX_GenerateMarkVertsForEntDObj_440:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_440:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntDObj_140
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_140
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [esi+eax+0x2], cx
-FX_GenerateMarkVertsForEntDObj_480:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_480:
 	mov ecx, [ebp-0x11c]
 	mov dword [ecx+0x4], 0xffffffff
 	movzx ecx, word [esi+0x4]
 	mov ebx, [ebp-0x11c]
 	mov [ebx+0x2], cx
 	mov [esi+0x4], di
-	jmp FX_GenerateMarkVertsForEntDObj_150
-FX_GenerateMarkVertsForEntDObj_40:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_150
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_40:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ReserveMarkMeshIndices
+	call _Z24R_ReserveMarkMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_GenerateMarkVertsForEntDObj_160
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_160
 	mov ebx, [ebp+0x10]
 	mov ecx, [ebx]
 	and ecx, 0x1
@@ -5743,7 +5743,7 @@ FX_GenerateMarkVertsForEntDObj_40:
 	movzx edx, word [ebp-0x1a]
 	mov [ebp-0xda], dx
 	mov ebx, eax
-FX_GenerateMarkVertsForEntDObj_270:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_270:
 	add ebx, [ebp-0x124]
 	mov [ebp-0x130], ebx
 	mov eax, [ebx+0x14]
@@ -5754,13 +5754,13 @@ FX_GenerateMarkVertsForEntDObj_270:
 	lea edx, [ebx+0xc]
 	mov [ebp-0x148], edx
 	mov edi, edx
-	jmp FX_GenerateMarkVertsForEntDObj_170
-FX_GenerateMarkVertsForEntDObj_220:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_170
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_220:
 	mov edi, [ebp-0x14c]
 	test edi, edi
-	jnz FX_GenerateMarkVertsForEntDObj_180
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_180
 	mov edx, [ebp-0x38]
-FX_GenerateMarkVertsForEntDObj_250:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_250:
 	mov ecx, [ebp-0x130]
 	mov eax, [ecx+0xc]
 	mov [ebp-0x44], eax
@@ -5769,8 +5769,8 @@ FX_GenerateMarkVertsForEntDObj_250:
 	mov [ebp-0x40], ax
 	mov eax, [ebp-0x154]
 	cmp byte [eax+0x48011], 0x0
-	jnz FX_GenerateMarkVertsForEntDObj_190
-FX_GenerateMarkVertsForEntDObj_230:
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_190
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_230:
 	movzx ecx, word [ebp-0xda]
 	add cx, [ebx]
 	mov eax, [ebp-0x14c]
@@ -5784,7 +5784,7 @@ FX_GenerateMarkVertsForEntDObj_230:
 	movzx eax, word [ebp-0xda]
 	add ax, [ebx+0x4]
 	mov [edx+0x48012], ax
-FX_GenerateMarkVertsForEntDObj_240:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_240:
 	mov eax, [ebp-0x3c]
 	add eax, 0x3
 	mov [ebp-0x14c], eax
@@ -5794,26 +5794,26 @@ FX_GenerateMarkVertsForEntDObj_240:
 	mov ecx, [ebp-0x130]
 	movzx eax, byte [ecx+0x12]
 	cmp [ebp-0x128], eax
-	jz FX_GenerateMarkVertsForEntDObj_200
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_200
 	mov edi, [ebp-0x148]
-FX_GenerateMarkVertsForEntDObj_170:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_170:
 	mov ecx, 0x6
 	cld
 	lea esi, [ebp-0x44]
 	repe cmpsb
 	mov eax, 0x0
-	jz FX_GenerateMarkVertsForEntDObj_210
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_210
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-FX_GenerateMarkVertsForEntDObj_210:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_210:
 	test eax, eax
-	jnz FX_GenerateMarkVertsForEntDObj_220
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_220
 	mov edx, [ebp-0x38]
 	mov eax, [ebp-0x154]
 	cmp byte [eax+0x48011], 0x0
-	jz FX_GenerateMarkVertsForEntDObj_230
-FX_GenerateMarkVertsForEntDObj_190:
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_230
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_190:
 	movzx ecx, word [eax+0x48012]
 	mov eax, [ebp-0x14c]
 	lea edx, [edx+eax*2]
@@ -5829,8 +5829,8 @@ FX_GenerateMarkVertsForEntDObj_190:
 	mov [edx+0x2], cx
 	mov edx, [ebp-0x154]
 	mov byte [edx+0x48011], 0x0
-	jmp FX_GenerateMarkVertsForEntDObj_240
-FX_GenerateMarkVertsForEntDObj_180:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_240
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_180:
 	mov ecx, [ebp-0x14c]
 	mov [esp+0xc], ecx
 	mov eax, [ebp-0x38]
@@ -5839,7 +5839,7 @@ FX_GenerateMarkVertsForEntDObj_180:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x48]
 	mov [esp], eax
-	call R_AddMarkMeshDrawSurf
+	call _Z21R_AddMarkMeshDrawSurfP8MaterialPK14GfxMarkContextPtj
 	mov edx, [ebp-0x3c]
 	mov [ebp-0x14c], edx
 	mov edx, [ebp-0x38]
@@ -5848,14 +5848,14 @@ FX_GenerateMarkVertsForEntDObj_180:
 	mov [ebp-0x38], edx
 	mov dword [ebp-0x14c], 0x0
 	mov dword [ebp-0x3c], 0x0
-	jmp FX_GenerateMarkVertsForEntDObj_250
-FX_GenerateMarkVertsForEntDObj_200:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_250
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_200:
 	mov esi, [ebp-0x12c]
 	test esi, esi
-	jz FX_GenerateMarkVertsForEntDObj_260
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_260
 	mov ebx, [ebp-0xe0]
-	jmp FX_GenerateMarkVertsForEntDObj_270
-FX_GenerateMarkVertsForEntDObj_50:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_270
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_50:
 	mov edx, ecx
 	mov ebx, ecx
 	mov ecx, [ebp-0x140]
@@ -5875,34 +5875,34 @@ FX_GenerateMarkVertsForEntDObj_50:
 	lea ebx, [eax+0x9010]
 	mov esi, fx_marksSystemPool
 	mov edx, [esi+0x808]
-	jmp FX_GenerateMarkVertsForEntDObj_280
-FX_GenerateMarkVertsForEntDObj_290:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_280
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_290:
 	mov edx, eax
-FX_GenerateMarkVertsForEntDObj_280:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_280:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntDObj_290
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_290
 	mov edx, [ebp-0x11c]
 	mov ecx, [edx+0x40]
 	lea ebx, [esi+0x15010]
 	mov edx, [esi+0x80c]
-	jmp FX_GenerateMarkVertsForEntDObj_300
-FX_GenerateMarkVertsForEntDObj_310:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_300
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_310:
 	mov edx, eax
-FX_GenerateMarkVertsForEntDObj_300:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_300:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntDObj_310
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_310
 	mov ebx, [ebp-0x11c]
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForEntDObj_320
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_320
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
@@ -5910,23 +5910,23 @@ FX_GenerateMarkVertsForEntDObj_300:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov edx, [ebp-0x11c]
-FX_GenerateMarkVertsForEntDObj_470:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_470:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntDObj_330
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_330
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [esi+eax+0x2], cx
 	mov ecx, [ebp-0x11c]
-FX_GenerateMarkVertsForEntDObj_460:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_460:
 	mov dword [ecx+0x4], 0xffffffff
 	movzx eax, word [esi+0x4]
 	mov [ecx+0x2], ax
 	mov [esi+0x4], di
-	jmp FX_GenerateMarkVertsForEntDObj_150
-FX_GenerateMarkVertsForEntDObj_70:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_150
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_70:
 	mov edx, [ebp-0x11c]
 	movzx eax, word [edx+0x34]
 	mov esi, fx_marksSystemPool
@@ -5947,35 +5947,35 @@ FX_GenerateMarkVertsForEntDObj_70:
 	mov ecx, [ebx+0x3c]
 	lea ebx, [esi+0x9010]
 	mov edx, [esi+0x808]
-	jmp FX_GenerateMarkVertsForEntDObj_340
-FX_GenerateMarkVertsForEntDObj_350:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_340
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_350:
 	mov edx, eax
-FX_GenerateMarkVertsForEntDObj_340:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_340:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntDObj_350
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_350
 	mov eax, [ebp-0x11c]
 	mov ecx, [eax+0x40]
 	lea ebx, [esi+0x15010]
 	mov [ebp-0x144], esi
 	mov edx, [esi+0x80c]
-	jmp FX_GenerateMarkVertsForEntDObj_360
-FX_GenerateMarkVertsForEntDObj_370:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_360
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_370:
 	mov edx, eax
-FX_GenerateMarkVertsForEntDObj_360:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_360:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntDObj_370
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_370
 	mov edx, [ebp-0x11c]
 	movzx ecx, word [edx+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForEntDObj_380
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_380
 	mov ebx, edx
 	movzx eax, cx
 	mov edx, eax
@@ -5984,24 +5984,24 @@ FX_GenerateMarkVertsForEntDObj_360:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov edx, [ebp-0x11c]
-FX_GenerateMarkVertsForEntDObj_380:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_380:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntDObj_390
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_390
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov ebx, [ebp-0x144]
 	mov [ebx+eax+0x2], cx
-FX_GenerateMarkVertsForEntDObj_450:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_450:
 	mov edx, [ebp-0x11c]
 	mov dword [edx+0x4], 0xffffffff
 	movzx ecx, word [esi+0x4]
 	mov [edx+0x2], cx
 	mov [esi+0x4], di
-	jmp FX_GenerateMarkVertsForEntDObj_150
-FX_GenerateMarkVertsForEntDObj_260:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_150
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_260:
 	movzx ebx, word [ebp-0x136]
 	mov [ebp-0x40], bx
 	movzx eax, byte [ebp-0x137]
@@ -6011,21 +6011,21 @@ FX_GenerateMarkVertsForEntDObj_260:
 	movzx eax, byte [edx+0x33]
 	and eax, 0x3f
 	mov [ebp-0x118], eax
-	jz FX_GenerateMarkVertsForEntDObj_400
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_400
 	xor ebx, ebx
 	xor esi, esi
-FX_GenerateMarkVertsForEntDObj_410:
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_410:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp+0x1c]
 	mov [esp], ecx
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov [esp], eax
-	call XModelNumBones
+	call _Z14XModelNumBonesPK6XModel
 	add esi, eax
 	add ebx, 0x1
 	cmp [ebp-0x118], ebx
-	jnz FX_GenerateMarkVertsForEntDObj_410
-FX_GenerateMarkVertsForEntDObj_430:
+	jnz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_410
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_430:
 	lea eax, [edi+esi]
 	shl eax, 0x5
 	add eax, [ebp-0x120]
@@ -6107,9 +6107,9 @@ FX_GenerateMarkVertsForEntDObj_430:
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x1c]
 	mov [esp], ecx
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov [esp], eax
-	call XModelGetBasePose
+	call _Z17XModelGetBasePosePK6XModel
 	shl edi, 0x5
 	add eax, edi
 	movss xmm1, dword [eax+0x1c]
@@ -6211,42 +6211,42 @@ FX_GenerateMarkVertsForEntDObj_430:
 	mov [esp+0x4], eax
 	lea edx, [ebp-0x78]
 	mov [esp], edx
-	call MatrixMultiply43
+	call _Z16MatrixMultiply43PA3_KfS1_PA3_f
 	movzx ecx, word [ebp-0x1a]
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x48]
 	mov [esp], eax
 	mov edx, [ebp-0x11c]
 	mov eax, fx_marksSystemPool
-	call FX_GenerateMarkVertsForMark_FinishAnimated
-	jmp FX_GenerateMarkVertsForEntDObj_420
-FX_GenerateMarkVertsForEntDObj_400:
+	call _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_420
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_400:
 	xor esi, esi
-	jmp FX_GenerateMarkVertsForEntDObj_430
-FX_GenerateMarkVertsForEntDObj_130:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_430
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_130:
 	mov edx, ebx
-	jmp FX_GenerateMarkVertsForEntDObj_440
-FX_GenerateMarkVertsForEntDObj_390:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_440
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_390:
 	mov eax, [ebp-0x134]
 	test eax, eax
-	jz FX_GenerateMarkVertsForEntDObj_450
+	jz _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_450
 	mov eax, [ebp-0x134]
 	mov [eax], cx
-	jmp FX_GenerateMarkVertsForEntDObj_450
-FX_GenerateMarkVertsForEntDObj_330:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_450
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_330:
 	mov ecx, edx
-	jmp FX_GenerateMarkVertsForEntDObj_460
-FX_GenerateMarkVertsForEntDObj_320:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_460
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_320:
 	mov edx, ebx
-	jmp FX_GenerateMarkVertsForEntDObj_470
-FX_GenerateMarkVertsForEntDObj_140:
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_470
+_Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_140:
 	mov [esi+0x6], cx
-	jmp FX_GenerateMarkVertsForEntDObj_480
+	jmp _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t_480
 	nop
 
 
 ;FX_GenerateMarkVertsForEntBrush(int, int, unsigned int*, unsigned char, GfxPlacement const*)
-FX_GenerateMarkVertsForEntBrush:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6259,10 +6259,10 @@ FX_GenerateMarkVertsForEntBrush:
 	mov edx, fx_marksSystemPool
 	movzx esi, word [edx+eax*2+0x8]
 	cmp si, 0xffff
-	jz FX_GenerateMarkVertsForEntBrush_10
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_10
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_GetSystem
+	call _Z12FX_GetSystemi
 	mov edx, esi
 	mov eax, edi
 	mov [ebp-0xa5], al
@@ -6343,11 +6343,11 @@ FX_GenerateMarkVertsForEntBrush:
 	addss xmm5, [eax+0x8]
 	movss [ebp-0x38], xmm5
 	cmp si, 0xffff
-	jz FX_GenerateMarkVertsForEntBrush_10
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_10
 	mov eax, fx_marksSystemPool
 	mov [ebp-0xac], eax
 	mov [ebp-0xbc], eax
-FX_GenerateMarkVertsForEntBrush_30:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_30:
 	movzx eax, dx
 	mov edx, eax
 	shl edx, 0x6
@@ -6357,20 +6357,20 @@ FX_GenerateMarkVertsForEntBrush_30:
 	movzx eax, byte [eax+0x33]
 	and eax, 0xc0
 	add eax, 0xffffff80
-	jz FX_GenerateMarkVertsForEntBrush_20
-FX_GenerateMarkVertsForEntBrush_400:
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_20
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_400:
 	mov ebx, [ebp-0x90]
 	movzx edx, word [ebx+0x2]
 	cmp dx, 0xffff
-	jnz FX_GenerateMarkVertsForEntBrush_30
-FX_GenerateMarkVertsForEntBrush_10:
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_30
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_10:
 	add esp, 0xdc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForEntBrush_20:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_20:
 	mov ecx, [ebp+0x10]
 	mov edx, [ecx]
 	mov ebx, [ebp-0x90]
@@ -6387,18 +6387,18 @@ FX_GenerateMarkVertsForEntBrush_20:
 	mov edx, [ebp-0x90]
 	movzx eax, word [edx+0x38]
 	mov [esp], eax
-	call R_ReserveMarkMeshVerts
+	call _Z22R_ReserveMarkMeshVertsiPt
 	test al, al
-	jnz FX_GenerateMarkVertsForEntBrush_40
-FX_GenerateMarkVertsForEntBrush_220:
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_40
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_220:
 	mov ecx, [ebp-0x90]
 	movzx eax, byte [ecx+0x33]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz FX_GenerateMarkVertsForEntBrush_50
-	jg FX_GenerateMarkVertsForEntBrush_60
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_50
+	jg _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_60
 	test eax, eax
-	jnz FX_GenerateMarkVertsForEntBrush_70
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_70
 	mov ecx, [ebp-0xac]
 	lea eax, [ecx+0x810]
 	mov edx, [ebp-0x90]
@@ -6418,34 +6418,34 @@ FX_GenerateMarkVertsForEntBrush_220:
 	lea ebx, [eax+0x9010]
 	mov esi, fx_marksSystemPool
 	mov edx, [esi+0x808]
-	jmp FX_GenerateMarkVertsForEntBrush_80
-FX_GenerateMarkVertsForEntBrush_90:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_80
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_90:
 	mov edx, eax
-FX_GenerateMarkVertsForEntBrush_80:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_80:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntBrush_90
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_90
 	mov edx, [ebp-0x90]
 	mov ecx, [edx+0x40]
 	lea ebx, [esi+0x15010]
 	mov edx, [esi+0x80c]
-	jmp FX_GenerateMarkVertsForEntBrush_100
-FX_GenerateMarkVertsForEntBrush_110:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_100
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_110:
 	mov edx, eax
-FX_GenerateMarkVertsForEntBrush_100:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_100:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntBrush_110
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_110
 	mov ebx, [ebp-0x90]
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForEntBrush_120
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_120
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
@@ -6453,24 +6453,24 @@ FX_GenerateMarkVertsForEntBrush_100:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov edx, [ebp-0x90]
-FX_GenerateMarkVertsForEntBrush_450:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_450:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntBrush_130
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_130
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [esi+eax+0x2], cx
-FX_GenerateMarkVertsForEntBrush_440:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_440:
 	mov ecx, [ebp-0x90]
 	mov dword [ecx+0x4], 0xffffffff
 	movzx ecx, word [esi+0x4]
 	mov ebx, [ebp-0x90]
 	mov [ebx+0x2], cx
 	mov [esi+0x4], di
-	jmp FX_GenerateMarkVertsForEntBrush_140
-FX_GenerateMarkVertsForEntBrush_50:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_140
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_50:
 	mov edx, ecx
 	mov ebx, ecx
 	mov ecx, [ebp-0xac]
@@ -6490,34 +6490,34 @@ FX_GenerateMarkVertsForEntBrush_50:
 	lea ebx, [eax+0x9010]
 	mov esi, fx_marksSystemPool
 	mov edx, [esi+0x808]
-	jmp FX_GenerateMarkVertsForEntBrush_150
-FX_GenerateMarkVertsForEntBrush_160:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_150
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_160:
 	mov edx, eax
-FX_GenerateMarkVertsForEntBrush_150:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_150:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntBrush_160
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_160
 	mov edx, [ebp-0x90]
 	mov ecx, [edx+0x40]
 	lea ebx, [esi+0x15010]
 	mov edx, [esi+0x80c]
-	jmp FX_GenerateMarkVertsForEntBrush_170
-FX_GenerateMarkVertsForEntBrush_180:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_170
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_180:
 	mov edx, eax
-FX_GenerateMarkVertsForEntBrush_170:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_170:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntBrush_180
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_180
 	mov ebx, [ebp-0x90]
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForEntBrush_190
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_190
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
@@ -6525,22 +6525,22 @@ FX_GenerateMarkVertsForEntBrush_170:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov edx, [ebp-0x90]
-FX_GenerateMarkVertsForEntBrush_420:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_420:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntBrush_200
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_200
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [esi+eax+0x2], cx
 	mov ecx, [ebp-0x90]
-FX_GenerateMarkVertsForEntBrush_410:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_410:
 	mov dword [ecx+0x4], 0xffffffff
 	movzx eax, word [esi+0x4]
 	mov [ecx+0x2], ax
 	mov [esi+0x4], di
-FX_GenerateMarkVertsForEntBrush_140:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_140:
 	add dword [esi+0x48018], 0x1
 	add esp, 0xdc
 	pop ebx
@@ -6548,21 +6548,21 @@ FX_GenerateMarkVertsForEntBrush_140:
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForEntBrush_60:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_60:
 	cmp eax, 0x80
-	jz FX_GenerateMarkVertsForEntBrush_210
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_210
 	cmp eax, 0xc0
-	jz FX_GenerateMarkVertsForEntBrush_210
-FX_GenerateMarkVertsForEntBrush_70:
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_210
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_70:
 	mov esi, fx_marksSystemPool
-	jmp FX_GenerateMarkVertsForEntBrush_140
-FX_GenerateMarkVertsForEntBrush_40:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_140
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_40:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ReserveMarkMeshIndices
+	call _Z24R_ReserveMarkMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_GenerateMarkVertsForEntBrush_220
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_220
 	mov ebx, [ebp+0x10]
 	mov ecx, [ebx]
 	and ecx, 0x1
@@ -6597,7 +6597,7 @@ FX_GenerateMarkVertsForEntBrush_40:
 	movzx edx, word [ebp-0x1a]
 	mov [ebp-0x6a], dx
 	mov ebx, eax
-FX_GenerateMarkVertsForEntBrush_390:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_390:
 	add ebx, [ebp-0x80]
 	mov [ebp-0x8c], ebx
 	mov eax, [ebx+0x14]
@@ -6608,13 +6608,13 @@ FX_GenerateMarkVertsForEntBrush_390:
 	lea edx, [ebx+0xc]
 	mov [ebp-0xb4], edx
 	mov edi, edx
-	jmp FX_GenerateMarkVertsForEntBrush_230
-FX_GenerateMarkVertsForEntBrush_280:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_230
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_280:
 	mov eax, [ebp-0xb8]
 	test eax, eax
-	jnz FX_GenerateMarkVertsForEntBrush_240
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_240
 	mov edx, [ebp-0x24]
-FX_GenerateMarkVertsForEntBrush_370:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_370:
 	mov ecx, [ebp-0x8c]
 	mov eax, [ecx+0xc]
 	mov [ebp-0x30], eax
@@ -6623,8 +6623,8 @@ FX_GenerateMarkVertsForEntBrush_370:
 	mov [ebp-0x2c], ax
 	mov esi, [ebp-0xbc]
 	cmp byte [esi+0x48011], 0x0
-	jnz FX_GenerateMarkVertsForEntBrush_250
-FX_GenerateMarkVertsForEntBrush_290:
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_250
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_290:
 	movzx ecx, word [ebp-0x6a]
 	add cx, [ebx]
 	mov eax, [ebp-0xb8]
@@ -6637,7 +6637,7 @@ FX_GenerateMarkVertsForEntBrush_290:
 	movzx eax, word [ebp-0x6a]
 	add ax, [ebx+0x4]
 	mov [esi+0x48012], ax
-FX_GenerateMarkVertsForEntBrush_300:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_300:
 	mov eax, [ebp-0x28]
 	add eax, 0x3
 	mov [ebp-0xb8], eax
@@ -6647,26 +6647,26 @@ FX_GenerateMarkVertsForEntBrush_300:
 	mov edx, [ebp-0x8c]
 	movzx eax, byte [edx+0x12]
 	cmp [ebp-0x84], eax
-	jz FX_GenerateMarkVertsForEntBrush_260
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_260
 	mov edi, [ebp-0xb4]
-FX_GenerateMarkVertsForEntBrush_230:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_230:
 	mov ecx, 0x6
 	cld
 	lea esi, [ebp-0x30]
 	repe cmpsb
 	mov eax, 0x0
-	jz FX_GenerateMarkVertsForEntBrush_270
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_270
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-FX_GenerateMarkVertsForEntBrush_270:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_270:
 	test eax, eax
-	jnz FX_GenerateMarkVertsForEntBrush_280
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_280
 	mov edx, [ebp-0x24]
 	mov esi, [ebp-0xbc]
 	cmp byte [esi+0x48011], 0x0
-	jz FX_GenerateMarkVertsForEntBrush_290
-FX_GenerateMarkVertsForEntBrush_250:
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_290
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_250:
 	movzx ecx, word [esi+0x48012]
 	mov eax, [ebp-0xb8]
 	lea edx, [edx+eax*2]
@@ -6681,8 +6681,8 @@ FX_GenerateMarkVertsForEntBrush_250:
 	mov [edx+0x4], ax
 	mov [edx+0x2], cx
 	mov byte [esi+0x48011], 0x0
-	jmp FX_GenerateMarkVertsForEntBrush_300
-FX_GenerateMarkVertsForEntBrush_210:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_300
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_210:
 	mov edx, [ebp-0x90]
 	movzx eax, word [edx+0x34]
 	mov esi, fx_marksSystemPool
@@ -6703,35 +6703,35 @@ FX_GenerateMarkVertsForEntBrush_210:
 	mov ecx, [ebx+0x3c]
 	lea ebx, [esi+0x9010]
 	mov edx, [esi+0x808]
-	jmp FX_GenerateMarkVertsForEntBrush_310
-FX_GenerateMarkVertsForEntBrush_320:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_310
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_320:
 	mov edx, eax
-FX_GenerateMarkVertsForEntBrush_310:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_310:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntBrush_320
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_320
 	mov eax, [ebp-0x90]
 	mov ecx, [eax+0x40]
 	lea ebx, [esi+0x15010]
 	mov [ebp-0xb0], esi
 	mov edx, [esi+0x80c]
-	jmp FX_GenerateMarkVertsForEntBrush_330
-FX_GenerateMarkVertsForEntBrush_340:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_330
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_340:
 	mov edx, eax
-FX_GenerateMarkVertsForEntBrush_330:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_330:
 	lea eax, [ecx+ebx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntBrush_340
+	jnz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_340
 	mov edx, [ebp-0x90]
 	movzx ecx, word [edx+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForEntBrush_350
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_350
 	mov ebx, edx
 	movzx eax, cx
 	mov edx, eax
@@ -6740,24 +6740,24 @@ FX_GenerateMarkVertsForEntBrush_330:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov edx, [ebp-0x90]
-FX_GenerateMarkVertsForEntBrush_350:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_350:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntBrush_360
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_360
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov ebx, [ebp-0xb0]
 	mov [ebx+eax+0x2], cx
-FX_GenerateMarkVertsForEntBrush_430:
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_430:
 	mov edx, [ebp-0x90]
 	mov dword [edx+0x4], 0xffffffff
 	movzx ecx, word [esi+0x4]
 	mov [edx+0x2], cx
 	mov [esi+0x4], di
-	jmp FX_GenerateMarkVertsForEntBrush_140
-FX_GenerateMarkVertsForEntBrush_240:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_140
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_240:
 	mov ecx, [ebp-0xb8]
 	mov [esp+0xc], ecx
 	mov eax, [ebp-0x24]
@@ -6766,7 +6766,7 @@ FX_GenerateMarkVertsForEntBrush_240:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x34]
 	mov [esp], eax
-	call R_AddMarkMeshDrawSurf
+	call _Z21R_AddMarkMeshDrawSurfP8MaterialPK14GfxMarkContextPtj
 	mov edx, [ebp-0x28]
 	mov [ebp-0xb8], edx
 	mov edx, [ebp-0x24]
@@ -6775,14 +6775,14 @@ FX_GenerateMarkVertsForEntBrush_240:
 	mov [ebp-0x24], edx
 	mov dword [ebp-0xb8], 0x0
 	mov dword [ebp-0x28], 0x0
-	jmp FX_GenerateMarkVertsForEntBrush_370
-FX_GenerateMarkVertsForEntBrush_260:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_370
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_260:
 	mov eax, [ebp-0x88]
 	test eax, eax
-	jz FX_GenerateMarkVertsForEntBrush_380
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_380
 	mov ebx, [ebp-0x70]
-	jmp FX_GenerateMarkVertsForEntBrush_390
-FX_GenerateMarkVertsForEntBrush_380:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_390
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_380:
 	movzx ecx, byte [ebp-0xa5]
 	mov [ebp-0x2e], cl
 	movzx ecx, word [ebp-0x1a]
@@ -6792,32 +6792,32 @@ FX_GenerateMarkVertsForEntBrush_380:
 	mov [esp], eax
 	mov edx, [ebp-0x90]
 	mov eax, esi
-	call FX_GenerateMarkVertsForMark_FinishAnimated
-	jmp FX_GenerateMarkVertsForEntBrush_400
-FX_GenerateMarkVertsForEntBrush_200:
+	call _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_400
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_200:
 	mov ecx, edx
-	jmp FX_GenerateMarkVertsForEntBrush_410
-FX_GenerateMarkVertsForEntBrush_190:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_410
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_190:
 	mov edx, ebx
-	jmp FX_GenerateMarkVertsForEntBrush_420
-FX_GenerateMarkVertsForEntBrush_360:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_420
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_360:
 	mov eax, [ebp-0x94]
 	test eax, eax
-	jz FX_GenerateMarkVertsForEntBrush_430
+	jz _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_430
 	mov eax, [ebp-0x94]
 	mov [eax], cx
-	jmp FX_GenerateMarkVertsForEntBrush_430
-FX_GenerateMarkVertsForEntBrush_130:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_430
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_130:
 	mov [esi+0x6], cx
-	jmp FX_GenerateMarkVertsForEntBrush_440
-FX_GenerateMarkVertsForEntBrush_120:
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_440
+_Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_120:
 	mov edx, ebx
-	jmp FX_GenerateMarkVertsForEntBrush_450
+	jmp _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement_450
 	nop
 
 
 ;FX_GenerateMarkVertsForEntXModel(int, int, unsigned int*, unsigned short, unsigned char, GfxScaledPlacement const*)
-FX_GenerateMarkVertsForEntXModel:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6832,10 +6832,10 @@ FX_GenerateMarkVertsForEntXModel:
 	mov edx, fx_marksSystemPool
 	movzx esi, word [edx+eax*2+0x8]
 	cmp si, 0xffff
-	jz FX_GenerateMarkVertsForEntXModel_10
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_10
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_GetSystem
+	call _Z12FX_GetSystemi
 	mov edx, esi
 	mov [ebp-0xa6], di
 	movzx eax, byte [ebp-0xa8]
@@ -6917,11 +6917,11 @@ FX_GenerateMarkVertsForEntXModel:
 	addss xmm5, [eax+0x8]
 	movss [ebp-0x38], xmm5
 	cmp si, 0xffff
-	jz FX_GenerateMarkVertsForEntXModel_10
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_10
 	mov eax, fx_marksSystemPool
 	mov [ebp-0xac], eax
 	mov [ebp-0xbc], eax
-FX_GenerateMarkVertsForEntXModel_30:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_30:
 	movzx eax, dx
 	mov edx, eax
 	shl edx, 0x6
@@ -6931,20 +6931,20 @@ FX_GenerateMarkVertsForEntXModel_30:
 	movzx eax, byte [eax+0x33]
 	and eax, 0xc0
 	cmp eax, 0xc0
-	jz FX_GenerateMarkVertsForEntXModel_20
-FX_GenerateMarkVertsForEntXModel_400:
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_20
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_400:
 	mov eax, [ebp-0x90]
 	movzx edx, word [eax+0x2]
 	cmp dx, 0xffff
-	jnz FX_GenerateMarkVertsForEntXModel_30
-FX_GenerateMarkVertsForEntXModel_10:
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_30
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_10:
 	add esp, 0xdc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForEntXModel_20:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_20:
 	mov ecx, [ebp+0x10]
 	mov edx, [ecx]
 	mov ebx, [ebp-0x90]
@@ -6961,18 +6961,18 @@ FX_GenerateMarkVertsForEntXModel_20:
 	mov edx, [ebp-0x90]
 	movzx eax, word [edx+0x38]
 	mov [esp], eax
-	call R_ReserveMarkMeshVerts
+	call _Z22R_ReserveMarkMeshVertsiPt
 	test al, al
-	jnz FX_GenerateMarkVertsForEntXModel_40
-FX_GenerateMarkVertsForEntXModel_220:
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_40
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_220:
 	mov ecx, [ebp-0x90]
 	movzx eax, byte [ecx+0x33]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz FX_GenerateMarkVertsForEntXModel_50
-	jg FX_GenerateMarkVertsForEntXModel_60
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_50
+	jg _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_60
 	test eax, eax
-	jnz FX_GenerateMarkVertsForEntXModel_70
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_70
 	mov ecx, [ebp-0xac]
 	lea eax, [ecx+0x810]
 	mov edx, [ebp-0x90]
@@ -6992,34 +6992,34 @@ FX_GenerateMarkVertsForEntXModel_220:
 	lea ebx, [eax+0x9010]
 	mov esi, fx_marksSystemPool
 	mov edx, [esi+0x808]
-	jmp FX_GenerateMarkVertsForEntXModel_80
-FX_GenerateMarkVertsForEntXModel_90:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_80
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_90:
 	mov edx, eax
-FX_GenerateMarkVertsForEntXModel_80:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_80:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntXModel_90
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_90
 	mov edx, [ebp-0x90]
 	mov ecx, [edx+0x40]
 	lea ebx, [esi+0x15010]
 	mov edx, [esi+0x80c]
-	jmp FX_GenerateMarkVertsForEntXModel_100
-FX_GenerateMarkVertsForEntXModel_110:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_100
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_110:
 	mov edx, eax
-FX_GenerateMarkVertsForEntXModel_100:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_100:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntXModel_110
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_110
 	mov ebx, [ebp-0x90]
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForEntXModel_120
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_120
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
@@ -7027,24 +7027,24 @@ FX_GenerateMarkVertsForEntXModel_100:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov edx, [ebp-0x90]
-FX_GenerateMarkVertsForEntXModel_450:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_450:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntXModel_130
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_130
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [esi+eax+0x2], cx
-FX_GenerateMarkVertsForEntXModel_440:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_440:
 	mov ecx, [ebp-0x90]
 	mov dword [ecx+0x4], 0xffffffff
 	movzx ecx, word [esi+0x4]
 	mov ebx, [ebp-0x90]
 	mov [ebx+0x2], cx
 	mov [esi+0x4], di
-	jmp FX_GenerateMarkVertsForEntXModel_140
-FX_GenerateMarkVertsForEntXModel_50:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_140
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_50:
 	mov edx, ecx
 	mov ebx, ecx
 	mov ecx, [ebp-0xac]
@@ -7064,34 +7064,34 @@ FX_GenerateMarkVertsForEntXModel_50:
 	lea ebx, [eax+0x9010]
 	mov esi, fx_marksSystemPool
 	mov edx, [esi+0x808]
-	jmp FX_GenerateMarkVertsForEntXModel_150
-FX_GenerateMarkVertsForEntXModel_160:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_150
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_160:
 	mov edx, eax
-FX_GenerateMarkVertsForEntXModel_150:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_150:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntXModel_160
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_160
 	mov edx, [ebp-0x90]
 	mov ecx, [edx+0x40]
 	lea ebx, [esi+0x15010]
 	mov edx, [esi+0x80c]
-	jmp FX_GenerateMarkVertsForEntXModel_170
-FX_GenerateMarkVertsForEntXModel_180:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_170
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_180:
 	mov edx, eax
-FX_GenerateMarkVertsForEntXModel_170:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_170:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntXModel_180
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_180
 	mov ebx, [ebp-0x90]
 	movzx ecx, word [ebx+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForEntXModel_190
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_190
 	movzx eax, cx
 	mov edx, eax
 	shl edx, 0x6
@@ -7099,22 +7099,22 @@ FX_GenerateMarkVertsForEntXModel_170:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov edx, [ebp-0x90]
-FX_GenerateMarkVertsForEntXModel_420:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_420:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntXModel_200
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_200
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov [esi+eax+0x2], cx
 	mov ecx, [ebp-0x90]
-FX_GenerateMarkVertsForEntXModel_410:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_410:
 	mov dword [ecx+0x4], 0xffffffff
 	movzx eax, word [esi+0x4]
 	mov [ecx+0x2], ax
 	mov [esi+0x4], di
-FX_GenerateMarkVertsForEntXModel_140:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_140:
 	add dword [esi+0x48018], 0x1
 	add esp, 0xdc
 	pop ebx
@@ -7122,21 +7122,21 @@ FX_GenerateMarkVertsForEntXModel_140:
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForEntXModel_60:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_60:
 	cmp eax, 0x80
-	jz FX_GenerateMarkVertsForEntXModel_210
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_210
 	cmp eax, 0xc0
-	jz FX_GenerateMarkVertsForEntXModel_210
-FX_GenerateMarkVertsForEntXModel_70:
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_210
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_70:
 	mov esi, fx_marksSystemPool
-	jmp FX_GenerateMarkVertsForEntXModel_140
-FX_GenerateMarkVertsForEntXModel_40:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_140
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_40:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ReserveMarkMeshIndices
+	call _Z24R_ReserveMarkMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_GenerateMarkVertsForEntXModel_220
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_220
 	mov ebx, [ebp+0x10]
 	mov ecx, [ebx]
 	and ecx, 0x1
@@ -7171,7 +7171,7 @@ FX_GenerateMarkVertsForEntXModel_40:
 	movzx edx, word [ebp-0x1a]
 	mov [ebp-0x6a], dx
 	mov ebx, eax
-FX_GenerateMarkVertsForEntXModel_390:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_390:
 	add ebx, [ebp-0x80]
 	mov [ebp-0x8c], ebx
 	mov eax, [ebx+0x14]
@@ -7182,13 +7182,13 @@ FX_GenerateMarkVertsForEntXModel_390:
 	lea edx, [ebx+0xc]
 	mov [ebp-0xb4], edx
 	mov edi, edx
-	jmp FX_GenerateMarkVertsForEntXModel_230
-FX_GenerateMarkVertsForEntXModel_280:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_230
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_280:
 	mov ecx, [ebp-0xb8]
 	test ecx, ecx
-	jnz FX_GenerateMarkVertsForEntXModel_240
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_240
 	mov edx, [ebp-0x24]
-FX_GenerateMarkVertsForEntXModel_370:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_370:
 	mov ecx, [ebp-0x8c]
 	mov eax, [ecx+0xc]
 	mov [ebp-0x30], eax
@@ -7197,8 +7197,8 @@ FX_GenerateMarkVertsForEntXModel_370:
 	mov [ebp-0x2c], ax
 	mov esi, [ebp-0xbc]
 	cmp byte [esi+0x48011], 0x0
-	jnz FX_GenerateMarkVertsForEntXModel_250
-FX_GenerateMarkVertsForEntXModel_290:
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_250
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_290:
 	movzx ecx, word [ebp-0x6a]
 	add cx, [ebx]
 	mov eax, [ebp-0xb8]
@@ -7211,7 +7211,7 @@ FX_GenerateMarkVertsForEntXModel_290:
 	movzx eax, word [ebp-0x6a]
 	add ax, [ebx+0x4]
 	mov [esi+0x48012], ax
-FX_GenerateMarkVertsForEntXModel_300:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_300:
 	mov eax, [ebp-0x28]
 	add eax, 0x3
 	mov [ebp-0xb8], eax
@@ -7221,26 +7221,26 @@ FX_GenerateMarkVertsForEntXModel_300:
 	mov edx, [ebp-0x8c]
 	movzx eax, byte [edx+0x12]
 	cmp [ebp-0x84], eax
-	jz FX_GenerateMarkVertsForEntXModel_260
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_260
 	mov edi, [ebp-0xb4]
-FX_GenerateMarkVertsForEntXModel_230:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_230:
 	mov ecx, 0x6
 	cld
 	lea esi, [ebp-0x30]
 	repe cmpsb
 	mov eax, 0x0
-	jz FX_GenerateMarkVertsForEntXModel_270
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_270
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-FX_GenerateMarkVertsForEntXModel_270:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_270:
 	test eax, eax
-	jnz FX_GenerateMarkVertsForEntXModel_280
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_280
 	mov edx, [ebp-0x24]
 	mov esi, [ebp-0xbc]
 	cmp byte [esi+0x48011], 0x0
-	jz FX_GenerateMarkVertsForEntXModel_290
-FX_GenerateMarkVertsForEntXModel_250:
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_290
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_250:
 	movzx ecx, word [esi+0x48012]
 	mov eax, [ebp-0xb8]
 	lea edx, [edx+eax*2]
@@ -7255,8 +7255,8 @@ FX_GenerateMarkVertsForEntXModel_250:
 	mov [edx+0x4], ax
 	mov [edx+0x2], cx
 	mov byte [esi+0x48011], 0x0
-	jmp FX_GenerateMarkVertsForEntXModel_300
-FX_GenerateMarkVertsForEntXModel_210:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_300
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_210:
 	mov edx, [ebp-0x90]
 	movzx eax, word [edx+0x34]
 	mov esi, fx_marksSystemPool
@@ -7277,35 +7277,35 @@ FX_GenerateMarkVertsForEntXModel_210:
 	mov ecx, [ebx+0x3c]
 	lea ebx, [esi+0x9010]
 	mov edx, [esi+0x808]
-	jmp FX_GenerateMarkVertsForEntXModel_310
-FX_GenerateMarkVertsForEntXModel_320:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_310
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_320:
 	mov edx, eax
-FX_GenerateMarkVertsForEntXModel_310:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_310:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntXModel_320
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_320
 	mov eax, [ebp-0x90]
 	mov ecx, [eax+0x40]
 	lea ebx, [esi+0x15010]
 	mov [ebp-0xb0], esi
 	mov edx, [esi+0x80c]
-	jmp FX_GenerateMarkVertsForEntXModel_330
-FX_GenerateMarkVertsForEntXModel_340:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_330
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_340:
 	mov edx, eax
-FX_GenerateMarkVertsForEntXModel_330:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_330:
 	lea eax, [ecx+ebx]
 	mov ecx, [eax+0x40]
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForEntXModel_340
+	jnz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_340
 	mov edx, [ebp-0x90]
 	movzx ecx, word [edx+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForEntXModel_350
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_350
 	mov ebx, edx
 	movzx eax, cx
 	mov edx, eax
@@ -7314,24 +7314,24 @@ FX_GenerateMarkVertsForEntXModel_330:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov edx, [ebp-0x90]
-FX_GenerateMarkVertsForEntXModel_350:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_350:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForEntXModel_360
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_360
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov ebx, [ebp-0xb0]
 	mov [ebx+eax+0x2], cx
-FX_GenerateMarkVertsForEntXModel_430:
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_430:
 	mov edx, [ebp-0x90]
 	mov dword [edx+0x4], 0xffffffff
 	movzx ecx, word [esi+0x4]
 	mov [edx+0x2], cx
 	mov [esi+0x4], di
-	jmp FX_GenerateMarkVertsForEntXModel_140
-FX_GenerateMarkVertsForEntXModel_240:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_140
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_240:
 	mov ecx, [ebp-0xb8]
 	mov [esp+0xc], ecx
 	mov eax, [ebp-0x24]
@@ -7340,7 +7340,7 @@ FX_GenerateMarkVertsForEntXModel_240:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x34]
 	mov [esp], eax
-	call R_AddMarkMeshDrawSurf
+	call _Z21R_AddMarkMeshDrawSurfP8MaterialPK14GfxMarkContextPtj
 	mov edx, [ebp-0x28]
 	mov [ebp-0xb8], edx
 	mov edx, [ebp-0x24]
@@ -7349,14 +7349,14 @@ FX_GenerateMarkVertsForEntXModel_240:
 	mov [ebp-0x24], edx
 	mov dword [ebp-0xb8], 0x0
 	mov dword [ebp-0x28], 0x0
-	jmp FX_GenerateMarkVertsForEntXModel_370
-FX_GenerateMarkVertsForEntXModel_260:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_370
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_260:
 	mov edx, [ebp-0x88]
 	test edx, edx
-	jz FX_GenerateMarkVertsForEntXModel_380
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_380
 	mov ebx, [ebp-0x70]
-	jmp FX_GenerateMarkVertsForEntXModel_390
-FX_GenerateMarkVertsForEntXModel_380:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_390
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_380:
 	movzx ecx, word [ebp-0xa6]
 	mov [ebp-0x2c], cx
 	movzx ebx, byte [ebp-0xa7]
@@ -7368,31 +7368,31 @@ FX_GenerateMarkVertsForEntXModel_380:
 	mov [esp], eax
 	mov edx, [ebp-0x90]
 	mov eax, esi
-	call FX_GenerateMarkVertsForMark_FinishAnimated
-	jmp FX_GenerateMarkVertsForEntXModel_400
-FX_GenerateMarkVertsForEntXModel_200:
+	call _Z42FX_GenerateMarkVertsForMark_FinishAnimatedP13FxMarksSystemP6FxMarktP16FxActiveMarkSurfPA3_Kf
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_400
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_200:
 	mov ecx, edx
-	jmp FX_GenerateMarkVertsForEntXModel_410
-FX_GenerateMarkVertsForEntXModel_190:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_410
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_190:
 	mov edx, ebx
-	jmp FX_GenerateMarkVertsForEntXModel_420
-FX_GenerateMarkVertsForEntXModel_360:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_420
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_360:
 	mov ebx, [ebp-0x94]
 	test ebx, ebx
-	jz FX_GenerateMarkVertsForEntXModel_430
+	jz _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_430
 	mov eax, [ebp-0x94]
 	mov [eax], cx
-	jmp FX_GenerateMarkVertsForEntXModel_430
-FX_GenerateMarkVertsForEntXModel_130:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_430
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_130:
 	mov [esi+0x6], cx
-	jmp FX_GenerateMarkVertsForEntXModel_440
-FX_GenerateMarkVertsForEntXModel_120:
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_440
+_Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_120:
 	mov edx, ebx
-	jmp FX_GenerateMarkVertsForEntXModel_450
+	jmp _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement_450
 
 
 ;FX_GenerateMarkVertsForStaticModels(int, int, unsigned char const*)
-FX_GenerateMarkVertsForStaticModels:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -7403,10 +7403,10 @@ FX_GenerateMarkVertsForStaticModels:
 	mov dword [ebp-0xc0], 0x0
 	mov dword [ebp-0xc4], 0x0
 	mov dword [ebp-0xc8], 0x0
-	call R_BeginMarkMeshVerts
+	call _Z20R_BeginMarkMeshVertsv
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call FX_GetSystem
+	call _Z12FX_GetSystemi
 	mov eax, fx_marksSystemPool
 	mov [ebp-0xd4], eax
 	mov byte [eax+0x48011], 0x0
@@ -7416,27 +7416,27 @@ FX_GenerateMarkVertsForStaticModels:
 	mov [ebp-0x58], edx
 	mov [ebp-0xec], eax
 	mov ecx, edx
-	jmp FX_GenerateMarkVertsForStaticModels_10
-FX_GenerateMarkVertsForStaticModels_30:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_10
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_30:
 	add dword [ebp-0x5c], 0x44
 	add dword [ebp-0x58], 0x44
 	cmp dword [ebp-0x5c], 0x8800
-	jz FX_GenerateMarkVertsForStaticModels_20
-FX_GenerateMarkVertsForStaticModels_80:
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_20
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_80:
 	mov ecx, [ebp-0x58]
-FX_GenerateMarkVertsForStaticModels_10:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_10:
 	cmp dword [ecx], 0xffffffff
-	jz FX_GenerateMarkVertsForStaticModels_30
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_30
 	cmp word [ecx-0x4], 0xffff
-	jnz FX_GenerateMarkVertsForStaticModels_30
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_30
 	movzx eax, byte [ecx+0x2f]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jnz FX_GenerateMarkVertsForStaticModels_30
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_30
 	movzx eax, word [ecx+0x30]
 	mov ebx, [ebp+0x10]
 	cmp byte [eax+ebx], 0x0
-	jz FX_GenerateMarkVertsForStaticModels_30
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_30
 	mov esi, [ebp-0xd4]
 	add esi, 0x810
 	mov [ebp-0xb4], esi
@@ -7451,12 +7451,12 @@ FX_GenerateMarkVertsForStaticModels_10:
 	mov eax, edx
 	neg eax
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForStaticModels_30
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_30
 	mov edi, [ebp-0xec]
 	mov [ebp-0xcc], edi
 	mov edx, [ebp-0xd4]
 	mov [ebp-0xf0], edx
-FX_GenerateMarkVertsForStaticModels_400:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_400:
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
@@ -7479,56 +7479,56 @@ FX_GenerateMarkVertsForStaticModels_400:
 	mov [esp+0x4], esi
 	movzx eax, word [ecx+0x38]
 	mov [esp], eax
-	call R_ReserveMarkMeshVerts
+	call _Z22R_ReserveMarkMeshVertsiPt
 	test al, al
-	jnz FX_GenerateMarkVertsForStaticModels_40
-FX_GenerateMarkVertsForStaticModels_100:
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_40
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_100:
 	mov edi, [ebp-0xa0]
 	movzx eax, byte [edi+0x33]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz FX_GenerateMarkVertsForStaticModels_50
-	jg FX_GenerateMarkVertsForStaticModels_60
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_50
+	jg _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_60
 	test eax, eax
-	jz FX_GenerateMarkVertsForStaticModels_70
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_70
 	mov eax, fx_marksSystemPool
 	mov [ebp-0xd4], eax
 	mov esi, eax
-FX_GenerateMarkVertsForStaticModels_230:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_230:
 	add dword [esi+0x48018], 0x1
 	add dword [ebp-0x5c], 0x44
 	add dword [ebp-0x58], 0x44
 	cmp dword [ebp-0x5c], 0x8800
-	jnz FX_GenerateMarkVertsForStaticModels_80
-FX_GenerateMarkVertsForStaticModels_20:
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_80
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_20:
 	mov ebx, [ebp-0xd4]
 	cmp byte [ebx+0x48011], 0x0
-	jz FX_GenerateMarkVertsForStaticModels_90
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_90
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x0
-	call R_ReserveMarkMeshIndices
+	call _Z24R_ReserveMarkMeshIndicesiPP16r_double_index_t
 	mov ecx, [ebp-0x20]
 	lea eax, [ecx-0x4]
 	mov [ebp-0x20], eax
 	movzx edx, word [ebx+0x48012]
 	mov word [eax+0x2], 0x0
 	mov [ecx-0x4], dx
-FX_GenerateMarkVertsForStaticModels_90:
-	call R_EndMarkMeshVerts
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_90:
+	call _Z18R_EndMarkMeshVertsv
 	add esp, 0x13c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenerateMarkVertsForStaticModels_40:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_40:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ReserveMarkMeshIndices
+	call _Z24R_ReserveMarkMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_GenerateMarkVertsForStaticModels_100
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_100
 	and dword [ebp-0xb8], 0x1
 	mov ecx, [ebp-0xb8]
 	add ecx, ecx
@@ -7559,7 +7559,7 @@ FX_GenerateMarkVertsForStaticModels_40:
 	movzx ecx, word [ebp-0x1a]
 	mov [ebp-0x62], cx
 	mov edi, edx
-FX_GenerateMarkVertsForStaticModels_210:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_210:
 	add edi, [ebp-0xa4]
 	mov [ebp-0xb0], edi
 	mov eax, [edi+0x14]
@@ -7571,13 +7571,13 @@ FX_GenerateMarkVertsForStaticModels_210:
 	mov [ebp-0xd8], edx
 	mov ebx, edi
 	mov edi, edx
-	jmp FX_GenerateMarkVertsForStaticModels_110
-FX_GenerateMarkVertsForStaticModels_160:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_110
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_160:
 	mov esi, [ebp-0xe4]
 	test esi, esi
-	jnz FX_GenerateMarkVertsForStaticModels_120
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_120
 	mov edx, [ebp-0x34]
-FX_GenerateMarkVertsForStaticModels_190:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_190:
 	mov ecx, [ebp-0xb0]
 	mov eax, [ecx+0xc]
 	mov [ebp-0x40], eax
@@ -7587,8 +7587,8 @@ FX_GenerateMarkVertsForStaticModels_190:
 	mov edi, [ebp-0xf0]
 	mov [ebp-0xd4], edi
 	cmp byte [edi+0x48011], 0x0
-	jnz FX_GenerateMarkVertsForStaticModels_130
-FX_GenerateMarkVertsForStaticModels_170:
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_130
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_170:
 	movzx ecx, word [ebp-0x62]
 	add cx, [ebx]
 	mov eax, [ebp-0xe4]
@@ -7601,7 +7601,7 @@ FX_GenerateMarkVertsForStaticModels_170:
 	movzx eax, word [ebp-0x62]
 	add ax, [ebx+0x4]
 	mov [edi+0x48012], ax
-FX_GenerateMarkVertsForStaticModels_180:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_180:
 	mov edx, [ebp-0x38]
 	add edx, 0x3
 	mov [ebp-0xe4], edx
@@ -7611,27 +7611,27 @@ FX_GenerateMarkVertsForStaticModels_180:
 	mov ecx, [ebp-0xb0]
 	movzx eax, byte [ecx+0x12]
 	cmp [ebp-0xa8], eax
-	jz FX_GenerateMarkVertsForStaticModels_140
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_140
 	mov edi, [ebp-0xd8]
-FX_GenerateMarkVertsForStaticModels_110:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_110:
 	mov ecx, 0x6
 	cld
 	lea esi, [ebp-0x40]
 	repe cmpsb
 	mov eax, 0x0
-	jz FX_GenerateMarkVertsForStaticModels_150
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_150
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-FX_GenerateMarkVertsForStaticModels_150:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_150:
 	test eax, eax
-	jnz FX_GenerateMarkVertsForStaticModels_160
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_160
 	mov edx, [ebp-0x34]
 	mov edi, [ebp-0xf0]
 	mov [ebp-0xd4], edi
 	cmp byte [edi+0x48011], 0x0
-	jz FX_GenerateMarkVertsForStaticModels_170
-FX_GenerateMarkVertsForStaticModels_130:
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_170
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_130:
 	mov esi, edi
 	movzx ecx, word [edi+0x48012]
 	mov edi, [ebp-0xe4]
@@ -7647,8 +7647,8 @@ FX_GenerateMarkVertsForStaticModels_130:
 	mov [edx+0x4], ax
 	mov [edx+0x2], cx
 	mov byte [esi+0x48011], 0x0
-	jmp FX_GenerateMarkVertsForStaticModels_180
-FX_GenerateMarkVertsForStaticModels_120:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_180
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_120:
 	mov ecx, [ebp-0xe4]
 	mov [esp+0xc], ecx
 	mov eax, [ebp-0x34]
@@ -7657,30 +7657,30 @@ FX_GenerateMarkVertsForStaticModels_120:
 	mov [esp+0x4], esi
 	mov eax, [ebp-0x44]
 	mov [esp], eax
-	call R_AddMarkMeshDrawSurf
+	call _Z21R_AddMarkMeshDrawSurfP8MaterialPK14GfxMarkContextPtj
 	mov edi, [ebp-0x38]
 	mov edx, [ebp-0x34]
 	lea edx, [edx+edi*2]
 	mov [ebp-0x34], edx
 	mov dword [ebp-0xe4], 0x0
 	mov dword [ebp-0x38], 0x0
-	jmp FX_GenerateMarkVertsForStaticModels_190
-FX_GenerateMarkVertsForStaticModels_140:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_190
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_140:
 	mov ecx, [ebp-0xac]
 	test ecx, ecx
-	jz FX_GenerateMarkVertsForStaticModels_200
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_200
 	mov edi, [ebp-0x68]
-	jmp FX_GenerateMarkVertsForStaticModels_210
-FX_GenerateMarkVertsForStaticModels_60:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_210
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_60:
 	cmp eax, 0x80
-	jz FX_GenerateMarkVertsForStaticModels_220
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_220
 	cmp eax, 0xc0
-	jz FX_GenerateMarkVertsForStaticModels_220
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_220
 	mov ebx, fx_marksSystemPool
 	mov [ebp-0xd4], ebx
 	mov esi, ebx
-	jmp FX_GenerateMarkVertsForStaticModels_230
-FX_GenerateMarkVertsForStaticModels_50:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_230
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_50:
 	mov eax, edi
 	sub eax, [ebp-0xb4]
 	sar eax, 0x2
@@ -7698,21 +7698,21 @@ FX_GenerateMarkVertsForStaticModels_50:
 	mov eax, fx_marksSystemPool
 	mov [ebp-0xd4], eax
 	mov edi, eax
-	jmp FX_GenerateMarkVertsForStaticModels_240
-FX_GenerateMarkVertsForStaticModels_250:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_240
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_250:
 	mov edi, [ebp-0xd4]
-FX_GenerateMarkVertsForStaticModels_240:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_240:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov edx, [edi+0x808]
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForStaticModels_250
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_250
 	mov eax, [ebp-0xa0]
 	mov ecx, [eax+0x40]
 	lea ebx, [edi+0x15010]
-FX_GenerateMarkVertsForStaticModels_260:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_260:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov edi, [ebp-0xd4]
@@ -7720,11 +7720,11 @@ FX_GenerateMarkVertsForStaticModels_260:
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForStaticModels_260
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_260
 	mov eax, [ebp-0xa0]
 	movzx ecx, word [eax+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForStaticModels_270
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_270
 	mov ebx, eax
 	movzx eax, cx
 	mov edx, eax
@@ -7733,10 +7733,10 @@ FX_GenerateMarkVertsForStaticModels_260:
 	movzx edx, word [ebx]
 	mov [edi+eax], dx
 	mov edi, [ebp-0xa0]
-FX_GenerateMarkVertsForStaticModels_580:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_580:
 	movzx eax, word [edi]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForStaticModels_280
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_280
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
@@ -7744,15 +7744,15 @@ FX_GenerateMarkVertsForStaticModels_580:
 	mov edx, [ebp-0xd4]
 	mov [edx+eax+0x2], cx
 	mov ecx, [ebp-0xa0]
-FX_GenerateMarkVertsForStaticModels_570:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_570:
 	mov dword [ecx+0x4], 0xffffffff
 	mov ebx, [ebp-0xd4]
 	movzx eax, word [ebx+0x4]
 	mov [ecx+0x2], ax
 	mov [ebx+0x4], si
 	mov esi, [ebp-0xd4]
-	jmp FX_GenerateMarkVertsForStaticModels_230
-FX_GenerateMarkVertsForStaticModels_70:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_230
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_70:
 	mov eax, [ebp-0xa0]
 	sub eax, [ebp-0xb4]
 	sar eax, 0x2
@@ -7771,21 +7771,21 @@ FX_GenerateMarkVertsForStaticModels_70:
 	mov edx, fx_marksSystemPool
 	mov [ebp-0xd4], edx
 	mov edi, edx
-	jmp FX_GenerateMarkVertsForStaticModels_290
-FX_GenerateMarkVertsForStaticModels_300:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_290
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_300:
 	mov edi, [ebp-0xd4]
-FX_GenerateMarkVertsForStaticModels_290:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_290:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov edx, [edi+0x808]
 	mov [eax], edx
 	mov [edi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForStaticModels_300
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_300
 	mov eax, [ebp-0xa0]
 	mov ecx, [eax+0x40]
 	lea ebx, [edi+0x15010]
-FX_GenerateMarkVertsForStaticModels_310:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_310:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov edi, [ebp-0xd4]
@@ -7793,11 +7793,11 @@ FX_GenerateMarkVertsForStaticModels_310:
 	mov [eax], edx
 	mov [edi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForStaticModels_310
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_310
 	mov eax, [ebp-0xa0]
 	movzx ecx, word [eax+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForStaticModels_320
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_320
 	mov ebx, eax
 	movzx eax, cx
 	mov edx, eax
@@ -7806,17 +7806,17 @@ FX_GenerateMarkVertsForStaticModels_310:
 	movzx edx, word [ebx]
 	mov [edi+eax], dx
 	mov edi, [ebp-0xa0]
-FX_GenerateMarkVertsForStaticModels_620:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_620:
 	movzx eax, word [edi]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForStaticModels_330
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_330
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edx, [ebp-0xd4]
 	mov [edx+eax+0x2], cx
-FX_GenerateMarkVertsForStaticModels_610:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_610:
 	mov edi, [ebp-0xa0]
 	mov dword [edi+0x4], 0xffffffff
 	mov eax, [ebp-0xd4]
@@ -7824,8 +7824,8 @@ FX_GenerateMarkVertsForStaticModels_610:
 	mov [edi+0x2], cx
 	mov [eax+0x4], si
 	mov esi, [ebp-0xd4]
-	jmp FX_GenerateMarkVertsForStaticModels_230
-FX_GenerateMarkVertsForStaticModels_200:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_230
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_200:
 	mov ebx, [ebp-0x4c]
 	mov [ebp-0xb8], ebx
 	movzx esi, word [ebp-0x1a]
@@ -7838,12 +7838,12 @@ FX_GenerateMarkVertsForStaticModels_200:
 	mov [esp+0x4], edi
 	mov eax, [ebp-0x44]
 	mov [esp], eax
-	call R_AddMarkMeshDrawSurf
+	call _Z21R_AddMarkMeshDrawSurfP8MaterialPK14GfxMarkContextPtj
 	test ebx, ebx
-	jnz FX_GenerateMarkVertsForStaticModels_340
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_340
 	movzx eax, si
 	mov [esp], eax
-	call R_GetMarkMeshVerts
+	call _Z18R_GetMarkMeshVertst
 	mov ecx, eax
 	mov eax, [ebp-0xa0]
 	movzx eax, word [eax+0x38]
@@ -7865,13 +7865,13 @@ FX_GenerateMarkVertsForStaticModels_200:
 	mov edx, [eax+0x40]
 	mov [ebp-0x98], edx
 	cmp dword [ebp-0xfc], 0x2
-	jg FX_GenerateMarkVertsForStaticModels_350
-FX_GenerateMarkVertsForStaticModels_380:
+	jg _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_350
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_380:
 	mov dword [ebp-0x50], 0x0
-FX_GenerateMarkVertsForStaticModels_390:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_390:
 	mov edx, eax
 	mov dword [ebp-0x12c], 0x0
-FX_GenerateMarkVertsForStaticModels_360:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_360:
 	movss xmm0, dword [edx]
 	movaps xmm2, xmm0
 	mov esi, [ebp-0xa0]
@@ -7993,10 +7993,10 @@ FX_GenerateMarkVertsForStaticModels_360:
 	add dword [ebp-0x12c], 0x1
 	mov esi, [ebp-0x12c]
 	cmp [ebp-0xfc], esi
-	jnz FX_GenerateMarkVertsForStaticModels_360
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_360
 	mov eax, [ebp-0x50]
 	test eax, eax
-	jz FX_GenerateMarkVertsForStaticModels_370
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_370
 	mov eax, [ebp-0x50]
 	mov [ebp-0xfc], eax
 	mov eax, [ebp-0x6c]
@@ -8004,20 +8004,20 @@ FX_GenerateMarkVertsForStaticModels_360:
 	mov edx, [eax+0x40]
 	mov [ebp-0x98], edx
 	cmp dword [ebp-0xfc], 0x2
-	jle FX_GenerateMarkVertsForStaticModels_380
-FX_GenerateMarkVertsForStaticModels_350:
+	jle _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_380
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_350:
 	mov ebx, [ebp-0xfc]
 	sub ebx, 0x2
 	mov [ebp-0x50], ebx
 	mov dword [ebp-0xfc], 0x2
-	jmp FX_GenerateMarkVertsForStaticModels_390
-FX_GenerateMarkVertsForStaticModels_370:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_390
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_370:
 	mov ecx, [ebp-0xa0]
 	movzx eax, word [ecx+0x2]
 	cmp ax, 0xffff
-	jnz FX_GenerateMarkVertsForStaticModels_400
-	jmp FX_GenerateMarkVertsForStaticModels_30
-FX_GenerateMarkVertsForStaticModels_220:
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_400
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_30
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_220:
 	mov edx, [ebp-0xa0]
 	movzx eax, word [edx+0x34]
 	mov ecx, fx_marksSystemPool
@@ -8037,22 +8037,22 @@ FX_GenerateMarkVertsForStaticModels_220:
 	mov ecx, [ebx+0x3c]
 	mov esi, [ebp-0xd4]
 	lea ebx, [esi+0x9010]
-	jmp FX_GenerateMarkVertsForStaticModels_410
-FX_GenerateMarkVertsForStaticModels_420:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_410
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_420:
 	mov esi, [ebp-0xd4]
-FX_GenerateMarkVertsForStaticModels_410:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_410:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x14]
 	mov edx, [esi+0x808]
 	mov [eax], edx
 	mov [esi+0x808], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForStaticModels_420
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_420
 	mov eax, [ebp-0xa0]
 	mov ecx, [eax+0x40]
 	lea ebx, [esi+0x15010]
 	mov [ebp-0xd0], esi
-FX_GenerateMarkVertsForStaticModels_430:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_430:
 	lea eax, [ebx+ecx]
 	mov ecx, [eax+0x40]
 	mov esi, [ebp-0xd4]
@@ -8060,11 +8060,11 @@ FX_GenerateMarkVertsForStaticModels_430:
 	mov [eax], edx
 	mov [esi+0x80c], eax
 	cmp ecx, 0xffff
-	jnz FX_GenerateMarkVertsForStaticModels_430
+	jnz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_430
 	mov eax, [ebp-0xa0]
 	movzx ecx, word [eax+0x2]
 	cmp cx, 0xffff
-	jz FX_GenerateMarkVertsForStaticModels_440
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_440
 	mov ebx, eax
 	movzx eax, cx
 	mov edx, eax
@@ -8073,17 +8073,17 @@ FX_GenerateMarkVertsForStaticModels_430:
 	movzx edx, word [ebx]
 	mov [esi+eax], dx
 	mov esi, [ebp-0xa0]
-FX_GenerateMarkVertsForStaticModels_600:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_600:
 	movzx eax, word [esi]
 	cmp ax, 0xffff
-	jz FX_GenerateMarkVertsForStaticModels_450
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_450
 	movzx eax, ax
 	mov edx, eax
 	shl edx, 0x6
 	lea eax, [edx+eax*4+0x810]
 	mov edi, [ebp-0xd0]
 	mov [edi+eax+0x2], cx
-FX_GenerateMarkVertsForStaticModels_590:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_590:
 	mov eax, [ebp-0xa0]
 	mov dword [eax+0x4], 0xffffffff
 	mov edx, [ebp-0xd4]
@@ -8092,11 +8092,11 @@ FX_GenerateMarkVertsForStaticModels_590:
 	movzx ecx, word [ebp-0xfc]
 	mov [edx+0x4], cx
 	mov esi, [ebp-0xd4]
-	jmp FX_GenerateMarkVertsForStaticModels_230
-FX_GenerateMarkVertsForStaticModels_340:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_230
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_340:
 	movzx eax, si
 	mov [esp], eax
-	call R_GetMarkMeshVerts
+	call _Z18R_GetMarkMeshVertst
 	mov esi, eax
 	mov edx, [ebp-0xa0]
 	movzx edx, word [edx+0x38]
@@ -8124,16 +8124,16 @@ FX_GenerateMarkVertsForStaticModels_340:
 	mov ebx, [eax+0x40]
 	mov [ebp-0x80], ebx
 	cmp dword [ebp-0x88], 0x2
-	jg FX_GenerateMarkVertsForStaticModels_460
-FX_GenerateMarkVertsForStaticModels_550:
+	jg _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_460
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_550:
 	mov dword [ebp-0x54], 0x0
-FX_GenerateMarkVertsForStaticModels_560:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_560:
 	mov dword [ebp-0x60], 0x0
 	mov ebx, eax
-	jmp FX_GenerateMarkVertsForStaticModels_470
-FX_GenerateMarkVertsForStaticModels_500:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_470
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_500:
 	mov eax, 0x3fff
-FX_GenerateMarkVertsForStaticModels_520:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_520:
 	mov ecx, edx
 	or ecx, eax
 	movss xmm1, dword [ebp-0x74]
@@ -8145,9 +8145,9 @@ FX_GenerateMarkVertsForStaticModels_520:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenerateMarkVertsForStaticModels_480
+	jle _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_480
 	mov eax, 0x3fff
-FX_GenerateMarkVertsForStaticModels_540:
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_540:
 	or edx, eax
 	shl ecx, 0x10
 	lea eax, [edx+ecx]
@@ -8216,8 +8216,8 @@ FX_GenerateMarkVertsForStaticModels_540:
 	add dword [ebp-0x60], 0x1
 	mov eax, [ebp-0x60]
 	cmp [ebp-0x88], eax
-	jz FX_GenerateMarkVertsForStaticModels_490
-FX_GenerateMarkVertsForStaticModels_470:
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_490
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_470:
 	movss xmm3, dword [ebx]
 	mov ecx, [ebp-0xa0]
 	subss xmm3, [ecx+0xc]
@@ -8281,20 +8281,20 @@ FX_GenerateMarkVertsForStaticModels_470:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jg FX_GenerateMarkVertsForStaticModels_500
+	jg _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_500
 	cmp eax, 0xffffc000
-	jg FX_GenerateMarkVertsForStaticModels_510
+	jg _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_510
 	xor eax, eax
-	jmp FX_GenerateMarkVertsForStaticModels_520
-FX_GenerateMarkVertsForStaticModels_480:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_520
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_480:
 	cmp eax, 0xffffc000
-	jg FX_GenerateMarkVertsForStaticModels_530
+	jg _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_530
 	xor eax, eax
-	jmp FX_GenerateMarkVertsForStaticModels_540
-FX_GenerateMarkVertsForStaticModels_490:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_540
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_490:
 	mov eax, [ebp-0x54]
 	test eax, eax
-	jz FX_GenerateMarkVertsForStaticModels_370
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_370
 	mov edx, [ebp-0x54]
 	mov [ebp-0x88], edx
 	mov eax, [ebp-0x80]
@@ -8302,63 +8302,63 @@ FX_GenerateMarkVertsForStaticModels_490:
 	mov ebx, [eax+0x40]
 	mov [ebp-0x80], ebx
 	cmp dword [ebp-0x88], 0x2
-	jle FX_GenerateMarkVertsForStaticModels_550
-FX_GenerateMarkVertsForStaticModels_460:
+	jle _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_550
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_460:
 	mov edx, [ebp-0x88]
 	sub edx, 0x2
 	mov [ebp-0x54], edx
 	mov dword [ebp-0x88], 0x2
-	jmp FX_GenerateMarkVertsForStaticModels_560
-FX_GenerateMarkVertsForStaticModels_280:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_560
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_280:
 	mov ecx, edi
-	jmp FX_GenerateMarkVertsForStaticModels_570
-FX_GenerateMarkVertsForStaticModels_270:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_570
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_270:
 	mov edi, eax
-	jmp FX_GenerateMarkVertsForStaticModels_580
-FX_GenerateMarkVertsForStaticModels_450:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_580
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_450:
 	test edi, edi
-	jz FX_GenerateMarkVertsForStaticModels_590
+	jz _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_590
 	mov [edi], cx
-	jmp FX_GenerateMarkVertsForStaticModels_590
-FX_GenerateMarkVertsForStaticModels_440:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_590
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_440:
 	mov esi, eax
-	jmp FX_GenerateMarkVertsForStaticModels_600
-FX_GenerateMarkVertsForStaticModels_330:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_600
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_330:
 	mov ebx, [ebp-0xd4]
 	mov [ebx+0x6], cx
-	jmp FX_GenerateMarkVertsForStaticModels_610
-FX_GenerateMarkVertsForStaticModels_320:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_610
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_320:
 	mov edi, eax
-	jmp FX_GenerateMarkVertsForStaticModels_620
-FX_GenerateMarkVertsForStaticModels_530:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_620
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_530:
 	and eax, 0x3fff
-	jmp FX_GenerateMarkVertsForStaticModels_540
-FX_GenerateMarkVertsForStaticModels_510:
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_540
+_Z35FX_GenerateMarkVertsForStaticModelsiiPKh_510:
 	and eax, 0x3fff
-	jmp FX_GenerateMarkVertsForStaticModels_520
+	jmp _Z35FX_GenerateMarkVertsForStaticModelsiiPKh_520
 
 
 ;FX_EndGeneratingMarkVertsForEntModels(int)
-FX_EndGeneratingMarkVertsForEntModels:
+_Z37FX_EndGeneratingMarkVertsForEntModelsi:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x24
 	mov ebx, fx_marksSystemPool
 	cmp byte [ebx+0x48011], 0x0
-	jz FX_EndGeneratingMarkVertsForEntModels_10
+	jz _Z37FX_EndGeneratingMarkVertsForEntModelsi_10
 	lea eax, [ebp-0xc]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x0
-	call R_ReserveMarkMeshIndices
+	call _Z24R_ReserveMarkMeshIndicesiPP16r_double_index_t
 	mov ecx, [ebp-0xc]
 	lea eax, [ecx-0x4]
 	mov [ebp-0xc], eax
 	movzx edx, word [ebx+0x48012]
 	mov word [eax+0x2], 0x0
 	mov [ecx-0x4], dx
-FX_EndGeneratingMarkVertsForEntModels_10:
-	call R_EndMarkMeshVerts
+_Z37FX_EndGeneratingMarkVertsForEntModelsi_10:
+	call _Z18R_EndMarkMeshVertsv
 	add esp, 0x24
 	pop ebx
 	pop ebp
@@ -8366,11 +8366,11 @@ FX_EndGeneratingMarkVertsForEntModels_10:
 
 
 ;FX_BeginGeneratingMarkVertsForEntModels(int, unsigned int*)
-FX_BeginGeneratingMarkVertsForEntModels:
+_Z39FX_BeginGeneratingMarkVertsForEntModelsiPj:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
-	call R_BeginMarkMeshVerts
+	call _Z20R_BeginMarkMeshVertsv
 	mov eax, fx_marksSystemPool
 	mov byte [eax+0x48011], 0x0
 	mov eax, [ebp+0xc]
@@ -8962,7 +8962,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x20
+g_fltMin: resb 0x10
 g_fxMarkPoints: resb 0x5fe0
 
 

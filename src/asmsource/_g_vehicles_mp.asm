@@ -87,6 +87,11 @@
 	extern SV_SetBrushModel
 	extern s_wheelTags
 	extern s_vehicleInfos
+	extern vehDebugServer
+	extern vehTestHorsepower
+	extern vehTestMaxMPH
+	extern vehTestWeight
+	extern vehTextureScrollScale
 
 
 ;Exports of g_vehicles_mp:
@@ -125,11 +130,6 @@
 	global G_VehiclesSetupSpawnedEnts
 	global s_numVehicleInfos
 	global s_vehicles
-	global vehDebugServer
-	global vehTestHorsepower
-	global vehTestMaxMPH
-	global vehTestWeight
-	global vehTextureScrollScale
 
 
 SECTION .text
@@ -6460,11 +6460,6 @@ s_phys: resb 0x40
 s_backup: resb 0x1c0
 s_numVehicleInfos: resb 0x1c
 s_vehicles: resb 0x1aa0
-vehDebugServer: resb 0x30
-vehTestHorsepower: resb 0x4
-vehTestMaxMPH: resb 0x4
-vehTestWeight: resb 0x4
-vehTextureScrollScale: resb 0x4
 
 
 ;All cstrings:

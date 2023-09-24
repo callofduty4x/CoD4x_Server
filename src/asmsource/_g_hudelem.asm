@@ -42,6 +42,8 @@
 	extern Scr_AddClassField
 	extern Scr_SetString
 	extern HECmd_SetText
+	extern HECmd_ScaleOverTime
+	extern HECmd_SetPulseFX
 
 ;Exports of g_hudelem:
 	global HECmd_ClearAllTextAfterHudElem
@@ -57,11 +59,9 @@
 	global HECmd_SetValue
 	global HECmd_SetWaypoint
 	global HECmd_FadeOverTime
-	global HECmd_ScaleOverTime
 	global HECmd_MoveOverTime
 	global HECmd_Reset
 	global HECmd_Destroy
-	global HECmd_SetPulseFX
 	global HECmd_SetPlayerNameString
 	global HECmd_SetMapNameString
 	global HECmd_SetGameTypeString
@@ -580,97 +580,6 @@ HECmd_FadeOverTime_20:
 	jmp HECmd_FadeOverTime_40
 
 
-;HECmd_ScaleOverTime(scr_entref_t)
-HECmd_ScaleOverTime:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov eax, [ebp+0x8]
-	mov edx, eax
-	shr eax, 0x10
-	sub ax, 0x1
-	jz HECmd_ScaleOverTime_10
-	mov dword [esp], _cstring_not_a_hud_elemen
-	call Scr_ObjectError
-	xor edi, edi
-HECmd_ScaleOverTime_60:
-	call Scr_GetNumParam
-	cmp eax, 0x3
-	jz HECmd_ScaleOverTime_20
-	mov dword [esp], _cstring_hudelem_scaleove
-	call Scr_Error
-HECmd_ScaleOverTime_20:
-	mov dword [esp], 0x0
-	call Scr_GetFloat
-	fstp dword [ebp-0x1c]
-	movss xmm0, dword [ebp-0x1c]
-	ucomiss xmm0, [_float_0_00000000]
-	jbe HECmd_ScaleOverTime_30
-HECmd_ScaleOverTime_70:
-	ucomiss xmm0, [_float_60_00000000]
-	ja HECmd_ScaleOverTime_40
-HECmd_ScaleOverTime_50:
-	mov dword [esp], 0x1
-	call Scr_GetInt
-	mov esi, eax
-	mov dword [esp], 0x2
-	call Scr_GetInt
-	mov ebx, eax
-	mov eax, level
-	mov eax, [eax+0x1ec]
-	mov [edi+0x50], eax
-	movss xmm0, dword [ebp-0x1c]
-	mulss xmm0, [_float_1000_00000000]
-	movss [ebp-0x1c], xmm0
-	addss xmm0, [_float_0_50000000]
-	movss [esp], xmm0
-	call floorf
-	fstp dword [ebp-0x20]
-	cvttss2si eax, [ebp-0x20]
-	mov [edi+0x54], eax
-	mov eax, [edi+0x38]
-	mov [edi+0x48], eax
-	mov eax, [edi+0x3c]
-	mov [edi+0x4c], eax
-	mov [edi+0x38], esi
-	mov [edi+0x3c], ebx
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-HECmd_ScaleOverTime_40:
-	cvtss2sd xmm0, xmm0
-	movsd [esp+0x4], xmm0
-	mov dword [esp], _cstring_scale_time_g__60
-	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
-	call Scr_ParamError
-	jmp HECmd_ScaleOverTime_50
-HECmd_ScaleOverTime_10:
-	movzx edx, dx
-	lea eax, [edx+edx*4]
-	lea eax, [edx+eax*4]
-	lea eax, [edx+eax*2]
-	lea edi, [eax*4+g_hudelems]
-	jmp HECmd_ScaleOverTime_60
-HECmd_ScaleOverTime_30:
-	jp HECmd_ScaleOverTime_70
-	cvtss2sd xmm0, xmm0
-	movsd [esp+0x4], xmm0
-	mov dword [esp], _cstring_scale_time_g__0
-	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
-	call Scr_ParamError
-	jmp HECmd_ScaleOverTime_50
-
-
 ;HECmd_MoveOverTime(scr_entref_t)
 HECmd_MoveOverTime:
 	push ebp
@@ -850,144 +759,6 @@ HECmd_Destroy_10:
 	mov dword [ebx], 0x0
 	add esp, 0x14
 	pop ebx
-	pop ebp
-	ret
-
-
-;HECmd_SetPulseFX(scr_entref_t)
-HECmd_SetPulseFX:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov ebx, [ebp+0x8]
-	call Scr_GetNumParam
-	cmp eax, 0x3
-	jz HECmd_SetPulseFX_10
-	mov dword [esp], _cstring_usage_hudelem_se1
-	call Scr_Error
-HECmd_SetPulseFX_10:
-	mov eax, ebx
-	shr ebx, 0x10
-	sub bx, 0x1
-	jz HECmd_SetPulseFX_20
-	mov dword [esp], _cstring_not_a_hud_elemen
-	call Scr_ObjectError
-	xor esi, esi
-	mov edi, level
-	mov eax, [edi+0x1ec]
-	mov [esi+0x88], eax
-	mov dword [esp], 0x0
-	call Scr_GetInt
-	mov ebx, eax
-	test eax, eax
-	js HECmd_SetPulseFX_30
-HECmd_SetPulseFX_70:
-	mov [esi+0x8c], ebx
-	mov dword [esp], 0x1
-	call Scr_GetInt
-	mov ebx, eax
-	test eax, eax
-	js HECmd_SetPulseFX_40
-HECmd_SetPulseFX_80:
-	mov [esi+0x90], ebx
-	mov dword [esp], 0x2
-	call Scr_GetInt
-	mov ebx, eax
-	test eax, eax
-	js HECmd_SetPulseFX_50
-HECmd_SetPulseFX_90:
-	mov [esi+0x94], ebx
-	mov ecx, [esi+0xa0]
-	lea eax, [ecx+ecx*2]
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	lea ecx, [eax+ecx]
-	add ecx, [edi]
-	mov eax, [ecx+0x658]
-	add eax, 0x1
-	mov [ecx+0x658], eax
-	mov edx, eax
-	and edx, 0x8000001f
-	js HECmd_SetPulseFX_60
-	mov eax, 0x1
-	test edx, edx
-	cmovnz eax, edx
-	mov [ecx+0x658], eax
-	mov [esi+0x98], eax
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-HECmd_SetPulseFX_20:
-	movzx edx, ax
-	lea eax, [edx+edx*4]
-	lea eax, [edx+eax*4]
-	lea eax, [edx+eax*2]
-	lea esi, [eax*4+g_hudelems]
-	mov edi, level
-	mov eax, [edi+0x1ec]
-	mov [esi+0x88], eax
-	mov dword [esp], 0x0
-	call Scr_GetInt
-	mov ebx, eax
-	test eax, eax
-	jns HECmd_SetPulseFX_70
-HECmd_SetPulseFX_30:
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_time_i_must_be_g
-	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
-	call Scr_ParamError
-	mov [esi+0x8c], ebx
-	mov dword [esp], 0x1
-	call Scr_GetInt
-	mov ebx, eax
-	test eax, eax
-	jns HECmd_SetPulseFX_80
-HECmd_SetPulseFX_40:
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_time_i_must_be_g
-	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x1
-	call Scr_ParamError
-	mov [esi+0x90], ebx
-	mov dword [esp], 0x2
-	call Scr_GetInt
-	mov ebx, eax
-	test eax, eax
-	jns HECmd_SetPulseFX_90
-HECmd_SetPulseFX_50:
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_time_i_must_be_g
-	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x2
-	call Scr_ParamError
-	jmp HECmd_SetPulseFX_90
-HECmd_SetPulseFX_60:
-	sub edx, 0x1
-	or edx, 0xffffffe0
-	add edx, 0x1
-	mov eax, 0x1
-	test edx, edx
-	cmovnz eax, edx
-	mov [ecx+0x658], eax
-	mov [esi+0x98], eax
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
 	pop ebp
 	ret
 

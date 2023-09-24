@@ -81,9 +81,10 @@
 #undef msg
 #endif
 
-#define msg "Compiling a plugin using CoD4X Plugin API. Your compiler is " COMPILER_NAME ", you are using " LANG_NAME "."
 
-#pragma message msg
+#define msg "Compiling a plugin using CoD4X Plugin API. Your compiler is " COMPILER_NAME ", you are using " LANG_NAME "."
+//I am muting this spam, yes!
+//#pragma message msg
 
 #undef msg
 

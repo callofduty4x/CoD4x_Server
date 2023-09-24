@@ -136,6 +136,7 @@ pexport Scr_GetEntity
 pexport Scr_GetConstString
 pexport Scr_GetType
 pexport Scr_GetVector
+pexport Scr_GetFunc
 pexport Scr_Error
 pexport Scr_ParamError
 pexport Scr_ObjectError
@@ -174,3 +175,5 @@ pexport SL_ConvertToString
 pexport HTTP_CreateString_x_www_form_urlencoded
 pexport HTTP_ParseFormDataBody
 pexport HTTP_GetFormDataItem
+
+ralias Plugin_UpdatePlayername, SV_UpdatePlayernameById

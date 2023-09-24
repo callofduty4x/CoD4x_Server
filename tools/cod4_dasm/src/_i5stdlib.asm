@@ -1,16 +1,16 @@
 ;Imports of i5stdlib:
 	extern tolower
-	extern __toupper
+	extern toupper
 	extern strcasecmp
 	extern strncasecmp
 	extern getcwd
 
 ;Exports of i5stdlib:
-	global itoa
-	global Q_strlwr
-	global strupr
-	global stricmp
-	global strnicmp
+	global _Z4itoaiPci
+	global _Z6strlwrPc
+	global _Z6struprPc
+	global _Z7stricmpPKcS0_
+	global _Z8strnicmpPKcS0_m
 	global _getcwd
 
 
@@ -18,7 +18,7 @@ SECTION .text
 
 
 ;itoa(int, char*, int)
-itoa:
+_Z4itoaiPci:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -28,13 +28,13 @@ itoa:
 	mov eax, [ebp+0x8]
 	mov ebx, [ebp+0x10]
 	test eax, eax
-	js itoa_10
+	js _Z4itoaiPci_10
 	mov ecx, eax
 	xor esi, esi
-itoa_80:
+_Z4itoaiPci_80:
 	xor edi, edi
-	jmp itoa_20
-itoa_40:
+	jmp _Z4itoaiPci_20
+_Z4itoaiPci_40:
 	lea eax, [edx+0x37]
 	mov edx, [ebp+0xc]
 	mov [edx+edi], al
@@ -44,13 +44,13 @@ itoa_40:
 	idiv ebx
 	mov ecx, eax
 	test eax, eax
-	jz itoa_30
-itoa_20:
+	jz _Z4itoaiPci_30
+_Z4itoaiPci_20:
 	mov eax, ecx
 	cdq
 	idiv ebx
 	cmp edx, 0x9
-	jg itoa_40
+	jg _Z4itoaiPci_40
 	lea eax, [edx+0x30]
 	mov edx, [ebp+0xc]
 	mov [edx+edi], al
@@ -60,15 +60,15 @@ itoa_20:
 	idiv ebx
 	mov ecx, eax
 	test eax, eax
-	jnz itoa_20
-itoa_30:
+	jnz _Z4itoaiPci_20
+_Z4itoaiPci_30:
 	mov edx, esi
 	test dl, dl
-	jz itoa_50
+	jz _Z4itoaiPci_50
 	mov eax, [ebp+0xc]
 	mov byte [eax+edi], 0x2d
 	add edi, 0x1
-itoa_50:
+_Z4itoaiPci_50:
 	mov edx, [ebp+0xc]
 	mov byte [edi+edx], 0x0
 	cld
@@ -79,10 +79,10 @@ itoa_50:
 	not ecx
 	lea ebx, [ecx-0x2]
 	test ebx, ebx
-	jle itoa_60
+	jle _Z4itoaiPci_60
 	lea edi, [ebx+edx]
 	mov esi, 0x1
-itoa_70:
+_Z4itoaiPci_70:
 	mov edx, [ebp+0xc]
 	add edx, esi
 	movzx ecx, byte [edx-0x1]
@@ -94,8 +94,8 @@ itoa_70:
 	add esi, 0x1
 	sub edi, 0x1
 	cmp ebx, eax
-	jg itoa_70
-itoa_60:
+	jg _Z4itoaiPci_70
+_Z4itoaiPci_60:
 	mov eax, [ebp+0xc]
 	add esp, 0x4
 	pop ebx
@@ -103,15 +103,15 @@ itoa_60:
 	pop edi
 	pop ebp
 	ret
-itoa_10:
+_Z4itoaiPci_10:
 	mov ecx, eax
 	neg ecx
 	mov esi, 0x1
-	jmp itoa_80
+	jmp _Z4itoaiPci_80
 
 
 ;strlwr(char*)
-Q_strlwr:
+_Z6strlwrPc:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -120,16 +120,16 @@ Q_strlwr:
 	mov esi, [ebp+0x8]
 	movzx eax, byte [esi]
 	test al, al
-	jnz Q_strlwr_10
+	jnz _Z6strlwrPc_10
 	mov eax, esi
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-Q_strlwr_10:
+_Z6strlwrPc_10:
 	mov ebx, esi
-Q_strlwr_20:
+_Z6strlwrPc_20:
 	movsx eax, al
 	mov [esp], eax
 	call tolower
@@ -137,7 +137,7 @@ Q_strlwr_20:
 	add ebx, 0x1
 	movzx eax, byte [ebx]
 	test al, al
-	jnz Q_strlwr_20
+	jnz _Z6strlwrPc_20
 	mov eax, esi
 	add esp, 0x10
 	pop ebx
@@ -148,7 +148,7 @@ Q_strlwr_20:
 
 
 ;strupr(char*)
-strupr:
+_Z6struprPc:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -157,24 +157,24 @@ strupr:
 	mov esi, [ebp+0x8]
 	movzx eax, byte [esi]
 	test al, al
-	jnz strupr_10
+	jnz _Z6struprPc_10
 	mov eax, esi
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-strupr_10:
+_Z6struprPc_10:
 	mov ebx, esi
-strupr_20:
+_Z6struprPc_20:
 	movsx eax, al
 	mov [esp], eax
-	call __toupper
+	call toupper
 	mov [ebx], al
 	add ebx, 0x1
 	movzx eax, byte [ebx]
 	test al, al
-	jnz strupr_20
+	jnz _Z6struprPc_20
 	mov eax, esi
 	add esp, 0x10
 	pop ebx
@@ -185,7 +185,7 @@ strupr_20:
 
 
 ;stricmp(char const*, char const*)
-stricmp:
+_Z7stricmpPKcS0_:
 	push ebp
 	mov ebp, esp
 	pop ebp
@@ -194,7 +194,7 @@ stricmp:
 
 
 ;strnicmp(char const*, char const*, unsigned long)
-strnicmp:
+_Z8strnicmpPKcS0_m:
 	push ebp
 	mov ebp, esp
 	pop ebp

@@ -1,19 +1,19 @@
 ;Imports of rb_backend:
-	extern RB_EndTessSurface
+	extern _Z17RB_EndTessSurfacev
 	extern gfxCmdBufSourceState
 	extern gfxRenderTargets
 	extern gfxCmdBufContext
-	extern Image_GetSurface
+	extern _Z16Image_GetSurfaceP8GfxImage
 	extern rgp
 	extern gfxCmdBufState
-	extern R_ClearScreen
-	extern R_SetViewportStruct
-	extern RB_SetTessTechnique
-	extern RB_TessOverflow
+	extern _Z13R_ClearScreenP16IDirect3DDevice9hPKffhPK11GfxViewport
+	extern _Z19R_SetViewportStructP20GfxCmdBufSourceStatePK11GfxViewport
+	extern _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
+	extern _Z15RB_TessOverflowv
 	extern sinf
 	extern cosf
 	extern dx_ctx
-	extern R_Set2D
+	extern _Z7R_Set2DP20GfxCmdBufSourceState
 	extern pow
 	extern floorf
 	extern _ZN10MacDisplay11GetDeviceIDEv
@@ -21,146 +21,145 @@
 	extern _ZN10MacDisplay16GetIsAntialiasedEv
 	extern rg
 	extern memcpy
-	extern R_CmdBufSet3D
-	extern R_Set3D
-	extern CL_ScaledMilliseconds
-	extern R_GetCharacterGlyph
-	extern R_WarnOncePerFrame
-	extern SEH_ReadCharFromString
-	extern R_FontGetRandomLetter
-	extern RandWithSeed
-	extern ColorIndex
-	extern bg_itemlist
-	extern SEH_PrintStrlen
+	extern _Z13R_CmdBufSet3DP20GfxCmdBufSourceState
+	extern _Z7R_Set3DP20GfxCmdBufSourceState
+	extern _Z21CL_ScaledMillisecondsv
+	extern _Z19R_GetCharacterGlyphP6Font_sj
+	extern _Z18R_WarnOncePerFrame14GfxWarningTypez
+	extern _Z22SEH_ReadCharFromStringPPKcPi
+	extern _Z21R_FontGetRandomLetterP6Font_si
+	extern _Z12RandWithSeedPi
+	extern _Z10ColorIndexh
+	extern _Z15SEH_PrintStrlenPKc
 	extern gfxBuf
 	extern r_gamma
 	extern r_ignoreHwGamma
-	extern Cvar_ClearModified
-	extern R_SetColorMappings
-	extern R_ErrorDescription
-	extern Com_Error
-	extern R_SetDrawSurfsShadowableLight
+	extern _Z18Dvar_ClearModifiedPK6dvar_s
+	extern _Z18R_SetColorMappingsv
+	extern _Z18R_ErrorDescriptionl
+	extern _Z9Com_Error11errorParm_tPKcz
+	extern _Z29R_SetDrawSurfsShadowableLightP20GfxCmdBufSourceStatePK19GfxDrawSurfListInfo
 	extern pixelCostMode
-	extern R_SetupMaterial
-	extern R_SkipDrawSurfListMaterial
-	extern R_ChangeDepthHackNearClip
-	extern R_ChangeDepthRange
-	extern R_PixelCost_EndSurface
-	extern R_SetupPass
-	extern R_UpdateMaterialTime
-	extern R_PixelCost_BeginSurface
-	extern R_GetViewport
-	extern R_SetViewport
-	extern R_UpdateViewport
+	extern _Z15R_SetupMaterial16GfxCmdBufContextPS_PK19GfxDrawSurfListInfo11GfxDrawSurf
+	extern _Z26R_SkipDrawSurfListMaterialPK11GfxDrawSurfj
+	extern _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
+	extern _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+	extern _Z22R_PixelCost_EndSurface16GfxCmdBufContext
+	extern _Z11R_SetupPass16GfxCmdBufContextj
+	extern _Z20R_UpdateMaterialTimeP20GfxCmdBufSourceStatef
+	extern _Z24R_PixelCost_BeginSurface16GfxCmdBufContext
+	extern _Z13R_GetViewportP20GfxCmdBufSourceStateP11GfxViewport
+	extern _Z13R_SetViewportP14GfxCmdBufStatePK11GfxViewport
+	extern _Z16R_UpdateViewportP20GfxCmdBufSourceStateP11GfxViewport
 	extern r_glob
-	extern R_GetCachedSModelSurf
-	extern XModelGetStaticModelCacheVertCount
-	extern R_LockVertexBuffer
+	extern _Z21R_GetCachedSModelSurfj
+	extern _Z34XModelGetStaticModelCacheVertCountP6XModelj
+	extern _Z18R_LockVertexBufferP22IDirect3DVertexBuffer9iii
 	extern Com_Memcpy
-	extern R_UnlockVertexBuffer
-	extern RB_PatchModelLighting
-	extern RB_UploadShaderStep
-	extern R_Cinematic_UpdateFrame
+	extern _Z20R_UnlockVertexBufferP22IDirect3DVertexBuffer9
+	extern _Z21RB_PatchModelLightingPK21GfxModelLightingPatchj
+	extern _Z19RB_UploadShaderStepv
+	extern _Z23R_Cinematic_UpdateFramev
 	extern r_texFilterAnisoMax
-	extern R_CheckDvarModified
-	extern R_SetTexFilter
+	extern _Z19R_CheckDvarModifiedPK6dvar_s
+	extern _Z14R_SetTexFilterv
 	extern r_showPixelCost
 	extern r_aaAlpha
 	extern gfxMetrics
-	extern R_SetAlphaAntiAliasingState
-	extern R_PixelCost_PrintColorCodeKey
+	extern _Z27R_SetAlphaAntiAliasingStateP16IDirect3DDevice9i
+	extern _Z29R_PixelCost_PrintColorCodeKeyv
 	extern r_texFilterDisable
 	extern r_texFilterAnisoMin
 	extern r_texFilterMipMode
 	extern r_texFilterMipBias
-	extern Vec2Normalize
+	extern _Z13Vec2NormalizePf
 	extern gfxCmdBufInput
-	extern R_RegisterFont
-	extern RB_InitSceneViewport
-	extern R_InitCmdBufSourceState
+	extern _Z14R_RegisterFontPKci
+	extern _Z20RB_InitSceneViewportv
+	extern _Z23R_InitCmdBufSourceStateP20GfxCmdBufSourceStatePK14GfxCmdBufInputi
 	extern memset
-	extern R_SetRenderTargetSize
-	extern R_SetRenderTarget
-	extern R_ClearAllStreamSources
-	extern R_AcquireGpuFenceLock
-	extern RB_IsGpuFenceFinished
-	extern R_ReleaseGpuFenceLock
-	extern RB_Draw3DCommon
+	extern _Z21R_SetRenderTargetSizeP20GfxCmdBufSourceState17GfxRenderTargetId
+	extern _Z17R_SetRenderTarget16GfxCmdBufContext17GfxRenderTargetId
+	extern _Z23R_ClearAllStreamSourcesP18GfxCmdBufPrimState
+	extern _Z21R_AcquireGpuFenceLockv
+	extern _Z21RB_IsGpuFenceFinishedv
+	extern _Z21R_ReleaseGpuFenceLockv
+	extern _Z15RB_Draw3DCommonv
 	extern msecPerRawTimerTick
-	extern RB_Draw3DInternal
-	extern R_TessTrianglesList
-	extern R_TessTrianglesPreTessList
-	extern R_TessStaticModelRigidDrawSurfList
-	extern R_TessStaticModelPreTessList
-	extern R_TessStaticModelCachedList
-	extern R_TessStaticModelSkinnedDrawSurfList
-	extern R_TessBModel
-	extern R_TessXModelRigidDrawSurfList
-	extern R_TessXModelRigidSkinnedDrawSurfList
-	extern R_TessXModelSkinnedDrawSurfList
-	extern R_TessCodeMeshList
-	extern R_TessMarkMeshList
-	extern R_TessParticleCloudList
+	extern _Z17RB_Draw3DInternalPK11GfxViewInfo
+	extern _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z36R_TessStaticModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	extern _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext
 
 ;Exports of rb_backend:
 	global _GLOBAL__I_backEndData
 	global RB_RenderCommandTable
-	global RB_SetMaterialColorCmd
-	global RB_SaveScreenCmd
-	global RB_SaveScreenSectionCmd
-	global RB_ClearScreenCmd
-	global RB_SetViewportCmd
-	global RB_StretchPicCmd
-	global RB_StretchPicCmdFlipST
-	global RB_StretchPicRotateXYCmd
-	global RB_StretchPicRotateSTCmd
-	global RB_StretchRawCmd
-	global RB_DrawQuadPicCmd
-	global RB_DrawFullScreenColoredQuadCmd
-	global RB_DrawText2DCmd
-	global RB_DrawText3DCmd
-	global RB_BlendSavedScreenBlurredCmd
-	global RB_BlendSavedScreenFlashedCmd
-	global RB_DrawPointsCmd
-	global RB_DrawLinesCmd
-	global RB_DrawTrianglesCmd
-	global RB_ProjectionSetCmd
+	global _Z22RB_SetMaterialColorCmdP25GfxRenderCommandExecState
+	global _Z16RB_SaveScreenCmdP25GfxRenderCommandExecState
+	global _Z23RB_SaveScreenSectionCmdP25GfxRenderCommandExecState
+	global _Z17RB_ClearScreenCmdP25GfxRenderCommandExecState
+	global _Z17RB_SetViewportCmdP25GfxRenderCommandExecState
+	global _Z16RB_StretchPicCmdP25GfxRenderCommandExecState
+	global _Z22RB_StretchPicCmdFlipSTP25GfxRenderCommandExecState
+	global _Z24RB_StretchPicRotateXYCmdP25GfxRenderCommandExecState
+	global _Z24RB_StretchPicRotateSTCmdP25GfxRenderCommandExecState
+	global _Z16RB_StretchRawCmdP25GfxRenderCommandExecState
+	global _Z17RB_DrawQuadPicCmdP25GfxRenderCommandExecState
+	global _Z31RB_DrawFullScreenColoredQuadCmdP25GfxRenderCommandExecState
+	global _Z16RB_DrawText2DCmdP25GfxRenderCommandExecState
+	global _Z16RB_DrawText3DCmdP25GfxRenderCommandExecState
+	global _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState
+	global _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState
+	global _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState
+	global _Z15RB_DrawLinesCmdP25GfxRenderCommandExecState
+	global _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState
+	global _Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState
 	global rb_tessTable
 	global _ZZ14RB_LookupColorhPhE11color_table
-	global RB_DrawStretchPicRotate
-	global RB_DrawCursor
+	global _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget
+	global _Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm
 	global _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E10MY_OFFSETS
 	global _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E25MY_ALTCOLOR_TWO_CINEMATIC
 	global _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E15MY_ALTCOLOR_TWO
-	global DrawText2D
-	global RB_EndFrame
-	global R_DrawSurfs
-	global RB_BeginFrame
-	global R_SetVertex2d
-	global RB_DrawLines2D
-	global RB_DrawLines3D
-	global RB_LookupColor
-	global RB_SetIdentity
-	global RB_SetBspImages
-	global RB_SetGammaRamp
-	global R_InsertGpuFence
-	global RB_DrawStretchPic
-	global RB_InitCodeImages
-	global RB_DrawTextInSpace
-	global RB_FullScreenFilter
-	global RB_InitCodeConstants
-	global RB_SplitScreenFilter
-	global R_ShowDirtyDiscError
-	global RB_DrawStretchPicFlipST
-	global R_SetVertex4dWithNormal
-	global RB_RegisterBackendAssets
-	global RB_FullScreenColoredFilter
-	global RB_InitBackendGlobalStructs
-	global RB_CallExecuteRenderCommands
-	global RB_DrawFullScreenColoredQuad
-	global RB_ExecuteRenderCommandsLoop
-	global RB_Draw3D
-	global R_Resolve
+	global _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_
+	global _Z11RB_EndFramej
+	global _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo
+	global _Z13RB_BeginFramePKv
+	global _Z13R_SetVertex2dP9GfxVertexffffm
+	global _Z14RB_DrawLines2DiiPK14GfxPointVertex
+	global _Z14RB_DrawLines3DiiPK14GfxPointVertexh
+	global _Z14RB_LookupColorhPh
+	global _Z14RB_SetIdentityv
+	global _Z15RB_SetBspImagesv
+	global _Z15RB_SetGammaRampPK12GfxGammaRamp
+	global _Z16R_InsertGpuFencev
+	global _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
+	global _Z17RB_InitCodeImagesv
+	global _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m
+	global _Z19RB_FullScreenFilterPK8Material
+	global _Z20RB_InitCodeConstantsv
+	global _Z20RB_SplitScreenFilterPK8MaterialPK11GfxViewInfo
+	global _Z20R_ShowDirtyDiscErrorv
+	global _Z23RB_DrawStretchPicFlipSTPK8Materialffffffffm18GfxPrimStatsTarget
+	global _Z23R_SetVertex4dWithNormalP9GfxVertexfffffffffPKh
+	global _Z24RB_RegisterBackendAssetsv
+	global _Z26RB_FullScreenColoredFilterPK8Materialm
+	global _Z27RB_InitBackendGlobalStructsv
+	global _Z28RB_CallExecuteRenderCommandsv
+	global _Z28RB_DrawFullScreenColoredQuadPK8Materialffffm
+	global _Z28RB_ExecuteRenderCommandsLoopPKv
+	global _Z9RB_Draw3Dv
+	global _Z9R_Resolve16GfxCmdBufContextP8GfxImage
 	global backEnd
 	global backEndData
 	global tess
@@ -176,11 +175,11 @@ _GLOBAL__I_backEndData:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;RB_SetMaterialColorCmd(GfxRenderCommandExecState*)
-RB_SetMaterialColorCmd:
+_Z22RB_SetMaterialColorCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -189,9 +188,9 @@ RB_SetMaterialColorCmd:
 	mov ebx, [esi]
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jz RB_SetMaterialColorCmd_10
-	call RB_EndTessSurface
-RB_SetMaterialColorCmd_10:
+	jz _Z22RB_SetMaterialColorCmdP25GfxRenderCommandExecState_10
+	call _Z17RB_EndTessSurfacev
+_Z22RB_SetMaterialColorCmdP25GfxRenderCommandExecState_10:
 	lea ecx, [ebx+0x4]
 	mov edx, gfxCmdBufSourceState
 	mov eax, [ebx+0x4]
@@ -215,7 +214,7 @@ RB_SetMaterialColorCmd_10:
 
 
 ;RB_SaveScreenCmd(GfxRenderCommandExecState*)
-RB_SaveScreenCmd:
+_Z16RB_SaveScreenCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -227,15 +226,15 @@ RB_SaveScreenCmd:
 	mov [ebp-0x1c], eax
 	mov ebx, [tess+0x22a948]
 	test ebx, ebx
-	jz RB_SaveScreenCmd_10
-	call RB_EndTessSurface
-RB_SaveScreenCmd_10:
+	jz _Z16RB_SaveScreenCmdP25GfxRenderCommandExecState_10
+	call _Z17RB_EndTessSurfacev
+_Z16RB_SaveScreenCmdP25GfxRenderCommandExecState_10:
 	mov edi, gfxRenderTargets
 	mov edx, [edi]
 	mov eax, gfxCmdBufContext
 	mov esi, [eax+0x4]
 	mov [esp], edx
-	call Image_GetSurface
+	call _Z16Image_GetSurfaceP8GfxImage
 	mov ebx, eax
 	mov edx, [esi+0x90]
 	mov ecx, [edx]
@@ -274,7 +273,7 @@ RB_SaveScreenCmd_10:
 
 
 ;RB_SaveScreenSectionCmd(GfxRenderCommandExecState*)
-RB_SaveScreenSectionCmd:
+_Z23RB_SaveScreenSectionCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -283,9 +282,9 @@ RB_SaveScreenSectionCmd:
 	mov ebx, [esi]
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jz RB_SaveScreenSectionCmd_10
-	call RB_EndTessSurface
-RB_SaveScreenSectionCmd_10:
+	jz _Z23RB_SaveScreenSectionCmdP25GfxRenderCommandExecState_10
+	call _Z17RB_EndTessSurfacev
+_Z23RB_SaveScreenSectionCmdP25GfxRenderCommandExecState_10:
 	mov ecx, [ebx+0x14]
 	mov eax, gfxCmdBufSourceState
 	mov edx, [eax+0xf3c]
@@ -302,7 +301,7 @@ RB_SaveScreenSectionCmd_10:
 
 
 ;RB_ClearScreenCmd(GfxRenderCommandExecState*)
-RB_ClearScreenCmd:
+_Z17RB_ClearScreenCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -310,9 +309,9 @@ RB_ClearScreenCmd:
 	mov ebx, [ebp+0x8]
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jz RB_ClearScreenCmd_10
-	call RB_EndTessSurface
-RB_ClearScreenCmd_10:
+	jz _Z17RB_ClearScreenCmdP25GfxRenderCommandExecState_10
+	call _Z17RB_EndTessSurfacev
+_Z17RB_ClearScreenCmdP25GfxRenderCommandExecState_10:
 	mov edx, [ebx]
 	mov dword [esp+0x14], 0x0
 	movzx eax, byte [edx+0x5]
@@ -326,7 +325,7 @@ RB_ClearScreenCmd_10:
 	mov eax, gfxCmdBufState
 	mov eax, [eax+0x90]
 	mov [esp], eax
-	call R_ClearScreen
+	call _Z13R_ClearScreenP16IDirect3DDevice9hPKffhPK11GfxViewport
 	mov edx, [ebx]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -339,7 +338,7 @@ RB_ClearScreenCmd_10:
 
 
 ;RB_SetViewportCmd(GfxRenderCommandExecState*)
-RB_SetViewportCmd:
+_Z17RB_SetViewportCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -347,15 +346,15 @@ RB_SetViewportCmd:
 	mov ebx, [ebp+0x8]
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jz RB_SetViewportCmd_10
-	call RB_EndTessSurface
-RB_SetViewportCmd_10:
+	jz _Z17RB_SetViewportCmdP25GfxRenderCommandExecState_10
+	call _Z17RB_EndTessSurfacev
+_Z17RB_SetViewportCmdP25GfxRenderCommandExecState_10:
 	mov eax, [ebx]
 	add eax, 0x4
 	mov [esp+0x4], eax
 	mov eax, gfxCmdBufSourceState
 	mov [esp], eax
-	call R_SetViewportStruct
+	call _Z19R_SetViewportStructP20GfxCmdBufSourceStatePK11GfxViewport
 	mov edx, [ebx]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -367,7 +366,7 @@ RB_SetViewportCmd_10:
 
 
 ;RB_StretchPicCmd(GfxRenderCommandExecState*)
-RB_StretchPicCmd:
+_Z16RB_StretchPicCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -395,7 +394,7 @@ RB_StretchPicCmd:
 	mov [esp+0x4], eax
 	mov eax, [edx+0x4]
 	mov [esp], eax
-	call RB_DrawStretchPic
+	call _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
 	mov edx, [ebx]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -407,7 +406,7 @@ RB_StretchPicCmd:
 
 
 ;RB_StretchPicCmdFlipST(GfxRenderCommandExecState*)
-RB_StretchPicCmdFlipST:
+_Z22RB_StretchPicCmdFlipSTP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -435,7 +434,7 @@ RB_StretchPicCmdFlipST:
 	mov [esp+0x4], eax
 	mov eax, [edx+0x4]
 	mov [esp], eax
-	call RB_DrawStretchPicFlipST
+	call _Z23RB_DrawStretchPicFlipSTPK8Materialffffffffm18GfxPrimStatsTarget
 	mov edx, [ebx]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -447,7 +446,7 @@ RB_StretchPicCmdFlipST:
 
 
 ;RB_StretchPicRotateXYCmd(GfxRenderCommandExecState*)
-RB_StretchPicRotateXYCmd:
+_Z24RB_StretchPicRotateXYCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -459,20 +458,20 @@ RB_StretchPicRotateXYCmd:
 	mov dword [esp+0x4], 0x4
 	mov eax, [esi+0x4]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov ecx, [tess+0x22a94c]
 	lea eax, [ecx+0x4]
 	cmp eax, 0x154a
-	jg RB_StretchPicRotateXYCmd_10
+	jg _Z24RB_StretchPicRotateXYCmdP25GfxRenderCommandExecState_10
 	mov edx, [tess+0x22a948]
 	lea eax, [edx+0x6]
 	cmp eax, 0x100000
-	jle RB_StretchPicRotateXYCmd_20
-RB_StretchPicRotateXYCmd_10:
-	call RB_TessOverflow
+	jle _Z24RB_StretchPicRotateXYCmdP25GfxRenderCommandExecState_20
+_Z24RB_StretchPicRotateXYCmdP25GfxRenderCommandExecState_10:
+	call _Z15RB_TessOverflowv
 	mov ecx, [tess+0x22a94c]
 	mov edx, [tess+0x22a948]
-RB_StretchPicRotateXYCmd_20:
+_Z24RB_StretchPicRotateXYCmdP25GfxRenderCommandExecState_20:
 	mov ebx, ecx
 	lea eax, [ecx+0x4]
 	mov [tess+0x22a94c], eax
@@ -615,7 +614,7 @@ RB_StretchPicRotateXYCmd_20:
 
 
 ;RB_StretchPicRotateSTCmd(GfxRenderCommandExecState*)
-RB_StretchPicRotateSTCmd:
+_Z24RB_StretchPicRotateSTCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -627,22 +626,22 @@ RB_StretchPicRotateSTCmd:
 	mov dword [esp+0x4], 0x4
 	mov eax, [edi+0x4]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov edx, [tess+0x22a94c]
 	mov esi, edx
 	mov ebx, [tess+0x22a948]
 	mov ecx, ebx
 	lea eax, [edx+0x4]
 	cmp eax, 0x154a
-	jg RB_StretchPicRotateSTCmd_10
+	jg _Z24RB_StretchPicRotateSTCmdP25GfxRenderCommandExecState_10
 	lea eax, [ebx+0x6]
 	cmp eax, 0x100000
-	jle RB_StretchPicRotateSTCmd_20
-RB_StretchPicRotateSTCmd_10:
-	call RB_TessOverflow
+	jle _Z24RB_StretchPicRotateSTCmdP25GfxRenderCommandExecState_20
+_Z24RB_StretchPicRotateSTCmdP25GfxRenderCommandExecState_10:
+	call _Z15RB_TessOverflowv
 	mov edx, [tess+0x22a94c]
 	mov ecx, [tess+0x22a948]
-RB_StretchPicRotateSTCmd_20:
+_Z24RB_StretchPicRotateSTCmdP25GfxRenderCommandExecState_20:
 	lea eax, [edx+0x4]
 	mov [tess+0x22a94c], eax
 	lea eax, [ecx+0x6]
@@ -780,7 +779,7 @@ RB_StretchPicRotateSTCmd_20:
 
 
 ;RB_StretchRawCmd(GfxRenderCommandExecState*)
-RB_StretchRawCmd:
+_Z16RB_StretchRawCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -815,7 +814,7 @@ RB_StretchRawCmd:
 	mov [esp], edx
 	call dword [ecx+0x90]
 	test eax, eax
-	js RB_StretchRawCmd_10
+	js _Z16RB_StretchRawCmdP25GfxRenderCommandExecState_10
 	mov edx, [ebp-0x1c]
 	mov ecx, [edx]
 	mov dword [esp+0xc], 0x2000
@@ -831,13 +830,13 @@ RB_StretchRawCmd:
 	mov [ebp-0x3c], edx
 	mov esi, [ebp-0x54]
 	test esi, esi
-	jle RB_StretchRawCmd_20
+	jle _Z16RB_StretchRawCmdP25GfxRenderCommandExecState_20
 	mov dword [ebp-0x40], 0x0
-RB_StretchRawCmd_50:
+_Z16RB_StretchRawCmdP25GfxRenderCommandExecState_50:
 	test edi, edi
-	jle RB_StretchRawCmd_30
+	jle _Z16RB_StretchRawCmdP25GfxRenderCommandExecState_30
 	xor esi, esi
-RB_StretchRawCmd_40:
+_Z16RB_StretchRawCmdP25GfxRenderCommandExecState_40:
 	movzx edx, byte [ebx]
 	shl edx, 0x10
 	movzx eax, byte [ebx+0x1]
@@ -853,14 +852,14 @@ RB_StretchRawCmd_40:
 	add ecx, 0x4
 	add esi, 0x1
 	cmp edi, esi
-	jnz RB_StretchRawCmd_40
-RB_StretchRawCmd_30:
+	jnz _Z16RB_StretchRawCmdP25GfxRenderCommandExecState_40
+_Z16RB_StretchRawCmdP25GfxRenderCommandExecState_30:
 	add ecx, [ebp-0x3c]
 	add dword [ebp-0x40], 0x1
 	mov eax, [ebp-0x40]
 	cmp [ebp-0x54], eax
-	jnz RB_StretchRawCmd_50
-RB_StretchRawCmd_20:
+	jnz _Z16RB_StretchRawCmdP25GfxRenderCommandExecState_50
+_Z16RB_StretchRawCmdP25GfxRenderCommandExecState_20:
 	mov eax, [ebp-0x1c]
 	mov edx, [eax]
 	mov [esp], eax
@@ -893,7 +892,7 @@ RB_StretchRawCmd_20:
 	mov edx, [eax]
 	mov [esp], eax
 	call dword [edx+0x8]
-RB_StretchRawCmd_10:
+_Z16RB_StretchRawCmdP25GfxRenderCommandExecState_10:
 	mov eax, [ebp+0x8]
 	mov edx, [eax]
 	movzx eax, word [edx+0x2]
@@ -910,7 +909,7 @@ RB_StretchRawCmd_10:
 
 
 ;RB_DrawQuadPicCmd(GfxRenderCommandExecState*)
-RB_DrawQuadPicCmd:
+_Z17RB_DrawQuadPicCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -922,20 +921,20 @@ RB_DrawQuadPicCmd:
 	mov dword [esp+0x4], 0x4
 	mov eax, [edi+0x4]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov ecx, [tess+0x22a94c]
 	lea eax, [ecx+0x4]
 	cmp eax, 0x154a
-	jg RB_DrawQuadPicCmd_10
+	jg _Z17RB_DrawQuadPicCmdP25GfxRenderCommandExecState_10
 	mov edx, [tess+0x22a948]
 	lea eax, [edx+0x6]
 	cmp eax, 0x100000
-	jle RB_DrawQuadPicCmd_20
-RB_DrawQuadPicCmd_10:
-	call RB_TessOverflow
+	jle _Z17RB_DrawQuadPicCmdP25GfxRenderCommandExecState_20
+_Z17RB_DrawQuadPicCmdP25GfxRenderCommandExecState_10:
+	call _Z15RB_TessOverflowv
 	mov ecx, [tess+0x22a94c]
 	mov edx, [tess+0x22a948]
-RB_DrawQuadPicCmd_20:
+_Z17RB_DrawQuadPicCmdP25GfxRenderCommandExecState_20:
 	mov ebx, ecx
 	lea eax, [ebx+0x4]
 	mov [tess+0x22a94c], eax
@@ -1026,7 +1025,7 @@ RB_DrawQuadPicCmd_20:
 
 
 ;RB_DrawFullScreenColoredQuadCmd(GfxRenderCommandExecState*)
-RB_DrawFullScreenColoredQuadCmd:
+_Z31RB_DrawFullScreenColoredQuadCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1047,12 +1046,12 @@ RB_DrawFullScreenColoredQuadCmd:
 	mov [ebp-0x1c], eax
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jz RB_DrawFullScreenColoredQuadCmd_10
-	call RB_EndTessSurface
-RB_DrawFullScreenColoredQuadCmd_10:
+	jz _Z31RB_DrawFullScreenColoredQuadCmdP25GfxRenderCommandExecState_10
+	call _Z17RB_EndTessSurfacev
+_Z31RB_DrawFullScreenColoredQuadCmdP25GfxRenderCommandExecState_10:
 	mov ebx, gfxCmdBufSourceState
 	mov [esp], ebx
-	call R_Set2D
+	call _Z7R_Set2DP20GfxCmdBufSourceState
 	mov dword [esp+0x28], 0x9
 	mov eax, [ebp-0x28]
 	mov [esp+0x24], eax
@@ -1071,8 +1070,8 @@ RB_DrawFullScreenColoredQuadCmd_10:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call RB_DrawStretchPic
-	call RB_EndTessSurface
+	call _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
+	call _Z17RB_EndTessSurfacev
 	mov eax, [ebp+0x8]
 	mov edx, [eax]
 	movzx eax, word [edx+0x2]
@@ -1088,7 +1087,7 @@ RB_DrawFullScreenColoredQuadCmd_10:
 
 
 ;RB_DrawText2DCmd(GfxRenderCommandExecState*)
-RB_DrawText2DCmd:
+_Z16RB_DrawText2DCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1162,7 +1161,7 @@ RB_DrawText2DCmd:
 	mov [esp+0x4], eax
 	add ebx, 0x50
 	mov [esp], ebx
-	call DrawText2D
+	call _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_
 	mov eax, [ebp+0x8]
 	mov edx, [eax]
 	movzx eax, word [edx+0x2]
@@ -1180,7 +1179,7 @@ RB_DrawText2DCmd:
 
 
 ;RB_DrawText3DCmd(GfxRenderCommandExecState*)
-RB_DrawText3DCmd:
+_Z16RB_DrawText3DCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1199,7 +1198,7 @@ RB_DrawText3DCmd:
 	mov [esp+0x4], edx
 	add eax, 0x30
 	mov [esp], eax
-	call RB_DrawTextInSpace
+	call _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m
 	mov edx, [ebx]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -1211,7 +1210,7 @@ RB_DrawText3DCmd:
 
 
 ;RB_BlendSavedScreenBlurredCmd(GfxRenderCommandExecState*)
-RB_BlendSavedScreenBlurredCmd:
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1222,18 +1221,18 @@ RB_BlendSavedScreenBlurredCmd:
 	mov ebx, [edi]
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jnz RB_BlendSavedScreenBlurredCmd_10
-RB_BlendSavedScreenBlurredCmd_60:
+	jnz _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_10
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_60:
 	mov esi, gfxCmdBufSourceState
 	mov ecx, rgp
 	mov edx, [ebx+0x18]
 	mov eax, [esi+0xf3c]
 	sub eax, [ecx+edx*4+0x2100]
-	js RB_BlendSavedScreenBlurredCmd_20
+	js _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_20
 	mov edx, [ebx+0x4]
 	cmp eax, edx
-	jl RB_BlendSavedScreenBlurredCmd_30
-RB_BlendSavedScreenBlurredCmd_20:
+	jl _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_30
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_20:
 	mov edx, [edi]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -1244,7 +1243,7 @@ RB_BlendSavedScreenBlurredCmd_20:
 	pop edi
 	pop ebp
 	ret
-RB_BlendSavedScreenBlurredCmd_30:
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_30:
 	cvtsi2ss xmm0, eax
 	cvtsi2ss xmm1, edx
 	divss xmm0, xmm1
@@ -1256,9 +1255,9 @@ RB_BlendSavedScreenBlurredCmd_30:
 	fstp qword [ebp-0x38]
 	cvtsd2ss xmm0, [ebp-0x38]
 	ucomiss xmm0, [_float_0_99000001]
-	jbe RB_BlendSavedScreenBlurredCmd_40
+	jbe _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_40
 	movss xmm0, dword [_float_252_44999695]
-RB_BlendSavedScreenBlurredCmd_70:
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_70:
 	addss xmm0, [_float_0_50000000]
 	movss [esp], xmm0
 	call floorf
@@ -1282,8 +1281,8 @@ RB_BlendSavedScreenBlurredCmd_70:
 	mov esi, eax
 	call _ZN10MacDisplay11GetVendorIDEv
 	cmp eax, 0x10de
-	jz RB_BlendSavedScreenBlurredCmd_50
-RB_BlendSavedScreenBlurredCmd_90:
+	jz _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_50
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_90:
 	movss xmm2, dword [ebx+0x8]
 	movss xmm1, dword [ebx+0xc]
 	mov dword [esp+0x28], 0x9
@@ -1294,7 +1293,7 @@ RB_BlendSavedScreenBlurredCmd_90:
 	addss xmm0, [ebx+0x10]
 	movss [esp+0x1c], xmm0
 	addss xmm1, [ebx+0x14]
-RB_BlendSavedScreenBlurredCmd_100:
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_100:
 	movss [esp+0x18], xmm1
 	movss [esp+0x14], xmm2
 	movss xmm0, dword [ebp-0x2c]
@@ -1307,7 +1306,7 @@ RB_BlendSavedScreenBlurredCmd_100:
 	mov eax, rgp
 	mov eax, [eax+0x20f0]
 	mov [esp], eax
-	call RB_DrawStretchPic
+	call _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
 	mov edx, [edi]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -1318,23 +1317,23 @@ RB_BlendSavedScreenBlurredCmd_100:
 	pop edi
 	pop ebp
 	ret
-RB_BlendSavedScreenBlurredCmd_10:
-	call RB_EndTessSurface
-	jmp RB_BlendSavedScreenBlurredCmd_60
-RB_BlendSavedScreenBlurredCmd_40:
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_10:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_60
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_40:
 	mulss xmm0, [_float_255_00000000]
-	jmp RB_BlendSavedScreenBlurredCmd_70
-RB_BlendSavedScreenBlurredCmd_50:
+	jmp _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_70
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_50:
 	cmp esi, 0x393
-	jz RB_BlendSavedScreenBlurredCmd_80
+	jz _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_80
 	cmp esi, 0x395
-	jz RB_BlendSavedScreenBlurredCmd_80
+	jz _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_80
 	cmp esi, 0x391
-	jnz RB_BlendSavedScreenBlurredCmd_90
-RB_BlendSavedScreenBlurredCmd_80:
+	jnz _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_90
+_Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_80:
 	call _ZN10MacDisplay16GetIsAntialiasedEv
 	test al, al
-	jz RB_BlendSavedScreenBlurredCmd_90
+	jz _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_90
 	movss xmm1, dword [ebx+0xc]
 	movss xmm2, dword [ebx+0x8]
 	mov dword [esp+0x28], 0x9
@@ -1346,12 +1345,12 @@ RB_BlendSavedScreenBlurredCmd_80:
 	movaps xmm0, xmm2
 	addss xmm0, [ebx+0x10]
 	movss [esp+0x1c], xmm0
-	jmp RB_BlendSavedScreenBlurredCmd_100
+	jmp _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState_100
 	nop
 
 
 ;RB_BlendSavedScreenFlashedCmd(GfxRenderCommandExecState*)
-RB_BlendSavedScreenFlashedCmd:
+_Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1362,8 +1361,8 @@ RB_BlendSavedScreenFlashedCmd:
 	mov esi, [edi]
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jnz RB_BlendSavedScreenFlashedCmd_10
-RB_BlendSavedScreenFlashedCmd_30:
+	jnz _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_10
+_Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_30:
 	movss xmm1, dword [_float_255_00000000]
 	movss xmm0, dword [esi+0x4]
 	mulss xmm0, xmm1
@@ -1406,8 +1405,8 @@ RB_BlendSavedScreenFlashedCmd_30:
 	mov ebx, eax
 	call _ZN10MacDisplay11GetVendorIDEv
 	cmp eax, 0x10de
-	jz RB_BlendSavedScreenFlashedCmd_20
-RB_BlendSavedScreenFlashedCmd_50:
+	jz _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_20
+_Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_50:
 	movss xmm2, dword [esi+0xc]
 	movss xmm1, dword [esi+0x10]
 	mov dword [esp+0x28], 0x9
@@ -1418,7 +1417,7 @@ RB_BlendSavedScreenFlashedCmd_50:
 	addss xmm0, [esi+0x14]
 	movss [esp+0x1c], xmm0
 	addss xmm1, [esi+0x18]
-RB_BlendSavedScreenFlashedCmd_60:
+_Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_60:
 	movss [esp+0x18], xmm1
 	movss [esp+0x14], xmm2
 	movss xmm0, dword [ebp-0x2c]
@@ -1431,7 +1430,7 @@ RB_BlendSavedScreenFlashedCmd_60:
 	mov eax, rgp
 	mov eax, [eax+0x20f4]
 	mov [esp], eax
-	call RB_DrawStretchPic
+	call _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
 	mov edx, [edi]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -1442,20 +1441,20 @@ RB_BlendSavedScreenFlashedCmd_60:
 	pop edi
 	pop ebp
 	ret
-RB_BlendSavedScreenFlashedCmd_10:
-	call RB_EndTessSurface
-	jmp RB_BlendSavedScreenFlashedCmd_30
-RB_BlendSavedScreenFlashedCmd_20:
+_Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_10:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_30
+_Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_20:
 	cmp ebx, 0x393
-	jz RB_BlendSavedScreenFlashedCmd_40
+	jz _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_40
 	cmp ebx, 0x395
-	jz RB_BlendSavedScreenFlashedCmd_40
+	jz _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_40
 	cmp ebx, 0x391
-	jnz RB_BlendSavedScreenFlashedCmd_50
-RB_BlendSavedScreenFlashedCmd_40:
+	jnz _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_50
+_Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_40:
 	call _ZN10MacDisplay16GetIsAntialiasedEv
 	test al, al
-	jz RB_BlendSavedScreenFlashedCmd_50
+	jz _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_50
 	movss xmm1, dword [esi+0x10]
 	movss xmm2, dword [esi+0xc]
 	mov dword [esp+0x28], 0x9
@@ -1467,11 +1466,11 @@ RB_BlendSavedScreenFlashedCmd_40:
 	movaps xmm0, xmm2
 	addss xmm0, [esi+0x14]
 	movss [esp+0x1c], xmm0
-	jmp RB_BlendSavedScreenFlashedCmd_60
+	jmp _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState_60
 
 
 ;RB_DrawPointsCmd(GfxRenderCommandExecState*)
-RB_DrawPointsCmd:
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1482,19 +1481,19 @@ RB_DrawPointsCmd:
 	mov eax, [eax]
 	mov [ebp-0x38], eax
 	cmp byte [eax+0x7], 0x2
-	jz RB_DrawPointsCmd_10
+	jz _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_10
 	mov dword [esp+0x4], 0x4
 	mov eax, rgp
 	mov eax, [eax+0x203c]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov ebx, gfxCmdBufSourceState
 	cmp dword [ebx+0xf38], 0x3
-	jz RB_DrawPointsCmd_20
+	jz _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_20
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jnz RB_DrawPointsCmd_30
-RB_DrawPointsCmd_130:
+	jnz _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_30
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_130:
 	mov dword [ebx+0xf38], 0x3
 	lea edx, [ebx+0xcb0]
 	mov dword [esp+0x8], 0x140
@@ -1508,8 +1507,8 @@ RB_DrawPointsCmd_130:
 	mov [ebx+0xefc], eax
 	mov dword [ebx+0xf00], 0x3f800000
 	mov [esp], ebx
-	call R_CmdBufSet3D
-RB_DrawPointsCmd_20:
+	call _Z13R_CmdBufSet3DP20GfxCmdBufSourceState
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_20:
 	mov edx, [ebx+0xf0c]
 	lea eax, [edx+0x80]
 	mov [ebp-0x30], eax
@@ -1526,17 +1525,17 @@ RB_DrawPointsCmd_20:
 	mov ebx, ecx
 	add ebx, 0x8
 	cmp word [ecx+0x4], 0x0
-	jle RB_DrawPointsCmd_40
+	jle _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_40
 	lea eax, [edx+0x90]
 	mov [ebp-0x1c], eax
 	lea edi, [edx+0xa0]
 	lea esi, [edx+0xb0]
 	mov dword [ebp-0x34], 0x0
 	mov edx, [tess+0x22a94c]
-	jmp RB_DrawPointsCmd_50
-RB_DrawPointsCmd_80:
+	jmp _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_50
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_80:
 	mov eax, [ebp-0x1c]
-RB_DrawPointsCmd_50:
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_50:
 	movss xmm3, dword [ebx]
 	movss xmm1, dword [ebx+0x4]
 	movss xmm2, dword [ebx+0x8]
@@ -1586,24 +1585,24 @@ RB_DrawPointsCmd_50:
 	addss xmm6, xmm0
 	lea eax, [edx+0x4]
 	cmp eax, 0x154a
-	jg RB_DrawPointsCmd_60
+	jg _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_60
 	mov ecx, [tess+0x22a948]
 	lea eax, [ecx+0x6]
 	cmp eax, 0x100000
-	jle RB_DrawPointsCmd_70
-RB_DrawPointsCmd_60:
+	jle _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_70
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_60:
 	movss [ebp-0x58], xmm4
 	movss [ebp-0x68], xmm5
 	movss [ebp-0x78], xmm6
 	movss [ebp-0x88], xmm7
-	call RB_TessOverflow
+	call _Z15RB_TessOverflowv
 	mov edx, [tess+0x22a94c]
 	mov ecx, [tess+0x22a948]
 	movss xmm7, dword [ebp-0x88]
 	movss xmm6, dword [ebp-0x78]
 	movss xmm5, dword [ebp-0x68]
 	movss xmm4, dword [ebp-0x58]
-RB_DrawPointsCmd_70:
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_70:
 	lea eax, [edx+0x3]
 	mov [ecx+ecx+tess+0x2a940], ax
 	mov [ecx+ecx+tess+0x2a942], dx
@@ -1682,10 +1681,10 @@ RB_DrawPointsCmd_70:
 	mov ecx, [ebp-0x38]
 	movsx eax, word [ecx+0x4]
 	cmp eax, [ebp-0x34]
-	jg RB_DrawPointsCmd_80
-RB_DrawPointsCmd_40:
-	call RB_EndTessSurface
-RB_DrawPointsCmd_90:
+	jg _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_80
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_40:
+	call _Z17RB_EndTessSurfacev
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_90:
 	mov eax, [ebp+0x8]
 	mov edx, [eax]
 	movzx eax, word [edx+0x2]
@@ -1698,12 +1697,12 @@ RB_DrawPointsCmd_90:
 	pop edi
 	pop ebp
 	ret
-RB_DrawPointsCmd_10:
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_10:
 	mov dword [esp+0x4], 0x4
 	mov eax, rgp
 	mov eax, [eax+0x2034]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov edx, [ebp-0x38]
 	movzx eax, byte [edx+0x6]
 	cvtsi2ss xmm2, eax
@@ -1711,24 +1710,24 @@ RB_DrawPointsCmd_10:
 	mov ebx, edx
 	add ebx, 0x8
 	cmp word [edx+0x4], 0x0
-	jle RB_DrawPointsCmd_90
+	jle _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_90
 	xor esi, esi
 	mov edx, [tess+0x22a94c]
-RB_DrawPointsCmd_120:
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_120:
 	lea eax, [edx+0x4]
 	cmp eax, 0x154a
-	jg RB_DrawPointsCmd_100
+	jg _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_100
 	mov ecx, [tess+0x22a948]
 	lea eax, [ecx+0x6]
 	cmp eax, 0x100000
-	jle RB_DrawPointsCmd_110
-RB_DrawPointsCmd_100:
+	jle _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_110
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_100:
 	movss [ebp-0x48], xmm2
-	call RB_TessOverflow
+	call _Z15RB_TessOverflowv
 	mov edx, [tess+0x22a94c]
 	mov ecx, [tess+0x22a948]
 	movss xmm2, dword [ebp-0x48]
-RB_DrawPointsCmd_110:
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_110:
 	lea eax, [edx+0x1]
 	mov [ecx+ecx+tess+0x2a940], ax
 	mov [ecx+ecx+tess+0x2a942], dx
@@ -1818,7 +1817,7 @@ RB_DrawPointsCmd_110:
 	mov ecx, [ebp-0x38]
 	movsx eax, word [ecx+0x4]
 	cmp eax, esi
-	jg RB_DrawPointsCmd_120
+	jg _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_120
 	mov eax, [ebp+0x8]
 	mov edx, [eax]
 	movzx eax, word [edx+0x2]
@@ -1831,14 +1830,14 @@ RB_DrawPointsCmd_110:
 	pop edi
 	pop ebp
 	ret
-RB_DrawPointsCmd_30:
-	call RB_EndTessSurface
-	jmp RB_DrawPointsCmd_130
+_Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_30:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState_130
 	nop
 
 
 ;RB_DrawLinesCmd(GfxRenderCommandExecState*)
-RB_DrawLinesCmd:
+_Z15RB_DrawLinesCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1846,7 +1845,7 @@ RB_DrawLinesCmd:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	cmp byte [edx+0x7], 0x2
-	jz RB_DrawLinesCmd_10
+	jz _Z15RB_DrawLinesCmdP25GfxRenderCommandExecState_10
 	mov dword [esp+0xc], 0x1
 	lea eax, [edx+0x8]
 	mov [esp+0x8], eax
@@ -1854,7 +1853,7 @@ RB_DrawLinesCmd:
 	mov [esp+0x4], eax
 	movsx eax, word [edx+0x4]
 	mov [esp], eax
-	call RB_DrawLines3D
+	call _Z14RB_DrawLines3DiiPK14GfxPointVertexh
 	mov edx, [ebx]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -1863,14 +1862,14 @@ RB_DrawLinesCmd:
 	pop ebx
 	pop ebp
 	ret
-RB_DrawLinesCmd_10:
+_Z15RB_DrawLinesCmdP25GfxRenderCommandExecState_10:
 	lea eax, [edx+0x8]
 	mov [esp+0x8], eax
 	movzx eax, byte [edx+0x6]
 	mov [esp+0x4], eax
 	movsx eax, word [edx+0x4]
 	mov [esp], eax
-	call RB_DrawLines2D
+	call _Z14RB_DrawLines2DiiPK14GfxPointVertex
 	mov edx, [ebx]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -1882,7 +1881,7 @@ RB_DrawLinesCmd_10:
 
 
 ;RB_DrawTrianglesCmd(GfxRenderCommandExecState*)
-RB_DrawTrianglesCmd:
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1916,48 +1915,48 @@ RB_DrawTrianglesCmd:
 	mov ebx, [eax+0x4]
 	mov ecx, [tess+0x22a948]
 	test ecx, ecx
-	jnz RB_DrawTrianglesCmd_10
-RB_DrawTrianglesCmd_70:
+	jnz _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_10
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_70:
 	mov eax, gfxCmdBufSourceState
 	mov [esp], eax
-	call R_Set3D
+	call _Z7R_Set3DP20GfxCmdBufSourceState
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov ecx, [tess+0x22a94c]
 	mov eax, [ebp-0x38]
 	add eax, ecx
 	cmp eax, 0x154a
-	jg RB_DrawTrianglesCmd_20
+	jg _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_20
 	mov eax, [ebp-0x34]
 	add eax, [tess+0x22a948]
 	cmp eax, 0x100000
-	jg RB_DrawTrianglesCmd_20
-RB_DrawTrianglesCmd_60:
+	jg _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_20
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_60:
 	mov edx, [ebp-0x34]
 	test edx, edx
-	jle RB_DrawTrianglesCmd_30
+	jle _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_30
 	xor ebx, ebx
 	mov esi, [tess+0x22a948]
-RB_DrawTrianglesCmd_40:
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_40:
 	lea edx, [ebx+esi]
 	movzx eax, word [edi+ebx*2]
 	add eax, ecx
 	mov [edx+edx+tess+0x2a940], ax
 	add ebx, 0x1
 	cmp [ebp-0x34], ebx
-	jnz RB_DrawTrianglesCmd_40
-RB_DrawTrianglesCmd_30:
+	jnz _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_40
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_30:
 	mov eax, [ebp-0x38]
 	test eax, eax
-	jg RB_DrawTrianglesCmd_50
-RB_DrawTrianglesCmd_100:
+	jg _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_50
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_100:
 	mov ebx, [ebp-0x34]
 	add [tess+0x22a948], ebx
 	mov eax, [ebp-0x38]
 	add eax, ecx
 	mov [tess+0x22a94c], eax
-	call RB_EndTessSurface
+	call _Z17RB_EndTessSurfacev
 	mov esi, [ebp+0x8]
 	mov edx, [esi]
 	movzx eax, word [edx+0x2]
@@ -1969,24 +1968,24 @@ RB_DrawTrianglesCmd_100:
 	pop edi
 	pop ebp
 	ret
-RB_DrawTrianglesCmd_20:
-	call RB_TessOverflow
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_20:
+	call _Z15RB_TessOverflowv
 	mov ecx, [tess+0x22a94c]
-	jmp RB_DrawTrianglesCmd_60
-RB_DrawTrianglesCmd_10:
-	call RB_EndTessSurface
-	jmp RB_DrawTrianglesCmd_70
-RB_DrawTrianglesCmd_50:
+	jmp _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_60
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_10:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_70
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_50:
 	mov esi, [ebp-0x28]
 	mov [ebp-0x20], esi
 	mov edi, [ebp-0x24]
 	mov esi, [ebp-0x2c]
 	mov ebx, [ebp-0x30]
 	mov dword [ebp-0x1c], 0x0
-	jmp RB_DrawTrianglesCmd_80
-RB_DrawTrianglesCmd_90:
+	jmp _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_80
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_90:
 	mov ecx, [tess+0x22a94c]
-RB_DrawTrianglesCmd_80:
+_Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_80:
 	mov eax, [ebp-0x20]
 	mov [esp+0x28], eax
 	mov eax, [edi+0x4]
@@ -2012,7 +2011,7 @@ RB_DrawTrianglesCmd_80:
 	shl eax, 0x5
 	add eax, tess
 	mov [esp], eax
-	call R_SetVertex4dWithNormal
+	call _Z23R_SetVertex4dWithNormalP9GfxVertexfffffffffPKh
 	add dword [ebp-0x1c], 0x1
 	add dword [ebp-0x20], 0x4
 	add edi, 0x8
@@ -2020,14 +2019,14 @@ RB_DrawTrianglesCmd_80:
 	add ebx, 0x10
 	mov edx, [ebp-0x1c]
 	cmp [ebp-0x38], edx
-	jnz RB_DrawTrianglesCmd_90
+	jnz _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_90
 	mov ecx, [tess+0x22a94c]
-	jmp RB_DrawTrianglesCmd_100
+	jmp _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState_100
 	nop
 
 
 ;RB_ProjectionSetCmd(GfxRenderCommandExecState*)
-RB_ProjectionSetCmd:
+_Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -2036,9 +2035,9 @@ RB_ProjectionSetCmd:
 	mov edx, [ebx]
 	mov eax, [edx+0x4]
 	test eax, eax
-	jz RB_ProjectionSetCmd_10
+	jz _Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_10
 	sub eax, 0x1
-	jz RB_ProjectionSetCmd_20
+	jz _Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_20
 	movzx eax, word [edx+0x2]
 	add eax, edx
 	mov [ebx], eax
@@ -2046,15 +2045,15 @@ RB_ProjectionSetCmd:
 	pop ebx
 	pop ebp
 	ret
-RB_ProjectionSetCmd_10:
+_Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_10:
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jnz RB_ProjectionSetCmd_30
+	jnz _Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_30
 	mov eax, gfxCmdBufSourceState
 	mov [esp], eax
-	call R_Set2D
+	call _Z7R_Set2DP20GfxCmdBufSourceState
 	mov edx, [ebx]
-RB_ProjectionSetCmd_40:
+_Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_40:
 	movzx eax, word [edx+0x2]
 	add eax, edx
 	mov [ebx], eax
@@ -2062,21 +2061,21 @@ RB_ProjectionSetCmd_40:
 	pop ebx
 	pop ebp
 	ret
-RB_ProjectionSetCmd_30:
-	call RB_EndTessSurface
+_Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_30:
+	call _Z17RB_EndTessSurfacev
 	mov eax, gfxCmdBufSourceState
 	mov [esp], eax
-	call R_Set2D
+	call _Z7R_Set2DP20GfxCmdBufSourceState
 	mov edx, [ebx]
-	jmp RB_ProjectionSetCmd_40
-RB_ProjectionSetCmd_20:
+	jmp _Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_40
+_Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_20:
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jnz RB_ProjectionSetCmd_50
-RB_ProjectionSetCmd_60:
+	jnz _Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_50
+_Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_60:
 	mov eax, gfxCmdBufSourceState
 	mov [esp], eax
-	call R_Set3D
+	call _Z7R_Set3DP20GfxCmdBufSourceState
 	mov edx, [ebx]
 	movzx eax, word [edx+0x2]
 	add eax, edx
@@ -2085,24 +2084,24 @@ RB_ProjectionSetCmd_60:
 	pop ebx
 	pop ebp
 	ret
-RB_ProjectionSetCmd_50:
-	call RB_EndTessSurface
-	jmp RB_ProjectionSetCmd_60
+_Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_50:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState_60
 	nop
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -2372,7 +2371,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;RB_DrawStretchPicRotate(Material const*, float, float, float, float, float, float, float, float, float, float, unsigned long, GfxPrimStatsTarget)
-RB_DrawStretchPicRotate:
+_Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2386,20 +2385,20 @@ RB_DrawStretchPicRotate:
 	mov edi, edx
 	mov dword [esp+0x4], 0x4
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov ecx, [tess+0x22a94c]
 	lea eax, [ecx+0x4]
 	cmp eax, 0x154a
-	jg RB_DrawStretchPicRotate_10
+	jg _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget_10
 	mov edx, [tess+0x22a948]
 	lea eax, [edx+0x6]
 	cmp eax, 0x100000
-	jle RB_DrawStretchPicRotate_20
-RB_DrawStretchPicRotate_10:
-	call RB_TessOverflow
+	jle _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget_20
+_Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget_10:
+	call _Z15RB_TessOverflowv
 	mov ecx, [tess+0x22a94c]
 	mov edx, [tess+0x22a948]
-RB_DrawStretchPicRotate_20:
+_Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget_20:
 	mov ebx, ecx
 	lea eax, [ebx+0x4]
 	mov [tess+0x22a94c], eax
@@ -2491,7 +2490,7 @@ RB_DrawStretchPicRotate_20:
 
 
 ;RB_DrawCursor(Material const*, unsigned char, float, float, float, float, Font_s*, float, float, unsigned long)
-RB_DrawCursor:
+_Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2511,16 +2510,16 @@ RB_DrawCursor:
 	mov eax, [ebp+0x10]
 	mov [ebp-0x34], eax
 	mov ebx, edx
-	call CL_ScaledMilliseconds
+	call _Z21CL_ScaledMillisecondsv
 	lea edx, [eax+0xff]
 	cmp eax, 0xffffffff
 	cmovle eax, edx
 	test ah, 0x1
-	jnz RB_DrawCursor_10
+	jnz _Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_10
 	movzx eax, bl
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_GetCharacterGlyph
+	call _Z19R_GetCharacterGlyphP6Font_sj
 	mov edx, eax
 	movzx eax, byte [eax+0x6]
 	cvtsi2ss xmm3, eax
@@ -2536,12 +2535,12 @@ RB_DrawCursor:
 	mov eax, [eax+0x8]
 	mov ecx, [eax+0x28]
 	test ecx, ecx
-	jz RB_DrawCursor_20
-RB_DrawCursor_40:
+	jz _Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_20
+_Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_40:
 	mov eax, 0x1
-RB_DrawCursor_50:
+_Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_50:
 	test eax, eax
-	jz RB_DrawCursor_30
+	jz _Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_30
 	mov eax, [edi]
 	mov [ebp+0xc], eax
 	mov dword [ebp+0x8], 0x26
@@ -2550,8 +2549,8 @@ RB_DrawCursor_50:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_WarnOncePerFrame
-RB_DrawCursor_30:
+	jmp _Z18R_WarnOncePerFrame14GfxWarningTypez
+_Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_30:
 	movss xmm0, dword [ebp-0x28]
 	movss [esp+0x14], xmm0
 	movss xmm0, dword [ebp-0x24]
@@ -2568,24 +2567,24 @@ RB_DrawCursor_30:
 	mov edx, [ebp-0x34]
 	movss xmm0, dword [ebp-0x1c]
 	mov eax, edi
-	call RB_DrawStretchPicRotate
-RB_DrawCursor_10:
+	call _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget
+_Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_10:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawCursor_20:
+_Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_20:
 	mov eax, [eax+0x20]
 	test eax, eax
-	jnz RB_DrawCursor_40
+	jnz _Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_40
 	xor eax, eax
-	jmp RB_DrawCursor_50
+	jmp _Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm_50
 
 
 ;DrawText2D(char const*, float, float, Font_s*, float, float, float, float, GfxColor, int, int, int, char, float, GfxColor, int, int, int, int, Material const*, Material const*)
-DrawText2D:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2604,25 +2603,25 @@ DrawText2D:
 	mov edx, esi
 	and dl, 0x1
 	mov [ebp-0x85], dl
-	jnz DrawText2D_10
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__10
 	pxor xmm0, xmm0
 	movss [ebp-0xb4], xmm0
-DrawText2D_790:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__790:
 	mov eax, [ebp+0x14]
 	mov eax, [eax+0xc]
 	mov [ebp-0xb0], eax
 	test esi, 0x40
-	jnz DrawText2D_20
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__20
 	mov dword [ebp-0xa4], 0x1
 	mov byte [ebp-0xa5], 0x0
 	mov byte [ebp-0x9d], 0x0
 	mov dword [ebp-0x9c], 0x0
-DrawText2D_780:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__780:
 	test esi, 0x10
-	jnz DrawText2D_30
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__30
 	mov dword [ebp-0xac], 0x0
 	mov dword [ebp-0x90], 0x1
-DrawText2D_320:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__320:
 	movss xmm0, dword [_float__0_50000000]
 	movss xmm1, dword [ebp+0x18]
 	mulss xmm1, xmm0
@@ -2634,7 +2633,7 @@ DrawText2D_320:
 	movss [ebp-0x94], xmm2
 	mov edx, [ebp-0x90]
 	test edx, edx
-	jle DrawText2D_40
+	jle _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__40
 	mov eax, esi
 	shr eax, 1
 	and eax, 0x1
@@ -2676,7 +2675,7 @@ DrawText2D_320:
 	mov dword [ebp-0x8c], 0x0
 	movzx edi, byte [ebp-0xe9]
 	mov [ebp-0xfc], edi
-DrawText2D_150:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__150:
 	mov eax, [ebp-0xa4]
 	mov [ebp-0x24], eax
 	mov edx, [ebp+0x28]
@@ -2691,95 +2690,95 @@ DrawText2D_150:
 	mov [ebp-0x84], edx
 	mov byte [ebp-0x7c], 0x0
 	mov dword [ebp-0x80], 0x0
-DrawText2D_310:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__310:
 	cmp byte [eax], 0x0
-	jz DrawText2D_50
-DrawText2D_120:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__50
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__120:
 	mov esi, [ebp-0x84]
 	test esi, esi
-	jz DrawText2D_50
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__50
 	mov dword [esp+0x4], 0x0
 	lea eax, [ebp-0x1c]
 	mov [esp], eax
-	call SEH_ReadCharFromString
+	call _Z22SEH_ReadCharFromStringPPKcPi
 	mov ebx, eax
 	cmp eax, 0x5e
-	jz DrawText2D_60
-DrawText2D_430:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__60
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__430:
 	cmp byte [ebp-0xa5], 0x0
-	jz DrawText2D_70
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__70
 	cmp dword [ebp-0x84], 0x1
-	jz DrawText2D_80
-DrawText2D_70:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__80
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__70:
 	mov byte [ebp-0x7a], 0x0
-DrawText2D_680:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__680:
 	cmp ebx, 0x5e
-	jz DrawText2D_90
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__90
 	cmp ebx, 0xa
-	jz DrawText2D_100
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__100
 	cmp ebx, 0xd
-	jnz DrawText2D_110
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__110
 	movss xmm1, dword [ebp-0x98]
 	movss [ebp-0x3c], xmm1
 	mov eax, [ebp-0x1c]
 	cmp byte [eax], 0x0
-	jnz DrawText2D_120
-DrawText2D_50:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__120
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__50:
 	mov ebx, [ebp-0xbc]
 	test ebx, ebx
-	jz DrawText2D_130
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__130
 	mov eax, [ebp-0x80]
 	cmp [ebp+0x34], eax
-	jz DrawText2D_140
-DrawText2D_130:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__140
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__130:
 	add dword [ebp-0x8c], 0x1
 	mov eax, [ebp-0x8c]
 	cmp [ebp-0x90], eax
-	jnz DrawText2D_150
-DrawText2D_40:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__150
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__40:
 	add esp, 0x12c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-DrawText2D_80:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__80:
 	mov eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_FontGetRandomLetter
+	call _Z21R_FontGetRandomLetterP6Font_si
 	mov ebx, eax
 	lea eax, [ebp-0x24]
 	mov [esp], eax
-	call RandWithSeed
+	call _Z12RandWithSeedPi
 	test al, 0x1
-	jz DrawText2D_160
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__160
 	mov byte [ebp-0x7a], 0xc0
 	mov byte [ebp-0x79], 0x1
 	mov ebx, 0x4f
 	cmp byte [ebp-0x9d], 0x0
-	jnz DrawText2D_170
-DrawText2D_330:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__170
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__330:
 	mov esi, ebx
 	mov byte [ebp-0x7b], 0x0
-DrawText2D_550:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__550:
 	cmp byte [ebp-0x79], 0x0
-	jnz DrawText2D_180
-DrawText2D_360:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__180
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__360:
 	mov dword [ebp-0x78], 0x0
 	mov [esp+0x4], esi
 	mov edx, [ebp+0x14]
 	mov [esp], edx
-	call R_GetCharacterGlyph
+	call _Z19R_GetCharacterGlyphP6Font_sj
 	mov edi, eax
 	cmp esi, ebx
-	jz DrawText2D_190
-DrawText2D_370:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__190
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__370:
 	mov [esp+0x4], ebx
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_GetCharacterGlyph
+	call _Z19R_GetCharacterGlyphP6Font_sj
 	movzx edx, byte [eax+0x5]
 	cvtsi2ss xmm1, edx
 	mulss xmm1, [_float_0_50000000]
@@ -2790,7 +2789,7 @@ DrawText2D_370:
 	movzx eax, byte [eax+0x4]
 	cvtsi2ss xmm0, eax
 	movss [ebp-0x74], xmm0
-DrawText2D_380:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__380:
 	movsx eax, byte [edi+0x2]
 	cvtsi2ss xmm2, eax
 	addss xmm2, xmm1
@@ -2800,26 +2799,26 @@ DrawText2D_380:
 	mulss xmm3, [ebp+0x1c]
 	mov ebx, [ebp-0x20]
 	cmp byte [ebp-0x9d], 0x0
-	jnz DrawText2D_200
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__200
 	cmp byte [ebp-0xa5], 0x0
-	jz DrawText2D_210
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__210
 	cmp dword [ebp-0x84], 0x1
-	jz DrawText2D_200
-DrawText2D_210:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__200
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__210:
 	cmp byte [ebp-0x7b], 0x0
-	jnz DrawText2D_220
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__220
 	mov eax, [ebp-0x8c]
 	test eax, eax
-	jnz DrawText2D_230
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__230
 	mov eax, [ebp-0xc4]
 	test eax, eax
-	jnz DrawText2D_240
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__240
 	addss xmm2, [ebp-0x3c]
 	movss [ebp-0x48], xmm2
 	addss xmm3, [ebp-0x40]
 	movss [ebp-0x44], xmm3
 	movaps xmm1, xmm3
-DrawText2D_640:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__640:
 	subss xmm2, [ebp-0x98]
 	movss xmm4, dword [ebp+0x24]
 	mulss xmm4, xmm2
@@ -2838,7 +2837,7 @@ DrawText2D_640:
 	addss xmm4, [ebp-0x94]
 	addss xmm4, xmm2
 	cmp byte [ebp-0x79], 0x0
-	jnz DrawText2D_250
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__250
 	movzx eax, byte [edi+0x6]
 	cvtsi2ss xmm3, eax
 	mulss xmm3, [ebp+0x1c]
@@ -2850,60 +2849,60 @@ DrawText2D_640:
 	mov eax, [eax+0x8]
 	mov edx, [eax+0x28]
 	test edx, edx
-	jnz DrawText2D_260
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__260
 	mov eax, [eax+0x20]
 	test eax, eax
-	jnz DrawText2D_260
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__260
 	xor eax, eax
 	test eax, eax
-	jz DrawText2D_270
-DrawText2D_580:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__270
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__580:
 	mov edi, [ebp-0xb0]
 	mov eax, [edi]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x26
-	call R_WarnOncePerFrame
-DrawText2D_590:
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__590:
 	mov edi, [ebp-0xbc]
 	test edi, edi
-	jz DrawText2D_220
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__220
 	mov eax, [ebp-0x80]
 	cmp [ebp+0x34], eax
-	jz DrawText2D_280
-DrawText2D_220:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__280
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__220:
 	cmp byte [ebp-0x85], 0x0
-	jz DrawText2D_290
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__290
 	movss xmm2, dword [ebp-0x3c]
 	addss xmm2, [ebp-0xb8]
 	movss [ebp-0x3c], xmm2
-DrawText2D_470:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__470:
 	mov edi, [ebp-0xcc]
 	test edi, edi
-	jz DrawText2D_300
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__300
 	movss xmm1, dword [ebp-0x3c]
 	addss xmm1, [ebp-0xc8]
 	movss [ebp-0x3c], xmm1
-DrawText2D_300:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__300:
 	add dword [ebp-0x80], 0x1
 	sub dword [ebp-0x84], 0x1
 	mov eax, [ebp-0x1c]
-	jmp DrawText2D_310
-DrawText2D_30:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__310
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__30:
 	mov edx, [ebp+0x14]
 	mov edx, [edx+0x10]
 	mov [ebp-0xac], edx
 	mov dword [ebp-0x90], 0x2
-	jmp DrawText2D_320
-DrawText2D_110:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__320
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__110:
 	mov byte [ebp-0x79], 0x0
 	cmp byte [ebp-0x9d], 0x0
-	jz DrawText2D_330
-DrawText2D_170:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__330
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__170:
 	movzx eax, byte [ebp-0x1d]
 	mov [ebp-0x69], al
 	lea eax, [ebp-0x24]
 	mov [esp], eax
-	call RandWithSeed
+	call _Z12RandWithSeedPi
 	mov ecx, eax
 	mov eax, [ebp+0x50]
 	cdq
@@ -2914,49 +2913,49 @@ DrawText2D_170:
 	idiv dword [ebp-0x68]
 	imul edi, edx
 	cmp [ebp-0x9c], edi
-	jl DrawText2D_340
+	jl _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__340
 	mov esi, ebx
 	mov byte [ebp-0x7b], 0x1
 	mov byte [ebp-0x79], 0x0
 	movss xmm1, dword [_float_255_00000000]
-DrawText2D_570:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__570:
 	addss xmm1, [_float_0_50000000]
 	movss [esp], xmm1
 	call floorf
 	fstp dword [ebp-0xf8]
 	cvttss2si edx, [ebp-0xf8]
 	cmp edx, 0xfe
-	jle DrawText2D_350
+	jle _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__350
 	mov eax, 0xffffffff
 	mov [ebp-0x7a], al
 	cmp byte [ebp-0x79], 0x0
-	jz DrawText2D_360
-DrawText2D_180:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__360
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__180:
 	mov eax, [ebp-0x24]
 	mov [ebp-0x2c], eax
 	lea eax, [ebp-0x2c]
 	mov [esp], eax
-	call RandWithSeed
+	call _Z12RandWithSeedPi
 	mov [ebp-0x78], eax
 	mov [esp+0x4], esi
 	mov edx, [ebp+0x14]
 	mov [esp], edx
-	call R_GetCharacterGlyph
+	call _Z19R_GetCharacterGlyphP6Font_sj
 	mov edi, eax
 	cmp esi, ebx
-	jnz DrawText2D_370
-DrawText2D_190:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__370
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__190:
 	movzx eax, byte [eax+0x4]
 	cvtsi2ss xmm1, eax
 	movss [ebp-0x74], xmm1
 	pxor xmm1, xmm1
-	jmp DrawText2D_380
-DrawText2D_90:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__380
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__90:
 	mov esi, [ebp-0x1c]
 	movzx ecx, byte [esi]
 	lea eax, [ecx-0x1]
 	cmp al, 0x1
-	ja DrawText2D_110
+	ja _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__110
 	movss xmm0, dword [ebp-0x3c]
 	subss xmm0, [ebp-0x98]
 	movss xmm2, dword [ebp-0x40]
@@ -2974,7 +2973,7 @@ DrawText2D_90:
 	addss xmm1, xmm0
 	mov edx, [ebp-0x20]
 	sub cl, 0x1
-	jz DrawText2D_390
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__390
 	movss xmm2, dword [_float_1_00000000]
 	movss [ebp-0x70], xmm2
 	xor edi, edi
@@ -2985,8 +2984,8 @@ DrawText2D_90:
 	imul eax, ebx
 	mov ecx, eax
 	add ecx, 0x10
-	js DrawText2D_400
-DrawText2D_720:
+	js _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__400
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__720:
 	sar ecx, 0x5
 	cvtsi2ss xmm4, ecx
 	mulss xmm4, [ebp+0x18]
@@ -2995,8 +2994,8 @@ DrawText2D_720:
 	imul eax, ebx
 	mov ecx, eax
 	add ecx, 0x10
-	js DrawText2D_410
-DrawText2D_730:
+	js _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__410
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__730:
 	sar ecx, 0x5
 	cvtsi2ss xmm3, ecx
 	mulss xmm3, [ebp+0x1c]
@@ -3019,57 +3018,57 @@ DrawText2D_730:
 	addss xmm1, xmm0
 	movaps xmm0, xmm5
 	movss [ebp-0x118], xmm4
-	call RB_DrawStretchPicRotate
+	call _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget
 	movss xmm4, dword [ebp-0x118]
 	addss xmm4, [ebp-0x3c]
 	movss [ebp-0x3c], xmm4
 	mov eax, [ebp-0xcc]
 	test eax, eax
-	jz DrawText2D_420
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__420
 	addss xmm4, [ebp-0xc8]
 	movss [ebp-0x3c], xmm4
-DrawText2D_420:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__420:
 	mov eax, [ebp-0x1c]
 	add eax, 0x7
 	mov [ebp-0x1c], eax
 	add dword [ebp-0x80], 0x1
 	sub dword [ebp-0x84], 0x1
-	jmp DrawText2D_310
-DrawText2D_60:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__310
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__60:
 	mov eax, [ebp-0x1c]
 	test eax, eax
-	jz DrawText2D_430
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__430
 	movzx eax, byte [eax]
 	cmp al, 0x5e
-	jz DrawText2D_430
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__430
 	cmp al, 0x2f
-	jle DrawText2D_430
+	jle _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__430
 	cmp al, 0x39
-	jg DrawText2D_430
+	jg _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__430
 	movzx eax, al
 	mov [esp], eax
-	call ColorIndex
+	call _Z10ColorIndexh
 	mov ebx, eax
 	mov dword [esp], 0x37
-	call ColorIndex
+	call _Z10ColorIndexh
 	cmp bl, al
-	jz DrawText2D_440
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__440
 	mov eax, [ebp-0xd4]
 	test eax, eax
-	jz DrawText2D_450
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__450
 	mov eax, [ebp-0x1c]
 	movzx eax, byte [eax]
 	mov [esp], eax
-	call ColorIndex
+	call _Z10ColorIndexh
 	cmp al, 0x2
-	jz DrawText2D_460
-DrawText2D_450:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__460
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__450:
 	lea eax, [ebp-0x28]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
 	movzx eax, byte [eax]
 	mov [esp], eax
-	call RB_LookupColor
+	call _Z14RB_LookupColorhPh
 	movzx edx, byte [ebp-0x28]
 	shl edx, 0x10
 	movzx eax, byte [ebp-0x27]
@@ -3082,13 +3081,13 @@ DrawText2D_450:
 	or edx, eax
 	mov [ebp-0x20], edx
 	mov byte [ebp-0x7c], 0x0
-DrawText2D_800:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__800:
 	mov eax, [ebp-0x1c]
 	add eax, 0x1
 	mov [ebp-0x1c], eax
 	add dword [ebp-0x80], 0x2
-	jmp DrawText2D_310
-DrawText2D_200:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__310
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__200:
 	mov eax, ebx
 	shr eax, 0x18
 	cvtsi2ss xmm1, eax
@@ -3102,15 +3101,15 @@ DrawText2D_200:
 	shl eax, 0x18
 	and ebx, 0xffffff
 	or ebx, eax
-	jmp DrawText2D_210
-DrawText2D_290:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__210
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__290:
 	movss xmm4, dword [ebp-0x74]
 	mulss xmm4, [ebp+0x18]
 	movss xmm0, dword [ebp-0x3c]
 	addss xmm0, xmm4
 	movss [ebp-0x3c], xmm0
-	jmp DrawText2D_470
-DrawText2D_100:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__470
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__100:
 	mov eax, [ebp+0x14]
 	cvtsi2ss xmm0, dword [eax+0x4]
 	mulss xmm0, [ebp+0x1c]
@@ -3119,29 +3118,29 @@ DrawText2D_100:
 	movss xmm0, dword [ebp-0x98]
 	movss [ebp-0x3c], xmm0
 	mov eax, [ebp-0x1c]
-	jmp DrawText2D_310
-DrawText2D_230:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__310
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__230:
 	cmp dword [ebp-0x8c], 0x1
-	jnz DrawText2D_220
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__220
 	mov esi, [ebp-0xd4]
 	test esi, esi
-	jz DrawText2D_480
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__480
 	cmp byte [ebp-0x7c], 0x0
-	jz DrawText2D_220
-DrawText2D_480:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__220
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__480:
 	mov edx, ebx
 	mov ecx, [ebp-0x5c]
 	test ecx, ecx
-	jz DrawText2D_490
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__490
 	mov eax, [ebp+0x40]
-	and eax, bg_itemlist+0x1c60
+	and eax, 0xff0000
 	and ebx, 0xff00ffff
 	or ebx, eax
 	mov edx, [ebp+0x40]
 	movzx eax, dh
 	mov bh, al
 	mov bl, [ebp+0x40]
-DrawText2D_750:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__750:
 	addss xmm2, [ebp-0x3c]
 	movzx eax, byte [edi+0x5]
 	cvtsi2ss xmm0, eax
@@ -3162,8 +3161,8 @@ DrawText2D_750:
 	movss [ebp-0x4c], xmm0
 	mov eax, [ebp-0x78]
 	and eax, 0x8000000f
-	js DrawText2D_500
-DrawText2D_830:
+	js _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__500
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__830:
 	cvtsi2ss xmm0, eax
 	movss xmm1, dword [_float_0_06250000]
 	mulss xmm1, xmm0
@@ -3172,7 +3171,7 @@ DrawText2D_830:
 	addss xmm2, xmm1
 	movss [ebp-0x54], xmm2
 	mov esi, _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E10MY_OFFSETS
-DrawText2D_540:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__540:
 	movss xmm0, dword [esi]
 	addss xmm0, xmm0
 	mulss xmm0, [ebp+0x18]
@@ -3195,7 +3194,7 @@ DrawText2D_540:
 	mulss xmm0, [ebp+0x20]
 	addss xmm4, xmm0
 	cmp byte [ebp-0x79], 0x0
-	jnz DrawText2D_510
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__510
 	movzx eax, byte [edi+0x6]
 	cvtsi2ss xmm3, eax
 	mulss xmm3, [ebp+0x1c]
@@ -3209,45 +3208,45 @@ DrawText2D_540:
 	mov eax, [eax+0x8]
 	mov edx, [eax+0x28]
 	test edx, edx
-	jnz DrawText2D_520
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__520
 	mov eax, [eax+0x20]
 	test eax, eax
-	jnz DrawText2D_520
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__520
 	xor eax, eax
 	test eax, eax
-	jz DrawText2D_530
-DrawText2D_660:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__530
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__660:
 	mov edx, [ebp-0xac]
 	mov eax, [edx]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x26
-	call R_WarnOncePerFrame
-DrawText2D_670:
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__670:
 	add esi, 0x8
 	cmp esi, _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E10MY_OFFSETS+0x20
-	jnz DrawText2D_540
-	jmp DrawText2D_220
-DrawText2D_350:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__540
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__220
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__350:
 	xor eax, eax
 	test edx, edx
 	cmovg eax, edx
 	mov [ebp-0x7a], al
-	jmp DrawText2D_550
-DrawText2D_340:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__550
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__340:
 	mov eax, [ebp-0x9c]
 	add eax, 0x3c
 	cmp edi, eax
-	jle DrawText2D_560
+	jle _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__560
 	mov esi, ebx
 	mov byte [ebp-0x7b], 0x0
 	mov byte [ebp-0x79], 0x0
 	movss xmm1, dword [_float_255_00000000]
-	jmp DrawText2D_570
-DrawText2D_260:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__570
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__260:
 	mov eax, 0x1
 	test eax, eax
-	jnz DrawText2D_580
-DrawText2D_270:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__580
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__270:
 	movss xmm0, dword [ebp+0x24]
 	movss [esp+0x14], xmm0
 	movss xmm1, dword [ebp+0x20]
@@ -3265,14 +3264,14 @@ DrawText2D_270:
 	movaps xmm1, xmm4
 	movaps xmm0, xmm5
 	mov eax, [ebp-0xb0]
-	call RB_DrawStretchPicRotate
-	jmp DrawText2D_590
-DrawText2D_240:
+	call _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__590
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__240:
 	mov eax, [ebp-0xc0]
 	test eax, eax
-	jz DrawText2D_600
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__600
 	movss xmm1, dword [_float_2_00000000]
-DrawText2D_700:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__700:
 	addss xmm2, [ebp-0x3c]
 	movss [ebp-0x48], xmm2
 	addss xmm3, [ebp-0x40]
@@ -3293,7 +3292,7 @@ DrawText2D_700:
 	mulss xmm2, [ebp+0x20]
 	addss xmm4, xmm2
 	cmp byte [ebp-0x79], 0x0
-	jnz DrawText2D_610
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__610
 	movzx eax, byte [edi+0x6]
 	cvtsi2ss xmm3, eax
 	mulss xmm3, [ebp+0x1c]
@@ -3305,14 +3304,14 @@ DrawText2D_700:
 	mov eax, [eax+0x8]
 	mov esi, [eax+0x28]
 	test esi, esi
-	jnz DrawText2D_620
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__620
 	mov ecx, [eax+0x20]
 	test ecx, ecx
-	jnz DrawText2D_620
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__620
 	xor eax, eax
 	test eax, eax
-	jnz DrawText2D_630
-DrawText2D_650:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__630
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__650:
 	movss xmm0, dword [ebp+0x24]
 	movss [esp+0x14], xmm0
 	movss xmm1, dword [ebp+0x20]
@@ -3330,28 +3329,28 @@ DrawText2D_650:
 	movaps xmm1, xmm4
 	movaps xmm0, xmm5
 	mov eax, [ebp-0xb0]
-	call RB_DrawStretchPicRotate
+	call _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget
 	movss xmm2, dword [ebp-0x48]
 	movss xmm1, dword [ebp-0x44]
-	jmp DrawText2D_640
-DrawText2D_620:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__640
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__620:
 	mov eax, 0x1
 	test eax, eax
-	jz DrawText2D_650
-DrawText2D_630:
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__650
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__630:
 	mov edx, [ebp-0xb0]
 	mov eax, [edx]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x26
-	call R_WarnOncePerFrame
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
 	movss xmm2, dword [ebp-0x48]
 	movss xmm1, dword [ebp-0x44]
-	jmp DrawText2D_640
-DrawText2D_520:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__640
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__520:
 	mov eax, 0x1
 	test eax, eax
-	jnz DrawText2D_660
-DrawText2D_530:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__660
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__530:
 	movss xmm0, dword [ebp+0x24]
 	movss [esp+0x14], xmm0
 	movss xmm1, dword [ebp+0x20]
@@ -3369,16 +3368,16 @@ DrawText2D_530:
 	movaps xmm1, xmm4
 	movaps xmm0, xmm5
 	mov eax, [ebp-0xac]
-	call RB_DrawStretchPicRotate
-	jmp DrawText2D_670
-DrawText2D_160:
+	call _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__670
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__160:
 	mov byte [ebp-0x7a], 0xc0
-	jmp DrawText2D_680
-DrawText2D_250:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__680
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__250:
 	mov eax, [ebp-0x78]
 	and eax, 0x8000000f
-	js DrawText2D_690
-DrawText2D_810:
+	js _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__690
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__810:
 	cvtsi2ss xmm1, eax
 	mulss xmm1, [_float_0_06250000]
 	movzx eax, byte [edi+0x6]
@@ -3402,9 +3401,9 @@ DrawText2D_810:
 	movaps xmm1, xmm4
 	movaps xmm0, xmm5
 	mov eax, [ebp+0x54]
-	call RB_DrawStretchPicRotate
-	jmp DrawText2D_590
-DrawText2D_510:
+	call _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__590
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__510:
 	movzx eax, byte [edi+0x6]
 	cvtsi2ss xmm1, eax
 	movzx eax, byte [edi+0x5]
@@ -3428,24 +3427,24 @@ DrawText2D_510:
 	movaps xmm1, xmm4
 	movaps xmm0, xmm5
 	mov eax, [ebp+0x58]
-	call RB_DrawStretchPicRotate
-	jmp DrawText2D_670
-DrawText2D_600:
+	call _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__670
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__600:
 	movss xmm1, dword [_float_1_00000000]
-	jmp DrawText2D_700
-DrawText2D_560:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__700
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__560:
 	mov edx, [ebp+0x44]
 	lea eax, [ebx+edx]
 	add eax, [ebp-0x9c]
 	mov [ebp-0x2c], eax
 	lea eax, [ebp-0x2c]
 	mov [esp], eax
-	call RandWithSeed
+	call _Z12RandWithSeedPi
 	test al, 0x1
-	jz DrawText2D_710
+	jz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__710
 	mov esi, 0x4f
 	mov byte [ebp-0x79], 0x1
-DrawText2D_820:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__820:
 	mov eax, [ebp-0x9c]
 	sub eax, edi
 	add eax, 0x3c
@@ -3459,8 +3458,8 @@ DrawText2D_820:
 	mulss xmm1, xmm0
 	mulss xmm1, [_float_255_00000000]
 	mov byte [ebp-0x7b], 0x0
-	jmp DrawText2D_570
-DrawText2D_390:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__570
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__390:
 	pxor xmm0, xmm0
 	movss [ebp-0x70], xmm0
 	mov edi, 0x3f800000
@@ -3471,8 +3470,8 @@ DrawText2D_390:
 	imul eax, ebx
 	mov ecx, eax
 	add ecx, 0x10
-	jns DrawText2D_720
-DrawText2D_400:
+	jns _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__720
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__400:
 	lea ecx, [eax+0x2f]
 	sar ecx, 0x5
 	cvtsi2ss xmm4, ecx
@@ -3482,15 +3481,15 @@ DrawText2D_400:
 	imul eax, ebx
 	mov ecx, eax
 	add ecx, 0x10
-	jns DrawText2D_730
-DrawText2D_410:
+	jns _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__730
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__410:
 	lea ecx, [eax+0x2f]
-	jmp DrawText2D_730
-DrawText2D_610:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__730
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__610:
 	mov eax, [ebp-0x78]
 	and eax, 0x8000000f
-	js DrawText2D_740
-DrawText2D_840:
+	js _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__740
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__840:
 	cvtsi2ss xmm1, eax
 	mulss xmm1, [_float_0_06250000]
 	movzx eax, byte [edi+0x6]
@@ -3514,11 +3513,11 @@ DrawText2D_840:
 	movaps xmm1, xmm4
 	movaps xmm0, xmm5
 	mov eax, [ebp+0x54]
-	call RB_DrawStretchPicRotate
+	call _Z23RB_DrawStretchPicRotatePK8Materialffffffffffm18GfxPrimStatsTarget
 	movss xmm2, dword [ebp-0x48]
 	movss xmm1, dword [ebp-0x44]
-	jmp DrawText2D_640
-DrawText2D_490:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__640
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__490:
 	mov eax, ebx
 	shr eax, 0x10
 	movzx eax, al
@@ -3540,15 +3539,15 @@ DrawText2D_490:
 	mulss xmm0, xmm1
 	cvttss2si eax, xmm0
 	mov bl, al
-	jmp DrawText2D_750
-DrawText2D_20:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__750
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__20:
 	mov dword [ebp-0x24], 0x1
 	mov eax, gfxCmdBufSourceState
 	mov edi, [eax+0xf3c]
 	sub edi, [ebp+0x44]
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call SEH_PrintStrlen
+	call _Z15SEH_PrintStrlenPKc
 	mov ecx, eax
 	cmp [ebp+0x2c], eax
 	cmovl ecx, [ebp+0x2c]
@@ -3557,28 +3556,28 @@ DrawText2D_20:
 	mov eax, [ebp+0x4c]
 	add eax, [ebp+0x50]
 	cmp edi, eax
-	jg DrawText2D_40
+	jg _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__40
 	cmp edi, edx
-	jl DrawText2D_760
+	jl _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__760
 	cmp [ebp+0x4c], edi
-	jl DrawText2D_770
+	jl _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__770
 	mov byte [ebp-0xa5], 0x0
 	mov byte [ebp-0x9d], 0x0
 	mov dword [ebp-0x9c], 0x0
-DrawText2D_860:
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__860:
 	mov eax, [ebp-0x24]
 	mov [ebp-0xa4], eax
-	jmp DrawText2D_780
-DrawText2D_10:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__780
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__10:
 	mov dword [esp+0x4], 0x6f
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_GetCharacterGlyph
+	call _Z19R_GetCharacterGlyphP6Font_sj
 	movzx eax, byte [eax+0x4]
 	cvtsi2ss xmm0, eax
 	movss [ebp-0xb4], xmm0
-	jmp DrawText2D_790
-DrawText2D_140:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__790
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__140:
 	movss xmm0, dword [ebp-0x3c]
 	subss xmm0, [ebp-0x98]
 	movss xmm4, dword [ebp-0x40]
@@ -3604,9 +3603,9 @@ DrawText2D_140:
 	subss xmm0, xmm4
 	mov edx, [ebp-0xfc]
 	mov eax, [ebp-0xb0]
-	call RB_DrawCursor
-	jmp DrawText2D_130
-DrawText2D_280:
+	call _Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__130
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__280:
 	movss xmm0, dword [ebp-0x40]
 	subss xmm0, [ebp-0x94]
 	movss xmm1, dword [ebp+0x24]
@@ -3627,38 +3626,38 @@ DrawText2D_280:
 	movaps xmm0, xmm4
 	mov edx, [ebp-0xfc]
 	mov eax, [ebp-0xb0]
-	call RB_DrawCursor
-	jmp DrawText2D_220
-DrawText2D_440:
+	call _Z13RB_DrawCursorPK8MaterialhffffP6Font_sffm
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__220
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__440:
 	mov edi, [ebp+0x28]
 	mov [ebp-0x20], edi
 	mov byte [ebp-0x7c], 0x0
-	jmp DrawText2D_800
-DrawText2D_690:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__800
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__690:
 	sub eax, 0x1
 	or eax, 0xfffffff0
 	add eax, 0x1
-	jmp DrawText2D_810
-DrawText2D_710:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__810
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__710:
 	mov eax, [ebp-0x2c]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_FontGetRandomLetter
+	call _Z21R_FontGetRandomLetterP6Font_si
 	mov esi, eax
 	mov byte [ebp-0x79], 0x0
-	jmp DrawText2D_820
-DrawText2D_500:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__820
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__500:
 	sub eax, 0x1
 	or eax, 0xfffffff0
 	add eax, 0x1
-	jmp DrawText2D_830
-DrawText2D_740:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__830
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__740:
 	sub eax, 0x1
 	or eax, 0xfffffff0
 	add eax, 0x1
-	jmp DrawText2D_840
-DrawText2D_460:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__840
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__460:
 	mov ecx, _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E25MY_ALTCOLOR_TWO_CINEMATIC
 	mov eax, [ebp-0xd0]
 	test eax, eax
@@ -3684,8 +3683,8 @@ DrawText2D_460:
 	or edx, eax
 	mov [ebp-0x20], edx
 	mov byte [ebp-0x7c], 0x1
-	jmp DrawText2D_800
-DrawText2D_760:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__800
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__760:
 	mov eax, edi
 	cdq
 	idiv dword [ebp+0x48]
@@ -3700,8 +3699,8 @@ DrawText2D_760:
 	cmovle eax, edx
 	mov edx, eax
 	sar edx, 0x2
-	jnz DrawText2D_850
-DrawText2D_870:
+	jnz _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__850
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__870:
 	mov edx, [ebp+0x44]
 	lea eax, [ecx+edx]
 	lea eax, [ebx+eax]
@@ -3709,55 +3708,55 @@ DrawText2D_870:
 	mov [ebp-0x24], eax
 	lea ebx, [ebp-0x24]
 	mov [esp], ebx
-	call RandWithSeed
+	call _Z12RandWithSeedPi
 	mov [esp], ebx
-	call RandWithSeed
+	call _Z12RandWithSeedPi
 	mov edi, [ebp-0xf4]
 	add edi, 0x1
 	mov [ebp+0x2c], edi
 	mov byte [ebp-0xa5], 0x1
 	mov byte [ebp-0x9d], 0x0
 	mov dword [ebp-0x9c], 0x0
-	jmp DrawText2D_860
-DrawText2D_850:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__860
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__850:
 	mov eax, ebx
 	mov edi, edx
 	cdq
 	idiv edi
 	mov ebx, eax
-	jmp DrawText2D_870
-DrawText2D_770:
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__870
+_Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__770:
 	mov edx, [ebp+0x44]
 	lea eax, [ecx+edx]
 	mov [ebp-0x24], eax
 	lea ebx, [ebp-0x24]
 	mov [esp], ebx
-	call RandWithSeed
+	call _Z12RandWithSeedPi
 	mov [esp], ebx
-	call RandWithSeed
+	call _Z12RandWithSeedPi
 	mov eax, [ebp+0x4c]
 	sub edi, eax
 	mov [ebp-0x9c], edi
 	mov byte [ebp-0xa5], 0x0
 	mov byte [ebp-0x9d], 0x1
-	jmp DrawText2D_860
+	jmp _Z10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6__860
 	nop
 
 
 ;RB_EndFrame(unsigned int)
-RB_EndFrame:
+_Z11RB_EndFramej:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x24
 	test byte [ebp+0x8], 0x2
-	jnz RB_EndFrame_10
-RB_EndFrame_40:
+	jnz _Z11RB_EndFramej_10
+_Z11RB_EndFramej_40:
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-RB_EndFrame_10:
+_Z11RB_EndFramej_10:
 	mov eax, dx_ctx
 	mov eax, [eax+0x8]
 	mov edx, [eax]
@@ -3768,8 +3767,8 @@ RB_EndFrame_10:
 	mov [esp], eax
 	call dword [edx+0x44]
 	test eax, eax
-	js RB_EndFrame_20
-RB_EndFrame_50:
+	js _Z11RB_EndFramej_20
+_Z11RB_EndFramej_50:
 	mov edx, dx_ctx
 	mov eax, [edx+0x2c54]
 	mov ecx, [edx+eax*4+0x2c34]
@@ -3787,39 +3786,39 @@ RB_EndFrame_50:
 	mov eax, r_gamma
 	mov edx, [eax]
 	cmp byte [edx+0xb], 0x0
-	jnz RB_EndFrame_30
+	jnz _Z11RB_EndFramej_30
 	mov eax, r_ignoreHwGamma
 	mov eax, [eax]
 	cmp byte [eax+0xb], 0x0
-	jz RB_EndFrame_40
-RB_EndFrame_30:
+	jz _Z11RB_EndFramej_40
+_Z11RB_EndFramej_30:
 	mov [esp], edx
-	call Cvar_ClearModified
+	call _Z18Dvar_ClearModifiedPK6dvar_s
 	mov ebx, r_ignoreHwGamma
 	mov eax, [ebx]
 	mov [esp], eax
-	call Cvar_ClearModified
+	call _Z18Dvar_ClearModifiedPK6dvar_s
 	mov eax, [ebx]
 	cmp byte [eax+0xc], 0x0
-	jnz RB_EndFrame_40
+	jnz _Z11RB_EndFramej_40
 	add esp, 0x24
 	pop ebx
 	pop ebp
-	jmp R_SetColorMappings
-RB_EndFrame_20:
+	jmp _Z18R_SetColorMappingsv
+_Z11RB_EndFramej_20:
 	cmp eax, 0x88760868
-	jz RB_EndFrame_50
+	jz _Z11RB_EndFramej_50
 	mov [esp], eax
-	call R_ErrorDescription
+	call _Z18R_ErrorDescriptionl
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_direct3ddevice9p
 	mov dword [esp], 0x1
-	call Com_Error
-	jmp RB_EndFrame_50
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z11RB_EndFramej_50
 
 
 ;R_DrawSurfs(GfxCmdBufContext, GfxCmdBufState*, GfxDrawSurfListInfo const*)
-R_DrawSurfs:
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3839,15 +3838,15 @@ R_DrawSurfs:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call R_SetDrawSurfsShadowableLight
+	call _Z29R_SetDrawSurfsShadowableLightP20GfxCmdBufSourceStatePK19GfxDrawSurfListInfo
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call R_Set3D
+	call _Z7R_Set3DP20GfxCmdBufSourceState
 	mov edx, [ebp-0x4c]
 	cmp byte [edx+0xf70], 0x0
-	jnz R_DrawSurfs_10
+	jnz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_10
 	mov eax, edx
-R_DrawSurfs_200:
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_200:
 	mov ecx, [ebp+0x10]
 	test ecx, ecx
 	mov edx, 0x0
@@ -3863,33 +3862,33 @@ R_DrawSurfs_200:
 	xor ecx, ecx
 	mov edx, [ebp-0x64]
 	test edx, edx
-	jnz R_DrawSurfs_20
-	jmp R_DrawSurfs_30
-R_DrawSurfs_80:
+	jnz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_20
+	jmp _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_30
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_80:
 	mov eax, pixelCostMode
 	mov eax, [eax]
 	test eax, eax
 	setnz byte [ebp-0x4d]
 	cmp byte [ebp-0x4d], 0x0
-	jnz R_DrawSurfs_40
-R_DrawSurfs_170:
+	jnz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_40
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_170:
 	mov ecx, [ebp-0x38]
 	mov [ebp-0x40], ecx
 	mov eax, [ebp-0x24]
 	mov eax, [eax+0xc0]
 	cmp word [eax+0x6], 0x0
-	jnz R_DrawSurfs_50
+	jnz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_50
 	xor edi, edi
-R_DrawSurfs_140:
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_140:
 	cmp byte [ebp-0x4d], 0x0
-	jnz R_DrawSurfs_60
-R_DrawSurfs_110:
+	jnz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_60
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_110:
 	mov ecx, edi
 	add ecx, [ebp-0x20]
 	mov [ebp-0x20], ecx
 	cmp [ebp-0x64], ecx
-	jz R_DrawSurfs_70
-R_DrawSurfs_20:
+	jz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_70
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_20:
 	mov eax, [ebp+0x10]
 	mov [ebp-0x6c], eax
 	mov edx, [ebp-0x44]
@@ -3915,22 +3914,22 @@ R_DrawSurfs_20:
 	mov edx, [ebp-0x24]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupMaterial
+	call _Z15R_SetupMaterial16GfxCmdBufContextPS_PK19GfxDrawSurfListInfo11GfxDrawSurf
 	test eax, eax
-	jnz R_DrawSurfs_80
+	jnz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_80
 	mov [esp+0x4], ebx
 	mov edx, [ebp-0x58]
 	mov [esp], edx
-	call R_SkipDrawSurfListMaterial
+	call _Z26R_SkipDrawSurfListMaterialPK11GfxDrawSurfj
 	mov edi, eax
 	mov ecx, edi
 	add ecx, [ebp-0x20]
 	mov [ebp-0x20], ecx
 	cmp [ebp-0x64], ecx
-	jnz R_DrawSurfs_20
-R_DrawSurfs_70:
+	jnz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_20
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_70:
 	mov ecx, [ebp-0x4c]
-R_DrawSurfs_180:
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_180:
 	mov eax, [ebp+0x10]
 	mov [ebp-0x6c], eax
 	mov edx, [ebp-0x44]
@@ -3948,19 +3947,19 @@ R_DrawSurfs_180:
 	mov dword [esp+0x4], 0x0
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov edi, [ebp-0x48]
 	cmp dword [ebx+0xf34], 0x1
 	sbb edx, edx
 	cmp edx, [edi+0xcc]
-	jz R_DrawSurfs_90
+	jz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_90
 	mov [esp+0x4], edx
 	mov [esp], edi
-	call R_ChangeDepthRange
-R_DrawSurfs_90:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_90:
 	mov edi, [ebp-0x3c]
 	test edi, edi
-	jz R_DrawSurfs_100
+	jz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_100
 	mov eax, [ebp-0x44]
 	mov [ebp-0x78], eax
 	mov edx, [ebp-0x6c]
@@ -3969,11 +3968,11 @@ R_DrawSurfs_90:
 	sbb eax, eax
 	mov ecx, [ebp-0x3c]
 	cmp eax, [ecx+0xcc]
-	jz R_DrawSurfs_100
+	jz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_100
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call R_ChangeDepthRange
-R_DrawSurfs_100:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_100:
 	mov edx, [ebp-0x48]
 	mov dword [edx+0xa08], 0x0
 	add esp, 0x8c
@@ -3982,32 +3981,32 @@ R_DrawSurfs_100:
 	pop edi
 	pop ebp
 	ret
-R_DrawSurfs_60:
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_60:
 	mov eax, [ebp-0x28]
 	mov edx, [ebp-0x24]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_PixelCost_EndSurface
-	jmp R_DrawSurfs_110
-R_DrawSurfs_50:
+	call _Z22R_PixelCost_EndSurface16GfxCmdBufContext
+	jmp _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_110
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_50:
 	mov eax, edi
 	shr eax, 0x12
 	mov ebx, eax
 	and ebx, 0xf
 	mov dword [ebp-0x54], 0x0
-	jmp R_DrawSurfs_120
-R_DrawSurfs_150:
+	jmp _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_120
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_150:
 	mov eax, [ebp-0x34]
 	test eax, eax
-	jz R_DrawSurfs_130
+	jz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_130
 	mov dword [esp+0x8], 0x0
 	mov eax, [ebp-0x38]
 	mov edx, [ebp-0x34]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPass
+	call _Z11R_SetupPass16GfxCmdBufContextj
 	mov edx, [ebp-0x34]
-R_DrawSurfs_160:
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_160:
 	mov eax, [ebx*4+rb_tessTable]
 	mov [ebp-0x5c], edx
 	mov edx, [ebp-0x40]
@@ -4025,66 +4024,66 @@ R_DrawSurfs_160:
 	mov eax, [eax+0xc0]
 	movzx eax, word [eax+0x6]
 	cmp [ebp-0x54], eax
-	jae R_DrawSurfs_140
-R_DrawSurfs_120:
+	jae _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_140
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_120:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp-0x28]
 	mov [esp], eax
-	call R_UpdateMaterialTime
+	call _Z20R_UpdateMaterialTimeP20GfxCmdBufSourceStatef
 	mov eax, [ebp-0x54]
 	mov [esp+0x8], eax
 	mov eax, [ebp-0x28]
 	mov edx, [ebp-0x24]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPass
+	call _Z11R_SetupPass16GfxCmdBufContextj
 	mov eax, [ebp-0x54]
 	test eax, eax
-	jz R_DrawSurfs_150
-R_DrawSurfs_130:
+	jz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_150
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_130:
 	xor edx, edx
-	jmp R_DrawSurfs_160
-R_DrawSurfs_40:
+	jmp _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_160
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_40:
 	mov eax, [ebp-0x28]
 	mov edx, [ebp-0x24]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_PixelCost_BeginSurface
-	jmp R_DrawSurfs_170
-R_DrawSurfs_30:
+	call _Z24R_PixelCost_BeginSurface16GfxCmdBufContext
+	jmp _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_170
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_30:
 	mov ecx, eax
-	jmp R_DrawSurfs_180
-R_DrawSurfs_10:
+	jmp _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_180
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_10:
 	lea ecx, [ebp-0x38]
 	mov [esp+0x4], ecx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call R_GetViewport
+	call _Z13R_GetViewportP20GfxCmdBufSourceStateP11GfxViewport
 	lea edx, [ebp-0x38]
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0xc]
 	mov [esp], ecx
-	call R_SetViewport
+	call _Z13R_SetViewportP14GfxCmdBufStatePK11GfxViewport
 	mov esi, [ebp+0x10]
 	test esi, esi
-	jz R_DrawSurfs_190
+	jz _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_190
 	lea eax, [ebp-0x38]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x10]
 	mov [esp], edx
-	call R_SetViewport
-R_DrawSurfs_190:
+	call _Z13R_SetViewportP14GfxCmdBufStatePK11GfxViewport
+_Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_190:
 	lea ecx, [ebp-0x38]
 	mov [esp+0x4], ecx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call R_UpdateViewport
+	call _Z16R_UpdateViewportP20GfxCmdBufSourceStateP11GfxViewport
 	mov eax, [ebp-0x4c]
-	jmp R_DrawSurfs_200
+	jmp _Z11R_DrawSurfs16GfxCmdBufContextP14GfxCmdBufStatePK19GfxDrawSurfListInfo_200
 
 
 ;RB_BeginFrame(void const*)
-RB_BeginFrame:
+_Z13RB_BeginFramePKv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4094,30 +4093,30 @@ RB_BeginFrame:
 	mov edx, [ebp+0x8]
 	mov [backEndData], edx
 	test byte [edx+0x11e770], 0x1
-	jz RB_BeginFrame_10
+	jz _Z13RB_BeginFramePKv_10
 	mov eax, r_glob
 	add dword [eax], 0x1
 	mov eax, dx_ctx
 	cmp byte [eax+0x2c6c], 0x0
-	jz RB_BeginFrame_20
-RB_BeginFrame_80:
+	jz _Z13RB_BeginFramePKv_20
+_Z13RB_BeginFramePKv_80:
 	mov edx, [backEndData]
 	mov eax, [edx+0xf0220]
 	test eax, eax
-	jz RB_BeginFrame_30
+	jz _Z13RB_BeginFramePKv_30
 	mov eax, gfxBuf
 	mov eax, [eax+0xc]
 	mov [ebp-0x24], eax
 	mov dword [ebp-0x1c], 0x0
 	mov dword [ebp-0x20], 0x0
 	mov ecx, [ebp-0x20]
-	jmp RB_BeginFrame_40
-RB_BeginFrame_50:
+	jmp _Z13RB_BeginFramePKv_40
+_Z13RB_BeginFramePKv_50:
 	mov ecx, eax
-RB_BeginFrame_40:
+_Z13RB_BeginFramePKv_40:
 	movzx eax, word [edx+ecx*2+0xf0020]
 	mov [esp], eax
-	call R_GetCachedSModelSurf
+	call _Z21R_GetCachedSModelSurfj
 	mov ebx, eax
 	movzx eax, word [eax+0x4]
 	mov [esp+0x4], eax
@@ -4129,7 +4128,7 @@ RB_BeginFrame_40:
 	lea eax, [edx+eax*2]
 	mov eax, [ecx+eax*4+0x38]
 	mov [esp], eax
-	call XModelGetStaticModelCacheVertCount
+	call _Z34XModelGetStaticModelCacheVertCountP6XModelj
 	mov edi, eax
 	mov esi, eax
 	shl esi, 0x5
@@ -4140,7 +4139,7 @@ RB_BeginFrame_40:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x24]
 	mov [esp], eax
-	call R_LockVertexBuffer
+	call _Z18R_LockVertexBufferP22IDirect3DVertexBuffer9iii
 	mov [esp+0x8], esi
 	mov edx, [ebp-0x1c]
 	shl edx, 0x5
@@ -4151,106 +4150,106 @@ RB_BeginFrame_40:
 	call Com_Memcpy
 	mov ecx, [ebp-0x24]
 	mov [esp], ecx
-	call R_UnlockVertexBuffer
+	call _Z20R_UnlockVertexBufferP22IDirect3DVertexBuffer9
 	add [ebp-0x1c], edi
 	add dword [ebp-0x20], 0x1
 	mov edx, [backEndData]
 	mov eax, [ebp-0x20]
 	cmp eax, [edx+0xf0220]
-	jb RB_BeginFrame_50
-RB_BeginFrame_30:
+	jb _Z13RB_BeginFramePKv_50
+_Z13RB_BeginFramePKv_30:
 	mov eax, [edx+0x118228]
 	mov [esp+0x4], eax
 	lea eax, [edx+0xf0228]
 	mov [esp], eax
-	call RB_PatchModelLighting
+	call _Z21RB_PatchModelLightingPK21GfxModelLightingPatchj
 	mov eax, dx_ctx
 	mov byte [eax+0x2c6d], 0x1
 	mov eax, [eax+0x8]
 	mov edx, [eax]
 	mov [esp], eax
 	call dword [edx+0xa4]
-	call RB_UploadShaderStep
-	call R_Cinematic_UpdateFrame
+	call _Z19RB_UploadShaderStepv
+	call _Z23R_Cinematic_UpdateFramev
 	mov dword [tess+0x22a948], 0x0
 	mov dword [tess+0x22a94c], 0x0
-RB_BeginFrame_10:
+_Z13RB_BeginFramePKv_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_BeginFrame_20:
+_Z13RB_BeginFramePKv_20:
 	mov eax, r_texFilterAnisoMax
 	mov eax, [eax]
 	mov [esp], eax
-	call R_CheckDvarModified
+	call _Z19R_CheckDvarModifiedPK6dvar_s
 	test al, al
-	jz RB_BeginFrame_60
-RB_BeginFrame_100:
-	call R_SetTexFilter
-RB_BeginFrame_110:
+	jz _Z13RB_BeginFramePKv_60
+_Z13RB_BeginFramePKv_100:
+	call _Z14R_SetTexFilterv
+_Z13RB_BeginFramePKv_110:
 	mov ebx, r_showPixelCost
 	mov eax, [ebx]
 	mov [esp], eax
-	call R_CheckDvarModified
+	call _Z19R_CheckDvarModifiedPK6dvar_s
 	test al, al
-	jnz RB_BeginFrame_70
-RB_BeginFrame_90:
+	jnz _Z13RB_BeginFramePKv_70
+_Z13RB_BeginFramePKv_90:
 	mov eax, r_aaAlpha
 	mov eax, [eax]
 	mov [esp], eax
-	call R_CheckDvarModified
+	call _Z19R_CheckDvarModifiedPK6dvar_s
 	test al, al
-	jz RB_BeginFrame_80
+	jz _Z13RB_BeginFramePKv_80
 	mov eax, gfxMetrics
 	cmp byte [eax+0x27], 0x0
-	jz RB_BeginFrame_80
+	jz _Z13RB_BeginFramePKv_80
 	mov eax, gfxCmdBufState
 	mov edx, [eax+0x9e4]
 	mov [esp+0x4], edx
 	mov eax, [eax+0x90]
 	mov [esp], eax
-	call R_SetAlphaAntiAliasingState
-	jmp RB_BeginFrame_80
-RB_BeginFrame_70:
+	call _Z27R_SetAlphaAntiAliasingStateP16IDirect3DDevice9i
+	jmp _Z13RB_BeginFramePKv_80
+_Z13RB_BeginFramePKv_70:
 	mov eax, [ebx]
 	mov edx, [eax+0xc]
 	test edx, edx
-	jnz RB_BeginFrame_90
-	call R_PixelCost_PrintColorCodeKey
-	jmp RB_BeginFrame_90
-RB_BeginFrame_60:
+	jnz _Z13RB_BeginFramePKv_90
+	call _Z29R_PixelCost_PrintColorCodeKeyv
+	jmp _Z13RB_BeginFramePKv_90
+_Z13RB_BeginFramePKv_60:
 	mov eax, r_texFilterDisable
 	mov eax, [eax]
 	mov [esp], eax
-	call R_CheckDvarModified
+	call _Z19R_CheckDvarModifiedPK6dvar_s
 	test al, al
-	jnz RB_BeginFrame_100
+	jnz _Z13RB_BeginFramePKv_100
 	mov eax, r_texFilterAnisoMin
 	mov eax, [eax]
 	mov [esp], eax
-	call R_CheckDvarModified
+	call _Z19R_CheckDvarModifiedPK6dvar_s
 	test al, al
-	jnz RB_BeginFrame_100
+	jnz _Z13RB_BeginFramePKv_100
 	mov eax, r_texFilterMipMode
 	mov eax, [eax]
 	mov [esp], eax
-	call R_CheckDvarModified
+	call _Z19R_CheckDvarModifiedPK6dvar_s
 	test al, al
-	jnz RB_BeginFrame_100
+	jnz _Z13RB_BeginFramePKv_100
 	mov eax, r_texFilterMipBias
 	mov eax, [eax]
 	mov [esp], eax
-	call R_CheckDvarModified
+	call _Z19R_CheckDvarModifiedPK6dvar_s
 	test al, al
-	jz RB_BeginFrame_110
-	jmp RB_BeginFrame_100
+	jz _Z13RB_BeginFramePKv_110
+	jmp _Z13RB_BeginFramePKv_100
 
 
 ;R_SetVertex2d(GfxVertex*, float, float, float, float, unsigned long)
-R_SetVertex2d:
+_Z13R_SetVertex2dP9GfxVertexffffm:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -4272,7 +4271,7 @@ R_SetVertex2d:
 
 
 ;RB_DrawLines2D(int, int, GfxPointVertex const*)
-RB_DrawLines2D:
+_Z14RB_DrawLines2DiiPK14GfxPointVertex:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4283,23 +4282,23 @@ RB_DrawLines2D:
 	mov eax, rgp
 	mov eax, [eax+0x2034]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov eax, [ebp+0x8]
 	test eax, eax
-	jg RB_DrawLines2D_10
+	jg _Z14RB_DrawLines2DiiPK14GfxPointVertex_10
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawLines2D_10:
+_Z14RB_DrawLines2DiiPK14GfxPointVertex_10:
 	xor edi, edi
 	mov esi, [ebp+0x10]
 	add esi, 0x10
 	mov ebx, [ebp+0x10]
 	add ebx, 0x4
-RB_DrawLines2D_40:
+_Z14RB_DrawLines2DiiPK14GfxPointVertex_40:
 	movss xmm0, dword [esi+0x4]
 	subss xmm0, [ebx]
 	movss [ebp-0x20], xmm0
@@ -4308,7 +4307,7 @@ RB_DrawLines2D_40:
 	movss [ebp-0x1c], xmm0
 	lea eax, [ebp-0x20]
 	mov [esp], eax
-	call Vec2Normalize
+	call _Z13Vec2NormalizePf
 	fstp st0
 	movss xmm0, dword [ebp-0x20]
 	mulss xmm0, [_float_0_50000000]
@@ -4319,16 +4318,16 @@ RB_DrawLines2D_40:
 	mov edx, [tess+0x22a94c]
 	lea eax, [edx+0x4]
 	cmp eax, 0x154a
-	jg RB_DrawLines2D_20
+	jg _Z14RB_DrawLines2DiiPK14GfxPointVertex_20
 	mov ecx, [tess+0x22a948]
 	lea eax, [ecx+0x6]
 	cmp eax, 0x100000
-	jle RB_DrawLines2D_30
-RB_DrawLines2D_20:
-	call RB_TessOverflow
+	jle _Z14RB_DrawLines2DiiPK14GfxPointVertex_30
+_Z14RB_DrawLines2DiiPK14GfxPointVertex_20:
+	call _Z15RB_TessOverflowv
 	mov edx, [tess+0x22a94c]
 	mov ecx, [tess+0x22a948]
-RB_DrawLines2D_30:
+_Z14RB_DrawLines2DiiPK14GfxPointVertex_30:
 	lea eax, [edx+0x1]
 	mov [ecx+ecx+tess+0x2a940], ax
 	mov [ecx+ecx+tess+0x2a942], dx
@@ -4415,7 +4414,7 @@ RB_DrawLines2D_30:
 	add ebx, 0x20
 	add esi, 0x20
 	cmp [ebp+0x8], edi
-	jnz RB_DrawLines2D_40
+	jnz _Z14RB_DrawLines2DiiPK14GfxPointVertex_40
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -4426,7 +4425,7 @@ RB_DrawLines2D_30:
 
 
 ;RB_DrawLines3D(int, int, GfxPointVertex const*, unsigned char)
-RB_DrawLines3D:
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4434,20 +4433,20 @@ RB_DrawLines3D:
 	push ebx
 	sub esp, 0xbc
 	cmp byte [ebp+0x14], 0x0
-	jz RB_DrawLines3D_10
+	jz _Z14RB_DrawLines3DiiPK14GfxPointVertexh_10
 	mov dword [esp+0x4], 0x4
 	mov eax, rgp
 	mov eax, [eax+0x2040]
 	mov [esp], eax
-	call RB_SetTessTechnique
-RB_DrawLines3D_50:
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_50:
 	mov ebx, gfxCmdBufSourceState
 	cmp dword [ebx+0xf38], 0x3
-	jz RB_DrawLines3D_20
+	jz _Z14RB_DrawLines3DiiPK14GfxPointVertexh_20
 	mov edi, [tess+0x22a948]
 	test edi, edi
-	jnz RB_DrawLines3D_30
-RB_DrawLines3D_60:
+	jnz _Z14RB_DrawLines3DiiPK14GfxPointVertexh_30
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_60:
 	mov dword [ebx+0xf38], 0x3
 	lea edx, [ebx+0xcb0]
 	mov dword [esp+0x8], 0x140
@@ -4461,8 +4460,8 @@ RB_DrawLines3D_60:
 	mov [ebx+0xefc], eax
 	mov dword [ebx+0xf00], 0x3f800000
 	mov [esp], ebx
-	call R_CmdBufSet3D
-RB_DrawLines3D_20:
+	call _Z13R_CmdBufSet3DP20GfxCmdBufSourceState
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_20:
 	mov eax, [ebx+0xf0c]
 	lea edi, [eax+0x80]
 	cvtsi2ss xmm0, dword [ebp+0xc]
@@ -4475,25 +4474,25 @@ RB_DrawLines3D_20:
 	movss [ebp-0x64], xmm0
 	mov esi, [ebp+0x8]
 	test esi, esi
-	jg RB_DrawLines3D_40
-	call RB_EndTessSurface
+	jg _Z14RB_DrawLines3DiiPK14GfxPointVertexh_40
+	call _Z17RB_EndTessSurfacev
 	add esp, 0xbc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawLines3D_10:
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_10:
 	mov dword [esp+0x4], 0x4
 	mov eax, rgp
 	mov eax, [eax+0x2044]
 	mov [esp], eax
-	call RB_SetTessTechnique
-	jmp RB_DrawLines3D_50
-RB_DrawLines3D_30:
-	call RB_EndTessSurface
-	jmp RB_DrawLines3D_60
-RB_DrawLines3D_40:
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
+	jmp _Z14RB_DrawLines3DiiPK14GfxPointVertexh_50
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_30:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z14RB_DrawLines3DiiPK14GfxPointVertexh_60
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_40:
 	lea edx, [eax+0x90]
 	mov [ebp-0x48], edx
 	lea ecx, [eax+0xa0]
@@ -4505,11 +4504,11 @@ RB_DrawLines3D_40:
 	mov esi, ebx
 	mov dword [ebp-0x6c], 0x0
 	mov ecx, eax
-	jmp RB_DrawLines3D_70
-RB_DrawLines3D_100:
+	jmp _Z14RB_DrawLines3DiiPK14GfxPointVertexh_70
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_100:
 	mov edx, [ebp-0x48]
 	mov ecx, [ebp-0x40]
-RB_DrawLines3D_70:
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_70:
 	lea eax, [ebx-0x10]
 	mov [ebp-0x3c], eax
 	movss xmm6, dword [ebx-0x10]
@@ -4642,7 +4641,7 @@ RB_DrawLines3D_70:
 	mov [esp], eax
 	movss [ebp-0xa8], xmm5
 	movss [ebp-0xb8], xmm6
-	call Vec2Normalize
+	call _Z13Vec2NormalizePf
 	fstp st0
 	movss xmm1, dword [ebp-0x68]
 	mulss xmm1, [ebp-0x20]
@@ -4665,20 +4664,20 @@ RB_DrawLines3D_70:
 	lea eax, [edx+0x4]
 	cmp eax, 0x154a
 	movss xmm6, dword [ebp-0xb8]
-	jg RB_DrawLines3D_80
+	jg _Z14RB_DrawLines3DiiPK14GfxPointVertexh_80
 	mov ecx, [tess+0x22a948]
 	lea eax, [ecx+0x6]
 	cmp eax, 0x100000
-	jle RB_DrawLines3D_90
-RB_DrawLines3D_80:
+	jle _Z14RB_DrawLines3DiiPK14GfxPointVertexh_90
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_80:
 	movss [ebp-0xa8], xmm5
 	movss [ebp-0xb8], xmm6
-	call RB_TessOverflow
+	call _Z15RB_TessOverflowv
 	mov edx, [tess+0x22a94c]
 	mov ecx, [tess+0x22a948]
 	movss xmm6, dword [ebp-0xb8]
 	movss xmm5, dword [ebp-0xa8]
-RB_DrawLines3D_90:
+_Z14RB_DrawLines3DiiPK14GfxPointVertexh_90:
 	lea eax, [edx+0x3]
 	mov [ecx+ecx+tess+0x2a940], ax
 	mov [ecx+ecx+tess+0x2a942], dx
@@ -4767,8 +4766,8 @@ RB_DrawLines3D_90:
 	add ebx, 0x20
 	mov eax, [ebp-0x6c]
 	cmp [ebp+0x8], eax
-	jnz RB_DrawLines3D_100
-	call RB_EndTessSurface
+	jnz _Z14RB_DrawLines3DiiPK14GfxPointVertexh_100
+	call _Z17RB_EndTessSurfacev
 	add esp, 0xbc
 	pop ebx
 	pop esi
@@ -4779,7 +4778,7 @@ RB_DrawLines3D_90:
 
 
 ;RB_LookupColor(unsigned char, unsigned char*)
-RB_LookupColor:
+_Z14RB_LookupColorhPh:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -4787,10 +4786,10 @@ RB_LookupColor:
 	movzx ebx, byte [ebp+0x8]
 	movzx eax, bl
 	mov [esp], eax
-	call ColorIndex
+	call _Z10ColorIndexh
 	movzx eax, al
 	cmp eax, 0x7
-	ja RB_LookupColor_10
+	ja _Z14RB_LookupColorhPh_10
 	mov eax, [eax*4+_ZZ14RB_LookupColorhPhE11color_table]
 	mov edx, [ebp+0xc]
 	mov [edx], eax
@@ -4798,24 +4797,24 @@ RB_LookupColor:
 	pop ebx
 	pop ebp
 	ret
-RB_LookupColor_10:
+_Z14RB_LookupColorhPh_10:
 	cmp bl, 0x38
-	jz RB_LookupColor_20
+	jz _Z14RB_LookupColorhPh_20
 	cmp bl, 0x39
-	jz RB_LookupColor_30
+	jz _Z14RB_LookupColorhPh_30
 	mov eax, [ebp+0xc]
 	mov dword [eax], 0xffffffff
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-RB_LookupColor_20:
+_Z14RB_LookupColorhPh_20:
 	mov eax, rg
 	cmp dword [eax+0x21d4], 0x2
-	jz RB_LookupColor_40
-RB_LookupColor_50:
+	jz _Z14RB_LookupColorhPh_40
+_Z14RB_LookupColorhPh_50:
 	add eax, 0x21cc
-RB_LookupColor_60:
+_Z14RB_LookupColorhPh_60:
 	mov eax, [eax]
 	mov edx, [ebp+0xc]
 	mov [edx], eax
@@ -4823,28 +4822,28 @@ RB_LookupColor_60:
 	pop ebx
 	pop ebp
 	ret
-RB_LookupColor_30:
+_Z14RB_LookupColorhPh_30:
 	mov eax, rg
 	cmp dword [eax+0x21d4], 0x2
-	jz RB_LookupColor_50
-RB_LookupColor_40:
+	jz _Z14RB_LookupColorhPh_50
+_Z14RB_LookupColorhPh_40:
 	add eax, 0x21d0
-	jmp RB_LookupColor_60
+	jmp _Z14RB_LookupColorhPh_60
 
 
 ;RB_SetIdentity()
-RB_SetIdentity:
+_Z14RB_SetIdentityv:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov ebx, gfxCmdBufSourceState
 	cmp dword [ebx+0xf38], 0x3
-	jz RB_SetIdentity_10
+	jz _Z14RB_SetIdentityv_10
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jnz RB_SetIdentity_20
-RB_SetIdentity_30:
+	jnz _Z14RB_SetIdentityv_20
+_Z14RB_SetIdentityv_30:
 	mov dword [ebx+0xf38], 0x3
 	lea edx, [ebx+0xcb0]
 	mov dword [esp+0x8], 0x140
@@ -4858,20 +4857,20 @@ RB_SetIdentity_30:
 	mov [ebx+0xefc], eax
 	mov dword [ebx+0xf00], 0x3f800000
 	mov [esp], ebx
-	call R_CmdBufSet3D
-RB_SetIdentity_10:
+	call _Z13R_CmdBufSet3DP20GfxCmdBufSourceState
+_Z14RB_SetIdentityv_10:
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-RB_SetIdentity_20:
-	call RB_EndTessSurface
-	jmp RB_SetIdentity_30
+_Z14RB_SetIdentityv_20:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z14RB_SetIdentityv_30
 	nop
 
 
 ;RB_SetBspImages()
-RB_SetBspImages:
+_Z15RB_SetBspImagesv:
 	push ebp
 	mov ebp, esp
 	mov eax, rgp
@@ -4889,7 +4888,7 @@ RB_SetBspImages:
 
 
 ;RB_SetGammaRamp(GfxGammaRamp const*)
-RB_SetGammaRamp:
+_Z15RB_SetGammaRampPK12GfxGammaRamp:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4899,7 +4898,7 @@ RB_SetGammaRamp:
 	lea esi, [ebp-0x608]
 	mov edx, esi
 	lea ebx, [ebp-0x408]
-RB_SetGammaRamp_10:
+_Z15RB_SetGammaRampPK12GfxGammaRamp_10:
 	movzx eax, word [ecx]
 	mov [edx], ax
 	mov [edx+0x200], ax
@@ -4907,7 +4906,7 @@ RB_SetGammaRamp_10:
 	add ecx, 0x2
 	add edx, 0x2
 	cmp edx, ebx
-	jnz RB_SetGammaRamp_10
+	jnz _Z15RB_SetGammaRampPK12GfxGammaRamp_10
 	mov eax, dx_ctx
 	mov edx, [eax+0x8]
 	mov ecx, [edx]
@@ -4925,7 +4924,7 @@ RB_SetGammaRamp_10:
 
 
 ;R_InsertGpuFence()
-R_InsertGpuFence:
+_Z16R_InsertGpuFencev:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -4944,7 +4943,7 @@ R_InsertGpuFence:
 
 
 ;RB_DrawStretchPic(Material const*, float, float, float, float, float, float, float, float, unsigned long, GfxPrimStatsTarget)
-RB_DrawStretchPic:
+_Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4956,20 +4955,20 @@ RB_DrawStretchPic:
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov ebx, [tess+0x22a94c]
 	lea eax, [ebx+0x4]
 	cmp eax, 0x154a
-	jg RB_DrawStretchPic_10
+	jg _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget_10
 	mov ecx, [tess+0x22a948]
 	lea eax, [ecx+0x6]
 	cmp eax, 0x100000
-	jle RB_DrawStretchPic_20
-RB_DrawStretchPic_10:
-	call RB_TessOverflow
+	jle _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget_20
+_Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget_10:
+	call _Z15RB_TessOverflowv
 	mov ebx, [tess+0x22a94c]
 	mov ecx, [tess+0x22a948]
-RB_DrawStretchPic_20:
+_Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget_20:
 	mov edx, ebx
 	lea eax, [edx+0x3]
 	mov [ecx+ecx+tess+0x2a940], ax
@@ -5053,7 +5052,7 @@ RB_DrawStretchPic_20:
 
 
 ;RB_InitCodeImages()
-RB_InitCodeImages:
+_Z17RB_InitCodeImagesv:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -5142,7 +5141,7 @@ RB_InitCodeImages:
 
 
 ;RB_DrawTextInSpace(char const*, Font_s*, float const*, float const*, float const*, unsigned long)
-RB_DrawTextInSpace:
+_Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5155,11 +5154,11 @@ RB_DrawTextInSpace:
 	mov [ebp-0x60], eax
 	mov ecx, [tess+0x22a948]
 	test ecx, ecx
-	jnz RB_DrawTextInSpace_10
-RB_DrawTextInSpace_70:
+	jnz _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_10
+_Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_70:
 	mov eax, gfxCmdBufSourceState
 	mov [esp], eax
-	call R_Set3D
+	call _Z7R_Set3DP20GfxCmdBufSourceState
 	movss xmm1, dword [_float__0_50000000]
 	mov edx, [ebp+0x14]
 	movss xmm0, dword [edx]
@@ -5203,28 +5202,28 @@ RB_DrawTextInSpace_70:
 	movss [ebp-0x34], xmm1
 	mov eax, [ebp+0x8]
 	cmp byte [eax], 0x0
-	jnz RB_DrawTextInSpace_20
-RB_DrawTextInSpace_60:
+	jnz _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_20
+_Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_60:
 	mov edx, [tess+0x22a948]
 	test edx, edx
-	jz RB_DrawTextInSpace_30
-	call RB_EndTessSurface
-RB_DrawTextInSpace_30:
+	jz _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_30
+	call _Z17RB_EndTessSurfacev
+_Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_30:
 	add esp, 0xbc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawTextInSpace_20:
+_Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_20:
 	mov dword [esp+0x4], 0x0
 	lea edx, [ebp+0x8]
 	mov [esp], edx
-	call SEH_ReadCharFromString
+	call _Z22SEH_ReadCharFromStringPPKcPi
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call R_GetCharacterGlyph
+	call _Z19R_GetCharacterGlyphP6Font_sj
 	mov [ebp-0x64], eax
 	mov edx, eax
 	movsx eax, byte [eax+0x2]
@@ -5289,29 +5288,29 @@ RB_DrawTextInSpace_20:
 	movss [ebp-0x88], xmm5
 	movss [ebp-0x98], xmm6
 	movss [ebp-0xa8], xmm7
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov edx, [tess+0x22a94c]
 	lea eax, [edx+0x4]
 	cmp eax, 0x154a
 	movss xmm5, dword [ebp-0x88]
 	movss xmm6, dword [ebp-0x98]
 	movss xmm7, dword [ebp-0xa8]
-	jg RB_DrawTextInSpace_40
+	jg _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_40
 	mov esi, [tess+0x22a948]
 	lea eax, [esi+0x6]
 	cmp eax, 0x100000
-	jle RB_DrawTextInSpace_50
-RB_DrawTextInSpace_40:
+	jle _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_50
+_Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_40:
 	movss [ebp-0x88], xmm5
 	movss [ebp-0x98], xmm6
 	movss [ebp-0xa8], xmm7
-	call RB_TessOverflow
+	call _Z15RB_TessOverflowv
 	mov edx, [tess+0x22a94c]
 	mov esi, [tess+0x22a948]
 	movss xmm7, dword [ebp-0xa8]
 	movss xmm6, dword [ebp-0x98]
 	movss xmm5, dword [ebp-0x88]
-RB_DrawTextInSpace_50:
+_Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_50:
 	mov ebx, edx
 	movzx edx, si
 	lea eax, [ebx+0x4]
@@ -5414,16 +5413,16 @@ RB_DrawTextInSpace_50:
 	movss [ebp-0x34], xmm0
 	mov eax, [ebp+0x8]
 	cmp byte [eax], 0x0
-	jnz RB_DrawTextInSpace_20
-	jmp RB_DrawTextInSpace_60
-RB_DrawTextInSpace_10:
-	call RB_EndTessSurface
-	jmp RB_DrawTextInSpace_70
+	jnz _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_20
+	jmp _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_60
+_Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_10:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m_70
 	nop
 
 
 ;RB_FullScreenFilter(Material const*)
-RB_FullScreenFilter:
+_Z19RB_FullScreenFilterPK8Material:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -5432,12 +5431,12 @@ RB_FullScreenFilter:
 	mov esi, [ebp+0x8]
 	mov ecx, [tess+0x22a948]
 	test ecx, ecx
-	jz RB_FullScreenFilter_10
-	call RB_EndTessSurface
-RB_FullScreenFilter_10:
+	jz _Z19RB_FullScreenFilterPK8Material_10
+	call _Z17RB_EndTessSurfacev
+_Z19RB_FullScreenFilterPK8Material_10:
 	mov ebx, gfxCmdBufSourceState
 	mov [esp], ebx
-	call R_Set2D
+	call _Z7R_Set2DP20GfxCmdBufSourceState
 	mov dword [esp+0x28], 0x9
 	mov dword [esp+0x24], 0xffffffff
 	mov eax, 0x3f800000
@@ -5453,16 +5452,16 @@ RB_FullScreenFilter_10:
 	mov [esp+0x8], eax
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call RB_DrawStretchPic
+	call _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
 	add esp, 0x30
 	pop ebx
 	pop esi
 	pop ebp
-	jmp RB_EndTessSurface
+	jmp _Z17RB_EndTessSurfacev
 
 
 ;RB_InitCodeConstants()
-RB_InitCodeConstants:
+_Z20RB_InitCodeConstantsv:
 	push ebp
 	mov ebp, esp
 	pop ebp
@@ -5471,7 +5470,7 @@ RB_InitCodeConstants:
 
 
 ;RB_SplitScreenFilter(Material const*, GfxViewInfo const*)
-RB_SplitScreenFilter:
+_Z20RB_SplitScreenFilterPK8MaterialPK11GfxViewInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5482,12 +5481,12 @@ RB_SplitScreenFilter:
 	mov esi, [ebp+0xc]
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jz RB_SplitScreenFilter_10
-	call RB_EndTessSurface
-RB_SplitScreenFilter_10:
+	jz _Z20RB_SplitScreenFilterPK8MaterialPK11GfxViewInfo_10
+	call _Z17RB_EndTessSurfacev
+_Z20RB_SplitScreenFilterPK8MaterialPK11GfxViewInfo_10:
 	mov ebx, gfxCmdBufSourceState
 	mov [esp], ebx
-	call R_Set2D
+	call _Z7R_Set2DP20GfxCmdBufSourceState
 	cvtsi2ss xmm5, dword [esi+0x16c]
 	cvtsi2ss xmm4, dword [esi+0x170]
 	cvtsi2ss xmm3, dword [ebx+0xf68]
@@ -5515,17 +5514,17 @@ RB_SplitScreenFilter_10:
 	mov [esp+0x8], eax
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call RB_DrawStretchPic
+	call _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
-	jmp RB_EndTessSurface
+	jmp _Z17RB_EndTessSurfacev
 
 
 ;R_ShowDirtyDiscError()
-R_ShowDirtyDiscError:
+_Z20R_ShowDirtyDiscErrorv:
 	push ebp
 	mov ebp, esp
 	pop ebp
@@ -5534,7 +5533,7 @@ R_ShowDirtyDiscError:
 
 
 ;RB_DrawStretchPicFlipST(Material const*, float, float, float, float, float, float, float, float, unsigned long, GfxPrimStatsTarget)
-RB_DrawStretchPicFlipST:
+_Z23RB_DrawStretchPicFlipSTPK8Materialffffffffm18GfxPrimStatsTarget:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5546,20 +5545,20 @@ RB_DrawStretchPicFlipST:
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov ebx, [tess+0x22a94c]
 	lea eax, [ebx+0x4]
 	cmp eax, 0x154a
-	jg RB_DrawStretchPicFlipST_10
+	jg _Z23RB_DrawStretchPicFlipSTPK8Materialffffffffm18GfxPrimStatsTarget_10
 	mov ecx, [tess+0x22a948]
 	lea eax, [ecx+0x6]
 	cmp eax, 0x100000
-	jle RB_DrawStretchPicFlipST_20
-RB_DrawStretchPicFlipST_10:
-	call RB_TessOverflow
+	jle _Z23RB_DrawStretchPicFlipSTPK8Materialffffffffm18GfxPrimStatsTarget_20
+_Z23RB_DrawStretchPicFlipSTPK8Materialffffffffm18GfxPrimStatsTarget_10:
+	call _Z15RB_TessOverflowv
 	mov ebx, [tess+0x22a94c]
 	mov ecx, [tess+0x22a948]
-RB_DrawStretchPicFlipST_20:
+_Z23RB_DrawStretchPicFlipSTPK8Materialffffffffm18GfxPrimStatsTarget_20:
 	mov edx, ebx
 	lea eax, [edx+0x3]
 	mov [ecx+ecx+tess+0x2a940], ax
@@ -5643,7 +5642,7 @@ RB_DrawStretchPicFlipST_20:
 
 
 ;R_SetVertex4dWithNormal(GfxVertex*, float, float, float, float, float, float, float, float, float, unsigned char const*)
-R_SetVertex4dWithNormal:
+_Z23R_SetVertex4dWithNormalP9GfxVertexfffffffffPKh:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -5691,13 +5690,13 @@ R_SetVertex4dWithNormal:
 
 
 ;RB_RegisterBackendAssets()
-RB_RegisterBackendAssets:
+_Z24RB_RegisterBackendAssetsv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_fontssmalldevfon
-	call R_RegisterFont
+	call _Z14R_RegisterFontPKci
 	mov [backEnd+0x8], eax
 	leave
 	ret
@@ -5705,7 +5704,7 @@ RB_RegisterBackendAssets:
 
 
 ;RB_FullScreenColoredFilter(Material const*, unsigned long)
-RB_FullScreenColoredFilter:
+_Z26RB_FullScreenColoredFilterPK8Materialm:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5716,12 +5715,12 @@ RB_FullScreenColoredFilter:
 	mov esi, [ebp+0xc]
 	mov ebx, [tess+0x22a948]
 	test ebx, ebx
-	jz RB_FullScreenColoredFilter_10
-	call RB_EndTessSurface
-RB_FullScreenColoredFilter_10:
+	jz _Z26RB_FullScreenColoredFilterPK8Materialm_10
+	call _Z17RB_EndTessSurfacev
+_Z26RB_FullScreenColoredFilterPK8Materialm_10:
 	mov ebx, gfxCmdBufSourceState
 	mov [esp], ebx
-	call R_Set2D
+	call _Z7R_Set2DP20GfxCmdBufSourceState
 	mov dword [esp+0x28], 0x9
 	mov [esp+0x24], esi
 	mov eax, 0x3f800000
@@ -5737,32 +5736,32 @@ RB_FullScreenColoredFilter_10:
 	mov [esp+0x8], eax
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call RB_DrawStretchPic
+	call _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
-	jmp RB_EndTessSurface
+	jmp _Z17RB_EndTessSurfacev
 	nop
 
 
 ;RB_InitBackendGlobalStructs()
-RB_InitBackendGlobalStructs:
+_Z27RB_InitBackendGlobalStructsv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
 	mov dword [backEnd], 0x0
 	mov dword [backEnd+0x4], 0x0
 	mov dword [backEnd+0x8], 0x0
-	call RB_InitSceneViewport
+	call _Z20RB_InitSceneViewportv
 	leave
-	jmp RB_InitCodeImages
+	jmp _Z17RB_InitCodeImagesv
 	nop
 
 
 ;RB_CallExecuteRenderCommands()
-RB_CallExecuteRenderCommands:
+_Z28RB_CallExecuteRenderCommandsv:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -5770,17 +5769,17 @@ RB_CallExecuteRenderCommands:
 	sub esp, 0x40
 	mov eax, [backEndData]
 	test byte [eax+0x11e770], 0x2
-	jz RB_CallExecuteRenderCommands_10
+	jz _Z28RB_CallExecuteRenderCommandsv_10
 	mov eax, [eax+0x11e6c4]
 	test eax, eax
-	jnz RB_CallExecuteRenderCommands_20
-RB_CallExecuteRenderCommands_140:
+	jnz _Z28RB_CallExecuteRenderCommandsv_20
+_Z28RB_CallExecuteRenderCommandsv_140:
 	mov dword [esp+0x8], 0x0
 	mov eax, gfxCmdBufInput
 	mov [esp+0x4], eax
 	mov esi, gfxCmdBufSourceState
 	mov [esp], esi
-	call R_InitCmdBufSourceState
+	call _Z23R_InitCmdBufSourceStateP20GfxCmdBufSourceStatePK14GfxCmdBufInputi
 	mov eax, [backEndData]
 	mov [esi+0xca8], eax
 	mov ebx, gfxCmdBufState
@@ -5800,31 +5799,31 @@ RB_CallExecuteRenderCommands_140:
 	call memset
 	mov dword [esp+0x4], 0x1
 	mov [esp], esi
-	call R_SetRenderTargetSize
+	call _Z21R_SetRenderTargetSizeP20GfxCmdBufSourceState17GfxRenderTargetId
 	mov eax, gfxCmdBufContext
 	mov edx, [eax+0x4]
 	mov eax, [eax]
 	mov dword [esp+0x8], 0x1
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetRenderTarget
-	call RB_InitSceneViewport
+	call _Z17R_SetRenderTarget16GfxCmdBufContext17GfxRenderTargetId
+	call _Z20RB_InitSceneViewportv
 	mov eax, [backEndData]
 	mov eax, [eax+0x11e6cc]
 	test eax, eax
-	jz RB_CallExecuteRenderCommands_30
+	jz _Z28RB_CallExecuteRenderCommandsv_30
 	mov [ebp-0xc], eax
 	movzx eax, word [eax]
 	test ax, ax
-	jnz RB_CallExecuteRenderCommands_40
+	jnz _Z28RB_CallExecuteRenderCommandsv_40
 	mov esi, [tess+0x22a948]
 	test esi, esi
-	jnz RB_CallExecuteRenderCommands_50
-RB_CallExecuteRenderCommands_30:
+	jnz _Z28RB_CallExecuteRenderCommandsv_50
+_Z28RB_CallExecuteRenderCommandsv_30:
 	mov ebx, [tess+0x22a948]
 	test ebx, ebx
-	jnz RB_CallExecuteRenderCommands_60
-RB_CallExecuteRenderCommands_150:
+	jnz _Z28RB_CallExecuteRenderCommandsv_60
+_Z28RB_CallExecuteRenderCommandsv_150:
 	mov ebx, gfxCmdBufState
 	mov dword [esp+0x8], 0xa10
 	mov [esp+0x4], ebx
@@ -5832,18 +5831,18 @@ RB_CallExecuteRenderCommands_150:
 	call memcpy
 	mov ecx, [ebx+0x94]
 	test ecx, ecx
-	jz RB_CallExecuteRenderCommands_70
-RB_CallExecuteRenderCommands_160:
+	jz _Z28RB_CallExecuteRenderCommandsv_70
+_Z28RB_CallExecuteRenderCommandsv_160:
 	mov dword [ebx+0x94], 0x0
 	mov eax, [ebx+0x90]
 	mov edx, [eax]
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x1a0]
-RB_CallExecuteRenderCommands_70:
+_Z28RB_CallExecuteRenderCommandsv_70:
 	lea eax, [ebx+0x90]
 	mov [esp], eax
-	call R_ClearAllStreamSources
+	call _Z23R_ClearAllStreamSourcesP18GfxCmdBufPrimState
 	mov esi, dx_ctx
 	mov eax, [esi+0x8]
 	mov edx, [eax]
@@ -5852,65 +5851,65 @@ RB_CallExecuteRenderCommands_70:
 	mov byte [esi+0x2c6d], 0x0
 	mov edx, [esi+0x2c58]
 	test edx, edx
-	jnz RB_CallExecuteRenderCommands_80
+	jnz _Z28RB_CallExecuteRenderCommandsv_80
 	mov dword [esi+0x2c8c], 0x0
 	mov dword [esi+0x2c90], 0x0
-RB_CallExecuteRenderCommands_10:
+_Z28RB_CallExecuteRenderCommandsv_10:
 	add esp, 0x40
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-RB_CallExecuteRenderCommands_80:
-	call R_AcquireGpuFenceLock
-	call RB_IsGpuFenceFinished
+_Z28RB_CallExecuteRenderCommandsv_80:
+	call _Z21R_AcquireGpuFenceLockv
+	call _Z21RB_IsGpuFenceFinishedv
 	test al, al
-	jnz RB_CallExecuteRenderCommands_90
+	jnz _Z28RB_CallExecuteRenderCommandsv_90
 	rdtsc
 	mov ebx, eax
-RB_CallExecuteRenderCommands_110:
-	call RB_IsGpuFenceFinished
+_Z28RB_CallExecuteRenderCommandsv_110:
+	call _Z21RB_IsGpuFenceFinishedv
 	test al, al
-	jnz RB_CallExecuteRenderCommands_100
+	jnz _Z28RB_CallExecuteRenderCommandsv_100
 	rdtsc
 	cmp eax, ebx
-	jns RB_CallExecuteRenderCommands_110
+	jns _Z28RB_CallExecuteRenderCommandsv_110
 	mov esi, dx_ctx
 	mov byte [esi+0x2ca4], 0x0
-RB_CallExecuteRenderCommands_230:
+_Z28RB_CallExecuteRenderCommandsv_230:
 	rdtsc
 	sub eax, ebx
-	js RB_CallExecuteRenderCommands_120
+	js _Z28RB_CallExecuteRenderCommandsv_120
 	sar eax, 0x4
 	cdq
 	add [esi+0x2c8c], eax
 	adc [esi+0x2c90], edx
-RB_CallExecuteRenderCommands_120:
+_Z28RB_CallExecuteRenderCommandsv_120:
 	cmp dword [esi+0x2c58], 0x2
-	jz RB_CallExecuteRenderCommands_130
-RB_CallExecuteRenderCommands_210:
+	jz _Z28RB_CallExecuteRenderCommandsv_130
+_Z28RB_CallExecuteRenderCommandsv_210:
 	mov eax, [esi+0x2c88]
 	mov edx, [eax]
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x18]
 	mov byte [esi+0x2ca4], 0x1
-	call R_ReleaseGpuFenceLock
+	call _Z21R_ReleaseGpuFenceLockv
 	add esp, 0x40
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-RB_CallExecuteRenderCommands_20:
-	call RB_Draw3DCommon
-	jmp RB_CallExecuteRenderCommands_140
-RB_CallExecuteRenderCommands_50:
-	call RB_EndTessSurface
+_Z28RB_CallExecuteRenderCommandsv_20:
+	call _Z15RB_Draw3DCommonv
+	jmp _Z28RB_CallExecuteRenderCommandsv_140
+_Z28RB_CallExecuteRenderCommandsv_50:
+	call _Z17RB_EndTessSurfacev
 	mov ebx, [tess+0x22a948]
 	test ebx, ebx
-	jz RB_CallExecuteRenderCommands_150
-RB_CallExecuteRenderCommands_60:
-	call RB_EndTessSurface
+	jz _Z28RB_CallExecuteRenderCommandsv_150
+_Z28RB_CallExecuteRenderCommandsv_60:
+	call _Z17RB_EndTessSurfacev
 	mov ebx, gfxCmdBufState
 	mov dword [esp+0x8], 0xa10
 	mov [esp+0x4], ebx
@@ -5918,30 +5917,30 @@ RB_CallExecuteRenderCommands_60:
 	call memcpy
 	mov ecx, [ebx+0x94]
 	test ecx, ecx
-	jnz RB_CallExecuteRenderCommands_160
-	jmp RB_CallExecuteRenderCommands_70
-RB_CallExecuteRenderCommands_40:
+	jnz _Z28RB_CallExecuteRenderCommandsv_160
+	jmp _Z28RB_CallExecuteRenderCommandsv_70
+_Z28RB_CallExecuteRenderCommandsv_40:
 	lea ebx, [ebp-0xc]
-RB_CallExecuteRenderCommands_170:
+_Z28RB_CallExecuteRenderCommandsv_170:
 	movzx eax, ax
 	mov [esp], ebx
 	call dword [eax*4+RB_RenderCommandTable]
 	mov eax, [ebp-0xc]
 	movzx eax, word [eax]
 	test ax, ax
-	jnz RB_CallExecuteRenderCommands_170
+	jnz _Z28RB_CallExecuteRenderCommandsv_170
 	mov esi, [tess+0x22a948]
 	test esi, esi
-	jz RB_CallExecuteRenderCommands_30
-	jmp RB_CallExecuteRenderCommands_50
-RB_CallExecuteRenderCommands_90:
+	jz _Z28RB_CallExecuteRenderCommandsv_30
+	jmp _Z28RB_CallExecuteRenderCommandsv_50
+_Z28RB_CallExecuteRenderCommandsv_90:
 	mov eax, [esi+0x2c8c]
 	mov edx, [esi+0x2c90]
 	cmp edx, 0x0
-	ja RB_CallExecuteRenderCommands_180
+	ja _Z28RB_CallExecuteRenderCommandsv_180
 	cmp eax, 0x4e20
-	jbe RB_CallExecuteRenderCommands_190
-RB_CallExecuteRenderCommands_180:
+	jbe _Z28RB_CallExecuteRenderCommandsv_190
+_Z28RB_CallExecuteRenderCommandsv_180:
 	mov esi, dx_ctx
 	mov ecx, eax
 	mov ebx, edx
@@ -5957,14 +5956,14 @@ RB_CallExecuteRenderCommands_180:
 	sbb edx, ebx
 	mov [esi+0x2c8c], eax
 	mov [esi+0x2c90], edx
-	jmp RB_CallExecuteRenderCommands_120
-RB_CallExecuteRenderCommands_130:
+	jmp _Z28RB_CallExecuteRenderCommandsv_120
+_Z28RB_CallExecuteRenderCommandsv_130:
 	movsd xmm0, qword [_double_30_00000000]
 	mov eax, msecPerRawTimerTick
 	divsd xmm0, qword [eax]
-	movsd xmm1, qword [_double_92233720368547758_double]
+	movsd xmm1, qword [_double_36854775808_00000000]
 	ucomisd xmm0, xmm1
-	jae RB_CallExecuteRenderCommands_200
+	jae _Z28RB_CallExecuteRenderCommandsv_200
 	fnstcw word [ebp-0x1a]
 	movzx eax, word [ebp-0x1a]
 	mov ah, 0xc
@@ -5976,11 +5975,11 @@ RB_CallExecuteRenderCommands_130:
 	fldcw word [ebp-0x1a]
 	mov ecx, [ebp-0x28]
 	mov ebx, [ebp-0x24]
-RB_CallExecuteRenderCommands_220:
+_Z28RB_CallExecuteRenderCommandsv_220:
 	mov [esi+0x2c8c], ecx
 	mov [esi+0x2c90], ebx
-	jmp RB_CallExecuteRenderCommands_210
-RB_CallExecuteRenderCommands_200:
+	jmp _Z28RB_CallExecuteRenderCommandsv_210
+_Z28RB_CallExecuteRenderCommandsv_200:
 	subsd xmm0, xmm1
 	fnstcw word [ebp-0x1a]
 	movzx eax, word [ebp-0x1a]
@@ -5995,18 +5994,18 @@ RB_CallExecuteRenderCommands_200:
 	mov ebx, [ebp-0x24]
 	lea edx, [ebx-0x80000000]
 	mov ebx, edx
-	jmp RB_CallExecuteRenderCommands_220
-RB_CallExecuteRenderCommands_190:
+	jmp _Z28RB_CallExecuteRenderCommandsv_220
+_Z28RB_CallExecuteRenderCommandsv_190:
 	mov dword [esi+0x2c8c], 0x0
 	mov dword [esi+0x2c90], 0x0
-	jmp RB_CallExecuteRenderCommands_120
-RB_CallExecuteRenderCommands_100:
+	jmp _Z28RB_CallExecuteRenderCommandsv_120
+_Z28RB_CallExecuteRenderCommandsv_100:
 	mov esi, dx_ctx
-	jmp RB_CallExecuteRenderCommands_230
+	jmp _Z28RB_CallExecuteRenderCommandsv_230
 
 
 ;RB_DrawFullScreenColoredQuad(Material const*, float, float, float, float, unsigned long)
-RB_DrawFullScreenColoredQuad:
+_Z28RB_DrawFullScreenColoredQuadPK8Materialffffm:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6025,12 +6024,12 @@ RB_DrawFullScreenColoredQuad:
 	mov esi, [ebp+0x1c]
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jz RB_DrawFullScreenColoredQuad_10
-	call RB_EndTessSurface
-RB_DrawFullScreenColoredQuad_10:
+	jz _Z28RB_DrawFullScreenColoredQuadPK8Materialffffm_10
+	call _Z17RB_EndTessSurfacev
+_Z28RB_DrawFullScreenColoredQuadPK8Materialffffm_10:
 	mov ebx, gfxCmdBufSourceState
 	mov [esp], ebx
-	call R_Set2D
+	call _Z7R_Set2DP20GfxCmdBufSourceState
 	mov dword [esp+0x28], 0x9
 	mov [esp+0x24], esi
 	mov [esp+0x20], edi
@@ -6049,18 +6048,18 @@ RB_DrawFullScreenColoredQuad_10:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call RB_DrawStretchPic
+	call _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
-	jmp RB_EndTessSurface
+	jmp _Z17RB_EndTessSurfacev
 	nop
 
 
 ;RB_ExecuteRenderCommandsLoop(void const*)
-RB_ExecuteRenderCommandsLoop:
+_Z28RB_ExecuteRenderCommandsLoopPKv:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -6069,32 +6068,32 @@ RB_ExecuteRenderCommandsLoop:
 	mov [ebp-0xc], eax
 	movzx eax, word [eax]
 	test ax, ax
-	jnz RB_ExecuteRenderCommandsLoop_10
-RB_ExecuteRenderCommandsLoop_40:
+	jnz _Z28RB_ExecuteRenderCommandsLoopPKv_10
+_Z28RB_ExecuteRenderCommandsLoopPKv_40:
 	mov eax, [tess+0x22a948]
 	test eax, eax
-	jz RB_ExecuteRenderCommandsLoop_20
-	call RB_EndTessSurface
-RB_ExecuteRenderCommandsLoop_20:
+	jz _Z28RB_ExecuteRenderCommandsLoopPKv_20
+	call _Z17RB_EndTessSurfacev
+_Z28RB_ExecuteRenderCommandsLoopPKv_20:
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-RB_ExecuteRenderCommandsLoop_10:
+_Z28RB_ExecuteRenderCommandsLoopPKv_10:
 	lea ebx, [ebp-0xc]
-RB_ExecuteRenderCommandsLoop_30:
+_Z28RB_ExecuteRenderCommandsLoopPKv_30:
 	movzx eax, ax
 	mov [esp], ebx
 	call dword [eax*4+RB_RenderCommandTable]
 	mov eax, [ebp-0xc]
 	movzx eax, word [eax]
 	test ax, ax
-	jnz RB_ExecuteRenderCommandsLoop_30
-	jmp RB_ExecuteRenderCommandsLoop_40
+	jnz _Z28RB_ExecuteRenderCommandsLoopPKv_30
+	jmp _Z28RB_ExecuteRenderCommandsLoopPKv_40
 
 
 ;RB_Draw3D()
-RB_Draw3D:
+_Z9RB_Draw3Dv:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -6102,7 +6101,7 @@ RB_Draw3D:
 	mov ebx, [backEndData]
 	mov ecx, [ebx+0x11e6c4]
 	test ecx, ecx
-	jz RB_Draw3D_10
+	jz _Z9RB_Draw3Dv_10
 	mov ecx, [ebx+0x11e6c0]
 	lea edx, [ecx+ecx*2]
 	lea edx, [ecx+edx*4]
@@ -6114,8 +6113,8 @@ RB_Draw3D:
 	add eax, ecx
 	add eax, [ebx+0x11e6c8]
 	mov [esp], eax
-	call RB_Draw3DInternal
-RB_Draw3D_10:
+	call _Z17RB_Draw3DInternalPK11GfxViewInfo
+_Z9RB_Draw3Dv_10:
 	add esp, 0x14
 	pop ebx
 	pop ebp
@@ -6124,7 +6123,7 @@ RB_Draw3D_10:
 
 
 ;R_Resolve(GfxCmdBufContext, GfxImage*)
-R_Resolve:
+_Z9R_Resolve16GfxCmdBufContextP8GfxImage:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -6133,7 +6132,7 @@ R_Resolve:
 	mov esi, [ebp+0xc]
 	mov eax, [ebp+0x10]
 	mov [esp], eax
-	call Image_GetSurface
+	call _Z16Image_GetSurfaceP8GfxImage
 	mov ebx, eax
 	mov edx, [esi+0x90]
 	mov ecx, [edx]
@@ -6198,9 +6197,9 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x0
-RB_RenderCommandTable: dd 0x0, RB_SetMaterialColorCmd, RB_SaveScreenCmd, RB_SaveScreenSectionCmd, RB_ClearScreenCmd, RB_SetViewportCmd, RB_StretchPicCmd, RB_StretchPicCmdFlipST, RB_StretchPicRotateXYCmd, RB_StretchPicRotateSTCmd, RB_StretchRawCmd, RB_DrawQuadPicCmd, RB_DrawFullScreenColoredQuadCmd, RB_DrawText2DCmd, RB_DrawText3DCmd, RB_BlendSavedScreenBlurredCmd, RB_BlendSavedScreenFlashedCmd, RB_DrawPointsCmd, RB_DrawLinesCmd, RB_DrawTrianglesCmd, RB_ProjectionSetCmd, 0x0, 0x0, 0x0
-rb_tessTable: dd R_TessTrianglesList, R_TessTrianglesPreTessList, R_TessStaticModelRigidDrawSurfList, R_TessStaticModelPreTessList, R_TessStaticModelCachedList, R_TessStaticModelSkinnedDrawSurfList, R_TessBModel, R_TessXModelRigidDrawSurfList, R_TessXModelRigidSkinnedDrawSurfList, R_TessXModelSkinnedDrawSurfList, R_TessCodeMeshList, R_TessMarkMeshList, R_TessParticleCloudList, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
+RB_RenderCommandTable: dd 0x0, _Z22RB_SetMaterialColorCmdP25GfxRenderCommandExecState, _Z16RB_SaveScreenCmdP25GfxRenderCommandExecState, _Z23RB_SaveScreenSectionCmdP25GfxRenderCommandExecState, _Z17RB_ClearScreenCmdP25GfxRenderCommandExecState, _Z17RB_SetViewportCmdP25GfxRenderCommandExecState, _Z16RB_StretchPicCmdP25GfxRenderCommandExecState, _Z22RB_StretchPicCmdFlipSTP25GfxRenderCommandExecState, _Z24RB_StretchPicRotateXYCmdP25GfxRenderCommandExecState, _Z24RB_StretchPicRotateSTCmdP25GfxRenderCommandExecState, _Z16RB_StretchRawCmdP25GfxRenderCommandExecState, _Z17RB_DrawQuadPicCmdP25GfxRenderCommandExecState, _Z31RB_DrawFullScreenColoredQuadCmdP25GfxRenderCommandExecState, _Z16RB_DrawText2DCmdP25GfxRenderCommandExecState, _Z16RB_DrawText3DCmdP25GfxRenderCommandExecState, _Z29RB_BlendSavedScreenBlurredCmdP25GfxRenderCommandExecState, _Z29RB_BlendSavedScreenFlashedCmdP25GfxRenderCommandExecState, _Z16RB_DrawPointsCmdP25GfxRenderCommandExecState, _Z15RB_DrawLinesCmdP25GfxRenderCommandExecState, _Z19RB_DrawTrianglesCmdP25GfxRenderCommandExecState, _Z19RB_ProjectionSetCmdP25GfxRenderCommandExecState, 0x0, 0x0, 0x0
+rb_tessTable: dd _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z36R_TessStaticModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext, _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext, 0x0, 0x0, 0x0
 _ZZ14RB_LookupColorhPhE11color_table: dd 0xff000000, 0xff5c5cff, 0xff00ff00, 0xff00ffff, 0xffff0000, 0xffffff00, 0xffff5cff, 0xffffffff, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E10MY_OFFSETS: dd 0xbf800000, 0xbf800000, 0xbf800000, 0x3f800000, 0x3f800000, 0xbf800000, 0x3f800000, 0x3f800000
 		db 0x0
@@ -6243,7 +6242,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 backEnd: resb 0xc
 backEndData: resb 0x14
 tess: resb 0x22a960
@@ -6292,5 +6291,5 @@ _float_0_06000000:		dd 0x3d75c28f	; 0.06
 _float_127_00000000:		dd 0x42fe0000	; 127
 _float_127_50000000:		dd 0x42ff0000	; 127.5
 _double_30_00000000:		dq 0x403e000000000000	; 30
-_double_92233720368547758_double:		dq 0x43e0000000000000	; 9.22337e+18
+_double_36854775808_00000000:		dq 0x43e0000000000000	; 9.22337e+18
 

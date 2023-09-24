@@ -68,7 +68,9 @@ void PlayerCmd_JumpButtonPressed(scr_entref_t object);
 void PlayerCmd_IsInADS(scr_entref_t object);
 void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object);
 void PlayerCmd_AimButtonPressed(scr_entref_t object);
+void PlayerCmd_Usercall(scr_entref_t object);
 
+void Scr_Usercall();
 void GScr_StrTokByPixLen();
 void GScr_StrTokByLen();
 void GScr_StrPixLen();
@@ -96,6 +98,8 @@ void PlayerCmd_spawn(scr_entref_t arg);
 void GScr_NewHudElem();
 void GScr_NewClientHudElem();
 void HECmd_SetText(scr_entref_t entnum);
+void HECmd_ScaleOverTime(scr_entref_t hud_elem_num);
+void HECmd_SetPulseFX(scr_entref_t hud_elem_num);
 void GScr_Spawn();
 void GScr_SpawnVehicle();
 void GScr_SpawnHelicopter();

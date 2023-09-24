@@ -2,15 +2,15 @@ VERSION=0.4
 BITS=32
 
 GCC_EXTRA_FLAGS=-m$(BITS)
-GCCFLAGS+=-g -Iinclude -Wall -MMD -fno-omit-frame-pointer -O0 $(GCC_EXTRA_FLAGS)
+GCCFLAGS+=-g -Iinclude -Wall -MMD -fno-omit-frame-pointer -O0 -Wno-unused-function -Wno-unused-parameter $(GCC_EXTRA_FLAGS)
 ifeq ($(USE_LIBCXX), 1)
 GCCFLAGS+=-stdlib=libc++ -DUSE_LIBCXX
-CXX_LDFLAGS+=-lc++ -lsupc++
+CXX_LDFLAGS+=-lc++ -lsupc++ -fsanitize=address
 CC=clang
 CXX=clang++
 endif
 CXXFLAGS=$(GCCFLAGS) -W --std=c++11
-CFLAGS=$(GCCFLAGS) -fPIC
+CFLAGS=$(GCCFLAGS) 
 
 EXES=cod4_dasm
 
@@ -66,7 +66,7 @@ $(MAC_CXX_BINS): %.cc.bin: %.cc
 #	touch $@
 
 cod4_dasm: cod4_dasm.o mach-o.o fat.o log.o libudis86/decode.o libudis86/itab.o libudis86/syn.o libudis86/syn-intel.o libudis86/udis86.o
-	$(CXX) -v $^ -o $@ -g -ldl -lpthread $(GCC_EXTRA_FLAGS) $(CXX_LDFLAGS)
+	$(CXX) $^ -o $@ -g -ldl -lpthread $(GCC_EXTRA_FLAGS) $(CXX_LDFLAGS)
 
 dist:
 	cd /tmp && rm -fr maloader-$(VERSION) && git clone git@github.com:shinh/maloader.git && rm -fr maloader/.git && mv maloader maloader-$(VERSION) && tar -cvzf maloader-$(VERSION).tar.gz maloader-$(VERSION)

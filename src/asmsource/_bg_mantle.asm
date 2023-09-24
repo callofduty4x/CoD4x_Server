@@ -20,16 +20,16 @@
 	extern Com_Error
 	extern Cvar_RegisterBool
 	extern Cvar_RegisterFloat
+	extern mantle_enable
+	extern mantle_view_yawcap
+	extern mantle_debug
+	extern mantle_check_angle
+	extern mantle_check_range
+	extern mantle_check_radius
 
 ;Exports of bg_mantle:
 	global s_mantleTrans
-	global mantle_enable
-	global mantle_view_yawcap
 	global s_mantleAnims
-	global mantle_debug
-	global mantle_check_angle
-	global mantle_check_range
-	global mantle_check_radius
 	global s_mantleAnimNames
 	global Mantle_GetAnimDelta
 	global Mantle_CheckLedge
@@ -1497,14 +1497,7 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of bg_mantle:
 SECTION .bss
-mantle_enable: resb 0x4
-mantle_view_yawcap: resb 0x4
 s_mantleAnims: resb 0x4
-mantle_debug: resb 0x4
-mantle_check_angle: resb 0x4
-mantle_check_range: resb 0x4
-mantle_check_radius: resb 0x68
-
 
 ;All cstrings:
 SECTION .rdata

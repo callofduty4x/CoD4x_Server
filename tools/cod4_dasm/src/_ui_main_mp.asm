@@ -1,190 +1,190 @@
 ;Imports of ui_main_mp:
-	extern FS_FOpenFileByMode
-	extern FS_Read
-	extern FS_FCloseFile
-	extern Com_PrintError
-	extern DB_FindXAssetHeader
-	extern CL_GetClientState
-	extern CL_GetConfigString
-	extern Info_ValueForKey
+	extern _Z18FS_FOpenFileByModePKcPi8fsMode_t
+	extern _Z7FS_ReadPvii
+	extern _Z13FS_FCloseFilei
+	extern _Z14Com_PrintErroriPKcz
+	extern _Z19DB_FindXAssetHeader10XAssetTypePKc
+	extern _Z17CL_GetClientStateiP15uiClientState_s
+	extern _Z18CL_GetConfigStringii
+	extern _Z16Info_ValueForKeyPKcS0_
 	extern atoi
 	extern memset
-	extern CL_GetClientName
-	extern Q_strncpyz
-	extern Q_CleanStr
-	extern LAN_CompareServers
-	extern Q_stricmp
-	extern Menu_SetFeederSelection
-	extern Cvar_VariableIntegerValue
-	extern SEH_VerifyLanguageSelection
-	extern Cvar_SetIntByName
-	extern Cvar_SetBoolByName
-	extern LAN_AddServer
-	extern va
-	extern Com_Printf
-	extern Cvar_SetStringByName
-	extern String_Parse
-	extern Com_sprintf
-	extern Com_Parse
-	extern String_Alloc
+	extern _Z16CL_GetClientNameiiPci
+	extern _Z10I_strncpyzPcPKci
+	extern _Z10I_CleanStrPc
+	extern _Z18LAN_CompareServersiiiii
+	extern _Z9I_stricmpPKcS0_
+	extern _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+	extern _Z11Dvar_GetIntPKc
+	extern _Z27SEH_VerifyLanguageSelectioni
+	extern _Z17Dvar_SetIntByNamePKci
+	extern _Z18Dvar_SetBoolByNamePKch
+	extern _Z13LAN_AddServeriPKcS0_
+	extern _Z2vaPKcz
+	extern _Z10Com_PrintfiPKcz
+	extern _Z20Dvar_SetStringByNamePKcS0_
+	extern _Z12String_ParsePPKcPci
+	extern _Z11Com_sprintfPciPKcz
+	extern _Z9Com_ParsePPKc
+	extern _Z12String_AllocPKc
 	extern useFastFile
-	extern FS_GetFileList
-	extern Com_RealTime
+	extern _Z14FS_GetFileListPKcS0_16FsListBehavior_ePci
+	extern _Z12Com_RealTimeP7qtime_s
 	extern snprintf
-	extern LAN_ResetPings
-	extern LAN_GetServerCount
-	extern LAN_MarkServerDirty
-	extern Cvar_GetVariantString
-	extern CL_ControllerIndexFromClientNum
-	extern Cmd_ExecuteSingleCommand
-	extern Cvar_VariableString
-	extern LAN_WaitServerResponse
+	extern _Z14LAN_ResetPingsi
+	extern _Z18LAN_GetServerCounti
+	extern _Z19LAN_MarkServerDirtyiii
+	extern _Z21Dvar_GetVariantStringPKc
+	extern _Z31CL_ControllerIndexFromClientNumi
+	extern _Z24Cmd_ExecuteSingleCommandiiPKc
+	extern _Z14Dvar_GetStringPKc
+	extern _Z22LAN_WaitServerResponsei
 	extern qsort
 	extern strcpy
-	extern LAN_ServerIsDirty
-	extern LAN_GetServerPing
-	extern LAN_GetServerInfo
-	extern Q_stricmpn
-	extern LAN_ServerInfoValid
-	extern LAN_GetServerStatus
+	extern _Z17LAN_ServerIsDirtyii
+	extern _Z17LAN_GetServerPingii
+	extern _Z17LAN_GetServerInfoiiPci
+	extern _Z10I_strnicmpPKcS0_i
+	extern _Z19LAN_ServerInfoValidii
+	extern _Z19LAN_GetServerStatusPcS_i
 	extern strchr
-	extern __toupper
-	extern LAN_GetServerAddressString
+	extern toupper
+	extern _Z26LAN_GetServerAddressStringiiPci
 	extern legacyHacks
 	extern colorBlack
 	extern scrPlaceFull
-	extern UI_FillRect
+	extern _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	extern colorGreen
 	extern colorLtGrey
-	extern R_NormalizedTextScale
-	extern R_TextWidth
-	extern Menu_Count
-	extern Menu_PaintAll
-	extern LAN_UpdateDirtyPings
-	extern CL_AllLocalClientsDisconnected
-	extern Menu_GetFocused
+	extern _Z21R_NormalizedTextScaleP6Font_sf
+	extern _Z11R_TextWidthPKciP6Font_s
+	extern _Z10Menu_CountP9UiContext
+	extern _Z13Menu_PaintAllP9UiContext
+	extern _Z20LAN_UpdateDirtyPingsii
+	extern _Z30CL_AllLocalClientsDisconnectedv
+	extern _Z15Menu_GetFocusedP9UiContext
 	extern clientUIActives
 	extern scrPlaceView
 	extern getBuildNumberAsInt
 	extern colorMdGrey
-	extern Cvar_VariableBooleanValue
-	extern UI_DrawHandlePic
-	extern Key_IsCatcherActive
-	extern Key_RemoveCatcher
-	extern Menus_CloseAll
-	extern CL_DrawStretchPic
-	extern ScrPlace_ApplyRect
+	extern _Z12Dvar_GetBoolPKc
+	extern _Z16UI_DrawHandlePicPK15ScreenPlacementffffiiPKfP8Material
+	extern _Z19Key_IsCatcherActiveii
+	extern _Z17Key_RemoveCatcherii
+	extern _Z14Menus_CloseAllP9UiContext
+	extern _Z17CL_DrawStretchPicPK15ScreenPlacementffffiiffffPKfP8Material
+	extern _Z18ScrPlace_ApplyRectPK15ScreenPlacementPfS2_S2_S2_ii
 	extern floorf
-	extern CL_DrawTextPhysical
-	extern Menus_AnyFullScreenVisible
-	extern Menu_HandleKey
-	extern Key_ClearStates
-	extern UILocalVar_Shutdown
-	extern Menus_FreeAllMemory
-	extern LAN_SaveServersToCache
-	extern CL_IsCgameInitialized
+	extern _Z19CL_DrawTextPhysicalPKciP6Font_sffffPKfi
+	extern _Z26Menus_AnyFullScreenVisibleP9UiContext
+	extern _Z14Menu_HandleKeyP9UiContextP9menuDef_tii
+	extern _Z15Key_ClearStatesi
+	extern _Z19UILocalVar_ShutdownP17UILocalVarContext
+	extern _Z19Menus_FreeAllMemoryP9UiContext
+	extern _Z22LAN_SaveServersToCachev
+	extern _Z21CL_IsCgameInitializedi
 	extern sin
-	extern LerpColor
+	extern _Z9LerpColorPfS_S_f
 	extern strstr
 	extern cls
 	extern sprintf
-	extern CG_OwnerDraw
-	extern SEH_LocalizeTextMessage
-	extern Display_KeyBindPending
+	extern _Z12CG_OwnerDrawi9rectDef_sffffiiffiiifP6Font_sfPfP8Materialii
+	extern _Z23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_t
+	extern _Z22Display_KeyBindPendingv
 	extern sv_voice
 	extern cl_voice
-	extern IN_IsTalkKeyHeld
-	extern Material_RegisterHandle
-	extern CL_IsClientLocal
-	extern CL_IsPlayerTalking
-	extern Com_PrintWarning
-	extern Cvar_SetInt
-	extern Cvar_SetString
-	extern R_TextHeight
-	extern CL_ShowSystemCursor
-	extern Display_MouseMove
-	extern Cmd_ArgsBuffer
-	extern Menus_CloseByName
-	extern Q_strncat
-	extern UI_LoadMenu
-	extern UI_AddMenuList
+	extern _Z16IN_IsTalkKeyHeldv
+	extern _Z23Material_RegisterHandlePKci
+	extern _Z16CL_IsClientLocali
+	extern _Z18CL_IsPlayerTalkingii
+	extern _Z16Com_PrintWarningiPKcz
+	extern _Z11Dvar_SetIntPK6dvar_si
+	extern _Z14Dvar_SetStringPK6dvar_sPKc
+	extern _Z12R_TextHeightP6Font_s
+	extern _Z19CL_ShowSystemCursori
+	extern _Z17Display_MouseMoveP9UiContext
+	extern _Z14Cmd_ArgsBufferiPci
+	extern _Z17Menus_CloseByNameP9UiContextPKc
+	extern _Z9I_strncatPciPKc
+	extern _Z11UI_LoadMenuPKci
+	extern _Z14UI_AddMenuListP9UiContextP8MenuList
 	extern g_editingField
-	extern Cvar_SetFromStringByNameFromSource
-	extern Cbuf_AddText
-	extern CLUI_GetCDKey
-	extern UI_LoadArenas
-	extern CL_CDKeyValidate
-	extern CLUI_SetCDKey
-	extern Menus_OpenByName
-	extern Com_Error
+	extern _Z34Dvar_SetFromStringByNameFromSourcePKcS0_13DvarSetSource
+	extern _Z12Cbuf_AddTextiPKc
+	extern _Z13CLUI_GetCDKeyPciS_i
+	extern _Z13UI_LoadArenasv
+	extern _Z16CL_CDKeyValidatePKcS0_
+	extern _Z13CLUI_SetCDKeyPcS_
+	extern _Z16Menus_OpenByNameP9UiContextPKc
+	extern _Z9Com_Error11errorParm_tPKcz
 	extern FS_ListFiles
 	extern FS_FreeFileList
 	extern com_playerProfile
-	extern Com_NewPlayerProfile
-	extern Com_DeletePlayerProfile
-	extern Com_ChangePlayerProfile
-	extern DB_SyncXAssets
-	extern Cvar_FindVar
-	extern Cvar_Reset
-	extern LAN_GetServerPunkBuster
-	extern Key_SetCatcher
-	extern Int_Parse
-	extern LAN_RemoveServer
-	extern CLUI_SetPbClStatus
-	extern Cvar_SetFloatByName
-	extern CL_MutePlayer
-	extern Com_SetRecommended
-	extern CG_ScriptMainMenu
-	extern SND_FadeAllSounds
-	extern CL_SetDisplayHUDWithKeycatchUI
-	extern CL_IsPlayerMuted
-	extern Voice_GetVoiceLevel
+	extern _Z20Com_NewPlayerProfilePKc
+	extern _Z23Com_DeletePlayerProfilePKc
+	extern _Z23Com_ChangePlayerProfileiPKc
+	extern _Z14DB_SyncXAssetsv
+	extern _Z12Dvar_FindVarPKc
+	extern _Z10Dvar_ResetPK6dvar_s13DvarSetSource
+	extern _Z23LAN_GetServerPunkBusterii
+	extern _Z14Key_SetCatcherii
+	extern _Z9Int_ParsePPKcPi
+	extern _Z16LAN_RemoveServeriPKc
+	extern _Z18CLUI_SetPbClStatusi
+	extern _Z19Dvar_SetFloatByNamePKcf
+	extern _Z13CL_MutePlayerii
+	extern _Z18Com_SetRecommendedii
+	extern _Z17CG_ScriptMainMenui
+	extern _Z17SND_FadeAllSoundsfi
+	extern _Z30CL_SetDisplayHUDWithKeycatchUIih
+	extern _Z16CL_IsPlayerMutedii
+	extern _Z19Voice_GetVoiceLevelv
 	extern colorWhite
-	extern Item_GetListBoxDef
-	extern UI_LoadMenus
-	extern UI_SetSystemCursorPos
-	extern Menus_MenuIsInStack
-	extern Window_SetDynamicFlags
-	extern Menu_Paint
-	extern Menus_FindByName
-	extern Menus_Open
-	extern R_AddCmdDrawTextSubtitle
-	extern CL_DrawTextPhysicalWithEffects
-	extern DB_GetLoadedFraction
+	extern _Z18Item_GetListBoxDefP9itemDef_s
+	extern _Z12UI_LoadMenusPKci
+	extern _Z21UI_SetSystemCursorPosP9UiContextff
+	extern _Z19Menus_MenuIsInStackP9UiContextP9menuDef_t
+	extern _Z22Window_SetDynamicFlagsiP11windowDef_ti
+	extern _Z10Menu_PaintP9UiContextP9menuDef_t
+	extern _Z16Menus_FindByNamePK9UiContextPKc
+	extern _Z10Menus_OpenP9UiContextP9menuDef_t
+	extern _Z24R_AddCmdDrawTextSubtitlePKciP6Font_sfffffPKfiS4_h
+	extern _Z30CL_DrawTextPhysicalWithEffectsPKciP6Font_sffffPKfiS4_P8MaterialS6_iiii
+	extern _Z20DB_GetLoadedFractionv
 	extern fs_gameDirVar
-	extern CG_DrawInformation
+	extern _Z18CG_DrawInformationi
 	extern colorYellow
-	extern Sys_Milliseconds
-	extern R_AddCmdDrawQuadPic
-	extern Item_ListBox_MaxScroll
-	extern CL_DrawTextPhysicalWithCursor
-	extern SEH_StringEd_GetString
+	extern _Z16Sys_Millisecondsv
+	extern _Z19R_AddCmdDrawQuadPicPA2_KfPS_P8Material
+	extern _Z22Item_ListBox_MaxScrolliP9itemDef_s
+	extern _Z29CL_DrawTextPhysicalWithCursorPKciP6Font_sffffPKfiic
+	extern _Z22SEH_StringEd_GetStringPKc
 	extern loc_warnings
 	extern loc_warningsAsErrors
-	extern Menu_IsVisible
+	extern _Z14Menu_IsVisibleP9UiContextP9menuDef_t
 	extern r_reflectionProbeGenerate
 	extern cmd_args
-	extern StringTable_GetAsset
-	extern ms_srand
-	extern ms_rand
-	extern StringTable_GetColumnValueForRow
-	extern Cvar_RegisterString
-	extern Cvar_RegisterBool
-	extern Cvar_RegisterInt
-	extern Cvar_RegisterFloat
-	extern Cvar_RegisterVec2
-	extern Cvar_RegisterVec4
-	extern String_Init
-	extern Menu_Setup
-	extern CL_GetScreenDimensions
-	extern CL_RegisterFont
-	extern LAN_LoadCachedServers
-	extern Cvar_GetFloat
-	extern UI_MapLoadInfo
-	extern UI_LoadSoundAliases
-	extern DB_ResetZoneSize
-	extern CL_AllowPopup
-	extern DB_FileExists
+	extern _Z20StringTable_GetAssetPKcPPK11StringTable
+	extern _Z8ms_srandj
+	extern _Z7ms_randv
+	extern _Z32StringTable_GetColumnValueForRowPK11StringTableii
+	extern _Z19Dvar_RegisterStringPKcS0_tS0_
+	extern _Z17Dvar_RegisterBoolPKchtS0_
+	extern _Z16Dvar_RegisterIntPKciiitS0_
+	extern _Z18Dvar_RegisterFloatPKcffftS0_
+	extern _Z17Dvar_RegisterVec2PKcfffftS0_
+	extern _Z17Dvar_RegisterVec4PKcfffffftS0_
+	extern _Z11String_Initv
+	extern _Z10Menu_SetupP9UiContext
+	extern _Z22CL_GetScreenDimensionsPiS_Pf
+	extern _Z15CL_RegisterFontPKci
+	extern _Z21LAN_LoadCachedServersv
+	extern _Z13Dvar_GetFloatPKc
+	extern _Z14UI_MapLoadInfoPKc
+	extern _Z19UI_LoadSoundAliasesv
+	extern _Z16DB_ResetZoneSizei
+	extern _Z13CL_AllowPopupi
+	extern _Z13DB_FileExistsPKc6FF_DIR
 
 ;Exports of ui_main_mp:
 	global g_mapname
@@ -195,103 +195,103 @@
 	global netSources
 	global g_showLoadingScreenMenu
 	global menuBuf2
-	global GetMenuBuffer_LoadObj
-	global GetMenuBuffer_FastFile
-	global UI_BuildPlayerList
-	global UI_ServersQsortCompare
-	global UI_PlayerProfilesQsortCompare
-	global UI_SelectCurrentMap
-	global UI_VerifyLanguage
+	global _Z21GetMenuBuffer_LoadObjPKc
+	global _Z22GetMenuBuffer_FastFilePKc
+	global _Z18UI_BuildPlayerListi
+	global _Z22UI_ServersQsortComparePKvS0_
+	global _Z29UI_PlayerProfilesQsortComparePKvS0_
+	global _Z19UI_SelectCurrentMapi
+	global _Z17UI_VerifyLanguagev
 	global _ZZ22UI_SafeTranslateStringPKcE11errorString
-	global UI_AddServerToFavoritesList
-	global UI_GetOpenOrCloseMenuOnDvarArgs
-	global UI_ReadableSize
+	global _Z27UI_AddServerToFavoritesListPKcS0_
+	global _Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i
+	global _Z15UI_ReadableSizePcii
 	global _ZZ18UI_FeederSelectionifiE4info
-	global UI_GetGameTypesList_FastFile
-	global UI_GetGameTypesList_LoadObj
+	global _Z28UI_GetGameTypesList_FastFilev
+	global _Z27UI_GetGameTypesList_LoadObjv
 	global _ZZ11UI_KeyEventiiiE14bypassKeyClear
-	global UI_StartServerRefresh
+	global _Z21UI_StartServerRefreshii
 	global _ZZ25UI_BuildServerDisplayListP8uiInfo_siE8numclean
-	global UI_BuildServerDisplayList
-	global UI_GetServerStatusInfo
+	global _Z25UI_BuildServerDisplayListP8uiInfo_si
+	global _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t
 	global _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE8lastTime
 	global _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10lastColumn
 	global _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10clientBuff
 	global _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
 	global _ZZ22UI_BuildFindPlayerListvE11numTimeOuts
 	global _ZZ22UI_BuildFindPlayerListvE8numFound
-	global UI_BuildFindPlayerList
-	global UI_BuildServerStatus
+	global _Z22UI_BuildFindPlayerListv
+	global _Z20UI_BuildServerStatusP8uiInfo_si
 	global _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE8tleIndex
 	global _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE12tleEstimates
 	global _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE8xferText
 	global _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE7etaText
 	global _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE6dlText
-	global UI_DisplayDownloadInfo
-	global UI_Refresh
-	global UI_CloseAll
-	global UI_DrawRect
-	global UI_DrawText
-	global UI_KeyEvent
-	global UI_Shutdown
-	global UI_DrawSides
-	global UI_OwnerDraw
-	global UI_TextWidth
-	global UI_MouseEvent
-	global UI_TextHeight
-	global UI_UpdateTime
-	global UI_CloseMenu_f
-	global UI_FeederCount
-	global Load_ScriptMenu
-	global UI_CheckExecKey
-	global UI_IsFullscreen
-	global UI_CloseAllMenus
-	global UI_DrawTopBottom
-	global UI_GetActiveMenu
-	global UI_GetBlurRadius
-	global UI_GetFontHandle
-	global UI_RunMenuScript
-	global UI_SetActiveMenu
-	global UI_AnyMenuVisible
-	global UI_DrawTextNoSnap
-	global UI_FeederItemText
-	global UI_OwnerDrawWidth
-	global UI_CloseInGameMenu
-	global UI_DrawRecordLevel
-	global UI_FeederItemColor
-	global UI_FeederItemImage
-	global UI_FeederSelection
-	global UI_LoadIngameMenus
-	global UI_PopupScriptMenu
-	global UI_CloseFocusedMenu
-	global UI_DrawMapLevelshot
-	global UI_DrawTextWithGlow
-	global UI_OwnerDrawVisible
-	global UI_DrawConnectScreen
-	global UI_DrawHighlightRect
-	global UI_FeederItemEnabled
-	global UI_GetMapDisplayName
-	global UI_OverrideCursorPos
-	global UI_DrawTextWithCursor
-	global UI_GetTalkerClientNum
-	global UI_OwnerDrawHandleKey
-	global UI_ReplaceConversions
-	global UI_GetLocalVarsContext
-	global UI_SafeTranslateString
-	global UI_ShouldDrawCrosshair
-	global UI_ClosePopupScriptMenu
-	global UI_GetTopActiveMenuName
-	global Menu_IsMenuOpenAndVisible
-	global UI_GetGameTypeDisplayName
-	global UI_AllowScriptMenuResponse
-	global UI_ReplaceConversionString
-	global CL_SelectStringTableEntryInDvar_f
-	global UI_FilterStringForButtonAnimation
-	global UI_GetMapDisplayNameFromPartialLoadNameMatch
-	global UI_Init
-	global UI_Pause
-	global UI_Popup
-	global UI_SetMap
+	global _Z22UI_DisplayDownloadInfoPKcffP6Font_sf
+	global _Z10UI_Refreshi
+	global _Z11UI_CloseAlli
+	global _Z11UI_DrawRectPK15ScreenPlacementffffiifPKf
+	global _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
+	global _Z11UI_KeyEventiii
+	global _Z11UI_Shutdowni
+	global _Z12UI_DrawSidesPK15ScreenPlacementffffiifPKf
+	global _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si
+	global _Z12UI_TextWidthPKciP6Font_sf
+	global _Z13UI_MouseEventiii
+	global _Z13UI_TextHeightP6Font_sf
+	global _Z13UI_UpdateTimeii
+	global _Z14UI_CloseMenu_fv
+	global _Z14UI_FeederCountif
+	global _Z15Load_ScriptMenuiPKci
+	global _Z15UI_CheckExecKeyii
+	global _Z15UI_IsFullscreeni
+	global _Z16UI_CloseAllMenusi
+	global _Z16UI_DrawTopBottomPK15ScreenPlacementffffiifPKf
+	global _Z16UI_GetActiveMenui
+	global _Z16UI_GetBlurRadiusi
+	global _Z16UI_GetFontHandlePK15ScreenPlacementif
+	global _Z16UI_RunMenuScriptiPPKcS0_
+	global _Z16UI_SetActiveMenuii
+	global _Z17UI_AnyMenuVisiblei
+	global _Z17UI_DrawTextNoSnapPK15ScreenPlacementPKciP6Font_sffiifPKfi
+	global _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material
+	global _Z17UI_OwnerDrawWidthiP6Font_sf
+	global _Z18UI_CloseInGameMenui
+	global _Z18UI_DrawRecordLeveliP9rectDef_s
+	global _Z18UI_FeederItemColoriP9itemDef_sfiiPf
+	global _Z18UI_FeederItemImagefi
+	global _Z18UI_FeederSelectionifi
+	global _Z18UI_LoadIngameMenusi
+	global _Z18UI_PopupScriptMenuiPKch
+	global _Z19UI_CloseFocusedMenui
+	global _Z19UI_DrawMapLevelshoti
+	global _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
+	global _Z19UI_OwnerDrawVisiblei
+	global _Z20UI_DrawConnectScreeni
+	global _Z20UI_DrawHighlightRectPK15ScreenPlacementffffiifPKfS3_
+	global _Z20UI_FeederItemEnabledifi
+	global _Z20UI_GetMapDisplayNamePKc
+	global _Z20UI_OverrideCursorPosiP9itemDef_s
+	global _Z21UI_DrawTextWithCursorPK15ScreenPlacementPKciP6Font_sffiifPKfiic
+	global _Z21UI_GetTalkerClientNumii
+	global _Z21UI_OwnerDrawHandleKeyiiPfi
+	global _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci
+	global _Z22UI_GetLocalVarsContexti
+	global _Z22UI_SafeTranslateStringPKc
+	global _Z22UI_ShouldDrawCrosshairv
+	global _Z23UI_ClosePopupScriptMenuih
+	global _Z23UI_GetTopActiveMenuNamei
+	global _Z25Menu_IsMenuOpenAndVisibleiPKc
+	global _Z25UI_GetGameTypeDisplayNamePKc
+	global _Z26UI_AllowScriptMenuResponsei
+	global _Z26UI_ReplaceConversionStringPKcS0_
+	global _Z33CL_SelectStringTableEntryInDvar_fv
+	global _Z33UI_FilterStringForButtonAnimationPcj
+	global _Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi
+	global _Z7UI_Initi
+	global _Z8UI_Pauseii
+	global _Z8UI_PopupiPKc
+	global _Z9UI_SetMapPKcS0_
 	global ui_showEndOfGame
 	global vehDriverViewHeightMax
 	global vehDriverViewHeightMin
@@ -348,7 +348,7 @@ SECTION .text
 
 
 ;GetMenuBuffer_LoadObj(char const*)
-GetMenuBuffer_LoadObj:
+_Z21GetMenuBuffer_LoadObjPKc:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -359,51 +359,51 @@ GetMenuBuffer_LoadObj:
 	lea eax, [ebp-0xc]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call FS_FOpenFileByMode
+	call _Z18FS_FOpenFileByModePKcPi8fsMode_t
 	mov ebx, eax
 	mov eax, [ebp-0xc]
 	test eax, eax
-	jz GetMenuBuffer_LoadObj_10
+	jz _Z21GetMenuBuffer_LoadObjPKc_10
 	cmp ebx, 0x7fff
-	jg GetMenuBuffer_LoadObj_20
+	jg _Z21GetMenuBuffer_LoadObjPKc_20
 	mov [esp+0x8], eax
 	mov [esp+0x4], ebx
 	mov dword [esp], menuBuf2
-	call FS_Read
+	call _Z7FS_ReadPvii
 	mov byte [ebx+menuBuf2], 0x0
 	mov eax, [ebp-0xc]
 	mov [esp], eax
-	call FS_FCloseFile
+	call _Z13FS_FCloseFilei
 	mov eax, menuBuf2
-GetMenuBuffer_LoadObj_30:
+_Z21GetMenuBuffer_LoadObjPKc_30:
 	add esp, 0x30
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-GetMenuBuffer_LoadObj_20:
+_Z21GetMenuBuffer_LoadObjPKc_20:
 	mov dword [esp+0x10], 0x8000
 	mov [esp+0xc], ebx
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_menu_file_too_la
 	mov dword [esp], 0xd
-	call Com_PrintError
+	call _Z14Com_PrintErroriPKcz
 	mov eax, [ebp-0xc]
 	mov [esp], eax
-	call FS_FCloseFile
+	call _Z13FS_FCloseFilei
 	xor eax, eax
-	jmp GetMenuBuffer_LoadObj_30
-GetMenuBuffer_LoadObj_10:
+	jmp _Z21GetMenuBuffer_LoadObjPKc_30
+_Z21GetMenuBuffer_LoadObjPKc_10:
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_menu_file_not_fo
 	mov dword [esp], 0xd
-	call Com_PrintError
+	call _Z14Com_PrintErroriPKcz
 	xor eax, eax
-	jmp GetMenuBuffer_LoadObj_30
+	jmp _Z21GetMenuBuffer_LoadObjPKc_30
 
 
 ;GetMenuBuffer_FastFile(char const*)
-GetMenuBuffer_FastFile:
+_Z22GetMenuBuffer_FastFilePKc:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -411,27 +411,27 @@ GetMenuBuffer_FastFile:
 	mov ebx, [ebp+0x8]
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x1f
-	call DB_FindXAssetHeader
+	call _Z19DB_FindXAssetHeader10XAssetTypePKc
 	test eax, eax
-	jz GetMenuBuffer_FastFile_10
+	jz _Z22GetMenuBuffer_FastFilePKc_10
 	mov eax, [eax+0x8]
-GetMenuBuffer_FastFile_20:
+_Z22GetMenuBuffer_FastFilePKc_20:
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-GetMenuBuffer_FastFile_10:
+_Z22GetMenuBuffer_FastFilePKc_10:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_menu_file_not_fo
 	mov dword [esp], 0xd
-	call Com_PrintError
+	call _Z14Com_PrintErroriPKcz
 	xor eax, eax
-	jmp GetMenuBuffer_FastFile_20
+	jmp _Z22GetMenuBuffer_FastFilePKc_20
 	nop
 
 
 ;UI_BuildPlayerList(int)
-UI_BuildPlayerList:
+_Z18UI_BuildPlayerListi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -442,13 +442,13 @@ UI_BuildPlayerList:
 	lea eax, [ebp-0x848]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call CL_GetClientState
+	call _Z17CL_GetClientStateiP15uiClientState_s
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call CL_GetConfigString
+	call _Z18CL_GetConfigStringii
 	mov dword [esp+0x4], _cstring_sv_maxclients
 	mov [esp], eax
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov edi, eax
@@ -458,30 +458,30 @@ UI_BuildPlayerList:
 	call memset
 	mov dword [sharedUiInfo+0x48], 0x0
 	test edi, edi
-	jg UI_BuildPlayerList_10
-UI_BuildPlayerList_30:
+	jg _Z18UI_BuildPlayerListi_10
+_Z18UI_BuildPlayerListi_30:
 	add esp, 0x84c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_BuildPlayerList_10:
+_Z18UI_BuildPlayerListi_10:
 	xor ebx, ebx
-	jmp UI_BuildPlayerList_20
-UI_BuildPlayerList_40:
+	jmp _Z18UI_BuildPlayerListi_20
+_Z18UI_BuildPlayerListi_40:
 	add ebx, 0x1
 	cmp edi, ebx
-	jz UI_BuildPlayerList_30
-UI_BuildPlayerList_20:
+	jz _Z18UI_BuildPlayerListi_30
+_Z18UI_BuildPlayerListi_20:
 	mov dword [esp+0xc], 0x26
 	lea eax, [ebp-0x3e]
 	mov [esp+0x8], eax
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call CL_GetClientName
+	call _Z16CL_GetClientNameiiPci
 	test eax, eax
-	jz UI_BuildPlayerList_40
+	jz _Z18UI_BuildPlayerListi_40
 	mov eax, [sharedUiInfo+0x48]
 	mov [eax*4+sharedUiInfo+0x104c], ebx
 	mov dword [esp+0x8], 0x20
@@ -490,18 +490,18 @@ UI_BuildPlayerList_20:
 	shl eax, 0x5
 	add eax, sharedUiInfo+0x4c
 	mov [esp], eax
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov eax, [sharedUiInfo+0x48]
 	shl eax, 0x5
 	add eax, sharedUiInfo+0x4c
 	mov [esp], eax
-	call Q_CleanStr
+	call _Z10I_CleanStrPc
 	add dword [sharedUiInfo+0x48], 0x1
-	jmp UI_BuildPlayerList_40
+	jmp _Z18UI_BuildPlayerListi_40
 
 
 ;UI_ServersQsortCompare(void const*, void const*)
-UI_ServersQsortCompare:
+_Z22UI_ServersQsortComparePKvS0_:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -518,13 +518,13 @@ UI_ServersQsortCompare:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_CompareServers
+	call _Z18LAN_CompareServersiiiii
 	leave
 	ret
 
 
 ;UI_PlayerProfilesQsortCompare(void const*, void const*)
-UI_PlayerProfilesQsortCompare:
+_Z29UI_PlayerProfilesQsortComparePKvS0_:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -533,12 +533,12 @@ UI_PlayerProfilesQsortCompare:
 	mov eax, [ebp+0xc]
 	mov eax, [eax]
 	cmp edx, eax
-	jz UI_PlayerProfilesQsortCompare_10
+	jz _Z29UI_PlayerProfilesQsortComparePKvS0__10
 	mov eax, [eax*4+uiInfoArray+0x1688]
 	mov [esp+0x4], eax
 	mov eax, [edx*4+uiInfoArray+0x1688]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	mov edx, eax
 	neg eax
 	mov ecx, [uiInfoArray+0x1788]
@@ -547,7 +547,7 @@ UI_PlayerProfilesQsortCompare:
 	mov eax, edx
 	leave
 	ret
-UI_PlayerProfilesQsortCompare_10:
+_Z29UI_PlayerProfilesQsortComparePKvS0__10:
 	xor edx, edx
 	mov eax, edx
 	leave
@@ -556,7 +556,7 @@ UI_PlayerProfilesQsortCompare_10:
 
 
 ;UI_SelectCurrentMap(int)
-UI_SelectCurrentMap:
+_Z19UI_SelectCurrentMapi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -567,100 +567,100 @@ UI_SelectCurrentMap:
 	lea eax, [ebp-0x860]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call CL_GetClientState
+	call _Z17CL_GetClientStateiP15uiClientState_s
 	cmp dword [ebp-0x860], 0x9
-	jz UI_SelectCurrentMap_10
-UI_SelectCurrentMap_20:
+	jz _Z19UI_SelectCurrentMapi_10
+_Z19UI_SelectCurrentMapi_20:
 	add esp, 0x87c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_SelectCurrentMap_10:
+_Z19UI_SelectCurrentMapi_10:
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call CL_GetConfigString
+	call _Z18CL_GetConfigStringii
 	cmp byte [eax], 0x0
-	jz UI_SelectCurrentMap_20
+	jz _Z19UI_SelectCurrentMapi_20
 	mov dword [esp+0x4], _cstring_mapname
 	mov [esp], eax
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x58]
 	mov [esp], eax
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov eax, [sharedUiInfo+0x1c58]
 	test eax, eax
-	jle UI_SelectCurrentMap_20
+	jle _Z19UI_SelectCurrentMapi_20
 	xor esi, esi
 	xor edi, edi
 	mov ebx, sharedUiInfo
-	jmp UI_SelectCurrentMap_30
-UI_SelectCurrentMap_40:
+	jmp _Z19UI_SelectCurrentMapi_30
+_Z19UI_SelectCurrentMapi_40:
 	add esi, 0x1
 	add ebx, 0xa0
 	cmp esi, [sharedUiInfo+0x1c58]
-	jge UI_SelectCurrentMap_20
-UI_SelectCurrentMap_30:
+	jge _Z19UI_SelectCurrentMapi_20
+_Z19UI_SelectCurrentMapi_30:
 	mov eax, [ebx+0x1cf8]
 	test eax, eax
-	jz UI_SelectCurrentMap_40
+	jz _Z19UI_SelectCurrentMapi_40
 	mov eax, [ebx+0x1c5c]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x58]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_SelectCurrentMap_50
+	jz _Z19UI_SelectCurrentMapi_50
 	add edi, 0x1
-	jmp UI_SelectCurrentMap_40
-UI_SelectCurrentMap_50:
+	jmp _Z19UI_SelectCurrentMapi_40
+_Z19UI_SelectCurrentMapi_50:
 	mov dword [esp+0x10], _cstring_createserver_map
 	mov [esp+0xc], edi
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
-	jmp UI_SelectCurrentMap_20
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+	jmp _Z19UI_SelectCurrentMapi_20
 
 
 ;UI_VerifyLanguage()
-UI_VerifyLanguage:
+_Z17UI_VerifyLanguagev:
 	push ebp
 	mov ebp, esp
 	push esi
 	push ebx
 	sub esp, 0x10
 	mov dword [esp], _cstring_loc_language
-	call Cvar_VariableIntegerValue
+	call _Z11Dvar_GetIntPKc
 	mov esi, eax
 	mov dword [esp], _cstring_ui_language
-	call Cvar_VariableIntegerValue
+	call _Z11Dvar_GetIntPKc
 	mov ebx, eax
 	mov [esp], eax
-	call SEH_VerifyLanguageSelection
+	call _Z27SEH_VerifyLanguageSelectioni
 	cmp ebx, eax
-	jz UI_VerifyLanguage_10
+	jz _Z17UI_VerifyLanguagev_10
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_ui_language
-	call Cvar_SetIntByName
-UI_VerifyLanguage_10:
+	call _Z17Dvar_SetIntByNamePKci
+_Z17UI_VerifyLanguagev_10:
 	cmp esi, ebx
-	jz UI_VerifyLanguage_20
+	jz _Z17UI_VerifyLanguagev_20
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_ui_languagechang
-	call Cvar_SetBoolByName
+	call _Z18Dvar_SetBoolByNamePKch
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_VerifyLanguage_20:
+_Z17UI_VerifyLanguagev_20:
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_languagechang
-	call Cvar_SetBoolByName
+	call _Z18Dvar_SetBoolByNamePKch
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -669,111 +669,111 @@ UI_VerifyLanguage_20:
 
 
 ;UI_AddServerToFavoritesList(char const*, char const*)
-UI_AddServerToFavoritesList:
+_Z27UI_AddServerToFavoritesListPKcS0_:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov ebx, edx
 	cmp byte [eax], 0x0
-	jz UI_AddServerToFavoritesList_10
+	jz _Z27UI_AddServerToFavoritesListPKcS0__10
 	cmp byte [edx], 0x0
-	jz UI_AddServerToFavoritesList_20
+	jz _Z27UI_AddServerToFavoritesListPKcS0__20
 	mov [esp+0x8], edx
 	mov [esp+0x4], eax
 	mov dword [esp], 0x2
-	call LAN_AddServer
+	call _Z13LAN_AddServeriPKcS0_
 	test eax, eax
-	jz UI_AddServerToFavoritesList_30
+	jz _Z27UI_AddServerToFavoritesListPKcS0__30
 	cmp eax, 0xffffffff
-	jz UI_AddServerToFavoritesList_40
+	jz _Z27UI_AddServerToFavoritesListPKcS0__40
 	cmp eax, 0xfffffffe
-	jz UI_AddServerToFavoritesList_50
+	jz _Z27UI_AddServerToFavoritesListPKcS0__50
 	mov dword [esp], _cstring_exe_favoriteadde
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_s
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov dword [esp+0x4], _cstring_exe_favoriteadde1
 	mov dword [esp], _cstring_ui_favorite_mess
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_AddServerToFavoritesList_20:
+_Z27UI_AddServerToFavoritesListPKcS0__20:
 	mov dword [esp], _cstring_exe_favoriteaddr
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov dword [esp+0x4], _cstring_exe_favoriteaddr1
 	mov dword [esp], _cstring_ui_favorite_mess
-	call Cvar_SetStringByName
-UI_AddServerToFavoritesList_60:
+	call _Z20Dvar_SetStringByNamePKcS0_
+_Z27UI_AddServerToFavoritesListPKcS0__60:
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_AddServerToFavoritesList_10:
+_Z27UI_AddServerToFavoritesListPKcS0__10:
 	mov dword [esp], _cstring_exe_favoritename
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov dword [esp+0x4], _cstring_exe_favoritename1
 	mov dword [esp], _cstring_ui_favorite_mess
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_AddServerToFavoritesList_50:
+_Z27UI_AddServerToFavoritesListPKcS0__50:
 	mov dword [esp], _cstring_exe_badserveradd
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov dword [esp+0x4], _cstring_exe_badserveradd1
 	mov dword [esp], _cstring_ui_favorite_mess
-	call Cvar_SetStringByName
-	jmp UI_AddServerToFavoritesList_60
-UI_AddServerToFavoritesList_30:
+	call _Z20Dvar_SetStringByNamePKcS0_
+	jmp _Z27UI_AddServerToFavoritesListPKcS0__60
+_Z27UI_AddServerToFavoritesListPKcS0__30:
 	mov dword [esp], _cstring_exe_favoriteinli
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov dword [esp+0x4], _cstring_exe_favoriteinli1
 	mov dword [esp], _cstring_ui_favorite_mess
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_AddServerToFavoritesList_40:
+_Z27UI_AddServerToFavoritesListPKcS0__40:
 	mov dword [esp], _cstring_exe_favoritelist
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov dword [esp+0x4], _cstring_exe_favoritelist1
 	mov dword [esp], _cstring_ui_favorite_mess
-	call Cvar_SetStringByName
-	jmp UI_AddServerToFavoritesList_60
+	call _Z20Dvar_SetStringByNamePKcS0_
+	jmp _Z27UI_AddServerToFavoritesListPKcS0__60
 
 
 ;UI_GetOpenOrCloseMenuOnDvarArgs(char const**, char const*, char*, int, char*, int, char*, int)
-UI_GetOpenOrCloseMenuOnDvarArgs:
+_Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -785,58 +785,58 @@ UI_GetOpenOrCloseMenuOnDvarArgs:
 	mov [esp+0x8], eax
 	mov [esp+0x4], ecx
 	mov [esp], ebx
-	call String_Parse
+	call _Z12String_ParsePPKcPci
 	test eax, eax
-	jnz UI_GetOpenOrCloseMenuOnDvarArgs_10
+	jnz _Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i_10
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_s_invalid_dvar_n
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	xor eax, eax
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_GetOpenOrCloseMenuOnDvarArgs_10:
+_Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i_10:
 	mov eax, [ebp+0x10]
 	mov [esp+0x8], eax
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call String_Parse
+	call _Z12String_ParsePPKcPci
 	test eax, eax
-	jz UI_GetOpenOrCloseMenuOnDvarArgs_20
+	jz _Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i_20
 	mov eax, [ebp+0x18]
 	mov [esp+0x8], eax
 	mov eax, [ebp+0x14]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call String_Parse
+	call _Z12String_ParsePPKcPci
 	test eax, eax
-	jz UI_GetOpenOrCloseMenuOnDvarArgs_30
+	jz _Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i_30
 	mov eax, 0x1
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_GetOpenOrCloseMenuOnDvarArgs_20:
+_Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i_20:
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_s_invalid_test_v
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	xor eax, eax
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_GetOpenOrCloseMenuOnDvarArgs_30:
+_Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i_30:
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_s_invalid_menu_n
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	xor eax, eax
 	add esp, 0x10
 	pop ebx
@@ -846,7 +846,7 @@ UI_GetOpenOrCloseMenuOnDvarArgs_30:
 
 
 ;UI_ReadableSize(char*, int, int)
-UI_ReadableSize:
+_Z15UI_ReadableSizePcii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -857,29 +857,29 @@ UI_ReadableSize:
 	mov esi, edx
 	mov ebx, ecx
 	cmp ecx, 0x40000000
-	jg UI_ReadableSize_10
+	jg _Z15UI_ReadableSizePcii_10
 	cmp ecx, 0x100000
-	jg UI_ReadableSize_20
+	jg _Z15UI_ReadableSizePcii_20
 	cmp ecx, 0x400
-	jle UI_ReadableSize_30
+	jle _Z15UI_ReadableSizePcii_30
 	mov dword [esp], _cstring_exe_kilobyte
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x10], eax
 	sar ebx, 0xa
-UI_ReadableSize_70:
+_Z15UI_ReadableSizePcii_70:
 	mov [esp+0xc], ebx
 	mov dword [esp+0x8], _cstring_d_s
 	mov [esp+0x4], esi
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_ReadableSize_20:
+_Z15UI_ReadableSizePcii_20:
 	mov eax, ecx
 	sar eax, 0x14
 	mov [esp+0xc], eax
@@ -887,9 +887,9 @@ UI_ReadableSize_20:
 	mov [esp+0x4], edx
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov dword [esp], _cstring_exe_megabyte
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x10], eax
 	cld
 	mov ecx, 0xffffffff
@@ -903,10 +903,10 @@ UI_ReadableSize_20:
 	lea eax, [ebx+ebx*4]
 	lea eax, [eax+eax*4]
 	shl eax, 0x2
-	js UI_ReadableSize_40
-UI_ReadableSize_80:
+	js _Z15UI_ReadableSizePcii_40
+_Z15UI_ReadableSizePcii_80:
 	sar eax, 0x14
-UI_ReadableSize_60:
+_Z15UI_ReadableSizePcii_60:
 	mov [esp+0xc], eax
 	mov dword [esp+0x8], _cstring_02d_s
 	sub esi, edx
@@ -914,14 +914,14 @@ UI_ReadableSize_60:
 	mov eax, [ebp-0x1c]
 	add eax, edx
 	mov [esp], eax
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_ReadableSize_10:
+_Z15UI_ReadableSizePcii_10:
 	mov eax, ecx
 	sar eax, 0x1e
 	mov [esp+0xc], eax
@@ -929,9 +929,9 @@ UI_ReadableSize_10:
 	mov [esp+0x4], edx
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov dword [esp], _cstring_exe_gigabyte
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x10], eax
 	cld
 	mov ecx, 0xffffffff
@@ -945,25 +945,25 @@ UI_ReadableSize_10:
 	lea eax, [ebx+ebx*4]
 	lea eax, [eax+eax*4]
 	shl eax, 0x2
-	js UI_ReadableSize_50
+	js _Z15UI_ReadableSizePcii_50
 	sar eax, 0x1e
-	jmp UI_ReadableSize_60
-UI_ReadableSize_30:
+	jmp _Z15UI_ReadableSizePcii_60
+_Z15UI_ReadableSizePcii_30:
 	mov dword [esp], _cstring_exe_bytes
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x10], eax
-	jmp UI_ReadableSize_70
-UI_ReadableSize_50:
+	jmp _Z15UI_ReadableSizePcii_70
+_Z15UI_ReadableSizePcii_50:
 	add eax, 0x3fffffff
 	sar eax, 0x1e
-	jmp UI_ReadableSize_60
-UI_ReadableSize_40:
+	jmp _Z15UI_ReadableSizePcii_60
+_Z15UI_ReadableSizePcii_40:
 	add eax, 0xfffff
-	jmp UI_ReadableSize_80
+	jmp _Z15UI_ReadableSizePcii_80
 
 
 ;UI_GetGameTypesList_FastFile()
-UI_GetGameTypesList_FastFile:
+_Z28UI_GetGameTypesList_FastFilev:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -972,42 +972,42 @@ UI_GetGameTypesList_FastFile:
 	sub esp, 0x2c
 	mov dword [esp+0x4], _cstring_mapsmpgametypes_
 	mov dword [esp], 0x1f
-	call DB_FindXAssetHeader
+	call _Z19DB_FindXAssetHeader10XAssetTypePKc
 	test eax, eax
-	jz UI_GetGameTypesList_FastFile_10
+	jz _Z28UI_GetGameTypesList_FastFilev_10
 	mov eax, [eax+0x8]
 	mov [ebp-0x20], eax
-	jmp UI_GetGameTypesList_FastFile_20
-UI_GetGameTypesList_FastFile_40:
+	jmp _Z28UI_GetGameTypesList_FastFilev_20
+_Z28UI_GetGameTypesList_FastFilev_40:
 	lea eax, [ebp-0x1c]
 	mov [esp], eax
-	call Com_Parse
+	call _Z9Com_ParsePPKc
 	mov ebx, [sharedUiInfo+0x114c]
 	mov [esp], eax
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [ebx*8+sharedUiInfo+0x1154], eax
 	mov eax, [sharedUiInfo+0x114c]
 	mov edx, [eax*8+sharedUiInfo+0x1154]
 	mov eax, [sharedUiInfo+0x1b54]
 	mov [edi+eax*8+0xc], edx
-UI_GetGameTypesList_FastFile_50:
+_Z28UI_GetGameTypesList_FastFilev_50:
 	add dword [sharedUiInfo+0x114c], 0x1
 	add dword [sharedUiInfo+0x1b54], 0x1
-UI_GetGameTypesList_FastFile_20:
+_Z28UI_GetGameTypesList_FastFilev_20:
 	lea eax, [ebp-0x20]
 	mov [esp], eax
-	call Com_Parse
+	call _Z9Com_ParsePPKc
 	mov esi, eax
 	mov eax, [ebp-0x20]
 	test eax, eax
-	jz UI_GetGameTypesList_FastFile_10
+	jz _Z28UI_GetGameTypesList_FastFilev_10
 	mov ebx, [sharedUiInfo+0x114c]
 	cmp ebx, 0x20
-	jz UI_GetGameTypesList_FastFile_30
+	jz _Z28UI_GetGameTypesList_FastFilev_30
 	cmp dword [sharedUiInfo+0x1b54], 0x20
-	jz UI_GetGameTypesList_FastFile_30
+	jz _Z28UI_GetGameTypesList_FastFilev_30
 	mov [esp], esi
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [ebx*8+sharedUiInfo+0x1150], eax
 	mov edi, sharedUiInfo+0x1b50
 	mov eax, [sharedUiInfo+0x114c]
@@ -1016,18 +1016,18 @@ UI_GetGameTypesList_FastFile_20:
 	mov [edi+eax*8+0x8], edx
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring_mapsmpgametypess
-	call va
+	call _Z2vaPKcz
 	mov edx, useFastFile
 	mov edx, [edx]
-	mov ecx, GetMenuBuffer_FastFile
+	mov ecx, _Z22GetMenuBuffer_FastFilePKc
 	cmp byte [edx+0xc], 0x0
-	mov edx, GetMenuBuffer_LoadObj
+	mov edx, _Z21GetMenuBuffer_LoadObjPKc
 	cmovz ecx, edx
 	mov [esp], eax
 	call ecx
 	mov [ebp-0x1c], eax
 	test eax, eax
-	jnz UI_GetGameTypesList_FastFile_40
+	jnz _Z28UI_GetGameTypesList_FastFilev_40
 	mov edx, [sharedUiInfo+0x114c]
 	mov eax, [edx*8+sharedUiInfo+0x1150]
 	mov [edx*8+sharedUiInfo+0x1154], eax
@@ -1035,13 +1035,13 @@ UI_GetGameTypesList_FastFile_20:
 	mov edx, [eax*8+sharedUiInfo+0x1154]
 	mov eax, [sharedUiInfo+0x1b54]
 	mov [edi+eax*8+0xc], edx
-	jmp UI_GetGameTypesList_FastFile_50
-UI_GetGameTypesList_FastFile_30:
+	jmp _Z28UI_GetGameTypesList_FastFilev_50
+_Z28UI_GetGameTypesList_FastFilev_30:
 	mov dword [esp+0x8], 0x1f
 	mov dword [esp+0x4], _cstring_too_many_game_ty
 	mov dword [esp], 0xd
-	call Com_Printf
-UI_GetGameTypesList_FastFile_10:
+	call _Z10Com_PrintfiPKcz
+_Z28UI_GetGameTypesList_FastFilev_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -1051,7 +1051,7 @@ UI_GetGameTypesList_FastFile_10:
 
 
 ;UI_GetGameTypesList_LoadObj()
-UI_GetGameTypesList_LoadObj:
+_Z27UI_GetGameTypesList_LoadObjv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1064,29 +1064,29 @@ UI_GetGameTypesList_LoadObj:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_gsc
 	mov dword [esp], _cstring_mapsmpgametypes
-	call FS_GetFileList
+	call _Z14FS_GetFileListPKcS0_16FsListBehavior_ePci
 	mov [ebp-0x1030], eax
 	test eax, eax
-	jg UI_GetGameTypesList_LoadObj_10
-UI_GetGameTypesList_LoadObj_30:
+	jg _Z27UI_GetGameTypesList_LoadObjv_10
+_Z27UI_GetGameTypesList_LoadObjv_30:
 	add esp, 0x104c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_GetGameTypesList_LoadObj_10:
+_Z27UI_GetGameTypesList_LoadObjv_10:
 	mov esi, edi
 	mov dword [ebp-0x102c], 0x0
-	jmp UI_GetGameTypesList_LoadObj_20
-UI_GetGameTypesList_LoadObj_40:
+	jmp _Z27UI_GetGameTypesList_LoadObjv_20
+_Z27UI_GetGameTypesList_LoadObjv_40:
 	lea esi, [esi+ebx+0x1]
-UI_GetGameTypesList_LoadObj_80:
+_Z27UI_GetGameTypesList_LoadObjv_80:
 	add dword [ebp-0x102c], 0x1
 	mov eax, [ebp-0x102c]
 	cmp [ebp-0x1030], eax
-	jz UI_GetGameTypesList_LoadObj_30
-UI_GetGameTypesList_LoadObj_20:
+	jz _Z27UI_GetGameTypesList_LoadObjv_30
+_Z27UI_GetGameTypesList_LoadObjv_20:
 	cld
 	xor eax, eax
 	mov ecx, 0xffffffff
@@ -1095,24 +1095,24 @@ UI_GetGameTypesList_LoadObj_20:
 	not ecx
 	lea ebx, [ecx-0x1]
 	cmp byte [esi], 0x5f
-	jz UI_GetGameTypesList_LoadObj_40
+	jz _Z27UI_GetGameTypesList_LoadObjv_40
 	mov dword [esp+0x4], _cstring_gsc1
 	lea eax, [esi+ebx]
 	mov [ebp-0x1034], eax
 	sub eax, 0x4
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_GetGameTypesList_LoadObj_50
+	jnz _Z27UI_GetGameTypesList_LoadObjv_50
 	mov byte [esi+ebx-0x4], 0x0
-UI_GetGameTypesList_LoadObj_50:
+_Z27UI_GetGameTypesList_LoadObjv_50:
 	mov ebx, [sharedUiInfo+0x114c]
 	cmp ebx, 0x20
-	jz UI_GetGameTypesList_LoadObj_60
+	jz _Z27UI_GetGameTypesList_LoadObjv_60
 	cmp dword [sharedUiInfo+0x1b54], 0x20
-	jz UI_GetGameTypesList_LoadObj_60
+	jz _Z27UI_GetGameTypesList_LoadObjv_60
 	mov [esp], esi
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [ebx*8+sharedUiInfo+0x1150], eax
 	mov edi, sharedUiInfo+0x1b50
 	mov eax, [sharedUiInfo+0x114c]
@@ -1121,36 +1121,36 @@ UI_GetGameTypesList_LoadObj_50:
 	mov [edi+eax*8+0x8], edx
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring_mapsmpgametypess
-	call va
+	call _Z2vaPKcz
 	mov edx, useFastFile
 	mov edx, [edx]
-	mov ecx, GetMenuBuffer_FastFile
+	mov ecx, _Z22GetMenuBuffer_FastFilePKc
 	cmp byte [edx+0xc], 0x0
-	mov edx, GetMenuBuffer_LoadObj
+	mov edx, _Z21GetMenuBuffer_LoadObjPKc
 	cmovz ecx, edx
 	mov [esp], eax
 	call ecx
 	mov [ebp-0x1c], eax
 	test eax, eax
-	jz UI_GetGameTypesList_LoadObj_70
+	jz _Z27UI_GetGameTypesList_LoadObjv_70
 	lea eax, [ebp-0x1c]
 	mov [esp], eax
-	call Com_Parse
+	call _Z9Com_ParsePPKc
 	mov ebx, [sharedUiInfo+0x114c]
 	mov [esp], eax
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [ebx*8+sharedUiInfo+0x1154], eax
 	mov eax, [sharedUiInfo+0x114c]
 	mov edx, [eax*8+sharedUiInfo+0x1154]
 	mov eax, [sharedUiInfo+0x1b54]
 	mov [edi+eax*8+0xc], edx
-UI_GetGameTypesList_LoadObj_90:
+_Z27UI_GetGameTypesList_LoadObjv_90:
 	add dword [sharedUiInfo+0x114c], 0x1
 	add dword [sharedUiInfo+0x1b54], 0x1
 	mov esi, [ebp-0x1034]
 	add esi, 0x1
-	jmp UI_GetGameTypesList_LoadObj_80
-UI_GetGameTypesList_LoadObj_70:
+	jmp _Z27UI_GetGameTypesList_LoadObjv_80
+_Z27UI_GetGameTypesList_LoadObjv_70:
 	mov edx, [sharedUiInfo+0x114c]
 	mov eax, [edx*8+sharedUiInfo+0x1150]
 	mov [edx*8+sharedUiInfo+0x1154], eax
@@ -1158,17 +1158,17 @@ UI_GetGameTypesList_LoadObj_70:
 	mov edx, [eax*8+sharedUiInfo+0x1154]
 	mov eax, [sharedUiInfo+0x1b54]
 	mov [edi+eax*8+0xc], edx
-	jmp UI_GetGameTypesList_LoadObj_90
-UI_GetGameTypesList_LoadObj_60:
+	jmp _Z27UI_GetGameTypesList_LoadObjv_90
+_Z27UI_GetGameTypesList_LoadObjv_60:
 	mov dword [esp+0x8], 0x1f
 	mov dword [esp+0x4], _cstring_too_many_game_ty
 	mov dword [esp], 0xd
-	call Com_Printf
-	jmp UI_GetGameTypesList_LoadObj_30
+	call _Z10Com_PrintfiPKcz
+	jmp _Z27UI_GetGameTypesList_LoadObjv_30
 
 
 ;UI_StartServerRefresh(int, int)
-UI_StartServerRefresh:
+_Z21UI_StartServerRefreshii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1179,7 +1179,7 @@ UI_StartServerRefresh:
 	mov [ebp-0x64], edx
 	lea eax, [ebp-0x54]
 	mov [esp], eax
-	call Com_RealTime
+	call _Z12Com_RealTimeP7qtime_s
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp+0xc], eax
@@ -1197,7 +1197,7 @@ UI_StartServerRefresh:
 	mov eax, [ebp-0x44]
 	mov eax, [eax*4+MonthAbbrev]
 	mov [esp], eax
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x14], ebx
 	mov [esp+0x10], esi
 	mov [esp+0xc], edi
@@ -1205,30 +1205,30 @@ UI_StartServerRefresh:
 	mov [esp+0x8], edx
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_s_i_i___i02i
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x30]
 	mov [esp], eax
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov eax, [ebp-0x64]
 	test eax, eax
-	jnz UI_StartServerRefresh_10
+	jnz _Z21UI_StartServerRefreshii_10
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_ResetPings
+	call _Z14LAN_ResetPingsi
 	mov dword [sharedUiInfo+0x72f0], 0x1
 	mov eax, [uiInfoArray+0x8]
 	add eax, 0x3e8
 	mov [sharedUiInfo+0x72dc], eax
-UI_StartServerRefresh_30:
+_Z21UI_StartServerRefreshii_30:
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_StartServerRefresh_10:
+_Z21UI_StartServerRefreshii_10:
 	mov dword [sharedUiInfo+0x72f0], 0x1
 	mov eax, [uiInfoArray+0x8]
 	add eax, 0x3e8
@@ -1238,55 +1238,55 @@ UI_StartServerRefresh_10:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0xffffffff
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_MarkServerDirty
+	call _Z19LAN_MarkServerDirtyiii
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_ResetPings
+	call _Z14LAN_ResetPingsi
 	mov edx, [ui_netSource]
 	mov eax, [edx+0xc]
 	test eax, eax
-	jz UI_StartServerRefresh_20
+	jz _Z21UI_StartServerRefreshii_20
 	mov eax, [uiInfoArray+0x8]
 	add eax, 0x1388
 	mov [sharedUiInfo+0x72dc], eax
 	cmp dword [edx+0xc], 0x1
-	jnz UI_StartServerRefresh_30
+	jnz _Z21UI_StartServerRefreshii_30
 	mov dword [esp], _cstring_debug_protocol
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	cmp byte [eax], 0x0
-	jz UI_StartServerRefresh_40
+	jz _Z21UI_StartServerRefreshii_40
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_globalservers_d_
-UI_StartServerRefresh_50:
-	call va
+_Z21UI_StartServerRefreshii_50:
+	call _Z2vaPKcz
 	mov ebx, eax
 	mov edx, [ebp-0x60]
 	mov [esp], edx
-	call CL_ControllerIndexFromClientNum
+	call _Z31CL_ControllerIndexFromClientNumi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x60]
 	mov [esp], eax
-	call Cmd_ExecuteSingleCommand
-	jmp UI_StartServerRefresh_30
-UI_StartServerRefresh_20:
+	call _Z24Cmd_ExecuteSingleCommandiiPKc
+	jmp _Z21UI_StartServerRefreshii_30
+_Z21UI_StartServerRefreshii_20:
 	mov edx, [ebp-0x60]
 	mov [esp], edx
-	call CL_ControllerIndexFromClientNum
+	call _Z31CL_ControllerIndexFromClientNumi
 	mov dword [esp+0x8], _cstring_localservers
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x60]
 	mov [esp], eax
-	call Cmd_ExecuteSingleCommand
+	call _Z24Cmd_ExecuteSingleCommandiiPKc
 	mov eax, [uiInfoArray+0x8]
 	add eax, 0x3e8
 	mov [sharedUiInfo+0x72dc], eax
@@ -1296,15 +1296,15 @@ UI_StartServerRefresh_20:
 	pop edi
 	pop ebp
 	ret
-UI_StartServerRefresh_40:
+_Z21UI_StartServerRefreshii_40:
 	mov dword [esp+0x8], 0x6
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_globalservers_d_1
-	jmp UI_StartServerRefresh_50
+	jmp _Z21UI_StartServerRefreshii_50
 
 
 ;UI_BuildServerDisplayList(uiInfo_s*, int)
-UI_BuildServerDisplayList:
+_Z25UI_BuildServerDisplayListP8uiInfo_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1313,20 +1313,20 @@ UI_BuildServerDisplayList:
 	sub esp, 0x43c
 	mov ebx, [ebp+0xc]
 	test ebx, ebx
-	jnz UI_BuildServerDisplayList_10
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_10
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x8]
 	cmp eax, [sharedUiInfo+0x1ab84]
-	jle UI_BuildServerDisplayList_20
-UI_BuildServerDisplayList_110:
+	jle _Z25UI_BuildServerDisplayListP8uiInfo_si_20
+_Z25UI_BuildServerDisplayListP8uiInfo_si_110:
 	xor ebx, ebx
-UI_BuildServerDisplayList_100:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_100:
 	mov dword [esp], _cstring_cl_motdstring
-	call Cvar_VariableString
+	call _Z14Dvar_GetStringPKc
 	mov dword [esp+0x8], 0x400
 	mov [esp+0x4], eax
 	mov dword [esp], sharedUiInfo+0x1aba4
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	xor esi, esi
 	cld
 	mov ecx, 0xffffffff
@@ -1336,36 +1336,36 @@ UI_BuildServerDisplayList_100:
 	not ecx
 	mov eax, ecx
 	sub eax, 0x1
-	jz UI_BuildServerDisplayList_30
-UI_BuildServerDisplayList_120:
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_30
+_Z25UI_BuildServerDisplayListP8uiInfo_si_120:
 	cmp eax, [sharedUiInfo+0x1ab8c]
-	jz UI_BuildServerDisplayList_40
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_40
 	mov [sharedUiInfo+0x1ab8c], eax
 	mov dword [sharedUiInfo+0x1ab90], 0xffffffff
-UI_BuildServerDisplayList_40:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_40:
 	test ebx, ebx
-	jnz UI_BuildServerDisplayList_50
-UI_BuildServerDisplayList_140:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_50
+_Z25UI_BuildServerDisplayListP8uiInfo_si_140:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	mov [ebp-0x424], eax
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_WaitServerResponse
+	call _Z22LAN_WaitServerResponsei
 	test eax, eax
-	jnz UI_BuildServerDisplayList_60
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_60
 	mov edx, [ui_netSource]
 	mov eax, [edx+0xc]
 	test eax, eax
-	jnz UI_BuildServerDisplayList_70
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_70
 	mov eax, [ebp-0x424]
 	test eax, eax
-	jz UI_BuildServerDisplayList_80
-UI_BuildServerDisplayList_70:
-	mov dword [esp+0xc], UI_ServersQsortCompare
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_80
+_Z25UI_BuildServerDisplayListP8uiInfo_si_70:
+	mov dword [esp+0xc], _Z22UI_ServersQsortComparePKvS0_
 	mov dword [esp+0x8], 0x4
 	mov eax, [sharedUiInfo+0x1ab78]
 	mov [esp+0x4], eax
@@ -1373,30 +1373,30 @@ UI_BuildServerDisplayList_70:
 	call qsort
 	mov eax, [ebp-0x424]
 	test eax, eax
-	jg UI_BuildServerDisplayList_90
-UI_BuildServerDisplayList_160:
+	jg _Z25UI_BuildServerDisplayListP8uiInfo_si_90
+_Z25UI_BuildServerDisplayListP8uiInfo_si_160:
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x8]
 	mov [sharedUiInfo+0x72dc], eax
-UI_BuildServerDisplayList_20:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_20:
 	add esp, 0x43c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_BuildServerDisplayList_10:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_10:
 	cmp ebx, 0x2
-	jnz UI_BuildServerDisplayList_100
-	jmp UI_BuildServerDisplayList_110
-UI_BuildServerDisplayList_60:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_100
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_110
+_Z25UI_BuildServerDisplayListP8uiInfo_si_60:
 	mov edx, [ui_netSource]
-UI_BuildServerDisplayList_80:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_80:
 	mov dword [sharedUiInfo+0x1ab78], 0x0
 	mov dword [sharedUiInfo+0x1ab80], 0x0
 	mov eax, [edx+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x8]
@@ -1408,13 +1408,13 @@ UI_BuildServerDisplayList_80:
 	pop edi
 	pop ebp
 	ret
-UI_BuildServerDisplayList_30:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_30:
 	mov dword [esp], _cstring_exe_cod_multipla
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov dword [esp+0x8], _cstring_17
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_s__s
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov dword [esp], sharedUiInfo+0x1aba4
 	call strcpy
@@ -1425,63 +1425,63 @@ UI_BuildServerDisplayList_30:
 	repne scasb
 	not ecx
 	lea eax, [ecx-0x1]
-	jmp UI_BuildServerDisplayList_120
-UI_BuildServerDisplayList_50:
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_120
+_Z25UI_BuildServerDisplayListP8uiInfo_si_50:
 	mov dword [_ZZ25UI_BuildServerDisplayListP8uiInfo_siE8numclean], 0x0
 	mov dword [sharedUiInfo+0x1ab78], 0x0
 	mov dword [sharedUiInfo+0x1ab80], 0x0
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov eax, [sharedUiInfo+0x72f4]
 	test eax, eax
-	js UI_BuildServerDisplayList_130
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_130
 	mov dword [esp+0x10], 0x0
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x2
 	mov dword [esp+0x4], 0x0
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Menu_SetFeederSelection
-UI_BuildServerDisplayList_130:
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+_Z25UI_BuildServerDisplayListP8uiInfo_si_130:
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0xffffffff
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_MarkServerDirty
-	jmp UI_BuildServerDisplayList_140
-UI_BuildServerDisplayList_90:
+	call _Z19LAN_MarkServerDirtyiii
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_140
+_Z25UI_BuildServerDisplayListP8uiInfo_si_90:
 	mov dword [ebp-0x428], 0x0
 	mov eax, [ebp-0x428]
-	jmp UI_BuildServerDisplayList_150
-UI_BuildServerDisplayList_170:
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_150
+_Z25UI_BuildServerDisplayListP8uiInfo_si_170:
 	add dword [ebp-0x428], 0x1
 	mov edx, [ebp-0x428]
 	cmp [ebp-0x424], edx
-	jz UI_BuildServerDisplayList_160
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_160
 	mov eax, edx
-UI_BuildServerDisplayList_150:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_150:
 	mov [esp+0x4], eax
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_ServerIsDirty
+	call _Z17LAN_ServerIsDirtyii
 	test eax, eax
-	jz UI_BuildServerDisplayList_170
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_170
 	mov edx, [ebp-0x428]
 	mov [esp+0x4], edx
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerPing
+	call _Z17LAN_GetServerPingii
 	mov [ebp-0x420], eax
 	test eax, eax
-	jle UI_BuildServerDisplayList_180
+	jle _Z25UI_BuildServerDisplayListP8uiInfo_si_180
 	mov edx, [ui_netSource]
-UI_BuildServerDisplayList_470:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_470:
 	mov dword [esp+0xc], 0x400
 	lea eax, [ebp-0x418]
 	mov [esp+0x8], eax
@@ -1489,11 +1489,11 @@ UI_BuildServerDisplayList_470:
 	mov [esp+0x4], eax
 	mov eax, [edx+0xc]
 	mov [esp], eax
-	call LAN_GetServerInfo
+	call _Z17LAN_GetServerInfoiiPci
 	mov dword [esp+0x4], _cstring_clients
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov ebx, eax
@@ -1501,214 +1501,214 @@ UI_BuildServerDisplayList_470:
 	mov dword [esp+0x4], _cstring_addr
 	lea eax, [ebp-0x418]
 	mov [esp], eax
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov dword [esp+0x8], 0xf
 	mov dword [esp+0x4], _cstring_000000000000
 	mov [esp], eax
-	call Q_stricmpn
+	call _Z10I_strnicmpPKcS0_i
 	test eax, eax
-	jz UI_BuildServerDisplayList_190
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_190
 	mov eax, [ebp-0x420]
 	test eax, eax
-	jle UI_BuildServerDisplayList_200
-UI_BuildServerDisplayList_500:
+	jle _Z25UI_BuildServerDisplayListP8uiInfo_si_200
+_Z25UI_BuildServerDisplayListP8uiInfo_si_500:
 	mov eax, [ui_browserShowEmpty]
 	cmp byte [eax+0xc], 0x0
-	jnz UI_BuildServerDisplayList_210
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_210
 	test ebx, ebx
-	jz UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_210:
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_210:
 	mov eax, [ui_browserShowFull]
 	cmp byte [eax+0xc], 0x0
-	jz UI_BuildServerDisplayList_230
-UI_BuildServerDisplayList_510:
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_230
+_Z25UI_BuildServerDisplayListP8uiInfo_si_510:
 	mov eax, [ui_browserShowPassword]
 	mov eax, [eax+0xc]
 	test eax, eax
-	js UI_BuildServerDisplayList_240
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_240
 	mov dword [esp+0x4], _cstring_pswrd
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov edx, [ui_browserShowPassword]
 	cmp eax, [edx+0xc]
-	jz UI_BuildServerDisplayList_240
-UI_BuildServerDisplayList_220:
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_240
+_Z25UI_BuildServerDisplayListP8uiInfo_si_220:
 	mov dword [esp+0x8], 0x0
 	mov eax, [ebp-0x428]
 	mov [esp+0x4], eax
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_MarkServerDirty
-	jmp UI_BuildServerDisplayList_170
-UI_BuildServerDisplayList_240:
+	call _Z19LAN_MarkServerDirtyiii
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_170
+_Z25UI_BuildServerDisplayListP8uiInfo_si_240:
 	mov eax, [ui_browserShowPure]
 	cmp byte [eax+0xc], 0x0
-	jnz UI_BuildServerDisplayList_250
-UI_BuildServerDisplayList_480:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_250
+_Z25UI_BuildServerDisplayListP8uiInfo_si_480:
 	mov eax, [ui_browserShowDedicated]
 	cmp byte [eax+0xc], 0x0
-	jnz UI_BuildServerDisplayList_260
-UI_BuildServerDisplayList_490:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_260
+_Z25UI_BuildServerDisplayListP8uiInfo_si_490:
 	mov eax, [ui_browserMod]
 	mov eax, [eax+0xc]
 	test eax, eax
-	js UI_BuildServerDisplayList_270
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_270
 	mov dword [esp+0x4], _cstring_mod
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov edx, [ui_browserMod]
 	cmp eax, [edx+0xc]
-	jnz UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_270:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_270:
 	mov eax, [ui_browserFriendlyfire]
 	mov edi, [eax+0xc]
 	test edi, edi
-	js UI_BuildServerDisplayList_280
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_280
 	mov dword [esp+0x4], _cstring_ff
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov edx, [ui_browserFriendlyfire]
 	cmp eax, [edx+0xc]
-	jnz UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_280:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_280:
 	mov eax, [ui_browserKillcam]
 	mov esi, [eax+0xc]
 	test esi, esi
-	js UI_BuildServerDisplayList_290
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_290
 	mov dword [esp+0x4], _cstring_kc
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov edx, [ui_browserKillcam]
 	cmp eax, [edx+0xc]
-	jnz UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_290:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_290:
 	mov eax, [ui_browserHardcore]
 	mov ebx, [eax+0xc]
 	test ebx, ebx
-	js UI_BuildServerDisplayList_300
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_300
 	mov dword [esp+0x4], _cstring_hc
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov edx, [ui_browserHardcore]
 	cmp eax, [edx+0xc]
-	jnz UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_300:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_300:
 	mov eax, [ui_browserOldSchool]
 	mov ecx, [eax+0xc]
 	test ecx, ecx
-	js UI_BuildServerDisplayList_310
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_310
 	mov dword [esp+0x4], _cstring_od
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov edx, [ui_browserOldSchool]
 	cmp eax, [edx+0xc]
-	jnz UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_310:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_310:
 	mov eax, [ui_browserShowPunkBuster]
 	mov edx, [eax+0xc]
 	test edx, edx
-	js UI_BuildServerDisplayList_320
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_320
 	mov dword [esp+0x4], _cstring_pb
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov edx, [ui_browserShowPunkBuster]
 	cmp eax, [edx+0xc]
-	jnz UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_320:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_320:
 	mov eax, [ui_joinGameType]
 	mov edx, [eax+0xc]
 	mov eax, [edx*8+sharedUiInfo+0x1b5c]
 	cmp byte [eax], 0x0
-	jnz UI_BuildServerDisplayList_330
-UI_BuildServerDisplayList_600:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_330
+_Z25UI_BuildServerDisplayListP8uiInfo_si_600:
 	mov eax, [ui_serverFilterType]
 	test eax, eax
-	jle UI_BuildServerDisplayList_340
+	jle _Z25UI_BuildServerDisplayListP8uiInfo_si_340
 	mov ebx, [eax*8+serverFilters+0x4]
 	mov dword [esp+0x4], _cstring_game
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_340:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_340:
 	mov edx, [ui_netSource]
 	cmp dword [edx+0xc], 0x2
-	jnz UI_BuildServerDisplayList_350
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_350
 	mov ecx, [sharedUiInfo+0x1ab78]
 	test ecx, ecx
-	jle UI_BuildServerDisplayList_360
+	jle _Z25UI_BuildServerDisplayListP8uiInfo_si_360
 	mov eax, [ebp-0x428]
 	cmp eax, [sharedUiInfo+0x72f8]
-	jz UI_BuildServerDisplayList_370
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_370
 	xor esi, esi
 	mov ebx, sharedUiInfo
-UI_BuildServerDisplayList_380:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_380:
 	add esi, 0x1
 	cmp ecx, esi
-	jz UI_BuildServerDisplayList_360
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_360
 	mov eax, [ebx+0x72fc]
 	add ebx, 0x4
 	cmp [ebp-0x428], eax
-	jnz UI_BuildServerDisplayList_380
-UI_BuildServerDisplayList_610:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_380
+_Z25UI_BuildServerDisplayListP8uiInfo_si_610:
 	lea eax, [ecx-0x1]
 	mov [sharedUiInfo+0x1ab78], eax
 	cmp esi, eax
-	jge UI_BuildServerDisplayList_390
+	jge _Z25UI_BuildServerDisplayListP8uiInfo_si_390
 	lea eax, [esi*4+0x72e4]
 	lea ecx, [eax+sharedUiInfo+0x18]
 	mov ebx, esi
 	lea esi, [esi*4+sharedUiInfo+0x72f8]
 	sub esi, ecx
-UI_BuildServerDisplayList_400:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_400:
 	add ebx, 0x1
 	mov eax, [ecx]
 	mov [esi+ecx], eax
 	add ecx, 0x4
 	cmp [sharedUiInfo+0x1ab78], ebx
-	jg UI_BuildServerDisplayList_400
-UI_BuildServerDisplayList_350:
+	jg _Z25UI_BuildServerDisplayListP8uiInfo_si_400
+_Z25UI_BuildServerDisplayListP8uiInfo_si_350:
 	mov ecx, [sharedUiInfo+0x1ab78]
-UI_BuildServerDisplayList_360:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_360:
 	mov esi, ecx
 	test ecx, ecx
-	jle UI_BuildServerDisplayList_410
+	jle _Z25UI_BuildServerDisplayListP8uiInfo_si_410
 	mov dword [ebp-0x41c], 0x0
-	jmp UI_BuildServerDisplayList_420
-UI_BuildServerDisplayList_450:
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_420
+_Z25UI_BuildServerDisplayListP8uiInfo_si_450:
 	sub esi, ebx
 	mov [ebp-0x41c], edi
-UI_BuildServerDisplayList_460:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_460:
 	test ebx, ebx
-	jle UI_BuildServerDisplayList_430
+	jle _Z25UI_BuildServerDisplayListP8uiInfo_si_430
 	mov edx, [ui_netSource]
-UI_BuildServerDisplayList_420:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_420:
 	mov ebx, esi
 	sar ebx, 1
 	mov edi, [ebp-0x41c]
@@ -1723,182 +1723,182 @@ UI_BuildServerDisplayList_420:
 	mov [esp+0x4], eax
 	mov eax, [edx+0xc]
 	mov [esp], eax
-	call LAN_CompareServers
+	call _Z18LAN_CompareServersiiiii
 	mov edx, eax
 	cmp eax, 0x0
-	jz UI_BuildServerDisplayList_440
-	jg UI_BuildServerDisplayList_450
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_440
+	jg _Z25UI_BuildServerDisplayListP8uiInfo_si_450
 	sub esi, ebx
-	jmp UI_BuildServerDisplayList_460
-UI_BuildServerDisplayList_180:
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_460
+_Z25UI_BuildServerDisplayListP8uiInfo_si_180:
 	mov edx, [ui_netSource]
 	cmp dword [edx+0xc], 0x2
-	jnz UI_BuildServerDisplayList_170
-	jmp UI_BuildServerDisplayList_470
-UI_BuildServerDisplayList_190:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_170
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_470
+_Z25UI_BuildServerDisplayListP8uiInfo_si_190:
 	mov dword [esp+0x8], 0x0
 	mov edx, [ebp-0x428]
 	mov [esp+0x4], edx
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_MarkServerDirty
-	jmp UI_BuildServerDisplayList_170
-UI_BuildServerDisplayList_250:
+	call _Z19LAN_MarkServerDirtyiii
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_170
+_Z25UI_BuildServerDisplayListP8uiInfo_si_250:
 	mov dword [esp+0x4], _cstring_pure
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	test eax, eax
-	jnz UI_BuildServerDisplayList_480
-	jmp UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_260:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_480
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_260:
 	mov dword [esp+0x4], _cstring_hw
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	sub eax, 0x1
 	cmp eax, 0x2
-	jbe UI_BuildServerDisplayList_490
-	jmp UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_200:
+	jbe _Z25UI_BuildServerDisplayListP8uiInfo_si_490
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_200:
 	mov edx, [ui_netSource]
 	cmp dword [edx+0xc], 0x2
-	jnz UI_BuildServerDisplayList_350
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_350
 	mov edx, [ebp-0x428]
 	mov [esp+0x4], edx
 	mov dword [esp], 0x2
-	call LAN_ServerInfoValid
+	call _Z19LAN_ServerInfoValidii
 	test al, al
-	jz UI_BuildServerDisplayList_340
-	jmp UI_BuildServerDisplayList_500
-UI_BuildServerDisplayList_230:
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_340
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_500
+_Z25UI_BuildServerDisplayListP8uiInfo_si_230:
 	mov dword [esp+0x4], _cstring_sv_maxclients
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	cmp ebx, eax
-	jnz UI_BuildServerDisplayList_510
-	jmp UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_430:
+	jnz _Z25UI_BuildServerDisplayListP8uiInfo_si_510
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_430:
 	mov eax, [ebp-0x41c]
 	add eax, 0x1
 	sub edx, 0x1
 	cmovl eax, [ebp-0x41c]
 	mov [ebp-0x41c], eax
 	test eax, eax
-	js UI_BuildServerDisplayList_520
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_520
 	mov ecx, [sharedUiInfo+0x1ab78]
-UI_BuildServerDisplayList_560:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_560:
 	cmp [ebp-0x41c], ecx
-	jg UI_BuildServerDisplayList_520
+	jg _Z25UI_BuildServerDisplayListP8uiInfo_si_520
 	mov eax, [sharedUiInfo+0x72f4]
 	cmp [ebp-0x41c], eax
-	jg UI_BuildServerDisplayList_530
+	jg _Z25UI_BuildServerDisplayListP8uiInfo_si_530
 	test ecx, ecx
-	jz UI_BuildServerDisplayList_530
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_530
 	add eax, 0x1
 	mov [sharedUiInfo+0x72f4], eax
-UI_BuildServerDisplayList_530:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_530:
 	lea ebx, [ecx+0x1]
 	mov [sharedUiInfo+0x1ab78], ebx
 	cmp [ebp-0x41c], ebx
-	jge UI_BuildServerDisplayList_540
+	jge _Z25UI_BuildServerDisplayListP8uiInfo_si_540
 	lea eax, [ecx*4+0x72e0]
 	lea edx, [eax+sharedUiInfo+0x18]
 	mov ecx, ebx
 	lea ebx, [ebx*4+sharedUiInfo+0x72f8]
 	sub ebx, edx
-UI_BuildServerDisplayList_550:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_550:
 	sub ecx, 0x1
 	mov eax, [edx]
 	mov [ebx+edx], eax
 	sub edx, 0x4
 	cmp [ebp-0x41c], ecx
-	jl UI_BuildServerDisplayList_550
-UI_BuildServerDisplayList_540:
+	jl _Z25UI_BuildServerDisplayListP8uiInfo_si_550
+_Z25UI_BuildServerDisplayListP8uiInfo_si_540:
 	mov edx, [ebp-0x428]
 	mov eax, [ebp-0x41c]
 	mov [eax*4+sharedUiInfo+0x72f8], edx
-UI_BuildServerDisplayList_520:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_520:
 	mov eax, [ebp-0x420]
 	test eax, eax
-	jle UI_BuildServerDisplayList_170
+	jle _Z25UI_BuildServerDisplayListP8uiInfo_si_170
 	mov dword [esp+0x8], 0x0
 	mov eax, [ebp-0x428]
 	mov [esp+0x4], eax
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_MarkServerDirty
+	call _Z19LAN_MarkServerDirtyiii
 	add dword [_ZZ25UI_BuildServerDisplayListP8uiInfo_siE8numclean], 0x1
-	jmp UI_BuildServerDisplayList_170
-UI_BuildServerDisplayList_410:
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_170
+_Z25UI_BuildServerDisplayListP8uiInfo_si_410:
 	mov dword [ebp-0x41c], 0x0
-	jmp UI_BuildServerDisplayList_560
-UI_BuildServerDisplayList_440:
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_560
+_Z25UI_BuildServerDisplayListP8uiInfo_si_440:
 	test edi, edi
-	js UI_BuildServerDisplayList_520
+	js _Z25UI_BuildServerDisplayListP8uiInfo_si_520
 	mov ecx, [sharedUiInfo+0x1ab78]
 	cmp edi, ecx
-	jg UI_BuildServerDisplayList_520
+	jg _Z25UI_BuildServerDisplayListP8uiInfo_si_520
 	mov eax, [sharedUiInfo+0x72f4]
 	cmp edi, eax
-	jg UI_BuildServerDisplayList_570
+	jg _Z25UI_BuildServerDisplayListP8uiInfo_si_570
 	test ecx, ecx
-	jz UI_BuildServerDisplayList_570
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_570
 	add eax, 0x1
 	mov [sharedUiInfo+0x72f4], eax
-UI_BuildServerDisplayList_570:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_570:
 	lea ebx, [ecx+0x1]
 	mov [sharedUiInfo+0x1ab78], ebx
 	cmp edi, ebx
-	jge UI_BuildServerDisplayList_580
+	jge _Z25UI_BuildServerDisplayListP8uiInfo_si_580
 	lea eax, [ecx*4+0x72e0]
 	lea edx, [eax+sharedUiInfo+0x18]
 	mov ecx, ebx
 	lea ebx, [ebx*4+sharedUiInfo+0x72f8]
 	sub ebx, edx
-UI_BuildServerDisplayList_590:
+_Z25UI_BuildServerDisplayListP8uiInfo_si_590:
 	sub ecx, 0x1
 	mov eax, [edx]
 	mov [ebx+edx], eax
 	sub edx, 0x4
 	cmp edi, ecx
-	jl UI_BuildServerDisplayList_590
-UI_BuildServerDisplayList_580:
+	jl _Z25UI_BuildServerDisplayListP8uiInfo_si_590
+_Z25UI_BuildServerDisplayListP8uiInfo_si_580:
 	mov eax, sharedUiInfo+0x72e0
 	mov edx, [ebp-0x428]
 	mov [eax+edi*4+0x18], edx
-	jmp UI_BuildServerDisplayList_520
-UI_BuildServerDisplayList_330:
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_520
+_Z25UI_BuildServerDisplayListP8uiInfo_si_330:
 	mov ebx, [edx*8+sharedUiInfo+0x1b58]
 	mov dword [esp+0x4], _cstring_gametype
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_BuildServerDisplayList_600
-	jmp UI_BuildServerDisplayList_220
-UI_BuildServerDisplayList_390:
+	jz _Z25UI_BuildServerDisplayListP8uiInfo_si_600
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_220
+_Z25UI_BuildServerDisplayListP8uiInfo_si_390:
 	mov ecx, eax
-	jmp UI_BuildServerDisplayList_360
-UI_BuildServerDisplayList_370:
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_360
+_Z25UI_BuildServerDisplayListP8uiInfo_si_370:
 	xor esi, esi
-	jmp UI_BuildServerDisplayList_610
+	jmp _Z25UI_BuildServerDisplayListP8uiInfo_si_610
 
 
 ;UI_GetServerStatusInfo(char*, serverStatusInfo_t*)
-UI_GetServerStatusInfo:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1908,7 +1908,7 @@ UI_GetServerStatusInfo:
 	mov ebx, eax
 	mov [ebp-0x48], edx
 	test edx, edx
-	jz UI_GetServerStatusInfo_10
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_10
 	mov dword [esp+0x8], 0xd04
 	mov dword [esp+0x4], 0x0
 	mov [esp], edx
@@ -1919,21 +1919,21 @@ UI_GetServerStatusInfo:
 	mov dword [esp+0x8], 0x400
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call LAN_GetServerStatus
+	call _Z19LAN_GetServerStatusPcS_i
 	test eax, eax
-	jnz UI_GetServerStatusInfo_20
+	jnz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_20
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_GetServerStatusInfo_20:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_20:
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], ebx
 	mov ecx, [ebp-0x48]
 	mov [esp], ecx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov ebx, [ebp-0x48]
 	mov dword [ebx+0x40], _cstring_address
 	mov dword [ebx+0x44], _cstring_null
@@ -1942,13 +1942,13 @@ UI_GetServerStatusInfo_20:
 	mov dword [ebx+0xd00], 0x1
 	mov eax, [ebp-0x44]
 	test eax, eax
-	jz UI_GetServerStatusInfo_30
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_30
 	cmp byte [ebx+0x840], 0x0
-	jnz UI_GetServerStatusInfo_40
+	jnz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_40
 	mov ebx, 0x1
-UI_GetServerStatusInfo_110:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_110:
 	cmp ebx, 0x7c
-	jg UI_GetServerStatusInfo_50
+	jg _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
 	mov eax, ebx
 	shl eax, 0x4
 	add eax, [ebp-0x48]
@@ -1968,27 +1968,27 @@ UI_GetServerStatusInfo_110:
 	mov [edx+0xd00], eax
 	mov eax, [ebp-0x44]
 	test eax, eax
-	jz UI_GetServerStatusInfo_50
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
 	mov ecx, [ebp-0x44]
 	movzx eax, byte [ecx]
 	test al, al
-	jz UI_GetServerStatusInfo_50
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
 	mov dword [ebp-0x40], 0x0
 	mov dword [ebp-0x3c], 0x0
-	jmp UI_GetServerStatusInfo_60
-UI_GetServerStatusInfo_70:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_60
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_70:
 	mov ebx, [ebp-0x44]
 	mov byte [ebx], 0x0
 	add ebx, 0x1
 	mov [ebp-0x44], ebx
-	jz UI_GetServerStatusInfo_50
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
 	mov eax, ebx
-UI_GetServerStatusInfo_80:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_80:
 	mov dword [esp+0x4], 0x20
 	mov [esp], eax
 	call strchr
 	test eax, eax
-	jz UI_GetServerStatusInfo_50
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
 	mov byte [eax], 0x0
 	add eax, 0x1
 	mov [ebp-0x20], eax
@@ -1996,7 +1996,7 @@ UI_GetServerStatusInfo_80:
 	mov [esp], eax
 	call strchr
 	test eax, eax
-	jz UI_GetServerStatusInfo_50
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
 	mov byte [eax], 0x0
 	add eax, 0x1
 	mov [ebp-0x1c], eax
@@ -2010,7 +2010,7 @@ UI_GetServerStatusInfo_80:
 	sub eax, edx
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov eax, [ebp-0x48]
 	mov ebx, [eax+0xd00]
 	mov edx, ebx
@@ -2033,39 +2033,39 @@ UI_GetServerStatusInfo_80:
 	mov eax, [ebp-0x48]
 	mov [eax+0xd00], ebx
 	cmp ebx, 0x7f
-	jg UI_GetServerStatusInfo_50
+	jg _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
 	mov dword [esp+0x4], 0x5c
 	mov [esp], ecx
 	call strchr
 	test eax, eax
-	jz UI_GetServerStatusInfo_50
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
 	mov byte [eax], 0x0
 	add dword [ebp-0x40], 0x1
 	mov edx, eax
 	add edx, 0x1
 	mov [ebp-0x44], edx
-	jz UI_GetServerStatusInfo_50
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
 	movzx eax, byte [eax+0x1]
 	test al, al
-	jz UI_GetServerStatusInfo_50
-UI_GetServerStatusInfo_60:
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_60:
 	cmp al, 0x5c
-	jz UI_GetServerStatusInfo_70
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_70
 	mov eax, [ebp-0x44]
-	jmp UI_GetServerStatusInfo_80
-UI_GetServerStatusInfo_40:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_80
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_40:
 	mov dword [esp+0x4], 0x5c
 	mov eax, [ebp-0x44]
 	mov [esp], eax
 	call strchr
 	mov [ebp-0x44], eax
 	test eax, eax
-	jz UI_GetServerStatusInfo_90
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_90
 	mov byte [eax], 0x0
 	add eax, 0x1
 	mov [ebp-0x44], eax
 	cmp byte [eax], 0x5c
-	jz UI_GetServerStatusInfo_100
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_100
 	mov ecx, eax
 	mov edx, [ebp-0x48]
 	mov ebx, [edx+0xd00]
@@ -2080,7 +2080,7 @@ UI_GetServerStatusInfo_40:
 	call strchr
 	mov [ebp-0x44], eax
 	test eax, eax
-	jz UI_GetServerStatusInfo_110
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_110
 	mov byte [eax], 0x0
 	add eax, 0x1
 	mov [ebp-0x44], eax
@@ -2093,48 +2093,48 @@ UI_GetServerStatusInfo_40:
 	lea eax, [edx+0x1]
 	mov [ebx+0xd00], eax
 	cmp eax, 0x7f
-	jg UI_GetServerStatusInfo_120
+	jg _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_120
 	test ecx, ecx
-	jz UI_GetServerStatusInfo_120
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_120
 	cmp byte [ecx], 0x0
-	jnz UI_GetServerStatusInfo_40
-UI_GetServerStatusInfo_120:
+	jnz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_40
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_120:
 	mov ebx, eax
-	jmp UI_GetServerStatusInfo_110
-UI_GetServerStatusInfo_50:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_110
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_50:
 	mov eax, [serverStatusDvars]
 	test eax, eax
-	jz UI_GetServerStatusInfo_130
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_130
 	mov dword [ebp-0x38], 0x0
 	mov dword [ebp-0x24], serverStatusDvars+0xc
-UI_GetServerStatusInfo_210:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_210:
 	mov eax, [ebp-0x48]
 	mov ebx, [eax+0xd00]
 	test ebx, ebx
-	jle UI_GetServerStatusInfo_140
+	jle _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_140
 	mov ebx, eax
 	xor edi, edi
-	jmp UI_GetServerStatusInfo_150
-UI_GetServerStatusInfo_160:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_150
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_160:
 	add edi, 0x1
 	add ebx, 0x10
 	mov ecx, [ebp-0x48]
 	cmp [ecx+0xd00], edi
-	jle UI_GetServerStatusInfo_140
-UI_GetServerStatusInfo_150:
+	jle _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_140
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_150:
 	mov eax, [ebx+0x44]
 	test eax, eax
-	jz UI_GetServerStatusInfo_160
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_160
 	cmp byte [eax], 0x0
-	jnz UI_GetServerStatusInfo_160
+	jnz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_160
 	mov eax, [ebx+0x40]
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x24]
 	mov eax, [ecx-0xc]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_GetServerStatusInfo_160
+	jnz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_160
 	mov eax, [ebp-0x38]
 	shl eax, 0x4
 	mov edx, [ebp-0x48]
@@ -2150,32 +2150,32 @@ UI_GetServerStatusInfo_150:
 	mov ecx, [ebp-0x24]
 	mov eax, [ecx-0x8]
 	cmp byte [eax], 0x0
-	jz UI_GetServerStatusInfo_170
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_170
 	mov [esi+0x40], eax
 	mov edx, [ebp-0x24]
 	mov eax, [edx-0x4]
 	cmp eax, 0x2
-	jz UI_GetServerStatusInfo_180
-UI_GetServerStatusInfo_230:
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_180
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_230:
 	cmp eax, 0x3
-	jz UI_GetServerStatusInfo_190
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_190
 	sub eax, 0x1
-	jz UI_GetServerStatusInfo_200
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_200
 	add dword [ebp-0x38], 0x1
-UI_GetServerStatusInfo_220:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_220:
 	add edi, 0x1
 	add ebx, 0x10
 	mov ecx, [ebp-0x48]
 	cmp [ecx+0xd00], edi
-	jg UI_GetServerStatusInfo_150
-UI_GetServerStatusInfo_140:
+	jg _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_150
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_140:
 	mov ebx, [ebp-0x24]
 	mov eax, [ebx]
 	add ebx, 0xc
 	mov [ebp-0x24], ebx
 	test eax, eax
-	jnz UI_GetServerStatusInfo_210
-UI_GetServerStatusInfo_130:
+	jnz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_210
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_130:
 	mov eax, 0x1
 	add esp, 0x4c
 	pop ebx
@@ -2183,7 +2183,7 @@ UI_GetServerStatusInfo_130:
 	pop edi
 	pop ebp
 	ret
-UI_GetServerStatusInfo_200:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_200:
 	mov eax, [esi+0x4c]
 	mov [esp], eax
 	call atoi
@@ -2193,73 +2193,73 @@ UI_GetServerStatusInfo_200:
 	cmovz edx, eax
 	mov [esi+0x4c], edx
 	add dword [ebp-0x38], 0x1
-	jmp UI_GetServerStatusInfo_220
-UI_GetServerStatusInfo_170:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_220
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_170:
 	mov edx, ecx
 	mov eax, [edx-0x4]
 	cmp eax, 0x2
-	jnz UI_GetServerStatusInfo_230
-UI_GetServerStatusInfo_180:
+	jnz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_230
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_180:
 	mov esi, [esi+0x4c]
 	mov [ebp-0x2c], esi
 	mov eax, [sharedUiInfo+0x114c]
 	test eax, eax
-	jg UI_GetServerStatusInfo_240
-UI_GetServerStatusInfo_250:
+	jg _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_240
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_250:
 	mov edx, esi
-UI_GetServerStatusInfo_280:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_280:
 	mov eax, [ebp-0x38]
 	shl eax, 0x4
 	mov ecx, [ebp-0x48]
 	mov [eax+ecx+0x4c], edx
 	add dword [ebp-0x38], 0x1
-	jmp UI_GetServerStatusInfo_220
-UI_GetServerStatusInfo_190:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_220
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_190:
 	mov esi, [esi+0x4c]
 	mov [ebp-0x34], esi
 	mov eax, [sharedUiInfo+0x1c58]
 	test eax, eax
-	jle UI_GetServerStatusInfo_250
+	jle _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_250
 	mov dword [ebp-0x30], 0x0
 	mov esi, sharedUiInfo
-UI_GetServerStatusInfo_270:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_270:
 	mov eax, [esi+0x1c60]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x34]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_GetServerStatusInfo_260
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_260
 	add dword [ebp-0x30], 0x1
 	add esi, 0xa0
 	mov edx, [ebp-0x30]
 	cmp edx, [sharedUiInfo+0x1c58]
-	jl UI_GetServerStatusInfo_270
+	jl _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_270
 	mov edx, [ebp-0x34]
-	jmp UI_GetServerStatusInfo_280
-UI_GetServerStatusInfo_240:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_280
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_240:
 	mov dword [ebp-0x28], 0x0
 	mov esi, sharedUiInfo
-UI_GetServerStatusInfo_300:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_300:
 	mov eax, [esi+0x1150]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x2c]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_GetServerStatusInfo_290
+	jz _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_290
 	add dword [ebp-0x28], 0x1
 	add esi, 0x8
 	mov edx, [ebp-0x28]
 	cmp edx, [sharedUiInfo+0x114c]
-	jl UI_GetServerStatusInfo_300
+	jl _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_300
 	mov edx, [ebp-0x2c]
-	jmp UI_GetServerStatusInfo_280
-UI_GetServerStatusInfo_10:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_280
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_10:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call LAN_GetServerStatus
+	call _Z19LAN_GetServerStatusPcS_i
 	xor eax, eax
 	add esp, 0x4c
 	pop ebx
@@ -2267,40 +2267,40 @@ UI_GetServerStatusInfo_10:
 	pop edi
 	pop ebp
 	ret
-UI_GetServerStatusInfo_30:
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_30:
 	mov eax, [ebp-0x48]
 	mov ebx, [eax+0xd00]
-	jmp UI_GetServerStatusInfo_110
-UI_GetServerStatusInfo_290:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_110
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_290:
 	mov ecx, [ebp-0x28]
 	mov eax, [ecx*8+sharedUiInfo+0x1154]
 	mov [esp], eax
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [ebp-0x2c], eax
 	mov edx, eax
-	jmp UI_GetServerStatusInfo_280
-UI_GetServerStatusInfo_260:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_280
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_260:
 	mov ecx, [ebp-0x30]
 	lea eax, [ecx+ecx*4]
 	shl eax, 0x5
 	mov eax, [eax+sharedUiInfo+0x1c5c]
 	mov [esp], eax
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [ebp-0x34], eax
 	mov edx, eax
-	jmp UI_GetServerStatusInfo_280
-UI_GetServerStatusInfo_90:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_280
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_90:
 	mov edx, [ebp-0x48]
 	mov ebx, [edx+0xd00]
-	jmp UI_GetServerStatusInfo_110
-UI_GetServerStatusInfo_100:
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_110
+_Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_100:
 	mov ecx, [ebp-0x48]
 	mov ebx, [ecx+0xd00]
-	jmp UI_GetServerStatusInfo_110
+	jmp _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t_110
 
 
 ;UI_BuildFindPlayerList()
-UI_BuildFindPlayerList:
+_Z22UI_BuildFindPlayerListv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2309,160 +2309,160 @@ UI_BuildFindPlayerList:
 	sub esp, 0x118c
 	mov eax, [uiInfoArray+0x24ac]
 	test eax, eax
-	jz UI_BuildFindPlayerList_10
+	jz _Z22UI_BuildFindPlayerListv_10
 	cmp eax, [uiInfoArray+0x8]
-	jle UI_BuildFindPlayerList_20
-UI_BuildFindPlayerList_10:
+	jle _Z22UI_BuildFindPlayerListv_20
+_Z22UI_BuildFindPlayerListv_10:
 	add esp, 0x118c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_BuildFindPlayerList_20:
+_Z22UI_BuildFindPlayerListv_20:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_BuildFindPlayerList_30
+	jz _Z22UI_BuildFindPlayerListv_30
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov ebx, [sharedUiInfo+0x1ab78]
 	test ebx, ebx
-	jnz UI_BuildFindPlayerList_40
-UI_BuildFindPlayerList_30:
+	jnz _Z22UI_BuildFindPlayerListv_40
+_Z22UI_BuildFindPlayerListv_30:
 	mov dword [ebp-0x1168], 0x0
 	mov dword [ebp-0x1150], sharedUiInfo
 	mov dword [ebp-0x116c], sharedUiInfo+0x1bd30
 	mov dword [ebp-0x1170], sharedUiInfo+0x1bcf0
 	mov dword [ebp-0x1174], sharedUiInfo+0x1bd30
-	jmp UI_BuildFindPlayerList_50
-UI_BuildFindPlayerList_100:
+	jmp _Z22UI_BuildFindPlayerListv_50
+_Z22UI_BuildFindPlayerListv_100:
 	xor edx, edx
 	mov eax, [ebp-0x1170]
-	call UI_GetServerStatusInfo
+	call _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t
 	mov eax, [ebp-0x114c]
 	mov dword [eax], 0x0
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_BuildFindPlayerList_60
+	jz _Z22UI_BuildFindPlayerListv_60
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov ebx, [sharedUiInfo+0x1ab78]
 	test ebx, ebx
-	jnz UI_BuildFindPlayerList_70
-UI_BuildFindPlayerList_60:
+	jnz _Z22UI_BuildFindPlayerListv_70
+_Z22UI_BuildFindPlayerListv_60:
 	mov eax, [sharedUiInfo+0x1bcec]
 	cmp eax, [sharedUiInfo+0x1ab78]
-	jl UI_BuildFindPlayerList_80
-UI_BuildFindPlayerList_240:
+	jl _Z22UI_BuildFindPlayerListv_80
+_Z22UI_BuildFindPlayerListv_240:
 	add dword [ebp-0x1168], 0x1
 	add dword [ebp-0x1174], 0x8c
 	add dword [ebp-0x1170], 0x8c
 	add dword [ebp-0x116c], 0x8c
 	add dword [ebp-0x1150], 0x8c
 	cmp dword [ebp-0x1168], 0x10
-	jz UI_BuildFindPlayerList_90
-UI_BuildFindPlayerList_50:
+	jz _Z22UI_BuildFindPlayerListv_90
+_Z22UI_BuildFindPlayerListv_50:
 	mov eax, [ebp-0x1150]
 	add eax, 0x1bd78
 	mov [ebp-0x114c], eax
 	mov edx, [ebp-0x1150]
 	mov ecx, [edx+0x1bd78]
 	test ecx, ecx
-	jz UI_BuildFindPlayerList_100
+	jz _Z22UI_BuildFindPlayerListv_100
 	lea edx, [ebp-0x1140]
 	mov eax, [ebp-0x1170]
-	call UI_GetServerStatusInfo
+	call _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t
 	test eax, eax
-	jz UI_BuildFindPlayerList_110
+	jz _Z22UI_BuildFindPlayerListv_110
 	mov eax, [_ZZ22UI_BuildFindPlayerListvE8numFound]
 	add eax, 0x1
 	mov [_ZZ22UI_BuildFindPlayerListvE8numFound], eax
 	mov edx, [ebp-0x440]
 	test edx, edx
-	jle UI_BuildFindPlayerList_120
+	jle _Z22UI_BuildFindPlayerListv_120
 	mov dword [ebp-0x1164], 0x0
 	lea eax, [ebp-0x1140]
 	mov [ebp-0x1154], eax
 	mov edx, eax
-	jmp UI_BuildFindPlayerList_130
-UI_BuildFindPlayerList_150:
+	jmp _Z22UI_BuildFindPlayerListv_130
+_Z22UI_BuildFindPlayerListv_150:
 	add dword [ebp-0x1164], 0x1
 	add dword [ebp-0x1154], 0x10
 	mov edx, [ebp-0x1164]
 	cmp edx, [ebp-0x440]
-	jge UI_BuildFindPlayerList_140
+	jge _Z22UI_BuildFindPlayerListv_140
 	mov edx, [ebp-0x1154]
-UI_BuildFindPlayerList_130:
+_Z22UI_BuildFindPlayerListv_130:
 	mov eax, [edx+0x48]
 	test eax, eax
-	jz UI_BuildFindPlayerList_150
+	jz _Z22UI_BuildFindPlayerListv_150
 	cmp byte [eax], 0x0
-	jz UI_BuildFindPlayerList_150
+	jz _Z22UI_BuildFindPlayerListv_150
 	mov dword [esp+0x8], 0x22
 	mov eax, [edx+0x4c]
 	mov [esp+0x4], eax
 	lea ebx, [ebp-0x3a]
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov [esp], ebx
-	call Q_CleanStr
+	call _Z10I_CleanStrPc
 	cmp byte [ebp-0x3a], 0x0
-	jz UI_BuildFindPlayerList_150
+	jz _Z22UI_BuildFindPlayerListv_150
 	mov [ebp-0x1160], ebx
-	jmp UI_BuildFindPlayerList_160
-UI_BuildFindPlayerList_190:
+	jmp _Z22UI_BuildFindPlayerListv_160
+_Z22UI_BuildFindPlayerListv_190:
 	xor eax, eax
-UI_BuildFindPlayerList_230:
+_Z22UI_BuildFindPlayerListv_230:
 	cmp byte [eax+uiInfoArray+0x18a5], 0x0
-	jz UI_BuildFindPlayerList_170
-UI_BuildFindPlayerList_210:
+	jz _Z22UI_BuildFindPlayerListv_170
+_Z22UI_BuildFindPlayerListv_210:
 	add dword [ebp-0x1160], 0x1
 	mov edx, [ebp-0x1160]
 	cmp byte [edx], 0x0
-	jz UI_BuildFindPlayerList_150
-UI_BuildFindPlayerList_160:
+	jz _Z22UI_BuildFindPlayerListv_150
+_Z22UI_BuildFindPlayerListv_160:
 	movzx eax, byte [uiInfoArray+0x18a5]
 	test al, al
-	jz UI_BuildFindPlayerList_180
+	jz _Z22UI_BuildFindPlayerListv_180
 	mov edx, [ebp-0x1160]
 	cmp byte [edx], 0x0
-	jz UI_BuildFindPlayerList_190
+	jz _Z22UI_BuildFindPlayerListv_190
 	mov esi, edx
 	mov dword [ebp-0x1158], 0x0
 	mov dword [ebp-0x115c], 0x0
 	mov edi, uiInfoArray+0x18a5
-	jmp UI_BuildFindPlayerList_200
-UI_BuildFindPlayerList_220:
+	jmp _Z22UI_BuildFindPlayerListv_200
+_Z22UI_BuildFindPlayerListv_220:
 	add dword [ebp-0x1158], 0x1
 	mov eax, [ebp-0x1158]
 	mov [ebp-0x115c], eax
 	movzx eax, byte [edi+0x1]
 	test al, al
-	jz UI_BuildFindPlayerList_170
+	jz _Z22UI_BuildFindPlayerListv_170
 	mov esi, [ebp-0x1160]
 	add esi, [ebp-0x115c]
 	add edi, 0x1
 	cmp byte [esi], 0x0
-	jz UI_BuildFindPlayerList_210
-UI_BuildFindPlayerList_200:
+	jz _Z22UI_BuildFindPlayerListv_210
+_Z22UI_BuildFindPlayerListv_200:
 	movsx eax, al
 	mov [esp], eax
-	call __toupper
+	call toupper
 	mov ebx, eax
 	movsx eax, byte [esi]
 	mov [esp], eax
-	call __toupper
+	call toupper
 	cmp ebx, eax
-	jz UI_BuildFindPlayerList_220
+	jz _Z22UI_BuildFindPlayerListv_220
 	mov eax, [ebp-0x115c]
-	jmp UI_BuildFindPlayerList_230
-UI_BuildFindPlayerList_140:
+	jmp _Z22UI_BuildFindPlayerListv_230
+_Z22UI_BuildFindPlayerListv_140:
 	mov eax, [_ZZ22UI_BuildFindPlayerListvE8numFound]
-UI_BuildFindPlayerList_120:
+_Z22UI_BuildFindPlayerListv_120:
 	mov [esp+0x10], eax
 	mov eax, [sharedUiInfo+0x1bcec]
 	mov [esp+0xc], eax
@@ -2472,23 +2472,23 @@ UI_BuildFindPlayerList_120:
 	shl eax, 0x6
 	add eax, uiInfoArray+0x2065
 	mov [esp], eax
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov eax, [ebp-0x114c]
 	mov dword [eax], 0x0
-UI_BuildFindPlayerList_110:
+_Z22UI_BuildFindPlayerListv_110:
 	mov edx, [ebp-0x114c]
 	mov esi, [edx]
 	test esi, esi
-	jz UI_BuildFindPlayerList_100
+	jz _Z22UI_BuildFindPlayerListv_100
 	mov eax, [uiInfoArray+0x8]
 	mov edx, [ui_serverStatusTimeOut]
 	sub eax, [edx+0xc]
 	mov edx, [ebp-0x1150]
 	cmp [edx+0x1bd70], eax
-	jge UI_BuildFindPlayerList_240
+	jge _Z22UI_BuildFindPlayerListv_240
 	add dword [_ZZ22UI_BuildFindPlayerListvE11numTimeOuts], 0x1
-	jmp UI_BuildFindPlayerList_100
-UI_BuildFindPlayerList_80:
+	jmp _Z22UI_BuildFindPlayerListv_100
+_Z22UI_BuildFindPlayerListv_80:
 	mov eax, [uiInfoArray+0x8]
 	mov edx, [ebp-0x1150]
 	mov [edx+0x1bd70], eax
@@ -2501,7 +2501,7 @@ UI_BuildFindPlayerList_80:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerAddressString
+	call _Z26LAN_GetServerAddressStringiiPci
 	mov dword [esp+0xc], 0x400
 	lea edx, [ebp-0x43a]
 	mov [esp+0x8], edx
@@ -2511,16 +2511,16 @@ UI_BuildFindPlayerList_80:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerInfo
+	call _Z17LAN_GetServerInfoiiPci
 	mov dword [esp+0x4], _cstring_hostname
 	lea eax, [ebp-0x43a]
 	mov [esp], eax
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x116c]
 	mov [esp], edx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov eax, [ebp-0x114c]
 	mov dword [eax], 0x1
 	mov edx, [sharedUiInfo+0x1bcec]
@@ -2535,27 +2535,27 @@ UI_BuildFindPlayerList_80:
 	shl eax, 0x6
 	add eax, uiInfoArray+0x2065
 	mov [esp], eax
-	call Com_sprintf
-	jmp UI_BuildFindPlayerList_240
-UI_BuildFindPlayerList_70:
+	call _Z11Com_sprintfPciPKcz
+	jmp _Z22UI_BuildFindPlayerListv_240
+_Z22UI_BuildFindPlayerListv_70:
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-	jmp UI_BuildFindPlayerList_60
-UI_BuildFindPlayerList_90:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+	jmp _Z22UI_BuildFindPlayerListv_60
+_Z22UI_BuildFindPlayerListv_90:
 	mov eax, sharedUiInfo
 	mov edx, sharedUiInfo+0x8c0
-UI_BuildFindPlayerList_260:
+_Z22UI_BuildFindPlayerListv_260:
 	mov ecx, [eax+0x1bd78]
 	test ecx, ecx
-	jnz UI_BuildFindPlayerList_250
+	jnz _Z22UI_BuildFindPlayerListv_250
 	add eax, 0x8c
 	cmp edx, eax
-	jnz UI_BuildFindPlayerList_260
+	jnz _Z22UI_BuildFindPlayerListv_260
 	mov ecx, [uiInfoArray+0x24a8]
 	test ecx, ecx
-	jz UI_BuildFindPlayerList_270
+	jz _Z22UI_BuildFindPlayerListv_270
 	mov eax, _cstring_null
 	cmp ecx, 0x2
 	mov edx, _cstring_s1
@@ -2569,8 +2569,8 @@ UI_BuildFindPlayerList_260:
 	shl edx, 0x6
 	add edx, uiInfoArray+0x20a5
 	mov [esp], edx
-	call Com_sprintf
-UI_BuildFindPlayerList_290:
+	call _Z11Com_sprintfPciPKcz
+_Z22UI_BuildFindPlayerListv_290:
 	mov dword [uiInfoArray+0x24ac], 0x0
 	add esp, 0x118c
 	pop ebx
@@ -2578,31 +2578,31 @@ UI_BuildFindPlayerList_290:
 	pop edi
 	pop ebp
 	ret
-UI_BuildFindPlayerList_180:
+_Z22UI_BuildFindPlayerListv_180:
 	mov edi, [ebp-0x1160]
 	test edi, edi
-	jz UI_BuildFindPlayerList_150
-UI_BuildFindPlayerList_170:
+	jz _Z22UI_BuildFindPlayerListv_150
+_Z22UI_BuildFindPlayerListv_170:
 	mov eax, [uiInfoArray+0x24a8]
 	cmp eax, 0xe
-	jle UI_BuildFindPlayerList_280
+	jle _Z22UI_BuildFindPlayerListv_280
 	mov eax, [sharedUiInfo+0x1ab78]
 	mov [sharedUiInfo+0x1bcec], eax
-	jmp UI_BuildFindPlayerList_150
-UI_BuildFindPlayerList_40:
+	jmp _Z22UI_BuildFindPlayerListv_150
+_Z22UI_BuildFindPlayerListv_40:
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-	jmp UI_BuildFindPlayerList_30
-UI_BuildFindPlayerList_280:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+	jmp _Z22UI_BuildFindPlayerListv_30
+_Z22UI_BuildFindPlayerListv_280:
 	mov dword [esp+0x8], 0x40
 	mov edx, [ebp-0x1170]
 	mov [esp+0x4], edx
 	shl eax, 0x6
 	add eax, uiInfoArray+0x1c65
 	mov [esp], eax
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov dword [esp+0x8], 0x40
 	mov eax, [ebp-0x1174]
 	mov [esp+0x4], eax
@@ -2610,10 +2610,10 @@ UI_BuildFindPlayerList_280:
 	shl eax, 0x6
 	add eax, uiInfoArray+0x2065
 	mov [esp], eax
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	add dword [uiInfoArray+0x24a8], 0x1
-	jmp UI_BuildFindPlayerList_150
-UI_BuildFindPlayerList_250:
+	jmp _Z22UI_BuildFindPlayerListv_150
+_Z22UI_BuildFindPlayerListv_250:
 	mov eax, [uiInfoArray+0x8]
 	add eax, 0x19
 	mov [uiInfoArray+0x24ac], eax
@@ -2623,17 +2623,17 @@ UI_BuildFindPlayerList_250:
 	pop edi
 	pop ebp
 	ret
-UI_BuildFindPlayerList_270:
+_Z22UI_BuildFindPlayerListv_270:
 	mov dword [esp+0x8], _cstring_no_servers_found
 	mov dword [esp+0x4], 0x40
 	mov dword [esp], uiInfoArray+0x2065
-	call Com_sprintf
-	jmp UI_BuildFindPlayerList_290
+	call _Z11Com_sprintfPciPKcz
+	jmp _Z22UI_BuildFindPlayerListv_290
 	nop
 
 
 ;UI_BuildServerStatus(uiInfo_s*, int)
-UI_BuildServerStatus:
+_Z20UI_BuildServerStatusP8uiInfo_si:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -2641,79 +2641,79 @@ UI_BuildServerStatus:
 	mov ebx, eax
 	mov eax, [eax+0x24ac]
 	test eax, eax
-	jnz UI_BuildServerStatus_10
+	jnz _Z20UI_BuildServerStatusP8uiInfo_si_10
 	test edx, edx
-	jnz UI_BuildServerStatus_20
+	jnz _Z20UI_BuildServerStatusP8uiInfo_si_20
 	mov eax, [sharedUiInfo+0x1bce8]
 	test eax, eax
-	jz UI_BuildServerStatus_10
+	jz _Z20UI_BuildServerStatusP8uiInfo_si_10
 	cmp eax, [ebx+0x8]
-	jg UI_BuildServerStatus_10
-UI_BuildServerStatus_60:
+	jg _Z20UI_BuildServerStatusP8uiInfo_si_10
+_Z20UI_BuildServerStatusP8uiInfo_si_60:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_BuildServerStatus_30
+	jz _Z20UI_BuildServerStatusP8uiInfo_si_30
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov eax, [sharedUiInfo+0x1ab78]
 	test eax, eax
-	jnz UI_BuildServerStatus_40
-UI_BuildServerStatus_30:
+	jnz _Z20UI_BuildServerStatusP8uiInfo_si_40
+_Z20UI_BuildServerStatusP8uiInfo_si_30:
 	mov edx, [sharedUiInfo+0x72f4]
 	test edx, edx
-	js UI_BuildServerStatus_10
+	js _Z20UI_BuildServerStatusP8uiInfo_si_10
 	mov eax, [sharedUiInfo+0x1ab78]
 	cmp edx, eax
-	jg UI_BuildServerStatus_10
+	jg _Z20UI_BuildServerStatusP8uiInfo_si_10
 	test eax, eax
-	jnz UI_BuildServerStatus_50
-UI_BuildServerStatus_10:
+	jnz _Z20UI_BuildServerStatusP8uiInfo_si_50
+_Z20UI_BuildServerStatusP8uiInfo_si_10:
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-UI_BuildServerStatus_20:
+_Z20UI_BuildServerStatusP8uiInfo_si_20:
 	mov dword [esp+0x10], 0x0
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0xd
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call Menu_SetFeederSelection
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
 	mov dword [sharedUiInfo+0x1bce4], 0x0
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], 0x0
-	call LAN_GetServerStatus
-	jmp UI_BuildServerStatus_60
-UI_BuildServerStatus_50:
+	call _Z19LAN_GetServerStatusPcS_i
+	jmp _Z20UI_BuildServerStatusP8uiInfo_si_60
+_Z20UI_BuildServerStatusP8uiInfo_si_50:
 	mov edx, sharedUiInfo+0x1afe4
 	mov eax, sharedUiInfo+0x1afa4
-	call UI_GetServerStatusInfo
+	call _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t
 	test eax, eax
-	jnz UI_BuildServerStatus_70
+	jnz _Z20UI_BuildServerStatusP8uiInfo_si_70
 	mov eax, [ebx+0x8]
 	add eax, 0x1f4
 	mov [sharedUiInfo+0x1bce8], eax
-	jmp UI_BuildServerStatus_10
-UI_BuildServerStatus_40:
+	jmp _Z20UI_BuildServerStatusP8uiInfo_si_10
+_Z20UI_BuildServerStatusP8uiInfo_si_40:
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call UI_BuildServerDisplayList
-	jmp UI_BuildServerStatus_30
-UI_BuildServerStatus_70:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+	jmp _Z20UI_BuildServerStatusP8uiInfo_si_30
+_Z20UI_BuildServerStatusP8uiInfo_si_70:
 	mov dword [sharedUiInfo+0x1bce8], 0x0
 	xor edx, edx
 	mov eax, sharedUiInfo+0x1afa4
-	call UI_GetServerStatusInfo
-	jmp UI_BuildServerStatus_10
+	call _Z22UI_GetServerStatusInfoPcP18serverStatusInfo_t
+	jmp _Z20UI_BuildServerStatusP8uiInfo_si_10
 	nop
 
 
 ;UI_DisplayDownloadInfo(char const*, float, float, Font_s*, float)
-UI_DisplayDownloadInfo:
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2748,7 +2748,7 @@ UI_DisplayDownloadInfo:
 	mov [esp+0x4], esi
 	mov edi, scrPlaceFull
 	mov [esp], edi
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	lea eax, [ebp-0x28]
 	mov [esp+0x1c], eax
 	mov dword [esp+0x18], 0x0
@@ -2760,7 +2760,7 @@ UI_DisplayDownloadInfo:
 	movss [esp+0x8], xmm0
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	lea edx, [ebp-0x28]
 	mov [esp+0x1c], edx
 	mov dword [esp+0x18], 0x0
@@ -2772,10 +2772,10 @@ UI_DisplayDownloadInfo:
 	movss [esp+0x8], xmm0
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	mov eax, [ebp-0x150]
 	test eax, eax
-	jle UI_DisplayDownloadInfo_10
+	jle _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_10
 	mov edx, colorGreen
 	mov eax, [edx]
 	mov [ebp-0x28], eax
@@ -2802,7 +2802,7 @@ UI_DisplayDownloadInfo:
 	movss [esp+0x8], xmm0
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	lea eax, [ebp-0x28]
 	mov [esp+0x1c], eax
 	mov dword [esp+0x18], 0x0
@@ -2816,7 +2816,7 @@ UI_DisplayDownloadInfo:
 	movss [esp+0x8], xmm0
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	lea edx, [ebp-0x28]
 	mov [esp+0x1c], edx
 	mov dword [esp+0x18], 0x0
@@ -2829,13 +2829,13 @@ UI_DisplayDownloadInfo:
 	movss [esp+0x8], xmm0
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call UI_FillRect
-UI_DisplayDownloadInfo_10:
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_10:
 	movss xmm0, dword [ebp+0x10]
 	addss xmm0, [_float_210_00000000]
 	movss [ebp-0x15c], xmm0
 	mov dword [esp], _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE6dlText
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov dword [esp+0x28], 0x0
 	mov esi, colorLtGrey
 	mov [esp+0x24], esi
@@ -2852,12 +2852,12 @@ UI_DisplayDownloadInfo_10:
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call UI_DrawText
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
 	movss xmm0, dword [ebp+0x10]
 	addss xmm0, [_float_235_00000000]
 	movss [ebp-0x158], xmm0
 	mov dword [esp], _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE7etaText
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov dword [esp+0x28], 0x0
 	mov [esp+0x24], esi
 	movss xmm1, dword [ebp+0x18]
@@ -2872,12 +2872,12 @@ UI_DisplayDownloadInfo_10:
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call UI_DrawText
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
 	movss xmm0, dword [ebp+0x10]
 	addss xmm0, [_float_260_00000000]
 	movss [ebp-0x154], xmm0
 	mov dword [esp], _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE8xferText
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov dword [esp+0x28], 0x0
 	mov [esp+0x24], esi
 	movss xmm1, dword [ebp+0x18]
@@ -2892,27 +2892,27 @@ UI_DisplayDownloadInfo_10:
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call UI_DrawText
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
 	movss xmm0, dword [ebp+0x18]
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0x140]
 	mov edx, [ebp+0x14]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [ebp-0x140]
 	cvttss2si eax, xmm0
 	cvtsi2ss xmm0, eax
 	ucomiss xmm0, [_float_430_00000000]
-	ja UI_DisplayDownloadInfo_20
+	ja _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_20
 	movss xmm2, dword [ebp+0x18]
-UI_DisplayDownloadInfo_60:
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_60:
 	mov dword [esp+0x28], 0x0
 	mov eax, colorLtGrey
 	mov [esp+0x24], eax
@@ -2929,45 +2929,45 @@ UI_DisplayDownloadInfo_60:
 	mov [esp+0x4], edx
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call UI_DrawText
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
 	mov ecx, [ebp-0x14c]
 	mov edx, 0x40
 	lea eax, [ebp-0x68]
-	call UI_ReadableSize
+	call _Z15UI_ReadableSizePcii
 	mov ecx, [ebp-0x150]
 	mov edx, 0x40
 	lea eax, [ebp-0xa8]
-	call UI_ReadableSize
+	call _Z15UI_ReadableSizePcii
 	mov ebx, [ebp-0x150]
 	test ebx, ebx
-	jle UI_DisplayDownloadInfo_30
+	jle _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_30
 	cvtsi2ss xmm0, dword [ebp-0x14c]
 	mulss xmm0, [_float_100_00000000]
 	cvtsi2ss xmm1, dword [ebp-0x150]
 	divss xmm0, xmm1
 	cvttss2si ecx, xmm0
 	mov [ebp-0x144], ecx
-UI_DisplayDownloadInfo_140:
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_140:
 	cmp dword [ebp-0x14c], 0xfff
-	jle UI_DisplayDownloadInfo_40
+	jle _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_40
 	mov ecx, [ebp-0x148]
 	test ecx, ecx
-	jnz UI_DisplayDownloadInfo_50
-UI_DisplayDownloadInfo_40:
+	jnz _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_50
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_40:
 	mov dword [esp], _cstring_exe_estimating
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
 	movss xmm0, dword [ebp+0x18]
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0x13c]
 	mov edx, [ebp+0x14]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov dword [esp+0x2c], 0x0
@@ -2997,12 +2997,12 @@ UI_DisplayDownloadInfo_40:
 	mov [esp+0x4], ebx
 	mov edi, scrPlaceFull
 	mov [esp], edi
-	call UI_DrawTextWithGlow
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
 	mov dword [esp], _cstring_exe_copied
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
 	mov dword [esp], _cstring_exe_of
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edx, [ebp-0x144]
 	mov [esp+0x14], edx
 	mov [esp+0x10], ebx
@@ -3012,19 +3012,19 @@ UI_DisplayDownloadInfo_40:
 	lea eax, [ebp-0x68]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_s_s_s_s_d
-	call va
+	call _Z2vaPKcz
 	mov ebx, eax
 	movss xmm0, dword [ebp+0x18]
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0x138]
 	mov edx, [ebp+0x14]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov dword [esp+0x2c], 0x0
@@ -3053,15 +3053,15 @@ UI_DisplayDownloadInfo_40:
 	mov dword [esp+0x8], 0x7fffffff
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call UI_DrawTextWithGlow
-UI_DisplayDownloadInfo_170:
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_170:
 	add esp, 0x19c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_DisplayDownloadInfo_20:
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_20:
 	movss xmm2, dword [ebp+0x18]
 	mulss xmm2, [_float_430_00000000]
 	divss xmm2, xmm0
@@ -3073,24 +3073,24 @@ UI_DisplayDownloadInfo_20:
 	movss xmm3, dword [_float_0_20000000]
 	andnps xmm2, xmm3
 	orps xmm2, xmm1
-	jmp UI_DisplayDownloadInfo_60
-UI_DisplayDownloadInfo_50:
+	jmp _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_60
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_50:
 	mov ecx, [uiInfoArray+0x8]
 	sub ecx, [ebp-0x148]
 	lea eax, [ecx+0x3e7]
 	cmp eax, 0x7ce
-	ja UI_DisplayDownloadInfo_70
+	ja _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_70
 	xor esi, esi
 	mov ecx, esi
 	mov edx, 0x40
 	lea eax, [ebp-0xe8]
-	call UI_ReadableSize
+	call _Z15UI_ReadableSizePcii
 	mov edx, [ebp-0x150]
 	test edx, edx
-	jz UI_DisplayDownloadInfo_80
-UI_DisplayDownloadInfo_150:
+	jz _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_80
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_150:
 	test esi, esi
-	jz UI_DisplayDownloadInfo_80
+	jz _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_80
 	mov eax, [ebp-0x150]
 	cdq
 	idiv esi
@@ -3101,8 +3101,8 @@ UI_DisplayDownloadInfo_150:
 	imul eax, ecx
 	mov edx, [ebp-0x150]
 	test edx, edx
-	js UI_DisplayDownloadInfo_90
-UI_DisplayDownloadInfo_210:
+	js _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_90
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_210:
 	sar edx, 0xa
 	mov esi, edx
 	cdq
@@ -3117,11 +3117,11 @@ UI_DisplayDownloadInfo_210:
 	xor ecx, ecx
 	mov eax, _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE12tleEstimates
 	mov edx, _ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE8xferText
-UI_DisplayDownloadInfo_100:
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_100:
 	add ecx, [eax]
 	add eax, 0x4
 	cmp edx, eax
-	jnz UI_DisplayDownloadInfo_100
+	jnz _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_100
 	mov eax, 0x66666667
 	imul ecx
 	mov esi, edx
@@ -3130,14 +3130,14 @@ UI_DisplayDownloadInfo_100:
 	sar eax, 0x1f
 	sub esi, eax
 	cmp esi, 0xe10
-	jg UI_DisplayDownloadInfo_110
+	jg _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_110
 	cmp esi, 0x3c
-	jle UI_DisplayDownloadInfo_120
+	jle _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_120
 	mov dword [esp], _cstring_exe_seconds
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
 	mov dword [esp], _cstring_exe_minutes
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edi, eax
 	mov [esp+0x18], ebx
 	mov edx, 0x88888889
@@ -3157,13 +3157,13 @@ UI_DisplayDownloadInfo_100:
 	mov [esp+0x14], edx
 	mov [esp+0x10], edi
 	mov [esp+0xc], ebx
-UI_DisplayDownloadInfo_200:
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_200:
 	mov dword [esp+0x8], _cstring_d_s_d_s
 	mov dword [esp+0x4], 0x40
 	lea ebx, [ebp-0x128]
 	mov [esp], ebx
-	call Com_sprintf
-UI_DisplayDownloadInfo_190:
+	call _Z11Com_sprintfPciPKcz
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_190:
 	mov dword [esp+0x28], 0x3
 	mov esi, colorLtGrey
 	mov [esp+0x24], esi
@@ -3180,12 +3180,12 @@ UI_DisplayDownloadInfo_190:
 	mov [esp+0x4], ebx
 	mov edi, scrPlaceFull
 	mov [esp], edi
-	call UI_DrawText
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
 	mov dword [esp], _cstring_exe_copied
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
 	mov dword [esp], _cstring_exe_of
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edx, [ebp-0x144]
 	mov [esp+0x14], edx
 	mov [esp+0x10], ebx
@@ -3195,19 +3195,19 @@ UI_DisplayDownloadInfo_190:
 	lea eax, [ebp-0x68]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_s_s_s_s_d
-	call va
+	call _Z2vaPKcz
 	mov ebx, eax
 	movss xmm0, dword [ebp+0x18]
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0x134]
 	mov edx, [ebp+0x14]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov dword [esp+0x2c], 0x0
@@ -3236,12 +3236,12 @@ UI_DisplayDownloadInfo_190:
 	mov dword [esp+0x8], 0x7fffffff
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call UI_DrawTextWithGlow
-	jmp UI_DisplayDownloadInfo_130
-UI_DisplayDownloadInfo_30:
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
+	jmp _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_130
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_30:
 	mov dword [ebp-0x144], 0x0
-	jmp UI_DisplayDownloadInfo_140
-UI_DisplayDownloadInfo_70:
+	jmp _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_140
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_70:
 	mov edx, 0x10624dd3
 	mov eax, ecx
 	imul edx
@@ -3257,25 +3257,25 @@ UI_DisplayDownloadInfo_70:
 	mov ecx, esi
 	mov edx, 0x40
 	lea eax, [ebp-0xe8]
-	call UI_ReadableSize
+	call _Z15UI_ReadableSizePcii
 	mov edx, [ebp-0x150]
 	test edx, edx
-	jnz UI_DisplayDownloadInfo_150
-UI_DisplayDownloadInfo_80:
+	jnz _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_150
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_80:
 	mov dword [esp], _cstring_exe_estimating
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
 	movss xmm0, dword [ebp+0x18]
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0x130]
 	mov edx, [ebp+0x14]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov dword [esp+0x2c], 0x0
@@ -3305,15 +3305,15 @@ UI_DisplayDownloadInfo_80:
 	mov [esp+0x4], ebx
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call UI_DrawTextWithGlow
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
 	mov eax, [ebp-0x150]
 	test eax, eax
-	jz UI_DisplayDownloadInfo_160
+	jz _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_160
 	mov dword [esp], _cstring_exe_copied
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
 	mov dword [esp], _cstring_exe_of
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edx, [ebp-0x144]
 	mov [esp+0x14], edx
 	mov [esp+0x10], ebx
@@ -3323,20 +3323,20 @@ UI_DisplayDownloadInfo_80:
 	lea eax, [ebp-0x68]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_s_s_s_s_d
-	call va
+	call _Z2vaPKcz
 	mov ebx, eax
-UI_DisplayDownloadInfo_180:
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_180:
 	movss xmm0, dword [ebp+0x18]
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0x12c]
 	mov edx, [ebp+0x14]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov dword [esp+0x2c], 0x0
@@ -3367,17 +3367,17 @@ UI_DisplayDownloadInfo_180:
 	mov [esp+0x4], ebx
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call UI_DrawTextWithGlow
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
 	test esi, esi
-	jz UI_DisplayDownloadInfo_170
-UI_DisplayDownloadInfo_130:
+	jz _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_170
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_130:
 	mov dword [esp], _cstring_exe_seconds
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x8], eax
 	lea edx, [ebp-0xe8]
 	mov [esp+0x4], edx
 	mov dword [esp], _cstring_ss
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x28], 0x3
 	mov edx, colorLtGrey
 	mov [esp+0x24], edx
@@ -3394,40 +3394,40 @@ UI_DisplayDownloadInfo_130:
 	mov [esp+0x4], eax
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call UI_DrawText
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
 	add esp, 0x19c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_DisplayDownloadInfo_160:
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_160:
 	mov dword [esp], _cstring_exe_copied
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x8], eax
 	lea edx, [ebp-0x68]
 	mov [esp+0x4], edx
 	mov dword [esp], _cstring_s_s
-	call va
+	call _Z2vaPKcz
 	mov ebx, eax
-	jmp UI_DisplayDownloadInfo_180
-UI_DisplayDownloadInfo_120:
+	jmp _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_180
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_120:
 	mov dword [esp], _cstring_exe_seconds
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x10], eax
 	mov [esp+0xc], esi
 	mov dword [esp+0x8], _cstring_d_s
 	mov dword [esp+0x4], 0x40
 	lea ebx, [ebp-0x128]
 	mov [esp], ebx
-	call Com_sprintf
-	jmp UI_DisplayDownloadInfo_190
-UI_DisplayDownloadInfo_110:
+	call _Z11Com_sprintfPciPKcz
+	jmp _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_190
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_110:
 	mov dword [esp], _cstring_exe_minutes
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
 	mov dword [esp], _cstring_exe_hours
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x10], eax
 	mov [esp+0x18], ebx
 	mov edx, 0x91a2b3c5
@@ -3458,15 +3458,15 @@ UI_DisplayDownloadInfo_110:
 	sub edx, ecx
 	mov [esp+0x14], edx
 	mov [esp+0xc], edi
-	jmp UI_DisplayDownloadInfo_200
-UI_DisplayDownloadInfo_90:
+	jmp _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_200
+_Z22UI_DisplayDownloadInfoPKcffP6Font_sf_90:
 	add edx, 0x3ff
-	jmp UI_DisplayDownloadInfo_210
+	jmp _Z22UI_DisplayDownloadInfoPKcffP6Font_sf_210
 	nop
 
 
 ;UI_Refresh(int)
-UI_Refresh:
+_Z10UI_Refreshi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3474,88 +3474,88 @@ UI_Refresh:
 	push ebx
 	sub esp, 0x4c
 	mov dword [esp], uiInfoArray
-	call Menu_Count
+	call _Z10Menu_CountP9UiContext
 	test eax, eax
-	jle UI_Refresh_10
+	jle _Z10UI_Refreshi_10
 	mov dword [esp], uiInfoArray
-	call Menu_PaintAll
+	call _Z13Menu_PaintAllP9UiContext
 	mov edx, [sharedUiInfo+0x72f0]
 	test edx, edx
-	jz UI_Refresh_20
+	jz _Z10UI_Refreshi_20
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	cmp eax, 0x2
-	jz UI_Refresh_30
+	jz _Z10UI_Refreshi_30
 	test eax, eax
-	jz UI_Refresh_40
+	jz _Z10UI_Refreshi_40
 	mov [esp], eax
-	call LAN_WaitServerResponse
+	call _Z22LAN_WaitServerResponsei
 	test eax, eax
-	jnz UI_Refresh_50
-UI_Refresh_30:
+	jnz _Z10UI_Refreshi_50
+_Z10UI_Refreshi_30:
 	xor ebx, ebx
-UI_Refresh_160:
+_Z10UI_Refreshi_160:
 	mov eax, [uiInfoArray+0x8]
 	cmp eax, [sharedUiInfo+0x72dc]
-	jge UI_Refresh_60
+	jge _Z10UI_Refreshi_60
 	test ebx, ebx
-	jnz UI_Refresh_20
-UI_Refresh_60:
+	jnz _Z10UI_Refreshi_20
+_Z10UI_Refreshi_60:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_Refresh_70
+	jz _Z10UI_Refreshi_70
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov eax, [sharedUiInfo+0x1ab78]
 	test eax, eax
-	jnz UI_Refresh_80
-UI_Refresh_70:
+	jnz _Z10UI_Refreshi_80
+_Z10UI_Refreshi_70:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp+0x4], eax
 	mov eax, [uiInfoArray]
 	mov [esp], eax
-	call LAN_UpdateDirtyPings
+	call _Z20LAN_UpdateDirtyPingsii
 	test eax, eax
-	jz UI_Refresh_90
+	jz _Z10UI_Refreshi_90
 	mov eax, [uiInfoArray+0x8]
 	add eax, 0x7d0
 	mov [sharedUiInfo+0x72dc], eax
-UI_Refresh_190:
+_Z10UI_Refreshi_190:
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-UI_Refresh_20:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+_Z10UI_Refreshi_20:
 	xor edx, edx
 	mov eax, uiInfoArray
-	call UI_BuildServerStatus
-	call UI_BuildFindPlayerList
-	call CL_AllLocalClientsDisconnected
+	call _Z20UI_BuildServerStatusP8uiInfo_si
+	call _Z22UI_BuildFindPlayerListv
+	call _Z30CL_AllLocalClientsDisconnectedv
 	test al, al
-	jnz UI_Refresh_100
-UI_Refresh_130:
+	jnz _Z10UI_Refreshi_100
+_Z10UI_Refreshi_130:
 	mov eax, [uiInfoArray+0x18]
 	test eax, eax
-	jnz UI_Refresh_110
-UI_Refresh_10:
+	jnz _Z10UI_Refreshi_110
+_Z10UI_Refreshi_10:
 	mov dword [esp], uiInfoArray
-	call Menu_GetFocused
+	call _Z15Menu_GetFocusedP9UiContext
 	test eax, eax
-	jz UI_Refresh_120
-UI_Refresh_170:
+	jz _Z10UI_Refreshi_120
+_Z10UI_Refreshi_170:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_Refresh_100:
+_Z10UI_Refreshi_100:
 	mov eax, clientUIActives
 	mov eax, [eax+0xc]
 	test eax, eax
-	jnz UI_Refresh_130
+	jnz _Z10UI_Refreshi_130
 	mov eax, [ui_buildLocation]
 	movss xmm0, dword [eax+0x10]
 	movss [ebp-0x20], xmm0
@@ -3573,14 +3573,14 @@ UI_Refresh_100:
 	mov eax, [ui_smallFont]
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm0, xmm1
-	jb UI_Refresh_140
+	jb _Z10UI_Refreshi_140
 	mov esi, [sharedUiInfo+0x2c]
-UI_Refresh_220:
+_Z10UI_Refreshi_220:
 	call getBuildNumberAsInt
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_17
 	mov dword [esp], _cstring_si
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x28], 0x0
 	mov edx, colorMdGrey
 	mov [esp+0x24], edx
@@ -3595,21 +3595,21 @@ UI_Refresh_220:
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call UI_DrawText
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
 	mov eax, [uiInfoArray+0x18]
 	test eax, eax
-	jz UI_Refresh_10
-UI_Refresh_110:
+	jz _Z10UI_Refreshi_10
+_Z10UI_Refreshi_110:
 	mov dword [esp], _cstring_cl_bypassmousein
-	call Cvar_VariableBooleanValue
+	call _Z12Dvar_GetBoolPKc
 	test al, al
-	jnz UI_Refresh_150
+	jnz _Z10UI_Refreshi_150
 	cmp dword [uiInfoArray+0x18a0], 0xa
-	jz UI_Refresh_150
+	jz _Z10UI_Refreshi_150
 	xor eax, eax
-UI_Refresh_180:
+_Z10UI_Refreshi_180:
 	test eax, eax
-	jnz UI_Refresh_10
+	jnz _Z10UI_Refreshi_10
 	mov eax, scrPlaceFull
 	movss xmm0, dword [_float_32_00000000]
 	movss xmm1, dword [eax]
@@ -3637,40 +3637,40 @@ UI_Refresh_180:
 	lea eax, [eax+edx*4]
 	add eax, scrPlaceView
 	mov [esp], eax
-	call UI_DrawHandlePic
-	jmp UI_Refresh_10
-UI_Refresh_40:
+	call _Z16UI_DrawHandlePicPK15ScreenPlacementffffiiPKfP8Material
+	jmp _Z10UI_Refreshi_10
+_Z10UI_Refreshi_40:
 	mov dword [esp], 0x0
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	test eax, eax
-	jnz UI_Refresh_30
-UI_Refresh_50:
+	jnz _Z10UI_Refreshi_30
+_Z10UI_Refreshi_50:
 	mov ebx, 0x1
-	jmp UI_Refresh_160
-UI_Refresh_120:
+	jmp _Z10UI_Refreshi_160
+_Z10UI_Refreshi_120:
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_IsCatcherActive
+	call _Z19Key_IsCatcherActiveii
 	test al, al
-	jz UI_Refresh_170
+	jz _Z10UI_Refreshi_170
 	mov dword [esp+0x4], 0xffffffef
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Key_RemoveCatcher
-	jmp UI_Refresh_170
-UI_Refresh_150:
+	call _Z17Key_RemoveCatcherii
+	jmp _Z10UI_Refreshi_170
+_Z10UI_Refreshi_150:
 	mov eax, 0x1
-	jmp UI_Refresh_180
-UI_Refresh_90:
+	jmp _Z10UI_Refreshi_180
+_Z10UI_Refreshi_90:
 	test ebx, ebx
-	jnz UI_Refresh_190
+	jnz _Z10UI_Refreshi_190
 	mov dword [esp+0x4], 0x2
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
 	mov eax, [sharedUiInfo+0x72f0]
 	test eax, eax
-	jz UI_Refresh_190
+	jz _Z10UI_Refreshi_190
 	mov dword [sharedUiInfo+0x72f0], 0x0
 	mov eax, [sharedUiInfo+0x1ab80]
 	mov [esp+0xc], eax
@@ -3678,60 +3678,60 @@ UI_Refresh_90:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_d_servers_listed
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	sub eax, [sharedUiInfo+0x1ab78]
 	test eax, eax
-	jle UI_Refresh_190
+	jle _Z10UI_Refreshi_190
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_d_servers_not_li
 	mov dword [esp], 0xd
-	call Com_Printf
-	jmp UI_Refresh_190
-UI_Refresh_140:
+	call _Z10Com_PrintfiPKcz
+	jmp _Z10UI_Refreshi_190
+_Z10UI_Refreshi_140:
 	mov eax, [ui_extraBigFont]
 	ucomiss xmm1, [eax+0xc]
-	jae UI_Refresh_200
+	jae _Z10UI_Refreshi_200
 	mov eax, [ui_bigFont]
 	ucomiss xmm1, [eax+0xc]
-	jb UI_Refresh_210
+	jb _Z10UI_Refreshi_210
 	mov esi, [sharedUiInfo+0x28]
-	jmp UI_Refresh_220
-UI_Refresh_200:
+	jmp _Z10UI_Refreshi_220
+_Z10UI_Refreshi_200:
 	mov esi, [sharedUiInfo+0x3c]
-	jmp UI_Refresh_220
-UI_Refresh_80:
+	jmp _Z10UI_Refreshi_220
+_Z10UI_Refreshi_80:
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-	jmp UI_Refresh_70
-UI_Refresh_210:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+	jmp _Z10UI_Refreshi_70
+_Z10UI_Refreshi_210:
 	mov esi, [sharedUiInfo+0x38]
-	jmp UI_Refresh_220
+	jmp _Z10UI_Refreshi_220
 
 
 ;UI_CloseAll(int)
-UI_CloseAll:
+_Z11UI_CloseAlli:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call UI_SetActiveMenu
+	call _Z16UI_SetActiveMenuii
 	leave
 	ret
 	nop
 
 
 ;UI_DrawRect(ScreenPlacement const*, float, float, float, float, int, int, float, float const*)
-UI_DrawRect:
+_Z11UI_DrawRectPK15ScreenPlacementffffiifPKf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3761,7 +3761,7 @@ UI_DrawRect:
 	movss [esp+0x4], xmm1
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_DrawStretchPic
+	call _Z17CL_DrawStretchPicPK15ScreenPlacementffffiiffffPKfP8Material
 	mov eax, [sharedUiInfo+0x20]
 	mov [esp+0x30], eax
 	mov [esp+0x2c], esi
@@ -3784,7 +3784,7 @@ UI_DrawRect:
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_DrawStretchPic
+	call _Z17CL_DrawStretchPicPK15ScreenPlacementffffiiffffPKfP8Material
 	movss xmm0, dword [ebp+0x24]
 	mulss xmm0, [_float__2_00000000]
 	addss xmm0, [ebp+0x18]
@@ -3811,7 +3811,7 @@ UI_DrawRect:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
 	movss [ebp-0x38], xmm0
-	call CL_DrawStretchPic
+	call _Z17CL_DrawStretchPicPK15ScreenPlacementffffiiffffPKfP8Material
 	mov eax, [sharedUiInfo+0x20]
 	mov [esp+0x30], eax
 	mov [esp+0x2c], esi
@@ -3835,7 +3835,7 @@ UI_DrawRect:
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_DrawStretchPic
+	call _Z17CL_DrawStretchPicPK15ScreenPlacementffffiiffffPKfP8Material
 	add esp, 0x6c
 	pop ebx
 	pop esi
@@ -3846,7 +3846,7 @@ UI_DrawRect:
 
 
 ;UI_DrawText(ScreenPlacement const*, char const*, int, Font_s*, float, float, int, int, float, float const*, int)
-UI_DrawText:
+_Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -3855,7 +3855,7 @@ UI_DrawText:
 	mov eax, [ebp+0x28]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fst dword [ebp-0xc]
 	fstp dword [ebp-0x10]
 	mov eax, [ebp+0x24]
@@ -3872,7 +3872,7 @@ UI_DrawText:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call ScrPlace_ApplyRect
+	call _Z18ScrPlace_ApplyRectPK15ScreenPlacementPfS2_S2_S2_ii
 	movss xmm1, dword [_float_0_50000000]
 	movss xmm0, dword [ebp+0x18]
 	addss xmm0, xmm1
@@ -3901,7 +3901,7 @@ UI_DrawText:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call CL_DrawTextPhysical
+	call _Z19CL_DrawTextPhysicalPKciP6Font_sffffPKfi
 	add esp, 0x54
 	pop ebx
 	pop ebp
@@ -3909,7 +3909,7 @@ UI_DrawText:
 
 
 ;UI_KeyEvent(int, int, int)
-UI_KeyEvent:
+_Z11UI_KeyEventiii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3921,61 +3921,61 @@ UI_KeyEvent:
 	mov esi, [ebp+0xc]
 	mov edi, [ebp+0x10]
 	mov dword [esp], uiInfoArray
-	call Menu_Count
+	call _Z10Menu_CountP9UiContext
 	test eax, eax
-	jnz UI_KeyEvent_10
-UI_KeyEvent_60:
+	jnz _Z11UI_KeyEventiii_10
+_Z11UI_KeyEventiii_60:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_KeyEvent_10:
+_Z11UI_KeyEventiii_10:
 	mov dword [esp], uiInfoArray
-	call Menu_GetFocused
+	call _Z15Menu_GetFocusedP9UiContext
 	mov ebx, eax
 	test eax, eax
-	jz UI_KeyEvent_20
+	jz _Z11UI_KeyEventiii_20
 	mov dword [esp], _cstring_cl_bypassmousein
-	call Cvar_VariableBooleanValue
+	call _Z12Dvar_GetBoolPKc
 	test al, al
-	jz UI_KeyEvent_30
-UI_KeyEvent_80:
+	jz _Z11UI_KeyEventiii_30
+_Z11UI_KeyEventiii_80:
 	mov edx, 0x1
 	mov eax, 0x1
 	test edx, edx
 	cmovz eax, [_ZZ11UI_KeyEventiiiE14bypassKeyClear]
 	mov [_ZZ11UI_KeyEventiiiE14bypassKeyClear], eax
 	cmp esi, 0x1b
-	jz UI_KeyEvent_40
-UI_KeyEvent_90:
+	jz _Z11UI_KeyEventiii_40
+_Z11UI_KeyEventiii_90:
 	mov dword [esp+0x4], 0x10
 	mov eax, [uiInfoArray]
 	mov [esp], eax
-	call Key_IsCatcherActive
+	call _Z19Key_IsCatcherActiveii
 	test al, al
-	jnz UI_KeyEvent_50
-UI_KeyEvent_100:
+	jnz _Z11UI_KeyEventiii_50
+_Z11UI_KeyEventiii_100:
 	mov dword [esp], uiInfoArray
-	call Menu_GetFocused
+	call _Z15Menu_GetFocusedP9UiContext
 	test eax, eax
-	jnz UI_KeyEvent_60
-UI_KeyEvent_20:
+	jnz _Z11UI_KeyEventiii_60
+_Z11UI_KeyEventiii_20:
 	mov dword [esp+0x4], 0x10
 	mov eax, [uiInfoArray]
 	mov [esp], eax
-	call Key_IsCatcherActive
+	call _Z19Key_IsCatcherActiveii
 	test al, al
-	jz UI_KeyEvent_60
+	jz _Z11UI_KeyEventiii_60
 	mov dword [esp+0x4], 0xffffffef
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call Key_RemoveCatcher
+	call _Z17Key_RemoveCatcherii
 	mov ecx, [_ZZ11UI_KeyEventiiiE14bypassKeyClear]
 	test ecx, ecx
-	jz UI_KeyEvent_70
-UI_KeyEvent_110:
+	jz _Z11UI_KeyEventiii_70
+_Z11UI_KeyEventiii_110:
 	mov dword [_ZZ11UI_KeyEventiiiE14bypassKeyClear], 0x0
 	mov dword [ebp+0xc], 0x0
 	mov dword [ebp+0x8], _cstring_cl_paused
@@ -3984,68 +3984,68 @@ UI_KeyEvent_110:
 	pop esi
 	pop edi
 	pop ebp
-	jmp Cvar_SetIntByName
-UI_KeyEvent_30:
+	jmp _Z17Dvar_SetIntByNamePKci
+_Z11UI_KeyEventiii_30:
 	cmp dword [uiInfoArray+0x18a0], 0xa
-	jz UI_KeyEvent_80
+	jz _Z11UI_KeyEventiii_80
 	xor edx, edx
 	mov eax, 0x1
 	test edx, edx
 	cmovz eax, [_ZZ11UI_KeyEventiiiE14bypassKeyClear]
 	mov [_ZZ11UI_KeyEventiiiE14bypassKeyClear], eax
 	cmp esi, 0x1b
-	jnz UI_KeyEvent_90
-UI_KeyEvent_40:
+	jnz _Z11UI_KeyEventiii_90
+_Z11UI_KeyEventiii_40:
 	test edi, edi
-	jz UI_KeyEvent_90
+	jz _Z11UI_KeyEventiii_90
 	mov dword [esp], uiInfoArray
-	call Menus_AnyFullScreenVisible
+	call _Z26Menus_AnyFullScreenVisibleP9UiContext
 	test eax, eax
-	jnz UI_KeyEvent_90
+	jnz _Z11UI_KeyEventiii_90
 	mov eax, [ebx+0xcc]
 	test eax, eax
-	jnz UI_KeyEvent_90
+	jnz _Z11UI_KeyEventiii_90
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
-	jmp UI_KeyEvent_90
-UI_KeyEvent_50:
+	call _Z14Menus_CloseAllP9UiContext
+	jmp _Z11UI_KeyEventiii_90
+_Z11UI_KeyEventiii_50:
 	mov [esp+0xc], edi
 	mov [esp+0x8], esi
 	mov [esp+0x4], ebx
 	mov dword [esp], uiInfoArray
-	call Menu_HandleKey
-	jmp UI_KeyEvent_100
-UI_KeyEvent_70:
+	call _Z14Menu_HandleKeyP9UiContextP9menuDef_tii
+	jmp _Z11UI_KeyEventiii_100
+_Z11UI_KeyEventiii_70:
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call Key_ClearStates
-	jmp UI_KeyEvent_110
+	call _Z15Key_ClearStatesi
+	jmp _Z11UI_KeyEventiii_110
 
 
 ;UI_Shutdown(int)
-UI_Shutdown:
+_Z11UI_Shutdowni:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [sharedUiInfo+0x20], 0x0
 	mov dword [esp], uiInfoArray+0xa78
-	call UILocalVar_Shutdown
+	call _Z19UILocalVar_ShutdownP17UILocalVarContext
 	mov eax, useFastFile
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz UI_Shutdown_10
+	jnz _Z11UI_Shutdowni_10
 	mov dword [esp], uiInfoArray
-	call Menus_FreeAllMemory
-UI_Shutdown_10:
+	call _Z19Menus_FreeAllMemoryP9UiContext
+_Z11UI_Shutdowni_10:
 	leave
-	jmp LAN_SaveServersToCache
+	jmp _Z22LAN_SaveServersToCachev
 	nop
 
 
 ;UI_DrawSides(ScreenPlacement const*, float, float, float, float, int, int, float, float const*)
-UI_DrawSides:
+_Z12UI_DrawSidesPK15ScreenPlacementffffiifPKf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4076,7 +4076,7 @@ UI_DrawSides:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
 	movss [ebp-0x28], xmm0
-	call CL_DrawStretchPic
+	call _Z17CL_DrawStretchPicPK15ScreenPlacementffffiiffffPKfP8Material
 	mov eax, [sharedUiInfo+0x20]
 	mov [esp+0x30], eax
 	mov [esp+0x2c], esi
@@ -4099,7 +4099,7 @@ UI_DrawSides:
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_DrawStretchPic
+	call _Z17CL_DrawStretchPicPK15ScreenPlacementffffiiffffPKfP8Material
 	add esp, 0x5c
 	pop ebx
 	pop esi
@@ -4109,7 +4109,7 @@ UI_DrawSides:
 
 
 ;UI_OwnerDraw(int, float, float, float, float, int, int, float, float, int, int, int, float, Font_s*, float, float*, Material*, int, rectDef_s, int)
-UI_OwnerDraw:
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4127,10 +4127,10 @@ UI_OwnerDraw:
 	movss [ebp-0xad4], xmm0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_IsCgameInitialized
+	call _Z21CL_IsCgameInitializedi
 	test eax, eax
-	jnz UI_OwnerDraw_10
-UI_OwnerDraw_70:
+	jnz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_10
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_70:
 	movss xmm0, dword [ebp+0xc]
 	addss xmm0, [ebp+0x24]
 	movss [ebp-0x60], xmm0
@@ -4148,12 +4148,12 @@ UI_OwnerDraw_70:
 	mov eax, [ebp+0x2c]
 	sub eax, 0xcd
 	cmp eax, 0x41
-	ja UI_OwnerDraw_20
-	jmp dword [eax*4+UI_OwnerDraw_jumptab_0]
-UI_OwnerDraw_290:
+	ja _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	jmp dword [eax*4+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_jumptab_0]
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_290:
 	mov edx, [sharedUiInfo+0x72f0]
 	test edx, edx
-	jz UI_OwnerDraw_30
+	jz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_30
 	movss xmm0, dword [_float_0_80000001]
 	mov edi, [ebp+0x44]
 	movss xmm1, dword [edi]
@@ -4191,32 +4191,32 @@ UI_OwnerDraw_290:
 	lea eax, [ebp-0x30]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call LerpColor
+	call _Z9LerpColorPfS_S_f
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_WaitServerResponse
+	call _Z22LAN_WaitServerResponsei
 	mov esi, eax
 	test eax, eax
-	jnz UI_OwnerDraw_40
+	jnz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_40
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	mov edi, eax
 	mov dword [esp], _cstring_exe_gettinginfof
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
 	mov dword [esp+0x8], 0x400
 	mov [esp+0x4], eax
 	lea eax, [ebp-0xac8]
 	mov [esp], eax
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov dword [esp+0x4], _cstring_1
 	mov [esp], ebx
 	call strstr
 	test eax, eax
-	jz UI_OwnerDraw_50
+	jz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_50
 	sub eax, ebx
 	mov byte [ebp+eax-0xac5], 0x2f
 	mov byte [ebp+eax-0xac4], 0x26
@@ -4231,8 +4231,8 @@ UI_OwnerDraw_290:
 	lea edx, [ebp-0xac8]
 	lea eax, [edx+eax]
 	mov [esp], eax
-	call Q_strncpyz
-UI_OwnerDraw_50:
+	call _Z10I_strncpyzPcPKci
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_50:
 	mov eax, cls
 	mov eax, [eax+0x4b4c]
 	mov [ebp-0x20], eax
@@ -4245,7 +4245,7 @@ UI_OwnerDraw_50:
 	mov dword [ebp-0x88], 0x2
 	xor edi, edi
 	lea esi, [ebp-0x2c8]
-UI_OwnerDraw_60:
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_60:
 	lea ebx, [edi*4]
 	mov eax, [ebp+ebx-0x20]
 	mov [esp+0x8], eax
@@ -4256,7 +4256,7 @@ UI_OwnerDraw_60:
 	add edi, 0x1
 	add esi, 0x20
 	cmp edi, 0x2
-	jnz UI_OwnerDraw_60
+	jnz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_60
 	mov dword [esp+0xc], 0x400
 	lea ebx, [ebp-0x6c8]
 	mov [esp+0x8], ebx
@@ -4264,11 +4264,11 @@ UI_OwnerDraw_60:
 	mov [esp+0x4], edx
 	lea edi, [ebp-0xac8]
 	mov [esp], edi
-	call UI_ReplaceConversions
+	call _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci
 	mov [esp], ebx
-	call va
+	call _Z2vaPKcz
 	mov edx, eax
-UI_OwnerDraw_230:
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_230:
 	mov eax, [ebp+0x4c]
 	mov [esp+0x28], eax
 	lea edi, [ebp-0xc8]
@@ -4293,15 +4293,15 @@ UI_OwnerDraw_230:
 	lea eax, [eax+edx*4]
 	add eax, scrPlaceView
 	mov [esp], eax
-	call UI_DrawText
-UI_OwnerDraw_20:
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20:
 	add esp, 0xb5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_OwnerDraw_10:
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_10:
 	mov edx, [ebp-0xacc]
 	mov [ebp-0x34], edx
 	mov eax, [ebp-0xad0]
@@ -4361,9 +4361,9 @@ UI_OwnerDraw_10:
 	mov [esp+0x18], edx
 	mov edi, [ebp+0x8]
 	mov [esp], edi
-	call CG_OwnerDraw
-	jmp UI_OwnerDraw_70
-UI_OwnerDraw_250:
+	call _Z12CG_OwnerDrawi9rectDef_sffffiiffiiifP6Font_sfPfP8Materialii
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_70
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_250:
 	mov eax, [ui_gametype]
 	mov eax, [eax+0xc]
 	mov eax, [eax*8+sharedUiInfo+0x1154]
@@ -4371,12 +4371,12 @@ UI_OwnerDraw_250:
 	mov edx, _cstring_exe_all
 	cmovz eax, edx
 	mov [esp], eax
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edi, [ebp+0x4c]
 	mov [esp+0x28], edi
 	mov edx, [ebp+0x44]
 	mov [esp+0x24], edx
-UI_OwnerDraw_80:
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_80:
 	movss xmm0, dword [ebp+0x40]
 	movss [esp+0x20], xmm0
 	mov edx, [ebp-0x4c]
@@ -4387,7 +4387,7 @@ UI_OwnerDraw_80:
 	mov [esp+0x14], edx
 	mov edx, [ebp-0x60]
 	mov [esp+0x10], edx
-UI_OwnerDraw_110:
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_110:
 	mov edx, [ebp+0x3c]
 	mov [esp+0xc], edx
 	mov dword [esp+0x8], 0x7fffffff
@@ -4398,31 +4398,31 @@ UI_OwnerDraw_110:
 	lea eax, [eax+edi*4]
 	add eax, scrPlaceView
 	mov [esp], eax
-	call UI_DrawText
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
 	add esp, 0xb5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_OwnerDraw_260:
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_260:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov eax, [eax*4+netSources]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_exe_netsources
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_net_source
-UI_OwnerDraw_90:
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_90:
 	mov [esp], eax
-	call SEH_LocalizeTextMessage
+	call _Z23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_t
 	mov edx, [ebp+0x4c]
 	mov [esp+0x28], edx
 	mov edi, [ebp+0x44]
 	mov [esp+0x24], edi
-	jmp UI_OwnerDraw_80
-UI_OwnerDraw_270:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_80
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_270:
 	xor eax, eax
 	cmp dword [ui_serverFilterType], 0x2
 	cmovb eax, [ui_serverFilterType]
@@ -4430,30 +4430,30 @@ UI_OwnerDraw_270:
 	mov eax, [eax*8+serverFilters]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_exe_serverfilter
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_server_filter
-	jmp UI_OwnerDraw_90
-UI_OwnerDraw_280:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_90
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_280:
 	mov edx, [ui_netGameType]
 	mov eax, [edx+0xc]
 	cmp eax, [sharedUiInfo+0x114c]
-	jg UI_OwnerDraw_100
-UI_OwnerDraw_210:
+	jg _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_100
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_210:
 	mov eax, [eax*8+sharedUiInfo+0x1154]
-UI_OwnerDraw_130:
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_130:
 	cmp byte [eax], 0x0
 	mov edx, _cstring_exe_all
 	cmovz eax, edx
 	mov [esp], eax
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edx, [ebp+0x4c]
 	mov [esp+0x28], edx
 	mov edi, [ebp+0x44]
 	mov [esp+0x24], edi
-	jmp UI_OwnerDraw_80
-UI_OwnerDraw_300:
-	call Display_KeyBindPending
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_80
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_300:
+	call _Z22Display_KeyBindPendingv
 	mov edx, _cstring_exe_keywait
 	test eax, eax
 	mov eax, _cstring_exe_keychange
@@ -4464,7 +4464,7 @@ UI_OwnerDraw_300:
 	movss xmm0, dword [ebp-0x60]
 	movss [ebp-0xadc], xmm0
 	mov [esp], edx
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edx, [ebp+0x4c]
 	mov [esp+0x28], edx
 	mov edx, [ebp+0x44]
@@ -4476,29 +4476,29 @@ UI_OwnerDraw_300:
 	mov [esp+0x14], edi
 	movss xmm0, dword [ebp-0xadc]
 	movss [esp+0x10], xmm0
-	jmp UI_OwnerDraw_110
-UI_OwnerDraw_310:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_110
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_310:
 	mov edx, [ui_joinGameType]
 	mov eax, [edx+0xc]
 	cmp eax, [sharedUiInfo+0x1b54]
-	jg UI_OwnerDraw_120
-UI_OwnerDraw_220:
+	jg _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_120
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_220:
 	mov eax, [eax*8+sharedUiInfo+0x1b5c]
-	jmp UI_OwnerDraw_130
-UI_OwnerDraw_320:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_130
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_320:
 	mov eax, [ui_currentNetMap]
 	mov eax, [eax+0xc]
 	test eax, eax
-	js UI_OwnerDraw_140
+	js _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_140
 	cmp eax, [sharedUiInfo+0x1c58]
-	jge UI_OwnerDraw_140
-UI_OwnerDraw_190:
+	jge _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_140
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_190:
 	lea ebx, [eax+eax*4]
 	shl ebx, 0x5
 	mov ecx, [ebx+sharedUiInfo+0x1cf4]
 	test ecx, ecx
-	jz UI_OwnerDraw_150
-UI_OwnerDraw_240:
+	jz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_150
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_240:
 	mov eax, [ebx+sharedUiInfo+0x1cf4]
 	mov [esp+0x20], eax
 	mov eax, [ebp+0x44]
@@ -4521,23 +4521,23 @@ UI_OwnerDraw_240:
 	lea eax, [eax+edx*4]
 	add eax, scrPlaceView
 	mov [esp], eax
-	call UI_DrawHandlePic
-	jmp UI_OwnerDraw_20
-UI_OwnerDraw_340:
+	call _Z16UI_DrawHandlePicPK15ScreenPlacementffffiiPKfP8Material
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_340:
 	mov eax, sv_voice
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz UI_OwnerDraw_20
+	jz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
 	mov eax, cl_voice
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz UI_OwnerDraw_20
-	call IN_IsTalkKeyHeld
+	jz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	call _Z16IN_IsTalkKeyHeldv
 	test al, al
-	jz UI_OwnerDraw_20
+	jz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
 	mov dword [esp+0x4], 0x7
 	mov dword [esp], _cstring_voice_on
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [esp+0x20], eax
 	mov edx, [ebp+0x44]
 	mov [esp+0x1c], edx
@@ -4559,58 +4559,58 @@ UI_OwnerDraw_340:
 	lea eax, [eax+edi*4]
 	add eax, scrPlaceView
 	mov [esp], eax
-	call UI_DrawHandlePic
-	jmp UI_OwnerDraw_20
-UI_OwnerDraw_350:
+	call _Z16UI_DrawHandlePicPK15ScreenPlacementffffiiPKfP8Material
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_350:
 	mov edi, [ebp+0x2c]
 	sub edi, 0x10b
 	xor esi, esi
 	xor ebx, ebx
-	jmp UI_OwnerDraw_160
-UI_OwnerDraw_170:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_160
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_170:
 	add ebx, 0x1
 	cmp ebx, 0x40
-	jz UI_OwnerDraw_20
-UI_OwnerDraw_160:
+	jz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_160:
 	mov [esp], ebx
-	call CL_IsClientLocal
+	call _Z16CL_IsClientLocali
 	test al, al
-	jnz UI_OwnerDraw_170
+	jnz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_170
 	mov [esp+0x4], ebx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_IsPlayerTalking
+	call _Z18CL_IsPlayerTalkingii
 	test al, al
-	jz UI_OwnerDraw_170
+	jz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_170
 	cmp edi, esi
-	jz UI_OwnerDraw_180
+	jz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_180
 	add esi, 0x1
-	jmp UI_OwnerDraw_170
-UI_OwnerDraw_330:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_170
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_330:
 	lea eax, [ebp-0x60]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call UI_DrawRecordLevel
-	jmp UI_OwnerDraw_20
-UI_OwnerDraw_140:
+	call _Z18UI_DrawRecordLeveliP9rectDef_s
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_140:
 	xor eax, eax
-	jmp UI_OwnerDraw_190
-UI_OwnerDraw_30:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_190
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_30:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_ui_lastserverref
-	call va
+	call _Z2vaPKcz
 	mov [esp], eax
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], eax
 	lea ebx, [ebp-0xc8]
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov dword [esp], _cstring_exe_refreshtime
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov esi, eax
 	cld
 	mov ecx, 0xa
@@ -4626,69 +4626,69 @@ UI_OwnerDraw_30:
 	lea eax, [ebp-0x88]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call UI_ReplaceConversions
+	call _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci
 	mov [esp], ebx
-	call va
+	call _Z2vaPKcz
 	mov edx, [ebp+0x4c]
 	mov [esp+0x28], edx
 	mov edi, [ebp+0x44]
 	mov [esp+0x24], edi
-	jmp UI_OwnerDraw_80
-UI_OwnerDraw_180:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_80
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_180:
 	test ebx, ebx
-	js UI_OwnerDraw_20
+	js _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
 	mov dword [esp+0xc], 0x26
 	lea edx, [ebp-0xc8]
 	mov [esp+0x8], edx
 	mov [esp+0x4], ebx
 	mov edi, [ebp+0x8]
 	mov [esp], edi
-	call CL_GetClientName
+	call _Z16CL_GetClientNameiiPci
 	test eax, eax
-	jnz UI_OwnerDraw_200
+	jnz _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_200
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_unable_to_find_c
 	mov dword [esp], 0xd
-	call Com_PrintWarning
-	jmp UI_OwnerDraw_20
-UI_OwnerDraw_100:
+	call _Z16Com_PrintWarningiPKcz
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_100:
 	mov dword [esp+0x4], 0x0
 	mov [esp], edx
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov eax, [sharedUiInfo+0x1150]
 	mov [esp+0x4], eax
 	mov eax, [ui_netGameTypeName]
 	mov [esp], eax
-	call Cvar_SetString
+	call _Z14Dvar_SetStringPK6dvar_sPKc
 	mov edx, [ui_netGameType]
 	mov eax, [edx+0xc]
-	jmp UI_OwnerDraw_210
-UI_OwnerDraw_120:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_210
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_120:
 	mov dword [esp+0x4], 0x0
 	mov [esp], edx
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov edx, [ui_joinGameType]
 	mov eax, [edx+0xc]
-	jmp UI_OwnerDraw_220
-UI_OwnerDraw_40:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_220
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_40:
 	mov dword [esp], _cstring_exe_waitingforma
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edx, eax
-	jmp UI_OwnerDraw_230
-UI_OwnerDraw_200:
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_230
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_200:
 	mov dword [esp+0x4], 0x7
 	mov dword [esp], _cstring_voice_on
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov esi, eax
 	movss xmm0, dword [ebp+0x40]
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x3c]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0xad8]
 	mov edx, [ebp+0x3c]
 	mov [esp], edx
-	call R_TextHeight
+	call _Z12R_TextHeightP6Font_s
 	mov edi, eax
 	mov eax, [ebp+0x8]
 	shl eax, 0x6
@@ -4711,7 +4711,7 @@ UI_OwnerDraw_200:
 	mov eax, [ebp-0x60]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call UI_DrawHandlePic
+	call _Z16UI_DrawHandlePicPK15ScreenPlacementffffiiPKfP8Material
 	cvtsi2ss xmm0, edi
 	mulss xmm0, [ebp-0xad8]
 	cvttss2si eax, xmm0
@@ -4743,89 +4743,89 @@ UI_OwnerDraw_200:
 	lea edx, [ebp-0xc8]
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call UI_DrawText
-	jmp UI_OwnerDraw_20
-UI_OwnerDraw_150:
+	call _Z11UI_DrawTextPK15ScreenPlacementPKciP6Font_sffiifPKfi
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_150:
 	mov dword [esp+0x4], 0x3
 	mov eax, [ebx+sharedUiInfo+0x1c64]
 	mov [esp], eax
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov edx, sharedUiInfo+0x1ce0
 	mov [ebx+edx+0x14], eax
-	jmp UI_OwnerDraw_240
+	jmp _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_240
 	
 	
-UI_OwnerDraw_jumptab_0:
-	dd UI_OwnerDraw_250
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_260
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_270
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_280
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_290
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_300
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_310
-	dd UI_OwnerDraw_320
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_20
-	dd UI_OwnerDraw_330
-	dd UI_OwnerDraw_340
-	dd UI_OwnerDraw_350
-	dd UI_OwnerDraw_350
-	dd UI_OwnerDraw_350
-	dd UI_OwnerDraw_350
+_Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_jumptab_0:
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_250
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_260
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_270
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_280
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_290
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_300
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_310
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_320
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_20
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_330
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_340
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_350
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_350
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_350
+	dd _Z12UI_OwnerDrawiffffiiffiiifP6Font_sfPfP8Materiali9rectDef_si_350
 
 
 ;UI_TextWidth(char const*, int, Font_s*, float)
-UI_TextWidth:
+_Z12UI_TextWidthPKciP6Font_sf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -4834,14 +4834,14 @@ UI_TextWidth:
 	mov eax, [ebp+0x14]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0xc]
 	mov [esp+0x8], ebx
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [ebp-0xc]
 	cvttss2si eax, xmm0
@@ -4853,7 +4853,7 @@ UI_TextWidth:
 
 
 ;UI_MouseEvent(int, int, int)
-UI_MouseEvent:
+_Z13UI_MouseEventiii:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -4866,46 +4866,46 @@ UI_MouseEvent:
 	movss [uiInfoArray+0x14], xmm1
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jb UI_MouseEvent_10
+	jb _Z13UI_MouseEventiii_10
 	ucomiss xmm0, [_float_640_00000000]
-	jbe UI_MouseEvent_20
-UI_MouseEvent_10:
+	jbe _Z13UI_MouseEventiii_20
+_Z13UI_MouseEventiii_10:
 	xor eax, eax
-UI_MouseEvent_50:
+_Z13UI_MouseEventiii_50:
 	mov [uiInfoArray+0x18], eax
 	test eax, eax
 	setz al
 	movzx eax, al
 	mov [esp], eax
-	call CL_ShowSystemCursor
+	call _Z19CL_ShowSystemCursori
 	mov eax, [uiInfoArray+0x18]
 	test eax, eax
-	jnz UI_MouseEvent_30
-UI_MouseEvent_40:
+	jnz _Z13UI_MouseEventiii_30
+_Z13UI_MouseEventiii_40:
 	leave
 	ret
-UI_MouseEvent_30:
+_Z13UI_MouseEventiii_30:
 	mov dword [esp], uiInfoArray
-	call Menu_Count
+	call _Z10Menu_CountP9UiContext
 	test eax, eax
-	jle UI_MouseEvent_40
+	jle _Z13UI_MouseEventiii_40
 	mov dword [esp], uiInfoArray
-	call Display_MouseMove
+	call _Z17Display_MouseMoveP9UiContext
 	leave
 	ret
-UI_MouseEvent_20:
-	jp UI_MouseEvent_10
+_Z13UI_MouseEventiii_20:
+	jp _Z13UI_MouseEventiii_10
 	ucomiss xmm1, xmm2
-	jb UI_MouseEvent_10
+	jb _Z13UI_MouseEventiii_10
 	ucomiss xmm1, [_float_480_00000000]
-	ja UI_MouseEvent_10
-	jp UI_MouseEvent_10
+	ja _Z13UI_MouseEventiii_10
+	jp _Z13UI_MouseEventiii_10
 	mov eax, 0x1
-	jmp UI_MouseEvent_50
+	jmp _Z13UI_MouseEventiii_50
 
 
 ;UI_TextHeight(Font_s*, float)
-UI_TextHeight:
+_Z13UI_TextHeightP6Font_sf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -4914,10 +4914,10 @@ UI_TextHeight:
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0xc]
 	mov [esp], ebx
-	call R_TextHeight
+	call _Z12R_TextHeightP6Font_s
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [ebp-0xc]
 	cvttss2si eax, xmm0
@@ -4929,7 +4929,7 @@ UI_TextHeight:
 
 
 ;UI_UpdateTime(int, int)
-UI_UpdateTime:
+_Z13UI_UpdateTimeii:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0xc]
@@ -4940,46 +4940,46 @@ UI_UpdateTime:
 	mov eax, [uiInfoArray+0x188c]
 	mov edx, eax
 	and edx, 0x80000003
-	js UI_UpdateTime_10
-UI_UpdateTime_60:
+	js _Z13UI_UpdateTimeii_10
+_Z13UI_UpdateTimeii_60:
 	mov [edx*4+uiInfoArray+0x1890], ecx
 	add eax, 0x1
 	mov [uiInfoArray+0x188c], eax
 	cmp eax, 0x4
-	jle UI_UpdateTime_20
+	jle _Z13UI_UpdateTimeii_20
 	xor edx, edx
 	mov eax, uiInfoArray
 	mov ecx, uiInfoArray+0x10
-UI_UpdateTime_30:
+_Z13UI_UpdateTimeii_30:
 	add edx, [eax+0x1890]
 	add eax, 0x4
 	cmp ecx, eax
-	jnz UI_UpdateTime_30
+	jnz _Z13UI_UpdateTimeii_30
 	test edx, edx
-	jnz UI_UpdateTime_40
+	jnz _Z13UI_UpdateTimeii_40
 	mov eax, 0xfa0
-UI_UpdateTime_50:
+_Z13UI_UpdateTimeii_50:
 	cvtsi2ss xmm0, eax
 	movss [uiInfoArray+0x28], xmm0
-UI_UpdateTime_20:
+_Z13UI_UpdateTimeii_20:
 	pop ebp
 	ret
-UI_UpdateTime_40:
+_Z13UI_UpdateTimeii_40:
 	mov eax, 0xfa0
 	mov ecx, edx
 	cdq
 	idiv ecx
-	jmp UI_UpdateTime_50
-UI_UpdateTime_10:
+	jmp _Z13UI_UpdateTimeii_50
+_Z13UI_UpdateTimeii_10:
 	sub edx, 0x1
 	or edx, 0xfffffffc
 	add edx, 0x1
-	jmp UI_UpdateTime_60
+	jmp _Z13UI_UpdateTimeii_60
 	nop
 
 
 ;UI_CloseMenu_f()
-UI_CloseMenu_f:
+_Z14UI_CloseMenu_fv:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -4988,10 +4988,10 @@ UI_CloseMenu_f:
 	lea ebx, [ebp-0x48]
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x1
-	call Cmd_ArgsBuffer
+	call _Z14Cmd_ArgsBufferiPci
 	mov [esp+0x4], ebx
 	mov dword [esp], uiInfoArray
-	call Menus_CloseByName
+	call _Z17Menus_CloseByNameP9UiContextPKc
 	add esp, 0x54
 	pop ebx
 	pop ebp
@@ -4999,7 +4999,7 @@ UI_CloseMenu_f:
 
 
 ;UI_FeederCount(int, float)
-UI_FeederCount:
+_Z14UI_FeederCountif:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5008,30 +5008,30 @@ UI_FeederCount:
 	sub esp, 0x1c
 	movss xmm0, dword [ebp+0xc]
 	ucomiss xmm0, [_float_4_00000000]
-	jnz UI_FeederCount_10
-	jp UI_FeederCount_10
+	jnz _Z14UI_FeederCountif_10
+	jp _Z14UI_FeederCountif_10
 	mov eax, [ui_netGameType]
 	mov esi, [eax+0xc]
 	mov eax, [sharedUiInfo+0x1c58]
 	test eax, eax
-	jle UI_FeederCount_20
+	jle _Z14UI_FeederCountif_20
 	xor edi, edi
 	xor ebx, ebx
 	mov edx, sharedUiInfo
-UI_FeederCount_40:
+_Z14UI_FeederCountif_40:
 	mov dword [edx+0x1cf8], 0x0
 	mov eax, [edx+0x1c70]
 	mov ecx, esi
 	sar eax, cl
 	test al, 0x1
-	jz UI_FeederCount_30
+	jz _Z14UI_FeederCountif_30
 	add ebx, 0x1
 	mov dword [edx+0x1cf8], 0x1
-UI_FeederCount_30:
+_Z14UI_FeederCountif_30:
 	add edi, 0x1
 	add edx, 0xa0
 	cmp [sharedUiInfo+0x1c58], edi
-	jg UI_FeederCount_40
+	jg _Z14UI_FeederCountif_40
 	mov eax, ebx
 	add esp, 0x1c
 	pop ebx
@@ -5039,10 +5039,10 @@ UI_FeederCount_30:
 	pop edi
 	pop ebp
 	ret
-UI_FeederCount_10:
+_Z14UI_FeederCountif_10:
 	ucomiss xmm0, [_float_9_00000000]
-	jnz UI_FeederCount_50
-	jp UI_FeederCount_50
+	jnz _Z14UI_FeederCountif_50
+	jp _Z14UI_FeederCountif_50
 	mov ebx, [sharedUiInfo+0x6e84]
 	mov eax, ebx
 	add esp, 0x1c
@@ -5051,9 +5051,9 @@ UI_FeederCount_10:
 	pop edi
 	pop ebp
 	ret
-UI_FeederCount_20:
+_Z14UI_FeederCountif_20:
 	xor ebx, ebx
-UI_FeederCount_80:
+_Z14UI_FeederCountif_80:
 	mov eax, ebx
 	add esp, 0x1c
 	pop ebx
@@ -5061,79 +5061,79 @@ UI_FeederCount_80:
 	pop edi
 	pop ebp
 	ret
-UI_FeederCount_50:
+_Z14UI_FeederCountif_50:
 	ucomiss xmm0, [_float_2_00000000]
-	jz UI_FeederCount_60
-UI_FeederCount_90:
+	jz _Z14UI_FeederCountif_60
+_Z14UI_FeederCountif_90:
 	ucomiss xmm0, [_float_13_00000000]
-	jnz UI_FeederCount_70
-	jp UI_FeederCount_70
+	jnz _Z14UI_FeederCountif_70
+	jp _Z14UI_FeederCountif_70
 	mov ebx, [sharedUiInfo+0x1bce4]
-	jmp UI_FeederCount_80
-UI_FeederCount_60:
-	jp UI_FeederCount_90
+	jmp _Z14UI_FeederCountif_80
+_Z14UI_FeederCountif_60:
+	jp _Z14UI_FeederCountif_90
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_FeederCount_100
+	jz _Z14UI_FeederCountif_100
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov eax, [sharedUiInfo+0x1ab78]
 	test eax, eax
-	jnz UI_FeederCount_110
-UI_FeederCount_100:
+	jnz _Z14UI_FeederCountif_110
+_Z14UI_FeederCountif_100:
 	mov ebx, [sharedUiInfo+0x1ab78]
-	jmp UI_FeederCount_80
-UI_FeederCount_70:
+	jmp _Z14UI_FeederCountif_80
+_Z14UI_FeederCountif_70:
 	ucomiss xmm0, [_float_7_00000000]
-	jz UI_FeederCount_120
-UI_FeederCount_170:
+	jz _Z14UI_FeederCountif_120
+_Z14UI_FeederCountif_170:
 	ucomiss xmm0, [_float_39_00000000]
-	jp UI_FeederCount_130
-	jz UI_FeederCount_20
-UI_FeederCount_130:
+	jp _Z14UI_FeederCountif_130
+	jz _Z14UI_FeederCountif_20
+_Z14UI_FeederCountif_130:
 	ucomiss xmm0, [_float_20_00000000]
-	jnz UI_FeederCount_140
-	jnp UI_FeederCount_150
-UI_FeederCount_140:
+	jnz _Z14UI_FeederCountif_140
+	jnp _Z14UI_FeederCountif_150
+_Z14UI_FeederCountif_140:
 	ucomiss xmm0, [_float_24_00000000]
-	jnz UI_FeederCount_160
-	jp UI_FeederCount_160
+	jnz _Z14UI_FeederCountif_160
+	jp _Z14UI_FeederCountif_160
 	mov ebx, [uiInfoArray+0x1684]
-	jmp UI_FeederCount_80
-UI_FeederCount_120:
-	jp UI_FeederCount_170
-UI_FeederCount_150:
+	jmp _Z14UI_FeederCountif_80
+_Z14UI_FeederCountif_120:
+	jp _Z14UI_FeederCountif_170
+_Z14UI_FeederCountif_150:
 	mov eax, [uiInfoArray+0x8]
 	cmp eax, [uiInfoArray+0x167c]
-	jg UI_FeederCount_180
-UI_FeederCount_190:
+	jg _Z14UI_FeederCountif_180
+_Z14UI_FeederCountif_190:
 	mov ebx, [sharedUiInfo+0x48]
-	jmp UI_FeederCount_80
-UI_FeederCount_110:
+	jmp _Z14UI_FeederCountif_80
+_Z14UI_FeederCountif_110:
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-	jmp UI_FeederCount_100
-UI_FeederCount_180:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+	jmp _Z14UI_FeederCountif_100
+_Z14UI_FeederCountif_180:
 	add eax, 0xbb8
 	mov [uiInfoArray+0x167c], eax
 	mov eax, [ebp+0x8]
-	call UI_BuildPlayerList
-	jmp UI_FeederCount_190
-UI_FeederCount_160:
+	call _Z18UI_BuildPlayerListi
+	jmp _Z14UI_FeederCountif_190
+_Z14UI_FeederCountif_160:
 	ucomiss xmm0, [_float_29_00000000]
-	jnz UI_FeederCount_20
-	jp UI_FeederCount_20
+	jnz _Z14UI_FeederCountif_20
+	jp _Z14UI_FeederCountif_20
 	mov ebx, [sharedUiInfo+0x1250]
-	jmp UI_FeederCount_80
+	jmp _Z14UI_FeederCountif_80
 	nop
 
 
 ;Load_ScriptMenu(int, char const*, int)
-Load_ScriptMenu:
+_Z15Load_ScriptMenuiPKci:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -5149,22 +5149,22 @@ Load_ScriptMenu:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x100
 	mov [esp], ebx
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov dword [esp+0x8], _cstring_menu
 	mov dword [esp+0x4], 0x100
 	mov [esp], ebx
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov eax, [ebp+0x10]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call UI_LoadMenu
+	call _Z11UI_LoadMenuPKci
 	test eax, eax
-	jz Load_ScriptMenu_10
+	jz _Z15Load_ScriptMenuiPKci_10
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call UI_AddMenuList
+	call _Z14UI_AddMenuListP9UiContextP8MenuList
 	mov eax, 0x1
-Load_ScriptMenu_10:
+_Z15Load_ScriptMenuiPKci_10:
 	add esp, 0x114
 	pop ebx
 	pop ebp
@@ -5172,41 +5172,41 @@ Load_ScriptMenu_10:
 
 
 ;UI_CheckExecKey(int, int)
-UI_CheckExecKey:
+_Z15UI_CheckExecKeyii:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov ebx, [ebp+0xc]
 	mov dword [esp], uiInfoArray
-	call Menu_GetFocused
+	call _Z15Menu_GetFocusedP9UiContext
 	mov edx, eax
 	mov eax, g_editingField
 	mov ecx, [eax]
 	test ecx, ecx
-	jnz UI_CheckExecKey_10
+	jnz _Z15UI_CheckExecKeyii_10
 	cmp ebx, 0x100
-	jg UI_CheckExecKey_20
+	jg _Z15UI_CheckExecKeyii_20
 	test edx, edx
-	jz UI_CheckExecKey_20
+	jz _Z15UI_CheckExecKeyii_20
 	mov eax, [edx+0xd0]
 	test eax, eax
-	jnz UI_CheckExecKey_30
-	jmp UI_CheckExecKey_20
-UI_CheckExecKey_40:
+	jnz _Z15UI_CheckExecKeyii_30
+	jmp _Z15UI_CheckExecKeyii_20
+_Z15UI_CheckExecKeyii_40:
 	mov eax, [eax+0x8]
 	test eax, eax
-	jz UI_CheckExecKey_20
-UI_CheckExecKey_30:
+	jz _Z15UI_CheckExecKeyii_20
+_Z15UI_CheckExecKeyii_30:
 	cmp ebx, [eax]
-	jnz UI_CheckExecKey_40
-UI_CheckExecKey_10:
+	jnz _Z15UI_CheckExecKeyii_40
+_Z15UI_CheckExecKeyii_10:
 	mov eax, 0x1
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_CheckExecKey_20:
+_Z15UI_CheckExecKeyii_20:
 	xor eax, eax
 	add esp, 0x14
 	pop ebx
@@ -5216,32 +5216,32 @@ UI_CheckExecKey_20:
 
 
 ;UI_IsFullscreen(int)
-UI_IsFullscreen:
+_Z15UI_IsFullscreeni:
 	push ebp
 	mov ebp, esp
 	mov dword [ebp+0x8], uiInfoArray
 	pop ebp
-	jmp Menus_AnyFullScreenVisible
+	jmp _Z26Menus_AnyFullScreenVisibleP9UiContext
 
 
 ;UI_CloseAllMenus(int)
-UI_CloseAllMenus:
+_Z16UI_CloseAllMenusi:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call UI_SetActiveMenu
+	call _Z16UI_SetActiveMenuii
 	leave
 	ret
 	nop
 
 
 ;UI_DrawTopBottom(ScreenPlacement const*, float, float, float, float, int, int, float, float const*)
-UI_DrawTopBottom:
+_Z16UI_DrawTopBottomPK15ScreenPlacementffffiifPKf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5272,7 +5272,7 @@ UI_DrawTopBottom:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
 	movss [ebp-0x28], xmm0
-	call CL_DrawStretchPic
+	call _Z17CL_DrawStretchPicPK15ScreenPlacementffffiiffffPKfP8Material
 	mov eax, [sharedUiInfo+0x20]
 	mov [esp+0x30], eax
 	mov [esp+0x2c], esi
@@ -5295,7 +5295,7 @@ UI_DrawTopBottom:
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_DrawStretchPic
+	call _Z17CL_DrawStretchPicPK15ScreenPlacementffffiiffffPKfP8Material
 	add esp, 0x5c
 	pop ebx
 	pop esi
@@ -5305,7 +5305,7 @@ UI_DrawTopBottom:
 
 
 ;UI_GetActiveMenu(int)
-UI_GetActiveMenu:
+_Z16UI_GetActiveMenui:
 	push ebp
 	mov ebp, esp
 	mov eax, [uiInfoArray+0x18a0]
@@ -5314,7 +5314,7 @@ UI_GetActiveMenu:
 
 
 ;UI_GetBlurRadius(int)
-UI_GetBlurRadius:
+_Z16UI_GetBlurRadiusi:
 	push ebp
 	mov ebp, esp
 	fld dword [uiInfoArray+0x2c]
@@ -5324,73 +5324,73 @@ UI_GetBlurRadius:
 
 
 ;UI_GetFontHandle(ScreenPlacement const*, int, float)
-UI_GetFontHandle:
+_Z16UI_GetFontHandlePK15ScreenPlacementif:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0xc]
 	cmp eax, 0x2
-	jz UI_GetFontHandle_10
+	jz _Z16UI_GetFontHandlePK15ScreenPlacementif_10
 	cmp eax, 0x3
-	jz UI_GetFontHandle_20
+	jz _Z16UI_GetFontHandlePK15ScreenPlacementif_20
 	cmp eax, 0x5
-	jz UI_GetFontHandle_30
+	jz _Z16UI_GetFontHandlePK15ScreenPlacementif_30
 	cmp eax, 0x6
-	jz UI_GetFontHandle_40
+	jz _Z16UI_GetFontHandlePK15ScreenPlacementif_40
 	movss xmm1, dword [ebp+0x10]
 	mov edx, [ebp+0x8]
 	mulss xmm1, [edx+0x4]
 	cmp eax, 0x4
-	jz UI_GetFontHandle_50
+	jz _Z16UI_GetFontHandlePK15ScreenPlacementif_50
 	mov eax, [ui_smallFont]
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm0, xmm1
-	jae UI_GetFontHandle_20
+	jae _Z16UI_GetFontHandlePK15ScreenPlacementif_20
 	mov eax, [ui_extraBigFont]
 	ucomiss xmm1, [eax+0xc]
-	jae UI_GetFontHandle_60
+	jae _Z16UI_GetFontHandlePK15ScreenPlacementif_60
 	mov eax, [ui_bigFont]
 	ucomiss xmm1, [eax+0xc]
-	jae UI_GetFontHandle_10
-UI_GetFontHandle_80:
+	jae _Z16UI_GetFontHandlePK15ScreenPlacementif_10
+_Z16UI_GetFontHandlePK15ScreenPlacementif_80:
 	mov eax, [sharedUiInfo+0x38]
 	pop ebp
 	ret
-UI_GetFontHandle_50:
+_Z16UI_GetFontHandlePK15ScreenPlacementif_50:
 	mov eax, [ui_smallFont]
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm0, xmm1
-	jb UI_GetFontHandle_70
-UI_GetFontHandle_20:
+	jb _Z16UI_GetFontHandlePK15ScreenPlacementif_70
+_Z16UI_GetFontHandlePK15ScreenPlacementif_20:
 	mov eax, [sharedUiInfo+0x2c]
 	pop ebp
 	ret
-UI_GetFontHandle_10:
+_Z16UI_GetFontHandlePK15ScreenPlacementif_10:
 	mov eax, [sharedUiInfo+0x28]
 	pop ebp
 	ret
-UI_GetFontHandle_30:
+_Z16UI_GetFontHandlePK15ScreenPlacementif_30:
 	mov eax, [sharedUiInfo+0x30]
 	pop ebp
 	ret
-UI_GetFontHandle_40:
+_Z16UI_GetFontHandlePK15ScreenPlacementif_40:
 	mov eax, [sharedUiInfo+0x40]
 	pop ebp
 	ret
-UI_GetFontHandle_60:
+_Z16UI_GetFontHandlePK15ScreenPlacementif_60:
 	mov eax, [sharedUiInfo+0x3c]
 	pop ebp
 	ret
-UI_GetFontHandle_70:
+_Z16UI_GetFontHandlePK15ScreenPlacementif_70:
 	mov eax, [ui_bigFont]
 	ucomiss xmm1, [eax+0xc]
-	jb UI_GetFontHandle_80
+	jb _Z16UI_GetFontHandlePK15ScreenPlacementif_80
 	mov eax, [sharedUiInfo+0x34]
 	pop ebp
 	ret
 
 
 ;UI_RunMenuScript(int, char const**, char const*)
-UI_RunMenuScript:
+_Z16UI_RunMenuScriptiPPKcS0_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5402,54 +5402,54 @@ UI_RunMenuScript:
 	lea ebx, [ebp-0x49c]
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call String_Parse
+	call _Z12String_ParsePPKcPci
 	test eax, eax
-	jnz UI_RunMenuScript_10
-UI_RunMenuScript_70:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__10
+_Z16UI_RunMenuScriptiPPKcS0__70:
 	add esp, 0x10dc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_RunMenuScript_10:
+_Z16UI_RunMenuScriptiPPKcS0__10:
 	mov dword [esp+0x4], _cstring_startserver
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_20
+	jnz _Z16UI_RunMenuScriptiPPKcS0__20
 	mov eax, [ui_dedicated]
 	mov eax, [eax+0xc]
 	test eax, eax
-	jnz UI_RunMenuScript_30
+	jnz _Z16UI_RunMenuScriptiPPKcS0__30
 	mov dword [esp], _cstring_sv_punkbuster
-	call Cvar_VariableBooleanValue
+	call _Z12Dvar_GetBoolPKc
 	mov ebx, eax
 	mov dword [esp], _cstring_cl_punkbuster
-	call Cvar_VariableBooleanValue
+	call _Z12Dvar_GetBoolPKc
 	test bl, bl
-	jz UI_RunMenuScript_30
+	jz _Z16UI_RunMenuScriptiPPKcS0__30
 	test al, al
-	jz UI_RunMenuScript_40
-UI_RunMenuScript_30:
+	jz _Z16UI_RunMenuScriptiPPKcS0__40
+_Z16UI_RunMenuScriptiPPKcS0__30:
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_cg_thirdperson
-	call Cvar_SetBoolByName
+	call _Z18Dvar_SetBoolByNamePKch
 	mov eax, [ui_dedicated]
 	mov eax, [eax+0xc]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_i
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x8], 0x1
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_dedicated
-	call Cvar_SetFromStringByNameFromSource
+	call _Z34Dvar_SetFromStringByNameFromSourcePKcS0_13DvarSetSource
 	mov eax, [ui_netGameType]
 	mov eax, [eax+0xc]
 	mov eax, [eax*8+sharedUiInfo+0x1150]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_g_gametype
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov eax, [ui_currentNetMap]
 	mov eax, [eax+0xc]
 	lea eax, [eax+eax*4]
@@ -5457,248 +5457,248 @@ UI_RunMenuScript_30:
 	mov eax, [eax+sharedUiInfo+0x1c60]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_wait__wait__map_
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Cbuf_AddText
+	call _Z12Cbuf_AddTextiPKc
 	add esp, 0x10dc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_RunMenuScript_20:
+_Z16UI_RunMenuScriptiPPKcS0__20:
 	mov dword [esp+0x4], _cstring_getcdkey
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_50
+	jnz _Z16UI_RunMenuScriptiPPKcS0__50
 	mov dword [esp+0xc], 0x5
 	lea esi, [ebp-0x89c]
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], 0x11
 	lea ebx, [ebp-0x109c]
 	mov [esp], ebx
-	call CLUI_GetCDKey
+	call _Z13CLUI_GetCDKeyPciS_i
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_cdkey1
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_cdkey2
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_cdkey3
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_cdkey4
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_cdkey5
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	cld
 	mov ecx, 0xffffffff
 	mov edi, ebx
 	xor eax, eax
 	repne scasb
 	cmp ecx, 0xffffffee
-	jz UI_RunMenuScript_60
-UI_RunMenuScript_160:
+	jz _Z16UI_RunMenuScriptiPPKcS0__60
+_Z16UI_RunMenuScriptiPPKcS0__160:
 	cld
 	mov ecx, 0xffffffff
 	mov edi, esi
 	xor eax, eax
 	repne scasb
 	cmp ecx, 0xfffffffa
-	jnz UI_RunMenuScript_70
+	jnz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp+0x8], 0x5
 	mov [esp+0x4], esi
 	lea ebx, [ebp-0x9c]
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_cdkey5
-	call Cvar_SetStringByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_50:
+	call _Z20Dvar_SetStringByNamePKcS0_
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__50:
 	mov dword [esp+0x4], _cstring_verifycdkey
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_RunMenuScript_80
+	jz _Z16UI_RunMenuScriptiPPKcS0__80
 	mov dword [esp+0x4], _cstring_loadarenas
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_90
-	call UI_LoadArenas
+	jnz _Z16UI_RunMenuScriptiPPKcS0__90
+	call _Z13UI_LoadArenasv
 	mov dword [esp], _cstring_g_gametype
-	call Cvar_VariableString
+	call _Z14Dvar_GetStringPKc
 	mov edi, eax
 	mov eax, [sharedUiInfo+0x114c]
 	test eax, eax
-	jg UI_RunMenuScript_100
-UI_RunMenuScript_210:
+	jg _Z16UI_RunMenuScriptiPPKcS0__100
+_Z16UI_RunMenuScriptiPPKcS0__210:
 	mov eax, [ui_netGameType]
 	mov ebx, [eax+0xc]
 	mov eax, [sharedUiInfo+0x1c58]
 	test eax, eax
-	jle UI_RunMenuScript_110
+	jle _Z16UI_RunMenuScriptiPPKcS0__110
 	xor esi, esi
 	mov edx, sharedUiInfo
-UI_RunMenuScript_130:
+_Z16UI_RunMenuScriptiPPKcS0__130:
 	mov dword [edx+0x1cf8], 0x0
 	mov eax, [edx+0x1c70]
 	mov ecx, ebx
 	sar eax, cl
 	test al, 0x1
-	jz UI_RunMenuScript_120
+	jz _Z16UI_RunMenuScriptiPPKcS0__120
 	mov dword [edx+0x1cf8], 0x1
-UI_RunMenuScript_120:
+_Z16UI_RunMenuScriptiPPKcS0__120:
 	add esi, 0x1
 	add edx, 0xa0
 	cmp [sharedUiInfo+0x1c58], esi
-	jg UI_RunMenuScript_130
-UI_RunMenuScript_110:
+	jg _Z16UI_RunMenuScriptiPPKcS0__130
+_Z16UI_RunMenuScriptiPPKcS0__110:
 	mov dword [esp+0x10], _cstring_createserver_map
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
 	mov eax, [ebp+0x8]
-	call UI_SelectCurrentMap
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_80:
+	call _Z19UI_SelectCurrentMapi
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__80:
 	mov byte [ebp-0x89c], 0x0
 	mov dword [esp], _cstring_cdkey1
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x400
 	lea esi, [ebp-0x89c]
 	mov [esp], esi
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov dword [esp], _cstring_cdkey2
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x400
 	mov [esp], esi
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov dword [esp], _cstring_cdkey3
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x400
 	mov [esp], esi
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov dword [esp], _cstring_cdkey4
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x400
 	mov [esp], esi
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov byte [ebp-0x109c], 0x0
 	mov dword [esp], _cstring_cdkey5
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x400
 	lea ebx, [ebp-0x109c]
 	mov [esp], ebx
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call CL_CDKeyValidate
+	call _Z16CL_CDKeyValidatePKcS0_
 	test eax, eax
-	jz UI_RunMenuScript_140
+	jz _Z16UI_RunMenuScriptiPPKcS0__140
 	mov dword [esp], _cstring_exe_cdkeyvalid
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_ui_cdkeyvalid
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call CLUI_SetCDKey
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_40:
+	call _Z13CLUI_SetCDKeyPcS_
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__40:
 	mov dword [esp+0x4], _cstring_startpb_popmenu
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_140:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__140:
 	mov dword [esp], _cstring_exe_cdkeyinvalid
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_ui_cdkeyvalid
-	call Cvar_SetStringByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_90:
+	call _Z20Dvar_SetStringByNamePKcS0_
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__90:
 	mov dword [esp+0x4], _cstring_loadgameinfo
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_150
+	jnz _Z16UI_RunMenuScriptiPPKcS0__150
 	mov dword [sharedUiInfo+0x114c], 0x0
 	mov dword [sharedUiInfo+0x1250], 0x0
 	mov dword [sharedUiInfo+0x1b54], 0x0
 	mov dword [esp], _cstring_all
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [sharedUiInfo+0x1b58], eax
 	mov eax, [sharedUiInfo+0x1b54]
 	mov dword [eax*8+sharedUiInfo+0x1b5c], _cstring_null
 	add dword [sharedUiInfo+0x1b54], 0x1
 	mov eax, useFastFile
 	mov edx, [eax]
-	mov eax, UI_GetGameTypesList_FastFile
+	mov eax, _Z28UI_GetGameTypesList_FastFilev
 	cmp byte [edx+0xc], 0x0
-	mov edx, UI_GetGameTypesList_LoadObj
+	mov edx, _Z27UI_GetGameTypesList_LoadObjv
 	cmovz eax, edx
 	call eax
 	mov edi, [sharedUiInfo+0x114c]
 	test edi, edi
-	jnz UI_RunMenuScript_70
+	jnz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp+0x4], _cstring_no_game_type_scr
 	mov dword [esp], 0x1
-	call Com_Error
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_60:
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__60:
 	mov dword [esp+0x8], 0x5
 	mov [esp+0x4], ebx
 	lea ebx, [ebp-0x9c]
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_cdkey1
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov dword [esp+0x8], 0x5
 	lea eax, [ebp-0x1098]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_cdkey2
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov dword [esp+0x8], 0x5
 	lea eax, [ebp-0x1094]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_cdkey3
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov dword [esp+0x8], 0x5
 	lea eax, [ebp-0x1090]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_cdkey4
-	call Cvar_SetStringByName
-	jmp UI_RunMenuScript_160
-UI_RunMenuScript_150:
+	call _Z20Dvar_SetStringByNamePKcS0_
+	jmp _Z16UI_RunMenuScriptiPPKcS0__160
+_Z16UI_RunMenuScriptiPPKcS0__150:
 	mov dword [esp+0x4], _cstring_loadmods
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_170
+	jnz _Z16UI_RunMenuScriptiPPKcS0__170
 	mov dword [sharedUiInfo+0x6e84], 0x0
 	mov dword [sharedUiInfo+0x6e88], 0x0
 	mov dword [esp+0x10], 0x800
@@ -5707,17 +5707,17 @@ UI_RunMenuScript_150:
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_modlist
-	call FS_GetFileList
+	call _Z14FS_GetFileListPKcS0_16FsListBehavior_ePci
 	mov [ebp-0x10c0], eax
 	test eax, eax
-	jle UI_RunMenuScript_70
+	jle _Z16UI_RunMenuScriptiPPKcS0__70
 	mov [ebp-0x10bc], edi
 	mov dword [ebp-0x10b8], 0x0
 	mov esi, [sharedUiInfo+0x6e84]
-	jmp UI_RunMenuScript_180
-UI_RunMenuScript_190:
+	jmp _Z16UI_RunMenuScriptiPPKcS0__180
+_Z16UI_RunMenuScriptiPPKcS0__190:
 	mov edi, [ebp-0x10bc]
-UI_RunMenuScript_180:
+_Z16UI_RunMenuScriptiPPKcS0__180:
 	cld
 	mov ecx, 0xffffffff
 	xor eax, eax
@@ -5728,11 +5728,11 @@ UI_RunMenuScript_180:
 	add edi, ebx
 	mov eax, [ebp-0x10bc]
 	mov [esp], eax
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [esi*8+sharedUiInfo+0x6c84], eax
 	mov esi, [sharedUiInfo+0x6e84]
 	mov [esp], edi
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [esi*8+sharedUiInfo+0x6c88], eax
 	cld
 	mov ecx, 0xffffffff
@@ -5748,44 +5748,44 @@ UI_RunMenuScript_180:
 	mov esi, eax
 	mov [sharedUiInfo+0x6e84], eax
 	cmp eax, 0x3f
-	jg UI_RunMenuScript_70
+	jg _Z16UI_RunMenuScriptiPPKcS0__70
 	add dword [ebp-0x10b8], 0x1
 	mov ecx, [ebp-0x10b8]
 	cmp [ebp-0x10c0], ecx
-	jnz UI_RunMenuScript_190
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_100:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__190
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__100:
 	xor esi, esi
 	mov ebx, sharedUiInfo
-	jmp UI_RunMenuScript_200
-UI_RunMenuScript_220:
+	jmp _Z16UI_RunMenuScriptiPPKcS0__200
+_Z16UI_RunMenuScriptiPPKcS0__220:
 	add esi, 0x1
 	add ebx, 0x8
 	cmp [sharedUiInfo+0x114c], esi
-	jle UI_RunMenuScript_210
-UI_RunMenuScript_200:
+	jle _Z16UI_RunMenuScriptiPPKcS0__210
+_Z16UI_RunMenuScriptiPPKcS0__200:
 	mov eax, [ebx+0x1150]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_220
+	jnz _Z16UI_RunMenuScriptiPPKcS0__220
 	mov [esp+0x4], esi
 	mov eax, [ui_netGameType]
 	mov [esp], eax
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov eax, [esi*8+sharedUiInfo+0x1150]
 	mov [esp+0x4], eax
 	mov eax, [ui_netGameTypeName]
 	mov [esp], eax
-	call Cvar_SetString
-	jmp UI_RunMenuScript_210
-UI_RunMenuScript_170:
+	call _Z14Dvar_SetStringPK6dvar_sPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__210
+_Z16UI_RunMenuScriptiPPKcS0__170:
 	mov dword [esp+0x4], _cstring_votetypemap
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_230
+	jnz _Z16UI_RunMenuScriptiPPKcS0__230
 	mov eax, [ui_currentNetMap]
 	mov eax, [eax+0xc]
 	lea eax, [eax+eax*4]
@@ -5797,105 +5797,105 @@ UI_RunMenuScript_170:
 	mov eax, [eax*8+sharedUiInfo+0x1150]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_callvote_typemap
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_230:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__230:
 	mov dword [esp+0x4], _cstring_votemap
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_240
+	jnz _Z16UI_RunMenuScriptiPPKcS0__240
 	mov eax, [ui_currentNetMap]
 	mov eax, [eax+0xc]
 	test eax, eax
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	cmp eax, [sharedUiInfo+0x1c58]
-	jge UI_RunMenuScript_70
+	jge _Z16UI_RunMenuScriptiPPKcS0__70
 	lea eax, [eax+eax*4]
 	shl eax, 0x5
 	mov eax, [eax+sharedUiInfo+0x1c60]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_callvote_map_s
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_240:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__240:
 	mov dword [esp+0x4], _cstring_votegame
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_250
+	jnz _Z16UI_RunMenuScriptiPPKcS0__250
 	mov eax, [ui_netGameType]
 	mov eax, [eax+0xc]
 	mov eax, [eax*8+sharedUiInfo+0x1150]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_callvote_g_gamet
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_250:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__250:
 	mov dword [esp+0x4], _cstring_clearerror
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_260
+	jnz _Z16UI_RunMenuScriptiPPKcS0__260
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_com_errormessage
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_com_isnotice
-	call Cvar_SetBoolByName
+	call _Z18Dvar_SetBoolByNamePKch
 	mov eax, clientUIActives
 	mov esi, [eax+0xc]
 	test esi, esi
-	jle UI_RunMenuScript_70
+	jle _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp+0x4], 0xffffffef
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_RemoveCatcher
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_260:
+	call _Z17Key_RemoveCatcherii
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__260:
 	mov dword [esp+0x4], _cstring_refreshservers
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_270
+	jnz _Z16UI_RunMenuScriptiPPKcS0__270
 	mov edx, 0x1
 	mov eax, [ebp+0x8]
-	call UI_StartServerRefresh
+	call _Z21UI_StartServerRefreshii
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_270:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__270:
 	mov dword [esp+0x4], _cstring_refreshfilter
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_280
+	jnz _Z16UI_RunMenuScriptiPPKcS0__280
 	xor edx, edx
 	mov eax, [ebp+0x8]
-	call UI_StartServerRefresh
+	call _Z21UI_StartServerRefreshii
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_280:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__280:
 	mov dword [esp+0x4], _cstring_addplayerprofile
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_290
+	jnz _Z16UI_RunMenuScriptiPPKcS0__290
 	mov dword [uiInfoArray+0x1684], 0x0
 	mov dword [uiInfoArray+0x1788], 0x1
 	mov dword [esp+0x10], 0x3
@@ -5908,17 +5908,17 @@ UI_RunMenuScript_280:
 	mov edi, eax
 	mov ebx, [ebp-0x1c]
 	test ebx, ebx
-	jg UI_RunMenuScript_300
-UI_RunMenuScript_480:
+	jg _Z16UI_RunMenuScriptiPPKcS0__300
+_Z16UI_RunMenuScriptiPPKcS0__480:
 	mov dword [esp+0x4], 0x3
 	mov [esp], edi
 	call FS_FreeFileList
 	mov eax, [uiInfoArray+0x1684]
 	cmp eax, 0x0
-	jz UI_RunMenuScript_310
-	jg UI_RunMenuScript_320
-UI_RunMenuScript_460:
-	mov dword [esp+0xc], UI_PlayerProfilesQsortCompare
+	jz _Z16UI_RunMenuScriptiPPKcS0__310
+	jg _Z16UI_RunMenuScriptiPPKcS0__320
+_Z16UI_RunMenuScriptiPPKcS0__460:
+	mov dword [esp+0xc], _Z29UI_PlayerProfilesQsortComparePKvS0_
 	mov dword [esp+0x8], 0x4
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray+0x178c
@@ -5926,42 +5926,42 @@ UI_RunMenuScript_460:
 	mov esi, [uiInfoArray+0xa74]
 	mov eax, esi
 	sub eax, 0x1
-	js UI_RunMenuScript_330
+	js _Z16UI_RunMenuScriptiPPKcS0__330
 	lea ebx, [eax*4+uiInfoArray+0xa34]
 	xor edi, edi
-	jmp UI_RunMenuScript_340
-UI_RunMenuScript_350:
+	jmp _Z16UI_RunMenuScriptiPPKcS0__340
+_Z16UI_RunMenuScriptiPPKcS0__350:
 	add edi, 0x1
 	sub ebx, 0x4
 	cmp edi, esi
-	jz UI_RunMenuScript_330
-UI_RunMenuScript_340:
+	jz _Z16UI_RunMenuScriptiPPKcS0__330
+_Z16UI_RunMenuScriptiPPKcS0__340:
 	mov eax, [ebx]
 	test byte [eax+0x50], 0x4
-	jz UI_RunMenuScript_350
+	jz _Z16UI_RunMenuScriptiPPKcS0__350
 	mov dword [esp+0x10], 0x0
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x18
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
-	jmp UI_RunMenuScript_350
-UI_RunMenuScript_290:
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__350
+_Z16UI_RunMenuScriptiPPKcS0__290:
 	mov dword [esp+0x4], _cstring_sortplayerprofil
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_360
+	jnz _Z16UI_RunMenuScriptiPPKcS0__360
 	xor eax, eax
 	cmp dword [uiInfoArray+0x1788], 0x0
 	setz al
 	mov [uiInfoArray+0x1788], eax
 	mov eax, [uiInfoArray+0x1684]
 	cmp eax, 0x0
-	jz UI_RunMenuScript_70
-	jg UI_RunMenuScript_370
-UI_RunMenuScript_410:
-	mov dword [esp+0xc], UI_PlayerProfilesQsortCompare
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
+	jg _Z16UI_RunMenuScriptiPPKcS0__370
+_Z16UI_RunMenuScriptiPPKcS0__410:
+	mov dword [esp+0xc], _Z29UI_PlayerProfilesQsortComparePKvS0_
 	mov dword [esp+0x8], 0x4
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray+0x178c
@@ -5969,203 +5969,203 @@ UI_RunMenuScript_410:
 	mov esi, [uiInfoArray+0xa74]
 	mov eax, esi
 	sub eax, 0x1
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	lea ebx, [eax*4+uiInfoArray+0xa34]
 	xor edi, edi
-	jmp UI_RunMenuScript_380
-UI_RunMenuScript_390:
+	jmp _Z16UI_RunMenuScriptiPPKcS0__380
+_Z16UI_RunMenuScriptiPPKcS0__390:
 	add edi, 0x1
 	sub ebx, 0x4
 	cmp esi, edi
-	jz UI_RunMenuScript_70
-UI_RunMenuScript_380:
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__380:
 	mov eax, [ebx]
 	test byte [eax+0x50], 0x4
-	jz UI_RunMenuScript_390
+	jz _Z16UI_RunMenuScriptiPPKcS0__390
 	mov dword [esp+0x10], 0x0
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x18
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
-	jmp UI_RunMenuScript_390
-UI_RunMenuScript_370:
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__390
+_Z16UI_RunMenuScriptiPPKcS0__370:
 	xor edx, edx
 	mov ecx, uiInfoArray
-UI_RunMenuScript_400:
+_Z16UI_RunMenuScriptiPPKcS0__400:
 	mov [ecx+0x178c], edx
 	add edx, 0x1
 	add ecx, 0x4
 	cmp eax, edx
-	jg UI_RunMenuScript_400
-	jmp UI_RunMenuScript_410
-UI_RunMenuScript_360:
+	jg _Z16UI_RunMenuScriptiPPKcS0__400
+	jmp _Z16UI_RunMenuScriptiPPKcS0__410
+_Z16UI_RunMenuScriptiPPKcS0__360:
 	mov dword [esp+0x4], _cstring_selectactiveplay
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_420
+	jnz _Z16UI_RunMenuScriptiPPKcS0__420
 	mov eax, com_playerProfile
 	mov eax, [eax]
 	mov esi, [eax+0xc]
 	mov ecx, [uiInfoArray+0x1684]
 	test ecx, ecx
-	jle UI_RunMenuScript_70
+	jle _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [ebp-0x10b4], 0x0
 	mov ebx, uiInfoArray
-UI_RunMenuScript_440:
+_Z16UI_RunMenuScriptiPPKcS0__440:
 	mov eax, [ebx+0x178c]
 	mov eax, [eax*4+uiInfoArray+0x1688]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_RunMenuScript_430
+	jz _Z16UI_RunMenuScriptiPPKcS0__430
 	add dword [ebp-0x10b4], 0x1
 	add ebx, 0x4
 	mov edx, [ebp-0x10b4]
 	cmp [uiInfoArray+0x1684], edx
-	jg UI_RunMenuScript_440
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_330:
+	jg _Z16UI_RunMenuScriptiPPKcS0__440
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__330:
 	mov eax, [uiInfoArray+0x1684]
-UI_RunMenuScript_310:
+_Z16UI_RunMenuScriptiPPKcS0__310:
 	mov [esp+0x4], eax
 	mov eax, [ui_playerProfileCount]
 	mov [esp], eax
-	call Cvar_SetInt
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_320:
+	call _Z11Dvar_SetIntPK6dvar_si
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__320:
 	xor edx, edx
 	mov ecx, uiInfoArray
-UI_RunMenuScript_450:
+_Z16UI_RunMenuScriptiPPKcS0__450:
 	mov [ecx+0x178c], edx
 	add edx, 0x1
 	add ecx, 0x4
 	cmp eax, edx
-	jg UI_RunMenuScript_450
-	jmp UI_RunMenuScript_460
-UI_RunMenuScript_300:
+	jg _Z16UI_RunMenuScriptiPPKcS0__450
+	jmp _Z16UI_RunMenuScriptiPPKcS0__460
+_Z16UI_RunMenuScriptiPPKcS0__300:
 	xor esi, esi
-UI_RunMenuScript_470:
+_Z16UI_RunMenuScriptiPPKcS0__470:
 	mov ebx, [uiInfoArray+0x1684]
 	mov eax, [edi+esi*4]
 	mov [esp], eax
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [ebx*4+uiInfoArray+0x1688], eax
 	add dword [uiInfoArray+0x1684], 0x1
 	add esi, 0x1
 	cmp [ebp-0x1c], esi
-	jg UI_RunMenuScript_470
-	jmp UI_RunMenuScript_480
-UI_RunMenuScript_430:
+	jg _Z16UI_RunMenuScriptiPPKcS0__470
+	jmp _Z16UI_RunMenuScriptiPPKcS0__480
+_Z16UI_RunMenuScriptiPPKcS0__430:
 	mov edx, [ebp-0x10b4]
 	test edx, edx
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	mov ecx, [ebp-0x10b4]
 	cmp [uiInfoArray+0x1684], ecx
-	jle UI_RunMenuScript_70
+	jle _Z16UI_RunMenuScriptiPPKcS0__70
 	mov esi, [uiInfoArray+0xa74]
 	mov eax, esi
 	sub eax, 0x1
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	lea ebx, [eax*4+uiInfoArray+0xa34]
 	xor edi, edi
-UI_RunMenuScript_500:
+_Z16UI_RunMenuScriptiPPKcS0__500:
 	mov eax, [ebx]
 	test byte [eax+0x50], 0x4
-	jz UI_RunMenuScript_490
+	jz _Z16UI_RunMenuScriptiPPKcS0__490
 	mov dword [esp+0x10], 0x0
 	mov edx, [ebp-0x10b4]
 	mov [esp+0xc], edx
 	mov dword [esp+0x8], 0x18
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
-UI_RunMenuScript_490:
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+_Z16UI_RunMenuScriptiPPKcS0__490:
 	add edi, 0x1
 	sub ebx, 0x4
 	cmp esi, edi
-	jnz UI_RunMenuScript_500
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_420:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__500
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__420:
 	mov dword [esp+0x4], _cstring_createplayerprof
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_510
+	jnz _Z16UI_RunMenuScriptiPPKcS0__510
 	mov eax, [ui_playerProfileNameNew]
 	mov eax, [eax+0xc]
 	cmp byte [eax], 0x0
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp+0x8], 0x20
 	mov [esp+0x4], eax
 	lea ecx, [ebp-0x89c]
 	mov [esp], ecx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov dword [esp+0x4], _cstring_null
 	mov eax, [ui_playerProfileNameNew]
 	mov [esp], eax
-	call Cvar_SetString
+	call _Z14Dvar_SetStringPK6dvar_sPKc
 	mov eax, [uiInfoArray+0x1684]
 	cmp eax, 0x40
-	jz UI_RunMenuScript_520
+	jz _Z16UI_RunMenuScriptiPPKcS0__520
 	test eax, eax
-	jle UI_RunMenuScript_530
+	jle _Z16UI_RunMenuScriptiPPKcS0__530
 	xor esi, esi
 	mov ebx, uiInfoArray
-UI_RunMenuScript_550:
+_Z16UI_RunMenuScriptiPPKcS0__550:
 	mov eax, [ebx+0x1688]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x89c]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_RunMenuScript_540
+	jz _Z16UI_RunMenuScriptiPPKcS0__540
 	add esi, 0x1
 	add ebx, 0x4
 	cmp [uiInfoArray+0x1684], esi
-	jg UI_RunMenuScript_550
-UI_RunMenuScript_530:
+	jg _Z16UI_RunMenuScriptiPPKcS0__550
+_Z16UI_RunMenuScriptiPPKcS0__530:
 	lea edx, [ebp-0x89c]
 	mov [esp], edx
-	call Com_NewPlayerProfile
+	call _Z20Com_NewPlayerProfilePKc
 	test al, al
-	jnz UI_RunMenuScript_560
+	jnz _Z16UI_RunMenuScriptiPPKcS0__560
 	mov dword [esp+0x4], _cstring_profile_create_f
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_510:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__510:
 	mov dword [esp+0x4], _cstring_deleteplayerprof
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_570
+	jnz _Z16UI_RunMenuScriptiPPKcS0__570
 	mov eax, [uiInfoArray+0x1684]
 	test eax, eax
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov eax, [ui_playerProfileSelected]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call Com_DeletePlayerProfile
+	call _Z23Com_DeletePlayerProfilePKc
 	test al, al
-	jz UI_RunMenuScript_580
+	jz _Z16UI_RunMenuScriptiPPKcS0__580
 	mov eax, [ui_playerProfileSelected]
 	mov esi, [eax+0xc]
 	mov eax, [uiInfoArray+0x1684]
 	test eax, eax
-	jg UI_RunMenuScript_590
-UI_RunMenuScript_690:
+	jg _Z16UI_RunMenuScriptiPPKcS0__590
+_Z16UI_RunMenuScriptiPPKcS0__690:
 	mov dword [ebp-0x10ac], 0xffffffff
-UI_RunMenuScript_670:
+_Z16UI_RunMenuScriptiPPKcS0__670:
 	mov edx, [ebp-0x10ac]
 	mov ebx, [edx*4+uiInfoArray+0x178c]
 	mov ecx, [uiInfoArray+0x1684]
 	lea edx, [ecx-0x1]
 	mov [uiInfoArray+0x1684], edx
 	test edx, edx
-	jz UI_RunMenuScript_600
+	jz _Z16UI_RunMenuScriptiPPKcS0__600
 	mov eax, [edx*4+uiInfoArray+0x1688]
 	mov [ebx*4+uiInfoArray+0x1688], eax
 	mov ebx, edx
@@ -6174,9 +6174,9 @@ UI_RunMenuScript_670:
 	cmovnz eax, [ebp-0x10ac]
 	mov [ebp-0x10ac], eax
 	test edx, edx
-	jg UI_RunMenuScript_610
-UI_RunMenuScript_660:
-	mov dword [esp+0xc], UI_PlayerProfilesQsortCompare
+	jg _Z16UI_RunMenuScriptiPPKcS0__610
+_Z16UI_RunMenuScriptiPPKcS0__660:
+	mov dword [esp+0xc], _Z29UI_PlayerProfilesQsortComparePKvS0_
 	mov dword [esp+0x8], 0x4
 	mov [esp+0x4], ebx
 	mov dword [esp], uiInfoArray+0x178c
@@ -6184,154 +6184,154 @@ UI_RunMenuScript_660:
 	mov esi, [uiInfoArray+0xa74]
 	mov eax, esi
 	sub eax, 0x1
-	js UI_RunMenuScript_620
+	js _Z16UI_RunMenuScriptiPPKcS0__620
 	lea ebx, [eax*4+uiInfoArray+0xa34]
 	xor edi, edi
-UI_RunMenuScript_640:
+_Z16UI_RunMenuScriptiPPKcS0__640:
 	mov eax, [ebx]
 	test byte [eax+0x50], 0x4
-	jz UI_RunMenuScript_630
+	jz _Z16UI_RunMenuScriptiPPKcS0__630
 	mov dword [esp+0x10], 0x0
 	mov ecx, [ebp-0x10ac]
 	mov [esp+0xc], ecx
 	mov dword [esp+0x8], 0x18
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
-UI_RunMenuScript_630:
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+_Z16UI_RunMenuScriptiPPKcS0__630:
 	add edi, 0x1
 	sub ebx, 0x4
 	cmp edi, esi
-	jnz UI_RunMenuScript_640
-UI_RunMenuScript_620:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__640
+_Z16UI_RunMenuScriptiPPKcS0__620:
 	mov eax, [uiInfoArray+0x1684]
 	mov [esp+0x4], eax
 	mov eax, [ui_playerProfileCount]
 	mov [esp], eax
-	call Cvar_SetInt
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_610:
+	call _Z11Dvar_SetIntPK6dvar_si
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__610:
 	xor edx, edx
 	mov ecx, uiInfoArray
 	mov eax, [uiInfoArray+0x1684]
-UI_RunMenuScript_650:
+_Z16UI_RunMenuScriptiPPKcS0__650:
 	mov [ecx+0x178c], edx
 	add edx, 0x1
 	mov ebx, eax
 	add ecx, 0x4
 	cmp edx, eax
-	jl UI_RunMenuScript_650
-	jmp UI_RunMenuScript_660
-UI_RunMenuScript_600:
+	jl _Z16UI_RunMenuScriptiPPKcS0__650
+	jmp _Z16UI_RunMenuScriptiPPKcS0__660
+_Z16UI_RunMenuScriptiPPKcS0__600:
 	mov dword [esp+0x4], _cstring_null
 	mov eax, [ui_playerProfileSelected]
 	mov [esp], eax
-	call Cvar_SetString
-	jmp UI_RunMenuScript_620
-UI_RunMenuScript_590:
+	call _Z14Dvar_SetStringPK6dvar_sPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__620
+_Z16UI_RunMenuScriptiPPKcS0__590:
 	mov dword [ebp-0x10ac], 0x0
 	mov ebx, uiInfoArray
-UI_RunMenuScript_680:
+_Z16UI_RunMenuScriptiPPKcS0__680:
 	mov eax, [ebx+0x178c]
 	mov eax, [eax*4+uiInfoArray+0x1688]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_RunMenuScript_670
+	jz _Z16UI_RunMenuScriptiPPKcS0__670
 	add dword [ebp-0x10ac], 0x1
 	add ebx, 0x4
 	mov eax, [ebp-0x10ac]
 	cmp eax, [uiInfoArray+0x1684]
-	jl UI_RunMenuScript_680
-	jmp UI_RunMenuScript_690
-UI_RunMenuScript_580:
+	jl _Z16UI_RunMenuScriptiPPKcS0__680
+	jmp _Z16UI_RunMenuScriptiPPKcS0__690
+_Z16UI_RunMenuScriptiPPKcS0__580:
 	mov dword [esp+0x4], _cstring_profile_delete_f
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_570:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__570:
 	mov dword [esp+0x4], _cstring_loadplayerprofil
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_700
+	jnz _Z16UI_RunMenuScriptiPPKcS0__700
 	mov eax, [ui_playerProfileSelected]
 	mov eax, [eax+0xc]
 	cmp byte [eax], 0x0
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Com_ChangePlayerProfile
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_540:
+	call _Z23Com_ChangePlayerProfileiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__540:
 	mov dword [esp+0x4], _cstring_profile_exists_p
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_700:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__700:
 	mov dword [esp+0x4], _cstring_runmod
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_710
+	jnz _Z16UI_RunMenuScriptiPPKcS0__710
 	mov eax, [sharedUiInfo+0x6e88]
 	mov eax, [eax*8+sharedUiInfo+0x6c84]
 	test eax, eax
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov [esp+0x10], eax
 	mov dword [esp+0xc], _cstring_mods
 	mov dword [esp+0x8], _cstring_ss
 	mov dword [esp+0x4], 0x104
 	lea ebx, [ebp-0x109c]
 	mov [esp], ebx
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov eax, useFastFile
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz UI_RunMenuScript_720
-	call DB_SyncXAssets
-UI_RunMenuScript_720:
+	jz _Z16UI_RunMenuScriptiPPKcS0__720
+	call _Z14DB_SyncXAssetsv
+_Z16UI_RunMenuScriptiPPKcS0__720:
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_fs_game
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov dword [esp+0x4], _cstring_vid_restart
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_710:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__710:
 	mov dword [esp+0x4], _cstring_clearmods
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_730
+	jnz _Z16UI_RunMenuScriptiPPKcS0__730
 	mov eax, useFastFile
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz UI_RunMenuScript_740
-	call DB_SyncXAssets
-UI_RunMenuScript_740:
+	jz _Z16UI_RunMenuScriptiPPKcS0__740
+	call _Z14DB_SyncXAssetsv
+_Z16UI_RunMenuScriptiPPKcS0__740:
 	mov dword [esp], _cstring_fs_game
-	call Cvar_FindVar
+	call _Z12Dvar_FindVarPKc
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call Cvar_Reset
+	call _Z10Dvar_ResetPK6dvar_s13DvarSetSource
 	mov dword [esp+0x4], _cstring_vid_restart
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_730:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__730:
 	mov dword [esp+0x4], _cstring_closejoin
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_750
+	jnz _Z16UI_RunMenuScriptiPPKcS0__750
 	mov eax, [sharedUiInfo+0x72f0]
 	test eax, eax
-	jz UI_RunMenuScript_760
+	jz _Z16UI_RunMenuScriptiPPKcS0__760
 	mov dword [sharedUiInfo+0x72f0], 0x0
 	mov eax, [sharedUiInfo+0x1ab80]
 	mov [esp+0xc], eax
@@ -6339,67 +6339,67 @@ UI_RunMenuScript_730:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_d_servers_listed
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	sub eax, [sharedUiInfo+0x1ab78]
 	test eax, eax
-	jle UI_RunMenuScript_770
+	jle _Z16UI_RunMenuScriptiPPKcS0__770
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_d_servers_not_li
 	mov dword [esp], 0xd
-	call Com_Printf
-UI_RunMenuScript_770:
+	call _Z10Com_PrintfiPKcz
+_Z16UI_RunMenuScriptiPPKcS0__770:
 	mov dword [sharedUiInfo+0x1ab84], 0x0
 	mov dword [sharedUiInfo+0x1bce8], 0x0
 	mov dword [uiInfoArray+0x24ac], 0x0
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_760:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__760:
 	mov dword [esp+0x4], _cstring_joinserver
 	mov dword [esp], uiInfoArray
-	call Menus_CloseByName
+	call _Z17Menus_CloseByNameP9UiContextPKc
 	mov dword [esp+0x4], _cstring_main
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_750:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__750:
 	mov dword [esp+0x4], _cstring_stoprefresh
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_780
+	jnz _Z16UI_RunMenuScriptiPPKcS0__780
 	mov eax, [sharedUiInfo+0x72f0]
 	test eax, eax
-	jnz UI_RunMenuScript_790
-UI_RunMenuScript_920:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__790
+_Z16UI_RunMenuScriptiPPKcS0__920:
 	mov dword [sharedUiInfo+0x1ab84], 0x0
 	mov dword [sharedUiInfo+0x1bce8], 0x0
 	mov dword [uiInfoArray+0x24ac], 0x0
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_520:
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__520:
 	mov dword [esp+0x4], _cstring_profile_create_t
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_560:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__560:
 	mov ebx, [uiInfoArray+0x1684]
 	lea ecx, [ebp-0x89c]
 	mov [esp], ecx
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [ebx*4+uiInfoArray+0x1688], eax
 	mov ebx, [uiInfoArray+0x1684]
 	add ebx, 0x1
 	mov [uiInfoArray+0x1684], ebx
 	cmp ebx, 0x0
-	jz UI_RunMenuScript_800
-	jg UI_RunMenuScript_810
-UI_RunMenuScript_880:
-	mov dword [esp+0xc], UI_PlayerProfilesQsortCompare
+	jz _Z16UI_RunMenuScriptiPPKcS0__800
+	jg _Z16UI_RunMenuScriptiPPKcS0__810
+_Z16UI_RunMenuScriptiPPKcS0__880:
+	mov dword [esp+0xc], _Z29UI_PlayerProfilesQsortComparePKvS0_
 	mov dword [esp+0x8], 0x4
 	mov [esp+0x4], ebx
 	mov dword [esp], uiInfoArray+0x178c
@@ -6407,90 +6407,90 @@ UI_RunMenuScript_880:
 	mov esi, [uiInfoArray+0xa74]
 	mov eax, esi
 	sub eax, 0x1
-	js UI_RunMenuScript_800
+	js _Z16UI_RunMenuScriptiPPKcS0__800
 	lea ebx, [eax*4+uiInfoArray+0xa34]
 	xor edi, edi
-UI_RunMenuScript_830:
+_Z16UI_RunMenuScriptiPPKcS0__830:
 	mov eax, [ebx]
 	test byte [eax+0x50], 0x4
-	jz UI_RunMenuScript_820
+	jz _Z16UI_RunMenuScriptiPPKcS0__820
 	mov dword [esp+0x10], 0x0
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x18
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
-UI_RunMenuScript_820:
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+_Z16UI_RunMenuScriptiPPKcS0__820:
 	add edi, 0x1
 	sub ebx, 0x4
 	cmp edi, esi
-	jnz UI_RunMenuScript_830
-UI_RunMenuScript_800:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__830
+_Z16UI_RunMenuScriptiPPKcS0__800:
 	mov eax, [uiInfoArray+0x1684]
 	mov [esp+0x4], eax
 	mov eax, [ui_playerProfileCount]
 	mov [esp], eax
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov eax, [uiInfoArray+0x1684]
 	test eax, eax
-	jg UI_RunMenuScript_840
-UI_RunMenuScript_910:
+	jg _Z16UI_RunMenuScriptiPPKcS0__840
+_Z16UI_RunMenuScriptiPPKcS0__910:
 	mov dword [ebp-0x10b0], 0xffffffff
-UI_RunMenuScript_890:
+_Z16UI_RunMenuScriptiPPKcS0__890:
 	mov esi, [uiInfoArray+0xa74]
 	mov eax, esi
 	sub eax, 0x1
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	lea ebx, [eax*4+uiInfoArray+0xa34]
 	xor edi, edi
-UI_RunMenuScript_860:
+_Z16UI_RunMenuScriptiPPKcS0__860:
 	mov eax, [ebx]
 	test byte [eax+0x50], 0x4
-	jz UI_RunMenuScript_850
+	jz _Z16UI_RunMenuScriptiPPKcS0__850
 	mov dword [esp+0x10], 0x0
 	mov ecx, [ebp-0x10b0]
 	mov [esp+0xc], ecx
 	mov dword [esp+0x8], 0x18
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
-UI_RunMenuScript_850:
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+_Z16UI_RunMenuScriptiPPKcS0__850:
 	add edi, 0x1
 	sub ebx, 0x4
 	cmp edi, esi
-	jnz UI_RunMenuScript_860
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_810:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__860
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__810:
 	xor edx, edx
 	mov ecx, uiInfoArray
 	mov eax, [uiInfoArray+0x1684]
-UI_RunMenuScript_870:
+_Z16UI_RunMenuScriptiPPKcS0__870:
 	mov [ecx+0x178c], edx
 	add edx, 0x1
 	mov ebx, eax
 	add ecx, 0x4
 	cmp eax, edx
-	jg UI_RunMenuScript_870
-	jmp UI_RunMenuScript_880
-UI_RunMenuScript_840:
+	jg _Z16UI_RunMenuScriptiPPKcS0__870
+	jmp _Z16UI_RunMenuScriptiPPKcS0__880
+_Z16UI_RunMenuScriptiPPKcS0__840:
 	mov dword [ebp-0x10b0], 0x0
 	mov ebx, uiInfoArray
-UI_RunMenuScript_900:
+_Z16UI_RunMenuScriptiPPKcS0__900:
 	mov eax, [ebx+0x178c]
 	mov eax, [eax*4+uiInfoArray+0x1688]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x89c]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_RunMenuScript_890
+	jz _Z16UI_RunMenuScriptiPPKcS0__890
 	add dword [ebp-0x10b0], 0x1
 	add ebx, 0x4
 	mov edx, [ebp-0x10b0]
 	cmp [uiInfoArray+0x1684], edx
-	jg UI_RunMenuScript_900
-	jmp UI_RunMenuScript_910
-UI_RunMenuScript_790:
+	jg _Z16UI_RunMenuScriptiPPKcS0__900
+	jmp _Z16UI_RunMenuScriptiPPKcS0__910
+_Z16UI_RunMenuScriptiPPKcS0__790:
 	mov dword [sharedUiInfo+0x72f0], 0x0
 	mov eax, [sharedUiInfo+0x1ab80]
 	mov [esp+0xc], eax
@@ -6498,45 +6498,45 @@ UI_RunMenuScript_790:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_d_servers_listed
 	mov dword [esp], 0xd
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	sub eax, [sharedUiInfo+0x1ab78]
 	test eax, eax
-	jle UI_RunMenuScript_920
+	jle _Z16UI_RunMenuScriptiPPKcS0__920
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_d_servers_not_li
 	mov dword [esp], 0xd
-	call Com_Printf
-	jmp UI_RunMenuScript_920
-UI_RunMenuScript_780:
+	call _Z10Com_PrintfiPKcz
+	jmp _Z16UI_RunMenuScriptiPPKcS0__920
+_Z16UI_RunMenuScriptiPPKcS0__780:
 	mov dword [esp+0x4], _cstring_serverstatus
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_930
+	jnz _Z16UI_RunMenuScriptiPPKcS0__930
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_RunMenuScript_940
+	jz _Z16UI_RunMenuScriptiPPKcS0__940
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov eax, [sharedUiInfo+0x1ab78]
 	test eax, eax
-	jz UI_RunMenuScript_940
+	jz _Z16UI_RunMenuScriptiPPKcS0__940
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-UI_RunMenuScript_940:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+_Z16UI_RunMenuScriptiPPKcS0__940:
 	mov eax, [sharedUiInfo+0x72f4]
 	test eax, eax
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	cmp eax, [sharedUiInfo+0x1ab78]
-	jge UI_RunMenuScript_70
+	jge _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp+0xc], 0x40
 	mov dword [esp+0x8], sharedUiInfo+0x1afa4
 	mov eax, [eax*4+sharedUiInfo+0x72f8]
@@ -6544,73 +6544,73 @@ UI_RunMenuScript_940:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerAddressString
+	call _Z26LAN_GetServerAddressStringiiPci
 	mov edx, 0x1
 	mov eax, uiInfoArray
-	call UI_BuildServerStatus
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_930:
+	call _Z20UI_BuildServerStatusP8uiInfo_si
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__930:
 	mov dword [esp+0x4], _cstring_updatefilter
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_950
+	jnz _Z16UI_RunMenuScriptiPPKcS0__950
 	mov eax, [ui_netSource]
 	mov edi, [eax+0xc]
 	test edi, edi
-	jnz UI_RunMenuScript_960
+	jnz _Z16UI_RunMenuScriptiPPKcS0__960
 	mov edx, 0x1
 	mov eax, [ebp+0x8]
-	call UI_StartServerRefresh
-UI_RunMenuScript_960:
+	call _Z21UI_StartServerRefreshii
+_Z16UI_RunMenuScriptiPPKcS0__960:
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x40000000
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call UI_FeederSelection
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_950:
+	call _Z18UI_FeederSelectionifi
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__950:
 	mov dword [esp+0x4], _cstring_joinserver1
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_970
+	jnz _Z16UI_RunMenuScriptiPPKcS0__970
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_cg_thirdperson
-	call Cvar_SetBoolByName
+	call _Z18Dvar_SetBoolByNamePKch
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_RunMenuScript_980
+	jz _Z16UI_RunMenuScriptiPPKcS0__980
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov esi, [sharedUiInfo+0x1ab78]
 	test esi, esi
-	jz UI_RunMenuScript_980
+	jz _Z16UI_RunMenuScriptiPPKcS0__980
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-UI_RunMenuScript_980:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+_Z16UI_RunMenuScriptiPPKcS0__980:
 	mov eax, [sharedUiInfo+0x72f4]
 	mov eax, [eax*4+sharedUiInfo+0x72f8]
 	mov [esp+0x4], eax
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerPunkBuster
+	call _Z23LAN_GetServerPunkBusterii
 	sub eax, 0x1
-	jz UI_RunMenuScript_990
-UI_RunMenuScript_1010:
+	jz _Z16UI_RunMenuScriptiPPKcS0__990
+_Z16UI_RunMenuScriptiPPKcS0__1010:
 	mov eax, [sharedUiInfo+0x72f4]
 	test eax, eax
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	cmp eax, [sharedUiInfo+0x1ab78]
-	jge UI_RunMenuScript_70
+	jge _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp+0xc], 0x400
 	lea ebx, [ebp-0x109c]
 	mov [esp+0x8], ebx
@@ -6619,198 +6619,198 @@ UI_RunMenuScript_1010:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerAddressString
+	call _Z26LAN_GetServerAddressStringiiPci
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_connect_s
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_970:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__970:
 	mov dword [esp+0x4], _cstring_quit
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1000
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1000
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CL_ControllerIndexFromClientNum
+	call _Z31CL_ControllerIndexFromClientNumi
 	mov dword [esp+0x8], _cstring_quit1
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Cmd_ExecuteSingleCommand
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_990:
+	call _Z24Cmd_ExecuteSingleCommandiiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__990:
 	mov dword [esp], _cstring_cl_punkbuster
-	call Cvar_VariableBooleanValue
+	call _Z12Dvar_GetBoolPKc
 	test al, al
-	jnz UI_RunMenuScript_1010
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1010
 	mov dword [esp+0x4], _cstring_joinpb_popmenu
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1000:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1000:
 	mov dword [esp+0x4], _cstring_controls
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1020
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1020
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_cl_paused
-	call Cvar_SetIntByName
+	call _Z17Dvar_SetIntByNamePKci
 	mov dword [esp+0x4], 0x10
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [esp+0x4], _cstring_setup_menu2
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1020:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1020:
 	mov dword [esp+0x4], _cstring_leave
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1030
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1030
 	mov dword [esp+0x4], _cstring_disconnect
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call Cbuf_AddText
+	call _Z12Cbuf_AddTextiPKc
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [esp+0x4], _cstring_main
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1030:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1030:
 	mov dword [esp+0x4], _cstring_serversort
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1040
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1040
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call Int_Parse
+	call _Z9Int_ParsePPKcPi
 	test eax, eax
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov eax, [sharedUiInfo+0x72e4]
 	cmp eax, [ebp-0x1c]
-	jnz UI_RunMenuScript_1050
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1050
 	xor eax, eax
 	cmp dword [sharedUiInfo+0x72e8], 0x0
 	setz al
 	mov [sharedUiInfo+0x72e8], eax
-UI_RunMenuScript_1050:
+_Z16UI_RunMenuScriptiPPKcS0__1050:
 	mov eax, [ebp-0x1c]
 	mov [sharedUiInfo+0x72e4], eax
-	mov dword [esp+0xc], UI_ServersQsortCompare
+	mov dword [esp+0xc], _Z22UI_ServersQsortComparePKvS0_
 	mov dword [esp+0x8], 0x4
 	mov eax, [sharedUiInfo+0x1ab78]
 	mov [esp+0x4], eax
 	mov dword [esp], sharedUiInfo+0x72f8
 	call qsort
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1040:
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1040:
 	mov dword [esp+0x4], _cstring_closeingame
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1060
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1060
 	mov dword [esp+0x4], 0xffffffef
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Key_RemoveCatcher
+	call _Z17Key_RemoveCatcherii
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call Key_ClearStates
+	call _Z15Key_ClearStatesi
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_cl_paused
-	call Cvar_SetIntByName
+	call _Z17Dvar_SetIntByNamePKci
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1060:
+	call _Z14Menus_CloseAllP9UiContext
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1060:
 	mov dword [esp+0x4], _cstring_votekick
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1070
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1070
 	mov eax, [uiInfoArray+0x1680]
 	test eax, eax
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	cmp eax, [sharedUiInfo+0x48]
-	jge UI_RunMenuScript_70
+	jge _Z16UI_RunMenuScriptiPPKcS0__70
 	shl eax, 0x5
 	add eax, sharedUiInfo+0x4c
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_callvote_kick_s
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1070:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1070:
 	mov dword [esp+0x4], _cstring_votetempban
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1080
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1080
 	mov eax, [uiInfoArray+0x1680]
 	test eax, eax
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	cmp eax, [sharedUiInfo+0x48]
-	jge UI_RunMenuScript_70
+	jge _Z16UI_RunMenuScriptiPPKcS0__70
 	shl eax, 0x5
 	add eax, sharedUiInfo+0x4c
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_callvote_tempban
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1080:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1080:
 	mov dword [esp+0x4], _cstring_addfavorite
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1090
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1090
 	mov eax, [ui_netSource]
 	cmp dword [eax+0xc], 0x2
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov byte [ebp-0x89c], 0x0
 	mov byte [ebp-0x9c], 0x0
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_RunMenuScript_1100
+	jz _Z16UI_RunMenuScriptiPPKcS0__1100
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov ebx, [sharedUiInfo+0x1ab78]
 	test ebx, ebx
-	jz UI_RunMenuScript_1100
+	jz _Z16UI_RunMenuScriptiPPKcS0__1100
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-UI_RunMenuScript_1100:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+_Z16UI_RunMenuScriptiPPKcS0__1100:
 	mov eax, [sharedUiInfo+0x72f4]
 	test eax, eax
-	js UI_RunMenuScript_1110
+	js _Z16UI_RunMenuScriptiPPKcS0__1110
 	cmp eax, [sharedUiInfo+0x1ab78]
-	jge UI_RunMenuScript_1110
+	jge _Z16UI_RunMenuScriptiPPKcS0__1110
 	mov dword [esp+0xc], 0x400
 	lea ebx, [ebp-0x109c]
 	mov [esp+0x8], ebx
@@ -6819,55 +6819,55 @@ UI_RunMenuScript_1100:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerInfo
+	call _Z17LAN_GetServerInfoiiPci
 	mov dword [esp+0x4], _cstring_hostname
 	mov [esp], ebx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov dword [esp+0x8], 0x20
 	mov [esp+0x4], eax
 	lea ecx, [ebp-0x9c]
 	mov [esp], ecx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov dword [esp+0x4], _cstring_addr
 	mov [esp], ebx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov dword [esp+0x8], 0x20
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x89c]
 	mov [esp], eax
-	call Q_strncpyz
-UI_RunMenuScript_1110:
+	call _Z10I_strncpyzPcPKci
+_Z16UI_RunMenuScriptiPPKcS0__1110:
 	lea edx, [ebp-0x89c]
 	lea eax, [ebp-0x9c]
-	call UI_AddServerToFavoritesList
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1090:
+	call _Z27UI_AddServerToFavoritesListPKcS0_
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1090:
 	mov dword [esp+0x4], _cstring_deletefavorite
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1120
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1120
 	mov eax, [ui_netSource]
 	cmp dword [eax+0xc], 0x2
-	jnz UI_RunMenuScript_70
+	jnz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov eax, [sharedUiInfo+0x72f4]
 	test eax, eax
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	cmp eax, [sharedUiInfo+0x1ab78]
-	jge UI_RunMenuScript_70
+	jge _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp], 0x2
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_RunMenuScript_1130
+	jz _Z16UI_RunMenuScriptiPPKcS0__1130
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov ecx, [sharedUiInfo+0x1ab78]
 	test ecx, ecx
-	jz UI_RunMenuScript_1130
+	jz _Z16UI_RunMenuScriptiPPKcS0__1130
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-UI_RunMenuScript_1130:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+_Z16UI_RunMenuScriptiPPKcS0__1130:
 	mov dword [esp+0xc], 0x400
 	lea ebx, [ebp-0x109c]
 	mov [esp+0x8], ebx
@@ -6877,236 +6877,236 @@ UI_RunMenuScript_1130:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerInfo
+	call _Z17LAN_GetServerInfoiiPci
 	mov byte [ebp-0x89c], 0x0
 	mov dword [esp+0x4], _cstring_addr
 	mov [esp], ebx
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov dword [esp+0x8], 0x20
 	mov [esp+0x4], eax
 	lea ebx, [ebp-0x89c]
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	cmp byte [ebp-0x89c], 0x0
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x2
-	call LAN_RemoveServer
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1120:
+	call _Z16LAN_RemoveServeriPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1120:
 	mov dword [esp+0x4], _cstring_createfavorite
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1140
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1140
 	mov eax, [ui_netSource]
 	cmp dword [eax+0xc], 0x2
-	jnz UI_RunMenuScript_70
+	jnz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov byte [ebp-0x9c], 0x0
 	mov byte [ebp-0x89c], 0x0
 	mov dword [esp+0x8], 0x20
 	mov dword [esp+0x4], _cstring_default
 	lea ebx, [ebp-0x89c]
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov dword [esp], _cstring_ui_favoriteaddre
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov dword [esp+0x8], 0x20
 	mov [esp+0x4], eax
 	lea esi, [ebp-0x9c]
 	mov [esp], esi
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov edx, esi
 	mov eax, ebx
-	call UI_AddServerToFavoritesList
+	call _Z27UI_AddServerToFavoritesListPKcS0_
 	mov edx, 0x1
 	mov eax, [ebp+0x8]
-	call UI_StartServerRefresh
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1140:
+	call _Z21UI_StartServerRefreshii
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1140:
 	mov dword [esp+0x4], _cstring_update
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1150
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1150
 	mov dword [esp+0x8], 0x400
 	lea ebx, [ebp-0x109c]
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call String_Parse
+	call _Z12String_ParsePPKcPci
 	test eax, eax
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp+0x4], _cstring_ui_setname
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1160
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1160
 	mov dword [esp], _cstring_ui_name
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_name
-	call Cvar_SetStringByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1150:
+	call _Z20Dvar_SetStringByNamePKcS0_
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1150:
 	mov dword [esp+0x4], _cstring_setpbclstatus
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1170
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1170
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call Int_Parse
+	call _Z9Int_ParsePPKcPi
 	test eax, eax
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call CLUI_SetPbClStatus
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1160:
+	call _Z18CLUI_SetPbClStatusi
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1160:
 	mov dword [esp+0x4], _cstring_ui_getname
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1180
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1180
 	mov dword [esp], _cstring_name
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_ui_name
-	call Cvar_SetStringByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1170:
+	call _Z20Dvar_SetStringByNamePKcS0_
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1170:
 	mov dword [esp+0x4], _cstring_startsingleplaye
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1190
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1190
 	mov dword [esp+0x4], _cstring_startsingleplaye1
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1180:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1180:
 	mov dword [esp+0x4], _cstring_ui_setrate
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1200
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1200
 	mov dword [esp], _cstring_rate
-	call Cvar_VariableIntegerValue
+	call _Z11Dvar_GetIntPKc
 	cmp eax, 0x1387
-	jg UI_RunMenuScript_1210
+	jg _Z16UI_RunMenuScriptiPPKcS0__1210
 	cmp eax, 0xf9f
-	jle UI_RunMenuScript_1220
+	jle _Z16UI_RunMenuScriptiPPKcS0__1220
 	mov dword [esp+0x4], 0xf
 	mov dword [esp], _cstring_cl_maxpackets
-	call Cvar_SetIntByName
+	call _Z17Dvar_SetIntByNamePKci
 	mov dword [esp+0x4], 0x2
 	mov dword [esp], _cstring_cl_packetdup
-	call Cvar_SetIntByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1190:
+	call _Z17Dvar_SetIntByNamePKci
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1190:
 	mov dword [esp+0x4], _cstring_getlanguage
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1230
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1230
 	mov dword [esp], _cstring_loc_language
-	call Cvar_VariableIntegerValue
+	call _Z11Dvar_GetIntPKc
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_ui_language
-	call Cvar_SetIntByName
-	call UI_VerifyLanguage
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1220:
+	call _Z17Dvar_SetIntByNamePKci
+	call _Z17UI_VerifyLanguagev
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1220:
 	mov dword [esp+0x4], 0xf
 	mov dword [esp], _cstring_cl_maxpackets
-	call Cvar_SetIntByName
+	call _Z17Dvar_SetIntByNamePKci
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_cl_packetdup
-	call Cvar_SetIntByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1230:
+	call _Z17Dvar_SetIntByNamePKci
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1230:
 	mov dword [esp+0x4], _cstring_verifylanguage
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1240
-	call UI_VerifyLanguage
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1210:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1240
+	call _Z17UI_VerifyLanguagev
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1210:
 	mov dword [esp+0x4], 0x1e
 	mov dword [esp], _cstring_cl_maxpackets
-	call Cvar_SetIntByName
+	call _Z17Dvar_SetIntByNamePKci
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_cl_packetdup
-	call Cvar_SetIntByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1200:
+	call _Z17Dvar_SetIntByNamePKci
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1200:
 	mov dword [esp+0x4], _cstring_ui_mousepitch
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_70
+	jnz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov [esp], ebx
-	call Cvar_VariableBooleanValue
+	call _Z12Dvar_GetBoolPKc
 	test al, al
-	jnz UI_RunMenuScript_1250
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1250
 	mov dword [esp+0x4], 0x3cb43958
 	mov dword [esp], _cstring_m_pitch
-	call Cvar_SetFloatByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1240:
+	call _Z19Dvar_SetFloatByNamePKcf
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1240:
 	mov dword [esp+0x4], _cstring_updatelanguage
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1260
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1260
 	mov dword [esp], _cstring_ui_language
-	call Cvar_VariableIntegerValue
+	call _Z11Dvar_GetIntPKc
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_loc_language
-	call Cvar_SetIntByName
-	call UI_VerifyLanguage
+	call _Z17Dvar_SetIntByNamePKci
+	call _Z17UI_VerifyLanguagev
 	mov dword [esp+0x4], _cstring_vid_restart
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call Cbuf_AddText
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1250:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1250:
 	mov dword [esp+0x4], 0xbcb43958
 	mov dword [esp], _cstring_m_pitch
-	call Cvar_SetFloatByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1260:
+	call _Z19Dvar_SetFloatByNamePKcf
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1260:
 	mov dword [esp+0x4], _cstring_muteplayer
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1270
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1270
 	mov eax, [uiInfoArray+0x1680]
 	test eax, eax
-	js UI_RunMenuScript_70
+	js _Z16UI_RunMenuScriptiPPKcS0__70
 	cmp eax, [sharedUiInfo+0x48]
-	jge UI_RunMenuScript_70
+	jge _Z16UI_RunMenuScriptiPPKcS0__70
 	mov eax, [eax*4+sharedUiInfo+0x104c]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_MutePlayer
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1270:
+	call _Z13CL_MutePlayerii
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1270:
 	mov dword [esp+0x4], _cstring_openmenuondvar
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_RunMenuScript_1280
+	jz _Z16UI_RunMenuScriptiPPKcS0__1280
 	mov dword [esp+0x4], _cstring_openmenuondvarno
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1290
-UI_RunMenuScript_1280:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1290
+_Z16UI_RunMenuScriptiPPKcS0__1280:
 	lea edi, [ebp-0x9c]
 	mov dword [esp+0x10], 0x80
 	lea edx, [ebp-0x89c]
@@ -7118,42 +7118,42 @@ UI_RunMenuScript_1280:
 	mov ecx, edi
 	mov edx, ebx
 	mov eax, esi
-	call UI_GetOpenOrCloseMenuOnDvarArgs
+	call _Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i
 	test al, al
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp+0x4], _cstring_openmenuondvar
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
 	setz al
 	mov esi, eax
 	mov [esp], edi
-	call Cvar_FindVar
+	call _Z12Dvar_FindVarPKc
 	test eax, eax
-	jz UI_RunMenuScript_1300
+	jz _Z16UI_RunMenuScriptiPPKcS0__1300
 	mov [esp], edi
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov [esp+0x4], eax
 	lea edx, [ebp-0x109c]
 	mov [esp], edx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
 	setz al
 	mov ecx, esi
 	cmp cl, al
-	jnz UI_RunMenuScript_70
+	jnz _Z16UI_RunMenuScriptiPPKcS0__70
 	lea eax, [ebp-0x89c]
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1290:
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1290:
 	mov dword [esp+0x4], _cstring_closemenuondvar
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1310
-UI_RunMenuScript_1330:
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1310
+_Z16UI_RunMenuScriptiPPKcS0__1330:
 	lea edi, [ebp-0x89c]
 	mov dword [esp+0x10], 0x80
 	lea edx, [ebp-0x9c]
@@ -7165,274 +7165,274 @@ UI_RunMenuScript_1330:
 	mov ecx, edi
 	mov edx, ebx
 	mov eax, esi
-	call UI_GetOpenOrCloseMenuOnDvarArgs
+	call _Z31UI_GetOpenOrCloseMenuOnDvarArgsPPKcS0_PciS2_iS2_i
 	test al, al
-	jz UI_RunMenuScript_70
+	jz _Z16UI_RunMenuScriptiPPKcS0__70
 	mov dword [esp+0x4], _cstring_closemenuondvar
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
 	setz al
 	mov esi, eax
 	mov [esp], edi
-	call Cvar_FindVar
+	call _Z12Dvar_FindVarPKc
 	test eax, eax
-	jz UI_RunMenuScript_1320
+	jz _Z16UI_RunMenuScriptiPPKcS0__1320
 	mov [esp], edi
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov [esp+0x4], eax
 	lea edx, [ebp-0x109c]
 	mov [esp], edx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
 	setz al
 	mov ecx, esi
 	cmp cl, al
-	jnz UI_RunMenuScript_70
+	jnz _Z16UI_RunMenuScriptiPPKcS0__70
 	lea eax, [ebp-0x9c]
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menus_CloseByName
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1300:
+	call _Z17Menus_CloseByNameP9UiContextPKc
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1300:
 	mov [esp+0xc], edi
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_s_cannot_find_dv
 	mov dword [esp], 0xd
-	call Com_Printf
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1320:
+	call _Z10Com_PrintfiPKcz
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1320:
 	mov [esp+0xc], edi
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_s_cannot_find_dv
 	mov dword [esp], 0xd
-	call Com_Printf
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1310:
+	call _Z10Com_PrintfiPKcz
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1310:
 	mov dword [esp+0x4], _cstring_closemenuondvarn
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_RunMenuScript_1330
+	jz _Z16UI_RunMenuScriptiPPKcS0__1330
 	mov dword [esp+0x4], _cstring_setrecommended
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1340
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1340
 	mov dword [esp+0x4], 0x1
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call Com_SetRecommended
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1340:
+	call _Z18Com_SetRecommendedii
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1340:
 	mov dword [esp+0x4], _cstring_clearloaderrorss
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_RunMenuScript_1350
+	jnz _Z16UI_RunMenuScriptiPPKcS0__1350
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
-	jmp UI_RunMenuScript_70
-UI_RunMenuScript_1350:
+	call _Z14Menus_CloseAllP9UiContext
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
+_Z16UI_RunMenuScriptiPPKcS0__1350:
 	mov ecx, [ebp+0x10]
 	mov [esp+0xc], ecx
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_unknown_ui_scrip
 	mov dword [esp], 0xd
-	call Com_Printf
-	jmp UI_RunMenuScript_70
+	call _Z10Com_PrintfiPKcz
+	jmp _Z16UI_RunMenuScriptiPPKcS0__70
 
 
 ;UI_SetActiveMenu(int, int)
-UI_SetActiveMenu:
+_Z16UI_SetActiveMenuii:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov ebx, [ebp+0xc]
 	mov dword [esp], uiInfoArray
-	call Menu_Count
+	call _Z10Menu_CountP9UiContext
 	test eax, eax
-	jle UI_SetActiveMenu_10
+	jle _Z16UI_SetActiveMenuii_10
 	mov [uiInfoArray+0x18a0], ebx
 	cmp ebx, 0xb
-	jbe UI_SetActiveMenu_20
-UI_SetActiveMenu_10:
+	jbe _Z16UI_SetActiveMenuii_20
+_Z16UI_SetActiveMenuii_10:
 	xor eax, eax
-UI_SetActiveMenu_30:
+_Z16UI_SetActiveMenuii_30:
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_SetActiveMenu_20:
-	jmp dword [ebx*4+UI_SetActiveMenu_jumptab_0]
-UI_SetActiveMenu_90:
+_Z16UI_SetActiveMenuii_20:
+	jmp dword [ebx*4+_Z16UI_SetActiveMenuii_jumptab_0]
+_Z16UI_SetActiveMenuii_90:
 	mov dword [esp+0x4], 0xffffffef
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_RemoveCatcher
+	call _Z17Key_RemoveCatcherii
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_cl_paused
-	call Cvar_SetIntByName
+	call _Z17Dvar_SetIntByNamePKci
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov eax, 0x1
-	jmp UI_SetActiveMenu_30
-UI_SetActiveMenu_170:
+	jmp _Z16UI_SetActiveMenuii_30
+_Z16UI_SetActiveMenuii_170:
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [esp+0x4], _cstring_endofgame
-UI_SetActiveMenu_70:
+_Z16UI_SetActiveMenuii_70:
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	mov dword [esp], _cstring_com_errormessage
-	call Cvar_VariableString
+	call _Z14Dvar_GetStringPKc
 	cmp byte [eax], 0x0
-	jnz UI_SetActiveMenu_40
-UI_SetActiveMenu_50:
+	jnz _Z16UI_SetActiveMenuii_40
+_Z16UI_SetActiveMenuii_50:
 	mov eax, 0x1
-	jmp UI_SetActiveMenu_30
-UI_SetActiveMenu_130:
+	jmp _Z16UI_SetActiveMenuii_30
+_Z16UI_SetActiveMenuii_130:
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp+0x4], _cstring_badcd
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	mov eax, 0x1
-	jmp UI_SetActiveMenu_30
-UI_SetActiveMenu_120:
+	jmp _Z16UI_SetActiveMenuii_30
+_Z16UI_SetActiveMenuii_120:
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp+0x4], _cstring_needcd
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	mov eax, 0x1
-	jmp UI_SetActiveMenu_30
-UI_SetActiveMenu_110:
+	jmp _Z16UI_SetActiveMenuii_30
+_Z16UI_SetActiveMenuii_110:
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov eax, [uiInfoArray]
 	mov [esp], eax
-	call CG_ScriptMainMenu
+	call _Z17CG_ScriptMainMenui
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	test eax, eax
-	jnz UI_SetActiveMenu_50
+	jnz _Z16UI_SetActiveMenuii_50
 	mov dword [esp+0x4], _cstring_main
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	mov eax, 0x1
-	jmp UI_SetActiveMenu_30
-UI_SetActiveMenu_100:
+	jmp _Z16UI_SetActiveMenuii_30
+_Z16UI_SetActiveMenuii_100:
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp+0x4], _cstring_main
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	mov dword [esp], _cstring_com_errormessage
-	call Cvar_VariableString
+	call _Z14Dvar_GetStringPKc
 	cmp byte [eax], 0x0
-	jnz UI_SetActiveMenu_60
-UI_SetActiveMenu_80:
+	jnz _Z16UI_SetActiveMenuii_60
+_Z16UI_SetActiveMenuii_80:
 	mov dword [esp+0x4], 0x3e8
 	mov dword [esp], 0x3f800000
-	call SND_FadeAllSounds
+	call _Z17SND_FadeAllSoundsfi
 	mov eax, 0x1
-	jmp UI_SetActiveMenu_30
-UI_SetActiveMenu_150:
+	jmp _Z16UI_SetActiveMenuii_30
+_Z16UI_SetActiveMenuii_150:
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp+0x4], 0x1
 	mov eax, [uiInfoArray]
 	mov [esp], eax
-	call CL_SetDisplayHUDWithKeycatchUI
+	call _Z30CL_SetDisplayHUDWithKeycatchUIih
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [esp+0x4], _cstring_quickmessage
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	mov eax, 0x1
-	jmp UI_SetActiveMenu_30
-UI_SetActiveMenu_160:
+	jmp _Z16UI_SetActiveMenuii_30
+_Z16UI_SetActiveMenuii_160:
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [esp+0x4], _cstring_scoreboard
-	jmp UI_SetActiveMenu_70
-UI_SetActiveMenu_140:
+	jmp _Z16UI_SetActiveMenuii_70
+_Z16UI_SetActiveMenuii_140:
 	mov dword [esp], _cstring_com_errormessage
-	call Cvar_VariableString
+	call _Z14Dvar_GetStringPKc
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [esp+0x4], _cstring_pregame_loaderro
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	mov eax, 0x1
-	jmp UI_SetActiveMenu_30
-UI_SetActiveMenu_40:
+	jmp _Z16UI_SetActiveMenuii_30
+_Z16UI_SetActiveMenuii_40:
 	mov dword [esp+0x4], _cstring_2
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_SetActiveMenu_50
+	jz _Z16UI_SetActiveMenuii_50
 	mov dword [esp+0x4], _cstring_error_popmenu
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	mov eax, 0x1
-	jmp UI_SetActiveMenu_30
-UI_SetActiveMenu_60:
+	jmp _Z16UI_SetActiveMenuii_30
+_Z16UI_SetActiveMenuii_60:
 	mov dword [esp+0x4], _cstring_2
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_SetActiveMenu_80
+	jz _Z16UI_SetActiveMenuii_80
 	mov dword [esp+0x4], _cstring_error_popmenu
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
-	jmp UI_SetActiveMenu_80
+	call _Z16Menus_OpenByNameP9UiContextPKc
+	jmp _Z16UI_SetActiveMenuii_80
 	
 	
-UI_SetActiveMenu_jumptab_0:
-	dd UI_SetActiveMenu_90
-	dd UI_SetActiveMenu_100
-	dd UI_SetActiveMenu_110
-	dd UI_SetActiveMenu_120
-	dd UI_SetActiveMenu_130
-	dd UI_SetActiveMenu_140
-	dd UI_SetActiveMenu_10
-	dd UI_SetActiveMenu_150
-	dd UI_SetActiveMenu_10
-	dd UI_SetActiveMenu_10
-	dd UI_SetActiveMenu_160
-	dd UI_SetActiveMenu_170
+_Z16UI_SetActiveMenuii_jumptab_0:
+	dd _Z16UI_SetActiveMenuii_90
+	dd _Z16UI_SetActiveMenuii_100
+	dd _Z16UI_SetActiveMenuii_110
+	dd _Z16UI_SetActiveMenuii_120
+	dd _Z16UI_SetActiveMenuii_130
+	dd _Z16UI_SetActiveMenuii_140
+	dd _Z16UI_SetActiveMenuii_10
+	dd _Z16UI_SetActiveMenuii_150
+	dd _Z16UI_SetActiveMenuii_10
+	dd _Z16UI_SetActiveMenuii_10
+	dd _Z16UI_SetActiveMenuii_160
+	dd _Z16UI_SetActiveMenuii_170
 
 
 ;UI_AnyMenuVisible(int)
-UI_AnyMenuVisible:
+_Z17UI_AnyMenuVisiblei:
 	push ebp
 	mov ebp, esp
 	xor eax, eax
@@ -7444,7 +7444,7 @@ UI_AnyMenuVisible:
 
 
 ;UI_DrawTextNoSnap(ScreenPlacement const*, char const*, int, Font_s*, float, float, int, int, float, float const*, int)
-UI_DrawTextNoSnap:
+_Z17UI_DrawTextNoSnapPK15ScreenPlacementPKciP6Font_sffiifPKfi:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -7453,7 +7453,7 @@ UI_DrawTextNoSnap:
 	mov eax, [ebp+0x28]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fst dword [ebp-0xc]
 	fstp dword [ebp-0x10]
 	mov eax, [ebp+0x24]
@@ -7470,7 +7470,7 @@ UI_DrawTextNoSnap:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call ScrPlace_ApplyRect
+	call _Z18ScrPlace_ApplyRectPK15ScreenPlacementPfS2_S2_S2_ii
 	mov eax, [ebp+0x30]
 	mov [esp+0x20], eax
 	mov eax, [ebp+0x2c]
@@ -7488,7 +7488,7 @@ UI_DrawTextNoSnap:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call CL_DrawTextPhysical
+	call _Z19CL_DrawTextPhysicalPKciP6Font_sffffPKfi
 	add esp, 0x44
 	pop ebx
 	pop ebp
@@ -7496,7 +7496,7 @@ UI_DrawTextNoSnap:
 
 
 ;UI_FeederItemText(int, itemDef_s*, float, int, int, Material**)
-UI_FeederItemText:
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -7511,50 +7511,50 @@ UI_FeederItemText:
 	mov esi, [ebp+0x1c]
 	mov dword [esi], 0x0
 	ucomiss xmm0, [_float_4_00000000]
-	jp UI_FeederItemText_10
-	jz UI_FeederItemText_20
-UI_FeederItemText_10:
+	jp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_10
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_20
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_10:
 	ucomiss xmm0, [_float_2_00000000]
-	jz UI_FeederItemText_30
-UI_FeederItemText_130:
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_30
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_130:
 	movss xmm0, dword [ebp-0x1c]
 	ucomiss xmm0, [_float_13_00000000]
-	jz UI_FeederItemText_40
-UI_FeederItemText_110:
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_40
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_110:
 	ucomiss xmm0, [_float_7_00000000]
-	jnz UI_FeederItemText_50
-	jp UI_FeederItemText_50
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_50
+	jp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_50
 	test edi, edi
-	js UI_FeederItemText_60
+	js _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	cmp edi, [sharedUiInfo+0x48]
-	jge UI_FeederItemText_60
-UI_FeederItemText_210:
+	jge _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_210:
 	shl edi, 0x5
 	lea ebx, [edi+sharedUiInfo+0x4c]
-	jmp UI_FeederItemText_70
-UI_FeederItemText_20:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_20:
 	mov esi, [sharedUiInfo+0x1c58]
 	test esi, esi
-	jle UI_FeederItemText_60
+	jle _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	xor ebx, ebx
 	xor ecx, ecx
 	mov edx, sharedUiInfo
 	mov eax, sharedUiInfo+0x1c5c
-UI_FeederItemText_100:
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_100:
 	cmp dword [edx+0x1cf8], 0x0
-	jz UI_FeederItemText_80
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_80
 	cmp ebx, edi
-	jz UI_FeederItemText_90
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_90
 	add ebx, 0x1
-UI_FeederItemText_80:
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_80:
 	add ecx, 0x1
 	add eax, 0xa0
 	add edx, 0xa0
 	cmp esi, ecx
-	jnz UI_FeederItemText_100
-UI_FeederItemText_60:
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_100
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60:
 	mov ebx, _cstring_null
-UI_FeederItemText_70:
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70:
 	mov eax, ebx
 	add esp, 0x3c
 	pop ebx
@@ -7562,41 +7562,41 @@ UI_FeederItemText_70:
 	pop edi
 	pop ebp
 	ret
-UI_FeederItemText_40:
-	jp UI_FeederItemText_110
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_40:
+	jp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_110
 	test edi, edi
-	js UI_FeederItemText_60
+	js _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	cmp edi, [sharedUiInfo+0x1bce4]
-	jge UI_FeederItemText_60
+	jge _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	cmp ebx, 0x3
-	ja UI_FeederItemText_60
+	ja _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	lea eax, [ebx+edi*4]
 	mov ebx, [eax*4+sharedUiInfo+0x1b024]
 	cmp byte [ebx], 0x40
-	jnz UI_FeederItemText_70
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
 	lea eax, [ebx+0x1]
 	mov [ebp+0x8], eax
-	jmp UI_FeederItemText_120
-UI_FeederItemText_30:
-	jp UI_FeederItemText_130
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_120
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_30:
+	jp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_130
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerCount
+	call _Z18LAN_GetServerCounti
 	cmp eax, [sharedUiInfo+0x1ab7c]
-	jz UI_FeederItemText_140
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_140
 	mov [sharedUiInfo+0x1ab7c], eax
 	mov ecx, [sharedUiInfo+0x1ab78]
 	test ecx, ecx
-	jnz UI_FeederItemText_150
-UI_FeederItemText_140:
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_150
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_140:
 	test edi, edi
-	js UI_FeederItemText_60
+	js _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	cmp edi, [sharedUiInfo+0x1ab78]
-	jge UI_FeederItemText_60
+	jge _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	cmp ebx, [_ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10lastColumn]
-	jz UI_FeederItemText_160
-UI_FeederItemText_250:
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_160
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_250:
 	mov dword [esp+0xc], 0x400
 	mov dword [esp+0x8], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
 	mov eax, [edi*4+sharedUiInfo+0x72f8]
@@ -7604,272 +7604,272 @@ UI_FeederItemText_250:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerInfo
+	call _Z17LAN_GetServerInfoiiPci
 	mov [_ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10lastColumn], ebx
 	mov eax, [uiInfoArray+0x8]
 	mov [_ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE8lastTime], eax
-UI_FeederItemText_240:
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_240:
 	mov dword [esp+0x4], _cstring_ping
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	cmp ebx, 0xa
-	jbe UI_FeederItemText_170
+	jbe _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_170
 	movss xmm0, dword [ebp-0x1c]
-UI_FeederItemText_200:
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_200:
 	ucomiss xmm0, [_float_24_00000000]
-	jnz UI_FeederItemText_60
-	jp UI_FeederItemText_60
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
+	jp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	test edi, edi
-	js UI_FeederItemText_60
+	js _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	cmp edi, [uiInfoArray+0x1684]
-	jge UI_FeederItemText_60
+	jge _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	mov eax, [edi*4+uiInfoArray+0x178c]
 	mov ebx, [eax*4+uiInfoArray+0x1688]
-	jmp UI_FeederItemText_70
-UI_FeederItemText_50:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_50:
 	ucomiss xmm0, [_float_9_00000000]
-	jz UI_FeederItemText_180
-UI_FeederItemText_220:
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_180
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_220:
 	ucomiss xmm0, [_float_39_00000000]
-	jz UI_FeederItemText_190
-UI_FeederItemText_350:
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_190
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_350:
 	ucomiss xmm0, [_float_20_00000000]
-	jnz UI_FeederItemText_200
-	jp UI_FeederItemText_200
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_200
+	jp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_200
 	test edi, edi
-	js UI_FeederItemText_60
+	js _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	cmp edi, [sharedUiInfo+0x48]
-	jge UI_FeederItemText_60
+	jge _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	sub ebx, 0x1
-	jz UI_FeederItemText_210
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_210
 	mov eax, [edi*4+sharedUiInfo+0x104c]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call CL_IsPlayerMuted
+	call _Z16CL_IsPlayerMutedii
 	test al, al
-	jz UI_FeederItemText_60
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	mov dword [ebp+0x8], _cstring_mp_muted
-UI_FeederItemText_120:
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_120:
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
-	jmp UI_SafeTranslateString
-UI_FeederItemText_170:
-	jmp dword [ebx*4+UI_FeederItemText_jumptab_0]
-UI_FeederItemText_180:
-	jp UI_FeederItemText_220
+	jmp _Z22UI_SafeTranslateStringPKc
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_170:
+	jmp dword [ebx*4+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_jumptab_0]
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_180:
+	jp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_220
 	test edi, edi
-	js UI_FeederItemText_60
+	js _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	cmp edi, [sharedUiInfo+0x6e84]
-	jge UI_FeederItemText_60
+	jge _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	mov ebx, [edi*8+sharedUiInfo+0x6c88]
 	test ebx, ebx
-	jz UI_FeederItemText_230
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_230
 	cmp byte [ebx], 0x0
-	jnz UI_FeederItemText_70
-UI_FeederItemText_230:
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_230:
 	mov ebx, [edi*8+sharedUiInfo+0x6c84]
-	jmp UI_FeederItemText_70
-UI_FeederItemText_160:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_160:
 	mov eax, [uiInfoArray+0x8]
 	add eax, 0x1388
 	cmp eax, [_ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE8lastTime]
-	jge UI_FeederItemText_240
-	jmp UI_FeederItemText_250
-UI_FeederItemText_370:
+	jge _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_240
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_250
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_370:
 	mov dword [esp+0x4], _cstring_pswrd
-UI_FeederItemText_260:
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_260:
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov ebx, _cstring_x
 	test eax, eax
 	mov eax, _cstring_null
 	cmovz ebx, eax
-	jmp UI_FeederItemText_70
-UI_FeederItemText_460:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_460:
 	mov dword [esp+0x4], _cstring_pb
-	jmp UI_FeederItemText_260
-UI_FeederItemText_470:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_260
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_470:
 	test eax, eax
-	jle UI_FeederItemText_270
+	jle _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_270
 	mov dword [ebp+0xc], _cstring_ping
-UI_FeederItemText_360:
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_360:
 	mov dword [ebp+0x8], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
-	jmp Info_ValueForKey
-UI_FeederItemText_380:
+	jmp _Z16Info_ValueForKeyPKcS0_
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_380:
 	mov dword [esp+0x4], _cstring_hw
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	cmp eax, 0x9
-	ja UI_FeederItemText_60
+	ja _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
 	mov eax, [eax*4+sharedUiInfo+0x6c5c]
 	mov [esi], eax
 	mov ebx, _cstring_null
-	jmp UI_FeederItemText_70
-UI_FeederItemText_420:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_420:
 	mov dword [esp+0x4], _cstring_gametype
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	test eax, eax
-	jz UI_FeederItemText_280
+	jz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_280
 	mov dword [esp+0x4], _cstring_gametype
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	cmp byte [eax], 0x0
-	jnz UI_FeederItemText_290
-UI_FeederItemText_280:
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_290
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_280:
 	mov ebx, _cstring_3
-	jmp UI_FeederItemText_70
-UI_FeederItemText_430:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_430:
 	mov dword [esp+0x4], _cstring_voice
-	jmp UI_FeederItemText_260
-UI_FeederItemText_400:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_260
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_400:
 	mov dword [esp+0x4], _cstring_mapname
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov ebx, eax
 	mov edx, [sharedUiInfo+0x1c58]
 	test edx, edx
-	jle UI_FeederItemText_70
+	jle _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
 	xor edi, edi
 	mov esi, sharedUiInfo
 	mov dword [ebp-0x20], sharedUiInfo+0x1c5c
-	jmp UI_FeederItemText_300
-UI_FeederItemText_310:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_300
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_310:
 	add edi, 0x1
 	add dword [ebp-0x20], 0xa0
 	add esi, 0xa0
 	cmp [sharedUiInfo+0x1c58], edi
-	jle UI_FeederItemText_70
-UI_FeederItemText_300:
+	jle _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_300:
 	mov eax, [esi+0x1c60]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_FeederItemText_310
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_310
 	mov edx, [ebp-0x20]
 	mov eax, [edx]
 	mov [ebp+0x8], eax
-	jmp UI_FeederItemText_120
-UI_FeederItemText_410:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_120
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_410:
 	mov dword [esp+0x4], _cstring_sv_maxclients
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov ebx, eax
 	mov dword [esp+0x4], _cstring_clients
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp+0x10], ebx
 	mov [esp+0xc], eax
 	mov dword [esp+0x8], _cstring_s_s1
 	mov dword [esp+0x4], 0x26
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10clientBuff
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov ebx, _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10clientBuff
-	jmp UI_FeederItemText_70
-UI_FeederItemText_440:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_440:
 	mov dword [esp+0x4], _cstring_pure
-	jmp UI_FeederItemText_260
-UI_FeederItemText_450:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_260
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_450:
 	mov dword [esp+0x4], _cstring_mod
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov [esp], eax
 	call atoi
 	mov ebx, _cstring_x
 	test eax, eax
 	mov eax, _cstring_null
 	cmovnz ebx, eax
-	jmp UI_FeederItemText_70
-UI_FeederItemText_390:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_390:
 	test eax, eax
-	jle UI_FeederItemText_320
+	jle _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_320
 	mov dword [esp+0x4], _cstring_hostname
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov dword [esp+0x8], 0x26
 	mov [esp+0x4], eax
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10clientBuff
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov ebx, _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10clientBuff
-	jmp UI_FeederItemText_70
-UI_FeederItemText_290:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_290:
 	mov dword [esp+0x4], _cstring_gametype
 	mov dword [esp], _ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE4info
-	call Info_ValueForKey
+	call _Z16Info_ValueForKeyPKcS0_
 	mov ebx, eax
 	mov eax, [sharedUiInfo+0x114c]
 	test eax, eax
-	jle UI_FeederItemText_70
+	jle _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
 	xor edi, edi
 	mov esi, sharedUiInfo
-	jmp UI_FeederItemText_330
-UI_FeederItemText_340:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_330
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_340:
 	add edi, 0x1
 	add esi, 0x8
 	cmp edi, [sharedUiInfo+0x114c]
-	jge UI_FeederItemText_70
-UI_FeederItemText_330:
+	jge _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_330:
 	mov eax, [esi+0x1150]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_FeederItemText_340
+	jnz _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_340
 	mov eax, [edi*8+sharedUiInfo+0x1154]
 	mov [ebp+0x8], eax
-	jmp UI_FeederItemText_120
-UI_FeederItemText_90:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_120
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_90:
 	mov eax, [eax]
 	mov [ebp+0x8], eax
-	jmp UI_FeederItemText_120
-UI_FeederItemText_150:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_120
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_150:
 	mov dword [sharedUiInfo+0x72f4], 0xffffffff
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
-	jmp UI_FeederItemText_140
-UI_FeederItemText_190:
-	jnp UI_FeederItemText_60
-	jmp UI_FeederItemText_350
-UI_FeederItemText_270:
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_140
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_190:
+	jnp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_60
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_350
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_270:
 	mov ebx, _cstring_4
-	jmp UI_FeederItemText_70
-UI_FeederItemText_320:
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_70
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_320:
 	mov dword [ebp+0xc], _cstring_addr
-	jmp UI_FeederItemText_360
+	jmp _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_360
 	
 	
-UI_FeederItemText_jumptab_0:
-	dd UI_FeederItemText_370
-	dd UI_FeederItemText_380
-	dd UI_FeederItemText_390
-	dd UI_FeederItemText_400
-	dd UI_FeederItemText_410
-	dd UI_FeederItemText_420
-	dd UI_FeederItemText_430
-	dd UI_FeederItemText_440
-	dd UI_FeederItemText_450
-	dd UI_FeederItemText_460
-	dd UI_FeederItemText_470
+_Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_jumptab_0:
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_370
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_380
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_390
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_400
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_410
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_420
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_430
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_440
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_450
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_460
+	dd _Z17UI_FeederItemTextiP9itemDef_sfiiPP8Material_470
 
 
 ;UI_OwnerDrawWidth(int, Font_s*, float)
-UI_OwnerDrawWidth:
+_Z17UI_OwnerDrawWidthiP6Font_sf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -7877,32 +7877,32 @@ UI_OwnerDrawWidth:
 	mov eax, [ebp+0x8]
 	sub eax, 0xcd
 	cmp eax, 0x2d
-	ja UI_OwnerDrawWidth_10
-	jmp dword [eax*4+UI_OwnerDrawWidth_jumptab_0]
-UI_OwnerDrawWidth_10:
+	ja _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	jmp dword [eax*4+_Z17UI_OwnerDrawWidthiP6Font_sf_jumptab_0]
+_Z17UI_OwnerDrawWidthiP6Font_sf_10:
 	xor eax, eax
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-UI_OwnerDrawWidth_60:
+_Z17UI_OwnerDrawWidthiP6Font_sf_60:
 	mov eax, [ui_gametype]
 	mov eax, [eax+0xc]
 	mov ebx, [eax*8+sharedUiInfo+0x1154]
-UI_OwnerDrawWidth_30:
+_Z17UI_OwnerDrawWidthiP6Font_sf_30:
 	test ebx, ebx
-	jz UI_OwnerDrawWidth_10
+	jz _Z17UI_OwnerDrawWidthiP6Font_sf_10
 	movss xmm0, dword [ebp+0x10]
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0xc]
 	mov eax, [ebp+0xc]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [ebp-0xc]
 	cvttss2si eax, xmm0
@@ -7910,25 +7910,25 @@ UI_OwnerDrawWidth_30:
 	pop ebx
 	pop ebp
 	ret
-UI_OwnerDrawWidth_100:
-	call Display_KeyBindPending
+_Z17UI_OwnerDrawWidthiP6Font_sf_100:
+	call _Z22Display_KeyBindPendingv
 	test eax, eax
-	jnz UI_OwnerDrawWidth_20
+	jnz _Z17UI_OwnerDrawWidthiP6Font_sf_20
 	mov dword [esp], _cstring_exe_keychange
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
-	jmp UI_OwnerDrawWidth_30
-UI_OwnerDrawWidth_90:
+	jmp _Z17UI_OwnerDrawWidthiP6Font_sf_30
+_Z17UI_OwnerDrawWidthiP6Font_sf_90:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_ui_lastserverref
-	call va
+	call _Z2vaPKcz
 	mov [esp], eax
-	call Cvar_GetVariantString
+	call _Z21Dvar_GetVariantStringPKc
 	mov ebx, eax
-	jmp UI_OwnerDrawWidth_30
-UI_OwnerDrawWidth_80:
+	jmp _Z17UI_OwnerDrawWidthiP6Font_sf_30
+_Z17UI_OwnerDrawWidthiP6Font_sf_80:
 	xor eax, eax
 	cmp dword [ui_serverFilterType], 0x2
 	cmovb eax, [ui_serverFilterType]
@@ -7936,121 +7936,121 @@ UI_OwnerDrawWidth_80:
 	mov eax, [eax*8+serverFilters]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_exe_serverfilter
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_server_filter
 	mov [esp], eax
-	call SEH_LocalizeTextMessage
+	call _Z23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_t
 	mov ebx, eax
-	jmp UI_OwnerDrawWidth_30
-UI_OwnerDrawWidth_70:
+	jmp _Z17UI_OwnerDrawWidthiP6Font_sf_30
+_Z17UI_OwnerDrawWidthiP6Font_sf_70:
 	mov edx, [ui_netSource]
 	mov eax, [edx+0xc]
 	cmp eax, [sharedUiInfo+0x1b54]
-	jg UI_OwnerDrawWidth_40
-UI_OwnerDrawWidth_50:
+	jg _Z17UI_OwnerDrawWidthiP6Font_sf_40
+_Z17UI_OwnerDrawWidthiP6Font_sf_50:
 	mov eax, [eax*4+netSources]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_exe_netsources
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_net_source
 	mov [esp], eax
-	call SEH_LocalizeTextMessage
+	call _Z23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_t
 	mov ebx, eax
-	jmp UI_OwnerDrawWidth_30
-UI_OwnerDrawWidth_20:
+	jmp _Z17UI_OwnerDrawWidthiP6Font_sf_30
+_Z17UI_OwnerDrawWidthiP6Font_sf_20:
 	mov dword [esp], _cstring_exe_keywait
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov ebx, eax
-	jmp UI_OwnerDrawWidth_30
-UI_OwnerDrawWidth_40:
+	jmp _Z17UI_OwnerDrawWidthiP6Font_sf_30
+_Z17UI_OwnerDrawWidthiP6Font_sf_40:
 	mov dword [esp+0x4], 0x0
 	mov [esp], edx
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov edx, [ui_netSource]
 	mov eax, [edx+0xc]
-	jmp UI_OwnerDrawWidth_50
+	jmp _Z17UI_OwnerDrawWidthiP6Font_sf_50
 	nop
 	
 	
-UI_OwnerDrawWidth_jumptab_0:
-	dd UI_OwnerDrawWidth_60
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_70
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_80
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_90
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_10
-	dd UI_OwnerDrawWidth_100
+_Z17UI_OwnerDrawWidthiP6Font_sf_jumptab_0:
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_60
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_70
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_80
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_90
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_10
+	dd _Z17UI_OwnerDrawWidthiP6Font_sf_100
 
 
 ;UI_CloseInGameMenu(int)
-UI_CloseInGameMenu:
+_Z18UI_CloseInGameMenui:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov ebx, [ebp+0x8]
 	mov dword [esp], uiInfoArray
-	call Menus_AnyFullScreenVisible
+	call _Z26Menus_AnyFullScreenVisibleP9UiContext
 	test eax, eax
-	jnz UI_CloseInGameMenu_10
+	jnz _Z18UI_CloseInGameMenui_10
 	cmp dword [uiInfoArray+0x18a0], 0x2
-	jz UI_CloseInGameMenu_20
-UI_CloseInGameMenu_10:
+	jz _Z18UI_CloseInGameMenui_20
+_Z18UI_CloseInGameMenui_10:
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_CloseInGameMenu_20:
+_Z18UI_CloseInGameMenui_20:
 	mov [ebp+0x8], ebx
 	add esp, 0x14
 	pop ebx
 	pop ebp
-	jmp UI_CloseFocusedMenu
+	jmp _Z19UI_CloseFocusedMenui
 
 
 ;UI_DrawRecordLevel(int, rectDef_s*)
-UI_DrawRecordLevel:
+_Z18UI_DrawRecordLeveliP9rectDef_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -8063,18 +8063,18 @@ UI_DrawRecordLevel:
 	shl eax, 0x6
 	lea edi, [eax+edx*4]
 	add edi, scrPlaceView
-	call Voice_GetVoiceLevel
+	call _Z19Voice_GetVoiceLevelv
 	fstp dword [ebp-0x1c]
 	movss xmm0, dword [ebp-0x1c]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jbe UI_DrawRecordLevel_10
+	jbe _Z18UI_DrawRecordLeveliP9rectDef_s_10
 	movaps xmm1, xmm0
 	mulss xmm1, [esi+0x8]
 	movss xmm3, dword [_float_4_00000000]
 	subss xmm1, xmm3
 	ucomiss xmm1, xmm2
-	jbe UI_DrawRecordLevel_10
+	jbe _Z18UI_DrawRecordLeveliP9rectDef_s_10
 	mov eax, colorWhite
 	mov [esp+0x1c], eax
 	mov dword [esp+0x18], 0x0
@@ -8090,8 +8090,8 @@ UI_DrawRecordLevel:
 	addss xmm0, [esi]
 	movss [esp+0x4], xmm0
 	mov [esp], edi
-	call UI_FillRect
-UI_DrawRecordLevel_10:
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
+_Z18UI_DrawRecordLeveliP9rectDef_s_10:
 	mov ebx, colorWhite
 	mov [esp+0x1c], ebx
 	mov dword [esp+0x18], 0x0
@@ -8104,7 +8104,7 @@ UI_DrawRecordLevel_10:
 	mov eax, [esi]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	mov [esp+0x1c], ebx
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x0
@@ -8118,7 +8118,7 @@ UI_DrawRecordLevel_10:
 	mov eax, [esi]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	mov [esp+0x1c], ebx
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x0
@@ -8132,7 +8132,7 @@ UI_DrawRecordLevel_10:
 	mov eax, [esi]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	mov [esp+0x1c], ebx
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x0
@@ -8148,7 +8148,7 @@ UI_DrawRecordLevel_10:
 	subss xmm0, [_float_1_00000000]
 	movss [esp+0x4], xmm0
 	mov [esp], edi
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	mov eax, 0x1
 	add esp, 0x3c
 	pop ebx
@@ -8159,7 +8159,7 @@ UI_DrawRecordLevel_10:
 
 
 ;UI_FeederItemColor(int, itemDef_s*, float, int, int, float*)
-UI_FeederItemColor:
+_Z18UI_FeederItemColoriP9itemDef_sfiiPf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -8168,7 +8168,7 @@ UI_FeederItemColor:
 	mov ebx, [ebp+0xc]
 	mov esi, [ebp+0x1c]
 	mov [esp], ebx
-	call Item_GetListBoxDef
+	call _Z18Item_GetListBoxDefP9itemDef_s
 	lea edx, [ebx+0x58]
 	mov eax, [ebx+0x58]
 	mov [esi], eax
@@ -8187,7 +8187,7 @@ UI_FeederItemColor:
 
 
 ;UI_FeederItemImage(float, int)
-UI_FeederItemImage:
+_Z18UI_FeederItemImagefi:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -8195,73 +8195,73 @@ UI_FeederItemImage:
 	sub esp, 0x10
 	movss xmm0, dword [ebp+0x8]
 	ucomiss xmm0, [_float_4_00000000]
-	jp UI_FeederItemImage_10
-	jnz UI_FeederItemImage_10
+	jp _Z18UI_FeederItemImagefi_10
+	jnz _Z18UI_FeederItemImagefi_10
 	mov esi, [sharedUiInfo+0x1c58]
 	test esi, esi
-	jle UI_FeederItemImage_20
+	jle _Z18UI_FeederItemImagefi_20
 	xor ecx, ecx
 	xor ebx, ebx
 	mov edx, sharedUiInfo
 	mov eax, sharedUiInfo+0x1c5c
-UI_FeederItemImage_50:
+_Z18UI_FeederItemImagefi_50:
 	cmp dword [edx+0x1cf8], 0x0
-	jz UI_FeederItemImage_30
+	jz _Z18UI_FeederItemImagefi_30
 	cmp ecx, [ebp+0xc]
-	jz UI_FeederItemImage_40
+	jz _Z18UI_FeederItemImagefi_40
 	add ecx, 0x1
-UI_FeederItemImage_30:
+_Z18UI_FeederItemImagefi_30:
 	add ebx, 0x1
 	add eax, 0xa0
 	add edx, 0xa0
 	cmp esi, ebx
-	jnz UI_FeederItemImage_50
-UI_FeederItemImage_20:
+	jnz _Z18UI_FeederItemImagefi_50
+_Z18UI_FeederItemImagefi_20:
 	xor ebx, ebx
-UI_FeederItemImage_80:
+_Z18UI_FeederItemImagefi_80:
 	cmp [sharedUiInfo+0x1c58], ebx
-	jle UI_FeederItemImage_60
-UI_FeederItemImage_90:
+	jle _Z18UI_FeederItemImagefi_60
+_Z18UI_FeederItemImagefi_90:
 	lea ebx, [ebx+ebx*4]
 	shl ebx, 0x5
 	mov eax, [ebx+sharedUiInfo+0x1cf4]
 	test eax, eax
-	jz UI_FeederItemImage_70
-UI_FeederItemImage_100:
+	jz _Z18UI_FeederItemImagefi_70
+_Z18UI_FeederItemImagefi_100:
 	mov eax, [ebx+sharedUiInfo+0x1cf4]
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_FeederItemImage_40:
+_Z18UI_FeederItemImagefi_40:
 	mov eax, [eax]
 	mov [esp], eax
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	test ebx, ebx
-	jns UI_FeederItemImage_80
-UI_FeederItemImage_60:
+	jns _Z18UI_FeederItemImagefi_80
+_Z18UI_FeederItemImagefi_60:
 	xor ebx, ebx
-	jmp UI_FeederItemImage_90
-UI_FeederItemImage_10:
+	jmp _Z18UI_FeederItemImagefi_90
+_Z18UI_FeederItemImagefi_10:
 	xor eax, eax
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_FeederItemImage_70:
+_Z18UI_FeederItemImagefi_70:
 	mov dword [esp+0x4], 0x3
 	mov eax, [ebx+sharedUiInfo+0x1c64]
 	mov [esp], eax
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov edx, sharedUiInfo+0x1ce0
 	mov [ebx+edx+0x14], eax
-	jmp UI_FeederItemImage_100
+	jmp _Z18UI_FeederItemImagefi_100
 
 
 ;UI_FeederSelection(int, float, int)
-UI_FeederSelection:
+_Z18UI_FeederSelectionifi:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -8270,12 +8270,12 @@ UI_FeederSelection:
 	movss xmm0, dword [ebp+0xc]
 	mov ecx, [ebp+0x10]
 	ucomiss xmm0, [_float_4_00000000]
-	jp UI_FeederSelection_10
-	jz UI_FeederSelection_20
-UI_FeederSelection_10:
+	jp _Z18UI_FeederSelectionifi_10
+	jz _Z18UI_FeederSelectionifi_20
+_Z18UI_FeederSelectionifi_10:
 	ucomiss xmm0, [_float_2_00000000]
-	jnz UI_FeederSelection_30
-	jp UI_FeederSelection_30
+	jnz _Z18UI_FeederSelectionifi_30
+	jp _Z18UI_FeederSelectionifi_30
 	cmp dword [sharedUiInfo+0x1ab78], 0x1
 	mov eax, [sharedUiInfo+0x72f4]
 	cmovge eax, ecx
@@ -8287,38 +8287,38 @@ UI_FeederSelection_10:
 	mov eax, [ui_netSource]
 	mov eax, [eax+0xc]
 	mov [esp], eax
-	call LAN_GetServerInfo
-UI_FeederSelection_100:
+	call _Z17LAN_GetServerInfoiiPci
+_Z18UI_FeederSelectionifi_100:
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_FeederSelection_20:
+_Z18UI_FeederSelectionifi_20:
 	mov esi, [sharedUiInfo+0x1c58]
 	test esi, esi
-	jle UI_FeederSelection_40
+	jle _Z18UI_FeederSelectionifi_40
 	xor edx, edx
 	xor ebx, ebx
 	mov eax, sharedUiInfo
-UI_FeederSelection_70:
+_Z18UI_FeederSelectionifi_70:
 	cmp dword [eax+0x1cf8], 0x0
-	jz UI_FeederSelection_50
+	jz _Z18UI_FeederSelectionifi_50
 	cmp edx, ecx
-	jz UI_FeederSelection_60
+	jz _Z18UI_FeederSelectionifi_60
 	add edx, 0x1
-UI_FeederSelection_50:
+_Z18UI_FeederSelectionifi_50:
 	add ebx, 0x1
 	add eax, 0xa0
 	cmp esi, ebx
-	jnz UI_FeederSelection_70
-UI_FeederSelection_40:
+	jnz _Z18UI_FeederSelectionifi_70
+_Z18UI_FeederSelectionifi_40:
 	xor ebx, ebx
-UI_FeederSelection_160:
+_Z18UI_FeederSelectionifi_160:
 	mov [esp+0x4], ebx
 	mov eax, [ui_currentMap]
 	mov [esp], eax
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov [ebp+0xc], ebx
 	mov eax, [ui_currentNetMap]
 	mov [ebp+0x8], eax
@@ -8326,29 +8326,29 @@ UI_FeederSelection_160:
 	pop ebx
 	pop esi
 	pop ebp
-	jmp Cvar_SetInt
-UI_FeederSelection_30:
+	jmp _Z11Dvar_SetIntPK6dvar_si
+_Z18UI_FeederSelectionifi_30:
 	ucomiss xmm0, [_float_7_00000000]
-	jz UI_FeederSelection_80
-UI_FeederSelection_140:
+	jz _Z18UI_FeederSelectionifi_80
+_Z18UI_FeederSelectionifi_140:
 	ucomiss xmm0, [_float_39_00000000]
-	jp UI_FeederSelection_90
-	jz UI_FeederSelection_100
-UI_FeederSelection_90:
+	jp _Z18UI_FeederSelectionifi_90
+	jz _Z18UI_FeederSelectionifi_100
+_Z18UI_FeederSelectionifi_90:
 	ucomiss xmm0, [_float_9_00000000]
-	jz UI_FeederSelection_110
-UI_FeederSelection_150:
+	jz _Z18UI_FeederSelectionifi_110
+_Z18UI_FeederSelectionifi_150:
 	ucomiss xmm0, [_float_20_00000000]
-	jnz UI_FeederSelection_120
-	jnp UI_FeederSelection_130
-UI_FeederSelection_120:
+	jnz _Z18UI_FeederSelectionifi_120
+	jnp _Z18UI_FeederSelectionifi_130
+_Z18UI_FeederSelectionifi_120:
 	ucomiss xmm0, [_float_24_00000000]
-	jnz UI_FeederSelection_100
-	jp UI_FeederSelection_100
+	jnz _Z18UI_FeederSelectionifi_100
+	jp _Z18UI_FeederSelectionifi_100
 	test ecx, ecx
-	js UI_FeederSelection_100
+	js _Z18UI_FeederSelectionifi_100
 	cmp ecx, [uiInfoArray+0x1684]
-	jge UI_FeederSelection_100
+	jge _Z18UI_FeederSelectionifi_100
 	mov eax, [ecx*4+uiInfoArray+0x178c]
 	mov eax, [eax*4+uiInfoArray+0x1688]
 	mov [ebp+0xc], eax
@@ -8358,102 +8358,102 @@ UI_FeederSelection_120:
 	pop ebx
 	pop esi
 	pop ebp
-	jmp Cvar_SetString
-UI_FeederSelection_80:
-	jp UI_FeederSelection_140
-UI_FeederSelection_130:
+	jmp _Z14Dvar_SetStringPK6dvar_sPKc
+_Z18UI_FeederSelectionifi_80:
+	jp _Z18UI_FeederSelectionifi_140
+_Z18UI_FeederSelectionifi_130:
 	mov [uiInfoArray+0x1680], ecx
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_FeederSelection_110:
-	jp UI_FeederSelection_150
+_Z18UI_FeederSelectionifi_110:
+	jp _Z18UI_FeederSelectionifi_150
 	mov [sharedUiInfo+0x6e88], ecx
-	jmp UI_FeederSelection_100
-UI_FeederSelection_60:
+	jmp _Z18UI_FeederSelectionifi_100
+_Z18UI_FeederSelectionifi_60:
 	lea eax, [ebx+ebx*4]
 	shl eax, 0x5
 	mov eax, [eax+sharedUiInfo+0x1c5c]
 	mov [esp], eax
-	call UI_SafeTranslateString
-	jmp UI_FeederSelection_160
+	call _Z22UI_SafeTranslateStringPKc
+	jmp _Z18UI_FeederSelectionifi_160
 
 
 ;UI_LoadIngameMenus(int)
-UI_LoadIngameMenus:
+_Z18UI_LoadIngameMenusi:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov eax, [ebp+0x8]
 	cmp byte [eax+g_ingameMenusLoaded], 0x0
-	jz UI_LoadIngameMenus_10
+	jz _Z18UI_LoadIngameMenusi_10
 	leave
 	ret
-UI_LoadIngameMenus_10:
+_Z18UI_LoadIngameMenusi_10:
 	mov byte [eax+g_ingameMenusLoaded], 0x1
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_mpingametxt
-	call UI_LoadMenus
+	call _Z12UI_LoadMenusPKci
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call UI_AddMenuList
+	call _Z14UI_AddMenuListP9UiContextP8MenuList
 	leave
 	ret
 	nop
 
 
 ;UI_PopupScriptMenu(int, char const*, unsigned char)
-UI_PopupScriptMenu:
+_Z18UI_PopupScriptMenuiPKch:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	movzx ebx, byte [ebp+0x10]
 	mov dword [esp], uiInfoArray
-	call Menu_GetFocused
+	call _Z15Menu_GetFocusedP9UiContext
 	test eax, eax
-	jz UI_PopupScriptMenu_10
+	jz _Z18UI_PopupScriptMenuiPKch_10
 	mov edx, [uiInfoArray+0x18a0]
 	cmp edx, 0x9
-	jz UI_PopupScriptMenu_20
+	jz _Z18UI_PopupScriptMenuiPKch_20
 	cmp edx, 0xa
-	jz UI_PopupScriptMenu_20
+	jz _Z18UI_PopupScriptMenuiPKch_20
 	xor eax, eax
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_PopupScriptMenu_20:
+_Z18UI_PopupScriptMenuiPKch_20:
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov eax, [eax]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_PopupScriptMenu_30
-UI_PopupScriptMenu_10:
+	jz _Z18UI_PopupScriptMenuiPKch_30
+_Z18UI_PopupScriptMenuiPKch_10:
 	mov dword [uiInfoArray+0x18a0], 0x9
 	test bl, bl
-	jz UI_PopupScriptMenu_40
-UI_PopupScriptMenu_50:
+	jz _Z18UI_PopupScriptMenuiPKch_40
+_Z18UI_PopupScriptMenuiPKch_50:
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Key_SetCatcher
+	call _Z14Key_SetCatcherii
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov dword [esp], uiInfoArray
-	call Menus_OpenByName
+	call _Z16Menus_OpenByNameP9UiContextPKc
 	mov eax, 0x1
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_PopupScriptMenu_40:
+_Z18UI_PopupScriptMenuiPKch_40:
 	mov edx, 0x441fc000
 	mov [uiInfoArray+0x10], edx
 	mov eax, 0x43ef8000
@@ -8461,9 +8461,9 @@ UI_PopupScriptMenu_40:
 	mov [esp+0x8], eax
 	mov [esp+0x4], edx
 	mov dword [esp], uiInfoArray
-	call UI_SetSystemCursorPos
-	jmp UI_PopupScriptMenu_50
-UI_PopupScriptMenu_30:
+	call _Z21UI_SetSystemCursorPosP9UiContextff
+	jmp _Z18UI_PopupScriptMenuiPKch_50
+_Z18UI_PopupScriptMenuiPKch_30:
 	mov al, 0x1
 	add esp, 0x14
 	pop ebx
@@ -8472,50 +8472,50 @@ UI_PopupScriptMenu_30:
 
 
 ;UI_CloseFocusedMenu(int)
-UI_CloseFocusedMenu:
+_Z19UI_CloseFocusedMenui:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov ebx, [ebp+0x8]
 	mov dword [esp], uiInfoArray
-	call Menu_Count
+	call _Z10Menu_CountP9UiContext
 	test eax, eax
-	jle UI_CloseFocusedMenu_10
+	jle _Z19UI_CloseFocusedMenui_10
 	mov dword [esp], uiInfoArray
-	call Menu_GetFocused
+	call _Z15Menu_GetFocusedP9UiContext
 	test eax, eax
-	jz UI_CloseFocusedMenu_20
+	jz _Z19UI_CloseFocusedMenui_20
 	mov dword [esp], uiInfoArray
-	call Menus_AnyFullScreenVisible
+	call _Z26Menus_AnyFullScreenVisibleP9UiContext
 	test eax, eax
-	jz UI_CloseFocusedMenu_30
-UI_CloseFocusedMenu_10:
+	jz _Z19UI_CloseFocusedMenui_30
+_Z19UI_CloseFocusedMenui_10:
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_CloseFocusedMenu_30:
+_Z19UI_CloseFocusedMenui_30:
 	mov dword [ebp+0x8], uiInfoArray
 	add esp, 0x14
 	pop ebx
 	pop ebp
-	jmp Menus_CloseAll
-UI_CloseFocusedMenu_20:
+	jmp _Z14Menus_CloseAllP9UiContext
+_Z19UI_CloseFocusedMenui_20:
 	mov dword [esp+0x4], 0x10
 	mov [esp], ebx
-	call Key_IsCatcherActive
+	call _Z19Key_IsCatcherActiveii
 	test al, al
-	jz UI_CloseFocusedMenu_10
+	jz _Z19UI_CloseFocusedMenui_10
 	mov dword [esp+0x4], 0xffffffef
 	mov [esp], ebx
-	call Key_RemoveCatcher
-	jmp UI_CloseFocusedMenu_10
+	call _Z17Key_RemoveCatcherii
+	jmp _Z19UI_CloseFocusedMenui_10
 	nop
 
 
 ;UI_DrawMapLevelshot(int)
-UI_DrawMapLevelshot:
+_Z19UI_DrawMapLevelshoti:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -8523,38 +8523,38 @@ UI_DrawMapLevelshot:
 	sub esp, 0x20
 	mov esi, [ebp+0x8]
 	cmp byte [g_showLoadingScreenMenu], 0x0
-	jz UI_DrawMapLevelshot_10
+	jz _Z19UI_DrawMapLevelshoti_10
 	mov eax, useFastFile
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz UI_DrawMapLevelshot_20
+	jz _Z19UI_DrawMapLevelshoti_20
 	mov dword [esp+0x4], _cstring_connect
 	mov dword [esp], 0x15
-	call DB_FindXAssetHeader
+	call _Z19DB_FindXAssetHeader10XAssetTypePKc
 	mov ebx, eax
-UI_DrawMapLevelshot_40:
+_Z19UI_DrawMapLevelshoti_40:
 	test ebx, ebx
-	jz UI_DrawMapLevelshot_10
+	jz _Z19UI_DrawMapLevelshoti_10
 	mov [esp+0x4], ebx
 	mov dword [esp], uiInfoArray
-	call Menus_MenuIsInStack
+	call _Z19Menus_MenuIsInStackP9UiContextP9menuDef_t
 	test eax, eax
-	jz UI_DrawMapLevelshot_30
-UI_DrawMapLevelshot_50:
+	jz _Z19UI_DrawMapLevelshoti_30
+_Z19UI_DrawMapLevelshoti_50:
 	mov dword [uiInfoArray+0x2c], 0x0
 	mov dword [esp+0x8], 0x4004
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call Window_SetDynamicFlags
+	call _Z22Window_SetDynamicFlagsiP11windowDef_ti
 	mov [esp+0x4], ebx
 	mov dword [esp], uiInfoArray
-	call Menu_Paint
+	call _Z10Menu_PaintP9UiContextP9menuDef_t
 	add esp, 0x20
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_DrawMapLevelshot_10:
+_Z19UI_DrawMapLevelshoti_10:
 	mov eax, colorBlack
 	mov [esp+0x1c], eax
 	mov dword [esp+0x18], 0x0
@@ -8569,27 +8569,27 @@ UI_DrawMapLevelshot_10:
 	lea eax, [eax+esi*4]
 	add eax, scrPlaceView
 	mov [esp], eax
-	call UI_FillRect
+	call _Z11UI_FillRectPK15ScreenPlacementffffiiPKf
 	add esp, 0x20
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_DrawMapLevelshot_20:
+_Z19UI_DrawMapLevelshoti_20:
 	mov dword [esp+0x4], _cstring_connect
 	mov dword [esp], uiInfoArray
-	call Menus_FindByName
+	call _Z16Menus_FindByNamePK9UiContextPKc
 	mov ebx, eax
-	jmp UI_DrawMapLevelshot_40
-UI_DrawMapLevelshot_30:
+	jmp _Z19UI_DrawMapLevelshoti_40
+_Z19UI_DrawMapLevelshoti_30:
 	mov [esp+0x4], ebx
 	mov dword [esp], uiInfoArray
-	call Menus_Open
-	jmp UI_DrawMapLevelshot_50
+	call _Z10Menus_OpenP9UiContextP9menuDef_t
+	jmp _Z19UI_DrawMapLevelshoti_50
 
 
 ;UI_DrawTextWithGlow(ScreenPlacement const*, char const*, int, Font_s*, float, float, int, int, float, float const*, int, float const*, unsigned char, unsigned char)
-UI_DrawTextWithGlow:
+_Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -8602,7 +8602,7 @@ UI_DrawTextWithGlow:
 	mov eax, [ebp+0x28]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fst dword [ebp-0x1c]
 	fstp dword [ebp-0x20]
 	mov eax, [ebp+0x24]
@@ -8619,7 +8619,7 @@ UI_DrawTextWithGlow:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call ScrPlace_ApplyRect
+	call _Z18ScrPlace_ApplyRectPK15ScreenPlacementPfS2_S2_S2_ii
 	movss xmm1, dword [_float_0_50000000]
 	movss xmm0, dword [ebp+0x18]
 	addss xmm0, xmm1
@@ -8635,7 +8635,7 @@ UI_DrawTextWithGlow:
 	call floorf
 	fst dword [ebp+0x1c]
 	test bl, bl
-	jz UI_DrawTextWithGlow_10
+	jz _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh_10
 	mov edx, esi
 	movzx eax, dl
 	mov [esp+0x2c], eax
@@ -8658,14 +8658,14 @@ UI_DrawTextWithGlow:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call R_AddCmdDrawTextSubtitle
+	call _Z24R_AddCmdDrawTextSubtitlePKciP6Font_sfffffPKfiS4_h
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_DrawTextWithGlow_10:
+_Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh_10:
 	mov dword [esp+0x3c], 0x0
 	mov dword [esp+0x38], 0x0
 	mov dword [esp+0x34], 0x0
@@ -8690,7 +8690,7 @@ UI_DrawTextWithGlow_10:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call CL_DrawTextPhysicalWithEffects
+	call _Z30CL_DrawTextPhysicalWithEffectsPKciP6Font_sffffPKfiS4_P8MaterialS6_iiii
 	add esp, 0x7c
 	pop ebx
 	pop esi
@@ -8701,27 +8701,27 @@ UI_DrawTextWithGlow_10:
 
 
 ;UI_OwnerDrawVisible(int)
-UI_OwnerDrawVisible:
+_Z19UI_OwnerDrawVisiblei:
 	push ebp
 	mov ebp, esp
 	mov ecx, [ebp+0x8]
 	test cl, 0x4
-	jz UI_OwnerDrawVisible_10
+	jz _Z19UI_OwnerDrawVisiblei_10
 	mov eax, [ui_netSource]
 	cmp dword [eax+0xc], 0x2
-	jz UI_OwnerDrawVisible_10
+	jz _Z19UI_OwnerDrawVisiblei_10
 	xor edx, edx
 	and ch, 0x10
-	jnz UI_OwnerDrawVisible_20
-UI_OwnerDrawVisible_30:
+	jnz _Z19UI_OwnerDrawVisiblei_20
+_Z19UI_OwnerDrawVisiblei_30:
 	mov eax, edx
 	pop ebp
 	ret
-UI_OwnerDrawVisible_10:
+_Z19UI_OwnerDrawVisiblei_10:
 	mov edx, 0x1
 	and ch, 0x10
-	jz UI_OwnerDrawVisible_30
-UI_OwnerDrawVisible_20:
+	jz _Z19UI_OwnerDrawVisiblei_30
+_Z19UI_OwnerDrawVisiblei_20:
 	mov eax, [ui_netSource]
 	cmp dword [eax+0xc], 0x2
 	mov eax, 0x0
@@ -8732,7 +8732,7 @@ UI_OwnerDrawVisible_20:
 
 
 ;UI_DrawConnectScreen(int)
-UI_DrawConnectScreen:
+_Z20UI_DrawConnectScreeni:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -8743,39 +8743,39 @@ UI_DrawConnectScreen:
 	mov eax, cls
 	mov eax, [eax+0x2dc6b4]
 	test eax, eax
-	jnz UI_DrawConnectScreen_10
+	jnz _Z20UI_DrawConnectScreeni_10
 	mov eax, legacyHacks
 	cmp byte [eax+0xc], 0x0
-	jz UI_DrawConnectScreen_20
-UI_DrawConnectScreen_10:
+	jz _Z20UI_DrawConnectScreeni_20
+_Z20UI_DrawConnectScreeni_10:
 	mov eax, [sharedUiInfo+0x40]
 	mov [ebp-0xdd0], eax
 	lea eax, [ebp-0xda4]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call CL_GetClientState
+	call _Z17CL_GetClientStateiP15uiClientState_s
 	mov eax, cls
 	mov eax, [eax+0x2dc6b4]
 	test eax, eax
-	jz UI_DrawConnectScreen_30
+	jz _Z20UI_DrawConnectScreeni_30
 	mov edx, legacyHacks
 	cmp byte [edx+0xc], 0x0
-	jnz UI_DrawConnectScreen_40
-UI_DrawConnectScreen_30:
+	jnz _Z20UI_DrawConnectScreeni_40
+_Z20UI_DrawConnectScreeni_30:
 	cmp byte [g_mapname], 0x0
-	jnz UI_DrawConnectScreen_50
+	jnz _Z20UI_DrawConnectScreeni_50
 	mov esi, 0x1
 	cmp dword [ebp-0xda4], 0x4
-	jle UI_DrawConnectScreen_60
-UI_DrawConnectScreen_100:
+	jle _Z20UI_DrawConnectScreeni_60
+_Z20UI_DrawConnectScreeni_100:
 	mov dword [esp+0x4], _cstring_localhost
 	lea eax, [ebp-0xd9c]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
 	mov eax, 0x0
 	cmovz esi, eax
-	call DB_GetLoadedFraction
+	call _Z20DB_GetLoadedFractionv
 	fstp dword [ebp-0xdd4]
 	mov edx, esi
 	movss xmm0, dword [ebp-0xdd4]
@@ -8786,28 +8786,28 @@ UI_DrawConnectScreen_100:
 	mov eax, [ebp-0xda4]
 	lea edx, [eax-0x3]
 	cmp edx, 0x5
-	ja UI_DrawConnectScreen_70
-	jmp dword [edx*4+UI_DrawConnectScreen_jumptab_0]
-UI_DrawConnectScreen_50:
+	ja _Z20UI_DrawConnectScreeni_70
+	jmp dword [edx*4+_Z20UI_DrawConnectScreeni_jumptab_0]
+_Z20UI_DrawConnectScreeni_50:
 	mov eax, [sharedUiInfo+0x114c]
 	test eax, eax
-	jg UI_DrawConnectScreen_80
-UI_DrawConnectScreen_250:
+	jg _Z20UI_DrawConnectScreeni_80
+_Z20UI_DrawConnectScreeni_250:
 	mov edi, g_gametype
-UI_DrawConnectScreen_350:
+_Z20UI_DrawConnectScreeni_350:
 	mov esi, [ui_connectScreenTextGlowColor]
 	add esi, 0xc
 	mov ebx, 0x3f000000
 	mov [esp+0x4], ebx
 	mov edx, [ebp-0xdd0]
 	mov [esp], edx
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0xdc4]
 	mov eax, [ebp-0xdd0]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov [esp], edi
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov [esp+0x2c], esi
@@ -8835,26 +8835,26 @@ UI_DrawConnectScreen_350:
 	mov [esp+0x4], edi
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call UI_DrawTextWithGlow
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
 	mov edi, [ui_connectScreenTextGlowColor]
 	add edi, 0xc
 	mov eax, [sharedUiInfo+0x1c58]
 	test eax, eax
-	jg UI_DrawConnectScreen_90
-UI_DrawConnectScreen_220:
+	jg _Z20UI_DrawConnectScreeni_90
+_Z20UI_DrawConnectScreeni_220:
 	mov esi, g_mapname
-UI_DrawConnectScreen_340:
+_Z20UI_DrawConnectScreeni_340:
 	mov ebx, 0x3f000000
 	mov [esp+0x4], ebx
 	mov eax, [ebp-0xdd0]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0xdc0]
 	mov edx, [ebp-0xdd0]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov [esp+0x2c], edi
@@ -8882,14 +8882,14 @@ UI_DrawConnectScreen_340:
 	mov [esp+0x4], esi
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call UI_DrawTextWithGlow
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
 	xor esi, esi
 	cmp dword [ebp-0xda4], 0x4
-	jg UI_DrawConnectScreen_100
-UI_DrawConnectScreen_60:
+	jg _Z20UI_DrawConnectScreeni_100
+_Z20UI_DrawConnectScreeni_60:
 	lea eax, [ebp-0x99c]
 	mov [esp], eax
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov [ebp-0xdac], eax
 	cld
 	mov ecx, 0xffffffff
@@ -8900,88 +8900,88 @@ UI_DrawConnectScreen_60:
 	sub ecx, 0x1
 	mov [ebp-0xdcc], ecx
 	test ecx, ecx
-	jle UI_DrawConnectScreen_100
+	jle _Z20UI_DrawConnectScreeni_100
 	xor edx, edx
 	movss xmm0, dword [_float_299_00000000]
 	movss [ebp-0xdc8], xmm0
 	xor edi, edi
 	xor ebx, ebx
-UI_DrawConnectScreen_140:
+_Z20UI_DrawConnectScreeni_140:
 	mov ecx, [ebp-0xdac]
 	add ecx, ebx
 	movzx eax, byte [ecx]
 	mov [ebp+edx-0x9c], al
 	cmp edx, 0x28
-	jle UI_DrawConnectScreen_110
+	jle _Z20UI_DrawConnectScreeni_110
 	test ebx, ebx
 	mov eax, 0x1
 	cmovg edi, eax
-UI_DrawConnectScreen_110:
+_Z20UI_DrawConnectScreeni_110:
 	cmp edx, 0x39
-	jg UI_DrawConnectScreen_120
+	jg _Z20UI_DrawConnectScreeni_120
 	mov eax, [ebp-0xdcc]
 	sub eax, 0x1
 	cmp ebx, eax
-	jz UI_DrawConnectScreen_120
+	jz _Z20UI_DrawConnectScreeni_120
 	test edi, edi
-	jz UI_DrawConnectScreen_130
+	jz _Z20UI_DrawConnectScreeni_130
 	cmp byte [ecx], 0x20
-	jz UI_DrawConnectScreen_120
-UI_DrawConnectScreen_130:
+	jz _Z20UI_DrawConnectScreeni_120
+_Z20UI_DrawConnectScreeni_130:
 	add edx, 0x1
-UI_DrawConnectScreen_260:
+_Z20UI_DrawConnectScreeni_260:
 	add ebx, 0x1
 	cmp [ebp-0xdcc], ebx
-	jnz UI_DrawConnectScreen_140
-	jmp UI_DrawConnectScreen_100
-UI_DrawConnectScreen_400:
+	jnz _Z20UI_DrawConnectScreeni_140
+	jmp _Z20UI_DrawConnectScreeni_100
+_Z20UI_DrawConnectScreeni_400:
 	mov edx, legacyHacks
 	cmp byte [edx+0xc], 0x0
-	jz UI_DrawConnectScreen_150
-UI_DrawConnectScreen_40:
+	jz _Z20UI_DrawConnectScreeni_150
+_Z20UI_DrawConnectScreeni_40:
 	movss xmm1, dword [_float_0_50000000]
 	mov eax, scrPlaceFull
 	mulss xmm1, [eax+0x4]
 	mov eax, [ui_smallFont]
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm0, xmm1
-	jae UI_DrawConnectScreen_160
+	jae _Z20UI_DrawConnectScreeni_160
 	mov eax, [ui_extraBigFont]
 	ucomiss xmm1, [eax+0xc]
-	jb UI_DrawConnectScreen_170
+	jb _Z20UI_DrawConnectScreeni_170
 	mov eax, [sharedUiInfo+0x3c]
-	jmp UI_DrawConnectScreen_180
-UI_DrawConnectScreen_380:
+	jmp _Z20UI_DrawConnectScreeni_180
+_Z20UI_DrawConnectScreeni_380:
 	mov edx, esi
 	test dl, dl
-	jnz UI_DrawConnectScreen_190
-UI_DrawConnectScreen_270:
+	jnz _Z20UI_DrawConnectScreeni_190
+_Z20UI_DrawConnectScreeni_270:
 	sub eax, 0x7
 	cmp eax, 0x1
-	ja UI_DrawConnectScreen_70
+	ja _Z20UI_DrawConnectScreeni_70
 	mov eax, fs_gameDirVar
 	mov eax, [eax]
 	mov eax, [eax+0xc]
 	cmp byte [eax], 0x0
-	jz UI_DrawConnectScreen_70
+	jz _Z20UI_DrawConnectScreeni_70
 	add eax, 0x5
 	mov [esp+0xc], eax
 	mov dword [esp+0x8], _cstring_mod_s
 	mov dword [esp+0x4], 0x100
 	lea ebx, [ebp-0x19c]
 	mov [esp], ebx
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov esi, 0x3f000000
 	mov [esp+0x4], esi
 	mov eax, [ebp-0xdd0]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0xdb0]
 	mov edx, [ebp-0xdd0]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov dword [esp+0x2c], 0x0
@@ -9009,77 +9009,77 @@ UI_DrawConnectScreen_270:
 	mov [esp+0x4], ebx
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call UI_DrawTextWithGlow
-UI_DrawConnectScreen_70:
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
+_Z20UI_DrawConnectScreeni_70:
 	add esp, 0xe0c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_DrawConnectScreen_20:
+_Z20UI_DrawConnectScreeni_20:
 	mov [esp], ebx
-	call CG_DrawInformation
-	jmp UI_DrawConnectScreen_10
-UI_DrawConnectScreen_160:
+	call _Z18CG_DrawInformationi
+	jmp _Z20UI_DrawConnectScreeni_10
+_Z20UI_DrawConnectScreeni_160:
 	mov eax, [sharedUiInfo+0x2c]
-UI_DrawConnectScreen_180:
+_Z20UI_DrawConnectScreeni_180:
 	mov dword [esp+0x10], 0x3f000000
 	mov [esp+0xc], eax
 	mov dword [esp+0x8], 0x42b20000
 	mov dword [esp+0x4], 0x43a00000
 	lea eax, [edx+0xc]
 	mov [esp], eax
-	call UI_DisplayDownloadInfo
+	call _Z22UI_DisplayDownloadInfoPKcffP6Font_sf
 	add esp, 0xe0c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_DrawConnectScreen_90:
+_Z20UI_DrawConnectScreeni_90:
 	xor esi, esi
 	mov ebx, sharedUiInfo
-UI_DrawConnectScreen_210:
+_Z20UI_DrawConnectScreeni_210:
 	mov eax, [ebx+0x1c60]
 	mov [esp+0x4], eax
 	mov dword [esp], g_mapname
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_DrawConnectScreen_200
+	jz _Z20UI_DrawConnectScreeni_200
 	add esi, 0x1
 	add ebx, 0xa0
 	cmp esi, [sharedUiInfo+0x1c58]
-	jl UI_DrawConnectScreen_210
-	jmp UI_DrawConnectScreen_220
-UI_DrawConnectScreen_80:
+	jl _Z20UI_DrawConnectScreeni_210
+	jmp _Z20UI_DrawConnectScreeni_220
+_Z20UI_DrawConnectScreeni_80:
 	xor esi, esi
 	mov ebx, sharedUiInfo
-UI_DrawConnectScreen_240:
+_Z20UI_DrawConnectScreeni_240:
 	mov eax, [ebx+0x1150]
 	mov [esp+0x4], eax
 	mov dword [esp], g_gametype
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_DrawConnectScreen_230
+	jz _Z20UI_DrawConnectScreeni_230
 	add esi, 0x1
 	add ebx, 0x8
 	cmp esi, [sharedUiInfo+0x114c]
-	jl UI_DrawConnectScreen_240
-	jmp UI_DrawConnectScreen_250
-UI_DrawConnectScreen_120:
+	jl _Z20UI_DrawConnectScreeni_240
+	jmp _Z20UI_DrawConnectScreeni_250
+_Z20UI_DrawConnectScreeni_120:
 	mov byte [ebp+edx-0x9b], 0x0
 	mov dword [esp+0x4], 0x3f000000
 	mov eax, [ebp-0xdd0]
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0xdbc]
 	mov edx, [ebp-0xdd0]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	lea edi, [ebp-0x9c]
 	mov [esp], edi
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov dword [esp+0x2c], 0x0
@@ -9108,20 +9108,20 @@ UI_DrawConnectScreen_120:
 	mov [esp+0x4], edi
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call UI_DrawTextWithGlow
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
 	movss xmm0, dword [ebp-0xdc8]
 	addss xmm0, [_float_22_00000000]
 	movss [ebp-0xdc8], xmm0
 	xor edi, edi
 	xor edx, edx
-	jmp UI_DrawConnectScreen_260
-UI_DrawConnectScreen_390:
+	jmp _Z20UI_DrawConnectScreeni_260
+_Z20UI_DrawConnectScreeni_390:
 	mov edx, esi
 	test dl, dl
-	jz UI_DrawConnectScreen_270
+	jz _Z20UI_DrawConnectScreeni_270
 	mov dword [esp], _cstring_exe_awaitingchal
-UI_DrawConnectScreen_360:
-	call UI_SafeTranslateString
+_Z20UI_DrawConnectScreeni_360:
+	call _Z22UI_SafeTranslateStringPKc
 	mov esi, eax
 	cld
 	mov ecx, 0xa
@@ -9142,44 +9142,44 @@ UI_DrawConnectScreen_360:
 	lea eax, [ebp-0x60]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call UI_ReplaceConversions
+	call _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci
 	mov [esp], ebx
-	call va
+	call _Z2vaPKcz
 	mov edi, eax
-	jmp UI_DrawConnectScreen_280
-UI_DrawConnectScreen_420:
+	jmp _Z20UI_DrawConnectScreeni_280
+_Z20UI_DrawConnectScreeni_420:
 	mov edx, esi
 	test dl, dl
-	jz UI_DrawConnectScreen_270
+	jz _Z20UI_DrawConnectScreeni_270
 	mov dword [esp], _cstring_exe_awaitinghost
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edi, eax
-	jmp UI_DrawConnectScreen_280
-UI_DrawConnectScreen_410:
+	jmp _Z20UI_DrawConnectScreeni_280
+_Z20UI_DrawConnectScreeni_410:
 	mov edx, esi
 	test dl, dl
-	jz UI_DrawConnectScreen_270
+	jz _Z20UI_DrawConnectScreeni_270
 	mov dword [esp], _cstring_exe_uploadingsta
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edi, eax
-	jmp UI_DrawConnectScreen_280
-UI_DrawConnectScreen_170:
+	jmp _Z20UI_DrawConnectScreeni_280
+_Z20UI_DrawConnectScreeni_170:
 	mov eax, [ui_bigFont]
 	ucomiss xmm1, [eax+0xc]
-	jae UI_DrawConnectScreen_290
+	jae _Z20UI_DrawConnectScreeni_290
 	mov eax, [sharedUiInfo+0x38]
-	jmp UI_DrawConnectScreen_180
-UI_DrawConnectScreen_150:
+	jmp _Z20UI_DrawConnectScreeni_180
+_Z20UI_DrawConnectScreeni_150:
 	mov edx, esi
 	test dl, dl
-	jz UI_DrawConnectScreen_270
+	jz _Z20UI_DrawConnectScreeni_270
 	mov dword [esp], _cstring_exe_awaitinggame
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edi, eax
-UI_DrawConnectScreen_280:
+_Z20UI_DrawConnectScreeni_280:
 	test edi, edi
-	jz UI_DrawConnectScreen_300
-	call Sys_Milliseconds
+	jz _Z20UI_DrawConnectScreeni_300
+	call _Z16Sys_Millisecondsv
 	mov ecx, eax
 	mov edx, 0x10624dd3
 	imul edx
@@ -9189,30 +9189,30 @@ UI_DrawConnectScreen_280:
 	sub edx, eax
 	and edx, 0x3
 	cmp edx, 0x2
-	jz UI_DrawConnectScreen_310
+	jz _Z20UI_DrawConnectScreeni_310
 	cmp edx, 0x3
-	jz UI_DrawConnectScreen_320
+	jz _Z20UI_DrawConnectScreeni_320
 	sub edx, 0x1
-	jz UI_DrawConnectScreen_330
+	jz _Z20UI_DrawConnectScreeni_330
 	mov dword [ebp-0xdb8], _cstring____
-UI_DrawConnectScreen_370:
+_Z20UI_DrawConnectScreeni_370:
 	mov ebx, 0x3f000000
 	mov [esp+0x4], ebx
 	mov edx, [ebp-0xdd0]
 	mov [esp], edx
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0xdb4]
 	mov eax, [ebp-0xdd0]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov [esp], edi
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov esi, eax
 	mov edx, [ebp-0xdb8]
 	mov [esp+0x8], edx
 	mov [esp+0x4], edi
 	mov dword [esp], _cstring_ss1
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x34], 0x0
 	mov dword [esp+0x30], 0x0
 	mov dword [esp+0x2c], 0x0
@@ -9240,54 +9240,54 @@ UI_DrawConnectScreen_370:
 	mov [esp+0x4], eax
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call UI_DrawTextWithGlow
+	call _Z19UI_DrawTextWithGlowPK15ScreenPlacementPKciP6Font_sffiifPKfiS7_hh
 	mov eax, [ebp-0xda4]
-	jmp UI_DrawConnectScreen_270
-UI_DrawConnectScreen_290:
+	jmp _Z20UI_DrawConnectScreeni_270
+_Z20UI_DrawConnectScreeni_290:
 	mov eax, [sharedUiInfo+0x28]
-	jmp UI_DrawConnectScreen_180
-UI_DrawConnectScreen_200:
+	jmp _Z20UI_DrawConnectScreeni_180
+_Z20UI_DrawConnectScreeni_200:
 	lea eax, [esi+esi*4]
 	shl eax, 0x5
 	mov eax, [eax+sharedUiInfo+0x1c5c]
 	mov [esp], eax
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov esi, eax
-	jmp UI_DrawConnectScreen_340
-UI_DrawConnectScreen_230:
+	jmp _Z20UI_DrawConnectScreeni_340
+_Z20UI_DrawConnectScreeni_230:
 	mov eax, [esi*8+sharedUiInfo+0x1154]
 	mov [esp], eax
-	call UI_SafeTranslateString
+	call _Z22UI_SafeTranslateStringPKc
 	mov edi, eax
-	jmp UI_DrawConnectScreen_350
-UI_DrawConnectScreen_300:
+	jmp _Z20UI_DrawConnectScreeni_350
+_Z20UI_DrawConnectScreeni_300:
 	mov eax, [ebp-0xda4]
-	jmp UI_DrawConnectScreen_270
-UI_DrawConnectScreen_190:
+	jmp _Z20UI_DrawConnectScreeni_270
+_Z20UI_DrawConnectScreeni_190:
 	mov dword [esp], _cstring_exe_awaitingconn
-	jmp UI_DrawConnectScreen_360
-UI_DrawConnectScreen_310:
+	jmp _Z20UI_DrawConnectScreeni_360
+_Z20UI_DrawConnectScreeni_310:
 	mov dword [ebp-0xdb8], _cstring__
-	jmp UI_DrawConnectScreen_370
-UI_DrawConnectScreen_320:
+	jmp _Z20UI_DrawConnectScreeni_370
+_Z20UI_DrawConnectScreeni_320:
 	mov dword [ebp-0xdb8], _cstring_4
-	jmp UI_DrawConnectScreen_370
-UI_DrawConnectScreen_330:
+	jmp _Z20UI_DrawConnectScreeni_370
+_Z20UI_DrawConnectScreeni_330:
 	mov dword [ebp-0xdb8], _cstring___
-	jmp UI_DrawConnectScreen_370
+	jmp _Z20UI_DrawConnectScreeni_370
 	
 	
-UI_DrawConnectScreen_jumptab_0:
-	dd UI_DrawConnectScreen_380
-	dd UI_DrawConnectScreen_390
-	dd UI_DrawConnectScreen_400
-	dd UI_DrawConnectScreen_410
-	dd UI_DrawConnectScreen_420
-	dd UI_DrawConnectScreen_420
+_Z20UI_DrawConnectScreeni_jumptab_0:
+	dd _Z20UI_DrawConnectScreeni_380
+	dd _Z20UI_DrawConnectScreeni_390
+	dd _Z20UI_DrawConnectScreeni_400
+	dd _Z20UI_DrawConnectScreeni_410
+	dd _Z20UI_DrawConnectScreeni_420
+	dd _Z20UI_DrawConnectScreeni_420
 
 
 ;UI_DrawHighlightRect(ScreenPlacement const*, float, float, float, float, int, int, float, float const*, float const*)
-UI_DrawHighlightRect:
+_Z20UI_DrawHighlightRectPK15ScreenPlacementffffiifPKfS3_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -9309,7 +9309,7 @@ UI_DrawHighlightRect:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call ScrPlace_ApplyRect
+	call _Z18ScrPlace_ApplyRectPK15ScreenPlacementPfS2_S2_S2_ii
 	xor eax, eax
 	mov [ebp-0x1c], eax
 	mov [ebp-0x20], eax
@@ -9327,7 +9327,7 @@ UI_DrawHighlightRect:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call ScrPlace_ApplyRect
+	call _Z18ScrPlace_ApplyRectPK15ScreenPlacementPfS2_S2_S2_ii
 	movss xmm1, dword [ebp+0x10]
 	movss xmm2, dword [ebp+0xc]
 	movss [ebp-0x48], xmm2
@@ -9350,7 +9350,7 @@ UI_DrawHighlightRect:
 	mov eax, [ebp+0x28]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_AddCmdDrawQuadPic
+	call _Z19R_AddCmdDrawQuadPicPA2_KfPS_P8Material
 	movss xmm1, dword [ebp+0x10]
 	movss xmm2, dword [ebp+0xc]
 	movss [ebp-0x48], xmm2
@@ -9374,7 +9374,7 @@ UI_DrawHighlightRect:
 	mov eax, [ebp+0x28]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_AddCmdDrawQuadPic
+	call _Z19R_AddCmdDrawQuadPicPA2_KfPS_P8Material
 	movss xmm2, dword [ebp+0x10]
 	addss xmm2, [ebp+0x18]
 	movss xmm1, dword [ebp+0xc]
@@ -9399,7 +9399,7 @@ UI_DrawHighlightRect:
 	mov eax, [ebp+0x2c]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_AddCmdDrawQuadPic
+	call _Z19R_AddCmdDrawQuadPicPA2_KfPS_P8Material
 	movss xmm2, dword [ebp+0x10]
 	movss xmm0, dword [ebp+0xc]
 	addss xmm0, [ebp+0x14]
@@ -9422,7 +9422,7 @@ UI_DrawHighlightRect:
 	mov eax, [ebp+0x2c]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_AddCmdDrawQuadPic
+	call _Z19R_AddCmdDrawQuadPicPA2_KfPS_P8Material
 	add esp, 0x5c
 	pop ebx
 	pop esi
@@ -9434,7 +9434,7 @@ UI_DrawHighlightRect:
 
 
 ;UI_FeederItemEnabled(int, float, int)
-UI_FeederItemEnabled:
+_Z20UI_FeederItemEnabledifi:
 	push ebp
 	mov ebp, esp
 	mov eax, 0x1
@@ -9443,7 +9443,7 @@ UI_FeederItemEnabled:
 
 
 ;UI_GetMapDisplayName(char const*)
-UI_GetMapDisplayName:
+_Z20UI_GetMapDisplayNamePKc:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -9454,30 +9454,30 @@ UI_GetMapDisplayName:
 	mov [ebp-0x1c], eax
 	mov edx, [sharedUiInfo+0x1c58]
 	test edx, edx
-	jg UI_GetMapDisplayName_10
+	jg _Z20UI_GetMapDisplayNamePKc_10
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_GetMapDisplayName_10:
+_Z20UI_GetMapDisplayNamePKc_10:
 	xor esi, esi
 	mov ebx, sharedUiInfo
 	mov edi, sharedUiInfo+0x1c5c
-UI_GetMapDisplayName_30:
+_Z20UI_GetMapDisplayNamePKc_30:
 	mov eax, [ebx+0x1c60]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_GetMapDisplayName_20
+	jz _Z20UI_GetMapDisplayNamePKc_20
 	add esi, 0x1
 	add edi, 0xa0
 	add ebx, 0xa0
 	cmp esi, [sharedUiInfo+0x1c58]
-	jl UI_GetMapDisplayName_30
+	jl _Z20UI_GetMapDisplayNamePKc_30
 	mov eax, [ebp-0x1c]
 	add esp, 0x2c
 	pop ebx
@@ -9485,7 +9485,7 @@ UI_GetMapDisplayName_30:
 	pop edi
 	pop ebp
 	ret
-UI_GetMapDisplayName_20:
+_Z20UI_GetMapDisplayNamePKc_20:
 	mov eax, [edi]
 	mov [ebp+0x8], eax
 	add esp, 0x2c
@@ -9493,12 +9493,12 @@ UI_GetMapDisplayName_20:
 	pop esi
 	pop edi
 	pop ebp
-	jmp UI_SafeTranslateString
+	jmp _Z22UI_SafeTranslateStringPKc
 	nop
 
 
 ;UI_OverrideCursorPos(int, itemDef_s*)
-UI_OverrideCursorPos:
+_Z20UI_OverrideCursorPosiP9itemDef_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -9508,67 +9508,67 @@ UI_OverrideCursorPos:
 	mov edi, [ebp+0xc]
 	movss xmm0, dword [edi+0x124]
 	ucomiss xmm0, [_float_4_00000000]
-	jnz UI_OverrideCursorPos_10
-	jp UI_OverrideCursorPos_10
+	jnz _Z20UI_OverrideCursorPosiP9itemDef_s_10
+	jp _Z20UI_OverrideCursorPosiP9itemDef_s_10
 	mov eax, [ui_currentNetMap]
 	mov esi, [eax+0xc]
 	mov ebx, [sharedUiInfo+0x1c58]
 	test ebx, ebx
-	jle UI_OverrideCursorPos_20
+	jle _Z20UI_OverrideCursorPosiP9itemDef_s_20
 	xor edx, edx
 	xor ecx, ecx
 	mov eax, sharedUiInfo
-UI_OverrideCursorPos_50:
+_Z20UI_OverrideCursorPosiP9itemDef_s_50:
 	cmp dword [eax+0x1cf8], 0x0
-	jz UI_OverrideCursorPos_30
+	jz _Z20UI_OverrideCursorPosiP9itemDef_s_30
 	cmp edx, esi
-	jz UI_OverrideCursorPos_40
+	jz _Z20UI_OverrideCursorPosiP9itemDef_s_40
 	add ecx, 0x1
-UI_OverrideCursorPos_30:
+_Z20UI_OverrideCursorPosiP9itemDef_s_30:
 	add edx, 0x1
 	add eax, 0xa0
 	cmp ebx, edx
-	jnz UI_OverrideCursorPos_50
-UI_OverrideCursorPos_20:
+	jnz _Z20UI_OverrideCursorPosiP9itemDef_s_50
+_Z20UI_OverrideCursorPosiP9itemDef_s_20:
 	xor ecx, ecx
-UI_OverrideCursorPos_40:
+_Z20UI_OverrideCursorPosiP9itemDef_s_40:
 	mov eax, [ebp+0x8]
 	mov [edi+eax*4+0x128], ecx
-UI_OverrideCursorPos_70:
+_Z20UI_OverrideCursorPosiP9itemDef_s_70:
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_OverrideCursorPos_10:
+_Z20UI_OverrideCursorPosiP9itemDef_s_10:
 	ucomiss xmm0, [_float_39_00000000]
-	jp UI_OverrideCursorPos_60
-	jz UI_OverrideCursorPos_70
-UI_OverrideCursorPos_60:
+	jp _Z20UI_OverrideCursorPosiP9itemDef_s_60
+	jz _Z20UI_OverrideCursorPosiP9itemDef_s_70
+_Z20UI_OverrideCursorPosiP9itemDef_s_60:
 	ucomiss xmm0, [_float_2_00000000]
-	jnz UI_OverrideCursorPos_70
-	jp UI_OverrideCursorPos_70
+	jnz _Z20UI_OverrideCursorPosiP9itemDef_s_70
+	jp _Z20UI_OverrideCursorPosiP9itemDef_s_70
 	mov esi, [edi+0x12c]
 	mov ecx, [ebp+0x8]
 	mov edx, [esi+ecx*4+0x8]
 	test edx, edx
-	jz UI_OverrideCursorPos_80
+	jz _Z20UI_OverrideCursorPosiP9itemDef_s_80
 	mov ecx, [sharedUiInfo+0x72f4]
 	test ecx, ecx
-	js UI_OverrideCursorPos_70
+	js _Z20UI_OverrideCursorPosiP9itemDef_s_70
 	mov ebx, [ebp+0x8]
 	mov eax, [edi+ebx*4+0x128]
 	cmp eax, [esi+ebx*4+0x4]
-	jl UI_OverrideCursorPos_70
+	jl _Z20UI_OverrideCursorPosiP9itemDef_s_70
 	cmp edx, eax
-	jl UI_OverrideCursorPos_70
+	jl _Z20UI_OverrideCursorPosiP9itemDef_s_70
 	mov ebx, ecx
 	sub ebx, eax
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Item_ListBox_MaxScroll
+	call _Z22Item_ListBox_MaxScrolliP9itemDef_s
 	mov edx, ebx
 	mov ecx, [ebp+0x8]
 	add edx, [esi+ecx*4+0x4]
@@ -9581,8 +9581,8 @@ UI_OverrideCursorPos_60:
 	add [esi+ecx*4+0x8], ebx
 	mov eax, [sharedUiInfo+0x72f4]
 	mov [edi+ecx*4+0x128], eax
-	jmp UI_OverrideCursorPos_70
-UI_OverrideCursorPos_80:
+	jmp _Z20UI_OverrideCursorPosiP9itemDef_s_70
+_Z20UI_OverrideCursorPosiP9itemDef_s_80:
 	mov dword [edi+ecx*4+0x128], 0xffffffff
 	add esp, 0x1c
 	pop ebx
@@ -9594,7 +9594,7 @@ UI_OverrideCursorPos_80:
 
 
 ;UI_DrawTextWithCursor(ScreenPlacement const*, char const*, int, Font_s*, float, float, int, int, float, float const*, int, int, char)
-UI_DrawTextWithCursor:
+_Z21UI_DrawTextWithCursorPK15ScreenPlacementPKciP6Font_sffiifPKfiic:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -9605,7 +9605,7 @@ UI_DrawTextWithCursor:
 	mov eax, [ebp+0x28]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fst dword [ebp-0xc]
 	fstp dword [ebp-0x10]
 	mov eax, [ebp+0x24]
@@ -9622,7 +9622,7 @@ UI_DrawTextWithCursor:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call ScrPlace_ApplyRect
+	call _Z18ScrPlace_ApplyRectPK15ScreenPlacementPfS2_S2_S2_ii
 	movss xmm1, dword [_float_0_50000000]
 	movss xmm0, dword [ebp+0x18]
 	addss xmm0, xmm1
@@ -9654,7 +9654,7 @@ UI_DrawTextWithCursor:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call CL_DrawTextPhysicalWithCursor
+	call _Z29CL_DrawTextPhysicalWithCursorPKciP6Font_sffffPKfiic
 	add esp, 0x50
 	pop ebx
 	pop esi
@@ -9664,7 +9664,7 @@ UI_DrawTextWithCursor:
 
 
 ;UI_GetTalkerClientNum(int, int)
-UI_GetTalkerClientNum:
+_Z21UI_GetTalkerClientNumii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -9674,25 +9674,25 @@ UI_GetTalkerClientNum:
 	mov edi, [ebp+0x8]
 	xor esi, esi
 	xor ebx, ebx
-	jmp UI_GetTalkerClientNum_10
-UI_GetTalkerClientNum_40:
+	jmp _Z21UI_GetTalkerClientNumii_10
+_Z21UI_GetTalkerClientNumii_40:
 	add esi, 0x1
-UI_GetTalkerClientNum_30:
+_Z21UI_GetTalkerClientNumii_30:
 	add ebx, 0x1
 	cmp ebx, 0x40
-	jz UI_GetTalkerClientNum_20
-UI_GetTalkerClientNum_10:
+	jz _Z21UI_GetTalkerClientNumii_20
+_Z21UI_GetTalkerClientNumii_10:
 	mov [esp], ebx
-	call CL_IsClientLocal
+	call _Z16CL_IsClientLocali
 	test al, al
-	jnz UI_GetTalkerClientNum_30
+	jnz _Z21UI_GetTalkerClientNumii_30
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call CL_IsPlayerTalking
+	call _Z18CL_IsPlayerTalkingii
 	test al, al
-	jz UI_GetTalkerClientNum_30
+	jz _Z21UI_GetTalkerClientNumii_30
 	cmp [ebp+0xc], esi
-	jnz UI_GetTalkerClientNum_40
+	jnz _Z21UI_GetTalkerClientNumii_40
 	mov eax, ebx
 	add esp, 0x1c
 	pop ebx
@@ -9700,7 +9700,7 @@ UI_GetTalkerClientNum_10:
 	pop edi
 	pop ebp
 	ret
-UI_GetTalkerClientNum_20:
+_Z21UI_GetTalkerClientNumii_20:
 	mov ebx, 0xffffffff
 	mov eax, ebx
 	add esp, 0x1c
@@ -9713,7 +9713,7 @@ UI_GetTalkerClientNum_20:
 
 
 ;UI_OwnerDrawHandleKey(int, int, float*, int)
-UI_OwnerDrawHandleKey:
+_Z21UI_OwnerDrawHandleKeyiiPfi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -9723,208 +9723,208 @@ UI_OwnerDrawHandleKey:
 	mov eax, [ebp+0x8]
 	sub eax, 0xcd
 	cmp eax, 0x30
-	ja UI_OwnerDrawHandleKey_10
-	jmp dword [eax*4+UI_OwnerDrawHandleKey_jumptab_0]
-UI_OwnerDrawHandleKey_470:
+	ja _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	jmp dword [eax*4+_Z21UI_OwnerDrawHandleKeyiiPfi_jumptab_0]
+_Z21UI_OwnerDrawHandleKeyiiPfi_470:
 	mov eax, [ebp+0x14]
 	sub eax, 0xc8
 	cmp eax, 0x1
-	jbe UI_OwnerDrawHandleKey_20
+	jbe _Z21UI_OwnerDrawHandleKeyiiPfi_20
 	cmp dword [ebp+0x14], 0xd
-	jz UI_OwnerDrawHandleKey_20
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_20
 	cmp dword [ebp+0x14], 0xbf
-	jz UI_OwnerDrawHandleKey_20
-UI_OwnerDrawHandleKey_10:
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_20
+_Z21UI_OwnerDrawHandleKeyiiPfi_10:
 	xor eax, eax
-UI_OwnerDrawHandleKey_50:
+_Z21UI_OwnerDrawHandleKeyiiPfi_50:
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_OwnerDrawHandleKey_510:
+_Z21UI_OwnerDrawHandleKeyiiPfi_510:
 	mov eax, [ebp+0x14]
 	sub eax, 0xc8
 	cmp eax, 0x1
-	jbe UI_OwnerDrawHandleKey_30
+	jbe _Z21UI_OwnerDrawHandleKeyiiPfi_30
 	cmp dword [ebp+0x14], 0xd
-	jz UI_OwnerDrawHandleKey_30
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_30
 	cmp dword [ebp+0x14], 0xbf
-	jnz UI_OwnerDrawHandleKey_10
-UI_OwnerDrawHandleKey_30:
+	jnz _Z21UI_OwnerDrawHandleKeyiiPfi_10
+_Z21UI_OwnerDrawHandleKeyiiPfi_30:
 	cmp dword [ebp+0x14], 0xc9
-	jz UI_OwnerDrawHandleKey_40
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_40
 	mov ecx, [ui_joinGameType]
 	mov edx, [ecx+0xc]
 	add edx, 0x1
 	cmp edx, [sharedUiInfo+0x1b54]
 	mov eax, 0x0
 	cmovz edx, eax
-UI_OwnerDrawHandleKey_370:
+_Z21UI_OwnerDrawHandleKeyiiPfi_370:
 	mov [esp+0x4], edx
 	mov [esp], ecx
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
 	mov eax, 0x1
-	jmp UI_OwnerDrawHandleKey_50
-UI_OwnerDrawHandleKey_490:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_50
+_Z21UI_OwnerDrawHandleKeyiiPfi_490:
 	mov eax, [ebp+0x14]
 	sub eax, 0xc8
 	cmp eax, 0x1
-	jbe UI_OwnerDrawHandleKey_60
+	jbe _Z21UI_OwnerDrawHandleKeyiiPfi_60
 	cmp dword [ebp+0x14], 0xd
-	jz UI_OwnerDrawHandleKey_60
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_60
 	cmp dword [ebp+0x14], 0xbf
-	jnz UI_OwnerDrawHandleKey_10
-UI_OwnerDrawHandleKey_60:
+	jnz _Z21UI_OwnerDrawHandleKeyiiPfi_10
+_Z21UI_OwnerDrawHandleKeyiiPfi_60:
 	cmp dword [ebp+0x14], 0xc9
-	jz UI_OwnerDrawHandleKey_70
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_70
 	mov eax, [ui_serverFilterType]
 	add eax, 0x1
 	mov [ui_serverFilterType], eax
-UI_OwnerDrawHandleKey_380:
+_Z21UI_OwnerDrawHandleKeyiiPfi_380:
 	cmp eax, 0x0
-	jle UI_OwnerDrawHandleKey_80
-UI_OwnerDrawHandleKey_450:
+	jle _Z21UI_OwnerDrawHandleKeyiiPfi_80
+_Z21UI_OwnerDrawHandleKeyiiPfi_450:
 	mov dword [ui_serverFilterType], 0x0
-	jmp UI_OwnerDrawHandleKey_90
-UI_OwnerDrawHandleKey_500:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_90
+_Z21UI_OwnerDrawHandleKeyiiPfi_500:
 	mov eax, [ebp+0x14]
 	sub eax, 0xc8
 	cmp eax, 0x1
-	jbe UI_OwnerDrawHandleKey_100
+	jbe _Z21UI_OwnerDrawHandleKeyiiPfi_100
 	cmp dword [ebp+0x14], 0xd
-	jz UI_OwnerDrawHandleKey_100
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_100
 	cmp dword [ebp+0x14], 0xbf
-	jnz UI_OwnerDrawHandleKey_10
-UI_OwnerDrawHandleKey_100:
+	jnz _Z21UI_OwnerDrawHandleKeyiiPfi_10
+_Z21UI_OwnerDrawHandleKeyiiPfi_100:
 	cmp dword [ebp+0x14], 0xc9
-	jz UI_OwnerDrawHandleKey_110
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_110
 	mov ecx, [ui_netGameType]
 	mov edx, [ecx+0xc]
 	add edx, 0x1
 	cmp edx, [sharedUiInfo+0x114c]
 	mov eax, 0x0
 	cmovz edx, eax
-UI_OwnerDrawHandleKey_340:
+_Z21UI_OwnerDrawHandleKeyiiPfi_340:
 	mov [esp+0x4], edx
 	mov [esp], ecx
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov eax, [ui_netGameType]
 	mov eax, [eax+0xc]
 	mov eax, [eax*8+sharedUiInfo+0x1150]
 	mov [esp+0x4], eax
 	mov eax, [ui_netGameTypeName]
 	mov [esp], eax
-	call Cvar_SetString
+	call _Z14Dvar_SetStringPK6dvar_sPKc
 	mov eax, [ui_netGameType]
 	mov eax, [eax+0xc]
 	mov eax, [eax*8+sharedUiInfo+0x1150]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_g_gametype
-	call Cvar_SetStringByName
+	call _Z20Dvar_SetStringByNamePKcS0_
 	mov eax, [ui_netGameType]
 	mov esi, [eax+0xc]
 	mov ecx, [sharedUiInfo+0x1c58]
 	test ecx, ecx
-	jle UI_OwnerDrawHandleKey_120
+	jle _Z21UI_OwnerDrawHandleKeyiiPfi_120
 	xor ebx, ebx
 	mov edx, sharedUiInfo
-UI_OwnerDrawHandleKey_140:
+_Z21UI_OwnerDrawHandleKeyiiPfi_140:
 	mov dword [edx+0x1cf8], 0x0
 	mov eax, [edx+0x1c70]
 	mov ecx, esi
 	sar eax, cl
 	test al, 0x1
-	jz UI_OwnerDrawHandleKey_130
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_130
 	mov dword [edx+0x1cf8], 0x1
-UI_OwnerDrawHandleKey_130:
+_Z21UI_OwnerDrawHandleKeyiiPfi_130:
 	add ebx, 0x1
 	mov ecx, [sharedUiInfo+0x1c58]
 	add edx, 0xa0
 	cmp ebx, ecx
-	jl UI_OwnerDrawHandleKey_140
-UI_OwnerDrawHandleKey_120:
+	jl _Z21UI_OwnerDrawHandleKeyiiPfi_140
+_Z21UI_OwnerDrawHandleKeyiiPfi_120:
 	mov eax, [ui_currentNetMap]
 	mov ebx, [eax+0xc]
 	lea eax, [ebx+ebx*4]
 	shl eax, 0x5
 	mov eax, [eax+sharedUiInfo+0x1cf8]
 	test eax, eax
-	jz UI_OwnerDrawHandleKey_150
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_150
 	test ecx, ecx
-	jle UI_OwnerDrawHandleKey_160
+	jle _Z21UI_OwnerDrawHandleKeyiiPfi_160
 	xor esi, esi
 	xor eax, eax
 	mov edx, sharedUiInfo
-UI_OwnerDrawHandleKey_190:
+_Z21UI_OwnerDrawHandleKeyiiPfi_190:
 	mov edi, [edx+0x1cf8]
 	test edi, edi
-	jz UI_OwnerDrawHandleKey_170
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_170
 	cmp eax, ebx
-	jz UI_OwnerDrawHandleKey_180
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_180
 	add esi, 0x1
-UI_OwnerDrawHandleKey_170:
+_Z21UI_OwnerDrawHandleKeyiiPfi_170:
 	add eax, 0x1
 	add edx, 0xa0
 	cmp ecx, eax
-	jnz UI_OwnerDrawHandleKey_190
-UI_OwnerDrawHandleKey_160:
+	jnz _Z21UI_OwnerDrawHandleKeyiiPfi_190
+_Z21UI_OwnerDrawHandleKeyiiPfi_160:
 	xor esi, esi
-UI_OwnerDrawHandleKey_180:
+_Z21UI_OwnerDrawHandleKeyiiPfi_180:
 	mov dword [esp+0x10], _cstring_createserver_map
 	mov [esp+0xc], esi
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
-UI_OwnerDrawHandleKey_430:
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
+_Z21UI_OwnerDrawHandleKeyiiPfi_430:
 	xor eax, eax
-	call UI_SelectCurrentMap
-UI_OwnerDrawHandleKey_310:
+	call _Z19UI_SelectCurrentMapi
+_Z21UI_OwnerDrawHandleKeyiiPfi_310:
 	mov eax, 0x1
-UI_OwnerDrawHandleKey_320:
+_Z21UI_OwnerDrawHandleKeyiiPfi_320:
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_OwnerDrawHandleKey_480:
+_Z21UI_OwnerDrawHandleKeyiiPfi_480:
 	mov eax, [ebp+0x14]
 	sub eax, 0xc8
 	cmp eax, 0x1
-	jbe UI_OwnerDrawHandleKey_200
+	jbe _Z21UI_OwnerDrawHandleKeyiiPfi_200
 	cmp dword [ebp+0x14], 0xd
-	jz UI_OwnerDrawHandleKey_200
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_200
 	cmp dword [ebp+0x14], 0xbf
-	jnz UI_OwnerDrawHandleKey_10
-UI_OwnerDrawHandleKey_200:
+	jnz _Z21UI_OwnerDrawHandleKeyiiPfi_10
+_Z21UI_OwnerDrawHandleKeyiiPfi_200:
 	cmp dword [ebp+0x14], 0xc9
-	jz UI_OwnerDrawHandleKey_210
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_210
 	mov ecx, [ui_netSource]
 	mov edx, [ecx+0xc]
 	add edx, 0x1
 	cmp edx, 0x3
 	mov eax, 0x0
 	cmovz edx, eax
-UI_OwnerDrawHandleKey_360:
+_Z21UI_OwnerDrawHandleKeyiiPfi_360:
 	mov [esp+0x4], edx
 	mov [esp], ecx
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov eax, [ui_netSource]
 	cmp dword [eax+0xc], 0x1
-	jz UI_OwnerDrawHandleKey_90
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_90
 	mov edx, 0x1
 	xor eax, eax
-	call UI_StartServerRefresh
-UI_OwnerDrawHandleKey_90:
+	call _Z21UI_StartServerRefreshii
+_Z21UI_OwnerDrawHandleKeyiiPfi_90:
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], uiInfoArray
-	call UI_BuildServerDisplayList
+	call _Z25UI_BuildServerDisplayListP8uiInfo_si
 	xor eax, eax
 	add esp, 0x3c
 	pop ebx
@@ -9932,226 +9932,226 @@ UI_OwnerDrawHandleKey_90:
 	pop edi
 	pop ebp
 	ret
-UI_OwnerDrawHandleKey_20:
+_Z21UI_OwnerDrawHandleKeyiiPfi_20:
 	mov eax, [ui_netGameType]
 	mov esi, [eax+0xc]
 	mov eax, [sharedUiInfo+0x1c58]
 	test eax, eax
-	jle UI_OwnerDrawHandleKey_220
+	jle _Z21UI_OwnerDrawHandleKeyiiPfi_220
 	xor ebx, ebx
 	xor edi, edi
 	mov edx, sharedUiInfo
-UI_OwnerDrawHandleKey_240:
+_Z21UI_OwnerDrawHandleKeyiiPfi_240:
 	mov dword [edx+0x1cf8], 0x0
 	mov eax, [edx+0x1c70]
 	mov ecx, esi
 	sar eax, cl
 	test al, 0x1
-	jz UI_OwnerDrawHandleKey_230
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_230
 	add edi, 0x1
 	mov dword [edx+0x1cf8], 0x1
-UI_OwnerDrawHandleKey_230:
+_Z21UI_OwnerDrawHandleKeyiiPfi_230:
 	add ebx, 0x1
 	add edx, 0xa0
 	cmp [sharedUiInfo+0x1c58], ebx
-	jg UI_OwnerDrawHandleKey_240
-UI_OwnerDrawHandleKey_330:
+	jg _Z21UI_OwnerDrawHandleKeyiiPfi_240
+_Z21UI_OwnerDrawHandleKeyiiPfi_330:
 	cmp dword [ebp+0x14], 0xc9
-	jz UI_OwnerDrawHandleKey_250
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_250
 	mov edx, [ui_gametype]
 	mov eax, [edx+0xc]
 	add eax, 0x1
 	cmp eax, [sharedUiInfo+0x114c]
-	jge UI_OwnerDrawHandleKey_260
+	jge _Z21UI_OwnerDrawHandleKeyiiPfi_260
 	cmp eax, 0x2
-	jz UI_OwnerDrawHandleKey_270
-UI_OwnerDrawHandleKey_440:
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_270
+_Z21UI_OwnerDrawHandleKeyiiPfi_440:
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov eax, [ui_netGameType]
 	mov esi, [eax+0xc]
 	mov eax, [sharedUiInfo+0x1c58]
 	test eax, eax
-	jle UI_OwnerDrawHandleKey_280
+	jle _Z21UI_OwnerDrawHandleKeyiiPfi_280
 	mov dword [ebp-0x1c], 0x0
 	xor ebx, ebx
 	mov edx, sharedUiInfo
-UI_OwnerDrawHandleKey_300:
+_Z21UI_OwnerDrawHandleKeyiiPfi_300:
 	mov dword [edx+0x1cf8], 0x0
 	mov eax, [edx+0x1c70]
 	mov ecx, esi
 	sar eax, cl
 	test al, 0x1
-	jz UI_OwnerDrawHandleKey_290
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_290
 	add ebx, 0x1
 	mov dword [edx+0x1cf8], 0x1
-UI_OwnerDrawHandleKey_290:
+_Z21UI_OwnerDrawHandleKeyiiPfi_290:
 	add dword [ebp-0x1c], 0x1
 	add edx, 0xa0
 	mov eax, [ebp-0x1c]
 	cmp [sharedUiInfo+0x1c58], eax
-	jg UI_OwnerDrawHandleKey_300
-UI_OwnerDrawHandleKey_390:
+	jg _Z21UI_OwnerDrawHandleKeyiiPfi_300
+_Z21UI_OwnerDrawHandleKeyiiPfi_390:
 	cmp ebx, edi
-	jz UI_OwnerDrawHandleKey_310
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_310
 	mov dword [esp+0x4], 0x0
 	mov eax, [ui_currentMap]
 	mov [esp], eax
-	call Cvar_SetInt
+	call _Z11Dvar_SetIntPK6dvar_si
 	mov eax, 0x1
-	jmp UI_OwnerDrawHandleKey_320
-UI_OwnerDrawHandleKey_220:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_320
+_Z21UI_OwnerDrawHandleKeyiiPfi_220:
 	xor edi, edi
-	jmp UI_OwnerDrawHandleKey_330
-UI_OwnerDrawHandleKey_110:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_330
+_Z21UI_OwnerDrawHandleKeyiiPfi_110:
 	mov ecx, [ui_netGameType]
 	mov eax, [ecx+0xc]
 	test eax, eax
 	cmovz eax, [sharedUiInfo+0x114c]
 	lea edx, [eax-0x1]
-	jmp UI_OwnerDrawHandleKey_340
-UI_OwnerDrawHandleKey_210:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_340
+_Z21UI_OwnerDrawHandleKeyiiPfi_210:
 	mov ecx, [ui_netSource]
 	mov eax, [ecx+0xc]
 	test eax, eax
-	jnz UI_OwnerDrawHandleKey_350
+	jnz _Z21UI_OwnerDrawHandleKeyiiPfi_350
 	mov edx, 0x2
-	jmp UI_OwnerDrawHandleKey_360
-UI_OwnerDrawHandleKey_40:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_360
+_Z21UI_OwnerDrawHandleKeyiiPfi_40:
 	mov ecx, [ui_joinGameType]
 	mov eax, [ecx+0xc]
 	test eax, eax
 	cmovz eax, [sharedUiInfo+0x1b54]
 	lea edx, [eax-0x1]
-	jmp UI_OwnerDrawHandleKey_370
-UI_OwnerDrawHandleKey_70:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_370
+_Z21UI_OwnerDrawHandleKeyiiPfi_70:
 	mov eax, [ui_serverFilterType]
 	sub eax, 0x1
 	mov [ui_serverFilterType], eax
-	jmp UI_OwnerDrawHandleKey_380
-UI_OwnerDrawHandleKey_280:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_380
+_Z21UI_OwnerDrawHandleKeyiiPfi_280:
 	xor ebx, ebx
-	jmp UI_OwnerDrawHandleKey_390
-UI_OwnerDrawHandleKey_150:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_390
+_Z21UI_OwnerDrawHandleKeyiiPfi_150:
 	test ecx, ecx
-	jle UI_OwnerDrawHandleKey_400
+	jle _Z21UI_OwnerDrawHandleKeyiiPfi_400
 	mov edx, [sharedUiInfo+0x1cf8]
 	test edx, edx
-	jnz UI_OwnerDrawHandleKey_410
+	jnz _Z21UI_OwnerDrawHandleKeyiiPfi_410
 	xor ebx, ebx
 	mov edx, sharedUiInfo
-UI_OwnerDrawHandleKey_420:
+_Z21UI_OwnerDrawHandleKeyiiPfi_420:
 	add ebx, 0x1
 	cmp ecx, ebx
-	jz UI_OwnerDrawHandleKey_400
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_400
 	mov eax, [edx+0x1d98]
 	add edx, 0xa0
 	test eax, eax
-	jz UI_OwnerDrawHandleKey_420
-UI_OwnerDrawHandleKey_460:
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_420
+_Z21UI_OwnerDrawHandleKeyiiPfi_460:
 	mov dword [esp+0x10], _cstring_createserver_map
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], uiInfoArray
-	call Menu_SetFeederSelection
+	call _Z23Menu_SetFeederSelectionP9UiContextP9menuDef_tiiPKc
 	mov [esp+0x4], ebx
 	mov eax, [ui_currentNetMap]
 	mov [esp], eax
-	call Cvar_SetInt
-	jmp UI_OwnerDrawHandleKey_430
-UI_OwnerDrawHandleKey_260:
+	call _Z11Dvar_SetIntPK6dvar_si
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_430
+_Z21UI_OwnerDrawHandleKeyiiPfi_260:
 	mov eax, 0x1
-	jmp UI_OwnerDrawHandleKey_440
-UI_OwnerDrawHandleKey_250:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_440
+_Z21UI_OwnerDrawHandleKeyiiPfi_250:
 	mov edx, [ui_gametype]
 	mov eax, [edx+0xc]
 	sub eax, 0x1
 	cmp eax, 0x2
-	jz UI_OwnerDrawHandleKey_260
+	jz _Z21UI_OwnerDrawHandleKeyiiPfi_260
 	cmp eax, 0x1
-	jg UI_OwnerDrawHandleKey_440
+	jg _Z21UI_OwnerDrawHandleKeyiiPfi_440
 	mov eax, [sharedUiInfo+0x114c]
 	sub eax, 0x1
-	jmp UI_OwnerDrawHandleKey_440
-UI_OwnerDrawHandleKey_400:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_440
+_Z21UI_OwnerDrawHandleKeyiiPfi_400:
 	mov eax, [ui_netGameTypeName]
 	mov eax, [eax+0xc]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_no_active_maps_f
 	mov dword [esp], 0x1
-	call Com_Error
-	jmp UI_OwnerDrawHandleKey_430
-UI_OwnerDrawHandleKey_80:
-	jge UI_OwnerDrawHandleKey_90
-	jmp UI_OwnerDrawHandleKey_450
-UI_OwnerDrawHandleKey_350:
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_430
+_Z21UI_OwnerDrawHandleKeyiiPfi_80:
+	jge _Z21UI_OwnerDrawHandleKeyiiPfi_90
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_450
+_Z21UI_OwnerDrawHandleKeyiiPfi_350:
 	lea edx, [eax-0x1]
-	jmp UI_OwnerDrawHandleKey_360
-UI_OwnerDrawHandleKey_410:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_360
+_Z21UI_OwnerDrawHandleKeyiiPfi_410:
 	xor ebx, ebx
-	jmp UI_OwnerDrawHandleKey_460
-UI_OwnerDrawHandleKey_270:
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_460
+_Z21UI_OwnerDrawHandleKeyiiPfi_270:
 	mov al, 0x3
-	jmp UI_OwnerDrawHandleKey_440
+	jmp _Z21UI_OwnerDrawHandleKeyiiPfi_440
 	nop
 	
 	
-UI_OwnerDrawHandleKey_jumptab_0:
-	dd UI_OwnerDrawHandleKey_470
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_480
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_490
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_500
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_10
-	dd UI_OwnerDrawHandleKey_510
+_Z21UI_OwnerDrawHandleKeyiiPfi_jumptab_0:
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_470
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_480
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_490
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_500
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_10
+	dd _Z21UI_OwnerDrawHandleKeyiiPfi_510
 
 
 ;UI_ReplaceConversions(char const*, ConversionArguments*, char*, int)
-UI_ReplaceConversions:
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -10169,7 +10169,7 @@ UI_ReplaceConversions:
 	mov [esp], eax
 	call strstr
 	test eax, eax
-	jz UI_ReplaceConversions_10
+	jz _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_10
 	cld
 	mov ecx, 0xffffffff
 	xor eax, eax
@@ -10185,15 +10185,15 @@ UI_ReplaceConversions:
 	call memset
 	mov eax, [ebp-0x24]
 	test eax, eax
-	jg UI_ReplaceConversions_20
-UI_ReplaceConversions_80:
+	jg _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_20
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_80:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-UI_ReplaceConversions_20:
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_20:
 	mov dword [ebp-0x1c], 0x0
 	mov dword [ebp-0x20], 0x0
 	mov ebx, [ebp-0x28]
@@ -10204,22 +10204,22 @@ UI_ReplaceConversions_20:
 	mov edi, _cstring_5
 	repe cmpsb
 	mov eax, 0x0
-	jz UI_ReplaceConversions_30
+	jz _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_30
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-UI_ReplaceConversions_30:
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_30:
 	test eax, eax
-	jnz UI_ReplaceConversions_40
-UI_ReplaceConversions_100:
+	jnz _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_40
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_100:
 	mov ecx, [ebp-0x28]
 	mov edi, [ebp-0x20]
 	movsx eax, byte [ecx+edi+0x2]
 	cmp eax, 0xff
-	ja UI_ReplaceConversions_40
+	ja _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_40
 	mov edx, [0xd5cc084]
 	test byte [edx+eax*4+0x35], 0x4
-	jz UI_ReplaceConversions_40
+	jz _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_40
 	lea esi, [eax-0x31]
 	mov ecx, [ebp-0x2c]
 	mov ecx, [ecx+esi*4+0x4]
@@ -10231,30 +10231,30 @@ UI_ReplaceConversions_100:
 	not ecx
 	sub ecx, 0x1
 	test ecx, ecx
-	jle UI_ReplaceConversions_50
+	jle _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_50
 	mov edx, [ebp-0x30]
 	add edx, [ebp-0x1c]
 	xor ebx, ebx
 	mov edi, [ebp-0x3c]
-	jmp UI_ReplaceConversions_60
-UI_ReplaceConversions_70:
+	jmp _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_60
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_70:
 	mov edi, [ebp-0x2c]
 	mov edi, [edi+esi*4+0x4]
 	mov [ebp-0x3c], edi
-UI_ReplaceConversions_60:
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_60:
 	movzx eax, byte [ebx+edi]
 	mov [edx], al
 	add dword [ebp-0x1c], 0x1
 	add ebx, 0x1
 	add edx, 0x1
 	cmp ecx, ebx
-	jnz UI_ReplaceConversions_70
-UI_ReplaceConversions_50:
+	jnz _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_70
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_50:
 	add dword [ebp-0x20], 0x3
-UI_ReplaceConversions_110:
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_110:
 	mov eax, [ebp-0x20]
 	cmp [ebp-0x24], eax
-	jle UI_ReplaceConversions_80
+	jle _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_80
 	mov ebx, [ebp-0x28]
 	add ebx, [ebp-0x20]
 	mov ecx, 0x2
@@ -10263,14 +10263,14 @@ UI_ReplaceConversions_110:
 	mov edi, _cstring_5
 	repe cmpsb
 	mov eax, 0x0
-	jz UI_ReplaceConversions_90
+	jz _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_90
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-UI_ReplaceConversions_90:
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_90:
 	test eax, eax
-	jz UI_ReplaceConversions_100
-UI_ReplaceConversions_40:
+	jz _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_100
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_40:
 	movzx eax, byte [ebx]
 	mov edx, [ebp-0x30]
 	mov ecx, [ebp-0x1c]
@@ -10278,8 +10278,8 @@ UI_ReplaceConversions_40:
 	add ecx, 0x1
 	mov [ebp-0x1c], ecx
 	add dword [ebp-0x20], 0x1
-	jmp UI_ReplaceConversions_110
-UI_ReplaceConversions_10:
+	jmp _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_110
+_Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci_10:
 	mov [ebp+0x10], ebx
 	mov edi, [ebp-0x28]
 	mov [ebp+0xc], edi
@@ -10290,11 +10290,11 @@ UI_ReplaceConversions_10:
 	pop esi
 	pop edi
 	pop ebp
-	jmp Q_strncpyz
+	jmp _Z10I_strncpyzPcPKci
 
 
 ;UI_GetLocalVarsContext(int)
-UI_GetLocalVarsContext:
+_Z22UI_GetLocalVarsContexti:
 	push ebp
 	mov ebp, esp
 	mov eax, uiInfoArray+0xa78
@@ -10303,38 +10303,38 @@ UI_GetLocalVarsContext:
 
 
 ;UI_SafeTranslateString(char const*)
-UI_SafeTranslateString:
+_Z22UI_SafeTranslateStringPKc:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov ebx, [ebp+0x8]
 	cmp byte [ebx], 0x15
-	jz UI_SafeTranslateString_10
+	jz _Z22UI_SafeTranslateStringPKc_10
 	mov [esp], ebx
-	call SEH_StringEd_GetString
+	call _Z22SEH_StringEd_GetStringPKc
 	test eax, eax
-	jz UI_SafeTranslateString_20
+	jz _Z22UI_SafeTranslateStringPKc_20
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_SafeTranslateString_10:
+_Z22UI_SafeTranslateStringPKc_10:
 	add ebx, 0x1
-UI_SafeTranslateString_20:
+_Z22UI_SafeTranslateStringPKc_20:
 	mov eax, loc_warnings
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz UI_SafeTranslateString_30
+	jz _Z22UI_SafeTranslateStringPKc_30
 	mov eax, loc_warningsAsErrors
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz UI_SafeTranslateString_40
+	jz _Z22UI_SafeTranslateStringPKc_40
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_could_not_transl
 	mov dword [esp], 0x7
-	call Com_Error
-UI_SafeTranslateString_50:
+	call _Z9Com_Error11errorParm_tPKcz
+_Z22UI_SafeTranslateStringPKc_50:
 	mov dword [_ZZ22UI_SafeTranslateStringPKcE11errorString], 0x4e55315e
 	mov dword [_ZZ22UI_SafeTranslateStringPKcE11errorString+0x4], 0x41434f4c
 	mov dword [_ZZ22UI_SafeTranslateStringPKcE11errorString+0x8], 0x455a494c
@@ -10343,23 +10343,23 @@ UI_SafeTranslateString_50:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], 0x400
 	mov dword [esp], _ZZ22UI_SafeTranslateStringPKcE11errorString
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov dword [esp+0x8], _cstring_171
 	mov dword [esp+0x4], 0x400
 	mov dword [esp], _ZZ22UI_SafeTranslateStringPKcE11errorString
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov eax, _ZZ22UI_SafeTranslateStringPKcE11errorString
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_SafeTranslateString_40:
+_Z22UI_SafeTranslateStringPKc_40:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_warning_could_no
 	mov dword [esp], 0xd
-	call Com_PrintWarning
-	jmp UI_SafeTranslateString_50
-UI_SafeTranslateString_30:
+	call _Z16Com_PrintWarningiPKcz
+	jmp _Z22UI_SafeTranslateStringPKc_50
+_Z22UI_SafeTranslateStringPKc_30:
 	mov [esp+0x4], ebx
 	mov dword [esp], _ZZ22UI_SafeTranslateStringPKcE11errorString
 	call strcpy
@@ -10371,7 +10371,7 @@ UI_SafeTranslateString_30:
 
 
 ;UI_ShouldDrawCrosshair()
-UI_ShouldDrawCrosshair:
+_Z22UI_ShouldDrawCrosshairv:
 	push ebp
 	mov ebp, esp
 	mov eax, [ui_drawCrosshair]
@@ -10381,20 +10381,20 @@ UI_ShouldDrawCrosshair:
 
 
 ;UI_ClosePopupScriptMenu(int, unsigned char)
-UI_ClosePopupScriptMenu:
+_Z23UI_ClosePopupScriptMenuih:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov eax, [ebp+0xc]
 	cmp dword [uiInfoArray+0x18a0], 0x9
-	jz UI_ClosePopupScriptMenu_10
+	jz _Z23UI_ClosePopupScriptMenuih_10
 	leave
 	ret
-UI_ClosePopupScriptMenu_10:
+_Z23UI_ClosePopupScriptMenuih_10:
 	mov [uiInfoArray+0x18a4], al
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call UI_CloseFocusedMenu
+	call _Z19UI_CloseFocusedMenui
 	mov byte [uiInfoArray+0x18a4], 0x1
 	leave
 	ret
@@ -10402,19 +10402,19 @@ UI_ClosePopupScriptMenu_10:
 
 
 ;UI_GetTopActiveMenuName(int)
-UI_GetTopActiveMenuName:
+_Z23UI_GetTopActiveMenuNamei:
 	push ebp
 	mov ebp, esp
 	mov eax, [uiInfoArray+0xa74]
 	sub eax, 0x1
-	jns UI_GetTopActiveMenuName_10
-UI_GetTopActiveMenuName_20:
+	jns _Z23UI_GetTopActiveMenuNamei_10
+_Z23UI_GetTopActiveMenuNamei_20:
 	xor eax, eax
 	pop ebp
 	ret
-UI_GetTopActiveMenuName_10:
+_Z23UI_GetTopActiveMenuNamei_10:
 	cmp eax, [uiInfoArray+0xa30]
-	jge UI_GetTopActiveMenuName_20
+	jge _Z23UI_GetTopActiveMenuNamei_20
 	mov eax, [eax*4+uiInfoArray+0xa34]
 	mov eax, [eax]
 	pop ebp
@@ -10422,7 +10422,7 @@ UI_GetTopActiveMenuName_10:
 
 
 ;Menu_IsMenuOpenAndVisible(int, char const*)
-Menu_IsMenuOpenAndVisible:
+_Z25Menu_IsMenuOpenAndVisibleiPKc:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -10430,27 +10430,27 @@ Menu_IsMenuOpenAndVisible:
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menus_FindByName
+	call _Z16Menus_FindByNamePK9UiContextPKc
 	mov ebx, eax
 	test eax, eax
-	jz Menu_IsMenuOpenAndVisible_10
+	jz _Z25Menu_IsMenuOpenAndVisibleiPKc_10
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call Menus_MenuIsInStack
+	call _Z19Menus_MenuIsInStackP9UiContextP9menuDef_t
 	test eax, eax
-	jnz Menu_IsMenuOpenAndVisible_20
-Menu_IsMenuOpenAndVisible_10:
+	jnz _Z25Menu_IsMenuOpenAndVisibleiPKc_20
+_Z25Menu_IsMenuOpenAndVisibleiPKc_10:
 	xor eax, eax
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-Menu_IsMenuOpenAndVisible_20:
+_Z25Menu_IsMenuOpenAndVisibleiPKc_20:
 	mov [esp+0x4], ebx
 	mov dword [esp], uiInfoArray
-	call Menu_IsVisible
+	call _Z14Menu_IsVisibleP9UiContextP9menuDef_t
 	test al, al
-	jz Menu_IsMenuOpenAndVisible_10
+	jz _Z25Menu_IsMenuOpenAndVisibleiPKc_10
 	mov eax, 0x1
 	add esp, 0x14
 	pop ebx
@@ -10460,7 +10460,7 @@ Menu_IsMenuOpenAndVisible_20:
 
 
 ;UI_GetGameTypeDisplayName(char const*)
-UI_GetGameTypeDisplayName:
+_Z25UI_GetGameTypeDisplayNamePKc:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -10470,8 +10470,8 @@ UI_GetGameTypeDisplayName:
 	mov edi, [ebp+0x8]
 	mov eax, [sharedUiInfo+0x114c]
 	test eax, eax
-	jg UI_GetGameTypeDisplayName_10
-UI_GetGameTypeDisplayName_30:
+	jg _Z25UI_GetGameTypeDisplayNamePKc_10
+_Z25UI_GetGameTypeDisplayNamePKc_30:
 	mov eax, edi
 	add esp, 0x1c
 	pop ebx
@@ -10479,22 +10479,22 @@ UI_GetGameTypeDisplayName_30:
 	pop edi
 	pop ebp
 	ret
-UI_GetGameTypeDisplayName_10:
+_Z25UI_GetGameTypeDisplayNamePKc_10:
 	xor esi, esi
 	mov ebx, sharedUiInfo
-	jmp UI_GetGameTypeDisplayName_20
-UI_GetGameTypeDisplayName_40:
+	jmp _Z25UI_GetGameTypeDisplayNamePKc_20
+_Z25UI_GetGameTypeDisplayNamePKc_40:
 	add esi, 0x1
 	add ebx, 0x8
 	cmp esi, [sharedUiInfo+0x114c]
-	jge UI_GetGameTypeDisplayName_30
-UI_GetGameTypeDisplayName_20:
+	jge _Z25UI_GetGameTypeDisplayNamePKc_30
+_Z25UI_GetGameTypeDisplayNamePKc_20:
 	mov eax, [ebx+0x1150]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz UI_GetGameTypeDisplayName_40
+	jnz _Z25UI_GetGameTypeDisplayNamePKc_40
 	mov eax, [esi*8+sharedUiInfo+0x1154]
 	mov [ebp+0x8], eax
 	add esp, 0x1c
@@ -10502,11 +10502,11 @@ UI_GetGameTypeDisplayName_20:
 	pop esi
 	pop edi
 	pop ebp
-	jmp UI_SafeTranslateString
+	jmp _Z22UI_SafeTranslateStringPKc
 
 
 ;UI_AllowScriptMenuResponse(int)
-UI_AllowScriptMenuResponse:
+_Z26UI_AllowScriptMenuResponsei:
 	push ebp
 	mov ebp, esp
 	movzx eax, byte [uiInfoArray+0x18a4]
@@ -10515,7 +10515,7 @@ UI_AllowScriptMenuResponse:
 
 
 ;UI_ReplaceConversionString(char const*, char const*)
-UI_ReplaceConversionString:
+_Z26UI_ReplaceConversionStringPKcS0_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -10536,9 +10536,9 @@ UI_ReplaceConversionString:
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call UI_ReplaceConversions
+	call _Z21UI_ReplaceConversionsPKcP19ConversionArgumentsPci
 	mov [esp], ebx
-	call va
+	call _Z2vaPKcz
 	add esp, 0x440
 	pop ebx
 	pop edi
@@ -10547,7 +10547,7 @@ UI_ReplaceConversionString:
 
 
 ;CL_SelectStringTableEntryInDvar_f()
-CL_SelectStringTableEntryInDvar_f:
+_Z33CL_SelectStringTableEntryInDvar_fv:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -10556,24 +10556,24 @@ CL_SelectStringTableEntryInDvar_f:
 	mov eax, r_reflectionProbeGenerate
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz CL_SelectStringTableEntryInDvar_f_10
+	jnz _Z33CL_SelectStringTableEntryInDvar_fv_10
 	mov ebx, cmd_args
 	mov edx, [ebx]
 	cmp dword [ebx+edx*4+0x44], 0x3
-	jle CL_SelectStringTableEntryInDvar_f_20
+	jle _Z33CL_SelectStringTableEntryInDvar_fv_20
 	lea eax, [ebp-0xc]
 	mov [esp+0x4], eax
 	mov eax, [ebx+edx*4+0x64]
 	mov eax, [eax+0x4]
 	mov [esp], eax
-	call StringTable_GetAsset
-	call Sys_Milliseconds
+	call _Z20StringTable_GetAssetPKcPPK11StringTable
+	call _Z16Sys_Millisecondsv
 	mov [esp], eax
-	call ms_srand
+	call _Z8ms_srandj
 	mov eax, [ebp-0xc]
 	cvtsi2ss xmm0, dword [eax+0x8]
 	movss [ebp-0x28], xmm0
-	call ms_rand
+	call _Z7ms_randv
 	cvtsi2ss xmm1, eax
 	movss xmm0, dword [ebp-0x28]
 	mulss xmm0, xmm1
@@ -10581,53 +10581,53 @@ CL_SelectStringTableEntryInDvar_f:
 	cvttss2si esi, xmm0
 	mov eax, [ebx]
 	cmp dword [ebx+eax*4+0x44], 0x2
-	jg CL_SelectStringTableEntryInDvar_f_30
+	jg _Z33CL_SelectStringTableEntryInDvar_fv_30
 	mov eax, _cstring_null
-CL_SelectStringTableEntryInDvar_f_60:
+_Z33CL_SelectStringTableEntryInDvar_fv_60:
 	mov [esp], eax
 	call atoi
 	mov [esp+0x8], eax
 	mov [esp+0x4], esi
 	mov eax, [ebp-0xc]
 	mov [esp], eax
-	call StringTable_GetColumnValueForRow
+	call _Z32StringTable_GetColumnValueForRowPK11StringTableii
 	mov ecx, eax
 	mov eax, cmd_args
 	mov edx, [eax]
 	cmp dword [eax+edx*4+0x44], 0x3
-	jg CL_SelectStringTableEntryInDvar_f_40
+	jg _Z33CL_SelectStringTableEntryInDvar_fv_40
 	mov eax, _cstring_null
-CL_SelectStringTableEntryInDvar_f_50:
+_Z33CL_SelectStringTableEntryInDvar_fv_50:
 	mov [esp+0x4], ecx
 	mov [esp], eax
-	call Cvar_SetStringByName
-CL_SelectStringTableEntryInDvar_f_10:
+	call _Z20Dvar_SetStringByNamePKcS0_
+_Z33CL_SelectStringTableEntryInDvar_fv_10:
 	add esp, 0x30
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-CL_SelectStringTableEntryInDvar_f_20:
+_Z33CL_SelectStringTableEntryInDvar_fv_20:
 	mov dword [esp+0x4], _cstring_usage_selectstri
 	mov dword [esp], 0x10
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	add esp, 0x30
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-CL_SelectStringTableEntryInDvar_f_40:
+_Z33CL_SelectStringTableEntryInDvar_fv_40:
 	mov eax, [eax+edx*4+0x64]
 	mov eax, [eax+0xc]
-	jmp CL_SelectStringTableEntryInDvar_f_50
-CL_SelectStringTableEntryInDvar_f_30:
+	jmp _Z33CL_SelectStringTableEntryInDvar_fv_50
+_Z33CL_SelectStringTableEntryInDvar_fv_30:
 	mov eax, [ebx+eax*4+0x64]
 	mov eax, [eax+0x8]
-	jmp CL_SelectStringTableEntryInDvar_f_60
+	jmp _Z33CL_SelectStringTableEntryInDvar_fv_60
 
 
 ;UI_FilterStringForButtonAnimation(char*, unsigned int)
-UI_FilterStringForButtonAnimation:
+_Z33UI_FilterStringForButtonAnimationPcj:
 	push ebp
 	mov ebp, esp
 	pop ebp
@@ -10636,7 +10636,7 @@ UI_FilterStringForButtonAnimation:
 
 
 ;UI_GetMapDisplayNameFromPartialLoadNameMatch(char const*, int*)
-UI_GetMapDisplayNameFromPartialLoadNameMatch:
+_Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -10649,8 +10649,8 @@ UI_GetMapDisplayNameFromPartialLoadNameMatch:
 	mov [ebp-0x20], edx
 	mov eax, [sharedUiInfo+0x1c58]
 	test eax, eax
-	jg UI_GetMapDisplayNameFromPartialLoadNameMatch_10
-UI_GetMapDisplayNameFromPartialLoadNameMatch_30:
+	jg _Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi_10
+_Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi_30:
 	xor eax, eax
 	add esp, 0x2c
 	pop ebx
@@ -10658,18 +10658,18 @@ UI_GetMapDisplayNameFromPartialLoadNameMatch_30:
 	pop edi
 	pop ebp
 	ret
-UI_GetMapDisplayNameFromPartialLoadNameMatch_10:
+_Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi_10:
 	xor esi, esi
 	mov ebx, sharedUiInfo
 	mov dword [ebp-0x24], sharedUiInfo+0x1c5c
-	jmp UI_GetMapDisplayNameFromPartialLoadNameMatch_20
-UI_GetMapDisplayNameFromPartialLoadNameMatch_40:
+	jmp _Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi_20
+_Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi_40:
 	add esi, 0x1
 	add dword [ebp-0x24], 0xa0
 	add ebx, 0xa0
 	cmp esi, [sharedUiInfo+0x1c58]
-	jge UI_GetMapDisplayNameFromPartialLoadNameMatch_30
-UI_GetMapDisplayNameFromPartialLoadNameMatch_20:
+	jge _Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi_30
+_Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi_20:
 	mov edi, [ebx+0x1c60]
 	cld
 	mov ecx, 0xffffffff
@@ -10684,9 +10684,9 @@ UI_GetMapDisplayNameFromPartialLoadNameMatch_20:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call Q_stricmpn
+	call _Z10I_strnicmpPKcS0_i
 	test eax, eax
-	jnz UI_GetMapDisplayNameFromPartialLoadNameMatch_40
+	jnz _Z44UI_GetMapDisplayNameFromPartialLoadNameMatchPKcPi_40
 	mov edx, [ebp-0x24]
 	mov eax, [edx]
 	mov [ebp+0x8], eax
@@ -10695,12 +10695,12 @@ UI_GetMapDisplayNameFromPartialLoadNameMatch_20:
 	pop esi
 	pop edi
 	pop ebp
-	jmp UI_SafeTranslateString
+	jmp _Z22UI_SafeTranslateStringPKc
 	nop
 
 
 ;UI_Init(int)
-UI_Init:
+_Z7UI_Initi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -10713,131 +10713,131 @@ UI_Init:
 	mov ebx, useFastFile
 	mov eax, [ebx]
 	cmp byte [eax+0xc], 0x0
-	jnz UI_Init_10
-UI_Init_140:
+	jnz _Z7UI_Initi_10
+_Z7UI_Initi_140:
 	cmp byte [eax+0xc], 0x0
-	jz UI_Init_20
-UI_Init_130:
+	jz _Z7UI_Initi_20
+_Z7UI_Initi_130:
 	mov dword [esp+0xc], _cstring_custom_game_mode
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_ui_custommodenam
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov [ui_customModeName], eax
 	mov dword [esp+0xc], _cstring_name_to_give_the
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_ui_custommodeedi
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov [ui_customModeEditName], eax
 	mov dword [esp+0xc], _cstring_custom_class_nam
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_ui_customclassna
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov [ui_customClassName], eax
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_g_allowvote
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_cg_brass
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_fx_marks
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server1
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server2
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server3
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server4
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server5
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server6
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server7
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server8
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server9
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server10
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server11
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server12
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server13
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server14
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server15
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0xc], _cstring_server_display
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_server16
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov dword [esp+0x14], _cstring_the_network_sour
 	mov dword [esp+0x10], 0x1
 	mov dword [esp+0xc], 0x2
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_ui_netsource
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_netSource], eax
 	mov dword [esp+0x14], _cstring_small_font_scale
 	mov dword [esp+0x10], 0x1
@@ -10846,7 +10846,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x3e800000
 	mov dword [esp], _cstring_ui_smallfont
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [ui_smallFont], eax
 	mov dword [esp+0x14], _cstring_big_font_scale
 	mov dword [esp+0x10], 0x1
@@ -10854,7 +10854,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x3ecccccd
 	mov dword [esp], _cstring_ui_bigfont
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [ui_bigFont], eax
 	mov dword [esp+0x14], _cstring_extra_big_font_s
 	mov dword [esp+0x10], 0x1
@@ -10862,7 +10862,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x3f0ccccd
 	mov dword [esp], _cstring_ui_extrabigfont
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [ui_extraBigFont], eax
 	mov dword [esp+0x14], _cstring_current_map_inde
 	mov dword [esp+0x10], 0x1
@@ -10870,7 +10870,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_currentmap
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_currentMap], eax
 	mov dword [esp+0x14], _cstring_game_type
 	mov dword [esp+0x10], 0x1
@@ -10878,7 +10878,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_gametype
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_gametype], eax
 	mov dword [esp+0x14], _cstring_game_join_type
 	mov dword [esp+0x10], 0x1
@@ -10886,13 +10886,13 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_joingametype
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_joinGameType], eax
 	mov dword [esp+0xc], _cstring_displayed_game_t
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_ui_netgametypena
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov [ui_netGameTypeName], eax
 	mov dword [esp+0x14], _cstring_true_if_this_is_
 	mov dword [esp+0x10], 0x1
@@ -10900,7 +10900,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_dedicated
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_dedicated], eax
 	mov dword [esp+0x14], _cstring_currently_runnin
 	mov dword [esp+0x10], 0x1
@@ -10908,19 +10908,19 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_currentnetmap
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_currentNetMap], eax
 	mov dword [esp+0xc], _cstring_show_full_server
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_ui_browsershowfu
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_browserShowFull], eax
 	mov dword [esp+0xc], _cstring_show_empty_serve
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_ui_browsershowem
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_browserShowEmpty], eax
 	mov dword [esp+0x14], _cstring_show_servers_tha
 	mov dword [esp+0x10], 0x1
@@ -10928,13 +10928,13 @@ UI_Init_130:
 	mov dword [esp+0x8], 0xffffffff
 	mov dword [esp+0x4], 0xffffffff
 	mov dword [esp], _cstring_ui_browsershowpa
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_browserShowPassword], eax
 	mov dword [esp+0xc], _cstring_show_pure_server
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_ui_browsershowpu
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_browserShowPure], eax
 	mov dword [esp+0x14], _cstring_ui_mod_value
 	mov dword [esp+0x10], 0x1
@@ -10942,13 +10942,13 @@ UI_Init_130:
 	mov dword [esp+0x8], 0xffffffff
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_browsermod
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_browserMod], eax
 	mov dword [esp+0xc], _cstring_show_dedicated_s
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_browsershowde
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_browserShowDedicated], eax
 	mov dword [esp+0x14], _cstring_friendly_fire_is
 	mov dword [esp+0x10], 0x1
@@ -10956,7 +10956,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x80000000
 	mov dword [esp+0x4], 0xffffffff
 	mov dword [esp], _cstring_ui_browserfriend
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_browserFriendlyfire], eax
 	mov dword [esp+0x14], _cstring_kill_cam_is_acti
 	mov dword [esp+0x10], 0x1
@@ -10964,7 +10964,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x80000000
 	mov dword [esp+0x4], 0xffffffff
 	mov dword [esp], _cstring_ui_browserkillca
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_browserKillcam], eax
 	mov dword [esp+0x14], _cstring_hardcore_mode
 	mov dword [esp+0x10], 0x1
@@ -10972,7 +10972,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x80000000
 	mov dword [esp+0x4], 0xffffffff
 	mov dword [esp], _cstring_ui_browserhardco
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_browserHardcore], eax
 	mov dword [esp+0x14], _cstring_oldschool_mode
 	mov dword [esp+0x10], 0x1
@@ -10980,7 +10980,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x80000000
 	mov dword [esp+0x4], 0xffffffff
 	mov dword [esp], _cstring_ui_browseroldsch
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_browserOldSchool], eax
 	mov dword [esp+0x14], _cstring_time_in_millisec
 	mov dword [esp+0x10], 0x1
@@ -10988,7 +10988,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x1b58
 	mov dword [esp], _cstring_ui_serverstatust
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_serverStatusTimeOut], eax
 	mov dword [esp+0x14], _cstring_only_show_punkbu
 	mov dword [esp+0x10], 0x1
@@ -10996,7 +10996,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x80000000
 	mov dword [esp+0x4], 0xffffffff
 	mov dword [esp], _cstring_ui_browsershowpu1
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_browserShowPunkBuster], eax
 	mov dword [esp+0x14], _cstring_number_of_player
 	mov dword [esp+0x10], 0x40
@@ -11004,19 +11004,19 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x80000000
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_playerprofile
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_playerProfileCount], eax
 	mov dword [esp+0xc], _cstring_selected_player_
 	mov dword [esp+0x8], 0x40
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_ui_playerprofile1
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov [ui_playerProfileSelected], eax
 	mov dword [esp+0xc], _cstring_new_player_profi
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_ui_playerprofile2
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov [ui_playerProfileNameNew], eax
 	mov dword [esp+0x18], _cstring_where_to_draw_th
 	mov dword [esp+0x14], 0x0
@@ -11025,7 +11025,7 @@ UI_Init_130:
 	mov dword [esp+0x8], 0x42500000
 	mov dword [esp+0x4], 0xc2c80000
 	mov dword [esp], _cstring_ui_buildlocation
-	call Cvar_RegisterVec2
+	call _Z17Dvar_RegisterVec2PKcfffftS0_
 	mov [ui_buildLocation], eax
 	mov dword [esp+0x14], _cstring_font_size_to_use
 	mov dword [esp+0x10], 0x0
@@ -11034,25 +11034,25 @@ UI_Init_130:
 	mov esi, 0x3e99999a
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring_ui_buildsize
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [ui_buildSize], eax
 	mov dword [esp+0xc], _cstring_show_onscreen_li
 	mov dword [esp+0x8], 0x80
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_showlist
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_showList], eax
 	mov dword [esp+0xc], _cstring_if_set_only_menu
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_null
 	mov dword [esp], _cstring_ui_showmenuonly
-	call Cvar_RegisterString
+	call _Z19Dvar_RegisterStringPKcS0_tS0_
 	mov [ui_showMenuOnly], eax
 	mov dword [esp+0xc], _cstring_currently_showin
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_showendofgame
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_showEndOfGame], eax
 	mov dword [esp+0x14], _cstring_scales_the_borde
 	mov dword [esp+0x10], 0x0
@@ -11061,13 +11061,13 @@ UI_Init_130:
 	mov ebx, 0x3f19999a
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_ui_borderlowligh
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [ui_borderLowLightScale], eax
 	mov dword [esp+0xc], _cstring_shows_cinematics
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_cinematicstim
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_cinematicsTimestamp], eax
 	mov dword [esp+0x20], _cstring_glow_color_appli
 	mov dword [esp+0x1c], 0x0
@@ -11078,58 +11078,58 @@ UI_Init_130:
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring_ui_connectscreen
-	call Cvar_RegisterVec4
+	call _Z17Dvar_RegisterVec4PKcfffffftS0_
 	mov [ui_connectScreenTextGlowColor], eax
 	mov dword [esp+0xc], _cstring_whether_to_draw_
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_ui_drawcrosshair
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_drawCrosshair], eax
 	mov dword [esp+0xc], _cstring_whether_the_hud_
 	mov dword [esp+0x8], 0x80
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_hud_hardcore
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_hud_hardcore], eax
 	mov dword [esp+0xc], _cstring_whether_the_ui_s
 	mov dword [esp+0x8], 0x80
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_uav_allies
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_uav_allies], eax
 	mov dword [esp+0xc], _cstring_whether_the_ui_s1
 	mov dword [esp+0x8], 0x80
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_uav_axis
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_uav_axis], eax
 	mov dword [esp+0xc], _cstring_whether_the_ui_s2
 	mov dword [esp+0x8], 0x80
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_uav_client
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_uav_client], eax
 	mov dword [esp+0xc], _cstring_whether_the_ui_s3
 	mov dword [esp+0x8], 0x80
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_allow_classch
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_allow_classchange], eax
 	mov dword [esp+0xc], _cstring_whether_the_ui_s4
 	mov dword [esp+0x8], 0x80
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_allow_teamcha
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [ui_allow_teamchange], eax
 	mov byte [uiInfoArray+0x18a4], 0x1
-	call String_Init
+	call _Z11String_Initv
 	mov dword [esp], uiInfoArray
-	call Menu_Setup
+	call _Z10Menu_SetupP9UiContext
 	mov dword [esp+0x8], uiInfoArray+0x24
 	mov dword [esp+0x4], uiInfoArray+0x20
 	mov dword [esp], uiInfoArray+0x1c
-	call CL_GetScreenDimensions
+	call _Z22CL_GetScreenDimensionsPiS_Pf
 	mov ebx, [uiInfoArray+0x1c]
 	mov ecx, [uiInfoArray+0x20]
 	mov eax, ebx
@@ -11140,35 +11140,35 @@ UI_Init_130:
 	lea eax, [ecx+ecx*4]
 	shl eax, 0x7
 	cmp edx, eax
-	jle UI_Init_30
+	jle _Z7UI_Initi_30
 	cvtsi2ss xmm1, ebx
 	cvtsi2ss xmm0, ecx
 	mulss xmm0, [_float__1_33333337]
 	addss xmm1, xmm0
 	mulss xmm1, [_float_0_50000000]
 	movss [uiInfoArray+0x4], xmm1
-UI_Init_100:
-	call Sys_Milliseconds
+_Z7UI_Initi_100:
+	call _Z16Sys_Millisecondsv
 	mov dword [sharedUiInfo+0x114c], 0x0
 	mov dword [sharedUiInfo+0x1250], 0x0
 	mov dword [sharedUiInfo+0x1b54], 0x0
 	mov dword [esp], _cstring_all
-	call String_Alloc
+	call _Z12String_AllocPKc
 	mov [sharedUiInfo+0x1b58], eax
 	mov eax, [sharedUiInfo+0x1b54]
 	mov dword [eax*8+sharedUiInfo+0x1b5c], _cstring_null
 	add dword [sharedUiInfo+0x1b54], 0x1
 	mov ebx, useFastFile
 	mov edx, [ebx]
-	mov eax, UI_GetGameTypesList_FastFile
+	mov eax, _Z28UI_GetGameTypesList_FastFilev
 	cmp byte [edx+0xc], 0x0
-	mov edx, UI_GetGameTypesList_LoadObj
+	mov edx, _Z27UI_GetGameTypesList_LoadObjv
 	cmovz eax, edx
 	call eax
 	mov edx, [sharedUiInfo+0x114c]
 	test edx, edx
-	jz UI_Init_40
-UI_Init_120:
+	jz _Z7UI_Initi_40
+_Z7UI_Initi_120:
 	mov dword [esp+0x14], _cstring_game_type
 	mov dword [esp+0x10], 0x1
 	mov eax, [sharedUiInfo+0x114c]
@@ -11177,130 +11177,130 @@ UI_Init_120:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_netgametype
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [ui_netGameType], eax
-	call UI_LoadArenas
+	call _Z13UI_LoadArenasv
 	mov eax, [ebx]
 	cmp byte [eax+0xc], 0x0
-	jnz UI_Init_50
-UI_Init_110:
+	jnz _Z7UI_Initi_50
+_Z7UI_Initi_110:
 	cmp byte [g_mapname], 0x0
-	jz UI_Init_60
+	jz _Z7UI_Initi_60
 	mov eax, [ebx]
 	cmp byte [eax+0xc], 0x0
-	jz UI_Init_60
+	jz _Z7UI_Initi_60
 	mov eax, useFastFile
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz UI_Init_70
-UI_Init_90:
+	jz _Z7UI_Initi_70
+_Z7UI_Initi_90:
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_white
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x20], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_scrollbar
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x10], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_scrollbar_arr
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x4], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_scrollbar_arr1
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_scrollbar_arr2
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x8], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_scrollbar_arr3
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0xc], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_scrollbar_thu
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x14], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_slider2
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x18], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_sliderbutt_1
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x1c], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_ui_cursor
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x24], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_fontsbigfont
-	call CL_RegisterFont
+	call _Z15CL_RegisterFontPKci
 	mov [sharedUiInfo+0x28], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_fontssmallfont
-	call CL_RegisterFont
+	call _Z15CL_RegisterFontPKci
 	mov [sharedUiInfo+0x2c], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_fontsconsolefont
-	call CL_RegisterFont
+	call _Z15CL_RegisterFontPKci
 	mov [sharedUiInfo+0x30], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_fontsboldfont
-	call CL_RegisterFont
+	call _Z15CL_RegisterFontPKci
 	mov [sharedUiInfo+0x34], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_fontsnormalfont
-	call CL_RegisterFont
+	call _Z15CL_RegisterFontPKci
 	mov [sharedUiInfo+0x38], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_fontsextrabigfon
-	call CL_RegisterFont
+	call _Z15CL_RegisterFontPKci
 	mov [sharedUiInfo+0x3c], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_fontsobjectivefo
-	call CL_RegisterFont
+	call _Z15CL_RegisterFontPKci
 	mov [sharedUiInfo+0x40], eax
 	mov dword [esp], uiInfoArray
-	call Menus_CloseAll
+	call _Z14Menus_CloseAllP9UiContext
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_server_hardware_
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x6c5c], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_server_hardware_1
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x6c60], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_server_hardware_2
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x6c64], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_server_hardware_3
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x6c68], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_server_hardware_4
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x6c74], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_server_hardware_5
-	call Material_RegisterHandle
+	call _Z23Material_RegisterHandlePKci
 	mov [sharedUiInfo+0x6c78], eax
-	call LAN_LoadCachedServers
+	call _Z21LAN_LoadCachedServersv
 	cmp dword [sharedUiInfo+0x72e4], 0xa
-	jz UI_Init_80
+	jz _Z7UI_Initi_80
 	mov dword [sharedUiInfo+0x72e4], 0xa
-	mov dword [esp+0xc], UI_ServersQsortCompare
+	mov dword [esp+0xc], _Z22UI_ServersQsortComparePKvS0_
 	mov dword [esp+0x8], 0x4
 	mov eax, [sharedUiInfo+0x1ab78]
 	mov [esp+0x4], eax
 	mov dword [esp], sharedUiInfo+0x72f8
 	call qsort
-UI_Init_80:
+_Z7UI_Initi_80:
 	mov dword [esp], _cstring_m_pitch
-	call Cvar_GetFloat
+	call _Z13Dvar_GetFloatPKc
 	fstp dword [ebp-0x1c]
 	movss xmm0, dword [ebp-0x1c]
 	xor eax, eax
@@ -11308,26 +11308,26 @@ UI_Init_80:
 	setb al
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_ui_mousepitch
-	call Cvar_SetBoolByName
+	call _Z18Dvar_SetBoolByNamePKch
 	mov eax, [ui_netGameType]
 	mov eax, [eax+0xc]
 	mov eax, [eax*8+sharedUiInfo+0x1150]
 	mov [esp+0x4], eax
 	mov eax, [ui_netGameTypeName]
 	mov [esp], eax
-	call Cvar_SetString
+	call _Z14Dvar_SetStringPK6dvar_sPKc
 	mov dword [esp+0xc], _cstring_true_if_the_game
 	mov dword [esp+0x8], 0x40
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_ui_multiplayer
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov dword [esp+0x14], _cstring_spam_debug_info_
 	mov dword [esp+0x10], 0x0
 	mov dword [esp+0xc], 0x2
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_uiscript_debug
-	call Cvar_RegisterInt
+	call _Z16Dvar_RegisterIntPKciiitS0_
 	mov [uiscript_debug], eax
 	add esp, 0x4c
 	pop ebx
@@ -11335,55 +11335,55 @@ UI_Init_80:
 	pop edi
 	pop ebp
 	ret
-UI_Init_60:
+_Z7UI_Initi_60:
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_mpmenustxt
-	call UI_LoadMenus
+	call _Z12UI_LoadMenusPKci
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call UI_AddMenuList
+	call _Z14UI_AddMenuListP9UiContextP8MenuList
 	cmp byte [g_mapname], 0x0
-	jz UI_Init_90
+	jz _Z7UI_Initi_90
 	mov eax, useFastFile
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz UI_Init_90
-	jmp UI_Init_70
-UI_Init_30:
+	jnz _Z7UI_Initi_90
+	jmp _Z7UI_Initi_70
+_Z7UI_Initi_30:
 	mov dword [uiInfoArray+0x4], 0x0
-	jmp UI_Init_100
-UI_Init_70:
+	jmp _Z7UI_Initi_100
+_Z7UI_Initi_70:
 	mov dword [esp+0x4], g_mapname
 	mov dword [esp], _cstring_mapsmpscsv
-	call va
+	call _Z2vaPKcz
 	mov [esp], eax
-	call UI_MapLoadInfo
-	jmp UI_Init_90
-UI_Init_50:
+	call _Z14UI_MapLoadInfoPKc
+	jmp _Z7UI_Initi_90
+_Z7UI_Initi_50:
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_ui_mpcodetxt
-	call UI_LoadMenus
+	call _Z12UI_LoadMenusPKci
 	mov [esp+0x4], eax
 	mov dword [esp], uiInfoArray
-	call UI_AddMenuList
-	jmp UI_Init_110
-UI_Init_40:
+	call _Z14UI_AddMenuListP9UiContextP8MenuList
+	jmp _Z7UI_Initi_110
+_Z7UI_Initi_40:
 	mov dword [esp+0x4], _cstring_no_game_type_scr
 	mov dword [esp], 0x1
-	call Com_Error
-	jmp UI_Init_120
-UI_Init_20:
-	call UI_LoadSoundAliases
-	jmp UI_Init_130
-UI_Init_10:
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z7UI_Initi_120
+_Z7UI_Initi_20:
+	call _Z19UI_LoadSoundAliasesv
+	jmp _Z7UI_Initi_130
+_Z7UI_Initi_10:
 	mov dword [esp], 0x0
-	call DB_ResetZoneSize
+	call _Z16DB_ResetZoneSizei
 	mov eax, [ebx]
-	jmp UI_Init_140
+	jmp _Z7UI_Initi_140
 
 
 ;UI_Pause(int, int)
-UI_Pause:
+_Z8UI_Pauseii:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -11391,76 +11391,76 @@ UI_Pause:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebp+0xc]
 	test edx, edx
-	jz UI_Pause_10
+	jz _Z8UI_Pauseii_10
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_cl_paused
-	call Cvar_SetIntByName
+	call _Z17Dvar_SetIntByNamePKci
 	mov dword [ebp+0xc], 0x10
 	mov [ebp+0x8], ebx
 	add esp, 0x14
 	pop ebx
 	pop ebp
-	jmp Key_SetCatcher
-UI_Pause_10:
+	jmp _Z14Key_SetCatcherii
+_Z8UI_Pauseii_10:
 	mov dword [esp+0x4], 0xffffffef
 	mov [esp], ebx
-	call Key_RemoveCatcher
+	call _Z17Key_RemoveCatcherii
 	mov [esp], ebx
-	call Key_ClearStates
+	call _Z15Key_ClearStatesi
 	mov dword [ebp+0xc], 0x0
 	mov dword [ebp+0x8], _cstring_cl_paused
 	add esp, 0x14
 	pop ebx
 	pop ebp
-	jmp Cvar_SetIntByName
+	jmp _Z17Dvar_SetIntByNamePKci
 	nop
 
 
 ;UI_Popup(int, char const*)
-UI_Popup:
+_Z8UI_PopupiPKc:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov ebx, [ebp+0x8]
 	mov [esp], ebx
-	call CL_AllowPopup
+	call _Z13CL_AllowPopupi
 	test al, al
-	jnz UI_Popup_10
-UI_Popup_20:
+	jnz _Z8UI_PopupiPKc_10
+_Z8UI_PopupiPKc_20:
 	xor eax, eax
-UI_Popup_40:
+_Z8UI_PopupiPKc_40:
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_Popup_10:
+_Z8UI_PopupiPKc_10:
 	mov dword [esp], uiInfoArray
-	call Menus_AnyFullScreenVisible
+	call _Z26Menus_AnyFullScreenVisibleP9UiContext
 	test eax, eax
-	jnz UI_Popup_20
+	jnz _Z8UI_PopupiPKc_20
 	mov dword [esp+0x4], _cstring_uimenu_wm_quickm
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz UI_Popup_30
+	jz _Z8UI_PopupiPKc_30
 	mov eax, 0x1
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-UI_Popup_30:
+_Z8UI_PopupiPKc_30:
 	mov dword [esp+0x4], 0x7
 	mov [esp], ebx
-	call UI_SetActiveMenu
+	call _Z16UI_SetActiveMenuii
 	mov eax, 0x1
-	jmp UI_Popup_40
+	jmp _Z8UI_PopupiPKc_40
 	nop
 
 
 ;UI_SetMap(char const*, char const*)
-UI_SetMap:
+_Z9UI_SetMapPKcS0_:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -11471,59 +11471,59 @@ UI_SetMap:
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], esi
 	mov dword [esp], g_mapname
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], ebx
 	mov dword [esp], g_gametype
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	movzx eax, byte [esi]
 	test al, al
 	setnz byte [g_showLoadingScreenMenu]
-	jnz UI_SetMap_10
-UI_SetMap_60:
+	jnz _Z9UI_SetMapPKcS0__10
+_Z9UI_SetMapPKcS0__60:
 	mov byte [g_showLoadingScreenMenu], 0x0
-UI_SetMap_50:
+_Z9UI_SetMapPKcS0__50:
 	mov eax, useFastFile
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz UI_SetMap_20
+	jnz _Z9UI_SetMapPKcS0__20
 	cmp byte [g_mapname], 0x0
-	jnz UI_SetMap_30
-UI_SetMap_20:
+	jnz _Z9UI_SetMapPKcS0__30
+_Z9UI_SetMapPKcS0__20:
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-UI_SetMap_30:
+_Z9UI_SetMapPKcS0__30:
 	mov dword [esp+0x4], g_mapname
 	mov dword [esp], _cstring_mapsmpscsv
-	call va
+	call _Z2vaPKcz
 	mov [ebp+0x8], eax
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
-	jmp UI_MapLoadInfo
-UI_SetMap_10:
+	jmp _Z14UI_MapLoadInfoPKc
+_Z9UI_SetMapPKcS0__10:
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call DB_FileExists
+	call _Z13DB_FileExistsPKc6FF_DIR
 	test al, al
-	jz UI_SetMap_40
-UI_SetMap_70:
+	jz _Z9UI_SetMapPKcS0__40
+_Z9UI_SetMapPKcS0__70:
 	mov byte [g_showLoadingScreenMenu], 0x1
-	jmp UI_SetMap_50
-UI_SetMap_40:
+	jmp _Z9UI_SetMapPKcS0__50
+_Z9UI_SetMapPKcS0__40:
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring_s_load
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x4], 0x2
 	mov [esp], eax
-	call DB_FileExists
+	call _Z13DB_FileExistsPKc6FF_DIR
 	test al, al
-	jz UI_SetMap_60
-	jmp UI_SetMap_70
+	jz _Z9UI_SetMapPKcS0__60
+	jmp _Z9UI_SetMapPKcS0__70
 	nop
 
 

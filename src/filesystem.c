@@ -2593,7 +2593,18 @@ static pack_t *FS_LoadZipFile( char *zipfile, const char *basename ) {
 		unzGoToNextFile( uf );
 	}
 
+/*//Code for dumping iwd pure sums
+	char headername[1024];
+	sprintf(headername, "%s.sum", zipfile);
+	FILE* df = fopen(headername, "wb");
+	if(df)
+	{
+		fwrite(fs_headerLongs, 4, fs_numHeaderLongs, df);
+		fclose(df);
+	}*/
+	
 	pack->checksum = Com_BlockChecksumKey32( fs_headerLongs, 4 * fs_numHeaderLongs, LittleLong( 0 ) );
+
 	if(fs_checksumFeed)
 		pack->pure_checksum = Com_BlockChecksumKey32( fs_headerLongs, 4 * fs_numHeaderLongs, LittleLong( fs_checksumFeed ) );
 	else
@@ -2711,9 +2722,10 @@ void FS_InitFilesystem()
   Q_strncpyz(lastValidBase, fs_basepath->string, sizeof(lastValidBase));
   Q_strncpyz(lastValidGame, fs_gameDirVar->string, sizeof(lastValidGame));
 
+/*
   char info[8192];
-
   Com_Printf(CON_CHANNEL_FILES, "Valid IWD checksums: %s\n", FS_LoadedIwdPureChecksums(info, 8192));
+*/
 }
 
 
@@ -3968,12 +3980,17 @@ void FS_ReferencedPaks(char *outChkSums, char *outPathNames, int maxlen)
   char chkSumString[8192];
   char pathString[8192];
   char chksum[1024];
+  char singlepath[1024];
 
   chkSumString[0] = 0;
   pathString[0] = 0;
 
   for ( puresum = fs_iwdPureChecks; puresum; puresum = puresum->next )
   {
+	if(fs_gameDirVar->string[0] && !Q_stricmp(puresum->gameName, fs_gameDirVar->string))
+	{
+		continue;
+	}
 	Com_sprintf(chksum, sizeof(chksum), "%i ", puresum->checksum);
 	Q_strncat(chkSumString, sizeof(chkSumString), chksum);
 	if ( pathString[0] )
@@ -3987,26 +4004,27 @@ void FS_ReferencedPaks(char *outChkSums, char *outPathNames, int maxlen)
 
   if ( fs_gameDirVar->string[0] )
   {
-	  for ( search = fs_searchpaths; search; search = search->next )
-	  {
-			if ( search->pack && !search->localized )
+	for ( search = fs_searchpaths; search; search = search->next )
+	{
+		if ( search->pack && !search->localized )
+		{
+		//!(search->pack->referenced & FS_GENERAL_REF) &&
+			if ( strstr( search->pack->pakBasename, "_svr_") == NULL &&
+			(!Q_stricmp(search->pack->pakGamename, fs_gameDirVar->string) || !Q_stricmpn(search->pack->pakGamename, "usermaps", 8)))
 			{
-			if ( !(search->pack->referenced & FS_GENERAL_REF) &&
-			(!Q_stricmp(search->pack->pakGamename, fs_gameDirVar->string) || !Q_stricmpn(search->pack->pakGamename, "usermaps", 8))
-			)
-			{
-			Com_sprintf(chksum, sizeof(chksum), "%i ", search->pack->checksum);
-			Q_strncat(chkSumString, sizeof(chkSumString), chksum);
-			if ( pathString[0] )
-			{
-				Q_strncat(pathString, sizeof(pathString), " ");
+				Com_sprintf(chksum, sizeof(chksum), "%i ", search->pack->checksum);
+				Q_strfrontcat(chkSumString, sizeof(chkSumString), chksum);
+				singlepath[0] = 0;
+
+				Q_strncat(singlepath, sizeof(singlepath), search->pack->pakGamename);
+				Q_strncat(singlepath, sizeof(singlepath), "/");
+				Q_strncat(singlepath, sizeof(singlepath), search->pack->pakBasename);
+				Q_strncat(singlepath, sizeof(singlepath), " ");
+
+				Q_strfrontcat(pathString, sizeof(pathString), singlepath);
 			}
-			Q_strncat(pathString, sizeof(pathString), search->pack->pakGamename);
-			Q_strncat(pathString, sizeof(pathString), "/");
-			Q_strncat(pathString, sizeof(pathString), search->pack->pakBasename);
-			}
-			}
-	  }
+		}
+	}
   }
 
   Q_strncpyz(outChkSums, chkSumString, maxlen);
@@ -4201,7 +4219,7 @@ fs_crcsum_t* FS_FindChecksumForFile(const char* filename, int len)
         {
             if(fscrcsums.sums[i].length != len)
             {
-                Com_Memset(&fscrcsums.sums[i], 0, sizeof(fs_crcsums_t));
+                Com_Memset(&fscrcsums.sums[i], 0, sizeof(fs_crcsum_t));
             }
             return &fscrcsums.sums[i];
         }

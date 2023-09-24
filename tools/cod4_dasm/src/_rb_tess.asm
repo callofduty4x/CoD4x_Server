@@ -1,76 +1,76 @@
 ;Imports of rb_tess:
-	extern XSurfaceGetNumTris
-	extern XSurfaceGetNumVerts
-	extern R_SetIndexData
+	extern _Z18XSurfaceGetNumTrisPK8XSurface
+	extern _Z19XSurfaceGetNumVertsPK8XSurface
+	extern _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	extern gfxBuf
-	extern R_SetVertexData
-	extern R_DrawIndexedPrimitive
-	extern DB_GetIndexBufferAndBase
+	extern _Z15R_SetVertexDataP14GfxCmdBufStatePKvii
+	extern _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
+	extern _Z24DB_GetIndexBufferAndBasehPvS_Pi
 	extern _ZN14MacOpenGLUtils13SetBufferHintEj
 	extern _ZN14MacOpenGLUtils16ClearBufferHintsEv
-	extern R_SetupPassPixelShaderArgs
-	extern R_ChangeDepthHackNearClip
-	extern R_UpdateVertexDecl
-	extern R_ChangeDepthRange
-	extern R_SetupPassPerObjectArgs
-	extern R_ChangeObjectPlacement
-	extern R_SetStreamsForBspSurface
-	extern R_SetupPassPerPrimArgs
+	extern _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
+	extern _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
+	extern _Z18R_UpdateVertexDeclP14GfxCmdBufState
+	extern _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+	extern _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
+	extern _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
+	extern _Z25R_SetStreamsForBspSurfaceP18GfxCmdBufPrimStatePK14srfTriangles_t
+	extern _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	extern rgp
-	extern R_SetLightmap
-	extern R_SetReflectionProbe
+	extern _Z13R_SetLightmap16GfxCmdBufContextj
+	extern _Z20R_SetReflectionProbe16GfxCmdBufContextj
 	extern sc_enable
 	extern gfxRenderTargets
 	extern rg
-	extern R_SetMeshStream
-	extern R_SetStaticModelLightingCoordsForSource
-	extern R_SetModelLightingCoordsForSource
-	extern R_DrawBspDrawSurfs
-	extern R_DrawBspDrawSurfsLit
-	extern VecNCompareCustomEpsilon
-	extern Vec3RotateTranspose
-	extern R_DrawBspDrawSurfsPreTess
-	extern R_DrawBspDrawSurfsLitPreTess
-	extern R_DrawStaticModelCachedSurf
-	extern R_DrawStaticModelCachedSurfLit
-	extern R_DrawStaticModelPreTessSurf
-	extern R_DrawStaticModelPreTessSurfLit
+	extern _Z15R_SetMeshStreamP14GfxCmdBufStateP11GfxMeshData
+	extern _Z39R_SetStaticModelLightingCoordsForSourcejP20GfxCmdBufSourceState
+	extern _Z33R_SetModelLightingCoordsForSourcetP20GfxCmdBufSourceState
+	extern _Z18R_DrawBspDrawSurfsPKjP14GfxCmdBufStatePK19GfxDrawSurfListInfo
+	extern _Z21R_DrawBspDrawSurfsLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo
+	extern _Z24VecNCompareCustomEpsilonPKfS0_fi
+	extern _Z19Vec3RotateTransposePKfPA3_S_Pf
+	extern _Z25R_DrawBspDrawSurfsPreTessPKj16GfxCmdBufContext
+	extern _Z28R_DrawBspDrawSurfsLitPreTessPKj16GfxCmdBufContext
+	extern _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext
+	extern _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext
+	extern _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext
+	extern _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext
 	extern s_manualObjectPlacement
-	extern R_UpdateMaterialTime
-	extern R_DrawXModelRigidSurfLit
-	extern R_DrawXModelRigidSurfCamera
-	extern R_DrawXModelRigidSurf
-	extern R_SetupPassVertexShaderArgs
-	extern R_DrawStaticModelSurf
+	extern _Z20R_UpdateMaterialTimeP20GfxCmdBufSourceStatef
+	extern _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo
+	extern _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo
+	extern _Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo
+	extern _Z27R_SetupPassVertexShaderArgs16GfxCmdBufContext
+	extern _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo
 	extern strstr
 	extern glIsEnabled
 	extern glGetFloatv
 	extern glEnable
 	extern glPolygonOffset
-	extern R_DrawStaticModelSurfLit
+	extern _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo
 	extern glDisable
-	extern R_DrawStaticModelSkinnedSurf
-	extern R_DrawStaticModelSkinnedSurfLit
+	extern _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext
+	extern _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext
 
 ;Exports of rb_tess:
 	global _GLOBAL__I__Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext
-	global R_DrawXModelSkinnedUncached
+	global _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex
 	global _ZZ34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContextE15sTreeTrunkUnits
 	global _ZZ34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContextE16sTreeTrunkFactor
-	global R_DrawXModelSkinnedCached
-	global R_TessBModel
-	global R_TessCodeMeshList
-	global R_TessMarkMeshList
-	global R_TessTrianglesList
-	global R_TessParticleCloudList
-	global R_TessTrianglesPreTessList
-	global R_TessStaticModelCachedList
-	global R_TessStaticModelPreTessList
-	global R_TessXModelRigidDrawSurfList
-	global R_TessXModelSkinnedDrawSurfList
-	global R_TessStaticModelRigidDrawSurfList
-	global R_TessStaticModelSkinnedDrawSurfList
-	global R_TessXModelRigidSkinnedDrawSurfList
+	global _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface
+	global _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z36R_TessStaticModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
+	global _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext
 
 
 SECTION .text
@@ -83,21 +83,21 @@ _GLOBAL__I__Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -367,7 +367,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_DrawXModelSkinnedUncached(GfxCmdBufContext, XSurface*, GfxPackedVertex*)
-R_DrawXModelSkinnedUncached:
+_Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -379,10 +379,10 @@ R_DrawXModelSkinnedUncached:
 	mov ebx, ecx
 	mov esi, [ebp-0x2c]
 	mov [esp], ecx
-	call XSurfaceGetNumTris
+	call _Z18XSurfaceGetNumTrisPK8XSurface
 	mov [ebp-0x20], eax
 	mov [esp], ebx
-	call XSurfaceGetNumVerts
+	call _Z19XSurfaceGetNumVertsPK8XSurface
 	mov [ebp-0x24], eax
 	add esi, 0x90
 	mov eax, [ebp-0x20]
@@ -390,7 +390,7 @@ R_DrawXModelSkinnedUncached:
 	mov eax, [ebx+0xc]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	mov edi, gfxBuf
 	mov ebx, [edi+0x70]
@@ -400,23 +400,23 @@ R_DrawXModelSkinnedUncached:
 	shl eax, 0x5
 	add eax, edx
 	cmp eax, [ebx+0x4]
-	jle R_DrawXModelSkinnedUncached_10
+	jle _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_10
 	mov dword [ebx], 0x0
 	mov ecx, [ebp-0x24]
-R_DrawXModelSkinnedUncached_10:
+_Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_10:
 	mov dword [esp+0xc], 0x20
 	mov [esp+0x8], ecx
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x2c]
 	mov [esp], eax
-	call R_SetVertexData
+	call _Z15R_SetVertexDataP14GfxCmdBufStatePKvii
 	mov ebx, eax
 	mov eax, [edi+0x70]
 	mov ecx, [eax+0x8]
 	cmp ecx, [esi+0x10]
-	jz R_DrawXModelSkinnedUncached_20
-R_DrawXModelSkinnedUncached_40:
+	jz _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_20
+_Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_40:
 	mov [esi+0x10], ecx
 	mov [esi+0x14], ebx
 	mov dword [esi+0xc], 0x20
@@ -428,11 +428,11 @@ R_DrawXModelSkinnedUncached_40:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawXModelSkinnedUncached_50:
+_Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_50:
 	mov ecx, [esi+0x1c]
 	test ecx, ecx
-	jz R_DrawXModelSkinnedUncached_30
-R_DrawXModelSkinnedUncached_60:
+	jz _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_30
+_Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_60:
 	mov dword [esi+0x1c], 0x0
 	mov dword [esi+0x20], 0x0
 	mov dword [esi+0x18], 0x0
@@ -444,35 +444,35 @@ R_DrawXModelSkinnedUncached_60:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawXModelSkinnedUncached_70:
+_Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_70:
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawXModelSkinnedUncached_20:
+_Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_20:
 	cmp ebx, [esi+0x14]
-	jnz R_DrawXModelSkinnedUncached_40
+	jnz _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_40
 	cmp dword [esi+0xc], 0x20
-	jnz R_DrawXModelSkinnedUncached_40
-	jmp R_DrawXModelSkinnedUncached_50
-R_DrawXModelSkinnedUncached_30:
+	jnz _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_40
+	jmp _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_50
+_Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_30:
 	mov edx, [esi+0x20]
 	test edx, edx
-	jnz R_DrawXModelSkinnedUncached_60
+	jnz _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_60
 	mov eax, [esi+0x18]
 	test eax, eax
-	jnz R_DrawXModelSkinnedUncached_60
-	jmp R_DrawXModelSkinnedUncached_70
+	jnz _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_60
+	jmp _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex_70
 
 
 ;R_DrawXModelSkinnedCached(GfxCmdBufContext, GfxModelSkinnedSurface const*)
-R_DrawXModelSkinnedCached:
+_Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -495,26 +495,26 @@ R_DrawXModelSkinnedCached:
 	mov [esp+0x4], eax
 	movzx eax, byte [edx+0x6]
 	mov [esp], eax
-	call DB_GetIndexBufferAndBase
+	call _Z24DB_GetIndexBufferAndBasehPvS_Pi
 	mov edi, [ebx+0xca8]
 	mov ecx, [ebp-0x24]
 	lea ebx, [esi+0x90]
 	cmp ecx, [ebx+0x4]
-	jz R_DrawXModelSkinnedCached_10
+	jz _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_10
 	mov [ebx+0x4], ecx
 	mov eax, [esi+0x90]
 	mov edx, [eax]
 	mov [esp+0x4], ecx
 	mov [esp], eax
 	call dword [edx+0x1a0]
-R_DrawXModelSkinnedCached_10:
+_Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_10:
 	mov eax, [ebp-0x3c]
 	mov esi, [eax]
 	mov eax, [edi+0x11e690]
 	mov ecx, [eax+0x8]
 	cmp ecx, [ebx+0x10]
-	jz R_DrawXModelSkinnedCached_20
-R_DrawXModelSkinnedCached_50:
+	jz _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_20
+_Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_50:
 	mov [ebx+0x10], ecx
 	mov [ebx+0x14], esi
 	mov dword [ebx+0xc], 0x20
@@ -526,11 +526,11 @@ R_DrawXModelSkinnedCached_50:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawXModelSkinnedCached_60:
+_Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_60:
 	mov esi, [ebx+0x1c]
 	test esi, esi
-	jz R_DrawXModelSkinnedCached_30
-R_DrawXModelSkinnedCached_70:
+	jz _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_30
+_Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_70:
 	mov dword [ebx+0x1c], 0x0
 	mov dword [ebx+0x20], 0x0
 	mov dword [ebx+0x18], 0x0
@@ -542,7 +542,7 @@ R_DrawXModelSkinnedCached_70:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawXModelSkinnedCached_80:
+_Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_80:
 	mov eax, [edi+0x11e690]
 	mov edx, [eax+0x4]
 	mov [ebp-0x20], edx
@@ -550,7 +550,7 @@ R_DrawXModelSkinnedCached_80:
 	mov eax, [eax]
 	mov [ebp-0x1c], eax
 	cmp edx, eax
-	jge R_DrawXModelSkinnedCached_40
+	jge _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_40
 	lea eax, [ebp-0x20]
 	mov eax, [eax]
 	mov [esp], eax
@@ -558,7 +558,7 @@ R_DrawXModelSkinnedCached_80:
 	lea eax, [ebp-0x30]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	call _ZN14MacOpenGLUtils16ClearBufferHintsEv
 	add esp, 0x5c
 	pop ebx
@@ -566,21 +566,21 @@ R_DrawXModelSkinnedCached_80:
 	pop edi
 	pop ebp
 	ret
-R_DrawXModelSkinnedCached_20:
+_Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_20:
 	cmp esi, [ebx+0x14]
-	jnz R_DrawXModelSkinnedCached_50
+	jnz _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_50
 	cmp dword [ebx+0xc], 0x20
-	jnz R_DrawXModelSkinnedCached_50
-	jmp R_DrawXModelSkinnedCached_60
-R_DrawXModelSkinnedCached_30:
+	jnz _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_50
+	jmp _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_60
+_Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_30:
 	mov ecx, [ebx+0x20]
 	test ecx, ecx
-	jnz R_DrawXModelSkinnedCached_70
+	jnz _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_70
 	mov edx, [ebx+0x18]
 	test edx, edx
-	jz R_DrawXModelSkinnedCached_80
-	jmp R_DrawXModelSkinnedCached_70
-R_DrawXModelSkinnedCached_40:
+	jz _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_80
+	jmp _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_70
+_Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface_40:
 	lea eax, [ebp-0x1c]
 	mov eax, [eax]
 	mov [esp], eax
@@ -588,7 +588,7 @@ R_DrawXModelSkinnedCached_40:
 	lea eax, [ebp-0x30]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	call _ZN14MacOpenGLUtils16ClearBufferHintsEv
 	add esp, 0x5c
 	pop ebx
@@ -599,7 +599,7 @@ R_DrawXModelSkinnedCached_40:
 
 
 ;R_TessBModel(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessBModel:
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -645,46 +645,46 @@ R_TessBModel:
 	mov edx, [ebp-0xb0]
 	mov [esp], edx
 	mov [esp+0x4], ecx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov edx, [ebp-0x38]
 	mov edx, [edx+0xca8]
 	mov [ebp-0x48], edx
 	mov esi, [esi+0x8]
 	mov [ebp-0x44], esi
 	cmp esi, 0x7
-	jz R_TessBModel_10
-R_TessBModel_180:
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_180:
 	mov dword [esp+0x4], 0x0
 	mov ebx, [ebp-0x38]
 	mov [esp], ebx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov esi, [ebp-0x3c]
 	mov eax, [esi+0xc0]
 	test byte [eax+0x4], 0x8
-	jnz R_TessBModel_20
+	jnz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov eax, 0x2
 	mov ecx, [ebp-0x3c]
-R_TessBModel_140:
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_140:
 	add ecx, 0x90
 	mov [ebp-0x40], ecx
 	mov [ecx+0x8], eax
 	mov ebx, [ebp-0x3c]
 	mov [esp], ebx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov [ebp-0xac], ebx
 	mov esi, [ebp-0x38]
 	mov [ebp-0xb0], esi
 	cmp dword [esi+0xf34], 0x1
 	sbb edx, edx
 	cmp edx, [ebx+0xcc]
-	jz R_TessBModel_30
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call R_ChangeDepthRange
-R_TessBModel_30:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov eax, [ebp-0x34]
 	test eax, eax
-	jz R_TessBModel_40
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
 	mov edx, [ebp-0x30]
 	mov [ebp-0xa8], edx
 	mov ecx, [ebp-0x34]
@@ -693,17 +693,17 @@ R_TessBModel_30:
 	mov esi, [ebp-0xa4]
 	mov [esp], ebx
 	mov [esp+0x4], esi
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov esi, [ebp-0x34]
 	mov eax, [esi+0xc0]
 	test byte [eax+0x4], 0x8
-	jnz R_TessBModel_50
+	jnz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
 	mov eax, 0x2
 	mov ecx, [ebp-0x34]
-R_TessBModel_150:
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_150:
 	mov [ecx+0x98], eax
 	mov [esp], ecx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov ebx, [ebp-0x30]
 	mov [ebp+0xc], ebx
 	mov esi, [ebp-0x34]
@@ -711,21 +711,21 @@ R_TessBModel_150:
 	cmp dword [ebx+0xf34], 0x1
 	sbb eax, eax
 	cmp eax, [esi+0xcc]
-	jz R_TessBModel_60
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_ChangeDepthRange
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
 	mov eax, [ebp-0x30]
 	mov edx, [ebp-0x34]
-R_TessBModel_160:
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_160:
 	mov [ebp-0xa0], eax
 	mov [ebp-0x9c], edx
 	mov ecx, [ebp-0xa0]
 	mov ebx, [ebp-0x9c]
 	mov [esp], ecx
 	mov [esp+0x4], ebx
-	call R_SetupPassPerObjectArgs
-R_TessBModel_40:
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	mov eax, [ebp-0x64]
 	mov ebx, [eax]
 	mov esi, [eax+0x4]
@@ -738,7 +738,7 @@ R_TessBModel_40:
 	mov dword [ebp-0xbc], 0xffffffff
 	mov word [ebp-0xc0], 0x0
 	cmp dword [ebp-0x44], 0x7
-	jz R_TessBModel_70
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
 	and dword [ebp-0xc0], 0xff00ffff
 	and dword [ebp-0xc0], 0xe0ffffff
 	mov edx, [ebp-0x3c]
@@ -749,8 +749,8 @@ R_TessBModel_40:
 	mov edx, [ebp-0x94]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
-R_TessBModel_70:
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	mov edx, [ebp-0xb8]
 	and edx, ebx
 	mov [ebp-0x58], edx
@@ -762,8 +762,8 @@ R_TessBModel_70:
 	add eax, 0x90
 	mov [ebp-0xc8], eax
 	cmp dword [ebp-0x44], 0x7
-	jz R_TessBModel_80
-R_TessBModel_130:
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_80
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_130:
 	mov edx, [ebp-0xc0]
 	and edx, ebx
 	mov [ebp-0x50], edx
@@ -776,18 +776,18 @@ R_TessBModel_130:
 	mov [ebp-0x2c], eax
 	mov ecx, [ebp-0x60]
 	mov [ebp-0xc4], ecx
-R_TessBModel_120:
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_120:
 	movzx eax, bx
 	mov esi, [ebp-0x48]
 	lea ebx, [esi+eax*4]
 	mov eax, [ebx]
 	mov edx, [ebp-0x38]
 	cmp eax, [edx+0xf08]
-	jz R_TessBModel_90
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_90
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call R_ChangeObjectPlacement
-R_TessBModel_90:
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_90:
 	mov ebx, [ebx+0x4]
 	movzx eax, word [ebx+0x8]
 	mov [ebp-0x24], eax
@@ -796,7 +796,7 @@ R_TessBModel_90:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp-0x40]
 	mov [esp], ecx
-	call R_SetStreamsForBspSurface
+	call _Z25R_SetStreamsForBspSurfaceP18GfxCmdBufPrimStatePK14srfTriangles_t
 	mov esi, [ebp-0x3c]
 	mov [ebp-0x74], esi
 	mov eax, [ebp-0x38]
@@ -805,7 +805,7 @@ R_TessBModel_90:
 	mov ecx, [ebp-0x74]
 	mov [esp], edx
 	mov [esp+0x4], ecx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov eax, [ebp-0x20]
 	mov [esp+0x8], eax
 	mov ecx, rgp
@@ -816,19 +816,19 @@ R_TessBModel_90:
 	mov [esp+0x4], eax
 	mov esi, [ebp-0x40]
 	mov [esp], esi
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	mov eax, [ebp-0x34]
 	test eax, eax
-	jz R_TessBModel_100
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_100
 	mov [esp+0x4], ebx
 	mov edx, [ebp-0xc8]
 	mov [esp], edx
-	call R_SetStreamsForBspSurface
+	call _Z25R_SetStreamsForBspSurfaceP18GfxCmdBufPrimStatePK14srfTriangles_t
 	mov ecx, [ebp-0x30]
 	mov [ebp-0x70], ecx
 	mov esi, [ebp-0x34]
@@ -837,7 +837,7 @@ R_TessBModel_90:
 	mov edx, [ebp-0x6c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov eax, [ebp-0x20]
 	mov [esp+0x8], eax
 	mov ecx, rgp
@@ -848,18 +848,18 @@ R_TessBModel_90:
 	mov [esp+0x4], eax
 	mov ebx, [ebp-0xc8]
 	mov [esp], ebx
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	lea esi, [ebp-0x24]
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call R_DrawIndexedPrimitive
-R_TessBModel_100:
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_100:
 	mov dword [ebp-0x20], 0x0
 	add dword [ebp-0x2c], 0x1
 	mov eax, [ebp-0xc4]
 	cmp [ebp-0x2c], eax
-	jz R_TessBModel_110
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
 	mov ebx, [edi+0x8]
 	mov esi, [edi+0xc]
 	add edi, 0x8
@@ -871,7 +871,7 @@ R_TessBModel_100:
 	xor ecx, edx
 	xor eax, [ebp-0x50]
 	or ecx, eax
-	jz R_TessBModel_120
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_120
 	mov eax, [ebp-0xb8]
 	and eax, ebx
 	mov edx, [ebp-0xb4]
@@ -880,12 +880,12 @@ R_TessBModel_100:
 	xor ecx, edx
 	xor eax, [ebp-0x58]
 	or ecx, eax
-	jnz R_TessBModel_110
+	jnz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
 	mov edx, [ebp-0x2c]
 	mov [ebp-0x5c], edx
 	cmp dword [ebp-0x44], 0x7
-	jnz R_TessBModel_130
-R_TessBModel_80:
+	jnz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_130
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_80:
 	mov eax, ebx
 	shr eax, 0x18
 	and eax, 0x1f
@@ -898,7 +898,7 @@ R_TessBModel_80:
 	mov edx, [ebp-0x8c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetLightmap
+	call _Z13R_SetLightmap16GfxCmdBufContextj
 	mov ecx, ebx
 	shr ecx, 0x10
 	movzx eax, cl
@@ -911,7 +911,7 @@ R_TessBModel_80:
 	mov edx, [ebp-0x84]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetReflectionProbe
+	call _Z20R_SetReflectionProbe16GfxCmdBufContextj
 	mov edx, [ebp-0x3c]
 	mov [ebp-0x7c], edx
 	mov ecx, [ebp-0x38]
@@ -920,9 +920,9 @@ R_TessBModel_80:
 	mov edx, [ebp-0x7c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
-	jmp R_TessBModel_130
-R_TessBModel_110:
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
+	jmp _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_130
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_110:
 	mov eax, [ebp-0x2c]
 	add esp, 0xcc
 	pop ebx
@@ -930,43 +930,43 @@ R_TessBModel_110:
 	pop edi
 	pop ebp
 	ret
-R_TessBModel_20:
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov eax, [esi+0xb8]
 	mov eax, [eax+0x40]
 	movzx eax, byte [eax+0x4]
 	add eax, 0x2
 	mov ecx, esi
-	jmp R_TessBModel_140
-R_TessBModel_50:
+	jmp _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_140
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	mov eax, [esi+0xb8]
 	mov eax, [eax+0x40]
 	movzx eax, byte [eax+0x4]
 	add eax, 0x2
 	mov ecx, esi
-	jmp R_TessBModel_150
-R_TessBModel_60:
+	jmp _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_150
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	mov eax, ebx
 	mov edx, esi
-	jmp R_TessBModel_160
-R_TessBModel_10:
+	jmp _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov eax, sc_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_TessBModel_170
+	jz _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_170
 	mov eax, gfxRenderTargets
 	mov eax, [eax+0x78]
-R_TessBModel_190:
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_190:
 	mov ecx, [ebp-0x38]
 	mov [ecx+0xc60], eax
-	jmp R_TessBModel_180
-R_TessBModel_170:
+	jmp _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_180
+_Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_170:
 	mov eax, rgp
 	mov eax, [eax+0x2008]
-	jmp R_TessBModel_190
+	jmp _Z12R_TessBModelPK19GfxDrawSurfListArgs16GfxCmdBufContext_190
 
 
 ;R_TessCodeMeshList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessCodeMeshList:
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -996,7 +996,7 @@ R_TessCodeMeshList:
 	mov edx, [ebp-0x80]
 	mov [esp], edx
 	mov [esp+0x4], ecx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov edx, [ebp-0x64]
 	mov esi, [edx]
 	mov edi, [edx+0x4]
@@ -1004,35 +1004,35 @@ R_TessCodeMeshList:
 	add eax, 0x2244
 	mov ecx, [ebp-0x2c]
 	cmp [ecx+0xf08], eax
-	jz R_TessCodeMeshList_10
+	jz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov [esp+0x4], eax
 	mov ebx, [ebp-0x80]
 	mov [esp], ebx
-	call R_ChangeObjectPlacement
-R_TessCodeMeshList_10:
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp-0x80]
 	mov [esp], eax
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov edx, [ebp-0x34]
 	add edx, 0x90
 	mov [ebp-0x40], edx
 	mov dword [edx+0x8], 0x1
 	mov ecx, [ebp-0x7c]
 	mov [esp], ecx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov ebx, [ebp-0x2c]
 	cmp dword [ebx+0xf34], 0x1
 	sbb eax, eax
 	mov edx, [ebp-0x34]
 	cmp eax, [edx+0xcc]
-	jz R_TessCodeMeshList_20
+	jz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x7c]
 	mov [esp], ecx
-	call R_ChangeDepthRange
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
 	mov ebx, [ebp-0x2c]
-R_TessCodeMeshList_20:
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov ebx, [ebx+0xca8]
 	mov [ebp-0x4c], ebx
 	mov eax, ebx
@@ -1040,7 +1040,7 @@ R_TessCodeMeshList_20:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x7c]
 	mov [esp], eax
-	call R_SetMeshStream
+	call _Z15R_SetMeshStreamP14GfxCmdBufStateP11GfxMeshData
 	mov dword [ebp-0x1c], 0x0
 	mov dword [ebp-0x24], 0x4000
 	mov dword [ebp-0x20], 0x0
@@ -1060,7 +1060,7 @@ R_TessCodeMeshList_20:
 	mov dword [ebp-0x5c], 0x0
 	xor ebx, ebx
 	mov [ebp-0x8c], ebx
-R_TessCodeMeshList_90:
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90:
 	movzx eax, si
 	shl eax, 0x4
 	mov esi, [ebp-0x4c]
@@ -1068,21 +1068,21 @@ R_TessCodeMeshList_90:
 	mov [ebp-0x68], eax
 	mov edx, [ebp-0x44]
 	test edx, edx
-	jnz R_TessCodeMeshList_30
+	jnz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	cmp word [eax+0xa], 0x0
-	jnz R_TessCodeMeshList_30
+	jnz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	mov edx, [ebp-0x8c]
 	lea eax, [edx+edx*2]
 	mov ecx, [ebp-0x48]
 	lea eax, [ecx+eax*2]
 	mov ebx, [ebp-0x68]
 	cmp eax, [ebx+0x4]
-	jz R_TessCodeMeshList_40
-R_TessCodeMeshList_30:
+	jz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov eax, [ebp-0x8c]
 	test eax, eax
-	jnz R_TessCodeMeshList_50
-R_TessCodeMeshList_110:
+	jnz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110:
 	mov ebx, [ebp-0x68]
 	mov ebx, [ebx+0x4]
 	mov [ebp-0x48], ebx
@@ -1092,7 +1092,7 @@ R_TessCodeMeshList_110:
 	movzx ecx, ax
 	mov [ebp-0x3c], ecx
 	test ax, ax
-	jz R_TessCodeMeshList_60
+	jz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
 	mov ebx, [ebp-0x2c]
 	mov [ebp-0x30], ebx
 	mov dword [ebp-0x38], 0x0
@@ -1101,7 +1101,7 @@ R_TessCodeMeshList_110:
 	shl edx, 0x4
 	mov eax, [ebp-0x4c]
 	lea esi, [edx+eax+0x6b000]
-R_TessCodeMeshList_70:
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	mov ebx, [esi+0xc]
 	mov ecx, [esi+0x8]
 	mov edx, [esi+0x4]
@@ -1119,8 +1119,8 @@ R_TessCodeMeshList_70:
 	mov [ebp-0x30], edx
 	mov ecx, [ebp-0x38]
 	cmp [ebp-0x3c], ecx
-	jnz R_TessCodeMeshList_70
-R_TessCodeMeshList_60:
+	jnz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	mov ebx, [ebp-0x34]
 	mov [ebp-0x74], ebx
 	mov esi, [ebp-0x2c]
@@ -1129,18 +1129,18 @@ R_TessCodeMeshList_60:
 	mov edx, [ebp-0x74]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov [ebp-0x6c], ebx
 	mov [ebp-0x70], esi
 	mov edx, [ebp-0x70]
 	mov ecx, [ebp-0x6c]
 	mov [esp], edx
 	mov [esp+0x4], ecx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov ecx, [ebp-0x20]
 	mov [ebp-0x8c], ecx
 	mov ebx, [ebp-0x68]
-R_TessCodeMeshList_40:
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	movzx ebx, word [ebx+0xa]
 	mov [ebp-0x44], ebx
 	mov ebx, [ebp-0x8c]
@@ -1151,7 +1151,7 @@ R_TessCodeMeshList_40:
 	add dword [ebp-0x5c], 0x1
 	mov eax, [ebp-0x5c]
 	cmp [ebp-0x60], eax
-	jz R_TessCodeMeshList_80
+	jz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80
 	mov ecx, [ebp-0x64]
 	mov esi, [ecx+eax*8]
 	mov edi, [ecx+eax*8+0x4]
@@ -1163,22 +1163,22 @@ R_TessCodeMeshList_40:
 	xor ecx, edx
 	xor eax, [ebp-0x58]
 	or ecx, eax
-	jz R_TessCodeMeshList_90
-R_TessCodeMeshList_80:
+	jz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80:
 	test ebx, ebx
-	jz R_TessCodeMeshList_100
+	jz _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100
 	mov [esp+0x8], ebx
 	mov ebx, [ebp-0x48]
 	mov [esp+0x4], ebx
 	mov esi, [ebp-0x40]
 	mov [esp], esi
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_DrawIndexedPrimitive
-R_TessCodeMeshList_100:
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100:
 	mov eax, [ebp-0x5c]
 	add esp, 0x9c
 	pop ebx
@@ -1186,26 +1186,26 @@ R_TessCodeMeshList_100:
 	pop edi
 	pop ebp
 	ret
-R_TessCodeMeshList_50:
+_Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	mov esi, [ebp-0x8c]
 	mov [esp+0x8], esi
 	mov eax, [ebp-0x48]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x40]
 	mov [esp], edx
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x40]
 	mov [esp], ecx
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	mov dword [ebp-0x20], 0x0
-	jmp R_TessCodeMeshList_110
+	jmp _Z18R_TessCodeMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
 
 
 ;R_TessMarkMeshList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessMarkMeshList:
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1245,12 +1245,12 @@ R_TessMarkMeshList:
 	mov edx, [ebp-0xa0]
 	mov [esp], edx
 	mov [esp+0x4], ecx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov ebx, [ebx+0x8]
 	mov [ebp-0x40], ebx
 	cmp ebx, 0x7
-	jz R_TessMarkMeshList_10
-R_TessMarkMeshList_200:
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_200:
 	mov ebx, [ebp-0x5c]
 	mov ecx, [ebx]
 	mov ebx, [ebx+0x4]
@@ -1260,15 +1260,15 @@ R_TessMarkMeshList_200:
 	add eax, 0x2244
 	mov esi, [ebp-0x34]
 	cmp [esi+0xf08], eax
-	jz R_TessMarkMeshList_20
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_ChangeObjectPlacement
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
 	mov eax, [ebp-0x34]
-R_TessMarkMeshList_180:
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov edx, [ebp-0x34]
 	mov edx, [edx+0xca8]
 	mov [ebp-0x48], edx
@@ -1278,11 +1278,11 @@ R_TessMarkMeshList_180:
 	movzx eax, byte [eax+edx+0x11867a]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz R_TessMarkMeshList_30
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	cmp eax, 0xc0
-	jz R_TessMarkMeshList_30
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	xor eax, eax
-R_TessMarkMeshList_170:
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170:
 	neg eax
 	add eax, 0x2
 	mov ecx, [ebp-0x38]
@@ -1291,24 +1291,24 @@ R_TessMarkMeshList_170:
 	mov [ecx+0x8], eax
 	mov ebx, [ebp-0x38]
 	mov [esp], ebx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov [ebp-0x9c], ebx
 	mov esi, [ebp-0x34]
 	mov [ebp-0xa0], esi
 	cmp dword [esi+0xf34], 0x1
 	sbb edx, edx
 	cmp edx, [ebx+0xcc]
-	jz R_TessMarkMeshList_40
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call R_ChangeDepthRange
-R_TessMarkMeshList_40:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	mov eax, [ebp-0x48]
 	add eax, 0x11e670
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x38]
 	mov [esp], edx
-	call R_SetMeshStream
+	call _Z15R_SetMeshStreamP14GfxCmdBufStateP11GfxMeshData
 	mov dword [ebp-0x1c], 0x0
 	mov dword [ebp-0x24], 0x1800
 	mov dword [ebp-0x20], 0x0
@@ -1321,7 +1321,7 @@ R_TessMarkMeshList_40:
 	mov dword [ebp-0xac], 0xffffffff
 	mov word [ebp-0xb0], 0x0
 	cmp dword [ebp-0x40], 0x7
-	jz R_TessMarkMeshList_50
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
 	and dword [ebp-0xb0], 0xff00ffff
 	and dword [ebp-0xb0], 0xe0ffffff
 	mov ecx, [ebp-0x38]
@@ -1332,8 +1332,8 @@ R_TessMarkMeshList_40:
 	mov edx, [ebp-0x94]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
-R_TessMarkMeshList_50:
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	mov edx, [ebp-0xb8]
 	and edx, [ebp-0xa8]
 	mov [ebp-0x50], edx
@@ -1343,8 +1343,8 @@ R_TessMarkMeshList_50:
 	mov dword [ebp-0x44], 0x0
 	mov dword [ebp-0x54], 0x0
 	cmp dword [ebp-0x40], 0x7
-	jz R_TessMarkMeshList_60
-R_TessMarkMeshList_120:
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120:
 	mov ebx, [ebp-0xb8]
 	and ebx, [ebp-0xb0]
 	mov esi, [ebp-0xb4]
@@ -1355,18 +1355,18 @@ R_TessMarkMeshList_120:
 	mov [ebp-0x30], eax
 	mov edx, [ebp-0x54]
 	mov [ebp-0x2c], edx
-	jmp R_TessMarkMeshList_70
-R_TessMarkMeshList_110:
+	jmp _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110:
 	mov ecx, [edi+0x4]
 	mov [ebp-0x44], ecx
-R_TessMarkMeshList_100:
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100:
 	add edx, [edi]
 	mov edi, edx
 	mov [ebp-0x20], edx
 	add dword [ebp-0x2c], 0x1
 	mov eax, [ebp-0x58]
 	cmp [ebp-0x2c], eax
-	jz R_TessMarkMeshList_80
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80
 	mov ecx, [ebp-0x30]
 	mov edx, [ecx+0x8]
 	mov ecx, [ecx+0xc]
@@ -1381,9 +1381,9 @@ R_TessMarkMeshList_100:
 	xor ecx, edx
 	xor eax, ebx
 	or ecx, eax
-	jnz R_TessMarkMeshList_90
+	jnz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90
 	movzx edi, word [ebp-0xb8]
-R_TessMarkMeshList_70:
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	shl edi, 0x4
 	mov ecx, [ebp-0x48]
 	lea edi, [edi+ecx+0x118670]
@@ -1392,9 +1392,9 @@ R_TessMarkMeshList_70:
 	mov ecx, [ebp-0x44]
 	lea eax, [ecx+eax*2]
 	cmp eax, [edi+0x4]
-	jz R_TessMarkMeshList_100
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100
 	test edx, edx
-	jz R_TessMarkMeshList_110
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
 	mov eax, [ebp-0x38]
 	mov [ebp-0x6c], eax
 	mov edx, [ebp-0x34]
@@ -1403,24 +1403,24 @@ R_TessMarkMeshList_70:
 	mov edx, [ebp-0x6c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov eax, [ebp-0x20]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x44]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x3c]
 	mov [esp], ecx
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x3c]
 	mov [esp], edx
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	mov dword [ebp-0x20], 0x0
 	xor edx, edx
-	jmp R_TessMarkMeshList_110
-R_TessMarkMeshList_90:
+	jmp _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90:
 	mov eax, [ebp-0xa8]
 	and eax, [ebp-0xb8]
 	mov edx, [ebp-0xa4]
@@ -1429,16 +1429,16 @@ R_TessMarkMeshList_90:
 	xor ecx, edx
 	xor eax, [ebp-0x50]
 	or ecx, eax
-	jnz R_TessMarkMeshList_80
+	jnz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80
 	mov eax, [ebp-0x2c]
 	mov [ebp-0x54], eax
 	movzx edi, word [ebp-0xb8]
 	cmp dword [ebp-0x40], 0x7
-	jnz R_TessMarkMeshList_120
-R_TessMarkMeshList_60:
+	jnz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	mov ecx, [ebp-0x20]
 	test ecx, ecx
-	jnz R_TessMarkMeshList_130
+	jnz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130
 	mov eax, edi
 	shl eax, 0x4
 	mov ecx, [ebp-0x48]
@@ -1446,10 +1446,10 @@ R_TessMarkMeshList_60:
 	movzx eax, byte [edx+0xa]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jz R_TessMarkMeshList_140
-R_TessMarkMeshList_210:
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_210:
 	cmp eax, 0xc0
-	jz R_TessMarkMeshList_150
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150
 	mov eax, [ebp-0xb8]
 	shr eax, 0x18
 	and eax, 0x1f
@@ -1462,8 +1462,8 @@ R_TessMarkMeshList_210:
 	mov edx, [ebp-0x84]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetLightmap
-R_TessMarkMeshList_220:
+	call _Z13R_SetLightmap16GfxCmdBufContextj
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_220:
 	mov ecx, [ebp-0xb8]
 	shr ecx, 0x10
 	movzx eax, cl
@@ -1476,7 +1476,7 @@ R_TessMarkMeshList_220:
 	mov edx, [ebp-0x7c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetReflectionProbe
+	call _Z20R_SetReflectionProbe16GfxCmdBufContextj
 	mov edx, [ebp-0x38]
 	mov [ebp-0x74], edx
 	mov [ebp-0x78], ebx
@@ -1484,11 +1484,11 @@ R_TessMarkMeshList_220:
 	mov ebx, [ebp-0x74]
 	mov [esp], ecx
 	mov [esp+0x4], ebx
-	call R_SetupPassPerObjectArgs
-	jmp R_TessMarkMeshList_120
-R_TessMarkMeshList_80:
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
+	jmp _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80:
 	test edi, edi
-	jz R_TessMarkMeshList_160
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	mov ebx, [ebp-0x38]
 	mov [ebp-0x64], ebx
 	mov esi, [ebp-0x34]
@@ -1497,21 +1497,21 @@ R_TessMarkMeshList_80:
 	mov edx, [ebp-0x64]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov eax, [ebp-0x20]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x44]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x3c]
 	mov [esp], ecx
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	lea ebx, [ebp-0x24]
 	mov [esp+0x4], ebx
 	mov esi, [ebp-0x3c]
 	mov [esp], esi
-	call R_DrawIndexedPrimitive
-R_TessMarkMeshList_160:
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160:
 	mov eax, [ebp-0x2c]
 	add esp, 0xbc
 	pop ebx
@@ -1519,24 +1519,24 @@ R_TessMarkMeshList_160:
 	pop edi
 	pop ebp
 	ret
-R_TessMarkMeshList_30:
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov eax, 0x1
-	jmp R_TessMarkMeshList_170
-R_TessMarkMeshList_20:
+	jmp _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov eax, esi
-	jmp R_TessMarkMeshList_180
-R_TessMarkMeshList_10:
+	jmp _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov eax, sc_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_TessMarkMeshList_190
+	jz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_190
 	mov eax, gfxRenderTargets
 	mov eax, [eax+0x78]
-R_TessMarkMeshList_230:
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_230:
 	mov edx, [ebp-0x34]
 	mov [edx+0xc60], eax
-	jmp R_TessMarkMeshList_200
-R_TessMarkMeshList_130:
+	jmp _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_200
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130:
 	mov ebx, [ebp-0x38]
 	mov [ebp-0x8c], ebx
 	mov esi, [ebp-0x34]
@@ -1545,20 +1545,20 @@ R_TessMarkMeshList_130:
 	mov edx, [ebp-0x8c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov eax, [ebp-0x20]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x44]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x3c]
 	mov [esp], ecx
-	call R_SetIndexData
+	call _Z14R_SetIndexDataP18GfxCmdBufPrimStatePKti
 	mov [ebp-0x1c], eax
 	lea ebx, [ebp-0x24]
 	mov [esp+0x4], ebx
 	mov esi, [ebp-0x3c]
 	mov [esp], esi
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	mov dword [ebp-0x20], 0x0
 	mov dword [ebp-0x44], 0x0
 	mov eax, edi
@@ -1568,30 +1568,30 @@ R_TessMarkMeshList_130:
 	movzx eax, byte [edx+0xa]
 	and eax, 0xc0
 	cmp eax, 0x40
-	jnz R_TessMarkMeshList_210
-R_TessMarkMeshList_140:
+	jnz _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_210
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140:
 	mov ebx, [ebp-0x34]
 	mov [esp+0x4], ebx
 	movzx eax, word [edx+0x8]
 	mov [esp], eax
-	call R_SetStaticModelLightingCoordsForSource
-	jmp R_TessMarkMeshList_220
-R_TessMarkMeshList_150:
+	call _Z39R_SetStaticModelLightingCoordsForSourcejP20GfxCmdBufSourceState
+	jmp _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_220
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150:
 	mov esi, [ebp-0x34]
 	mov [esp+0x4], esi
 	movzx eax, word [edx+0x8]
 	mov [esp], eax
-	call R_SetModelLightingCoordsForSource
-	jmp R_TessMarkMeshList_220
-R_TessMarkMeshList_190:
+	call _Z33R_SetModelLightingCoordsForSourcetP20GfxCmdBufSourceState
+	jmp _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_220
+_Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_190:
 	mov eax, rgp
 	mov eax, [eax+0x2008]
-	jmp R_TessMarkMeshList_230
+	jmp _Z18R_TessMarkMeshListPK19GfxDrawSurfListArgs16GfxCmdBufContext_230
 	nop
 
 
 ;R_TessTrianglesList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessTrianglesList:
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1630,41 +1630,41 @@ R_TessTrianglesList:
 	mov [ebp-0x2c], ecx
 	mov [esp], ebx
 	mov [esp+0x4], esi
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov eax, rg
 	add eax, 0x2244
 	mov edx, [ebp-0x20]
 	cmp [edx+0xf08], eax
-	jz R_TessTrianglesList_10
+	jz _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ChangeObjectPlacement
-R_TessTrianglesList_10:
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov ecx, [ebp-0x24]
 	mov eax, [ecx+0xc0]
 	test byte [eax+0x4], 0x8
-	jnz R_TessTrianglesList_20
+	jnz _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov eax, 0x2
 	mov ecx, [ebp-0x24]
-R_TessTrianglesList_70:
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	mov [ecx+0x98], eax
 	mov [esp], ecx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov esi, [ebp-0x24]
 	mov ebx, [ebp-0x20]
 	cmp dword [ebx+0xf34], 0x1
 	sbb edx, edx
 	cmp edx, [esi+0xcc]
-	jz R_TessTrianglesList_30
+	jz _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	mov [esp+0x4], edx
 	mov [esp], esi
-	call R_ChangeDepthRange
-R_TessTrianglesList_30:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	test edi, edi
-	jz R_TessTrianglesList_40
+	jz _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
 	mov ecx, [ebp-0x1c]
 	mov [ebp-0x78], ecx
 	mov [ebp-0x74], edi
@@ -1672,26 +1672,26 @@ R_TessTrianglesList_30:
 	mov edx, [ebp-0x74]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov eax, [edi+0xc0]
 	test byte [eax+0x4], 0x8
-	jnz R_TessTrianglesList_50
+	jnz _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
 	mov eax, 0x2
-R_TessTrianglesList_80:
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80:
 	mov [edi+0x98], eax
 	mov [esp], edi
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov edx, [ebp-0x1c]
 	mov [ebp+0xc], edx
 	mov [ebp+0x10], edi
 	cmp dword [edx+0xf34], 0x1
 	sbb eax, eax
 	cmp eax, [edi+0xcc]
-	jz R_TessTrianglesList_40
+	jz _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call R_ChangeDepthRange
-R_TessTrianglesList_40:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	mov ebx, [ebp-0x20]
 	mov ecx, [ebx+0xca8]
 	add ecx, 0x28000
@@ -1702,7 +1702,7 @@ R_TessTrianglesList_40:
 	movzx eax, word [eax+edx*8]
 	lea ebx, [ecx+eax*4]
 	cmp dword [ebp-0x2c], 0x7
-	jz R_TessTrianglesList_60
+	jz _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
 	mov ecx, [ebp-0x24]
 	mov [ebp-0x3c], ecx
 	mov eax, [ebp-0x20]
@@ -1711,7 +1711,7 @@ R_TessTrianglesList_40:
 	mov ecx, [ebp-0x3c]
 	mov [esp], edx
 	mov [esp+0x4], ecx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov ecx, [ebp-0x24]
 	mov [ebp-0x34], ecx
 	mov eax, [ebp-0x20]
@@ -1720,13 +1720,13 @@ R_TessTrianglesList_40:
 	mov ecx, [ebp-0x34]
 	mov [esp], edx
 	mov [esp+0x4], ecx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov ecx, [ebp-0x28]
 	mov [esp+0x8], ecx
 	mov eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_DrawBspDrawSurfs
+	call _Z18R_DrawBspDrawSurfsPKjP14GfxCmdBufStatePK19GfxDrawSurfListInfo
 	mov eax, 0x1
 	add esp, 0x8c
 	pop ebx
@@ -1734,26 +1734,26 @@ R_TessTrianglesList_40:
 	pop edi
 	pop ebp
 	ret
-R_TessTrianglesList_20:
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov eax, [ecx+0xb8]
 	mov eax, [eax+0x40]
 	movzx eax, byte [eax+0x4]
 	add eax, 0x2
-	jmp R_TessTrianglesList_70
-R_TessTrianglesList_50:
+	jmp _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	mov eax, [edi+0xb8]
 	mov eax, [eax+0x40]
 	movzx eax, byte [eax+0x4]
 	add eax, 0x2
-	jmp R_TessTrianglesList_80
-R_TessTrianglesList_60:
+	jmp _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	mov eax, sc_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_TessTrianglesList_90
+	jz _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90
 	mov eax, gfxRenderTargets
 	mov eax, [eax+0x78]
-R_TessTrianglesList_110:
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110:
 	mov edx, [ebp-0x20]
 	mov [edx+0xc60], eax
 	mov ecx, [ebp-0x24]
@@ -1763,7 +1763,7 @@ R_TessTrianglesList_110:
 	mov edx, [ebp-0x6c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp-0x24]
 	mov [ebp-0x64], edx
 	mov ecx, [ebp-0x20]
@@ -1772,9 +1772,9 @@ R_TessTrianglesList_110:
 	mov edx, [ebp-0x64]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	test edi, edi
-	jz R_TessTrianglesList_100
+	jz _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100
 	mov edx, [ebp-0x1c]
 	mov [ebp-0x60], edx
 	mov [ebp-0x5c], edi
@@ -1782,7 +1782,7 @@ R_TessTrianglesList_110:
 	mov edx, [ebp-0x5c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp-0x1c]
 	mov [ebp-0x58], edx
 	mov [ebp-0x54], edi
@@ -1790,8 +1790,8 @@ R_TessTrianglesList_110:
 	mov edx, [ebp-0x54]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
-R_TessTrianglesList_100:
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100:
 	mov edx, [ebp-0x1c]
 	mov [ebp-0x50], edx
 	mov [ebp-0x4c], edi
@@ -1810,7 +1810,7 @@ R_TessTrianglesList_100:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], ebx
-	call R_DrawBspDrawSurfsLit
+	call _Z21R_DrawBspDrawSurfsLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo
 	mov eax, 0x1
 	add esp, 0x8c
 	pop ebx
@@ -1818,14 +1818,14 @@ R_TessTrianglesList_100:
 	pop edi
 	pop ebp
 	ret
-R_TessTrianglesList_90:
+_Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90:
 	mov eax, rgp
 	mov eax, [eax+0x2008]
-	jmp R_TessTrianglesList_110
+	jmp _Z19R_TessTrianglesListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
 
 
 ;R_TessParticleCloudList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessParticleCloudList:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1855,21 +1855,21 @@ R_TessParticleCloudList:
 	mov [ebp-0x80], eax
 	movss xmm0, dword [eax+0x30]
 	ucomiss xmm0, [eax+0x34]
-	jp R_TessParticleCloudList_10
-	jnz R_TessParticleCloudList_10
+	jp _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
+	jnz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov ecx, eax
-R_TessParticleCloudList_160:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160:
 	movss [ebp-0x4c], xmm0
 	xor eax, eax
 	mov [ebp-0x48], eax
-R_TessParticleCloudList_150:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150:
 	mov edx, [ecx+0x34]
 	mov [ebp-0x44], eax
 	mov [ebp-0x40], edx
 	mov esi, edx
 	mov ebx, eax
 	mov ecx, eax
-R_TessParticleCloudList_180:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180:
 	lea edx, [edi+0xbd0]
 	mov eax, [ebp-0x4c]
 	mov [edi+0xbd0], eax
@@ -1906,31 +1906,31 @@ R_TessParticleCloudList_180:
 	mov edx, [ebp-0x94]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov dword [esp+0x4], 0x0
 	mov [esp], edi
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov ebx, [ebp-0x7c]
 	add ebx, 0x90
 	mov dword [ebx+0x8], 0xe
 	mov edx, [ebp-0x7c]
 	mov [esp], edx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov ecx, [ebp-0x7c]
 	mov [ebp-0x9c], ecx
 	mov [ebp-0xa0], edi
 	cmp dword [edi+0xf34], 0x1
 	sbb edx, edx
 	cmp edx, [ecx+0xcc]
-	jz R_TessParticleCloudList_20
+	jz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov [esp+0x4], edx
 	mov [esp], ecx
-	call R_ChangeDepthRange
-R_TessParticleCloudList_20:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov esi, gfxBuf
 	mov ecx, [esi+0x78]
 	cmp ecx, [ebx+0x4]
-	jz R_TessParticleCloudList_30
+	jz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	mov [ebx+0x4], ecx
 	mov edx, [ebp-0x7c]
 	mov eax, [edx+0x90]
@@ -1938,11 +1938,11 @@ R_TessParticleCloudList_20:
 	mov [esp+0x4], ecx
 	mov [esp], eax
 	call dword [edx+0x1a0]
-R_TessParticleCloudList_30:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov ecx, [esi+0x74]
 	cmp ecx, [ebx+0x10]
-	jz R_TessParticleCloudList_40
-R_TessParticleCloudList_70:
+	jz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	mov [ebx+0x10], ecx
 	mov dword [ebx+0x14], 0x0
 	mov dword [ebx+0xc], 0x14
@@ -1954,11 +1954,11 @@ R_TessParticleCloudList_70:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_TessParticleCloudList_80:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80:
 	mov eax, [ebx+0x1c]
 	test eax, eax
-	jz R_TessParticleCloudList_50
-R_TessParticleCloudList_90:
+	jz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90:
 	mov dword [ebx+0x1c], 0x0
 	mov dword [ebx+0x20], 0x0
 	mov dword [ebx+0x18], 0x0
@@ -1970,14 +1970,14 @@ R_TessParticleCloudList_90:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_TessParticleCloudList_100:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100:
 	mov ecx, [ebp-0x80]
 	cmp ecx, [edi+0xf08]
-	jz R_TessParticleCloudList_60
+	jz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
 	mov [esp+0x4], ecx
 	mov [esp], edi
-	call R_ChangeObjectPlacement
-R_TessParticleCloudList_60:
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	mov edx, [ebp-0x7c]
 	mov [ebp-0x8c], edx
 	mov [ebp-0x90], edi
@@ -1985,7 +1985,7 @@ R_TessParticleCloudList_60:
 	mov edx, [ebp-0x8c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp-0x7c]
 	mov [ebp-0x84], edx
 	mov [ebp-0x88], edi
@@ -1993,14 +1993,14 @@ R_TessParticleCloudList_60:
 	mov edx, [ebp-0x84]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov dword [ebp-0x1c], 0x0
 	mov dword [ebp-0x24], 0x1000
 	mov dword [ebp-0x20], 0x800
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	mov eax, 0x1
 	add esp, 0xbc
 	pop ebx
@@ -2008,22 +2008,22 @@ R_TessParticleCloudList_60:
 	pop edi
 	pop ebp
 	ret
-R_TessParticleCloudList_40:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	mov eax, [ebx+0x14]
 	test eax, eax
-	jnz R_TessParticleCloudList_70
+	jnz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
 	cmp dword [ebx+0xc], 0x14
-	jnz R_TessParticleCloudList_70
-	jmp R_TessParticleCloudList_80
-R_TessParticleCloudList_50:
+	jnz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
+	jmp _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	mov eax, [ebx+0x20]
 	test eax, eax
-	jnz R_TessParticleCloudList_90
+	jnz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90
 	mov eax, [ebx+0x18]
 	test eax, eax
-	jz R_TessParticleCloudList_100
-	jmp R_TessParticleCloudList_90
-R_TessParticleCloudList_10:
+	jz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100
+	jmp _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov esi, eax
 	add esi, 0x20
 	mov ebx, eax
@@ -2032,9 +2032,9 @@ R_TessParticleCloudList_10:
 	mov dword [esp+0x8], 0x3a83126f
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call VecNCompareCustomEpsilon
+	call _Z24VecNCompareCustomEpsilonPKfS0_fi
 	test eax, eax
-	jnz R_TessParticleCloudList_110
+	jnz _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
 	mov eax, [ebp-0x80]
 	movss xmm2, dword [eax+0x20]
 	subss xmm2, [eax+0x10]
@@ -2054,9 +2054,9 @@ R_TessParticleCloudList_10:
 	movaps xmm0, xmm1
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
-	jb R_TessParticleCloudList_120
+	jb _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120
 	movss xmm5, dword [_float_1_00000000]
-R_TessParticleCloudList_190:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_190:
 	mov eax, [ebp-0x80]
 	movss xmm0, dword [eax+0x34]
 	mulss xmm2, xmm5
@@ -2093,29 +2093,29 @@ R_TessParticleCloudList_190:
 	mov [esp+0x4], esi
 	lea eax, [ebp-0x30]
 	mov [esp], eax
-	call Vec3RotateTranspose
+	call _Z19Vec3RotateTransposePKfPA3_S_Pf
 	movss xmm2, dword [ebp-0x3c]
 	ucomiss xmm2, [_float_0_00100000]
-	jae R_TessParticleCloudList_130
-	jp R_TessParticleCloudList_130
+	jae _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130
+	jp _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130
 	movss xmm1, dword [ebp-0x38]
 	movss xmm0, dword [_float_0_00100000]
 	ucomiss xmm0, xmm1
-	jbe R_TessParticleCloudList_140
+	jbe _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140
 	mov edx, [ebp-0x80]
 	mov eax, [edx+0x30]
 	mov [ebp-0x4c], eax
 	xor eax, eax
 	mov [ebp-0x48], eax
 	mov ecx, edx
-	jmp R_TessParticleCloudList_150
-R_TessParticleCloudList_110:
+	jmp _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110:
 	mov ecx, [ebp-0x80]
 	movss xmm0, dword [ecx+0x30]
-	jmp R_TessParticleCloudList_160
-R_TessParticleCloudList_130:
+	jmp _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130:
 	movss xmm1, dword [ebp-0x38]
-R_TessParticleCloudList_140:
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140:
 	movss [ebp-0x4c], xmm1
 	movaps xmm0, xmm2
 	xorps xmm0, [_data16_80000000]
@@ -2136,12 +2136,12 @@ R_TessParticleCloudList_140:
 	movss [ebp-0x48], xmm0
 	movss xmm0, dword [eax+0x30]
 	ucomiss xmm0, xmm2
-	ja R_TessParticleCloudList_170
+	ja _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170
 	mov esi, [ebp-0x40]
 	mov ebx, [ebp-0x44]
 	mov ecx, [ebp-0x48]
-	jmp R_TessParticleCloudList_180
-R_TessParticleCloudList_170:
+	jmp _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170:
 	divss xmm0, xmm2
 	movaps xmm1, xmm0
 	mulss xmm1, [ebp-0x44]
@@ -2151,15 +2151,15 @@ R_TessParticleCloudList_170:
 	mov esi, [ebp-0x40]
 	mov ebx, [ebp-0x44]
 	mov ecx, [ebp-0x48]
-	jmp R_TessParticleCloudList_180
-R_TessParticleCloudList_120:
+	jmp _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180
+_Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120:
 	movss xmm5, dword [_float_1_00000000]
 	divss xmm5, xmm1
-	jmp R_TessParticleCloudList_190
+	jmp _Z23R_TessParticleCloudListPK19GfxDrawSurfListArgs16GfxCmdBufContext_190
 
 
 ;R_TessTrianglesPreTessList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessTrianglesPreTessList:
+_Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2179,7 +2179,7 @@ R_TessTrianglesPreTessList:
 	mov [ebp-0x24], ecx
 	mov [esp], ebx
 	mov [esp+0x4], esi
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov eax, [ebp-0x24]
 	mov eax, [eax+0x8]
 	mov [ebp-0x28], eax
@@ -2187,41 +2187,41 @@ R_TessTrianglesPreTessList:
 	add eax, 0x2244
 	mov edx, [ebp-0x1c]
 	cmp [edx+0xf08], eax
-	jz R_TessTrianglesPreTessList_10
+	jz _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ChangeObjectPlacement
-R_TessTrianglesPreTessList_10:
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
+_Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov ecx, [ebp-0x20]
 	mov eax, [ecx+0xc0]
 	test byte [eax+0x4], 0x8
-	jnz R_TessTrianglesPreTessList_20
+	jnz _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov eax, 0x2
 	mov edi, [ebp-0x20]
-R_TessTrianglesPreTessList_60:
+_Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	add edi, 0x90
 	mov [edi+0x8], eax
 	mov ecx, [ebp-0x20]
 	mov [esp], ecx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov esi, [ebp-0x20]
 	mov ebx, [ebp-0x1c]
 	cmp dword [ebx+0xf34], 0x1
 	sbb edx, edx
 	cmp edx, [esi+0xcc]
-	jz R_TessTrianglesPreTessList_30
+	jz _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	mov [esp+0x4], edx
 	mov [esp], esi
-	call R_ChangeDepthRange
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
 	mov ecx, [ebp-0x1c]
-R_TessTrianglesPreTessList_70:
+_Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	mov ebx, [ecx+0xca8]
 	mov ecx, [ebx+0x11e6a0]
 	cmp ecx, [edi+0x4]
-	jz R_TessTrianglesPreTessList_40
+	jz _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
 	mov [edi+0x4], ecx
 	mov edx, [ebp-0x20]
 	mov eax, [edx+0x90]
@@ -2229,7 +2229,7 @@ R_TessTrianglesPreTessList_70:
 	mov [esp+0x4], ecx
 	mov [esp], eax
 	call dword [edx+0x1a0]
-R_TessTrianglesPreTessList_40:
+_Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x8]
 	mov ecx, [ebp-0x24]
@@ -2237,7 +2237,7 @@ R_TessTrianglesPreTessList_40:
 	movzx eax, word [edx+eax*8]
 	lea eax, [ebx+eax*4+0x28000]
 	cmp dword [ebp-0x28], 0x7
-	jz R_TessTrianglesPreTessList_50
+	jz _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
 	mov ecx, [ebp-0x20]
 	mov [ebp-0x2c], ecx
 	mov edx, [ebp-0x1c]
@@ -2247,7 +2247,7 @@ R_TessTrianglesPreTessList_40:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], eax
-	call R_DrawBspDrawSurfsPreTess
+	call _Z25R_DrawBspDrawSurfsPreTessPKj16GfxCmdBufContext
 	mov eax, 0x1
 	add esp, 0x3c
 	pop ebx
@@ -2255,17 +2255,17 @@ R_TessTrianglesPreTessList_40:
 	pop edi
 	pop ebp
 	ret
-R_TessTrianglesPreTessList_20:
+_Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov eax, [ecx+0xb8]
 	mov eax, [eax+0x40]
 	movzx eax, byte [eax+0x4]
 	add eax, 0x2
 	mov edi, ecx
-	jmp R_TessTrianglesPreTessList_60
-R_TessTrianglesPreTessList_30:
+	jmp _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
+_Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov ecx, ebx
-	jmp R_TessTrianglesPreTessList_70
-R_TessTrianglesPreTessList_50:
+	jmp _Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
+_Z26R_TessTrianglesPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	mov edx, [ebp-0x20]
 	mov [ebp-0x34], edx
 	mov ecx, [ebp-0x1c]
@@ -2275,7 +2275,7 @@ R_TessTrianglesPreTessList_50:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], eax
-	call R_DrawBspDrawSurfsLitPreTess
+	call _Z28R_DrawBspDrawSurfsLitPreTessPKj16GfxCmdBufContext
 	mov eax, 0x1
 	add esp, 0x3c
 	pop ebx
@@ -2286,7 +2286,7 @@ R_TessTrianglesPreTessList_50:
 
 
 ;R_TessStaticModelCachedList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessStaticModelCachedList:
+_Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2306,34 +2306,34 @@ R_TessStaticModelCachedList:
 	mov [ebp-0x20], ecx
 	mov [esp], ebx
 	mov [esp+0x4], esi
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov eax, [ebp-0x20]
 	mov eax, [eax+0x8]
 	mov [ebp-0x24], eax
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov eax, rg
 	add eax, 0x2244
 	cmp [ebx+0xf08], eax
-	jz R_TessStaticModelCachedList_10
+	jz _Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ChangeObjectPlacement
-R_TessStaticModelCachedList_10:
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
+_Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov edx, [ebp-0x1c]
 	mov dword [edx+0x98], 0xf
 	mov [esp], esi
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	cmp dword [edi+0xf34], 0x1
 	sbb eax, eax
 	mov ecx, [ebp-0x1c]
 	cmp eax, [ecx+0xcc]
-	jz R_TessStaticModelCachedList_20
+	jz _Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_ChangeDepthRange
-R_TessStaticModelCachedList_20:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov ecx, [edi+0xca8]
 	add ecx, 0x28000
 	mov edi, [ebp+0x8]
@@ -2343,7 +2343,7 @@ R_TessStaticModelCachedList_20:
 	movzx eax, word [eax+edx*8]
 	lea eax, [ecx+eax*4]
 	cmp dword [ebp-0x24], 0x7
-	jz R_TessStaticModelCachedList_30
+	jz _Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	mov [ebp-0x2c], esi
 	mov [ebp-0x30], ebx
 	mov edx, [ebp-0x30]
@@ -2351,7 +2351,7 @@ R_TessStaticModelCachedList_20:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], eax
-	call R_DrawStaticModelCachedSurf
+	call _Z27R_DrawStaticModelCachedSurfPKj16GfxCmdBufContext
 	mov eax, 0x1
 	add esp, 0x3c
 	pop ebx
@@ -2359,7 +2359,7 @@ R_TessStaticModelCachedList_20:
 	pop edi
 	pop ebp
 	ret
-R_TessStaticModelCachedList_30:
+_Z27R_TessStaticModelCachedListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov [ebp-0x34], esi
 	mov [ebp-0x38], ebx
 	mov edx, [ebp-0x38]
@@ -2367,7 +2367,7 @@ R_TessStaticModelCachedList_30:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], eax
-	call R_DrawStaticModelCachedSurfLit
+	call _Z30R_DrawStaticModelCachedSurfLitPKj16GfxCmdBufContext
 	mov eax, 0x1
 	add esp, 0x3c
 	pop ebx
@@ -2378,7 +2378,7 @@ R_TessStaticModelCachedList_30:
 
 
 ;R_TessStaticModelPreTessList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessStaticModelPreTessList:
+_Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2398,34 +2398,34 @@ R_TessStaticModelPreTessList:
 	mov [ebp-0x20], ecx
 	mov [esp], ebx
 	mov [esp+0x4], esi
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov eax, [ebp-0x20]
 	mov eax, [eax+0x8]
 	mov [ebp-0x24], eax
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov eax, rg
 	add eax, 0x2244
 	cmp [ebx+0xf08], eax
-	jz R_TessStaticModelPreTessList_10
+	jz _Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ChangeObjectPlacement
-R_TessStaticModelPreTessList_10:
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
+_Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov edx, [ebp-0x1c]
 	mov dword [edx+0x98], 0xf
 	mov [esp], esi
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	cmp dword [edi+0xf34], 0x1
 	sbb eax, eax
 	mov ecx, [ebp-0x1c]
 	cmp eax, [ecx+0xcc]
-	jz R_TessStaticModelPreTessList_20
+	jz _Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call R_ChangeDepthRange
-R_TessStaticModelPreTessList_20:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov ecx, [edi+0xca8]
 	add ecx, 0x28000
 	mov edi, [ebp+0x8]
@@ -2435,7 +2435,7 @@ R_TessStaticModelPreTessList_20:
 	movzx eax, word [eax+edx*8]
 	lea eax, [ecx+eax*4]
 	cmp dword [ebp-0x24], 0x7
-	jz R_TessStaticModelPreTessList_30
+	jz _Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	mov [ebp-0x2c], esi
 	mov [ebp-0x30], ebx
 	mov edx, [ebp-0x30]
@@ -2443,7 +2443,7 @@ R_TessStaticModelPreTessList_20:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], eax
-	call R_DrawStaticModelPreTessSurf
+	call _Z28R_DrawStaticModelPreTessSurfPKj16GfxCmdBufContext
 	mov eax, 0x1
 	add esp, 0x3c
 	pop ebx
@@ -2451,7 +2451,7 @@ R_TessStaticModelPreTessList_20:
 	pop edi
 	pop ebp
 	ret
-R_TessStaticModelPreTessList_30:
+_Z28R_TessStaticModelPreTessListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov [ebp-0x34], esi
 	mov [ebp-0x38], ebx
 	mov edx, [ebp-0x38]
@@ -2459,7 +2459,7 @@ R_TessStaticModelPreTessList_30:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], eax
-	call R_DrawStaticModelPreTessSurfLit
+	call _Z31R_DrawStaticModelPreTessSurfLitPKj16GfxCmdBufContext
 	mov eax, 0x1
 	add esp, 0x3c
 	pop ebx
@@ -2470,7 +2470,7 @@ R_TessStaticModelPreTessList_30:
 
 
 ;R_TessXModelRigidDrawSurfList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessXModelRigidDrawSurfList:
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2535,18 +2535,18 @@ R_TessXModelRigidDrawSurfList:
 	mov eax, [ebp-0x28]
 	mov eax, [eax+0x24]
 	test eax, eax
-	jz R_TessXModelRigidDrawSurfList_10
+	jz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	movzx eax, word [ebp-0xa8]
 	movzx eax, word [ecx+eax*4+0xe]
 	movzx edx, ax
 	test ax, ax
-	jnz R_TessXModelRigidDrawSurfList_20
+	jnz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	xor ebx, ebx
 	xor eax, eax
-R_TessXModelRigidDrawSurfList_100:
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100:
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call R_UpdateMaterialTime
+	call _Z20R_UpdateMaterialTimeP20GfxCmdBufSourceStatef
 	mov esi, eax
 	mov edx, [ebp-0x24]
 	mov [ebp-0x9c], edx
@@ -2555,38 +2555,38 @@ R_TessXModelRigidDrawSurfList_100:
 	mov edx, [ebp-0x9c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	test esi, esi
-	jnz R_TessXModelRigidDrawSurfList_30
-R_TessXModelRigidDrawSurfList_120:
+	jnz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120:
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov edx, [ebp-0x24]
 	mov dword [edx+0x98], 0x1
 	mov [esp], edx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov ecx, [ebp-0x24]
 	cmp ebx, [ecx+0xcc]
-	jz R_TessXModelRigidDrawSurfList_40
+	jz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
 	mov [esp+0x4], ebx
 	mov [esp], ecx
-	call R_ChangeDepthRange
-R_TessXModelRigidDrawSurfList_40:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	cmp dword [ebp-0x2c], 0x7
-	jnz R_TessXModelRigidDrawSurfList_50
+	jnz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
 	mov eax, sc_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_TessXModelRigidDrawSurfList_60
-R_TessXModelRigidDrawSurfList_130:
+	jnz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130:
 	mov eax, rgp
 	mov eax, [eax+0x2008]
-R_TessXModelRigidDrawSurfList_140:
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140:
 	mov [edi+0xc60], eax
 	mov eax, [ebp-0x20]
 	test eax, eax
-	jz R_TessXModelRigidDrawSurfList_70
+	jz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
 	mov eax, [ebp-0x1c]
 	mov [ebp-0x90], eax
 	mov edx, [ebp-0x20]
@@ -2595,22 +2595,22 @@ R_TessXModelRigidDrawSurfList_140:
 	mov edx, [ebp-0x8c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	test esi, esi
-	jnz R_TessXModelRigidDrawSurfList_80
-R_TessXModelRigidDrawSurfList_160:
+	jnz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160:
 	mov edx, [ebp-0x20]
 	mov dword [edx+0x98], 0x1
 	mov [esp], edx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov ecx, [ebp-0x20]
 	cmp ebx, [ecx+0xcc]
-	jz R_TessXModelRigidDrawSurfList_90
+	jz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90
 	mov [esp+0x4], ebx
 	mov [esp], ecx
-	call R_ChangeDepthRange
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
 	mov edx, [ebp-0x20]
-R_TessXModelRigidDrawSurfList_150:
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150:
 	mov eax, [ebp-0x1c]
 	mov [ebp-0x80], eax
 	mov [ebp-0x7c], edx
@@ -2618,8 +2618,8 @@ R_TessXModelRigidDrawSurfList_150:
 	mov edx, [ebp-0x7c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
-R_TessXModelRigidDrawSurfList_70:
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	mov edx, [ebp-0x24]
 	mov [ebp-0x74], edx
 	mov [ebp-0x78], edi
@@ -2627,7 +2627,7 @@ R_TessXModelRigidDrawSurfList_70:
 	mov edx, [ebp-0x74]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp-0x1c]
 	mov [ebp-0x70], edx
 	mov ecx, [ebp-0x20]
@@ -2649,20 +2649,20 @@ R_TessXModelRigidDrawSurfList_70:
 	mov [esp+0x4], ecx
 	mov eax, [ebp-0x34]
 	mov [esp], eax
-	call R_DrawXModelRigidSurfLit
+	call _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo
 	add esp, 0xcc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_TessXModelRigidDrawSurfList_20:
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	lea eax, [ecx+edx*8+0x118260]
 	mov ebx, [eax]
 	and ebx, 0x2
 	mov eax, [eax+0x4]
-	jmp R_TessXModelRigidDrawSurfList_100
-R_TessXModelRigidDrawSurfList_50:
+	jmp _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	mov edx, [ebp-0x24]
 	mov [ebp-0x5c], edx
 	mov [ebp-0x60], edi
@@ -2670,7 +2670,7 @@ R_TessXModelRigidDrawSurfList_50:
 	mov edx, [ebp-0x5c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp-0x24]
 	mov [ebp-0x54], edx
 	mov [ebp-0x58], edi
@@ -2684,42 +2684,42 @@ R_TessXModelRigidDrawSurfList_50:
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x34]
 	mov [esp], ecx
-	call R_DrawXModelRigidSurfCamera
+	call _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo
 	add esp, 0xcc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_TessXModelRigidDrawSurfList_10:
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov [ebp-0x4c], esi
 	mov [ebp-0x50], ebx
 	mov eax, [ebp-0x50]
 	mov edx, [ebp-0x4c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov edx, [ebp-0x24]
 	mov dword [edx+0x98], 0x1
 	mov [esp], esi
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov ecx, [ebp-0x24]
 	cmp dword [ecx+0xcc], 0xffffffff
-	jz R_TessXModelRigidDrawSurfList_110
+	jz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], esi
-	call R_ChangeDepthRange
-R_TessXModelRigidDrawSurfList_110:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110:
 	mov [ebp-0x44], esi
 	mov [ebp-0x48], ebx
 	mov eax, [ebp-0x48]
 	mov edx, [ebp-0x44]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov [ebp-0x3c], esi
 	mov [ebp-0x40], ebx
 	mov edx, [ebp-0x28]
@@ -2732,14 +2732,14 @@ R_TessXModelRigidDrawSurfList_110:
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x34]
 	mov [esp], ecx
-	call R_DrawXModelRigidSurf
+	call _Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo
 	add esp, 0xcc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_TessXModelRigidDrawSurfList_30:
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov edx, [ebp-0x24]
 	mov [ebp-0x94], edx
 	mov [ebp-0x98], edi
@@ -2747,18 +2747,18 @@ R_TessXModelRigidDrawSurfList_30:
 	mov edx, [ebp-0x94]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassVertexShaderArgs
-	jmp R_TessXModelRigidDrawSurfList_120
-R_TessXModelRigidDrawSurfList_60:
+	call _Z27R_SetupPassVertexShaderArgs16GfxCmdBufContext
+	jmp _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	test dword [ebp-0xa8], 0x1f000000
-	jz R_TessXModelRigidDrawSurfList_130
+	jz _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130
 	mov eax, gfxRenderTargets
 	mov eax, [eax+0x78]
-	jmp R_TessXModelRigidDrawSurfList_140
-R_TessXModelRigidDrawSurfList_90:
+	jmp _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90:
 	mov edx, ecx
-	jmp R_TessXModelRigidDrawSurfList_150
-R_TessXModelRigidDrawSurfList_80:
+	jmp _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150
+_Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80:
 	mov edx, [ebp-0x1c]
 	mov [ebp-0x88], edx
 	mov ecx, [ebp-0x20]
@@ -2767,12 +2767,12 @@ R_TessXModelRigidDrawSurfList_80:
 	mov edx, [ebp-0x84]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassVertexShaderArgs
-	jmp R_TessXModelRigidDrawSurfList_160
+	call _Z27R_SetupPassVertexShaderArgs16GfxCmdBufContext
+	jmp _Z29R_TessXModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 
 
 ;R_TessXModelSkinnedDrawSurfList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessXModelSkinnedDrawSurfList:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2838,15 +2838,15 @@ R_TessXModelSkinnedDrawSurfList:
 	add eax, 0xf14
 	mov edx, [ebp-0x44]
 	cmp eax, [edx+0xf08]
-	jz R_TessXModelSkinnedDrawSurfList_10
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0xf8]
 	mov [esp], ecx
-	call R_ChangeObjectPlacement
-R_TessXModelSkinnedDrawSurfList_10:
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov eax, [ebx+0x24]
 	test eax, eax
-	jz R_TessXModelSkinnedDrawSurfList_20
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	movzx eax, si
 	mov edx, [ebp-0x54]
 	lea ebx, [edx+eax*4]
@@ -2854,15 +2854,15 @@ R_TessXModelSkinnedDrawSurfList_10:
 	movzx ecx, ax
 	mov [ebp-0x20], ecx
 	test ax, ax
-	jnz R_TessXModelSkinnedDrawSurfList_30
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	mov dword [ebp-0x5c], 0x0
 	pxor xmm0, xmm0
 	movss [ebp-0x58], xmm0
-R_TessXModelSkinnedDrawSurfList_290:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_290:
 	movss [esp+0x4], xmm0
 	mov eax, [ebp-0x44]
 	mov [esp], eax
-	call R_UpdateMaterialTime
+	call _Z20R_UpdateMaterialTimeP20GfxCmdBufSourceStatef
 	mov [ebp-0x24], eax
 	mov edx, [ebp-0x48]
 	mov [ebp-0xec], edx
@@ -2872,42 +2872,42 @@ R_TessXModelSkinnedDrawSurfList_290:
 	mov edx, [ebp-0xec]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov eax, [ebp-0x24]
 	test eax, eax
-	jnz R_TessXModelSkinnedDrawSurfList_40
-R_TessXModelSkinnedDrawSurfList_410:
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_410:
 	mov edx, [ebp-0x5c]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x44]
 	mov [esp], ecx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov eax, [ebp-0x48]
 	mov dword [eax+0x98], 0x1
 	mov [esp], eax
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov ecx, [ebp-0x5c]
 	mov edx, [ebp-0x48]
 	cmp ecx, [edx+0xcc]
-	jz R_TessXModelSkinnedDrawSurfList_50
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
 	mov [esp+0x4], ecx
 	mov [esp], edx
-	call R_ChangeDepthRange
-R_TessXModelSkinnedDrawSurfList_50:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	cmp dword [ebp-0x50], 0x7
-	jnz R_TessXModelSkinnedDrawSurfList_60
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
 	mov eax, sc_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_TessXModelSkinnedDrawSurfList_70
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
 	test esi, 0x1f000000
-	jz R_TessXModelSkinnedDrawSurfList_80
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80
 	mov eax, gfxRenderTargets
 	mov eax, [eax+0x78]
-R_TessXModelSkinnedDrawSurfList_430:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_430:
 	mov edx, [ebp-0x44]
 	mov [edx+0xc60], eax
-R_TessXModelSkinnedDrawSurfList_380:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_380:
 	mov eax, [ebp-0x48]
 	mov [ebp-0xdc], eax
 	mov edx, [ebp-0x44]
@@ -2916,10 +2916,10 @@ R_TessXModelSkinnedDrawSurfList_380:
 	mov edx, [ebp-0xdc]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov eax, [ebp-0x40]
 	test eax, eax
-	jz R_TessXModelSkinnedDrawSurfList_90
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90
 	mov edx, [ebp-0x3c]
 	mov [ebp-0xd8], edx
 	mov ecx, [ebp-0x40]
@@ -2928,24 +2928,24 @@ R_TessXModelSkinnedDrawSurfList_380:
 	mov edx, [ebp-0xd4]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov ecx, [ebp-0x24]
 	test ecx, ecx
-	jnz R_TessXModelSkinnedDrawSurfList_100
-R_TessXModelSkinnedDrawSurfList_440:
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_440:
 	mov edx, [ebp-0x40]
 	mov dword [edx+0x98], 0x1
 	mov [esp], edx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov eax, [ebp-0x5c]
 	mov ecx, [ebp-0x40]
 	cmp eax, [ecx+0xcc]
-	jz R_TessXModelSkinnedDrawSurfList_110
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
 	mov [esp+0x4], eax
 	mov [esp], ecx
-	call R_ChangeDepthRange
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
 	mov ecx, [ebp-0x40]
-R_TessXModelSkinnedDrawSurfList_110:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110:
 	mov edx, [ebp-0x3c]
 	mov [ebp-0xc8], edx
 	mov [ebp-0xc4], ecx
@@ -2953,7 +2953,7 @@ R_TessXModelSkinnedDrawSurfList_110:
 	mov edx, [ebp-0xc4]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp-0x3c]
 	mov [ebp-0xc0], edx
 	mov ecx, [ebp-0x40]
@@ -2962,8 +2962,8 @@ R_TessXModelSkinnedDrawSurfList_110:
 	mov edx, [ebp-0xbc]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
-R_TessXModelSkinnedDrawSurfList_90:
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90:
 	mov dword [ebp-0x100], 0xffffffff
 	mov dword [ebp-0xfc], 0xffffffff
 	mov word [ebp-0x100], 0x0
@@ -2975,27 +2975,27 @@ R_TessXModelSkinnedDrawSurfList_90:
 	and ecx, edi
 	mov [ebp-0x2c], ecx
 	mov dword [ebp-0x6c], 0x0
-R_TessXModelSkinnedDrawSurfList_170:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170:
 	mov edx, [ebp-0x40]
 	test edx, edx
-	jz R_TessXModelSkinnedDrawSurfList_120
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120
 	mov eax, [ebp-0x3c]
 	mov [ebp+0xc], eax
 	mov edx, [ebp-0x40]
 	mov [ebp+0x10], edx
 	mov eax, [ebx]
 	test eax, eax
-	js R_TessXModelSkinnedDrawSurfList_130
+	js _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130
 	mov ecx, ebx
 	mov eax, [ebp+0xc]
 	mov edx, [ebp+0x10]
-	call R_DrawXModelSkinnedCached
-R_TessXModelSkinnedDrawSurfList_120:
+	call _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120:
 	mov ecx, [ebp-0x44]
 	mov [esp+0x4], ecx
 	movzx eax, word [ebx+0x10]
 	mov [esp], eax
-	call R_SetModelLightingCoordsForSource
+	call _Z33R_SetModelLightingCoordsForSourcetP20GfxCmdBufSourceState
 	mov ecx, esi
 	shr ecx, 0x10
 	movzx eax, cl
@@ -3008,7 +3008,7 @@ R_TessXModelSkinnedDrawSurfList_120:
 	mov edx, [ebp-0xb4]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetReflectionProbe
+	call _Z20R_SetReflectionProbe16GfxCmdBufContextj
 	mov edx, [ebp-0x48]
 	mov [ebp-0xac], edx
 	mov ecx, [ebp-0x44]
@@ -3017,23 +3017,23 @@ R_TessXModelSkinnedDrawSurfList_120:
 	mov edx, [ebp-0xac]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov edx, [ebp-0x48]
 	mov [ebp-0xf4], edx
 	mov ecx, [ebp-0x44]
 	mov [ebp-0xf8], ecx
 	mov eax, [ebx]
 	test eax, eax
-	js R_TessXModelSkinnedDrawSurfList_140
+	js _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140
 	mov ecx, ebx
 	mov eax, [ebp-0xf8]
 	mov edx, [ebp-0xf4]
-	call R_DrawXModelSkinnedCached
-R_TessXModelSkinnedDrawSurfList_400:
+	call _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_400:
 	add dword [ebp-0x6c], 0x1
 	mov eax, [ebp-0x6c]
 	cmp [ebp-0x70], eax
-	jz R_TessXModelSkinnedDrawSurfList_150
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150
 	mov ecx, [ebp-0x74]
 	mov esi, [ecx+eax*8]
 	mov edi, [ecx+eax*8+0x4]
@@ -3045,37 +3045,37 @@ R_TessXModelSkinnedDrawSurfList_400:
 	xor ecx, edx
 	xor eax, [ebp-0x30]
 	or ecx, eax
-	jnz R_TessXModelSkinnedDrawSurfList_160
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	movzx eax, si
 	mov edx, [ebp-0x54]
 	lea ebx, [edx+eax*4]
 	movzx eax, word [ebx+0xe]
 	movzx edx, ax
 	cmp [ebp-0x20], edx
-	jz R_TessXModelSkinnedDrawSurfList_170
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170
 	test ax, ax
-	jz R_TessXModelSkinnedDrawSurfList_180
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180
 	mov ecx, [ebp-0x54]
 	lea edx, [ecx+edx*8+0x118260]
 	mov eax, [edx]
 	and eax, 0x2
 	cmp [ebp-0x5c], eax
-	jnz R_TessXModelSkinnedDrawSurfList_160
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	movss xmm0, dword [ebp-0x58]
 	ucomiss xmm0, [edx+0x4]
-	jp R_TessXModelSkinnedDrawSurfList_160
-R_TessXModelSkinnedDrawSurfList_390:
-	jz R_TessXModelSkinnedDrawSurfList_170
-R_TessXModelSkinnedDrawSurfList_160:
+	jp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_390:
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160:
 	mov eax, [ebp-0x6c]
-R_TessXModelSkinnedDrawSurfList_150:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150:
 	add esp, 0x10c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_TessXModelSkinnedDrawSurfList_20:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	movzx eax, si
 	mov edx, [ebp-0x54]
 	lea ebx, [edx+eax*4]
@@ -3083,14 +3083,14 @@ R_TessXModelSkinnedDrawSurfList_20:
 	movzx ecx, ax
 	mov [ebp-0x60], ecx
 	test ax, ax
-	jnz R_TessXModelSkinnedDrawSurfList_190
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_190
 	pxor xmm0, xmm0
 	movss [ebp-0x1c], xmm0
-R_TessXModelSkinnedDrawSurfList_280:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_280:
 	movss [esp+0x4], xmm0
 	mov eax, [ebp-0x44]
 	mov [esp], eax
-	call R_UpdateMaterialTime
+	call _Z20R_UpdateMaterialTimeP20GfxCmdBufSourceStatef
 	mov [ebp-0x4c], eax
 	mov edx, [ebp-0x48]
 	mov [ebp-0x94], edx
@@ -3100,27 +3100,27 @@ R_TessXModelSkinnedDrawSurfList_280:
 	mov edx, [ebp-0x94]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov eax, [ebp-0x4c]
 	test eax, eax
-	jnz R_TessXModelSkinnedDrawSurfList_200
-R_TessXModelSkinnedDrawSurfList_420:
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_200
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_420:
 	mov dword [esp+0x4], 0x0
 	mov edx, [ebp-0x44]
 	mov [esp], edx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov ecx, [ebp-0x48]
 	mov dword [ecx+0x98], 0x1
 	mov [esp], ecx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov eax, [ebp-0x48]
 	cmp dword [eax+0xcc], 0xffffffff
-	jz R_TessXModelSkinnedDrawSurfList_210
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_210
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], eax
-	call R_ChangeDepthRange
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
 	mov edx, [ebp-0x48]
-R_TessXModelSkinnedDrawSurfList_370:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_370:
 	mov [ebp-0x84], edx
 	mov ecx, [ebp-0x44]
 	mov [ebp-0x88], ecx
@@ -3128,7 +3128,7 @@ R_TessXModelSkinnedDrawSurfList_370:
 	mov edx, [ebp-0x84]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp-0x48]
 	mov [ebp-0x7c], edx
 	mov ecx, [ebp-0x44]
@@ -3137,7 +3137,7 @@ R_TessXModelSkinnedDrawSurfList_370:
 	mov edx, [ebp-0x7c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov dword [ebp-0x100], 0xffffffff
 	mov dword [ebp-0xfc], 0xffffffff
 	mov word [ebp-0x100], 0x0
@@ -3150,24 +3150,24 @@ R_TessXModelSkinnedDrawSurfList_370:
 	and ecx, edi
 	mov [ebp-0x64], ecx
 	mov dword [ebp-0x6c], 0x0
-R_TessXModelSkinnedDrawSurfList_240:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_240:
 	mov eax, [ebp-0x48]
 	mov [ebp-0xf4], eax
 	mov edx, [ebp-0x44]
 	mov [ebp-0xf8], edx
 	mov edi, [ebx]
 	test edi, edi
-	js R_TessXModelSkinnedDrawSurfList_220
-R_TessXModelSkinnedDrawSurfList_260:
+	js _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_220
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_260:
 	mov ecx, ebx
 	mov eax, [ebp-0xf8]
 	mov edx, [ebp-0xf4]
-	call R_DrawXModelSkinnedCached
+	call _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface
 	add dword [ebp-0x6c], 0x1
 	mov ecx, [ebp-0x6c]
 	cmp [ebp-0x70], ecx
-	jz R_TessXModelSkinnedDrawSurfList_230
-R_TessXModelSkinnedDrawSurfList_270:
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_230
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_270:
 	mov edx, [ebp-0x74]
 	mov esi, [edx+ecx*8]
 	mov edi, [edx+ecx*8+0x4]
@@ -3179,40 +3179,40 @@ R_TessXModelSkinnedDrawSurfList_270:
 	xor ecx, edx
 	xor eax, [ebp-0x68]
 	or ecx, eax
-	jnz R_TessXModelSkinnedDrawSurfList_160
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	movzx eax, si
 	mov ecx, [ebp-0x54]
 	lea ebx, [ecx+eax*4]
 	movzx eax, word [ebx+0xe]
 	movzx edx, ax
 	cmp [ebp-0x60], edx
-	jz R_TessXModelSkinnedDrawSurfList_240
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_240
 	test ax, ax
-	jz R_TessXModelSkinnedDrawSurfList_250
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_250
 	movss xmm0, dword [ebp-0x1c]
 	ucomiss xmm0, [ecx+edx*8+0x118264]
-	jp R_TessXModelSkinnedDrawSurfList_160
-R_TessXModelSkinnedDrawSurfList_300:
-	jnz R_TessXModelSkinnedDrawSurfList_160
+	jp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_300:
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	mov eax, [ebp-0x48]
 	mov [ebp-0xf4], eax
 	mov edx, [ebp-0x44]
 	mov [ebp-0xf8], edx
 	mov edi, [ebx]
 	test edi, edi
-	jns R_TessXModelSkinnedDrawSurfList_260
-R_TessXModelSkinnedDrawSurfList_220:
+	jns _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_260
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_220:
 	mov eax, [ebx+0x14]
 	mov ecx, [ebx+0x4]
 	mov [esp], eax
 	mov eax, [ebp-0xf8]
 	mov edx, [ebp-0xf4]
-	call R_DrawXModelSkinnedUncached
+	call _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex
 	add dword [ebp-0x6c], 0x1
 	mov ecx, [ebp-0x6c]
 	cmp [ebp-0x70], ecx
-	jnz R_TessXModelSkinnedDrawSurfList_270
-R_TessXModelSkinnedDrawSurfList_230:
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_270
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_230:
 	mov eax, ecx
 	add esp, 0x10c
 	pop ebx
@@ -3220,11 +3220,11 @@ R_TessXModelSkinnedDrawSurfList_230:
 	pop edi
 	pop ebp
 	ret
-R_TessXModelSkinnedDrawSurfList_190:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_190:
 	movss xmm0, dword [edx+ecx*8+0x118264]
 	movss [ebp-0x1c], xmm0
-	jmp R_TessXModelSkinnedDrawSurfList_280
-R_TessXModelSkinnedDrawSurfList_30:
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_280
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov edx, ecx
 	mov ecx, [ebp-0x54]
 	lea eax, [ecx+edx*8+0x118260]
@@ -3233,13 +3233,13 @@ R_TessXModelSkinnedDrawSurfList_30:
 	mov [ebp-0x5c], edx
 	movss xmm0, dword [eax+0x4]
 	movss [ebp-0x58], xmm0
-	jmp R_TessXModelSkinnedDrawSurfList_290
-R_TessXModelSkinnedDrawSurfList_250:
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_290
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_250:
 	movss xmm0, dword [ebp-0x1c]
 	ucomiss xmm0, [_float_0_00000000]
-	jnp R_TessXModelSkinnedDrawSurfList_300
-	jmp R_TessXModelSkinnedDrawSurfList_160
-R_TessXModelSkinnedDrawSurfList_60:
+	jnp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_300
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	mov eax, [ebp-0x48]
 	mov [ebp-0xa4], eax
 	mov edx, [ebp-0x44]
@@ -3248,7 +3248,7 @@ R_TessXModelSkinnedDrawSurfList_60:
 	mov edx, [ebp-0xa4]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp-0x48]
 	mov [ebp-0x9c], edx
 	mov ecx, [ebp-0x44]
@@ -3257,7 +3257,7 @@ R_TessXModelSkinnedDrawSurfList_60:
 	mov edx, [ebp-0x9c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov dword [ebp-0x100], 0xffffffff
 	mov dword [ebp-0xfc], 0xffffffff
 	mov word [ebp-0x100], 0x0
@@ -3270,24 +3270,24 @@ R_TessXModelSkinnedDrawSurfList_60:
 	and ecx, edi
 	mov [ebp-0x34], ecx
 	mov dword [ebp-0x6c], 0x0
-R_TessXModelSkinnedDrawSurfList_320:
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_320:
 	mov eax, [ebp-0x48]
 	mov [ebp-0xf4], eax
 	mov edx, [ebp-0x44]
 	mov [ebp-0xf8], edx
 	mov eax, [ebx]
 	test eax, eax
-	js R_TessXModelSkinnedDrawSurfList_310
-R_TessXModelSkinnedDrawSurfList_340:
+	js _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_310
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_340:
 	mov ecx, ebx
 	mov eax, [ebp-0xf8]
 	mov edx, [ebp-0xf4]
-	call R_DrawXModelSkinnedCached
-R_TessXModelSkinnedDrawSurfList_350:
+	call _Z25R_DrawXModelSkinnedCached16GfxCmdBufContextPK22GfxModelSkinnedSurface
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_350:
 	add dword [ebp-0x6c], 0x1
 	mov ecx, [ebp-0x6c]
 	cmp [ebp-0x70], ecx
-	jz R_TessXModelSkinnedDrawSurfList_230
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_230
 	mov edx, [ebp-0x74]
 	mov esi, [edx+ecx*8]
 	mov edi, [edx+ecx*8+0x4]
@@ -3299,83 +3299,83 @@ R_TessXModelSkinnedDrawSurfList_350:
 	xor ecx, edx
 	xor eax, [ebp-0x38]
 	or ecx, eax
-	jnz R_TessXModelSkinnedDrawSurfList_160
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	movzx eax, si
 	mov ecx, [ebp-0x54]
 	lea ebx, [ecx+eax*4]
 	movzx eax, word [ebx+0xe]
 	movzx edx, ax
 	cmp [ebp-0x20], edx
-	jz R_TessXModelSkinnedDrawSurfList_320
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_320
 	test ax, ax
-	jz R_TessXModelSkinnedDrawSurfList_330
+	jz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_330
 	lea edx, [ecx+edx*8+0x118260]
 	mov eax, [edx]
 	and eax, 0x2
 	cmp [ebp-0x5c], eax
-	jnz R_TessXModelSkinnedDrawSurfList_160
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	movss xmm0, dword [ebp-0x58]
 	ucomiss xmm0, [edx+0x4]
-	jp R_TessXModelSkinnedDrawSurfList_160
-R_TessXModelSkinnedDrawSurfList_360:
-	jnz R_TessXModelSkinnedDrawSurfList_160
+	jp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_360:
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	mov eax, [ebp-0x48]
 	mov [ebp-0xf4], eax
 	mov edx, [ebp-0x44]
 	mov [ebp-0xf8], edx
 	mov eax, [ebx]
 	test eax, eax
-	jns R_TessXModelSkinnedDrawSurfList_340
-R_TessXModelSkinnedDrawSurfList_310:
+	jns _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_340
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_310:
 	mov eax, [ebx+0x14]
 	mov ecx, [ebx+0x4]
 	mov [esp], eax
 	mov eax, [ebp-0xf8]
 	mov edx, [ebp-0xf4]
-	call R_DrawXModelSkinnedUncached
-	jmp R_TessXModelSkinnedDrawSurfList_350
-R_TessXModelSkinnedDrawSurfList_330:
+	call _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_350
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_330:
 	mov eax, [ebp-0x5c]
 	test eax, eax
-	jnz R_TessXModelSkinnedDrawSurfList_160
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	movss xmm0, dword [ebp-0x58]
 	ucomiss xmm0, [_float_0_00000000]
-	jnp R_TessXModelSkinnedDrawSurfList_360
-	jmp R_TessXModelSkinnedDrawSurfList_160
-R_TessXModelSkinnedDrawSurfList_210:
+	jnp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_360
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_210:
 	mov edx, eax
-	jmp R_TessXModelSkinnedDrawSurfList_370
-R_TessXModelSkinnedDrawSurfList_70:
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_370
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	mov eax, rgp
 	mov eax, [eax+0x2008]
 	mov ecx, [ebp-0x44]
 	mov [ecx+0xc60], eax
-	jmp R_TessXModelSkinnedDrawSurfList_380
-R_TessXModelSkinnedDrawSurfList_180:
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_380
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180:
 	mov eax, [ebp-0x5c]
 	test eax, eax
-	jnz R_TessXModelSkinnedDrawSurfList_160
+	jnz _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
 	movss xmm0, dword [ebp-0x58]
 	ucomiss xmm0, [_float_0_00000000]
-	jnp R_TessXModelSkinnedDrawSurfList_390
-	jmp R_TessXModelSkinnedDrawSurfList_160
-R_TessXModelSkinnedDrawSurfList_140:
+	jnp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_390
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140:
 	mov eax, [ebx+0x14]
 	mov ecx, [ebx+0x4]
 	mov [esp], eax
 	mov eax, [ebp-0xf8]
 	mov edx, [ebp-0xf4]
-	call R_DrawXModelSkinnedUncached
-	jmp R_TessXModelSkinnedDrawSurfList_400
-R_TessXModelSkinnedDrawSurfList_130:
+	call _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_400
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130:
 	mov eax, [ebx+0x14]
 	mov ecx, [ebx+0x4]
 	mov [esp], eax
 	mov eax, [ebp+0xc]
 	mov edx, [ebp+0x10]
-	call R_DrawXModelSkinnedUncached
-	jmp R_TessXModelSkinnedDrawSurfList_120
-R_TessXModelSkinnedDrawSurfList_40:
+	call _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	mov edx, [ebp-0x48]
 	mov [ebp-0xe4], edx
 	mov ecx, [ebp-0x44]
@@ -3384,9 +3384,9 @@ R_TessXModelSkinnedDrawSurfList_40:
 	mov edx, [ebp-0xe4]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassVertexShaderArgs
-	jmp R_TessXModelSkinnedDrawSurfList_410
-R_TessXModelSkinnedDrawSurfList_200:
+	call _Z27R_SetupPassVertexShaderArgs16GfxCmdBufContext
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_410
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_200:
 	mov edx, [ebp-0x48]
 	mov [ebp-0x8c], edx
 	mov ecx, [ebp-0x44]
@@ -3395,13 +3395,13 @@ R_TessXModelSkinnedDrawSurfList_200:
 	mov edx, [ebp-0x8c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassVertexShaderArgs
-	jmp R_TessXModelSkinnedDrawSurfList_420
-R_TessXModelSkinnedDrawSurfList_80:
+	call _Z27R_SetupPassVertexShaderArgs16GfxCmdBufContext
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_420
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80:
 	mov eax, rgp
 	mov eax, [eax+0x2008]
-	jmp R_TessXModelSkinnedDrawSurfList_430
-R_TessXModelSkinnedDrawSurfList_100:
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_430
+_Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100:
 	mov edx, [ebp-0x3c]
 	mov [ebp-0xd0], edx
 	mov ecx, [ebp-0x40]
@@ -3410,13 +3410,13 @@ R_TessXModelSkinnedDrawSurfList_100:
 	mov edx, [ebp-0xcc]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassVertexShaderArgs
-	jmp R_TessXModelSkinnedDrawSurfList_440
+	call _Z27R_SetupPassVertexShaderArgs16GfxCmdBufContext
+	jmp _Z31R_TessXModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_440
 	add [eax], al
 
 
 ;R_TessStaticModelRigidDrawSurfList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessStaticModelRigidDrawSurfList:
+_Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3458,29 +3458,29 @@ R_TessStaticModelRigidDrawSurfList:
 	mov [ebp-0x3c], ecx
 	mov [esp], ebx
 	mov [esp+0x4], esi
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov eax, s_manualObjectPlacement
 	mov [ebx+0xf08], eax
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov eax, [ebp-0x34]
 	mov dword [eax+0x98], 0x1
 	mov [esp], esi
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov [ebp-0x8c], esi
 	mov [ebp-0x90], ebx
 	cmp dword [ebx+0xf34], 0x1
 	sbb edx, edx
 	cmp edx, [esi+0xcc]
-	jz R_TessStaticModelRigidDrawSurfList_10
+	jz _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov [esp+0x4], edx
 	mov [esp], esi
-	call R_ChangeDepthRange
-R_TessStaticModelRigidDrawSurfList_10:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov esi, [ebp-0x30]
 	test esi, esi
-	jz R_TessStaticModelRigidDrawSurfList_20
+	jz _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov ecx, [ebp+0xc]
 	mov [ebp-0x88], ecx
 	mov ebx, [ebp+0x10]
@@ -3489,12 +3489,12 @@ R_TessStaticModelRigidDrawSurfList_10:
 	mov edx, [ebp-0x84]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov edx, [ebp-0x30]
 	mov dword [edx+0x98], 0x1
 	mov ecx, [ebp+0x10]
 	mov [esp], ecx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov ebx, [ebp-0x84]
 	mov [ebp+0x10], ebx
 	mov eax, [ebp+0xc]
@@ -3502,11 +3502,11 @@ R_TessStaticModelRigidDrawSurfList_10:
 	sbb eax, eax
 	mov edx, [ebp-0x30]
 	cmp eax, [edx+0xcc]
-	jz R_TessStaticModelRigidDrawSurfList_20
+	jz _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_ChangeDepthRange
-R_TessStaticModelRigidDrawSurfList_20:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov ecx, [edi+0xca8]
 	add ecx, 0x28000
 	mov ebx, [ebp+0x8]
@@ -3516,7 +3516,7 @@ R_TessStaticModelRigidDrawSurfList_20:
 	movzx eax, word [eax+edx*8]
 	lea esi, [ecx+eax*4]
 	cmp dword [ebp-0x3c], 0x7
-	jz R_TessStaticModelRigidDrawSurfList_30
+	jz _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
 	mov edx, [ebp-0x34]
 	mov [ebp-0x4c], edx
 	mov [ebp-0x50], edi
@@ -3524,7 +3524,7 @@ R_TessStaticModelRigidDrawSurfList_20:
 	mov ebx, [ebp-0x4c]
 	mov [esp], ecx
 	mov [esp+0x4], ebx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov ebx, [ebp-0x34]
 	mov [ebp-0x44], ebx
 	mov [ebp-0x48], edi
@@ -3535,8 +3535,8 @@ R_TessStaticModelRigidDrawSurfList_20:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], esi
-	call R_DrawStaticModelSurf
-R_TessStaticModelRigidDrawSurfList_70:
+	call _Z21R_DrawStaticModelSurfPKj16GfxCmdBufContextPK19GfxDrawSurfListInfo
+_Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	mov eax, 0x1
 	add esp, 0xac
 	pop ebx
@@ -3544,13 +3544,13 @@ R_TessStaticModelRigidDrawSurfList_70:
 	pop edi
 	pop ebp
 	ret
-R_TessStaticModelRigidDrawSurfList_30:
+_Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov eax, rgp
 	mov eax, [eax+0x2008]
 	mov [edi+0xc60], eax
 	mov ebx, [ebp-0x30]
 	test ebx, ebx
-	jz R_TessStaticModelRigidDrawSurfList_40
+	jz _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
 	mov eax, [ebp-0x2c]
 	mov [ebp-0x80], eax
 	mov edx, [ebp-0x30]
@@ -3559,8 +3559,8 @@ R_TessStaticModelRigidDrawSurfList_30:
 	mov ebx, [ebp-0x7c]
 	mov [esp], ecx
 	mov [esp+0x4], ebx
-	call R_SetupPassPerObjectArgs
-R_TessStaticModelRigidDrawSurfList_40:
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
+_Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	mov ebx, [ebp-0x34]
 	mov [ebp-0x74], ebx
 	mov [ebp-0x78], edi
@@ -3568,7 +3568,7 @@ R_TessStaticModelRigidDrawSurfList_40:
 	mov edx, [ebp-0x74]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov eax, [ebx+0xb8]
 	mov eax, [eax+0x44]
 	mov eax, [eax+0x8]
@@ -3577,7 +3577,7 @@ R_TessStaticModelRigidDrawSurfList_40:
 	mov [esp], eax
 	call strstr
 	test eax, eax
-	jz R_TessStaticModelRigidDrawSurfList_50
+	jz _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
 	mov dword [esp], 0x8037
 	call glIsEnabled
 	mov ebx, eax
@@ -3614,14 +3614,14 @@ R_TessStaticModelRigidDrawSurfList_40:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], esi
-	call R_DrawStaticModelSurfLit
+	call _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo
 	mov eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
 	call glPolygonOffset
 	test bl, bl
-	jnz R_TessStaticModelRigidDrawSurfList_60
+	jnz _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
 	mov dword [esp], 0x8037
 	call glDisable
 	mov eax, 0x1
@@ -3631,7 +3631,7 @@ R_TessStaticModelRigidDrawSurfList_40:
 	pop edi
 	pop ebp
 	ret
-R_TessStaticModelRigidDrawSurfList_60:
+_Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	mov dword [esp], 0x8037
 	call glEnable
 	mov eax, 0x1
@@ -3641,7 +3641,7 @@ R_TessStaticModelRigidDrawSurfList_60:
 	pop edi
 	pop ebp
 	ret
-R_TessStaticModelRigidDrawSurfList_50:
+_Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	mov ecx, [ebp-0x2c]
 	mov [ebp-0x60], ecx
 	mov ebx, [ebp-0x30]
@@ -3660,13 +3660,13 @@ R_TessStaticModelRigidDrawSurfList_50:
 	mov [esp+0x4], eax
 	mov [esp+0x8], edx
 	mov [esp], esi
-	call R_DrawStaticModelSurfLit
-	jmp R_TessStaticModelRigidDrawSurfList_70
+	call _Z24R_DrawStaticModelSurfLitPKj16GfxCmdBufContextS1_PK19GfxDrawSurfListInfo
+	jmp _Z34R_TessStaticModelRigidDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
 	nop
 
 
 ;R_TessStaticModelSkinnedDrawSurfList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessStaticModelSkinnedDrawSurfList:
+_Z36R_TessStaticModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3688,7 +3688,7 @@ R_TessStaticModelSkinnedDrawSurfList:
 	mov [ebp-0x20], ecx
 	mov [esp], esi
 	mov [esp+0x4], edi
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov eax, [ebp-0x20]
 	mov eax, [eax+0x8]
 	mov [ebp-0x24], eax
@@ -3696,21 +3696,21 @@ R_TessStaticModelSkinnedDrawSurfList:
 	mov [esi+0xf08], eax
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov edx, [ebp-0x1c]
 	mov dword [edx+0x98], 0x1
 	mov [esp], edi
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov [ebp-0x3c], edi
 	mov [ebp-0x40], esi
 	cmp dword [esi+0xf34], 0x1
 	sbb edx, edx
 	cmp edx, [edi+0xcc]
-	jz R_TessStaticModelSkinnedDrawSurfList_10
+	jz _Z36R_TessStaticModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov [esp+0x4], edx
 	mov [esp], edi
-	call R_ChangeDepthRange
-R_TessStaticModelSkinnedDrawSurfList_10:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z36R_TessStaticModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov ecx, [ebx+0xca8]
 	add ecx, 0x28000
 	mov ebx, [ebp+0x8]
@@ -3720,7 +3720,7 @@ R_TessStaticModelSkinnedDrawSurfList_10:
 	movzx eax, word [eax+edx*8]
 	lea eax, [ecx+eax*4]
 	cmp dword [ebp-0x24], 0x7
-	jz R_TessStaticModelSkinnedDrawSurfList_20
+	jz _Z36R_TessStaticModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	mov [ebp-0x2c], edi
 	mov [ebp-0x30], esi
 	mov ecx, [ebp-0x30]
@@ -3728,7 +3728,7 @@ R_TessStaticModelSkinnedDrawSurfList_10:
 	mov [esp+0x4], ecx
 	mov [esp+0x8], ebx
 	mov [esp], eax
-	call R_DrawStaticModelSkinnedSurf
+	call _Z28R_DrawStaticModelSkinnedSurfPKj16GfxCmdBufContext
 	mov eax, 0x1
 	add esp, 0x4c
 	pop ebx
@@ -3736,7 +3736,7 @@ R_TessStaticModelSkinnedDrawSurfList_10:
 	pop edi
 	pop ebp
 	ret
-R_TessStaticModelSkinnedDrawSurfList_20:
+_Z36R_TessStaticModelSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov [ebp-0x34], edi
 	mov [ebp-0x38], esi
 	mov edx, [ebp-0x38]
@@ -3744,7 +3744,7 @@ R_TessStaticModelSkinnedDrawSurfList_20:
 	mov [esp+0x4], edx
 	mov [esp+0x8], ecx
 	mov [esp], eax
-	call R_DrawStaticModelSkinnedSurfLit
+	call _Z31R_DrawStaticModelSkinnedSurfLitPKj16GfxCmdBufContext
 	mov eax, 0x1
 	add esp, 0x4c
 	pop ebx
@@ -3755,7 +3755,7 @@ R_TessStaticModelSkinnedDrawSurfList_20:
 
 
 ;R_TessXModelRigidSkinnedDrawSurfList(GfxDrawSurfListArgs const*, GfxCmdBufContext)
-R_TessXModelRigidSkinnedDrawSurfList:
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3797,12 +3797,12 @@ R_TessXModelRigidSkinnedDrawSurfList:
 	mov [ebp-0x58], edx
 	mov eax, [ecx+0x24]
 	test eax, eax
-	jz R_TessXModelRigidSkinnedDrawSurfList_10
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10
 	mov ecx, esi
-R_TessXModelRigidSkinnedDrawSurfList_230:
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_230:
 	mov dword [ecx+0x98], 0x1
 	mov [esp], ecx
-	call R_UpdateVertexDecl
+	call _Z18R_UpdateVertexDeclP14GfxCmdBufState
 	mov dword [ebp-0xa0], 0xffffffff
 	mov dword [ebp-0x9c], 0xffffffff
 	mov word [ebp-0xa0], 0x0
@@ -3812,10 +3812,10 @@ R_TessXModelRigidSkinnedDrawSurfList_230:
 	mov dword [ebp-0xa4], 0xffffffff
 	mov word [ebp-0xa8], 0x0
 	cmp dword [ebp-0x34], 0x7
-	jz R_TessXModelRigidSkinnedDrawSurfList_20
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20
 	and dword [ebp-0xa8], 0xff00ffff
 	and dword [ebp-0xa8], 0xe0ffffff
-R_TessXModelRigidSkinnedDrawSurfList_20:
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_20:
 	mov eax, [ebp-0x58]
 	mov ebx, [eax]
 	mov esi, [eax+0x4]
@@ -3828,8 +3828,8 @@ R_TessXModelRigidSkinnedDrawSurfList_20:
 	mov dword [ebp-0x30], 0x1
 	xor edx, edx
 	cmp dword [ebp-0x34], 0x7
-	jz R_TessXModelRigidSkinnedDrawSurfList_30
-R_TessXModelRigidSkinnedDrawSurfList_180:
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180:
 	mov eax, [ebp-0xa8]
 	and eax, ebx
 	mov [ebp-0x48], eax
@@ -3842,13 +3842,13 @@ R_TessXModelRigidSkinnedDrawSurfList_180:
 	mov [ebp-0x1c], edx
 	mov edx, [ebp-0x54]
 	mov [ebp-0xac], edx
-	jmp R_TessXModelRigidSkinnedDrawSurfList_40
-R_TessXModelRigidSkinnedDrawSurfList_130:
+	jmp _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130:
 	mov [esp+0x4], eax
 	mov [esp], ecx
-	call R_ChangeObjectPlacement
+	call _Z23R_ChangeObjectPlacementP20GfxCmdBufSourceStatePK18GfxScaledPlacement
 	mov edx, [ebp-0x24]
-R_TessXModelRigidSkinnedDrawSurfList_140:
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140:
 	mov eax, [ebp-0x28]
 	mov [ebp-0x74], eax
 	mov [ebp-0x78], edx
@@ -3856,7 +3856,7 @@ R_TessXModelRigidSkinnedDrawSurfList_140:
 	mov edx, [ebp-0x74]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerObjectArgs
+	call _Z24R_SetupPassPerObjectArgs16GfxCmdBufContext
 	mov edx, [ebp-0x28]
 	mov [ebp-0x6c], edx
 	mov ecx, [ebp-0x24]
@@ -3865,7 +3865,7 @@ R_TessXModelRigidSkinnedDrawSurfList_140:
 	mov edx, [ebp-0x6c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	mov edx, [ebp-0x5c]
 	mov ecx, [edx+0x4]
 	mov eax, [ecx+0x1c]
@@ -3876,11 +3876,11 @@ R_TessXModelRigidSkinnedDrawSurfList_140:
 	mov [esp], eax
 	mov eax, [ebp-0x68]
 	mov edx, [ebp-0x64]
-	call R_DrawXModelSkinnedUncached
+	call _Z27R_DrawXModelSkinnedUncached16GfxCmdBufContextP8XSurfaceP15GfxPackedVertex
 	add dword [ebp-0x1c], 0x1
 	mov ecx, [ebp-0xac]
 	cmp [ebp-0x1c], ecx
-	jz R_TessXModelRigidSkinnedDrawSurfList_50
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
 	mov eax, [ebp-0x20]
 	mov ebx, [eax+0x8]
 	mov esi, [eax+0xc]
@@ -3894,8 +3894,8 @@ R_TessXModelRigidSkinnedDrawSurfList_140:
 	xor ecx, edx
 	xor eax, [ebp-0x48]
 	or ecx, eax
-	jnz R_TessXModelRigidSkinnedDrawSurfList_60
-R_TessXModelRigidSkinnedDrawSurfList_40:
+	jnz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_40:
 	movzx eax, bx
 	mov ecx, [ebp-0x38]
 	lea eax, [ecx+eax*4]
@@ -3903,52 +3903,52 @@ R_TessXModelRigidSkinnedDrawSurfList_40:
 	mov eax, [ebp-0x2c]
 	mov eax, [eax+0x24]
 	test eax, eax
-	jz R_TessXModelRigidSkinnedDrawSurfList_70
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70
 	mov edx, [ebp-0x5c]
 	movzx eax, word [edx+0xe]
 	movzx edx, ax
 	test ax, ax
-	jnz R_TessXModelRigidSkinnedDrawSurfList_80
+	jnz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80
 	mov dword [ebp-0x3c], 0x0
 	xor eax, eax
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x24]
 	mov [esp], ecx
-	call R_UpdateMaterialTime
+	call _Z20R_UpdateMaterialTimeP20GfxCmdBufSourceStatef
 	mov edi, eax
 	mov eax, [ebp-0x30]
 	or eax, edi
-	jnz R_TessXModelRigidSkinnedDrawSurfList_90
-R_TessXModelRigidSkinnedDrawSurfList_150:
+	jnz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150:
 	test edi, edi
-	jnz R_TessXModelRigidSkinnedDrawSurfList_100
-R_TessXModelRigidSkinnedDrawSurfList_160:
+	jnz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160:
 	mov edx, [ebp-0x3c]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x24]
 	mov [esp], ecx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	cmp dword [ebp-0x34], 0x7
-	jz R_TessXModelRigidSkinnedDrawSurfList_110
-R_TessXModelRigidSkinnedDrawSurfList_170:
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170:
 	mov ecx, [ebp-0x3c]
 	mov edx, [ebp-0x28]
 	cmp ecx, [edx+0xcc]
-	jz R_TessXModelRigidSkinnedDrawSurfList_120
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120
 	mov [esp+0x4], ecx
 	mov [esp], edx
-	call R_ChangeDepthRange
-R_TessXModelRigidSkinnedDrawSurfList_120:
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_120:
 	mov dword [ebp-0x30], 0x0
-R_TessXModelRigidSkinnedDrawSurfList_70:
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_70:
 	mov eax, [ebp-0x5c]
 	add eax, 0x18
 	mov ecx, [ebp-0x24]
 	cmp eax, [ecx+0xf08]
-	jnz R_TessXModelRigidSkinnedDrawSurfList_130
+	jnz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_130
 	mov edx, ecx
-	jmp R_TessXModelRigidSkinnedDrawSurfList_140
-R_TessXModelRigidSkinnedDrawSurfList_80:
+	jmp _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_140
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_80:
 	mov ecx, [ebp-0x38]
 	lea eax, [ecx+edx*8+0x118260]
 	mov edx, [eax]
@@ -3958,12 +3958,12 @@ R_TessXModelRigidSkinnedDrawSurfList_80:
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x24]
 	mov [esp], ecx
-	call R_UpdateMaterialTime
+	call _Z20R_UpdateMaterialTimeP20GfxCmdBufSourceStatef
 	mov edi, eax
 	mov eax, [ebp-0x30]
 	or eax, edi
-	jz R_TessXModelRigidSkinnedDrawSurfList_150
-R_TessXModelRigidSkinnedDrawSurfList_90:
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_150
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_90:
 	mov edx, [ebp-0x28]
 	mov [ebp-0x8c], edx
 	mov ecx, [ebp-0x24]
@@ -3972,10 +3972,10 @@ R_TessXModelRigidSkinnedDrawSurfList_90:
 	mov edx, [ebp-0x8c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	test edi, edi
-	jz R_TessXModelRigidSkinnedDrawSurfList_160
-R_TessXModelRigidSkinnedDrawSurfList_100:
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_160
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_100:
 	mov edx, [ebp-0x28]
 	mov [ebp-0x84], edx
 	mov ecx, [ebp-0x24]
@@ -3984,21 +3984,21 @@ R_TessXModelRigidSkinnedDrawSurfList_100:
 	mov edx, [ebp-0x84]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassVertexShaderArgs
+	call _Z27R_SetupPassVertexShaderArgs16GfxCmdBufContext
 	mov edx, [ebp-0x3c]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x24]
 	mov [esp], ecx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	cmp dword [ebp-0x34], 0x7
-	jnz R_TessXModelRigidSkinnedDrawSurfList_170
-R_TessXModelRigidSkinnedDrawSurfList_110:
+	jnz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_110:
 	mov eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x5c]
 	movzx eax, word [edx+0x10]
 	mov [esp], eax
-	call R_SetModelLightingCoordsForSource
+	call _Z33R_SetModelLightingCoordsForSourcetP20GfxCmdBufSourceState
 	mov ecx, ebx
 	shr ecx, 0x10
 	movzx eax, cl
@@ -4011,9 +4011,9 @@ R_TessXModelRigidSkinnedDrawSurfList_110:
 	mov edx, [ebp-0x7c]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetReflectionProbe
-	jmp R_TessXModelRigidSkinnedDrawSurfList_170
-R_TessXModelRigidSkinnedDrawSurfList_60:
+	call _Z20R_SetReflectionProbe16GfxCmdBufContextj
+	jmp _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_170
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_60:
 	mov eax, [ebp-0xa0]
 	and eax, ebx
 	mov edx, [ebp-0x9c]
@@ -4022,23 +4022,23 @@ R_TessXModelRigidSkinnedDrawSurfList_60:
 	xor ecx, edx
 	xor eax, [ebp-0x50]
 	or ecx, eax
-	jnz R_TessXModelRigidSkinnedDrawSurfList_50
+	jnz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50
 	mov edx, [ebp-0x1c]
 	cmp dword [ebp-0x34], 0x7
-	jnz R_TessXModelRigidSkinnedDrawSurfList_180
-R_TessXModelRigidSkinnedDrawSurfList_30:
+	jnz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_30:
 	mov eax, sc_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_TessXModelRigidSkinnedDrawSurfList_190
-R_TessXModelRigidSkinnedDrawSurfList_200:
+	jnz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_190
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_200:
 	mov eax, rgp
 	mov eax, [eax+0x2008]
-R_TessXModelRigidSkinnedDrawSurfList_210:
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_210:
 	mov ecx, [ebp-0x24]
 	mov [ecx+0xc60], eax
-	jmp R_TessXModelRigidSkinnedDrawSurfList_180
-R_TessXModelRigidSkinnedDrawSurfList_50:
+	jmp _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_180
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_50:
 	mov eax, [ebp-0x1c]
 	add esp, 0xbc
 	pop ebx
@@ -4046,34 +4046,34 @@ R_TessXModelRigidSkinnedDrawSurfList_50:
 	pop edi
 	pop ebp
 	ret
-R_TessXModelRigidSkinnedDrawSurfList_190:
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_190:
 	test ebx, 0x1f000000
-	jz R_TessXModelRigidSkinnedDrawSurfList_200
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_200
 	mov eax, gfxRenderTargets
 	mov eax, [eax+0x78]
-	jmp R_TessXModelRigidSkinnedDrawSurfList_210
-R_TessXModelRigidSkinnedDrawSurfList_10:
+	jmp _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_210
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_10:
 	mov [ebp-0x94], esi
 	mov [ebp-0x98], ebx
 	mov eax, [ebp-0x98]
 	mov edx, [ebp-0x94]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPixelShaderArgs
+	call _Z26R_SetupPassPixelShaderArgs16GfxCmdBufContext
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call R_ChangeDepthHackNearClip
+	call _Z25R_ChangeDepthHackNearClipP20GfxCmdBufSourceStatej
 	mov edx, [ebp-0x28]
 	cmp dword [edx+0xcc], 0xffffffff
-	jz R_TessXModelRigidSkinnedDrawSurfList_220
+	jz _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_220
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], esi
-	call R_ChangeDepthRange
+	call _Z18R_ChangeDepthRangeP14GfxCmdBufState17GfxDepthRangeType
 	mov ecx, [ebp-0x28]
-	jmp R_TessXModelRigidSkinnedDrawSurfList_230
-R_TessXModelRigidSkinnedDrawSurfList_220:
+	jmp _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_230
+_Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_220:
 	mov ecx, edx
-	jmp R_TessXModelRigidSkinnedDrawSurfList_230
+	jmp _Z36R_TessXModelRigidSkinnedDrawSurfListPK19GfxDrawSurfListArgs16GfxCmdBufContext_230
 	nop
 
 
@@ -4116,7 +4116,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of rb_tess:

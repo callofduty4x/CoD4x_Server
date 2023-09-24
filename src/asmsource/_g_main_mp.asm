@@ -158,9 +158,81 @@
 	extern level
 	extern G_InitSomeVariables
 	extern G_RunFrameForEntity
+	extern g_compassShowEnemies
+	extern bullet_penetrationEnabled
+	extern g_debugLocDamage
+	extern g_dropForwardSpeed
+	extern g_dropHorzSpeedRand
+	extern g_dropUpSpeedBase
+	extern g_dropUpSpeedRand
+	extern g_maxDroppedWeapons
+	extern pickupPrints
+	extern g_minGrenadeDamageSpeed
+	extern g_banIPs
+	extern g_dedicated
+	extern g_antilag
+	extern melee_debug
+	extern g_useholdspawndelay
+	extern g_useholdtime
+	extern player_MGUseRadius
+	extern player_throwbackInnerRadius
+	extern player_throwbackOuterRadius
+	extern g_NoScriptSpam
+	extern g_fogColorReadOnly
+	extern g_fogHalfDistReadOnly
+	extern g_fogStartDistReadOnly
+	extern g_debugDamage
+	extern radius_damage_debug
+	extern g_allowVote
+	extern g_cheats
+	extern g_deadChat
+	extern g_oldVoting
+	extern g_gravity
+	extern g_motd
+	extern g_clonePlayerMaxVelocity
+	extern g_knockback
+	extern g_voiceChatTalkingDuration
+	extern g_inactivity
+	extern g_mantleBlockTimeBuffer
+	extern g_speed
+	extern g_synchronousClients
+	extern g_ScoresColor_Allies
+	extern g_ScoresColor_Axis
+	extern g_ScoresColor_EnemyTeam
+	extern g_ScoresColor_Free
+	extern g_ScoresColor_MyTeam
+	extern g_ScoresColor_Spectator
+	extern g_TeamColor_Allies
+	extern g_TeamColor_Axis
+	extern g_TeamColor_EnemyTeam
+	extern g_TeamColor_Free
+	extern g_TeamColor_MyTeam
+	extern g_TeamColor_Spectator
+	extern g_TeamIcon_Allies
+	extern g_TeamIcon_Axis
+	extern g_TeamIcon_Free
+	extern g_TeamIcon_Spectator
+	extern g_TeamName_Allies
+	extern g_TeamName_Axis
+	extern g_dumpAnims
+	extern g_entinfo
+	extern g_friendlyNameDist
+	extern g_friendlyfireDist
+	extern g_listEntity
+	extern g_log
+	extern g_logSync
+	extern g_password
+	extern g_redCrosshairs
+	extern g_voteAbstainWeight
+	extern voice_deadChat
+	extern voice_extern
+	extern voice_localEcho
 
 ;Exports of g_main_mp:
+	global g_maxclients
 	global g_clients
+	global g_entities
+	global level_bgs
 	global g_entinfoNames
 	global G_CreateDObj
 	global G_GetDObj
@@ -181,79 +253,6 @@
 	global G_LocationalTracePassed
 	global G_LocationalTraceAllowChildren
 	global CheckVote
-	global g_compassShowEnemies
-	global bullet_penetrationEnabled
-	global g_debugLocDamage
-	global g_entities
-	global g_dropForwardSpeed
-	global g_dropHorzSpeedRand
-	global g_dropUpSpeedBase
-	global g_dropUpSpeedRand
-	global g_maxDroppedWeapons
-	global pickupPrints
-	global g_minGrenadeDamageSpeed
-	global g_banIPs
-	global g_dedicated
-	global g_antilag
-	global melee_debug
-	global g_useholdspawndelay
-	global g_useholdtime
-	global player_MGUseRadius
-	global player_throwbackInnerRadius
-	global player_throwbackOuterRadius
-	global g_NoScriptSpam
-	global g_fogColorReadOnly
-	global g_fogHalfDistReadOnly
-	global g_fogStartDistReadOnly
-	global g_maxclients
-	global level_bgs
-	global g_debugDamage
-	global radius_damage_debug
-	global g_allowVote
-	global g_cheats
-	global g_deadChat
-	global g_oldVoting
-	global g_gravity
-	global g_motd
-	global g_clonePlayerMaxVelocity
-	global g_knockback
-	global g_voiceChatTalkingDuration
-	global g_inactivity
-	global g_mantleBlockTimeBuffer
-	global g_playerCollisionEjectSpeed
-	global g_speed
-	global g_synchronousClients
-	global g_ScoresColor_Allies
-	global g_ScoresColor_Axis
-	global g_ScoresColor_EnemyTeam
-	global g_ScoresColor_Free
-	global g_ScoresColor_MyTeam
-	global g_ScoresColor_Spectator
-	global g_TeamColor_Allies
-	global g_TeamColor_Axis
-	global g_TeamColor_EnemyTeam
-	global g_TeamColor_Free
-	global g_TeamColor_MyTeam
-	global g_TeamColor_Spectator
-	global g_TeamIcon_Allies
-	global g_TeamIcon_Axis
-	global g_TeamIcon_Free
-	global g_TeamIcon_Spectator
-	global g_TeamName_Allies
-	global g_TeamName_Axis
-	global g_dumpAnims
-	global g_entinfo
-	global g_friendlyNameDist
-	global g_friendlyfireDist
-	global g_listEntity
-	global g_log
-	global g_logSync
-	global g_password
-	global g_redCrosshairs
-	global g_voteAbstainWeight
-	global voice_deadChat
-	global voice_global
-	global voice_localEcho
 
 
 SECTION .text
@@ -1803,81 +1802,10 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of g_main_mp:
 SECTION .bss
-g_clients: resb 0xc6100
-g_compassShowEnemies: resb 0x4
-bullet_penetrationEnabled: resb 0x4
-g_debugLocDamage: resb 0x4
-g_entities: resb 0x9d000
-g_dropForwardSpeed: resb 0x4
-g_dropHorzSpeedRand: resb 0x4
-g_dropUpSpeedBase: resb 0x4
-g_dropUpSpeedRand: resb 0x4
-g_maxDroppedWeapons: resb 0x4
-pickupPrints: resb 0x4
-g_minGrenadeDamageSpeed: resb 0x4
-g_banIPs: resb 0x4
-g_dedicated: resb 0x4
-g_antilag: resb 0x4
-melee_debug: resb 0x4
-g_useholdspawndelay: resb 0x4
-g_useholdtime: resb 0x4
-player_MGUseRadius: resb 0x4
-player_throwbackInnerRadius: resb 0x4
-player_throwbackOuterRadius: resb 0x4
-g_NoScriptSpam: resb 0x4
-g_fogColorReadOnly: resb 0x4
-g_fogHalfDistReadOnly: resb 0x4
-g_fogStartDistReadOnly: resb 0x4
-g_gametype: resb 0x14
-g_maxclients: resb 0x4
 level_bgs: resb 0xacd20
-g_debugDamage: resb 0x4
-radius_damage_debug: resb 0x4
-g_allowVote: resb 0x4
-g_cheats: resb 0x4
-g_deadChat: resb 0x8
-g_oldVoting: resb 0x4
-g_gravity: resb 0x4
-g_motd: resb 0x4
-g_clonePlayerMaxVelocity: resb 0x4
-g_knockback: resb 0x4
-g_voiceChatTalkingDuration: resb 0x4
-g_inactivity: resb 0x4
-g_mantleBlockTimeBuffer: resb 0x4
-g_playerCollisionEjectSpeed: resb 0x4
-g_speed: resb 0x4
-g_synchronousClients: resb 0x4
-g_ScoresColor_Allies: resb 0x4
-g_ScoresColor_Axis: resb 0x4
-g_ScoresColor_EnemyTeam: resb 0x4
-g_ScoresColor_Free: resb 0x4
-g_ScoresColor_MyTeam: resb 0x4
-g_ScoresColor_Spectator: resb 0x4
-g_TeamColor_Allies: resb 0x4
-g_TeamColor_Axis: resb 0x4
-g_TeamColor_EnemyTeam: resb 0x4
-g_TeamColor_Free: resb 0x4
-g_TeamColor_MyTeam: resb 0x4
-g_TeamColor_Spectator: resb 0x4
-g_TeamIcon_Allies: resb 0x4
-g_TeamIcon_Axis: resb 0x4
-g_TeamIcon_Free: resb 0x4
-g_TeamIcon_Spectator: resb 0x4
-g_TeamName_Allies: resb 0x4
-g_TeamName_Axis: resb 0x4
-g_dumpAnims: resb 0x4
-g_entinfo: resb 0x4
-g_friendlyNameDist: resb 0x4
-g_friendlyfireDist: resb 0x4
-g_listEntity: resb 0x4
-g_log: resb 0x4
-g_logSync: resb 0x4
-g_password: resb 0x4
-g_redCrosshairs: resb 0x4
-g_voteAbstainWeight: resb 0x4
-voice_deadChat: resb 0x4
-voice_global: resb 0x4
-voice_localEcho: resb 0x4
+g_clients: resb 0xc6100
+g_entities: resb 0x9d000
+g_maxclients: resb 0x4
 
 
 ;All cstrings:
@@ -1931,8 +1859,6 @@ _cstring_display_entity_i:		db "Display entity information",0
 _cstring_g_entinfo:		db "g_entinfo",0
 _cstring_the_message_of_t:		db "The message of the day",0
 _cstring_g_motd:		db "g_motd",0
-_cstring_speed_at_which_t:		db "Speed at which to push intersecting players away from each other",0
-_cstring_g_playercollisio:		db "g_playerCollisionEjectSpeed",0
 _cstring_forward_speed_of:		db "Forward speed of a dropped item",0
 _cstring_g_dropforwardspe:		db "g_dropForwardSpeed",0
 _cstring_base_component_o:		db "Base component of the initial vertical speed of a dropped item",0

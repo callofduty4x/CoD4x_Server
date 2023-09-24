@@ -1,0 +1,3188 @@
+  3b4660   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3D
+  ......   ;********************************************************
+  ......   __ZTI9CDirect3D:
+  ......     db          08h ; ' '
+  3b4661     db          00h ; ' '
+  3b4662     db          00h ; ' '
+  3b4663     db          00h ; ' '
+  3b4664     db          37h ; '7'
+  3b4665     db          38h ; '8'
+  3b4666     db          3ah ; ':'
+  3b4667     db          00h ; ' '
+  3b4668     dd          003b4680h
+  3b466c     db          00h ; ' '
+  3b466d     db          00h ; ' '
+  3b466e     db          00h ; ' '
+  3b466f     db          00h ; ' '
+  3b4670     db          00h ; ' '
+  3b4671     db          00h ; ' '
+  3b4672     db          00h ; ' '
+  3b4673     db          00h ; ' '
+  3b4674     db          00h ; ' '
+  3b4675     db          00h ; ' '
+  3b4676     db          00h ; ' '
+  3b4677     db          00h ; ' '
+  3b4678     db          00h ; ' '
+  3b4679     db          00h ; ' '
+  3b467a     db          00h ; ' '
+  3b467b     db          00h ; ' '
+  3b467c     db          00h ; ' '
+  3b467d     db          00h ; ' '
+  3b467e     db          00h ; ' '
+  3b467f     db          00h ; ' '
+  3b4680   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3D9
+  ......   ;********************************************************
+  ......   __ZTI10IDirect3D9:
+  ......     db          08h ; ' '
+  3b4681     db          00h ; ' '
+  3b4682     db          00h ; ' '
+  3b4683     db          00h ; ' '
+  3b4684     db          2ah ; '*'
+  3b4685     db          38h ; '8'
+  3b4686     db          3ah ; ':'
+  3b4687     db          00h ; ' '
+  3b4688     db          a0h ; ' '
+  3b4689     db          46h ; 'F'
+  3b468a     db          3bh ; ';'
+  3b468b     db          00h ; ' '
+  3b468c     db          00h ; ' '
+  3b468d     db          00h ; ' '
+  3b468e     db          00h ; ' '
+  3b468f     db          00h ; ' '
+  3b4690     db          00h ; ' '
+  3b4691     db          00h ; ' '
+  3b4692     db          00h ; ' '
+  3b4693     db          00h ; ' '
+  3b4694     db          00h ; ' '
+  3b4695     db          00h ; ' '
+  3b4696     db          00h ; ' '
+  3b4697     db          00h ; ' '
+  3b4698     db          00h ; ' '
+  3b4699     db          00h ; ' '
+  3b469a     db          00h ; ' '
+  3b469b     db          00h ; ' '
+  3b469c     db          00h ; ' '
+  3b469d     db          00h ; ' '
+  3b469e     db          00h ; ' '
+  3b469f     db          00h ; ' '
+  3b46a0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IUnknown
+  ......   ;********************************************************
+  ......   __ZTI8IUnknown:
+  ......     db          08h ; ' '
+  3b46a1     db          00h ; ' '
+  3b46a2     db          00h ; ' '
+  3b46a3     db          00h ; ' '
+  3b46a4     db          20h ; ' '
+  3b46a5     db          38h ; '8'
+  3b46a6     db          3ah ; ':'
+  3b46a7     db          00h ; ' '
+  3b46a8     db          00h ; ' '
+  3b46a9     db          00h ; ' '
+  3b46aa     db          00h ; ' '
+  3b46ab     db          00h ; ' '
+  3b46ac     db          00h ; ' '
+  3b46ad     db          00h ; ' '
+  3b46ae     db          00h ; ' '
+  3b46af     db          00h ; ' '
+  3b46b0     db          00h ; ' '
+  3b46b1     db          00h ; ' '
+  3b46b2     db          00h ; ' '
+  3b46b3     db          00h ; ' '
+  3b46b4     db          00h ; ' '
+  3b46b5     db          00h ; ' '
+  3b46b6     db          00h ; ' '
+  3b46b7     db          00h ; ' '
+  3b46b8     db          00h ; ' '
+  3b46b9     db          00h ; ' '
+  3b46ba     db          00h ; ' '
+  3b46bb     db          00h ; ' '
+  3b46bc     db          00h ; ' '
+  3b46bd     db          00h ; ' '
+  3b46be     db          00h ; ' '
+  3b46bf     db          00h ; ' '
+  3b46c0   
+  ......   ;********************************************************
+  ......   ; function vtable for IUnknown
+  ......   ;********************************************************
+  ......   __ZTV8IUnknown:
+  ......     db          00h ; ' '
+  3b46c1     db          00h ; ' '
+  3b46c2     db          00h ; ' '
+  3b46c3     db          00h ; ' '
+  3b46c4     db          a0h ; ' '
+  3b46c5     db          46h ; 'F'
+  3b46c6     db          3bh ; ';'
+  3b46c7     db          00h ; ' '
+  3b46c8     db          00h ; ' '
+  3b46c9     db          00h ; ' '
+  3b46ca     db          00h ; ' '
+  3b46cb     db          00h ; ' '
+  3b46cc     db          00h ; ' '
+  3b46cd     db          00h ; ' '
+  3b46ce     db          00h ; ' '
+  3b46cf     db          00h ; ' '
+  3b46d0     db          00h ; ' '
+  3b46d1     db          00h ; ' '
+  3b46d2     db          00h ; ' '
+  3b46d3     db          00h ; ' '
+  3b46d4     db          00h ; ' '
+  3b46d5     db          00h ; ' '
+  3b46d6     db          00h ; ' '
+  3b46d7     db          00h ; ' '
+  3b46d8     db          00h ; ' '
+  3b46d9     db          00h ; ' '
+  3b46da     db          00h ; ' '
+  3b46db     db          00h ; ' '
+  3b46dc     db          00h ; ' '
+  3b46dd     db          00h ; ' '
+  3b46de     db          00h ; ' '
+  3b46df     db          00h ; ' '
+  3b46e0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DCubeTexture
+  ......   ;********************************************************
+  ......   __ZTI20CDirect3DCubeTexture:
+  ......     db          08h ; ' '
+  3b46e1     db          00h ; ' '
+  3b46e2     db          00h ; ' '
+  3b46e3     db          00h ; ' '
+  3b46e4     db          87h ; '‡'
+  3b46e5     db          38h ; '8'
+  3b46e6     db          3ah ; ':'
+  3b46e7     db          00h ; ' '
+  3b46e8     db          00h ; ' '
+  3b46e9     db          00h ; ' '
+  3b46ea     db          00h ; ' '
+  3b46eb     db          00h ; ' '
+  3b46ec     db          02h ; ' '
+  3b46ed     db          00h ; ' '
+  3b46ee     db          00h ; ' '
+  3b46ef     db          00h ; ' '
+  3b46f0     db          00h ; ' '
+  3b46f1     db          47h ; 'G'
+  3b46f2     db          3bh ; ';'
+  3b46f3     db          00h ; ' '
+  3b46f4     db          02h ; ' '
+  3b46f5     db          00h ; ' '
+  3b46f6     db          00h ; ' '
+  3b46f7     db          00h ; ' '
+  3b46f8     db          a0h ; ' '
+  3b46f9     db          4fh ; 'O'
+  3b46fa     db          3bh ; ';'
+  3b46fb     db          00h ; ' '
+  3b46fc     db          02h ; ' '
+  3b46fd     db          04h ; ' '
+  3b46fe     db          00h ; ' '
+  3b46ff     db          00h ; ' '
+  3b4700   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DCubeTexture9
+  ......   ;********************************************************
+  ......   __ZTI21IDirect3DCubeTexture9:
+  ......     db          08h ; ' '
+  3b4701     db          00h ; ' '
+  3b4702     db          00h ; ' '
+  3b4703     db          00h ; ' '
+  3b4704     db          6fh ; 'o'
+  3b4705     db          38h ; '8'
+  3b4706     db          3ah ; ':'
+  3b4707     db          00h ; ' '
+  3b4708     db          20h ; ' '
+  3b4709     db          47h ; 'G'
+  3b470a     db          3bh ; ';'
+  3b470b     db          00h ; ' '
+  3b470c     db          00h ; ' '
+  3b470d     db          00h ; ' '
+  3b470e     db          00h ; ' '
+  3b470f     db          00h ; ' '
+  3b4710     db          00h ; ' '
+  3b4711     db          00h ; ' '
+  3b4712     db          00h ; ' '
+  3b4713     db          00h ; ' '
+  3b4714     db          00h ; ' '
+  3b4715     db          00h ; ' '
+  3b4716     db          00h ; ' '
+  3b4717     db          00h ; ' '
+  3b4718     db          00h ; ' '
+  3b4719     db          00h ; ' '
+  3b471a     db          00h ; ' '
+  3b471b     db          00h ; ' '
+  3b471c     db          00h ; ' '
+  3b471d     db          00h ; ' '
+  3b471e     db          00h ; ' '
+  3b471f     db          00h ; ' '
+  3b4720   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DBaseTexture9
+  ......   ;********************************************************
+  ......   __ZTI21IDirect3DBaseTexture9:
+  ......     db          08h ; ' '
+  3b4721     db          00h ; ' '
+  3b4722     db          00h ; ' '
+  3b4723     db          00h ; ' '
+  3b4724     db          57h ; 'W'
+  3b4725     db          38h ; '8'
+  3b4726     db          3ah ; ':'
+  3b4727     db          00h ; ' '
+  3b4728     db          40h ; '@'
+  3b4729     db          47h ; 'G'
+  3b472a     db          3bh ; ';'
+  3b472b     db          00h ; ' '
+  3b472c     db          00h ; ' '
+  3b472d     db          00h ; ' '
+  3b472e     db          00h ; ' '
+  3b472f     db          00h ; ' '
+  3b4730     db          00h ; ' '
+  3b4731     db          00h ; ' '
+  3b4732     db          00h ; ' '
+  3b4733     db          00h ; ' '
+  3b4734     db          00h ; ' '
+  3b4735     db          00h ; ' '
+  3b4736     db          00h ; ' '
+  3b4737     db          00h ; ' '
+  3b4738     db          00h ; ' '
+  3b4739     db          00h ; ' '
+  3b473a     db          00h ; ' '
+  3b473b     db          00h ; ' '
+  3b473c     db          00h ; ' '
+  3b473d     db          00h ; ' '
+  3b473e     db          00h ; ' '
+  3b473f     db          00h ; ' '
+  3b4740   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DResource9
+  ......   ;********************************************************
+  ......   __ZTI18IDirect3DResource9:
+  ......     db          08h ; ' '
+  3b4741     db          00h ; ' '
+  3b4742     db          00h ; ' '
+  3b4743     db          00h ; ' '
+  3b4744     db          42h ; 'B'
+  3b4745     db          38h ; '8'
+  3b4746     db          3ah ; ':'
+  3b4747     db          00h ; ' '
+  3b4748     db          a0h ; ' '
+  3b4749     db          46h ; 'F'
+  3b474a     db          3bh ; ';'
+  3b474b     db          00h ; ' '
+  3b474c     db          00h ; ' '
+  3b474d     db          00h ; ' '
+  3b474e     db          00h ; ' '
+  3b474f     db          00h ; ' '
+  3b4750     db          00h ; ' '
+  3b4751     db          00h ; ' '
+  3b4752     db          00h ; ' '
+  3b4753     db          00h ; ' '
+  3b4754     db          00h ; ' '
+  3b4755     db          00h ; ' '
+  3b4756     db          00h ; ' '
+  3b4757     db          00h ; ' '
+  3b4758     db          00h ; ' '
+  3b4759     db          00h ; ' '
+  3b475a     db          00h ; ' '
+  3b475b     db          00h ; ' '
+  3b475c     db          00h ; ' '
+  3b475d     db          00h ; ' '
+  3b475e     db          00h ; ' '
+  3b475f     db          00h ; ' '
+  3b4760   
+  ......   ;********************************************************
+  ......   ; function vtable for IDirect3DCubeTexture9
+  ......   ;********************************************************
+  ......   __ZTV21IDirect3DCubeTexture9:
+  ......     db          00h ; ' '
+  3b4761     db          00h ; ' '
+  3b4762     db          00h ; ' '
+  3b4763     db          00h ; ' '
+  3b4764     db          00h ; ' '
+  3b4765     db          47h ; 'G'
+  3b4766     db          3bh ; ';'
+  3b4767     db          00h ; ' '
+  3b4768     db          00h ; ' '
+  3b4769     db          00h ; ' '
+  3b476a     db          00h ; ' '
+  3b476b     db          00h ; ' '
+  3b476c     db          00h ; ' '
+  3b476d     db          00h ; ' '
+  3b476e     db          00h ; ' '
+  3b476f     db          00h ; ' '
+  3b4770     db          00h ; ' '
+  3b4771     db          00h ; ' '
+  3b4772     db          00h ; ' '
+  3b4773     db          00h ; ' '
+  3b4774     db          00h ; ' '
+  3b4775     db          00h ; ' '
+  3b4776     db          00h ; ' '
+  3b4777     db          00h ; ' '
+  3b4778     db          00h ; ' '
+  3b4779     db          00h ; ' '
+  3b477a     db          00h ; ' '
+  3b477b     db          00h ; ' '
+  3b477c     db          00h ; ' '
+  3b477d     db          00h ; ' '
+  3b477e     db          00h ; ' '
+  3b477f     db          00h ; ' '
+  3b4780     db          00h ; ' '
+  3b4781     db          00h ; ' '
+  3b4782     db          00h ; ' '
+  3b4783     db          00h ; ' '
+  3b4784     db          00h ; ' '
+  3b4785     db          00h ; ' '
+  3b4786     db          00h ; ' '
+  3b4787     db          00h ; ' '
+  3b4788     db          00h ; ' '
+  3b4789     db          00h ; ' '
+  3b478a     db          00h ; ' '
+  3b478b     db          00h ; ' '
+  3b478c     db          00h ; ' '
+  3b478d     db          00h ; ' '
+  3b478e     db          00h ; ' '
+  3b478f     db          00h ; ' '
+  3b4790     db          00h ; ' '
+  3b4791     db          00h ; ' '
+  3b4792     db          00h ; ' '
+  3b4793     db          00h ; ' '
+  3b4794     db          00h ; ' '
+  3b4795     db          00h ; ' '
+  3b4796     db          00h ; ' '
+  3b4797     db          00h ; ' '
+  3b4798     db          00h ; ' '
+  3b4799     db          00h ; ' '
+  3b479a     db          00h ; ' '
+  3b479b     db          00h ; ' '
+  3b479c     db          00h ; ' '
+  3b479d     db          00h ; ' '
+  3b479e     db          00h ; ' '
+  3b479f     db          00h ; ' '
+  3b47a0     db          00h ; ' '
+  3b47a1     db          00h ; ' '
+  3b47a2     db          00h ; ' '
+  3b47a3     db          00h ; ' '
+  3b47a4     db          00h ; ' '
+  3b47a5     db          00h ; ' '
+  3b47a6     db          00h ; ' '
+  3b47a7     db          00h ; ' '
+  3b47a8     db          00h ; ' '
+  3b47a9     db          00h ; ' '
+  3b47aa     db          00h ; ' '
+  3b47ab     db          00h ; ' '
+  3b47ac     db          00h ; ' '
+  3b47ad     db          00h ; ' '
+  3b47ae     db          00h ; ' '
+  3b47af     db          00h ; ' '
+  3b47b0     db          00h ; ' '
+  3b47b1     db          00h ; ' '
+  3b47b2     db          00h ; ' '
+  3b47b3     db          00h ; ' '
+  3b47b4     db          00h ; ' '
+  3b47b5     db          00h ; ' '
+  3b47b6     db          00h ; ' '
+  3b47b7     db          00h ; ' '
+  3b47b8     db          00h ; ' '
+  3b47b9     db          00h ; ' '
+  3b47ba     db          00h ; ' '
+  3b47bb     db          00h ; ' '
+  3b47bc     db          00h ; ' '
+  3b47bd     db          00h ; ' '
+  3b47be     db          00h ; ' '
+  3b47bf     db          00h ; ' '
+  3b47c0   
+  ......   ;********************************************************
+  ......   ; function vtable for IDirect3DBaseTexture9
+  ......   ;********************************************************
+  ......   __ZTV21IDirect3DBaseTexture9:
+  ......     db          00h ; ' '
+  3b47c1     db          00h ; ' '
+  3b47c2     db          00h ; ' '
+  3b47c3     db          00h ; ' '
+  3b47c4     db          20h ; ' '
+  3b47c5     db          47h ; 'G'
+  3b47c6     db          3bh ; ';'
+  3b47c7     db          00h ; ' '
+  3b47c8     db          00h ; ' '
+  3b47c9     db          00h ; ' '
+  3b47ca     db          00h ; ' '
+  3b47cb     db          00h ; ' '
+  3b47cc     db          00h ; ' '
+  3b47cd     db          00h ; ' '
+  3b47ce     db          00h ; ' '
+  3b47cf     db          00h ; ' '
+  3b47d0     db          00h ; ' '
+  3b47d1     db          00h ; ' '
+  3b47d2     db          00h ; ' '
+  3b47d3     db          00h ; ' '
+  3b47d4     db          00h ; ' '
+  3b47d5     db          00h ; ' '
+  3b47d6     db          00h ; ' '
+  3b47d7     db          00h ; ' '
+  3b47d8     db          00h ; ' '
+  3b47d9     db          00h ; ' '
+  3b47da     db          00h ; ' '
+  3b47db     db          00h ; ' '
+  3b47dc     db          00h ; ' '
+  3b47dd     db          00h ; ' '
+  3b47de     db          00h ; ' '
+  3b47df     db          00h ; ' '
+  3b47e0     db          00h ; ' '
+  3b47e1     db          00h ; ' '
+  3b47e2     db          00h ; ' '
+  3b47e3     db          00h ; ' '
+  3b47e4     db          00h ; ' '
+  3b47e5     db          00h ; ' '
+  3b47e6     db          00h ; ' '
+  3b47e7     db          00h ; ' '
+  3b47e8     db          00h ; ' '
+  3b47e9     db          00h ; ' '
+  3b47ea     db          00h ; ' '
+  3b47eb     db          00h ; ' '
+  3b47ec     db          00h ; ' '
+  3b47ed     db          00h ; ' '
+  3b47ee     db          00h ; ' '
+  3b47ef     db          00h ; ' '
+  3b47f0     db          00h ; ' '
+  3b47f1     db          00h ; ' '
+  3b47f2     db          00h ; ' '
+  3b47f3     db          00h ; ' '
+  3b47f4     db          00h ; ' '
+  3b47f5     db          00h ; ' '
+  3b47f6     db          00h ; ' '
+  3b47f7     db          00h ; ' '
+  3b47f8     db          00h ; ' '
+  3b47f9     db          00h ; ' '
+  3b47fa     db          00h ; ' '
+  3b47fb     db          00h ; ' '
+  3b47fc     db          00h ; ' '
+  3b47fd     db          00h ; ' '
+  3b47fe     db          00h ; ' '
+  3b47ff     db          00h ; ' '
+  3b4800     db          00h ; ' '
+  3b4801     db          00h ; ' '
+  3b4802     db          00h ; ' '
+  3b4803     db          00h ; ' '
+  3b4804     db          00h ; ' '
+  3b4805     db          00h ; ' '
+  3b4806     db          00h ; ' '
+  3b4807     db          00h ; ' '
+  3b4808     db          00h ; ' '
+  3b4809     db          00h ; ' '
+  3b480a     db          00h ; ' '
+  3b480b     db          00h ; ' '
+  3b480c     db          00h ; ' '
+  3b480d     db          00h ; ' '
+  3b480e     db          00h ; ' '
+  3b480f     db          00h ; ' '
+  3b4810     db          00h ; ' '
+  3b4811     db          00h ; ' '
+  3b4812     db          00h ; ' '
+  3b4813     db          00h ; ' '
+  3b4814     db          00h ; ' '
+  3b4815     db          00h ; ' '
+  3b4816     db          00h ; ' '
+  3b4817     db          00h ; ' '
+  3b4818     db          00h ; ' '
+  3b4819     db          00h ; ' '
+  3b481a     db          00h ; ' '
+  3b481b     db          00h ; ' '
+  3b481c     db          00h ; ' '
+  3b481d     db          00h ; ' '
+  3b481e     db          00h ; ' '
+  3b481f     db          00h ; ' '
+  3b4820   
+  ......   ;********************************************************
+  ......   ; function vtable for IDirect3DResource9
+  ......   ;********************************************************
+  ......   __ZTV18IDirect3DResource9:
+  ......     db          00h ; ' '
+  3b4821     db          00h ; ' '
+  3b4822     db          00h ; ' '
+  3b4823     db          00h ; ' '
+  3b4824     db          40h ; '@'
+  3b4825     db          47h ; 'G'
+  3b4826     db          3bh ; ';'
+  3b4827     db          00h ; ' '
+  3b4828     db          00h ; ' '
+  3b4829     db          00h ; ' '
+  3b482a     db          00h ; ' '
+  3b482b     db          00h ; ' '
+  3b482c     db          00h ; ' '
+  3b482d     db          00h ; ' '
+  3b482e     db          00h ; ' '
+  3b482f     db          00h ; ' '
+  3b4830     db          00h ; ' '
+  3b4831     db          00h ; ' '
+  3b4832     db          00h ; ' '
+  3b4833     db          00h ; ' '
+  3b4834     db          00h ; ' '
+  3b4835     db          00h ; ' '
+  3b4836     db          00h ; ' '
+  3b4837     db          00h ; ' '
+  3b4838     db          00h ; ' '
+  3b4839     db          00h ; ' '
+  3b483a     db          00h ; ' '
+  3b483b     db          00h ; ' '
+  3b483c     db          00h ; ' '
+  3b483d     db          00h ; ' '
+  3b483e     db          00h ; ' '
+  3b483f     db          00h ; ' '
+  3b4840     db          00h ; ' '
+  3b4841     db          00h ; ' '
+  3b4842     db          00h ; ' '
+  3b4843     db          00h ; ' '
+  3b4844     db          00h ; ' '
+  3b4845     db          00h ; ' '
+  3b4846     db          00h ; ' '
+  3b4847     db          00h ; ' '
+  3b4848     db          00h ; ' '
+  3b4849     db          00h ; ' '
+  3b484a     db          00h ; ' '
+  3b484b     db          00h ; ' '
+  3b484c     db          00h ; ' '
+  3b484d     db          00h ; ' '
+  3b484e     db          00h ; ' '
+  3b484f     db          00h ; ' '
+  3b4850     db          00h ; ' '
+  3b4851     db          00h ; ' '
+  3b4852     db          00h ; ' '
+  3b4853     db          00h ; ' '
+  3b4854     db          00h ; ' '
+  3b4855     db          00h ; ' '
+  3b4856     db          00h ; ' '
+  3b4857     db          00h ; ' '
+  3b4858     db          00h ; ' '
+  3b4859     db          00h ; ' '
+  3b485a     db          00h ; ' '
+  3b485b     db          00h ; ' '
+  3b485c     db          00h ; ' '
+  3b485d     db          00h ; ' '
+  3b485e     db          00h ; ' '
+  3b485f     db          00h ; ' '
+  3b4860   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DDevice
+  ......   ;********************************************************
+  ......   __ZTI15CDirect3DDevice:
+  ......     db          08h ; ' '
+  3b4861     db          00h ; ' '
+  3b4862     db          00h ; ' '
+  3b4863     db          00h ; ' '
+  3b4864     db          b1h ; '±'
+  3b4865     db          38h ; '8'
+  3b4866     db          3ah ; ':'
+  3b4867     db          00h ; ' '
+  3b4868     db          80h ; '€'
+  3b4869     db          48h ; 'H'
+  3b486a     db          3bh ; ';'
+  3b486b     db          00h ; ' '
+  3b486c     db          00h ; ' '
+  3b486d     db          00h ; ' '
+  3b486e     db          00h ; ' '
+  3b486f     db          00h ; ' '
+  3b4870     db          00h ; ' '
+  3b4871     db          00h ; ' '
+  3b4872     db          00h ; ' '
+  3b4873     db          00h ; ' '
+  3b4874     db          00h ; ' '
+  3b4875     db          00h ; ' '
+  3b4876     db          00h ; ' '
+  3b4877     db          00h ; ' '
+  3b4878     db          00h ; ' '
+  3b4879     db          00h ; ' '
+  3b487a     db          00h ; ' '
+  3b487b     db          00h ; ' '
+  3b487c     db          00h ; ' '
+  3b487d     db          00h ; ' '
+  3b487e     db          00h ; ' '
+  3b487f     db          00h ; ' '
+  3b4880   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DDevice9
+  ......   ;********************************************************
+  ......   __ZTI16IDirect3DDevice9:
+  ......     db          08h ; ' '
+  3b4881     db          00h ; ' '
+  3b4882     db          00h ; ' '
+  3b4883     db          00h ; ' '
+  3b4884     db          9eh ; 'ž'
+  3b4885     db          38h ; '8'
+  3b4886     db          3ah ; ':'
+  3b4887     db          00h ; ' '
+  3b4888     db          a0h ; ' '
+  3b4889     db          46h ; 'F'
+  3b488a     db          3bh ; ';'
+  3b488b     db          00h ; ' '
+  3b488c     db          00h ; ' '
+  3b488d     db          00h ; ' '
+  3b488e     db          00h ; ' '
+  3b488f     db          00h ; ' '
+  3b4890     db          00h ; ' '
+  3b4891     db          00h ; ' '
+  3b4892     db          00h ; ' '
+  3b4893     db          00h ; ' '
+  3b4894     db          00h ; ' '
+  3b4895     db          00h ; ' '
+  3b4896     db          00h ; ' '
+  3b4897     db          00h ; ' '
+  3b4898     db          00h ; ' '
+  3b4899     db          00h ; ' '
+  3b489a     db          00h ; ' '
+  3b489b     db          00h ; ' '
+  3b489c     db          00h ; ' '
+  3b489d     db          00h ; ' '
+  3b489e     db          00h ; ' '
+  3b489f     db          00h ; ' '
+  3b48a0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DIndexBuffer
+  ......   ;********************************************************
+  ......   __ZTI20CDirect3DIndexBuffer:
+  ......     db          08h ; ' '
+  3b48a1     db          00h ; ' '
+  3b48a2     db          00h ; ' '
+  3b48a3     db          00h ; ' '
+  3b48a4     db          dbh ; 'Û'
+  3b48a5     db          38h ; '8'
+  3b48a6     db          3ah ; ':'
+  3b48a7     db          00h ; ' '
+  3b48a8     db          00h ; ' '
+  3b48a9     db          00h ; ' '
+  3b48aa     db          00h ; ' '
+  3b48ab     db          00h ; ' '
+  3b48ac     db          02h ; ' '
+  3b48ad     db          00h ; ' '
+  3b48ae     db          00h ; ' '
+  3b48af     db          00h ; ' '
+  3b48b0     db          c0h ; 'À'
+  3b48b1     db          48h ; 'H'
+  3b48b2     db          3bh ; ';'
+  3b48b3     db          00h ; ' '
+  3b48b4     db          02h ; ' '
+  3b48b5     db          00h ; ' '
+  3b48b6     db          00h ; ' '
+  3b48b7     db          00h ; ' '
+  3b48b8     db          60h ; '`'
+  3b48b9     db          4fh ; 'O'
+  3b48ba     db          3bh ; ';'
+  3b48bb     db          00h ; ' '
+  3b48bc     db          02h ; ' '
+  3b48bd     db          04h ; ' '
+  3b48be     db          00h ; ' '
+  3b48bf     db          00h ; ' '
+  3b48c0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DIndexBuffer9
+  ......   ;********************************************************
+  ......   __ZTI21IDirect3DIndexBuffer9:
+  ......     db          08h ; ' '
+  3b48c1     db          00h ; ' '
+  3b48c2     db          00h ; ' '
+  3b48c3     db          00h ; ' '
+  3b48c4     db          c3h ; 'Ã'
+  3b48c5     db          38h ; '8'
+  3b48c6     db          3ah ; ':'
+  3b48c7     db          00h ; ' '
+  3b48c8     db          40h ; '@'
+  3b48c9     db          47h ; 'G'
+  3b48ca     db          3bh ; ';'
+  3b48cb     db          00h ; ' '
+  3b48cc     db          00h ; ' '
+  3b48cd     db          00h ; ' '
+  3b48ce     db          00h ; ' '
+  3b48cf     db          00h ; ' '
+  3b48d0     db          00h ; ' '
+  3b48d1     db          00h ; ' '
+  3b48d2     db          00h ; ' '
+  3b48d3     db          00h ; ' '
+  3b48d4     db          00h ; ' '
+  3b48d5     db          00h ; ' '
+  3b48d6     db          00h ; ' '
+  3b48d7     db          00h ; ' '
+  3b48d8     db          00h ; ' '
+  3b48d9     db          00h ; ' '
+  3b48da     db          00h ; ' '
+  3b48db     db          00h ; ' '
+  3b48dc     db          00h ; ' '
+  3b48dd     db          00h ; ' '
+  3b48de     db          00h ; ' '
+  3b48df     db          00h ; ' '
+  3b48e0   
+  ......   ;********************************************************
+  ......   ; function vtable for IDirect3DIndexBuffer9
+  ......   ;********************************************************
+  ......   __ZTV21IDirect3DIndexBuffer9:
+  ......     db          00h ; ' '
+  3b48e1     db          00h ; ' '
+  3b48e2     db          00h ; ' '
+  3b48e3     db          00h ; ' '
+  3b48e4     db          c0h ; 'À'
+  3b48e5     db          48h ; 'H'
+  3b48e6     db          3bh ; ';'
+  3b48e7     db          00h ; ' '
+  3b48e8     db          00h ; ' '
+  3b48e9     db          00h ; ' '
+  3b48ea     db          00h ; ' '
+  3b48eb     db          00h ; ' '
+  3b48ec     db          00h ; ' '
+  3b48ed     db          00h ; ' '
+  3b48ee     db          00h ; ' '
+  3b48ef     db          00h ; ' '
+  3b48f0     db          00h ; ' '
+  3b48f1     db          00h ; ' '
+  3b48f2     db          00h ; ' '
+  3b48f3     db          00h ; ' '
+  3b48f4     db          00h ; ' '
+  3b48f5     db          00h ; ' '
+  3b48f6     db          00h ; ' '
+  3b48f7     db          00h ; ' '
+  3b48f8     db          00h ; ' '
+  3b48f9     db          00h ; ' '
+  3b48fa     db          00h ; ' '
+  3b48fb     db          00h ; ' '
+  3b48fc     db          00h ; ' '
+  3b48fd     db          00h ; ' '
+  3b48fe     db          00h ; ' '
+  3b48ff     db          00h ; ' '
+  3b4900     db          00h ; ' '
+  3b4901     db          00h ; ' '
+  3b4902     db          00h ; ' '
+  3b4903     db          00h ; ' '
+  3b4904     db          00h ; ' '
+  3b4905     db          00h ; ' '
+  3b4906     db          00h ; ' '
+  3b4907     db          00h ; ' '
+  3b4908     db          00h ; ' '
+  3b4909     db          00h ; ' '
+  3b490a     db          00h ; ' '
+  3b490b     db          00h ; ' '
+  3b490c     db          00h ; ' '
+  3b490d     db          00h ; ' '
+  3b490e     db          00h ; ' '
+  3b490f     db          00h ; ' '
+  3b4910     db          00h ; ' '
+  3b4911     db          00h ; ' '
+  3b4912     db          00h ; ' '
+  3b4913     db          00h ; ' '
+  3b4914     db          00h ; ' '
+  3b4915     db          00h ; ' '
+  3b4916     db          00h ; ' '
+  3b4917     db          00h ; ' '
+  3b4918     db          00h ; ' '
+  3b4919     db          00h ; ' '
+  3b491a     db          00h ; ' '
+  3b491b     db          00h ; ' '
+  3b491c     db          00h ; ' '
+  3b491d     db          00h ; ' '
+  3b491e     db          00h ; ' '
+  3b491f     db          00h ; ' '
+  3b4920   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DPixelShader
+  ......   ;********************************************************
+  ......   __ZTI20CDirect3DPixelShader:
+  ......     db          08h ; ' '
+  3b4921     db          00h ; ' '
+  3b4922     db          00h ; ' '
+  3b4923     db          00h ; ' '
+  3b4924     db          0ah ; ' '
+  3b4925     db          39h ; '9'
+  3b4926     db          3ah ; ':'
+  3b4927     db          00h ; ' '
+  3b4928     db          40h ; '@'
+  3b4929     db          49h ; 'I'
+  3b492a     db          3bh ; ';'
+  3b492b     db          00h ; ' '
+  3b492c     db          00h ; ' '
+  3b492d     db          00h ; ' '
+  3b492e     db          00h ; ' '
+  3b492f     db          00h ; ' '
+  3b4930     db          00h ; ' '
+  3b4931     db          00h ; ' '
+  3b4932     db          00h ; ' '
+  3b4933     db          00h ; ' '
+  3b4934     db          00h ; ' '
+  3b4935     db          00h ; ' '
+  3b4936     db          00h ; ' '
+  3b4937     db          00h ; ' '
+  3b4938     db          00h ; ' '
+  3b4939     db          00h ; ' '
+  3b493a     db          00h ; ' '
+  3b493b     db          00h ; ' '
+  3b493c     db          00h ; ' '
+  3b493d     db          00h ; ' '
+  3b493e     db          00h ; ' '
+  3b493f     db          00h ; ' '
+  3b4940   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DPixelShader9
+  ......   ;********************************************************
+  ......   __ZTI21IDirect3DPixelShader9:
+  ......     db          08h ; ' '
+  3b4941     db          00h ; ' '
+  3b4942     db          00h ; ' '
+  3b4943     db          00h ; ' '
+  3b4944     db          f2h ; 'ò'
+  3b4945     db          38h ; '8'
+  3b4946     db          3ah ; ':'
+  3b4947     db          00h ; ' '
+  3b4948     db          a0h ; ' '
+  3b4949     db          46h ; 'F'
+  3b494a     db          3bh ; ';'
+  3b494b     db          00h ; ' '
+  3b494c     db          00h ; ' '
+  3b494d     db          00h ; ' '
+  3b494e     db          00h ; ' '
+  3b494f     db          00h ; ' '
+  3b4950     db          00h ; ' '
+  3b4951     db          00h ; ' '
+  3b4952     db          00h ; ' '
+  3b4953     db          00h ; ' '
+  3b4954     db          00h ; ' '
+  3b4955     db          00h ; ' '
+  3b4956     db          00h ; ' '
+  3b4957     db          00h ; ' '
+  3b4958     db          00h ; ' '
+  3b4959     db          00h ; ' '
+  3b495a     db          00h ; ' '
+  3b495b     db          00h ; ' '
+  3b495c     db          00h ; ' '
+  3b495d     db          00h ; ' '
+  3b495e     db          00h ; ' '
+  3b495f     db          00h ; ' '
+  3b4960   
+  ......   ;********************************************************
+  ......   ; function typeinfo for COpenGLARBFragmentProgram
+  ......   ;********************************************************
+  ......   __ZTI25COpenGLARBFragmentProgram:
+  ......     db          08h ; ' '
+  3b4961     db          00h ; ' '
+  3b4962     db          00h ; ' '
+  3b4963     db          00h ; ' '
+  3b4964     db          21h ; '!'
+  3b4965     db          39h ; '9'
+  3b4966     db          3ah ; ':'
+  3b4967     db          00h ; ' '
+  3b4968     db          20h ; ' '
+  3b4969     db          49h ; 'I'
+  3b496a     db          3bh ; ';'
+  3b496b     db          00h ; ' '
+  3b496c     db          00h ; ' '
+  3b496d     db          00h ; ' '
+  3b496e     db          00h ; ' '
+  3b496f     db          00h ; ' '
+  3b4970     db          00h ; ' '
+  3b4971     db          00h ; ' '
+  3b4972     db          00h ; ' '
+  3b4973     db          00h ; ' '
+  3b4974     db          00h ; ' '
+  3b4975     db          00h ; ' '
+  3b4976     db          00h ; ' '
+  3b4977     db          00h ; ' '
+  3b4978     db          00h ; ' '
+  3b4979     db          00h ; ' '
+  3b497a     db          00h ; ' '
+  3b497b     db          00h ; ' '
+  3b497c     db          00h ; ' '
+  3b497d     db          00h ; ' '
+  3b497e     db          00h ; ' '
+  3b497f     db          00h ; ' '
+  3b4980   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DSurface
+  ......   ;********************************************************
+  ......   __ZTI16CDirect3DSurface:
+  ......     db          08h ; ' '
+  3b4981     db          00h ; ' '
+  3b4982     db          00h ; ' '
+  3b4983     db          00h ; ' '
+  3b4984     db          51h ; 'Q'
+  3b4985     db          39h ; '9'
+  3b4986     db          3ah ; ':'
+  3b4987     db          00h ; ' '
+  3b4988     db          a0h ; ' '
+  3b4989     db          49h ; 'I'
+  3b498a     db          3bh ; ';'
+  3b498b     db          00h ; ' '
+  3b498c     db          00h ; ' '
+  3b498d     db          00h ; ' '
+  3b498e     db          00h ; ' '
+  3b498f     db          00h ; ' '
+  3b4990     db          00h ; ' '
+  3b4991     db          00h ; ' '
+  3b4992     db          00h ; ' '
+  3b4993     db          00h ; ' '
+  3b4994     db          00h ; ' '
+  3b4995     db          00h ; ' '
+  3b4996     db          00h ; ' '
+  3b4997     db          00h ; ' '
+  3b4998     db          00h ; ' '
+  3b4999     db          00h ; ' '
+  3b499a     db          00h ; ' '
+  3b499b     db          00h ; ' '
+  3b499c     db          00h ; ' '
+  3b499d     db          00h ; ' '
+  3b499e     db          00h ; ' '
+  3b499f     db          00h ; ' '
+  3b49a0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DSurface9
+  ......   ;********************************************************
+  ......   __ZTI17IDirect3DSurface9:
+  ......     db          08h ; ' '
+  3b49a1     db          00h ; ' '
+  3b49a2     db          00h ; ' '
+  3b49a3     db          00h ; ' '
+  3b49a4     db          3dh ; '='
+  3b49a5     db          39h ; '9'
+  3b49a6     db          3ah ; ':'
+  3b49a7     db          00h ; ' '
+  3b49a8     db          40h ; '@'
+  3b49a9     db          47h ; 'G'
+  3b49aa     db          3bh ; ';'
+  3b49ab     db          00h ; ' '
+  3b49ac     db          00h ; ' '
+  3b49ad     db          00h ; ' '
+  3b49ae     db          00h ; ' '
+  3b49af     db          00h ; ' '
+  3b49b0     db          00h ; ' '
+  3b49b1     db          00h ; ' '
+  3b49b2     db          00h ; ' '
+  3b49b3     db          00h ; ' '
+  3b49b4     db          00h ; ' '
+  3b49b5     db          00h ; ' '
+  3b49b6     db          00h ; ' '
+  3b49b7     db          00h ; ' '
+  3b49b8     db          00h ; ' '
+  3b49b9     db          00h ; ' '
+  3b49ba     db          00h ; ' '
+  3b49bb     db          00h ; ' '
+  3b49bc     db          00h ; ' '
+  3b49bd     db          00h ; ' '
+  3b49be     db          00h ; ' '
+  3b49bf     db          00h ; ' '
+  3b49c0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DSwapChain
+  ......   ;********************************************************
+  ......   __ZTI18CDirect3DSwapChain:
+  ......     db          08h ; ' '
+  3b49c1     db          00h ; ' '
+  3b49c2     db          00h ; ' '
+  3b49c3     db          00h ; ' '
+  3b49c4     db          7ah ; 'z'
+  3b49c5     db          39h ; '9'
+  3b49c6     db          3ah ; ':'
+  3b49c7     db          00h ; ' '
+  3b49c8     db          e0h ; 'à'
+  3b49c9     db          49h ; 'I'
+  3b49ca     db          3bh ; ';'
+  3b49cb     db          00h ; ' '
+  3b49cc     db          00h ; ' '
+  3b49cd     db          00h ; ' '
+  3b49ce     db          00h ; ' '
+  3b49cf     db          00h ; ' '
+  3b49d0     db          00h ; ' '
+  3b49d1     db          00h ; ' '
+  3b49d2     db          00h ; ' '
+  3b49d3     db          00h ; ' '
+  3b49d4     db          00h ; ' '
+  3b49d5     db          00h ; ' '
+  3b49d6     db          00h ; ' '
+  3b49d7     db          00h ; ' '
+  3b49d8     db          00h ; ' '
+  3b49d9     db          00h ; ' '
+  3b49da     db          00h ; ' '
+  3b49db     db          00h ; ' '
+  3b49dc     db          00h ; ' '
+  3b49dd     db          00h ; ' '
+  3b49de     db          00h ; ' '
+  3b49df     db          00h ; ' '
+  3b49e0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DSwapChain9
+  ......   ;********************************************************
+  ......   __ZTI19IDirect3DSwapChain9:
+  ......     db          08h ; ' '
+  3b49e1     db          00h ; ' '
+  3b49e2     db          00h ; ' '
+  3b49e3     db          00h ; ' '
+  3b49e4     db          64h ; 'd'
+  3b49e5     db          39h ; '9'
+  3b49e6     db          3ah ; ':'
+  3b49e7     db          00h ; ' '
+  3b49e8     db          a0h ; ' '
+  3b49e9     db          46h ; 'F'
+  3b49ea     db          3bh ; ';'
+  3b49eb     db          00h ; ' '
+  3b49ec     db          00h ; ' '
+  3b49ed     db          00h ; ' '
+  3b49ee     db          00h ; ' '
+  3b49ef     db          00h ; ' '
+  3b49f0     db          00h ; ' '
+  3b49f1     db          00h ; ' '
+  3b49f2     db          00h ; ' '
+  3b49f3     db          00h ; ' '
+  3b49f4     db          00h ; ' '
+  3b49f5     db          00h ; ' '
+  3b49f6     db          00h ; ' '
+  3b49f7     db          00h ; ' '
+  3b49f8     db          00h ; ' '
+  3b49f9     db          00h ; ' '
+  3b49fa     db          00h ; ' '
+  3b49fb     db          00h ; ' '
+  3b49fc     db          00h ; ' '
+  3b49fd     db          00h ; ' '
+  3b49fe     db          00h ; ' '
+  3b49ff     db          00h ; ' '
+  3b4a00   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DTexture
+  ......   ;********************************************************
+  ......   __ZTI16CDirect3DTexture:
+  ......     db          08h ; ' '
+  3b4a01     db          00h ; ' '
+  3b4a02     db          00h ; ' '
+  3b4a03     db          00h ; ' '
+  3b4a04     db          a3h ; '£'
+  3b4a05     db          39h ; '9'
+  3b4a06     db          3ah ; ':'
+  3b4a07     db          00h ; ' '
+  3b4a08     db          00h ; ' '
+  3b4a09     db          00h ; ' '
+  3b4a0a     db          00h ; ' '
+  3b4a0b     db          00h ; ' '
+  3b4a0c     db          02h ; ' '
+  3b4a0d     db          00h ; ' '
+  3b4a0e     db          00h ; ' '
+  3b4a0f     db          00h ; ' '
+  3b4a10     db          20h ; ' '
+  3b4a11     db          4ah ; 'J'
+  3b4a12     db          3bh ; ';'
+  3b4a13     db          00h ; ' '
+  3b4a14     db          02h ; ' '
+  3b4a15     db          00h ; ' '
+  3b4a16     db          00h ; ' '
+  3b4a17     db          00h ; ' '
+  3b4a18     db          a0h ; ' '
+  3b4a19     db          4fh ; 'O'
+  3b4a1a     db          3bh ; ';'
+  3b4a1b     db          00h ; ' '
+  3b4a1c     db          02h ; ' '
+  3b4a1d     db          04h ; ' '
+  3b4a1e     db          00h ; ' '
+  3b4a1f     db          00h ; ' '
+  3b4a20   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DTexture9
+  ......   ;********************************************************
+  ......   __ZTI17IDirect3DTexture9:
+  ......     db          08h ; ' '
+  3b4a21     db          00h ; ' '
+  3b4a22     db          00h ; ' '
+  3b4a23     db          00h ; ' '
+  3b4a24     db          8fh ; ''
+  3b4a25     db          39h ; '9'
+  3b4a26     db          3ah ; ':'
+  3b4a27     db          00h ; ' '
+  3b4a28     db          20h ; ' '
+  3b4a29     db          47h ; 'G'
+  3b4a2a     db          3bh ; ';'
+  3b4a2b     db          00h ; ' '
+  3b4a2c     db          00h ; ' '
+  3b4a2d     db          00h ; ' '
+  3b4a2e     db          00h ; ' '
+  3b4a2f     db          00h ; ' '
+  3b4a30     db          00h ; ' '
+  3b4a31     db          00h ; ' '
+  3b4a32     db          00h ; ' '
+  3b4a33     db          00h ; ' '
+  3b4a34     db          00h ; ' '
+  3b4a35     db          00h ; ' '
+  3b4a36     db          00h ; ' '
+  3b4a37     db          00h ; ' '
+  3b4a38     db          00h ; ' '
+  3b4a39     db          00h ; ' '
+  3b4a3a     db          00h ; ' '
+  3b4a3b     db          00h ; ' '
+  3b4a3c     db          00h ; ' '
+  3b4a3d     db          00h ; ' '
+  3b4a3e     db          00h ; ' '
+  3b4a3f     db          00h ; ' '
+  3b4a40   
+  ......   ;********************************************************
+  ......   ; function vtable for IDirect3DTexture9
+  ......   ;********************************************************
+  ......   __ZTV17IDirect3DTexture9:
+  ......     db          00h ; ' '
+  3b4a41     db          00h ; ' '
+  3b4a42     db          00h ; ' '
+  3b4a43     db          00h ; ' '
+  3b4a44     db          20h ; ' '
+  3b4a45     db          4ah ; 'J'
+  3b4a46     db          3bh ; ';'
+  3b4a47     db          00h ; ' '
+  3b4a48     db          00h ; ' '
+  3b4a49     db          00h ; ' '
+  3b4a4a     db          00h ; ' '
+  3b4a4b     db          00h ; ' '
+  3b4a4c     db          00h ; ' '
+  3b4a4d     db          00h ; ' '
+  3b4a4e     db          00h ; ' '
+  3b4a4f     db          00h ; ' '
+  3b4a50     db          00h ; ' '
+  3b4a51     db          00h ; ' '
+  3b4a52     db          00h ; ' '
+  3b4a53     db          00h ; ' '
+  3b4a54     db          00h ; ' '
+  3b4a55     db          00h ; ' '
+  3b4a56     db          00h ; ' '
+  3b4a57     db          00h ; ' '
+  3b4a58     db          00h ; ' '
+  3b4a59     db          00h ; ' '
+  3b4a5a     db          00h ; ' '
+  3b4a5b     db          00h ; ' '
+  3b4a5c     db          00h ; ' '
+  3b4a5d     db          00h ; ' '
+  3b4a5e     db          00h ; ' '
+  3b4a5f     db          00h ; ' '
+  3b4a60     db          00h ; ' '
+  3b4a61     db          00h ; ' '
+  3b4a62     db          00h ; ' '
+  3b4a63     db          00h ; ' '
+  3b4a64     db          00h ; ' '
+  3b4a65     db          00h ; ' '
+  3b4a66     db          00h ; ' '
+  3b4a67     db          00h ; ' '
+  3b4a68     db          00h ; ' '
+  3b4a69     db          00h ; ' '
+  3b4a6a     db          00h ; ' '
+  3b4a6b     db          00h ; ' '
+  3b4a6c     db          00h ; ' '
+  3b4a6d     db          00h ; ' '
+  3b4a6e     db          00h ; ' '
+  3b4a6f     db          00h ; ' '
+  3b4a70     db          00h ; ' '
+  3b4a71     db          00h ; ' '
+  3b4a72     db          00h ; ' '
+  3b4a73     db          00h ; ' '
+  3b4a74     db          00h ; ' '
+  3b4a75     db          00h ; ' '
+  3b4a76     db          00h ; ' '
+  3b4a77     db          00h ; ' '
+  3b4a78     db          00h ; ' '
+  3b4a79     db          00h ; ' '
+  3b4a7a     db          00h ; ' '
+  3b4a7b     db          00h ; ' '
+  3b4a7c     db          00h ; ' '
+  3b4a7d     db          00h ; ' '
+  3b4a7e     db          00h ; ' '
+  3b4a7f     db          00h ; ' '
+  3b4a80     db          00h ; ' '
+  3b4a81     db          00h ; ' '
+  3b4a82     db          00h ; ' '
+  3b4a83     db          00h ; ' '
+  3b4a84     db          00h ; ' '
+  3b4a85     db          00h ; ' '
+  3b4a86     db          00h ; ' '
+  3b4a87     db          00h ; ' '
+  3b4a88     db          00h ; ' '
+  3b4a89     db          00h ; ' '
+  3b4a8a     db          00h ; ' '
+  3b4a8b     db          00h ; ' '
+  3b4a8c     db          00h ; ' '
+  3b4a8d     db          00h ; ' '
+  3b4a8e     db          00h ; ' '
+  3b4a8f     db          00h ; ' '
+  3b4a90     db          00h ; ' '
+  3b4a91     db          00h ; ' '
+  3b4a92     db          00h ; ' '
+  3b4a93     db          00h ; ' '
+  3b4a94     db          00h ; ' '
+  3b4a95     db          00h ; ' '
+  3b4a96     db          00h ; ' '
+  3b4a97     db          00h ; ' '
+  3b4a98     db          00h ; ' '
+  3b4a99     db          00h ; ' '
+  3b4a9a     db          00h ; ' '
+  3b4a9b     db          00h ; ' '
+  3b4a9c     db          00h ; ' '
+  3b4a9d     db          00h ; ' '
+  3b4a9e     db          00h ; ' '
+  3b4a9f     db          00h ; ' '
+  3b4aa0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DVertexBuffer
+  ......   ;********************************************************
+  ......   __ZTI21CDirect3DVertexBuffer:
+  ......     db          08h ; ' '
+  3b4aa1     db          00h ; ' '
+  3b4aa2     db          00h ; ' '
+  3b4aa3     db          00h ; ' '
+  3b4aa4     db          cfh ; 'Ï'
+  3b4aa5     db          39h ; '9'
+  3b4aa6     db          3ah ; ':'
+  3b4aa7     db          00h ; ' '
+  3b4aa8     db          00h ; ' '
+  3b4aa9     db          00h ; ' '
+  3b4aaa     db          00h ; ' '
+  3b4aab     db          00h ; ' '
+  3b4aac     db          02h ; ' '
+  3b4aad     db          00h ; ' '
+  3b4aae     db          00h ; ' '
+  3b4aaf     db          00h ; ' '
+  3b4ab0     db          c0h ; 'À'
+  3b4ab1     db          4ah ; 'J'
+  3b4ab2     db          3bh ; ';'
+  3b4ab3     db          00h ; ' '
+  3b4ab4     db          02h ; ' '
+  3b4ab5     db          00h ; ' '
+  3b4ab6     db          00h ; ' '
+  3b4ab7     db          00h ; ' '
+  3b4ab8     db          60h ; '`'
+  3b4ab9     db          4fh ; 'O'
+  3b4aba     db          3bh ; ';'
+  3b4abb     db          00h ; ' '
+  3b4abc     db          02h ; ' '
+  3b4abd     db          04h ; ' '
+  3b4abe     db          00h ; ' '
+  3b4abf     db          00h ; ' '
+  3b4ac0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DVertexBuffer9
+  ......   ;********************************************************
+  ......   __ZTI22IDirect3DVertexBuffer9:
+  ......     db          08h ; ' '
+  3b4ac1     db          00h ; ' '
+  3b4ac2     db          00h ; ' '
+  3b4ac3     db          00h ; ' '
+  3b4ac4     db          b6h ; '¶'
+  3b4ac5     db          39h ; '9'
+  3b4ac6     db          3ah ; ':'
+  3b4ac7     db          00h ; ' '
+  3b4ac8     db          40h ; '@'
+  3b4ac9     db          47h ; 'G'
+  3b4aca     db          3bh ; ';'
+  3b4acb     db          00h ; ' '
+  3b4acc     db          00h ; ' '
+  3b4acd     db          00h ; ' '
+  3b4ace     db          00h ; ' '
+  3b4acf     db          00h ; ' '
+  3b4ad0     db          00h ; ' '
+  3b4ad1     db          00h ; ' '
+  3b4ad2     db          00h ; ' '
+  3b4ad3     db          00h ; ' '
+  3b4ad4     db          00h ; ' '
+  3b4ad5     db          00h ; ' '
+  3b4ad6     db          00h ; ' '
+  3b4ad7     db          00h ; ' '
+  3b4ad8     db          00h ; ' '
+  3b4ad9     db          00h ; ' '
+  3b4ada     db          00h ; ' '
+  3b4adb     db          00h ; ' '
+  3b4adc     db          00h ; ' '
+  3b4add     db          00h ; ' '
+  3b4ade     db          00h ; ' '
+  3b4adf     db          00h ; ' '
+  3b4ae0   
+  ......   ;********************************************************
+  ......   ; function vtable for IDirect3DVertexBuffer9
+  ......   ;********************************************************
+  ......   __ZTV22IDirect3DVertexBuffer9:
+  ......     dd          00000000h
+  3b4ae4     dd          003b4ac0h
+  3b4ae8     dd          00000000h
+  3b4aec     dd          00000000h
+  3b4af0     dd          00000000h
+  3b4af4     dd          00000000h
+  3b4af8     dd          00000000h
+  3b4afc     dd          00000000h
+  3b4b00     dd          00000000h
+  3b4b04     db          00h ; ' '
+  3b4b05     dd          00000000h
+  3b4b09     dd          00000000h
+  3b4b0d     dd          00000000h
+  3b4b11     db          00h ; ' '
+  3b4b12     db          00h ; ' '
+  3b4b13     db          00h ; ' '
+  3b4b14     db          00h ; ' '
+  3b4b15     db          00h ; ' '
+  3b4b16     db          00h ; ' '
+  3b4b17     db          00h ; ' '
+  3b4b18     db          00h ; ' '
+  3b4b19     db          00h ; ' '
+  3b4b1a     db          00h ; ' '
+  3b4b1b     db          00h ; ' '
+  3b4b1c     db          00h ; ' '
+  3b4b1d     db          00h ; ' '
+  3b4b1e     db          00h ; ' '
+  3b4b1f     db          00h ; ' '
+  3b4b20   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DVertexDeclaration
+  ......   ;********************************************************
+  ......   __ZTI26CDirect3DVertexDeclaration:
+  ......     db          08h ; ' '
+  3b4b21     db          00h ; ' '
+  3b4b22     db          00h ; ' '
+  3b4b23     db          00h ; ' '
+  3b4b24     db          05h ; ' '
+  3b4b25     db          3ah ; ':'
+  3b4b26     db          3ah ; ':'
+  3b4b27     db          00h ; ' '
+  3b4b28     db          40h ; '@'
+  3b4b29     db          4bh ; 'K'
+  3b4b2a     db          3bh ; ';'
+  3b4b2b     db          00h ; ' '
+  3b4b2c     db          00h ; ' '
+  3b4b2d     db          00h ; ' '
+  3b4b2e     db          00h ; ' '
+  3b4b2f     db          00h ; ' '
+  3b4b30     db          00h ; ' '
+  3b4b31     db          00h ; ' '
+  3b4b32     db          00h ; ' '
+  3b4b33     db          00h ; ' '
+  3b4b34     db          00h ; ' '
+  3b4b35     db          00h ; ' '
+  3b4b36     db          00h ; ' '
+  3b4b37     db          00h ; ' '
+  3b4b38     db          00h ; ' '
+  3b4b39     db          00h ; ' '
+  3b4b3a     db          00h ; ' '
+  3b4b3b     db          00h ; ' '
+  3b4b3c     db          00h ; ' '
+  3b4b3d     db          00h ; ' '
+  3b4b3e     db          00h ; ' '
+  3b4b3f     db          00h ; ' '
+  3b4b40   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DVertexDeclaration9
+  ......   ;********************************************************
+  ......   __ZTI27IDirect3DVertexDeclaration9:
+  ......     db          08h ; ' '
+  3b4b41     db          00h ; ' '
+  3b4b42     db          00h ; ' '
+  3b4b43     db          00h ; ' '
+  3b4b44     db          e7h ; 'ç'
+  3b4b45     db          39h ; '9'
+  3b4b46     db          3ah ; ':'
+  3b4b47     db          00h ; ' '
+  3b4b48     db          a0h ; ' '
+  3b4b49     db          46h ; 'F'
+  3b4b4a     db          3bh ; ';'
+  3b4b4b     db          00h ; ' '
+  3b4b4c     db          00h ; ' '
+  3b4b4d     db          00h ; ' '
+  3b4b4e     db          00h ; ' '
+  3b4b4f     db          00h ; ' '
+  3b4b50     db          00h ; ' '
+  3b4b51     db          00h ; ' '
+  3b4b52     db          00h ; ' '
+  3b4b53     db          00h ; ' '
+  3b4b54     db          00h ; ' '
+  3b4b55     db          00h ; ' '
+  3b4b56     db          00h ; ' '
+  3b4b57     db          00h ; ' '
+  3b4b58     db          00h ; ' '
+  3b4b59     db          00h ; ' '
+  3b4b5a     db          00h ; ' '
+  3b4b5b     db          00h ; ' '
+  3b4b5c     db          00h ; ' '
+  3b4b5d     db          00h ; ' '
+  3b4b5e     db          00h ; ' '
+  3b4b5f     db          00h ; ' '
+  3b4b60   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DVertexShader
+  ......   ;********************************************************
+  ......   __ZTI21CDirect3DVertexShader:
+  ......     db          08h ; ' '
+  3b4b61     db          00h ; ' '
+  3b4b62     db          00h ; ' '
+  3b4b63     db          00h ; ' '
+  3b4b64     db          3bh ; ';'
+  3b4b65     db          3ah ; ':'
+  3b4b66     db          3ah ; ':'
+  3b4b67     db          00h ; ' '
+  3b4b68     db          00h ; ' '
+  3b4b69     db          00h ; ' '
+  3b4b6a     db          00h ; ' '
+  3b4b6b     db          00h ; ' '
+  3b4b6c     db          02h ; ' '
+  3b4b6d     db          00h ; ' '
+  3b4b6e     db          00h ; ' '
+  3b4b6f     db          00h ; ' '
+  3b4b70     db          80h ; '€'
+  3b4b71     db          4bh ; 'K'
+  3b4b72     db          3bh ; ';'
+  3b4b73     db          00h ; ' '
+  3b4b74     db          02h ; ' '
+  3b4b75     db          00h ; ' '
+  3b4b76     db          00h ; ' '
+  3b4b77     db          00h ; ' '
+  3b4b78     db          e0h ; 'à'
+  3b4b79     db          4bh ; 'K'
+  3b4b7a     db          3bh ; ';'
+  3b4b7b     db          00h ; ' '
+  3b4b7c     db          02h ; ' '
+  3b4b7d     db          04h ; ' '
+  3b4b7e     db          00h ; ' '
+  3b4b7f     db          00h ; ' '
+  3b4b80   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DVertexShader9
+  ......   ;********************************************************
+  ......   __ZTI22IDirect3DVertexShader9:
+  ......     db          08h ; ' '
+  3b4b81     db          00h ; ' '
+  3b4b82     db          00h ; ' '
+  3b4b83     db          00h ; ' '
+  3b4b84     db          22h ; '"'
+  3b4b85     db          3ah ; ':'
+  3b4b86     db          3ah ; ':'
+  3b4b87     db          00h ; ' '
+  3b4b88     db          a0h ; ' '
+  3b4b89     db          46h ; 'F'
+  3b4b8a     db          3bh ; ';'
+  3b4b8b     db          00h ; ' '
+  3b4b8c     db          00h ; ' '
+  3b4b8d     db          00h ; ' '
+  3b4b8e     db          00h ; ' '
+  3b4b8f     db          00h ; ' '
+  3b4b90     db          00h ; ' '
+  3b4b91     db          00h ; ' '
+  3b4b92     db          00h ; ' '
+  3b4b93     db          00h ; ' '
+  3b4b94     db          00h ; ' '
+  3b4b95     db          00h ; ' '
+  3b4b96     db          00h ; ' '
+  3b4b97     db          00h ; ' '
+  3b4b98     db          00h ; ' '
+  3b4b99     db          00h ; ' '
+  3b4b9a     db          00h ; ' '
+  3b4b9b     db          00h ; ' '
+  3b4b9c     db          00h ; ' '
+  3b4b9d     db          00h ; ' '
+  3b4b9e     db          00h ; ' '
+  3b4b9f     db          00h ; ' '
+  3b4ba0   
+  ......   ;********************************************************
+  ......   ; function vtable for IDirect3DVertexShader9
+  ......   ;********************************************************
+  ......   __ZTV22IDirect3DVertexShader9:
+  ......     db          00h ; ' '
+  3b4ba1     db          00h ; ' '
+  3b4ba2     db          00h ; ' '
+  3b4ba3     db          00h ; ' '
+  3b4ba4     db          80h ; '€'
+  3b4ba5     db          4bh ; 'K'
+  3b4ba6     db          3bh ; ';'
+  3b4ba7     db          00h ; ' '
+  3b4ba8     db          00h ; ' '
+  3b4ba9     db          00h ; ' '
+  3b4baa     db          00h ; ' '
+  3b4bab     db          00h ; ' '
+  3b4bac     db          00h ; ' '
+  3b4bad     db          00h ; ' '
+  3b4bae     db          00h ; ' '
+  3b4baf     db          00h ; ' '
+  3b4bb0     db          00h ; ' '
+  3b4bb1     db          00h ; ' '
+  3b4bb2     db          00h ; ' '
+  3b4bb3     db          00h ; ' '
+  3b4bb4     db          00h ; ' '
+  3b4bb5     db          00h ; ' '
+  3b4bb6     db          00h ; ' '
+  3b4bb7     db          00h ; ' '
+  3b4bb8     db          00h ; ' '
+  3b4bb9     db          00h ; ' '
+  3b4bba     db          00h ; ' '
+  3b4bbb     db          00h ; ' '
+  3b4bbc     db          00h ; ' '
+  3b4bbd     db          00h ; ' '
+  3b4bbe     db          00h ; ' '
+  3b4bbf     db          00h ; ' '
+  3b4bc0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CMemoryBuffer
+  ......   ;********************************************************
+  ......   __ZTI13CMemoryBuffer:
+  ......     db          08h ; ' '
+  3b4bc1     db          00h ; ' '
+  3b4bc2     db          00h ; ' '
+  3b4bc3     db          00h ; ' '
+  3b4bc4     db          53h ; 'S'
+  3b4bc5     db          3ah ; ':'
+  3b4bc6     db          3ah ; ':'
+  3b4bc7     db          00h ; ' '
+  3b4bc8     db          00h ; ' '
+  3b4bc9     db          00h ; ' '
+  3b4bca     db          00h ; ' '
+  3b4bcb     db          00h ; ' '
+  3b4bcc     db          00h ; ' '
+  3b4bcd     db          00h ; ' '
+  3b4bce     db          00h ; ' '
+  3b4bcf     db          00h ; ' '
+  3b4bd0     db          00h ; ' '
+  3b4bd1     db          00h ; ' '
+  3b4bd2     db          00h ; ' '
+  3b4bd3     db          00h ; ' '
+  3b4bd4     db          00h ; ' '
+  3b4bd5     db          00h ; ' '
+  3b4bd6     db          00h ; ' '
+  3b4bd7     db          00h ; ' '
+  3b4bd8     db          00h ; ' '
+  3b4bd9     db          00h ; ' '
+  3b4bda     db          00h ; ' '
+  3b4bdb     db          00h ; ' '
+  3b4bdc     db          00h ; ' '
+  3b4bdd     db          00h ; ' '
+  3b4bde     db          00h ; ' '
+  3b4bdf     db          00h ; ' '
+  3b4be0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for COpenGLVertexProgram
+  ......   ;********************************************************
+  ......   __ZTI20COpenGLVertexProgram:
+  ......     db          08h ; ' '
+  3b4be1     db          00h ; ' '
+  3b4be2     db          00h ; ' '
+  3b4be3     db          00h ; ' '
+  3b4be4     db          63h ; 'c'
+  3b4be5     db          3ah ; ':'
+  3b4be6     db          3ah ; ':'
+  3b4be7     db          00h ; ' '
+  3b4be8     db          00h ; ' '
+  3b4be9     db          00h ; ' '
+  3b4bea     db          00h ; ' '
+  3b4beb     db          00h ; ' '
+  3b4bec     db          00h ; ' '
+  3b4bed     db          00h ; ' '
+  3b4bee     db          00h ; ' '
+  3b4bef     db          00h ; ' '
+  3b4bf0     db          00h ; ' '
+  3b4bf1     db          00h ; ' '
+  3b4bf2     db          00h ; ' '
+  3b4bf3     db          00h ; ' '
+  3b4bf4     db          00h ; ' '
+  3b4bf5     db          00h ; ' '
+  3b4bf6     db          00h ; ' '
+  3b4bf7     db          00h ; ' '
+  3b4bf8     db          00h ; ' '
+  3b4bf9     db          00h ; ' '
+  3b4bfa     db          00h ; ' '
+  3b4bfb     db          00h ; ' '
+  3b4bfc     db          00h ; ' '
+  3b4bfd     db          00h ; ' '
+  3b4bfe     db          00h ; ' '
+  3b4bff     db          00h ; ' '
+  3b4c00   
+  ......   ;********************************************************
+  ......   ; function typeinfo for COpenGL
+  ......   ;********************************************************
+  ......   __ZTI7COpenGL:
+  ......     db          08h ; ' '
+  3b4c01     db          00h ; ' '
+  3b4c02     db          00h ; ' '
+  3b4c03     db          00h ; ' '
+  3b4c04     dd          003a3a7ah
+  3b4c08     db          00h ; ' '
+  3b4c09     db          00h ; ' '
+  3b4c0a     db          00h ; ' '
+  3b4c0b     db          00h ; ' '
+  3b4c0c     db          00h ; ' '
+  3b4c0d     db          00h ; ' '
+  3b4c0e     db          00h ; ' '
+  3b4c0f     db          00h ; ' '
+  3b4c10     db          00h ; ' '
+  3b4c11     db          00h ; ' '
+  3b4c12     db          00h ; ' '
+  3b4c13     db          00h ; ' '
+  3b4c14     db          00h ; ' '
+  3b4c15     db          00h ; ' '
+  3b4c16     db          00h ; ' '
+  3b4c17     db          00h ; ' '
+  3b4c18     db          00h ; ' '
+  3b4c19     db          00h ; ' '
+  3b4c1a     db          00h ; ' '
+  3b4c1b     db          00h ; ' '
+  3b4c1c     db          00h ; ' '
+  3b4c1d     db          00h ; ' '
+  3b4c1e     db          00h ; ' '
+  3b4c1f     db          00h ; ' '
+  3b4c20   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CMacGameEngine
+  ......   ;********************************************************
+  ......   __ZTI14CMacGameEngine:
+  ......     db          08h ; ' '
+  3b4c24     dd          003a3a83h
+  3b4c28     dd          00000000h
+  3b4c2c     dd          00000000h
+  3b4c30     dd          00000000h
+  3b4c34     dd          00000000h
+  3b4c38     dd          00000000h
+  3b4c3c     dd          00000000h
+  3b4c40   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CCallOfDutyEngine
+  ......   ;********************************************************
+  ......   __ZTI17CCallOfDutyEngine:
+  ......     dd          00000008h
+  3b4c44     dd          003a3a94h
+  3b4c48     dd          003b4c20h
+  3b4c4c     dd          00000000h
+  3b4c50     dd          00000000h
+  3b4c54     dd          00000000h
+  3b4c58     dd          00000000h
+  3b4c5c     dd          00000000h
+  3b4c60   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CThread
+  ......   ;********************************************************
+  ......   __ZTI7CThread:
+  ......     dd          00000008h
+  3b4c64     dd          003a3aa8h
+  3b4c68     dd          00000000h
+  3b4c6c     dd          00000000h
+  3b4c70     dd          00000000h
+  3b4c74     dd          00000000h
+  3b4c78     dd          00000000h
+  3b4c7c     dd          00000000h
+  3b4c80   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DVolume
+  ......   ;********************************************************
+  ......   __ZTI15CDirect3DVolume:
+  ......     db          08h ; ' '
+  3b4c81     db          00h ; ' '
+  3b4c82     db          00h ; ' '
+  3b4c83     db          00h ; ' '
+  3b4c84     dd          003a3ac4h
+  3b4c88     db          a0h ; ' '
+  3b4c89     db          4ch ; 'L'
+  3b4c8a     db          3bh ; ';'
+  3b4c8b     db          00h ; ' '
+  3b4c8c     db          00h ; ' '
+  3b4c8d     db          00h ; ' '
+  3b4c8e     db          00h ; ' '
+  3b4c8f     db          00h ; ' '
+  3b4c90     db          00h ; ' '
+  3b4c91     db          00h ; ' '
+  3b4c92     db          00h ; ' '
+  3b4c93     db          00h ; ' '
+  3b4c94     db          00h ; ' '
+  3b4c95     db          00h ; ' '
+  3b4c96     db          00h ; ' '
+  3b4c97     db          00h ; ' '
+  3b4c98     db          00h ; ' '
+  3b4c99     db          00h ; ' '
+  3b4c9a     db          00h ; ' '
+  3b4c9b     db          00h ; ' '
+  3b4c9c     db          00h ; ' '
+  3b4c9d     db          00h ; ' '
+  3b4c9e     db          00h ; ' '
+  3b4c9f     db          00h ; ' '
+  3b4ca0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DVolume9
+  ......   ;********************************************************
+  ......   __ZTI16IDirect3DVolume9:
+  ......     db          08h ; ' '
+  3b4ca1     db          00h ; ' '
+  3b4ca2     db          00h ; ' '
+  3b4ca3     db          00h ; ' '
+  3b4ca4     db          b1h ; '±'
+  3b4ca5     db          3ah ; ':'
+  3b4ca6     db          3ah ; ':'
+  3b4ca7     db          00h ; ' '
+  3b4ca8     db          a0h ; ' '
+  3b4ca9     db          46h ; 'F'
+  3b4caa     db          3bh ; ';'
+  3b4cab     db          00h ; ' '
+  3b4cac     db          00h ; ' '
+  3b4cad     db          00h ; ' '
+  3b4cae     db          00h ; ' '
+  3b4caf     db          00h ; ' '
+  3b4cb0     db          00h ; ' '
+  3b4cb1     db          00h ; ' '
+  3b4cb2     db          00h ; ' '
+  3b4cb3     db          00h ; ' '
+  3b4cb4     db          00h ; ' '
+  3b4cb5     db          00h ; ' '
+  3b4cb6     db          00h ; ' '
+  3b4cb7     db          00h ; ' '
+  3b4cb8     db          00h ; ' '
+  3b4cb9     db          00h ; ' '
+  3b4cba     db          00h ; ' '
+  3b4cbb     db          00h ; ' '
+  3b4cbc     db          00h ; ' '
+  3b4cbd     db          00h ; ' '
+  3b4cbe     db          00h ; ' '
+  3b4cbf     db          00h ; ' '
+  3b4cc0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DVolumeTexture
+  ......   ;********************************************************
+  ......   __ZTI22CDirect3DVolumeTexture:
+  ......     db          08h ; ' '
+  3b4cc1     db          00h ; ' '
+  3b4cc2     db          00h ; ' '
+  3b4cc3     db          00h ; ' '
+  3b4cc4     dd          003a3af0h
+  3b4cc8     db          00h ; ' '
+  3b4cc9     db          00h ; ' '
+  3b4cca     db          00h ; ' '
+  3b4ccb     db          00h ; ' '
+  3b4ccc     db          02h ; ' '
+  3b4ccd     db          00h ; ' '
+  3b4cce     db          00h ; ' '
+  3b4ccf     db          00h ; ' '
+  3b4cd0     db          e0h ; 'à'
+  3b4cd1     db          4ch ; 'L'
+  3b4cd2     db          3bh ; ';'
+  3b4cd3     db          00h ; ' '
+  3b4cd4     db          02h ; ' '
+  3b4cd5     db          00h ; ' '
+  3b4cd6     db          00h ; ' '
+  3b4cd7     db          00h ; ' '
+  3b4cd8     db          a0h ; ' '
+  3b4cd9     db          4fh ; 'O'
+  3b4cda     db          3bh ; ';'
+  3b4cdb     db          00h ; ' '
+  3b4cdc     db          02h ; ' '
+  3b4cdd     db          04h ; ' '
+  3b4cde     db          00h ; ' '
+  3b4cdf     db          00h ; ' '
+  3b4ce0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DVolumeTexture9
+  ......   ;********************************************************
+  ......   __ZTI23IDirect3DVolumeTexture9:
+  ......     db          08h ; ' '
+  3b4ce1     db          00h ; ' '
+  3b4ce2     db          00h ; ' '
+  3b4ce3     db          00h ; ' '
+  3b4ce4     db          d6h ; 'Ö'
+  3b4ce5     db          3ah ; ':'
+  3b4ce6     db          3ah ; ':'
+  3b4ce7     db          00h ; ' '
+  3b4ce8     db          20h ; ' '
+  3b4ce9     db          47h ; 'G'
+  3b4cea     db          3bh ; ';'
+  3b4ceb     db          00h ; ' '
+  3b4cec     db          00h ; ' '
+  3b4ced     db          00h ; ' '
+  3b4cee     db          00h ; ' '
+  3b4cef     db          00h ; ' '
+  3b4cf0     db          00h ; ' '
+  3b4cf1     db          00h ; ' '
+  3b4cf2     db          00h ; ' '
+  3b4cf3     db          00h ; ' '
+  3b4cf4     db          00h ; ' '
+  3b4cf5     db          00h ; ' '
+  3b4cf6     db          00h ; ' '
+  3b4cf7     db          00h ; ' '
+  3b4cf8     db          00h ; ' '
+  3b4cf9     db          00h ; ' '
+  3b4cfa     db          00h ; ' '
+  3b4cfb     db          00h ; ' '
+  3b4cfc     db          00h ; ' '
+  3b4cfd     db          00h ; ' '
+  3b4cfe     db          00h ; ' '
+  3b4cff     db          00h ; ' '
+  3b4d00   
+  ......   ;********************************************************
+  ......   ; function vtable for IDirect3DVolumeTexture9
+  ......   ;********************************************************
+  ......   __ZTV23IDirect3DVolumeTexture9:
+  ......     db          00h ; ' '
+  3b4d01     db          00h ; ' '
+  3b4d02     db          00h ; ' '
+  3b4d03     db          00h ; ' '
+  3b4d04     dd          003b4ce0h
+  3b4d08     db          00h ; ' '
+  3b4d09     db          00h ; ' '
+  3b4d0a     db          00h ; ' '
+  3b4d0b     db          00h ; ' '
+  3b4d0c     db          00h ; ' '
+  3b4d0d     db          00h ; ' '
+  3b4d0e     db          00h ; ' '
+  3b4d0f     db          00h ; ' '
+  3b4d10     db          00h ; ' '
+  3b4d11     db          00h ; ' '
+  3b4d12     db          00h ; ' '
+  3b4d13     db          00h ; ' '
+  3b4d14     db          00h ; ' '
+  3b4d15     db          00h ; ' '
+  3b4d16     db          00h ; ' '
+  3b4d17     db          00h ; ' '
+  3b4d18     db          00h ; ' '
+  3b4d19     db          00h ; ' '
+  3b4d1a     db          00h ; ' '
+  3b4d1b     db          00h ; ' '
+  3b4d1c     db          00h ; ' '
+  3b4d1d     db          00h ; ' '
+  3b4d1e     db          00h ; ' '
+  3b4d1f     db          00h ; ' '
+  3b4d20     db          00h ; ' '
+  3b4d21     db          00h ; ' '
+  3b4d22     db          00h ; ' '
+  3b4d23     db          00h ; ' '
+  3b4d24     db          00h ; ' '
+  3b4d25     db          00h ; ' '
+  3b4d26     db          00h ; ' '
+  3b4d27     db          00h ; ' '
+  3b4d28     db          00h ; ' '
+  3b4d29     db          00h ; ' '
+  3b4d2a     db          00h ; ' '
+  3b4d2b     db          00h ; ' '
+  3b4d2c     db          00h ; ' '
+  3b4d2d     db          00h ; ' '
+  3b4d2e     db          00h ; ' '
+  3b4d2f     db          00h ; ' '
+  3b4d30     db          00h ; ' '
+  3b4d31     db          00h ; ' '
+  3b4d32     db          00h ; ' '
+  3b4d33     db          00h ; ' '
+  3b4d34     db          00h ; ' '
+  3b4d35     db          00h ; ' '
+  3b4d36     db          00h ; ' '
+  3b4d37     db          00h ; ' '
+  3b4d38     db          00h ; ' '
+  3b4d39     db          00h ; ' '
+  3b4d3a     db          00h ; ' '
+  3b4d3b     db          00h ; ' '
+  3b4d3c     db          00h ; ' '
+  3b4d3d     db          00h ; ' '
+  3b4d3e     db          00h ; ' '
+  3b4d3f     db          00h ; ' '
+  3b4d40     db          00h ; ' '
+  3b4d41     db          00h ; ' '
+  3b4d42     db          00h ; ' '
+  3b4d43     db          00h ; ' '
+  3b4d44     db          00h ; ' '
+  3b4d45     db          00h ; ' '
+  3b4d46     db          00h ; ' '
+  3b4d47     db          00h ; ' '
+  3b4d48     db          00h ; ' '
+  3b4d49     db          00h ; ' '
+  3b4d4a     db          00h ; ' '
+  3b4d4b     db          00h ; ' '
+  3b4d4c     db          00h ; ' '
+  3b4d4d     db          00h ; ' '
+  3b4d4e     db          00h ; ' '
+  3b4d4f     db          00h ; ' '
+  3b4d50     db          00h ; ' '
+  3b4d51     db          00h ; ' '
+  3b4d52     db          00h ; ' '
+  3b4d53     db          00h ; ' '
+  3b4d54     db          00h ; ' '
+  3b4d55     db          00h ; ' '
+  3b4d56     db          00h ; ' '
+  3b4d57     db          00h ; ' '
+  3b4d58     db          00h ; ' '
+  3b4d59     db          00h ; ' '
+  3b4d5a     db          00h ; ' '
+  3b4d5b     db          00h ; ' '
+  3b4d5c     db          00h ; ' '
+  3b4d5d     db          00h ; ' '
+  3b4d5e     db          00h ; ' '
+  3b4d5f     db          00h ; ' '
+  3b4d60   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CD3DXBuffer
+  ......   ;********************************************************
+  ......   __ZTI11CD3DXBuffer:
+  ......     db          08h ; ' '
+  3b4d61     db          00h ; ' '
+  3b4d62     db          00h ; ' '
+  3b4d63     db          00h ; ' '
+  3b4d64     db          17h ; ' '
+  3b4d65     db          3bh ; ';'
+  3b4d66     db          3ah ; ':'
+  3b4d67     db          00h ; ' '
+  3b4d68     db          80h ; '€'
+  3b4d69     db          4dh ; 'M'
+  3b4d6a     db          3bh ; ';'
+  3b4d6b     db          00h ; ' '
+  3b4d6c     db          00h ; ' '
+  3b4d6d     db          00h ; ' '
+  3b4d6e     db          00h ; ' '
+  3b4d6f     db          00h ; ' '
+  3b4d70     db          00h ; ' '
+  3b4d71     db          00h ; ' '
+  3b4d72     db          00h ; ' '
+  3b4d73     db          00h ; ' '
+  3b4d74     db          00h ; ' '
+  3b4d75     db          00h ; ' '
+  3b4d76     db          00h ; ' '
+  3b4d77     db          00h ; ' '
+  3b4d78     db          00h ; ' '
+  3b4d79     db          00h ; ' '
+  3b4d7a     db          00h ; ' '
+  3b4d7b     db          00h ; ' '
+  3b4d7c     db          00h ; ' '
+  3b4d7d     db          00h ; ' '
+  3b4d7e     db          00h ; ' '
+  3b4d7f     db          00h ; ' '
+  3b4d80   
+  ......   ;********************************************************
+  ......   ; function typeinfo for ID3DXBuffer
+  ......   ;********************************************************
+  ......   __ZTI11ID3DXBuffer:
+  ......     db          08h ; ' '
+  3b4d81     db          00h ; ' '
+  3b4d82     db          00h ; ' '
+  3b4d83     db          00h ; ' '
+  3b4d84     db          09h ; ' '
+  3b4d85     db          3bh ; ';'
+  3b4d86     db          3ah ; ':'
+  3b4d87     db          00h ; ' '
+  3b4d88     db          a0h ; ' '
+  3b4d89     db          46h ; 'F'
+  3b4d8a     db          3bh ; ';'
+  3b4d8b     db          00h ; ' '
+  3b4d8c     db          00h ; ' '
+  3b4d8d     db          00h ; ' '
+  3b4d8e     db          00h ; ' '
+  3b4d8f     db          00h ; ' '
+  3b4d90     db          00h ; ' '
+  3b4d91     db          00h ; ' '
+  3b4d92     db          00h ; ' '
+  3b4d93     db          00h ; ' '
+  3b4d94     db          00h ; ' '
+  3b4d95     db          00h ; ' '
+  3b4d96     db          00h ; ' '
+  3b4d97     db          00h ; ' '
+  3b4d98     db          00h ; ' '
+  3b4d99     db          00h ; ' '
+  3b4d9a     db          00h ; ' '
+  3b4d9b     db          00h ; ' '
+  3b4d9c     db          00h ; ' '
+  3b4d9d     db          00h ; ' '
+  3b4d9e     db          00h ; ' '
+  3b4d9f     db          00h ; ' '
+  3b4da0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for dxUserGeom
+  ......   ;********************************************************
+  ......   __ZTI10dxUserGeom:
+  ......     db          08h ; ' '
+  3b4da1     db          00h ; ' '
+  3b4da2     db          00h ; ' '
+  3b4da3     db          00h ; ' '
+  3b4da4     db          2dh ; '-'
+  3b4da5     db          3bh ; ';'
+  3b4da6     db          3ah ; ':'
+  3b4da7     db          00h ; ' '
+  3b4da8     db          c0h ; 'À'
+  3b4da9     db          4dh ; 'M'
+  3b4daa     db          3bh ; ';'
+  3b4dab     db          00h ; ' '
+  3b4dac     db          00h ; ' '
+  3b4dad     db          00h ; ' '
+  3b4dae     db          00h ; ' '
+  3b4daf     db          00h ; ' '
+  3b4db0     db          00h ; ' '
+  3b4db1     db          00h ; ' '
+  3b4db2     db          00h ; ' '
+  3b4db3     db          00h ; ' '
+  3b4db4     db          00h ; ' '
+  3b4db5     db          00h ; ' '
+  3b4db6     db          00h ; ' '
+  3b4db7     db          00h ; ' '
+  3b4db8     db          00h ; ' '
+  3b4db9     db          00h ; ' '
+  3b4dba     db          00h ; ' '
+  3b4dbb     db          00h ; ' '
+  3b4dbc     db          00h ; ' '
+  3b4dbd     db          00h ; ' '
+  3b4dbe     db          00h ; ' '
+  3b4dbf     db          00h ; ' '
+  3b4dc0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for dxGeom
+  ......   ;********************************************************
+  ......   __ZTI6dxGeom:
+  ......     db          08h ; ' '
+  3b4dc4     dd          003a3b25h
+  3b4dc8     dd          003b4de0h
+  3b4dcc     dd          00000000h
+  3b4dd0     dd          00000000h
+  3b4dd4     dd          00000000h
+  3b4dd8     dd          00000000h
+  3b4ddc     dd          00000000h
+  3b4de0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for dBase
+  ......   ;********************************************************
+  ......   __ZTI5dBase:
+  ......     db          08h ; ' '
+  3b4de1     db          00h ; ' '
+  3b4de2     db          00h ; ' '
+  3b4de3     db          00h ; ' '
+  3b4de4     db          3ah ; ':'
+  3b4de5     db          3bh ; ';'
+  3b4de6     db          3ah ; ':'
+  3b4de7     db          00h ; ' '
+  3b4de8     db          00h ; ' '
+  3b4de9     db          00h ; ' '
+  3b4dea     db          00h ; ' '
+  3b4deb     db          00h ; ' '
+  3b4dec     db          00h ; ' '
+  3b4ded     db          00h ; ' '
+  3b4dee     db          00h ; ' '
+  3b4def     db          00h ; ' '
+  3b4df0     db          00h ; ' '
+  3b4df1     db          00h ; ' '
+  3b4df2     db          00h ; ' '
+  3b4df3     db          00h ; ' '
+  3b4df4     db          00h ; ' '
+  3b4df5     db          00h ; ' '
+  3b4df6     db          00h ; ' '
+  3b4df7     db          00h ; ' '
+  3b4df8     db          00h ; ' '
+  3b4df9     db          00h ; ' '
+  3b4dfa     db          00h ; ' '
+  3b4dfb     db          00h ; ' '
+  3b4dfc     db          00h ; ' '
+  3b4dfd     db          00h ; ' '
+  3b4dfe     db          00h ; ' '
+  3b4dff     db          00h ; ' '
+  3b4e00   
+  ......   ;********************************************************
+  ......   ; function vtable for dxGeom
+  ......   ;********************************************************
+  ......   __ZTV6dxGeom:
+  ......     dd          00000000h
+  3b4e04     dd          003b4dc0h
+  3b4e08     dd          00334b80h
+  3b4e0c     dd          00334b94h
+  3b4e10     dd          00000000h
+  3b4e14     dd          00334b76h
+  3b4e18     dd          00000000h
+  3b4e1c     dd          00000000h
+  3b4e20   
+  ......   ;********************************************************
+  ......   ; function typeinfo for dxSpace
+  ......   ;********************************************************
+  ......   __ZTI7dxSpace:
+  ......     db          08h ; ' '
+  3b4e21     db          00h ; ' '
+  3b4e22     db          00h ; ' '
+  3b4e23     db          00h ; ' '
+  3b4e24     db          41h ; 'A'
+  3b4e25     db          3bh ; ';'
+  3b4e26     db          3ah ; ':'
+  3b4e27     db          00h ; ' '
+  3b4e28     db          c0h ; 'À'
+  3b4e29     db          4dh ; 'M'
+  3b4e2a     db          3bh ; ';'
+  3b4e2b     db          00h ; ' '
+  3b4e2c     db          00h ; ' '
+  3b4e2d     db          00h ; ' '
+  3b4e2e     db          00h ; ' '
+  3b4e2f     db          00h ; ' '
+  3b4e30     db          00h ; ' '
+  3b4e31     db          00h ; ' '
+  3b4e32     db          00h ; ' '
+  3b4e33     db          00h ; ' '
+  3b4e34     db          00h ; ' '
+  3b4e35     db          00h ; ' '
+  3b4e36     db          00h ; ' '
+  3b4e37     db          00h ; ' '
+  3b4e38     db          00h ; ' '
+  3b4e39     db          00h ; ' '
+  3b4e3a     db          00h ; ' '
+  3b4e3b     db          00h ; ' '
+  3b4e3c     db          00h ; ' '
+  3b4e3d     db          00h ; ' '
+  3b4e3e     db          00h ; ' '
+  3b4e3f     db          00h ; ' '
+  3b4e40   
+  ......   ;********************************************************
+  ......   ; function typeinfo for dxSimpleSpace
+  ......   ;********************************************************
+  ......   __ZTI13dxSimpleSpace:
+  ......     db          08h ; ' '
+  3b4e41     db          00h ; ' '
+  3b4e42     db          00h ; ' '
+  3b4e43     db          00h ; ' '
+  3b4e44     db          4ah ; 'J'
+  3b4e45     db          3bh ; ';'
+  3b4e46     db          3ah ; ':'
+  3b4e47     db          00h ; ' '
+  3b4e48     db          20h ; ' '
+  3b4e49     db          4eh ; 'N'
+  3b4e4a     db          3bh ; ';'
+  3b4e4b     db          00h ; ' '
+  3b4e4c     db          00h ; ' '
+  3b4e4d     db          00h ; ' '
+  3b4e4e     db          00h ; ' '
+  3b4e4f     db          00h ; ' '
+  3b4e50     db          00h ; ' '
+  3b4e51     db          00h ; ' '
+  3b4e52     db          00h ; ' '
+  3b4e53     db          00h ; ' '
+  3b4e54     db          00h ; ' '
+  3b4e55     db          00h ; ' '
+  3b4e56     db          00h ; ' '
+  3b4e57     db          00h ; ' '
+  3b4e58     db          00h ; ' '
+  3b4e59     db          00h ; ' '
+  3b4e5a     db          00h ; ' '
+  3b4e5b     db          00h ; ' '
+  3b4e5c     db          00h ; ' '
+  3b4e5d     db          00h ; ' '
+  3b4e5e     db          00h ; ' '
+  3b4e5f     db          00h ; ' '
+  3b4e60   
+  ......   ;********************************************************
+  ......   ; function typeinfo for dxBox
+  ......   ;********************************************************
+  ......   __ZTI5dxBox:
+  ......     db          08h ; ' '
+  3b4e61     db          00h ; ' '
+  3b4e62     db          00h ; ' '
+  3b4e63     db          00h ; ' '
+  3b4e64     db          5ah ; 'Z'
+  3b4e65     db          3bh ; ';'
+  3b4e66     db          3ah ; ':'
+  3b4e67     db          00h ; ' '
+  3b4e68     db          c0h ; 'À'
+  3b4e69     db          4dh ; 'M'
+  3b4e6a     db          3bh ; ';'
+  3b4e6b     db          00h ; ' '
+  3b4e6c     db          00h ; ' '
+  3b4e6d     db          00h ; ' '
+  3b4e6e     db          00h ; ' '
+  3b4e6f     db          00h ; ' '
+  3b4e70     db          00h ; ' '
+  3b4e71     db          00h ; ' '
+  3b4e72     db          00h ; ' '
+  3b4e73     db          00h ; ' '
+  3b4e74     db          00h ; ' '
+  3b4e75     db          00h ; ' '
+  3b4e76     db          00h ; ' '
+  3b4e77     db          00h ; ' '
+  3b4e78     db          00h ; ' '
+  3b4e79     db          00h ; ' '
+  3b4e7a     db          00h ; ' '
+  3b4e7b     db          00h ; ' '
+  3b4e7c     db          00h ; ' '
+  3b4e7d     db          00h ; ' '
+  3b4e7e     db          00h ; ' '
+  3b4e7f     db          00h ; ' '
+  3b4e80   
+  ......   ;********************************************************
+  ......   ; function typeinfo for dxGeomTransform
+  ......   ;********************************************************
+  ......   __ZTI15dxGeomTransform:
+  ......     db          08h ; ' '
+  3b4e81     db          00h ; ' '
+  3b4e82     db          00h ; ' '
+  3b4e83     db          00h ; ' '
+  3b4e84     db          61h ; 'a'
+  3b4e85     db          3bh ; ';'
+  3b4e86     db          3ah ; ':'
+  3b4e87     db          00h ; ' '
+  3b4e88     db          c0h ; 'À'
+  3b4e89     db          4dh ; 'M'
+  3b4e8a     db          3bh ; ';'
+  3b4e8b     db          00h ; ' '
+  3b4e8c     db          00h ; ' '
+  3b4e8d     db          00h ; ' '
+  3b4e8e     db          00h ; ' '
+  3b4e8f     db          00h ; ' '
+  3b4e90     db          00h ; ' '
+  3b4e91     db          00h ; ' '
+  3b4e92     db          00h ; ' '
+  3b4e93     db          00h ; ' '
+  3b4e94     db          00h ; ' '
+  3b4e95     db          00h ; ' '
+  3b4e96     db          00h ; ' '
+  3b4e97     db          00h ; ' '
+  3b4e98     db          00h ; ' '
+  3b4e99     db          00h ; ' '
+  3b4e9a     db          00h ; ' '
+  3b4e9b     db          00h ; ' '
+  3b4e9c     db          00h ; ' '
+  3b4e9d     db          00h ; ' '
+  3b4e9e     db          00h ; ' '
+  3b4e9f     db          00h ; ' '
+  3b4ea0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CSoundEngine
+  ......   ;********************************************************
+  ......   __ZTI12CSoundEngine:
+  ......     db          08h ; ' '
+  3b4ea1     db          00h ; ' '
+  3b4ea2     db          00h ; ' '
+  3b4ea3     db          00h ; ' '
+  3b4ea4     db          73h ; 's'
+  3b4ea5     db          3bh ; ';'
+  3b4ea6     db          3ah ; ':'
+  3b4ea7     db          00h ; ' '
+  3b4ea8     db          60h ; '`'
+  3b4ea9     db          4ch ; 'L'
+  3b4eaa     db          3bh ; ';'
+  3b4eab     db          00h ; ' '
+  3b4eac     db          00h ; ' '
+  3b4ead     db          00h ; ' '
+  3b4eae     db          00h ; ' '
+  3b4eaf     db          00h ; ' '
+  3b4eb0     db          00h ; ' '
+  3b4eb1     db          00h ; ' '
+  3b4eb2     db          00h ; ' '
+  3b4eb3     db          00h ; ' '
+  3b4eb4     db          00h ; ' '
+  3b4eb5     db          00h ; ' '
+  3b4eb6     db          00h ; ' '
+  3b4eb7     db          00h ; ' '
+  3b4eb8     db          00h ; ' '
+  3b4eb9     db          00h ; ' '
+  3b4eba     db          00h ; ' '
+  3b4ebb     db          00h ; ' '
+  3b4ebc     db          00h ; ' '
+  3b4ebd     db          00h ; ' '
+  3b4ebe     db          00h ; ' '
+  3b4ebf     db          00h ; ' '
+  3b4ec0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CSoundObject
+  ......   ;********************************************************
+  ......   __ZTI12CSoundObject:
+  ......     db          08h ; ' '
+  3b4ec1     db          00h ; ' '
+  3b4ec2     db          00h ; ' '
+  3b4ec3     db          00h ; ' '
+  3b4ec4     db          82h ; '‚'
+  3b4ec5     db          3bh ; ';'
+  3b4ec6     db          3ah ; ':'
+  3b4ec7     db          00h ; ' '
+  3b4ec8     db          00h ; ' '
+  3b4ec9     db          00h ; ' '
+  3b4eca     db          00h ; ' '
+  3b4ecb     db          00h ; ' '
+  3b4ecc     db          00h ; ' '
+  3b4ecd     db          00h ; ' '
+  3b4ece     db          00h ; ' '
+  3b4ecf     db          00h ; ' '
+  3b4ed0     db          00h ; ' '
+  3b4ed1     db          00h ; ' '
+  3b4ed2     db          00h ; ' '
+  3b4ed3     db          00h ; ' '
+  3b4ed4     db          00h ; ' '
+  3b4ed5     db          00h ; ' '
+  3b4ed6     db          00h ; ' '
+  3b4ed7     db          00h ; ' '
+  3b4ed8     db          00h ; ' '
+  3b4ed9     db          00h ; ' '
+  3b4eda     db          00h ; ' '
+  3b4edb     db          00h ; ' '
+  3b4edc     db          00h ; ' '
+  3b4edd     db          00h ; ' '
+  3b4ede     db          00h ; ' '
+  3b4edf     db          00h ; ' '
+  3b4ee0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CSampleSound
+  ......   ;********************************************************
+  ......   __ZTI12CSampleSound:
+  ......     db          08h ; ' '
+  3b4ee1     db          00h ; ' '
+  3b4ee2     db          00h ; ' '
+  3b4ee3     db          00h ; ' '
+  3b4ee4     db          91h ; '‘'
+  3b4ee5     db          3bh ; ';'
+  3b4ee6     db          3ah ; ':'
+  3b4ee7     db          00h ; ' '
+  3b4ee8     db          c0h ; 'À'
+  3b4ee9     db          4eh ; 'N'
+  3b4eea     db          3bh ; ';'
+  3b4eeb     db          00h ; ' '
+  3b4eec     db          00h ; ' '
+  3b4eed     db          00h ; ' '
+  3b4eee     db          00h ; ' '
+  3b4eef     db          00h ; ' '
+  3b4ef0     db          00h ; ' '
+  3b4ef1     db          00h ; ' '
+  3b4ef2     db          00h ; ' '
+  3b4ef3     db          00h ; ' '
+  3b4ef4     db          00h ; ' '
+  3b4ef5     db          00h ; ' '
+  3b4ef6     db          00h ; ' '
+  3b4ef7     db          00h ; ' '
+  3b4ef8     db          00h ; ' '
+  3b4ef9     db          00h ; ' '
+  3b4efa     db          00h ; ' '
+  3b4efb     db          00h ; ' '
+  3b4efc     db          00h ; ' '
+  3b4efd     db          00h ; ' '
+  3b4efe     db          00h ; ' '
+  3b4eff     db          00h ; ' '
+  3b4f00   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CStreamSound
+  ......   ;********************************************************
+  ......   __ZTI12CStreamSound:
+  ......     db          08h ; ' '
+  3b4f01     db          00h ; ' '
+  3b4f02     db          00h ; ' '
+  3b4f03     db          00h ; ' '
+  3b4f04     db          a0h ; ' '
+  3b4f05     db          3bh ; ';'
+  3b4f06     db          3ah ; ':'
+  3b4f07     db          00h ; ' '
+  3b4f08     db          c0h ; 'À'
+  3b4f09     db          4eh ; 'N'
+  3b4f0a     db          3bh ; ';'
+  3b4f0b     db          00h ; ' '
+  3b4f0c     db          00h ; ' '
+  3b4f0d     db          00h ; ' '
+  3b4f0e     db          00h ; ' '
+  3b4f0f     db          00h ; ' '
+  3b4f10     db          00h ; ' '
+  3b4f11     db          00h ; ' '
+  3b4f12     db          00h ; ' '
+  3b4f13     db          00h ; ' '
+  3b4f14     db          00h ; ' '
+  3b4f15     db          00h ; ' '
+  3b4f16     db          00h ; ' '
+  3b4f17     db          00h ; ' '
+  3b4f18     db          00h ; ' '
+  3b4f19     db          00h ; ' '
+  3b4f1a     db          00h ; ' '
+  3b4f1b     db          00h ; ' '
+  3b4f1c     db          00h ; ' '
+  3b4f1d     db          00h ; ' '
+  3b4f1e     db          00h ; ' '
+  3b4f1f     db          00h ; ' '
+  3b4f20   
+  ......   ;********************************************************
+  ......   ; function typeinfo for CDirect3DQuery
+  ......   ;********************************************************
+  ......   __ZTI14CDirect3DQuery:
+  ......     dd          00000008h
+  3b4f24     dd          003a3bc1h
+  3b4f28     dd          003b4f40h
+  3b4f2c     dd          00000000h
+  3b4f30     dd          00000000h
+  3b4f34     dd          00000000h
+  3b4f38     dd          00000000h
+  3b4f3c     dd          00000000h
+  3b4f40   
+  ......   ;********************************************************
+  ......   ; function typeinfo for IDirect3DQuery9
+  ......   ;********************************************************
+  ......   __ZTI15IDirect3DQuery9:
+  ......     dd          00000008h
+  3b4f44     dd          003a3bafh
+  3b4f48     dd          003b46a0h
+  3b4f4c     dd          00000000h
+  3b4f50     dd          00000000h
+  3b4f54     dd          00000000h
+  3b4f58     db          00h ; ' '
+  3b4f59     db          00h ; ' '
+  3b4f5a     db          00h ; ' '
+  3b4f5b     db          00h ; ' '
+  3b4f5c     db          00h ; ' '
+  3b4f5d     db          00h ; ' '
+  3b4f5e     db          00h ; ' '
+  3b4f5f     db          00h ; ' '
+  3b4f60   
+  ......   ;********************************************************
+  ......   ; function typeinfo for COpenGLBufferObject
+  ......   ;********************************************************
+  ......   __ZTI19COpenGLBufferObject:
+  ......     db          08h ; ' '
+  3b4f61     db          00h ; ' '
+  3b4f62     db          00h ; ' '
+  3b4f63     db          00h ; ' '
+  3b4f64     db          d2h ; 'Ò'
+  3b4f65     db          3bh ; ';'
+  3b4f66     db          3ah ; ':'
+  3b4f67     db          00h ; ' '
+  3b4f68     db          00h ; ' '
+  3b4f69     db          00h ; ' '
+  3b4f6a     db          00h ; ' '
+  3b4f6b     db          00h ; ' '
+  3b4f6c     db          00h ; ' '
+  3b4f6d     db          00h ; ' '
+  3b4f6e     db          00h ; ' '
+  3b4f6f     db          00h ; ' '
+  3b4f70     db          00h ; ' '
+  3b4f71     db          00h ; ' '
+  3b4f72     db          00h ; ' '
+  3b4f73     db          00h ; ' '
+  3b4f74     db          00h ; ' '
+  3b4f75     db          00h ; ' '
+  3b4f76     db          00h ; ' '
+  3b4f77     db          00h ; ' '
+  3b4f78     db          00h ; ' '
+  3b4f79     db          00h ; ' '
+  3b4f7a     db          00h ; ' '
+  3b4f7b     db          00h ; ' '
+  3b4f7c     db          00h ; ' '
+  3b4f7d     db          00h ; ' '
+  3b4f7e     db          00h ; ' '
+  3b4f7f     db          00h ; ' '
+  3b4f80   
+  ......   ;********************************************************
+  ......   ; function typeinfo for TextureInfoType
+  ......   ;********************************************************
+  ......   __ZTI15TextureInfoType:
+  ......     db          08h ; ' '
+  3b4f81     db          00h ; ' '
+  3b4f82     db          00h ; ' '
+  3b4f83     db          00h ; ' '
+  3b4f84     db          e8h ; 'è'
+  3b4f85     db          3bh ; ';'
+  3b4f86     db          3ah ; ':'
+  3b4f87     db          00h ; ' '
+  3b4f88     db          00h ; ' '
+  3b4f89     db          00h ; ' '
+  3b4f8a     db          00h ; ' '
+  3b4f8b     db          00h ; ' '
+  3b4f8c     db          00h ; ' '
+  3b4f8d     db          00h ; ' '
+  3b4f8e     db          00h ; ' '
+  3b4f8f     db          00h ; ' '
+  3b4f90     db          00h ; ' '
+  3b4f91     db          00h ; ' '
+  3b4f92     db          00h ; ' '
+  3b4f93     db          00h ; ' '
+  3b4f94     db          00h ; ' '
+  3b4f95     db          00h ; ' '
+  3b4f96     db          00h ; ' '
+  3b4f97     db          00h ; ' '
+  3b4f98     db          00h ; ' '
+  3b4f99     db          00h ; ' '
+  3b4f9a     db          00h ; ' '
+  3b4f9b     db          00h ; ' '
+  3b4f9c     db          00h ; ' '
+  3b4f9d     db          00h ; ' '
+  3b4f9e     db          00h ; ' '
+  3b4f9f     db          00h ; ' '
+  3b4fa0   
+  ......   ;********************************************************
+  ......   ; function typeinfo for COpenGLTexture
+  ......   ;********************************************************
+  ......   __ZTI14COpenGLTexture:
+  ......     db          08h ; ' '
+  3b4fa1     db          00h ; ' '
+  3b4fa2     db          00h ; ' '
+  3b4fa3     db          00h ; ' '
+  3b4fa4     db          fah ; 'ú'
+  3b4fa5     db          3bh ; ';'
+  3b4fa6     db          3ah ; ':'
+  3b4fa7     db          00h ; ' '
+  3b4fa8     db          ??
+  3b4fa9     db          ??
+  3b4faa     db          ??
+  3b4fab     db          ??
+  3b4fac     db          ??
+  3b4fad     db          ??
+  3b4fae     db          ??
+  3b4faf     db          ??
+  3b4fb0     db          ??
+  3b4fb1     db          ??
+  3b4fb2     db          ??
+  3b4fb3     db          ??
+  3b4fb4     db          ??
+  3b4fb5     db          ??
+  3b4fb6     db          ??
+  3b4fb7     db          ??
+  3b4fb8     db          ??
+  3b4fb9     db          ??
+  3b4fba     db          ??
+  3b4fbb     db          ??
+  3b4fbc     db          ??
+  3b4fbd     db          ??
+  3b4fbe     db          ??
+  3b4fbf     db          ??
+  3b4fc0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3D
+  ...... ! ;********************************************************
+  ...... ! __ZTV9CDirect3D:
+  ...... !   dd          00000000h
+  3b4fc4 !   dd          003b4660h
+  3b4fc8 ! 
+  ...... ! offset_3b4fc8:                  ;xref oc41a oc432 ocddd
+  ...... !   dd          0000c44ch
+  3b4fcc !   dd          0000c402h
+  3b4fd0 !   dd          0000c466h
+  3b4fd4 !   dd          0032fbdch
+  3b4fd8 !   dd          0000c48eh
+  3b4fdc !   dd          0000c498h
+  3b4fe0 !   dd          0000c51eh
+  3b4fe4 !   dd          0000c532h
+  3b4fe8 !   dd          0000c62ah
+  3b4fec !   dd          0032fbe4h
+  3b4ff0 !   dd          0000c692h
+  3b4ff4 !   dd          0000c758h
+  3b4ff8 !   dd          0000c7b8h
+  3b4ffc !   dd          0032fbech
+  3b5000 !   dd          0000c7c0h
+  3b5004 !   dd          0032fbf4h
+  3b5008 !   dd          0000ca38h
+  3b500c !   dd          0000c414h
+  3b5010 !   dd          0000c42ch
+  3b5014 !   dd          00000000h
+  3b5018 !   dd          00000000h
+  3b501c !   dd          00000000h
+  3b5020 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DCubeTexture
+  ...... ! ;********************************************************
+  ...... ! __ZTV20CDirect3DCubeTexture:
+  ...... !   dd          00000000h
+  3b5024 !   dd          003b46e0h
+  3b5028 ! 
+  ...... ! offset_3b5028:                  ;xref oe3e2 oe5d8 oe702
+  ...... !   dd          0000e2c8h
+  3b502c !   dd          0032fc02h
+  3b5030 !   dd          0032fc14h
+  3b5034 !   dd          0032fc3ch
+  3b5038 !   dd          0032fc46h
+  3b503c !   dd          0032fc50h
+  3b5040 !   dd          0032fc5ah
+  3b5044 !   dd          0032fc64h
+  3b5048 !   dd          0032fc6ch
+  3b504c !   dd          0032fc76h
+  3b5050 !   dd          0032fc7ch
+  3b5054 !   dd          0032fc86h
+  3b5058 !   dd          0032fc90h
+  3b505c !   dd          0032fc98h
+  3b5060 !   dd          0032fca4h
+  3b5064 !   dd          0032fcaeh
+  3b5068 !   dd          0032fcb6h
+  3b506c ! 
+  ...... ! loc_3b506c:                     ;xref j3b5024
+  ...... !   dd          0000e3b0h
+  3b5070 !   dd          0000e4b4h
+  3b5074 !   dd          0000e50ah
+  3b5078 !   dd          0000e582h
+  3b507c     dd          0000e2e2h
+  3b5080     dd          0000e5cch
+  3b5084     dd          0000e3d6h
+  3b5088     dd          fffffffch
+  3b508c     dd          003b46e0h
+  3b5090 ! 
+  ...... ! offset_3b5090:                  ;xref oe3e8 oe5de oe708
+  ...... !   dd          0032fcc6h
+  3b5094 !   dd          0032fcbch
+  3b5098 !   dd          0032fbfch
+  3b509c !   dd          00000000h
+  3b50a0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DDevice
+  ...... ! ;********************************************************
+  ...... ! __ZTV15CDirect3DDevice:
+  ...... !   dd          00000000h
+  3b50a4 !   dd          003b4860h
+  3b50a8 !   dd          0000ea54h
+  3b50ac !   dd          0000ea42h
+  3b50b0     dd          0000ea6eh
+  3b50b4     dd          0000ec46h
+  3b50b8     dd          0000ec4eh
+  3b50bc     dd          0032ff70h
+  3b50c0     dd          0000ec5ch
+  3b50c4     dd          0000ec70h
+  3b50c8     dd          0000ef22h
+  3b50cc     dd          0032ff7ah
+  3b50d0     dd          0032ff84h
+  3b50d4     dd          0032ff8eh
+  3b50d8     dd          0032ff94h
+  3b50dc     dd          0032ff9eh
+  3b50e0     dd          0032ffa8h
+  3b50e4     dd          0032ffceh
+  3b50e8     dd          00012518h
+  3b50ec     dd          0000ef2ch
+  3b50f0     dd          0000ef52h
+  3b50f4     dd          0032ffd6h
+  3b50f8     dd          0032ffe0h
+  3b50fc     dd          0000ef72h
+  3b5100     dd          0000ef82h
+  3b5104     dd          0000ef88h
+  3b5108     dd          0000eff8h
+  3b510c     dd          0000f06eh
+  3b5110     dd          0000f0d6h
+  3b5114     dd          0000ea98h
+  3b5118     dd          0000eb9ch
+  3b511c     dd          0000eaf2h
+  3b5120     dd          0032ffeah
+  3b5124     dd          000120feh
+  3b5128     dd          0032fff4h
+  3b512c     dd          0032fffeh
+  3b5130     dd          00011c8ah
+  3b5134     dd          00330008h
+  3b5138     dd          00330010h
+  3b513c     dd          00011f44h
+  3b5140     dd          0033001ah
+  3b5144     dd          0000f5f6h
+  3b5148     dd          0000f12ah
+  3b514c     dd          0000f14ah
+  3b5150     dd          0000f152h
+  3b5154     dd          000117f2h
+  3b5158     dd          0033003eh
+  3b515c     dd          00330048h
+  3b5160     dd          00330052h
+  3b5164     dd          0000f15ah
+  3b5168     dd          0033005ch
+  3b516c     dd          0033009eh
+  3b5170     dd          003300a8h
+  3b5174     dd          003300b2h
+  3b5178     dd          003300bch
+  3b517c     dd          003300c6h
+  3b5180     dd          003300d0h
+  3b5184     dd          003300d8h
+  3b5188     dd          003300e2h
+  3b518c     dd          0000f824h
+  3b5190     dd          003300ech
+  3b5194     dd          00330100h
+  3b5198     dd          003300f6h
+  3b519c     dd          0033010ah
+  3b51a0     dd          00330114h
+  3b51a4     dd          0033011eh
+  3b51a8     dd          00330314h
+  3b51ac     dd          00330128h
+  3b51b0     dd          00330132h
+  3b51b4     dd          0033013ch
+  3b51b8     dd          00330146h
+  3b51bc     dd          00330150h
+  3b51c0     dd          0033015ah
+  3b51c4     dd          00330164h
+  3b51c8     dd          0033016eh
+  3b51cc     dd          00330178h
+  3b51d0     dd          00330182h
+  3b51d4     dd          0000f408h
+  3b51d8     dd          0033018ch
+  3b51dc     dd          003301c0h
+  3b51e0     dd          003301cah
+  3b51e4     dd          003301d2h
+  3b51e8     dd          003301dch
+  3b51ec     dd          00330202h
+  3b51f0     dd          0033020ch
+  3b51f4     dd          00330216h
+  3b51f8     dd          00330220h
+  3b51fc     dd          0033022ah
+  3b5200     dd          0000f48ch
+  3b5204     dd          0000f776h
+  3b5208     dd          003301e4h
+  3b520c     dd          003301eeh
+  3b5210     dd          003301f8h
+  3b5214     dd          0000f4d2h
+  3b5218     dd          0000f798h
+  3b521c     dd          00330234h
+  3b5220     dd          0033023eh
+  3b5224     dd          00330248h
+  3b5228     dd          00330252h
+  3b522c     dd          0033025ch
+  3b5230     dd          00330266h
+  3b5234     dd          00330270h
+  3b5238     dd          0000f7c2h
+  3b523c     dd          0000f56ah
+  3b5240     dd          0033027ah
+  3b5244     dd          00330284h
+  3b5248     dd          0033028eh
+  3b524c     dd          003302b6h
+  3b5250     dd          0001336ah
+  3b5254     dd          00330436h
+  3b5258     dd          003302cch
+  3b525c     dd          00330468h
+  3b5260     dd          003302d4h
+  3b5264     dd          003302dch
+  3b5268     dd          003302e4h
+  3b526c     dd          003302ech
+  3b5270     dd          003302f4h
+  3b5274     dd          003302fch
+  3b5278     dd          00330304h
+  3b527c     dd          0033030ch
+  3b5280     dd          0000f5b0h
+  3b5284     dd          00013044h
+  3b5288     dd          00012462h
+  3b528c     dd          00000000h
+  3b5290     dd          00000000h
+  3b5294     dd          00000000h
+  3b5298     dd          00000000h
+  3b529c     dd          00000000h
+  3b52a0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DIndexBuffer
+  ...... ! ;********************************************************
+  ...... ! __ZTV20CDirect3DIndexBuffer:
+  ...... !   dd          00000000h
+  3b52a4 !   dd          003b48a0h
+  3b52a8 ! 
+  ...... ! offset_3b52a8:                  ;xref o133b1 o133f5 o13564
+  ...... !   dd          00013436h
+  3b52ac !   dd          00013394h
+  3b52b0 !   dd          00013450h
+  3b52b4 !   dd          00330c3ah
+  3b52b8 !   dd          00330c44h
+  3b52bc !   dd          00330c4eh
+  3b52c0 !   dd          00330c58h
+  3b52c4 !   dd          00330c62h
+  3b52c8 !   dd          00330c6ah
+  3b52cc !   dd          00330c72h
+  3b52d0 !   dd          00330c78h
+  3b52d4 !   dd          00013478h
+  3b52d8 !   dd          000134ech
+  3b52dc !   dd          00330c82h
+  3b52e0 !   dd          000133a6h
+  3b52e4 !   dd          000133eah
+  3b52e8 !   dd          fffffffch
+  3b52ec     dd          003b48a0h
+  3b52f0 ! 
+  ...... ! offset_3b52f0:                  ;xref o133b7 o133fb o1356a
+  ...... !   dd          00330c8ch
+  3b52f4 !   dd          00330c96h
+  3b52f8 !   dd          00000000h
+  3b52fc !   dd          00000000h
+  3b5300 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DPixelShader
+  ...... ! ;********************************************************
+  ...... ! __ZTV20CDirect3DPixelShader:
+  ...... !   dd          00000000h
+  3b5304 !   dd          003b4920h
+  3b5308 ! 
+  ...... ! offset_3b5308:                  ;xref o13653 o136b0 o13704
+  ...... !   dd          0001359eh
+  3b530c !   dd          0001358ch
+  3b5310 !   dd          000135b8h
+  3b5314 !   dd          00330ca0h
+  3b5318 !   dd          00330cb0h
+  3b531c !   dd          000136feh
+  3b5320 !   dd          0001364ch
+  3b5324 !   dd          00000000h
+  3b5328 !   dd          00000000h
+  3b532c !   dd          00000000h
+  3b5330 !   dd          00000000h
+  3b5334 !   dd          00000000h
+  3b5338 !   dd          00000000h
+  3b533c !   dd          00000000h
+  3b5340 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for COpenGLARBFragmentProgram
+  ...... ! ;********************************************************
+  ...... ! __ZTV25COpenGLARBFragmentProgram:
+  ...... !   dd          00000000h
+  3b5344 !   dd          003b4960h
+  3b5348 ! 
+  ...... ! offset_3b5348:                  ;xref o137d6 o13984 o13b18
+  ...... !   dd          0001359eh
+  3b534c !   dd          0001358ch
+  3b5350 !   dd          000135b8h
+  3b5354 !   dd          00330ca0h
+  3b5358 !   dd          00330cb0h
+  3b535c !   dd          00013978h
+  3b5360 !   dd          00013b0ch
+  3b5364 !   dd          00013752h
+  3b5368 !   dd          000135e0h
+  3b536c !   dd          00013608h
+  3b5370 !   dd          00000000h
+  3b5374 !   dd          00000000h
+  3b5378 !   dd          00000000h
+  3b537c !   dd          00000000h
+  3b5380 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DSurface
+  ...... ! ;********************************************************
+  ...... ! __ZTV16CDirect3DSurface:
+  ...... !   dd          00000000h
+  3b5384 !   dd          003b4980h
+  3b5388 ! 
+  ...... ! offset_3b5388:                  ;xref o13cc4 o13cee o1405f
+  ...... !   dd          00013d16h
+  3b538c !   dd          00013caah
+  3b5390 !   dd          00013d30h
+  3b5394 !   dd          00330cc0h
+  3b5398 !   dd          00330ccah
+  3b539c     dd          00330cd4h
+  3b53a0 !   dd          00330cdeh
+  3b53a4 !   dd          00330ce8h
+  3b53a8 !   dd          00330cf2h
+  3b53ac !   dd          00330cfah
+  3b53b0 !   dd          00330d00h
+  3b53b4 !   dd          00330d0ah
+  3b53b8 !   dd          00013d58h
+  3b53bc !   dd          00013d86h
+  3b53c0 !   dd          00013edah
+  3b53c4 !   dd          00330d14h
+  3b53c8 !   dd          00330d1eh
+  3b53cc !   dd          00013cbeh
+  3b53d0 !   dd          00013ce4h
+  3b53d4 !   dd          00000000h
+  3b53d8 !   dd          00000000h
+  3b53dc !   dd          00000000h
+  3b53e0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DSwapChain
+  ...... ! ;********************************************************
+  ...... ! __ZTV18CDirect3DSwapChain:
+  ...... !   dd          00000000h
+  3b53e4 !   dd          003b49c0h
+  3b53e8 ! 
+  ...... ! offset_3b53e8:                  ;xref o14327 o14348 o143ec
+  ...... !   dd          0001436ah
+  3b53ec !   dd          0001430ch
+  3b53f0 !   dd          00014384h
+  3b53f4 !   dd          00330d28h
+  3b53f8 !   dd          00330d32h
+  3b53fc !   dd          000143ach
+  3b5400 !   dd          00330d3ch
+  3b5404 !   dd          00330d46h
+  3b5408 !   dd          00330d50h
+  3b540c !   dd          00330d5ah
+  3b5410 !   dd          0001431eh
+  3b5414 !   dd          0001433eh
+  3b5418 !   dd          00000000h
+  3b541c !   dd          00000000h
+  3b5420 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DTexture
+  ...... ! ;********************************************************
+  ...... ! __ZTV16CDirect3DTexture:
+  ...... !   dd          00000000h
+  3b5424 !   dd          003b4a00h
+  3b5428 ! 
+  ...... ! offset_3b5428:                  ;xref o1459a o1474c o14c98
+  ...... !   dd          00014416h
+  3b542c !   dd          00014404h
+  3b5430 !   dd          00014430h
+  3b5434 !   dd          00330d64h
+  3b5438 !   dd          00330d6eh
+  3b543c !   dd          00330d78h
+  3b5440 !   dd          00330d82h
+  3b5444     dd          00330d8ch
+  3b5448     dd          00330d94h
+  3b544c !   dd          00330d9eh
+  3b5450 !   dd          00330da4h
+  3b5454 !   dd          00330daeh
+  3b5458 !   dd          00330db8h
+  3b545c !   dd          00330dc0h
+  3b5460 !   dd          00330dcch
+  3b5464 !   dd          00330dd6h
+  3b5468 !   dd          00330ddeh
+  3b546c !   dd          00014458h
+  3b5470 !   dd          000146aeh
+  3b5474 !   dd          00014666h
+  3b5478 !   dd          00014560h
+  3b547c !   dd          0001453eh
+  3b5480 !   dd          00014c8ch
+  3b5484 !   dd          0001458eh
+  3b5488 !   dd          fffffffch
+  3b548c     dd          003b4a00h
+  3b5490 ! 
+  ...... ! offset_3b5490:                  ;xref o145a0 o14752 o14c9e
+  ...... !   dd          00330fd8h
+  3b5494 !   dd          00330de4h
+  3b5498 !   dd          0032fbfch
+  3b549c !   dd          00000000h
+  3b54a0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DVertexBuffer
+  ...... ! ;********************************************************
+  ...... ! __ZTV21CDirect3DVertexBuffer:
+  ...... !   dd          00000000h
+  3b54a4 !   dd          003b4aa0h
+  3b54a8 ! 
+  ...... ! offset_3b54a8:                  ;xref o14d79 o14dbd o14f60
+  ...... !   dd          00014dfeh
+  3b54ac !   dd          00014d5ch
+  3b54b0 !   dd          00014e18h
+  3b54b4 !   dd          00330fe2h
+  3b54b8 !   dd          00330fech
+  3b54bc !   dd          00330ff6h
+  3b54c0 !   dd          00331000h
+  3b54c4 !   dd          0033100ah
+  3b54c8 !   dd          00331012h
+  3b54cc !   dd          0033101ah
+  3b54d0 !   dd          00331020h
+  3b54d4 !   dd          00014e9ah
+  3b54d8 !   dd          00014e40h
+  3b54dc !   dd          00014e66h
+  3b54e0 !   dd          00014d6eh
+  3b54e4 !   dd          00014db2h
+  3b54e8 !   dd          fffffffch
+  3b54ec     dd          003b4aa0h
+  3b54f0 ! 
+  ...... ! offset_3b54f0:                  ;xref o14d7f o14dc3 o14f66
+  ...... !   dd          0033102ah
+  3b54f4 !   dd          00331034h
+  3b54f8 !   dd          00000000h
+  3b54fc !   dd          00000000h
+  3b5500 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DVertexDeclaration
+  ...... ! ;********************************************************
+  ...... ! __ZTV26CDirect3DVertexDeclaration:
+  ...... !   dd          00000000h
+  3b5504 !   dd          003b4b20h
+  3b5508 ! 
+  ...... ! offset_3b5508:                  ;xref o1503e o15080 o152c6
+  ...... !                                 ;xref o15508
+  ...... !   dd          00014f96h
+  3b550c !   dd          00014f84h
+  3b5510 !   dd          00014fb0h
+  3b5514 !   dd          0033103eh
+  3b5518 !   dd          00014fd8h
+  3b551c !   dd          00015502h
+  3b5520 !   dd          00015034h
+  3b5524 !   dd          00000000h
+  3b5528 !   dd          00000000h
+  3b552c !   dd          00000000h
+  3b5530 !   dd          00000000h
+  3b5534 !   dd          00000000h
+  3b5538 !   dd          00000000h
+  3b553c !   dd          00000000h
+  3b5540 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DVertexShader
+  ...... ! ;********************************************************
+  ...... ! __ZTV21CDirect3DVertexShader:
+  ...... !   dd          00000000h
+  3b5544 !   dd          003b4b60h
+  3b5548 ! 
+  ...... ! offset_3b5548:                  ;xref o1554c o15570 o15617
+  ...... !   dd          00015596h
+  3b554c !   dd          00015534h
+  3b5550 !   dd          000155b0h
+  3b5554 !   dd          000155d8h
+  3b5558 !   dd          003310e6h
+  3b555c !   dd          00015546h
+  3b5560 !   dd          00015566h
+  3b5564 !   dd          fffffffch
+  3b5568     dd          003b4b60h
+  3b556c ! 
+  ...... ! offset_3b556c:                  ;xref o15552 o15576 o1561d
+  ...... !   dd          003310f0h
+  3b5570 !   dd          003310fah
+  3b5574 !   dd          00000000h
+  3b5578 !   dd          00000000h
+  3b557c !   dd          00000000h
+  3b5580 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CMemoryBuffer
+  ...... ! ;********************************************************
+  ...... ! __ZTV13CMemoryBuffer:
+  ...... !   dd          00000000h
+  3b5584 !   dd          003b4bc0h
+  3b5588 ! 
+  ...... ! offset_3b5588:                  ;xref o15646 o15706 o15740
+  ...... !   dd          000156fch
+  3b558c !   dd          00015736h
+  3b5590 !   dd          00000000h
+  3b5594 !   dd          00000000h
+  3b5598 !   dd          00000000h
+  3b559c !   dd          00000000h
+  3b55a0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for COpenGL
+  ...... ! ;********************************************************
+  ...... ! __ZTV7COpenGL:
+  ...... !   dd          00000000h
+  3b55a4 !   dd          003b4c00h
+  3b55a8 ! 
+  ...... ! offset_3b55a8:                  ;xref o170a4 o17d2e o17db8
+  ...... !   dd          00017dach
+  3b55ac ! 
+  ...... ! loc_3b55ac:                     ;xref j3b55a9
+  ...... !   dd          00017098h
+  3b55b0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for COpenGLVertexProgram
+  ...... ! ;********************************************************
+  ...... ! __ZTV20COpenGLVertexProgram:
+  ...... !   dd          00000000h
+  3b55b4 !   dd          003b4be0h
+  3b55b8 ! 
+  ...... ! offset_3b55b8:                  ;xref o17e6f o1823c o183d2
+  ...... !                                 ;xref o18568
+  ...... !   dd          000183c6h
+  3b55bc !   dd          0001855ch
+  3b55c0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CMacGameEngine
+  ...... ! ;********************************************************
+  ...... ! __ZTV14CMacGameEngine:
+  ...... !   dd          00000000h
+  3b55c4 !   dd          003b4c20h
+  3b55c8 ! 
+  ...... ! offset_3b55c8:                  ;xref o19366 o193d2 o19422
+  ...... !                                 ;xref o19472
+  ...... !   dd          00019418h
+  3b55cc !   dd          00019468h
+  3b55d0 !   dd          00019d04h
+  3b55d4 !   dd          00019788h
+  3b55d8 !   dd          00000000h
+  3b55dc !   dd          00019fa4h
+  3b55e0 !   dd          00019876h
+  3b55e4 !   dd          0001987ch
+  3b55e8 !   dd          00019882h
+  3b55ec     dd          00019888h
+  3b55f0     dd          0001988eh
+  3b55f4     dd          00019894h
+  3b55f8     dd          0001989ah
+  3b55fc     dd          000198a0h
+  3b5600     dd          000198a6h
+  3b5604     dd          000198ach
+  3b5608     dd          000198b8h
+  3b560c     dd          00000000h
+  3b5610     dd          00000000h
+  3b5614     dd          00000000h
+  3b5618     dd          00000000h
+  3b561c     dd          00000000h
+  3b5620 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CCallOfDutyEngine
+  ...... ! ;********************************************************
+  ...... ! __ZTV17CCallOfDutyEngine:
+  ...... !   dd          00000000h
+  3b5624 !   dd          003b4c40h
+  3b5628 ! 
+  ...... ! offset_3b5628:                  ;xref o1ac9b o1ae1b o331620
+  ...... !                                 ;xref o33163a
+  ...... !   dd          0033161ah
+  3b562c !   dd          00331630h
+  3b5630 !   dd          0001ae32h
+  3b5634 !   dd          0001ade0h
+  3b5638 !   dd          0001b40ah
+  3b563c !   dd          00019fa4h
+  3b5640 !   dd          0001fa50h
+  3b5644 !   dd          0001fa9ch
+  3b5648 !   dd          0001fae8h
+  3b564c !   dd          0001faeeh
+  3b5650 !   dd          000201b4h
+  3b5654 !   dd          0001fbd0h
+  3b5658 !   dd          0001fd3eh
+  3b565c !   dd          0001ff18h
+  3b5660 !   dd          0001feb6h
+  3b5664 !   dd          000198ach
+  3b5668 !   dd          0001adeah
+  3b566c !   dd          00000000h
+  3b5670     dd          00000000h
+  3b5674     dd          00000000h
+  3b5678     dd          00000000h
+  3b567c     dd          00000000h
+  3b5680 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CThread
+  ...... ! ;********************************************************
+  ...... ! __ZTV7CThread:
+  ...... !   dd          00000000h
+  3b5684 !   dd          003b4c60h
+  3b5688 ! 
+  ...... ! offset_3b5688:                  ;xref o1b78e o1b803 o1b84b
+  ...... !                                 ;xref o1b893
+  ...... !   dd          0001b840h
+  3b568c !   dd          0001b888h
+  3b5690 !   dd          00000000h
+  3b5694 !   dd          00000000h
+  3b5698 !   dd          00000000h
+  3b569c !   dd          00000000h
+  3b56a0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DVolume
+  ...... ! ;********************************************************
+  ...... ! __ZTV15CDirect3DVolume:
+  ...... !   dd          00000000h
+  3b56a4 !   dd          003b4c80h
+  3b56a8 ! 
+  ...... ! offset_3b56a8:                  ;xref o1b93e o1b94c o1be2d
+  ...... !   dd          0001b95ch
+  3b56ac !   dd          0001b924h
+  3b56b0 !   dd          0001b976h
+  3b56b4 !   dd          00331656h
+  3b56b8 !   dd          00331660h
+  3b56bc !   dd          0033166ah
+  3b56c0 !   dd          00331674h
+  3b56c4 !   dd          0033167eh
+  3b56c8 !   dd          0001b9a0h
+  3b56cc !   dd          0001ba82h
+  3b56d0 !   dd          0001bb0eh
+  3b56d4 !   dd          0001b938h
+  3b56d8 ! 
+  ...... ! loc_3b56d8:                     ;xref j3b56c0
+  ...... !   dd          0001b946h
+  3b56dc ! 
+  ...... ! loc_3b56dc:                     ;xref j3b56c4
+  ...... !   dd          00000000h
+  3b56e0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CDirect3DVolumeTexture
+  ...... ! ;********************************************************
+  ...... ! __ZTV22CDirect3DVolumeTexture:
+  ...... !   dd          00000000h
+  3b56e4 !   dd          003b4cc0h
+  3b56e8 ! 
+  ...... ! offset_3b56e8:                  ;xref o1bf04 o1c0db o1c3e6
+  ...... !   dd          0001b9e6h
+  3b56ec !   dd          0001b9d4h
+  3b56f0 !   dd          0001ba00h
+  3b56f4 !   dd          00331688h
+  3b56f8 !   dd          00331692h
+  3b56fc !   dd          0033169ch
+  3b5700 !   dd          003316a6h
+  3b5704 !   dd          003316b0h
+  3b5708 !   dd          003316b8h
+  3b570c !   dd          003316c2h
+  3b5710 !   dd          003316c8h
+  3b5714 !   dd          003316d2h
+  3b5718 !   dd          003316dch
+  3b571c !   dd          003316e4h
+  3b5720 !   dd          003316f0h
+  3b5724 !   dd          003316fah
+  3b5728 !   dd          00331702h
+  3b572c !   dd          0001ba28h
+  3b5730 !   dd          0001bdeah
+  3b5734 !   dd          0001bda2h
+  3b5738 !   dd          0001bae0h
+  3b573c !   dd          0001c014h
+  3b5740 !   dd          0001c3dah
+  3b5744 !   dd          0001bef8h
+  3b5748 !   dd          fffffffch
+  3b574c     dd          003b4cc0h
+  3b5750 ! 
+  ...... ! offset_3b5750:                  ;xref o1bf0a o1c0e1 o1c3ec
+  ...... !   dd          00331b7eh
+  3b5754 !   dd          00331708h
+  3b5758 !   dd          0032fbfch
+  3b575c !   dd          00000000h
+  3b5760 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function vtable for CD3DXBuffer
+  ...... ! ;********************************************************
+  ...... ! __ZTV11CD3DXBuffer:
+  ...... !   dd          00000000h
+  3b5764 !   dd          003b4d60h
+  3b5768 ! 
+  ...... ! offset_3b5768:                  ;xref o1c50c o1c538 o1d95c
+  ...... !   dd          0001c562h
+  3b576c     dd          0001c4f0h
+  3b5770 !   dd          0001c57ch
+  3b5774 !   dd          00331b88h
+  3b5778 !   dd          00331b94h
+  3b577c !   dd          0001c502h
+  3b5780 !   dd          0001c52eh
+  3b5784 !   dd          00000000h
+  3b5788 !   dd          00000000h
+  3b578c !   dd          00000000h
+  3b5790 !   dd          00000000h
+  3b5794 !   dd          00000000h
+  3b5798 !   dd          00000000h
+  3b579c !   dd          00000000h
+  3b57a0 ! 
+  ...... ! ;********************************************************
+  ...... ! ; function _directives
+  ...... ! ;********************************************************
+  ...... ! _directives:                    ;xref r437ae o437b9
+  ...... !   dd          002ee4dch
+

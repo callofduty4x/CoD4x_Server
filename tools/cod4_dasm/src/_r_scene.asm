@@ -1,20 +1,20 @@
 ;Imports of r_scene:
 	extern vidConfig
 	extern memset
-	extern MatrixForViewer
-	extern InfinitePerspectiveMatrix
+	extern _Z15MatrixForViewerPA4_fPKfPA3_S1_
+	extern _Z25InfinitePerspectiveMatrixPA4_ffff
 	extern r_znear_depthhack
-	extern MatrixMultiply44
-	extern MatrixInverse44
+	extern _Z16MatrixMultiply44PA4_KfS1_PA4_f
+	extern _Z15MatrixInverse44PKfPf
 	extern r_znear
-	extern Com_Memset
+	extern _Z10Com_MemsetPvii
 	extern rgp
-	extern R_ClearDpvsScene
-	extern R_FilterDynEntIntoCells
-	extern R_LinkDynEntToPrimaryLights
+	extern _Z16R_ClearDpvsScenev
+	extern _Z23R_FilterDynEntIntoCellsj17DynEntityDrawTypePfS0_
+	extern _Z27R_LinkDynEntToPrimaryLightsj17DynEntityDrawTypePKfS1_
 	extern rg
 	extern r_norefresh
-	extern R_AllocViewParms
+	extern _Z16R_AllocViewParmsv
 	extern r_lockPvs
 	extern r_lodBiasRigid
 	extern r_lodScaleRigid
@@ -30,8 +30,8 @@
 	extern gfxCmdBufInput
 	extern memcpy
 	extern Com_Memcpy
-	extern R_SetupDynamicModelLighting
-	extern R_SetFrameFog
+	extern _Z27R_SetupDynamicModelLightingP14GfxCmdBufInput
+	extern _Z13R_SetFrameFogP14GfxCmdBufInput
 	extern r_specularColorScale
 	extern r_dof_tweak
 	extern r_dof_viewModelStart
@@ -42,7 +42,7 @@
 	extern r_dof_farEnd
 	extern r_dof_nearBlur
 	extern r_dof_farBlur
-	extern R_UsingDepthOfField
+	extern _Z19R_UsingDepthOfFieldPK11GfxViewInfo
 	extern gfxRenderTargets
 	extern com_statmon
 	extern r_filmUseTweaks
@@ -62,105 +62,105 @@
 	extern r_glowTweakBloomIntensity
 	extern r_glowTweakBloomCutoff
 	extern r_glowTweakBloomDesaturation
-	extern R_UsingGlow
+	extern _Z11R_UsingGlowPK11GfxViewInfo
 	extern gfxMeshGlob
-	extern R_SyncRenderThread
-	extern R_SetQuadMesh
-	extern R_SetupWorldSurfacesDpvs
-	extern R_SetViewFrustumPlanes
-	extern R_CellForPoint
-	extern PIXBeginNamedEvent
-	extern R_FilterEntitiesIntoCells
-	extern R_AddWorldSurfacesDpvs
-	extern R_BeginAllStaticModelLighting
+	extern _Z18R_SyncRenderThreadv
+	extern _Z13R_SetQuadMeshP15GfxQuadMeshDataffffffffm
+	extern _Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms
+	extern _Z22R_SetViewFrustumPlanesP11GfxViewInfo
+	extern _Z14R_CellForPointPKf
+	extern _Z18PIXBeginNamedEventiPKcz
+	extern _Z25R_FilterEntitiesIntoCellsi
+	extern _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi
+	extern _Z29R_BeginAllStaticModelLightingv
 	extern r_dlightLimit
 	extern gfxDrawMethod
 	extern dx_ctx
-	extern R_AddAllBspDrawSurfacesCameraNonlit
-	extern R_AddAllStaticModelSurfacesCamera
-	extern DynEntPieces_AddDrawSurfs
-	extern R_DrawAllDynEnt
-	extern R_DrawAllSceneEnt
-	extern R_AddWorkerCmd
-	extern R_SortAllStaticModelSurfacesCamera
-	extern R_SetAllStaticModelLighting
-	extern R_EmitShadowCookieSurfs
-	extern R_InitDrawSurfListInfo
-	extern R_MergeAndEmitDrawSurfLists
-	extern FX_RunPhysics
-	extern DynEntCl_ProcessEntities
+	extern _Z35R_AddAllBspDrawSurfacesCameraNonlitjjj
+	extern _Z33R_AddAllStaticModelSurfacesCamerav
+	extern _Z25DynEntPieces_AddDrawSurfsi
+	extern _Z15R_DrawAllDynEntPK11GfxViewInfo
+	extern _Z17R_DrawAllSceneEntPK11GfxViewInfo
+	extern _Z14R_AddWorkerCmd13WorkerCmdTypePv
+	extern _Z34R_SortAllStaticModelSurfacesCamerav
+	extern _Z27R_SetAllStaticModelLightingv
+	extern _Z23R_EmitShadowCookieSurfsP11GfxViewInfo
+	extern _Z22R_InitDrawSurfListInfoP19GfxDrawSurfListInfo
+	extern _Z27R_MergeAndEmitDrawSurfListsjjP19GfxDrawSurfListInfo
+	extern _Z13FX_RunPhysicsi
+	extern _Z24DynEntCl_ProcessEntitiesi
 	extern fx_marks
 	extern fx_marks_smodels
 	extern fx_marks_ents
-	extern R_SortDrawSurfs
+	extern _Z15R_SortDrawSurfsP11GfxDrawSurfi
 	extern sc_enable
 	extern r_pretess
-	extern R_BeginPreTess
+	extern _Z14R_BeginPreTessv
 	extern r_dof_enable
-	extern R_Cinematic_IsStarted
-	extern R_RegisterFont
-	extern R_Cinematic_IsUnderrun
+	extern _Z21R_Cinematic_IsStartedv
+	extern _Z14R_RegisterFontPKci
+	extern _Z22R_Cinematic_IsUnderrunv
 	extern colorRedFaded
-	extern R_AddCmdDrawText
-	extern R_CullDynamicPointLightsInCameraView
-	extern R_GetPointLightPartitions
-	extern R_GetBspLightSurfs
-	extern R_GetStaticModelLightSurfs
-	extern R_GetSceneEntLightSurfs
-	extern R_CullDynamicSpotLightInCameraView
-	extern R_AddDynamicShadowableLight
+	extern _Z16R_AddCmdDrawTextPKciP6Font_sfffffPKfi
+	extern _Z36R_CullDynamicPointLightsInCameraViewv
+	extern _Z25R_GetPointLightPartitionsPPK8GfxLight
+	extern _Z18R_GetBspLightSurfsPPK8GfxLighti
+	extern _Z26R_GetStaticModelLightSurfsPPK8GfxLighti
+	extern _Z23R_GetSceneEntLightSurfsPPK8GfxLighti
+	extern _Z34R_CullDynamicSpotLightInCameraViewv
+	extern _Z27R_AddDynamicShadowableLightP11GfxViewInfoPK8GfxLight
 	extern _ZN10MacDisplay15SupportsShadowsEv
-	extern CL_UpdateSound
-	extern R_EndPreTess
-	extern R_EmitPointLightPartitionSurfs
-	extern R_AddAllBspDrawSurfacesCamera
+	extern _Z14CL_UpdateSoundv
+	extern _Z12R_EndPreTessv
+	extern _Z30R_EmitPointLightPartitionSurfsP11GfxViewInfoPPK8GfxLightiPKf
+	extern _Z29R_AddAllBspDrawSurfacesCamerav
 	extern sm_sunEnable
-	extern R_UpdateDrawMethod
-	extern R_AddAllBspDrawSurfacesSunShadow
-	extern R_AddAllStaticModelSurfacesSunShadow
+	extern _Z18R_UpdateDrawMethodP14GfxBackEndDataPK11GfxViewInfo
+	extern _Z32R_AddAllBspDrawSurfacesSunShadowv
+	extern _Z36R_AddAllStaticModelSurfacesSunShadowv
 	extern r_spotLightShadows
 	extern comWorld
-	extern Com_Error
-	extern R_ChooseShadowedLights
-	extern R_GenerateAllSortedSpotShadowDrawSurfs
-	extern FX_GenerateMarkVertsForStaticModels
-	extern FX_BeginGeneratingMarkVertsForEntModels
+	extern _Z9Com_Error11errorParm_tPKcz
+	extern _Z22R_ChooseShadowedLightsP11GfxViewInfo
+	extern _Z38R_GenerateAllSortedSpotShadowDrawSurfsP11GfxViewInfo
+	extern _Z35FX_GenerateMarkVertsForStaticModelsiiPKh
+	extern _Z39FX_BeginGeneratingMarkVertsForEntModelsiPj
 	extern gfxCfg
-	extern CG_GetPoseLightingHandle
-	extern FX_GenerateMarkVertsForEntDObj
-	extern FX_GenerateMarkVertsForEntXModel
-	extern FX_GenerateMarkVertsForEntBrush
-	extern FX_EndGeneratingMarkVertsForEntModels
-	extern R_AddAllSceneEntSurfacesSunShadow
-	extern R_SortAllStaticModelSurfacesSunShadow
-	extern R_MergeAndEmitSunShadowMapsSurfs
-	extern R_SetupSunShadowMaps
-	extern R_SunShadowMaps
-	extern Sys_Sleep
-	extern Sys_Milliseconds
+	extern _Z24CG_GetPoseLightingHandlePK7cpose_t
+	extern _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t
+	extern _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement
+	extern _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement
+	extern _Z37FX_EndGeneratingMarkVertsForEntModelsi
+	extern _Z33R_AddAllSceneEntSurfacesSunShadowv
+	extern _Z37R_SortAllStaticModelSurfacesSunShadowv
+	extern _Z32R_MergeAndEmitSunShadowMapsSurfsP11GfxViewInfo
+	extern _Z20R_SetupSunShadowMapsPK12GfxViewParmsP12GfxSunShadow
+	extern _Z15R_SunShadowMapsP12GfxSunShadow
+	extern _Z9Sys_Sleepi
+	extern _Z16Sys_Millisecondsv
 	extern r_lightTweakSunDirection
-	extern Cvar_ClearModified
-	extern R_UnfilterDynEntFromCells
-	extern R_UnlinkDynEntFromPrimaryLights
-	extern R_UnfilterEntFromCells
-	extern R_UnlinkEntityFromPrimaryLights
-	extern InterlockedExchangeAdd
-	extern DObjGetTree
-	extern DObjGetRadius
-	extern CG_GetPoseOrigin
-	extern CG_GetPoseAngles
-	extern AnglesToQuat
-	extern CG_PredictiveSkinCEntity
-	extern R_WarnOncePerFrame
-	extern DObjGetNumModels
-	extern DObjGetModel
-	extern XModelGetRadius
-	extern R_FilterDObjIntoCells
-	extern R_LinkSphereEntityToPrimaryLights
-	extern XModelGetSurfCount
-	extern XModelGetSkins
-	extern R_FilterBModelIntoCells
-	extern R_LinkBoxEntityToPrimaryLights
+	extern _Z18Dvar_ClearModifiedPK6dvar_s
+	extern _Z25R_UnfilterDynEntFromCellsj17DynEntityDrawType
+	extern _Z31R_UnlinkDynEntFromPrimaryLightsj17DynEntityDrawType
+	extern _Z22R_UnfilterEntFromCellsjj
+	extern _Z31R_UnlinkEntityFromPrimaryLightsjj
+	extern iInterlockedExchangeAdd
+	extern _Z11DObjGetTreePK6DObj_s
+	extern _Z13DObjGetRadiusPK6DObj_s
+	extern _Z16CG_GetPoseOriginPK7cpose_tPf
+	extern _Z16CG_GetPoseAnglesPK7cpose_tPf
+	extern _Z12AnglesToQuatPKfPf
+	extern _Z24CG_PredictiveSkinCEntityP14GfxSceneEntity
+	extern _Z18R_WarnOncePerFrame14GfxWarningTypez
+	extern _Z16DObjGetNumModelsPK6DObj_s
+	extern _Z12DObjGetModelPK6DObj_si
+	extern _Z15XModelGetRadiusPK6XModel
+	extern _Z21R_FilterDObjIntoCellsjjPff
+	extern _Z33R_LinkSphereEntityToPrimaryLightsjjPKff
+	extern _Z18XModelGetSurfCountPK6XModeli
+	extern _Z14XModelGetSkinsPK6XModeli
+	extern _Z23R_FilterBModelIntoCellsjjP13GfxBrushModel
+	extern _Z30R_LinkBoxEntityToPrimaryLightsjjPKfS0_
 	extern r_drawDecals
 	extern r_spotLightEndRadius
 	extern r_spotLightStartRadius
@@ -169,44 +169,44 @@
 	extern tanf
 	extern r_spotLightBrightness
 	extern cosf
-	extern Cvar_SetFloat
-	extern InterlockedIncrement
-	extern InterlockedDecrement
-	extern R_AddParticleCloudDrawSurf
+	extern _Z13Dvar_SetFloatPK6dvar_sf
+	extern iInterlockedIncrement
+	extern iInterlockedDecrement
+	extern _Z26R_AddParticleCloudDrawSurfjP8Material
 
 ;Exports of r_scene:
 	global _GLOBAL__I_scene
 	global lockPvsViewParms
 	global g_allowShadowMaps
 	global _ZZ20R_GetAllowShadowMapsvE19sDisableShadowsTest
-	global R_SetSceneParms
-	global R_SetViewParmsForScene
-	global R_InitScene
-	global R_ClearScene
-	global R_LinkDynEnt
-	global R_SetEndTime
-	global R_RenderScene
-	global R_WaitEndTime
-	global R_SetLodOrigin
-	global R_UnlinkDynEnt
-	global R_UnlinkEntity
-	global R_GetBrushModel
-	global R_AddDObjToScene
-	global R_LinkDObjEntity
-	global R_AddDObjSurfaces
-	global R_AllocSceneModel
-	global R_LinkBModelEntity
-	global R_AddBModelSurfaces
-	global R_AddXModelSurfaces
-	global R_GetLocalClientNum
-	global R_AddOmniLightToScene
-	global R_AddSpotLightToScene
-	global R_AddDObjSurfacesCamera
-	global R_AddBModelSurfacesCamera
-	global R_AddParticleCloudToScene
-	global R_AddXModelSurfacesCamera
-	global R_SetupViewProjectionMatrices
-	global R_AddBrushModelToSceneFromAngles
+	global _Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms
+	global _Z22R_SetViewParmsForScenePK8refdef_sP12GfxViewParms
+	global _Z11R_InitScenev
+	global _Z12R_ClearScenei
+	global _Z12R_LinkDynEntj17DynEntityDrawTypePfS0_
+	global _Z12R_SetEndTimei
+	global _Z13R_RenderScenePK8refdef_s
+	global _Z13R_WaitEndTimev
+	global _Z14R_SetLodOriginPK8refdef_s
+	global _Z14R_UnlinkDynEntj17DynEntityDrawType
+	global _Z14R_UnlinkEntityjj
+	global _Z15R_GetBrushModelj
+	global _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
+	global _Z16R_LinkDObjEntityjjPff
+	global _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3_
+	global _Z17R_AllocSceneModelv
+	global _Z18R_LinkBModelEntityjjP13GfxBrushModel
+	global _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
+	global _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6_
+	global _Z19R_GetLocalClientNumv
+	global _Z21R_AddOmniLightToScenePKfffff
+	global _Z21R_AddSpotLightToScenePKfS0_ffff
+	global _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3_
+	global _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j
+	global _Z25R_AddParticleCloudToSceneP8Material
+	global _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j
+	global _Z29R_SetupViewProjectionMatricesP12GfxViewParms
+	global _Z32R_AddBrushModelToSceneFromAnglesPK13GfxBrushModelPKfS3_j
 	global scene
 
 
@@ -220,11 +220,11 @@ _GLOBAL__I_scene:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;R_SetSceneParms(refdef_s const*, GfxSceneParms*)
-R_SetSceneParms:
+_Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -288,10 +288,10 @@ R_SetSceneParms:
 	mov eax, [esi+0x8]
 	mov edx, vidConfig
 	cmp eax, [edx+0x8]
-	jz R_SetSceneParms_10
-R_SetSceneParms_30:
+	jz _Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms_10
+_Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms_30:
 	xor eax, eax
-R_SetSceneParms_40:
+_Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms_40:
 	mov [edi+0x68], al
 	mov eax, [esi]
 	mov [edi+0x7c], eax
@@ -332,7 +332,7 @@ R_SetSceneParms_40:
 	sub eax, [ebp-0x1c]
 	mov [edi+0x78], eax
 	cmp byte [esi+0x4090], 0x0
-	jz R_SetSceneParms_20
+	jz _Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms_20
 	mov ecx, ebx
 	mov ebx, [esi+0x4080]
 	imul ebx, [ecx]
@@ -371,7 +371,7 @@ R_SetSceneParms_40:
 	pop edi
 	pop ebp
 	ret
-R_SetSceneParms_20:
+_Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms_20:
 	mov ebx, [ebp-0x10]
 	mov [edi+0x8c], ebx
 	mov edx, [ebp-0x1c]
@@ -386,27 +386,27 @@ R_SetSceneParms_20:
 	pop edi
 	pop ebp
 	ret
-R_SetSceneParms_10:
+_Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms_10:
 	mov eax, [esi+0xc]
 	cmp eax, [edx+0xc]
-	jnz R_SetSceneParms_30
+	jnz _Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms_30
 	mov eax, 0x1
-	jmp R_SetSceneParms_40
+	jmp _Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms_40
 	nop
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -676,7 +676,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_SetViewParmsForScene(refdef_s const*, GfxViewParms*)
-R_SetViewParmsForScene:
+_Z22R_SetViewParmsForScenePK8refdef_sP12GfxViewParms:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -732,14 +732,14 @@ R_SetViewParmsForScene:
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call MatrixForViewer
+	call _Z15MatrixForViewerPA4_fPKfPA3_S1_
 	mov eax, [ebp-0x1c]
 	movss xmm3, dword [eax+0x58]
 	pxor xmm0, xmm0
 	ucomiss xmm3, xmm0
-	jbe R_SetViewParmsForScene_10
+	jbe _Z22R_SetViewParmsForScenePK8refdef_sP12GfxViewParms_10
 	mov edx, eax
-R_SetViewParmsForScene_20:
+_Z22R_SetViewParmsForScenePK8refdef_sP12GfxViewParms_20:
 	movss [edi+0x138], xmm3
 	lea esi, [edi+0x40]
 	movss [esp+0xc], xmm3
@@ -748,7 +748,7 @@ R_SetViewParmsForScene_20:
 	mov eax, [edx+0x10]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call InfinitePerspectiveMatrix
+	call _Z25InfinitePerspectiveMatrixPA4_ffff
 	mov eax, r_znear_depthhack
 	mov eax, [eax]
 	mov eax, [eax+0xc]
@@ -758,18 +758,18 @@ R_SetViewParmsForScene_20:
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call MatrixMultiply44
+	call _Z16MatrixMultiply44PA4_KfS1_PA4_f
 	lea eax, [edi+0xc0]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call MatrixInverse44
+	call _Z15MatrixInverse44PKfPf
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_SetViewParmsForScene_10:
+_Z22R_SetViewParmsForScenePK8refdef_sP12GfxViewParms_10:
 	mov eax, r_znear
 	mov eax, [eax]
 	movss xmm3, dword [eax+0xc]
@@ -783,11 +783,11 @@ R_SetViewParmsForScene_10:
 	andnps xmm3, xmm2
 	orps xmm3, xmm1
 	mov edx, [ebp-0x1c]
-	jmp R_SetViewParmsForScene_20
+	jmp _Z22R_SetViewParmsForScenePK8refdef_sP12GfxViewParms_20
 
 
 ;R_InitScene()
-R_InitScene:
+_Z11R_InitScenev:
 	push ebp
 	mov ebp, esp
 	mov dword [scene+0xe4190], scene
@@ -864,7 +864,7 @@ R_InitScene:
 
 
 ;R_ClearScene(int)
-R_ClearScene:
+_Z12R_ClearScenei:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -879,21 +879,21 @@ R_ClearScene:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], scene+0x12b430
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov eax, [scene+0x13ba30]
 	lea eax, [eax+eax*8]
 	shl eax, 0x3
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], scene+0x13ba34
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov eax, [scene+0x14f634]
 	lea eax, [eax+eax*4]
 	shl eax, 0x3
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], scene+0x14f638
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov dword [scene+0x11422c], 0x0
 	mov dword [esp+0x8], 0x88
 	mov dword [esp+0x4], 0x0
@@ -901,29 +901,29 @@ R_ClearScene:
 	call memset
 	xor esi, esi
 	mov ebx, scene+0x14da34
-R_ClearScene_10:
+_Z12R_ClearScenei_10:
 	mov eax, [scene+0x13ba30]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	add esi, 0x1
 	add ebx, 0x400
 	cmp esi, 0x7
-	jnz R_ClearScene_10
+	jnz _Z12R_ClearScenei_10
 	mov dword [scene+0x12b42c], 0x0
 	mov dword [scene+0x13ba30], 0x0
 	mov dword [scene+0x14f634], 0x0
 	mov eax, rgp
 	mov ebx, [eax+0x20a0]
 	test ebx, ebx
-	jz R_ClearScene_20
+	jz _Z12R_ClearScenei_20
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
-	jmp R_ClearDpvsScene
-R_ClearScene_20:
+	jmp _Z16R_ClearDpvsScenev
+_Z12R_ClearScenei_20:
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -932,7 +932,7 @@ R_ClearScene_20:
 
 
 ;R_LinkDynEnt(unsigned int, DynEntityDrawType, float*, float*)
-R_LinkDynEnt:
+_Z12R_LinkDynEntj17DynEntityDrawTypePfS0_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -948,7 +948,7 @@ R_LinkDynEnt:
 	mov [esp+0x8], esi
 	mov [esp+0x4], edi
 	mov [esp], eax
-	call R_FilterDynEntIntoCells
+	call _Z23R_FilterDynEntIntoCellsj17DynEntityDrawTypePfS0_
 	mov [ebp+0x14], ebx
 	mov [ebp+0x10], esi
 	mov [ebp+0xc], edi
@@ -959,12 +959,12 @@ R_LinkDynEnt:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_LinkDynEntToPrimaryLights
+	jmp _Z27R_LinkDynEntToPrimaryLightsj17DynEntityDrawTypePKfS1_
 	nop
 
 
 ;R_SetEndTime(int)
-R_SetEndTime:
+_Z12R_SetEndTimei:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0x8]
@@ -976,7 +976,7 @@ R_SetEndTime:
 
 
 ;R_RenderScene(refdef_s const*)
-R_RenderScene:
+_Z13R_RenderScenePK8refdef_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -986,16 +986,16 @@ R_RenderScene:
 	mov esi, [ebp+0x8]
 	mov ebx, rg
 	cmp byte [ebx+0x140], 0x0
-	jz R_RenderScene_10
+	jz _Z13R_RenderScenePK8refdef_s_10
 	mov eax, r_norefresh
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_RenderScene_10
+	jnz _Z13R_RenderScenePK8refdef_s_10
 	mov eax, rgp
 	mov edi, [eax+0x20a0]
 	test edi, edi
-	jz R_RenderScene_20
-R_RenderScene_1020:
+	jz _Z13R_RenderScenePK8refdef_s_20
+_Z13R_RenderScenePK8refdef_s_1020:
 	mov eax, [esi+0x18]
 	mov [ebx+0x144], eax
 	mov eax, [esi+0x1c]
@@ -1009,25 +1009,25 @@ R_RenderScene_1020:
 	mov [ebx+0x154], eax
 	mov eax, [edx+0x8]
 	mov [ebx+0x158], eax
-	call R_AllocViewParms
+	call _Z16R_AllocViewParmsv
 	mov [ebp-0xec], eax
 	mov edx, eax
 	mov eax, esi
-	call R_SetViewParmsForScene
+	call _Z22R_SetViewParmsForScenePK8refdef_sP12GfxViewParms
 	lea edx, [ebp-0xe0]
 	mov eax, esi
-	call R_SetSceneParms
+	call _Z15R_SetSceneParmsPK8refdef_sP13GfxSceneParms
 	mov edx, r_lockPvs
 	mov eax, [edx]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_30
+	jz _Z13R_RenderScenePK8refdef_s_30
 	mov eax, [lockPvsViewParms+0x100]
 	mov [ebx+0x21f8], eax
 	mov eax, [lockPvsViewParms+0x104]
 	mov [ebx+0x21fc], eax
 	mov eax, [lockPvsViewParms+0x108]
 	mov [ebx+0x2200], eax
-R_RenderScene_600:
+_Z13R_RenderScenePK8refdef_s_600:
 	movss xmm1, dword [_float_2_11867309]
 	mulss xmm1, [esi+0x14]
 	mov eax, r_lodBiasRigid
@@ -1083,19 +1083,19 @@ R_RenderScene_600:
 	add edx, ebx
 	mov [ebp-0x104], edx
 	cmp byte [_ZZ20R_GetAllowShadowMapsvE19sDisableShadowsTest], 0x0
-	jnz R_RenderScene_40
-R_RenderScene_790:
+	jnz _Z13R_RenderScenePK8refdef_s_40
+_Z13R_RenderScenePK8refdef_s_790:
 	mov eax, sm_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_50
+	jz _Z13R_RenderScenePK8refdef_s_50
 	cmp byte [g_allowShadowMaps], 0x0
-	jnz R_RenderScene_60
-R_RenderScene_50:
+	jnz _Z13R_RenderScenePK8refdef_s_60
+_Z13R_RenderScenePK8refdef_s_50:
 	xor eax, eax
-R_RenderScene_620:
+_Z13R_RenderScenePK8refdef_s_620:
 	test eax, eax
-	jz R_RenderScene_70
+	jz _Z13R_RenderScenePK8refdef_s_70
 	mov dword [ebp-0x128], 0x2
 	mov eax, r_rendererInUse
 	mov eax, [eax]
@@ -1105,8 +1105,8 @@ R_RenderScene_620:
 	mov esi, rg
 	mov [esi+0x22e0], eax
 	test eax, eax
-	jz R_RenderScene_80
-R_RenderScene_580:
+	jz _Z13R_RenderScenePK8refdef_s_80
+_Z13R_RenderScenePK8refdef_s_580:
 	mov eax, sm_sunShadowScale
 	mov eax, [eax]
 	movss xmm0, dword [eax+0xc]
@@ -1116,10 +1116,10 @@ R_RenderScene_580:
 	movss xmm1, dword [_float_1_00000000]
 	movss [ebp-0x124], xmm1
 	mov ebx, 0x1
-	jmp R_RenderScene_90
-R_RenderScene_130:
+	jmp _Z13R_RenderScenePK8refdef_s_90
+_Z13R_RenderScenePK8refdef_s_130:
 	cvtsi2ss xmm3, ebx
-R_RenderScene_140:
+_Z13R_RenderScenePK8refdef_s_140:
 	movss xmm0, dword [ebp-0x130]
 	mulss xmm0, xmm3
 	addss xmm0, [_float_0_50000000]
@@ -1146,24 +1146,24 @@ R_RenderScene_140:
 	mov ecx, [ebp-0x168]
 	test ecx, ecx
 	movss xmm3, dword [ebp-0x1a8]
-	js R_RenderScene_100
+	js _Z13R_RenderScenePK8refdef_s_100
 	cvtsi2ss xmm0, ecx
-R_RenderScene_570:
+_Z13R_RenderScenePK8refdef_s_570:
 	divss xmm0, xmm3
 	subss xmm0, [ebp-0x130]
 	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [ebp-0x124]
-	jae R_RenderScene_110
+	jae _Z13R_RenderScenePK8refdef_s_110
 	mov edi, ebx
 	mov esi, ecx
 	movss [ebp-0x124], xmm0
-R_RenderScene_110:
+_Z13R_RenderScenePK8refdef_s_110:
 	add ebx, 0x1
 	cmp ebx, 0xb
-	jz R_RenderScene_120
-R_RenderScene_90:
+	jz _Z13R_RenderScenePK8refdef_s_120
+_Z13R_RenderScenePK8refdef_s_90:
 	test ebx, ebx
-	jns R_RenderScene_130
+	jns _Z13R_RenderScenePK8refdef_s_130
 	mov eax, ebx
 	shr eax, 1
 	mov edx, ebx
@@ -1171,16 +1171,16 @@ R_RenderScene_90:
 	or eax, edx
 	cvtsi2ss xmm3, eax
 	addss xmm3, xmm3
-	jmp R_RenderScene_140
-R_RenderScene_120:
+	jmp _Z13R_RenderScenePK8refdef_s_140
+_Z13R_RenderScenePK8refdef_s_120:
 	test esi, esi
-	js R_RenderScene_150
+	js _Z13R_RenderScenePK8refdef_s_150
 	cvtsi2ss xmm1, esi
-R_RenderScene_970:
+_Z13R_RenderScenePK8refdef_s_970:
 	test edi, edi
-	js R_RenderScene_160
+	js _Z13R_RenderScenePK8refdef_s_160
 	cvtsi2ss xmm0, edi
-R_RenderScene_960:
+_Z13R_RenderScenePK8refdef_s_960:
 	movaps xmm2, xmm1
 	divss xmm2, xmm0
 	mov eax, rg
@@ -1188,9 +1188,9 @@ R_RenderScene_960:
 	movss [eax+0x22e8], xmm1
 	call _ZN10MacDisplay10Is1900CardEv
 	test al, al
-	jz R_RenderScene_170
+	jz _Z13R_RenderScenePK8refdef_s_170
 	movss xmm0, dword [_float_512_00000000]
-R_RenderScene_610:
+_Z13R_RenderScenePK8refdef_s_610:
 	mov edx, rg
 	mulss xmm0, [edx+0x22e4]
 	movss [esp], xmm0
@@ -1219,7 +1219,7 @@ R_RenderScene_610:
 	divss xmm0, dword [eax+0x22e4]
 	movss [eax+0x22f0], xmm0
 	mov ebx, eax
-R_RenderScene_590:
+_Z13R_RenderScenePK8refdef_s_590:
 	mov dword [ebx+0x22f4], 0x0
 	mov esi, [ebp-0x104]
 	add esi, 0x6380
@@ -1305,10 +1305,10 @@ R_RenderScene_590:
 	rep stosd
 	mov edx, [ebp-0x18c]
 	mov [esp], edx
-	call R_SetupDynamicModelLighting
+	call _Z27R_SetupDynamicModelLightingP14GfxCmdBufInput
 	mov ecx, [ebp-0x18c]
 	mov [esp], ecx
-	call R_SetFrameFog
+	call _Z13R_SetFrameFogP14GfxCmdBufInput
 	mov ebx, [ebp-0x18c]
 	mov edx, [ebx+0x428]
 	lea esi, [edx+0x11e6d0]
@@ -1353,7 +1353,7 @@ R_RenderScene_590:
 	mov eax, r_dof_tweak
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_180
+	jz _Z13R_RenderScenePK8refdef_s_180
 	mov eax, r_dof_viewModelStart
 	mov eax, [eax]
 	mov eax, [eax+0xc]
@@ -1386,28 +1386,28 @@ R_RenderScene_590:
 	mov eax, [eax]
 	mov eax, [eax+0xc]
 	mov [esi+0x5644], eax
-R_RenderScene_740:
+_Z13R_RenderScenePK8refdef_s_740:
 	mov edx, [ebp-0x104]
 	mov [esp], edx
-	call R_UsingDepthOfField
+	call _Z19R_UsingDepthOfFieldPK11GfxViewInfo
 	test al, al
-	jz R_RenderScene_190
+	jz _Z13R_RenderScenePK8refdef_s_190
 	mov eax, gfxRenderTargets
 	mov esi, [eax+0x68]
 	test esi, esi
-	jz R_RenderScene_200
-R_RenderScene_950:
+	jz _Z13R_RenderScenePK8refdef_s_200
+_Z13R_RenderScenePK8refdef_s_950:
 	mov ecx, [ebp-0x104]
 	mov byte [ecx+0x13a8], 0x1
 	mov eax, com_statmon
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_RenderScene_210
-R_RenderScene_190:
+	jnz _Z13R_RenderScenePK8refdef_s_210
+_Z13R_RenderScenePK8refdef_s_190:
 	mov eax, r_filmUseTweaks
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_220
+	jz _Z13R_RenderScenePK8refdef_s_220
 	mov eax, r_filmTweakEnable
 	mov eax, [eax]
 	movzx eax, byte [eax+0xc]
@@ -1450,7 +1450,7 @@ R_RenderScene_190:
 	mov [ecx+0x4], eax
 	mov eax, [edx+0x8]
 	mov [ecx+0x8], eax
-R_RenderScene_760:
+_Z13R_RenderScenePK8refdef_s_760:
 	mov eax, [ebp-0x104]
 	movss xmm0, dword [eax+0x5654]
 	mov eax, r_desaturation
@@ -1473,7 +1473,7 @@ R_RenderScene_760:
 	addss xmm6, [eax+0xc]
 	movss [edx+0x564c], xmm6
 	cmp byte [edx+0x5648], 0x0
-	jnz R_RenderScene_230
+	jnz _Z13R_RenderScenePK8refdef_s_230
 	mov eax, [ebp-0x18c]
 	add eax, 0x2d0
 	mov ecx, [ebp-0x18c]
@@ -1494,11 +1494,11 @@ R_RenderScene_760:
 	mov dword [eax+0x4], 0x0
 	mov dword [eax+0x8], 0x0
 	mov dword [eax+0xc], 0x0
-R_RenderScene_710:
+_Z13R_RenderScenePK8refdef_s_710:
 	mov eax, r_glowUseTweaks
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_240
+	jz _Z13R_RenderScenePK8refdef_s_240
 	mov eax, r_glowTweakEnable
 	mov eax, [eax]
 	movzx eax, byte [eax+0xc]
@@ -1520,13 +1520,13 @@ R_RenderScene_710:
 	mov eax, [eax]
 	mov eax, [eax+0xc]
 	mov [edx+0x567c], eax
-R_RenderScene_680:
+_Z13R_RenderScenePK8refdef_s_680:
 	pxor xmm0, xmm0
 	mov ebx, [ebp-0x104]
 	ucomiss xmm0, [ebx+0x5680]
-	jp R_RenderScene_250
-	jz R_RenderScene_260
-R_RenderScene_250:
+	jp _Z13R_RenderScenePK8refdef_s_250
+	jz _Z13R_RenderScenePK8refdef_s_260
+_Z13R_RenderScenePK8refdef_s_250:
 	movss xmm0, dword [ebx+0x5678]
 	mov edx, [ebx+0x567c]
 	mov eax, [ebp-0x18c]
@@ -1548,19 +1548,19 @@ R_RenderScene_250:
 	mov dword [eax+0x8], 0x0
 	mov [eax+0xc], edx
 	mov ebx, [ebp-0x104]
-R_RenderScene_260:
+_Z13R_RenderScenePK8refdef_s_260:
 	mov [esp], ebx
-	call R_UsingGlow
+	call _Z11R_UsingGlowPK11GfxViewInfo
 	test al, al
-	jz R_RenderScene_270
+	jz _Z13R_RenderScenePK8refdef_s_270
 	mov ebx, com_statmon
 	mov eax, [ebx]
 	cmp byte [eax+0xc], 0x0
-	jnz R_RenderScene_280
-R_RenderScene_940:
+	jnz _Z13R_RenderScenePK8refdef_s_280
+_Z13R_RenderScenePK8refdef_s_940:
 	cmp byte [eax+0xc], 0x0
-	jnz R_RenderScene_290
-R_RenderScene_750:
+	jnz _Z13R_RenderScenePK8refdef_s_290
+_Z13R_RenderScenePK8refdef_s_750:
 	mov eax, [ebp-0x18c]
 	add eax, 0x220
 	movss xmm0, dword [_float_0_98437500]
@@ -1587,19 +1587,19 @@ R_RenderScene_750:
 	cvtsi2ss xmm3, dword [esi+0x160]
 	movss [ebp-0x10c], xmm3
 	ucomiss xmm0, [ebx]
-	jnz R_RenderScene_300
-	jp R_RenderScene_300
+	jnz _Z13R_RenderScenePK8refdef_s_300
+	jp _Z13R_RenderScenePK8refdef_s_300
 	ucomiss xmm1, [ebx+0x4]
-	jnz R_RenderScene_300
-	jp R_RenderScene_300
+	jnz _Z13R_RenderScenePK8refdef_s_300
+	jp _Z13R_RenderScenePK8refdef_s_300
 	ucomiss xmm2, [ebx+0x8]
-	jnz R_RenderScene_300
-	jp R_RenderScene_300
+	jnz _Z13R_RenderScenePK8refdef_s_300
+	jp _Z13R_RenderScenePK8refdef_s_300
 	ucomiss xmm3, [ebx+0xc]
-	jp R_RenderScene_300
-	jz R_RenderScene_310
-R_RenderScene_300:
-	call R_SyncRenderThread
+	jp _Z13R_RenderScenePK8refdef_s_300
+	jz _Z13R_RenderScenePK8refdef_s_310
+_Z13R_RenderScenePK8refdef_s_300:
+	call _Z18R_SyncRenderThreadv
 	mov dword [esp+0x24], 0xffffffff
 	mov eax, 0x3f800000
 	mov [esp+0x20], eax
@@ -1616,60 +1616,60 @@ R_RenderScene_300:
 	movss xmm2, dword [ebp-0x118]
 	movss [esp+0x4], xmm2
 	mov [esp], ebx
-	call R_SetQuadMesh
-R_RenderScene_310:
+	call _Z13R_SetQuadMeshP15GfxQuadMeshDataffffffffm
+_Z13R_RenderScenePK8refdef_s_310:
 	mov eax, [ebp-0x134]
 	mov [esp], eax
-	call R_SetupWorldSurfacesDpvs
+	call _Z24R_SetupWorldSurfacesDpvsPK12GfxViewParms
 	mov edx, [ebp-0x104]
 	mov [esp], edx
-	call R_SetViewFrustumPlanes
+	call _Z22R_SetViewFrustumPlanesP11GfxViewInfo
 	mov ecx, [ebp-0x134]
 	add ecx, 0x100
 	mov [ebp-0x12c], ecx
 	mov [esp], ecx
-	call R_CellForPoint
+	call _Z14R_CellForPointPKf
 	mov ebx, eax
 	mov dword [esp+0x4], _cstring_filter_entities
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov [esp], ebx
-	call R_FilterEntitiesIntoCells
+	call _Z25R_FilterEntitiesIntoCellsi
 	mov dword [esp+0x4], _cstring_draw_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov [esp+0x4], ebx
 	mov ebx, [ebp-0x134]
 	mov [esp], ebx
-	call R_AddWorldSurfacesDpvs
-	call R_BeginAllStaticModelLighting
+	call _Z22R_AddWorldSurfacesDpvsPK12GfxViewParmsi
+	call _Z29R_BeginAllStaticModelLightingv
 	mov esi, [ebp-0x104]
 	mov dword [esi+0x55e0], 0x0
 	mov eax, r_dlightLimit
 	mov eax, [eax]
 	mov ebx, [eax+0xc]
 	test ebx, ebx
-	jz R_RenderScene_320
+	jz _Z13R_RenderScenePK8refdef_s_320
 	mov eax, gfxDrawMethod
 	cmp dword [eax], 0x3
-	jz R_RenderScene_330
-R_RenderScene_320:
+	jz _Z13R_RenderScenePK8refdef_s_330
+_Z13R_RenderScenePK8refdef_s_320:
 	xor eax, eax
-R_RenderScene_650:
+_Z13R_RenderScenePK8refdef_s_650:
 	test eax, eax
-	jnz R_RenderScene_340
-R_RenderScene_780:
+	jnz _Z13R_RenderScenePK8refdef_s_340
+_Z13R_RenderScenePK8refdef_s_780:
 	mov eax, dx_ctx
 	cmp byte [eax+0x2c6c], 0x0
-	jz R_RenderScene_350
+	jz _Z13R_RenderScenePK8refdef_s_350
 	xor edi, edi
-R_RenderScene_720:
+_Z13R_RenderScenePK8refdef_s_720:
 	mov dword [esp+0x4], _cstring_bsp_surfaces
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov eax, gfxDrawMethod
 	cmp dword [eax], 0x3
-	jz R_RenderScene_360
+	jz _Z13R_RenderScenePK8refdef_s_360
 	mov ebx, rgp
 	mov edx, [ebx+0x20a0]
 	mov dword [esp+0x8], 0x0
@@ -1677,79 +1677,79 @@ R_RenderScene_720:
 	mov [esp+0x4], eax
 	mov eax, [edx+0x250]
 	mov [esp], eax
-	call R_AddAllBspDrawSurfacesCameraNonlit
+	call _Z35R_AddAllBspDrawSurfacesCameraNonlitjjj
 	mov edx, [ebx+0x20a0]
 	mov dword [esp+0x8], 0x3
 	mov eax, [edx+0x25c]
 	mov [esp+0x4], eax
 	mov eax, [edx+0x258]
 	mov [esp], eax
-	call R_AddAllBspDrawSurfacesCameraNonlit
+	call _Z35R_AddAllBspDrawSurfacesCameraNonlitjjj
 	mov [ebp-0x190], ebx
 	mov ecx, ebx
-R_RenderScene_900:
+_Z13R_RenderScenePK8refdef_s_900:
 	mov edx, [ecx+0x20a0]
 	mov dword [esp+0x8], 0x9
 	mov eax, [edx+0x264]
 	mov [esp+0x4], eax
 	mov eax, [edx+0x260]
 	mov [esp], eax
-	call R_AddAllBspDrawSurfacesCameraNonlit
-	call R_AddAllStaticModelSurfacesCamera
+	call _Z35R_AddAllBspDrawSurfacesCameraNonlitjjj
+	call _Z33R_AddAllStaticModelSurfacesCamerav
 	mov dword [esp+0x4], _cstring_pieces_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov ebx, [ebp-0x104]
 	mov eax, [ebx+0x13a0]
 	mov [esp], eax
-	call DynEntPieces_AddDrawSurfs
+	call _Z25DynEntPieces_AddDrawSurfsi
 	mov dword [esp+0x4], _cstring_draw_all_dyn_ent
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov [esp], ebx
-	call R_DrawAllDynEnt
+	call _Z15R_DrawAllDynEntPK11GfxViewInfo
 	mov eax, gfxDrawMethod
 	cmp dword [eax], 0x3
-	jz R_RenderScene_370
-R_RenderScene_910:
+	jz _Z13R_RenderScenePK8refdef_s_370
+_Z13R_RenderScenePK8refdef_s_910:
 	mov dword [esp+0x4], _cstring_waitfx
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov dword [esp+0x4], _cstring_draw_all_scene_e
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov eax, [ebp-0x104]
 	mov [esp], eax
-	call R_DrawAllSceneEnt
+	call _Z17R_DrawAllSceneEntPK11GfxViewInfo
 	mov edx, [ebp-0x104]
 	mov [ebp-0x1c], edx
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x8
-	call R_AddWorkerCmd
-	call R_SortAllStaticModelSurfacesCamera
+	call _Z14R_AddWorkerCmd13WorkerCmdTypePv
+	call _Z34R_SortAllStaticModelSurfacesCamerav
 	mov dword [esp+0x4], _cstring_r_getvisibledlig
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov eax, r_dlightLimit
 	mov eax, [eax]
 	mov ecx, [eax+0xc]
 	test ecx, ecx
-	jz R_RenderScene_380
+	jz _Z13R_RenderScenePK8refdef_s_380
 	mov eax, gfxDrawMethod
 	cmp dword [eax], 0x3
-	jz R_RenderScene_390
-R_RenderScene_380:
+	jz _Z13R_RenderScenePK8refdef_s_390
+_Z13R_RenderScenePK8refdef_s_380:
 	xor eax, eax
-R_RenderScene_640:
+_Z13R_RenderScenePK8refdef_s_640:
 	test eax, eax
-	jnz R_RenderScene_400
+	jnz _Z13R_RenderScenePK8refdef_s_400
 	mov dword [ebp-0x108], 0x0
-R_RenderScene_770:
+_Z13R_RenderScenePK8refdef_s_770:
 	mov eax, [ebp-0x104]
 	mov edx, [eax+0x55e0]
 	test edx, edx
-	jz R_RenderScene_410
+	jz _Z13R_RenderScenePK8refdef_s_410
 	mov edx, eax
 	mov eax, [scene+0x11ca64]
 	mov [edx+0x55d8], eax
@@ -1758,23 +1758,23 @@ R_RenderScene_770:
 	mov dword [ecx+0x1390], 0x0
 	mov eax, gfxDrawMethod
 	cmp dword [eax], 0x3
-	jz R_RenderScene_420
-R_RenderScene_660:
-	call R_SetAllStaticModelLighting
+	jz _Z13R_RenderScenePK8refdef_s_420
+_Z13R_RenderScenePK8refdef_s_660:
+	call _Z27R_SetAllStaticModelLightingv
 	mov dword [esp+0x4], _cstring_emit_cookie_surf
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov esi, [ebp-0x104]
 	mov [esp], esi
-	call R_EmitShadowCookieSurfs
+	call _Z23R_EmitShadowCookieSurfsP11GfxViewInfo
 	mov eax, edi
 	test al, al
-	jnz R_RenderScene_430
-R_RenderScene_810:
+	jnz _Z13R_RenderScenePK8refdef_s_430
+_Z13R_RenderScenePK8refdef_s_810:
 	mov esi, [ebp-0x104]
 	add esi, 0x6304
 	mov [esp], esi
-	call R_InitDrawSurfListInfo
+	call _Z22R_InitDrawSurfListInfoP19GfxDrawSurfListInfo
 	mov edx, gfxDrawMethod
 	mov eax, [edx+0x4]
 	mov [esi+0x8], eax
@@ -1811,7 +1811,7 @@ R_RenderScene_810:
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], 0x0
-	call R_MergeAndEmitDrawSurfLists
+	call _Z27R_MergeAndEmitDrawSurfListsjjP19GfxDrawSurfListInfo
 	mov eax, [ebx]
 	lea eax, [eax+edi*8+0x70000]
 	mov edx, [ebp-0x104]
@@ -1824,59 +1824,59 @@ R_RenderScene_810:
 	mov eax, [eax]
 	mov eax, [eax+0xc]
 	test eax, eax
-	jz R_RenderScene_440
+	jz _Z13R_RenderScenePK8refdef_s_440
 	mov ecx, gfxDrawMethod
 	cmp dword [ecx], 0x3
-	jz R_RenderScene_450
-R_RenderScene_440:
+	jz _Z13R_RenderScenePK8refdef_s_450
+_Z13R_RenderScenePK8refdef_s_440:
 	xor eax, eax
-R_RenderScene_630:
+_Z13R_RenderScenePK8refdef_s_630:
 	test eax, eax
-	jnz R_RenderScene_460
-R_RenderScene_820:
+	jnz _Z13R_RenderScenePK8refdef_s_460
+_Z13R_RenderScenePK8refdef_s_820:
 	mov edx, [ebp-0x104]
 	mov [edx+0x5590], eax
 	mov eax, [edx+0x13a0]
 	test eax, eax
-	jz R_RenderScene_470
-R_RenderScene_800:
+	jz _Z13R_RenderScenePK8refdef_s_470
+_Z13R_RenderScenePK8refdef_s_800:
 	mov ecx, [ebp-0x104]
 	mov eax, [ecx+0x13a0]
 	mov [esp], eax
-	call FX_RunPhysics
+	call _Z13FX_RunPhysicsi
 	mov ebx, [ebp-0x104]
 	mov eax, [ebx+0x13a0]
 	mov [esp], eax
-	call DynEntCl_ProcessEntities
+	call _Z24DynEntCl_ProcessEntitiesi
 	mov eax, dx_ctx
 	cmp byte [eax+0x2c6c], 0x0
-	jnz R_RenderScene_480
+	jnz _Z13R_RenderScenePK8refdef_s_480
 	mov eax, fx_marks
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_480
+	jz _Z13R_RenderScenePK8refdef_s_480
 	mov eax, fx_marks_smodels
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_RenderScene_490
-R_RenderScene_1070:
+	jnz _Z13R_RenderScenePK8refdef_s_490
+_Z13R_RenderScenePK8refdef_s_1070:
 	mov eax, fx_marks_ents
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_RenderScene_500
-R_RenderScene_480:
+	jnz _Z13R_RenderScenePK8refdef_s_500
+_Z13R_RenderScenePK8refdef_s_480:
 	mov dword [esp+0x4], _cstring_sort_fx_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov eax, [scene+0xe4120]
 	mov [esp+0x4], eax
 	mov eax, [scene+0xe41a8]
 	mov [esp], eax
-	call R_SortDrawSurfs
+	call _Z15R_SortDrawSurfsP11GfxDrawSurfi
 	mov ebx, [ebp-0x104]
 	add ebx, 0x632c
 	mov [esp], ebx
-	call R_InitDrawSurfListInfo
+	call _Z22R_InitDrawSurfListInfoP19GfxDrawSurfListInfo
 	mov edi, gfxDrawMethod
 	mov eax, [edi+0x4]
 	mov [ebx+0x8], eax
@@ -1904,7 +1904,7 @@ R_RenderScene_480:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], 0x6
 	mov dword [esp], 0x3
-	call R_MergeAndEmitDrawSurfLists
+	call _Z27R_MergeAndEmitDrawSurfListsjjP19GfxDrawSurfListInfo
 	mov edx, frontEndDataOut
 	mov eax, [edx]
 	lea eax, [eax+esi*8+0x70000]
@@ -1916,21 +1916,21 @@ R_RenderScene_480:
 	mov [ebx+0x4], eax
 	mov dword [esp+0x4], _cstring_sort_fx_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov eax, [scene+0xe4138]
 	mov [esp+0x4], eax
 	mov eax, [scene+0xe41c0]
 	mov [esp], eax
-	call R_SortDrawSurfs
+	call _Z15R_SortDrawSurfsP11GfxDrawSurfi
 	mov ebx, [ebp-0x104]
 	add ebx, 0x6354
 	mov [ebp-0xf0], ebx
 	mov [esp], ebx
-	call R_InitDrawSurfListInfo
+	call _Z22R_InitDrawSurfListInfoP19GfxDrawSurfListInfo
 	mov eax, [edi+0x8]
 	cmp eax, 0x5
-	jz R_RenderScene_510
-R_RenderScene_930:
+	jz _Z13R_RenderScenePK8refdef_s_510
+_Z13R_RenderScenePK8refdef_s_930:
 	mov edx, [ebp-0xf0]
 	mov [edx+0x8], eax
 	mov ecx, [ebp-0x104]
@@ -1955,12 +1955,12 @@ R_RenderScene_930:
 	mov edx, [ebp-0x104]
 	mov eax, [edx+0x55e0]
 	test eax, eax
-	jz R_RenderScene_520
+	jz _Z13R_RenderScenePK8refdef_s_520
 	mov eax, edx
 	add eax, 0x5598
 	mov ecx, [ebp-0xf0]
 	mov [ecx+0x20], eax
-R_RenderScene_520:
+_Z13R_RenderScenePK8refdef_s_520:
 	mov ebx, frontEndDataOut
 	mov eax, [ebx]
 	mov esi, [eax+0x118254]
@@ -1968,7 +1968,7 @@ R_RenderScene_520:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x6
 	mov dword [esp], 0x9
-	call R_MergeAndEmitDrawSurfLists
+	call _Z27R_MergeAndEmitDrawSurfListsjjP19GfxDrawSurfListInfo
 	mov eax, [ebx]
 	lea edx, [eax+esi*8+0x70000]
 	mov ecx, [ebp-0xf0]
@@ -1979,16 +1979,16 @@ R_RenderScene_520:
 	mov [ecx+0x4], edi
 	mov ebx, [ebp-0x104]
 	cmp byte [ebx+0x13a8], 0x0
-	jnz R_RenderScene_10
+	jnz _Z13R_RenderScenePK8refdef_s_10
 	test edi, edi
-	jz R_RenderScene_530
+	jz _Z13R_RenderScenePK8refdef_s_530
 	mov ebx, [ebp-0xf0]
 	mov esi, [ebx+0x8]
 	mov ecx, edx
 	xor ebx, ebx
 	mov eax, rgp
 	mov [ebp-0x190], eax
-R_RenderScene_560:
+_Z13R_RenderScenePK8refdef_s_560:
 	movzx edx, byte [ecx+0x3]
 	shr dl, 0x5
 	movzx edx, dl
@@ -2001,27 +2001,27 @@ R_RenderScene_560:
 	mov eax, [eax+0x8]
 	mov eax, [eax+esi*4+0xc]
 	test eax, eax
-	jz R_RenderScene_540
+	jz _Z13R_RenderScenePK8refdef_s_540
 	test byte [eax+0x4], 0x20
-	jnz R_RenderScene_550
-R_RenderScene_540:
+	jnz _Z13R_RenderScenePK8refdef_s_550
+_Z13R_RenderScenePK8refdef_s_540:
 	add ebx, 0x1
 	add ecx, 0x8
 	cmp edi, ebx
-	jnz R_RenderScene_560
-R_RenderScene_530:
+	jnz _Z13R_RenderScenePK8refdef_s_560
+_Z13R_RenderScenePK8refdef_s_530:
 	xor eax, eax
-R_RenderScene_990:
+_Z13R_RenderScenePK8refdef_s_990:
 	mov ecx, [ebp-0x104]
 	mov [ecx+0x13a8], al
-R_RenderScene_10:
+_Z13R_RenderScenePK8refdef_s_10:
 	add esp, 0x1cc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_RenderScene_100:
+_Z13R_RenderScenePK8refdef_s_100:
 	mov eax, ecx
 	shr eax, 1
 	mov edx, ecx
@@ -2029,8 +2029,8 @@ R_RenderScene_100:
 	or eax, edx
 	cvtsi2ss xmm0, eax
 	addss xmm0, xmm0
-	jmp R_RenderScene_570
-R_RenderScene_70:
+	jmp _Z13R_RenderScenePK8refdef_s_570
+_Z13R_RenderScenePK8refdef_s_70:
 	mov eax, sc_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
@@ -2045,8 +2045,8 @@ R_RenderScene_70:
 	mov esi, rg
 	mov [esi+0x22e0], eax
 	test eax, eax
-	jnz R_RenderScene_580
-R_RenderScene_80:
+	jnz _Z13R_RenderScenePK8refdef_s_580
+_Z13R_RenderScenePK8refdef_s_80:
 	call _ZN10MacDisplay10Is1900CardEv
 	cmp al, 0x1
 	sbb eax, eax
@@ -2059,41 +2059,41 @@ R_RenderScene_80:
 	mov [ecx+0x22e8], eax
 	mov dword [ecx+0x22f0], 0x40800000
 	mov ebx, ecx
-	jmp R_RenderScene_590
-R_RenderScene_30:
+	jmp _Z13R_RenderScenePK8refdef_s_590
+_Z13R_RenderScenePK8refdef_s_30:
 	mov eax, [esi+0x18]
 	mov [ebx+0x21f8], eax
 	mov eax, [esi+0x1c]
 	mov [ebx+0x21fc], eax
 	mov eax, [esi+0x20]
 	mov [ebx+0x2200], eax
-	jmp R_RenderScene_600
-R_RenderScene_170:
+	jmp _Z13R_RenderScenePK8refdef_s_600
+_Z13R_RenderScenePK8refdef_s_170:
 	movss xmm0, dword [_float_1024_00000000]
-	jmp R_RenderScene_610
-R_RenderScene_60:
+	jmp _Z13R_RenderScenePK8refdef_s_610
+_Z13R_RenderScenePK8refdef_s_60:
 	mov eax, 0x1
-	jmp R_RenderScene_620
-R_RenderScene_450:
+	jmp _Z13R_RenderScenePK8refdef_s_620
+_Z13R_RenderScenePK8refdef_s_450:
 	mov eax, 0x1
-	jmp R_RenderScene_630
-R_RenderScene_390:
+	jmp _Z13R_RenderScenePK8refdef_s_630
+_Z13R_RenderScenePK8refdef_s_390:
 	mov eax, 0x1
-	jmp R_RenderScene_640
-R_RenderScene_330:
+	jmp _Z13R_RenderScenePK8refdef_s_640
+_Z13R_RenderScenePK8refdef_s_330:
 	mov eax, 0x1
-	jmp R_RenderScene_650
-R_RenderScene_410:
+	jmp _Z13R_RenderScenePK8refdef_s_650
+_Z13R_RenderScenePK8refdef_s_410:
 	mov ecx, eax
 	mov dword [ecx+0x1390], 0x0
 	mov eax, gfxDrawMethod
 	cmp dword [eax], 0x3
-	jnz R_RenderScene_660
-R_RenderScene_420:
+	jnz _Z13R_RenderScenePK8refdef_s_660
+_Z13R_RenderScenePK8refdef_s_420:
 	cmp dword [ebp-0x128], 0x2
-	jz R_RenderScene_670
+	jz _Z13R_RenderScenePK8refdef_s_670
 	cmp dword [ebp-0x128], 0x1
-	jnz R_RenderScene_660
+	jnz _Z13R_RenderScenePK8refdef_s_660
 	mov edx, [ebp-0x104]
 	mov eax, [edx+0x13a0]
 	mov [ebp-0x34], eax
@@ -2107,9 +2107,9 @@ R_RenderScene_420:
 	lea eax, [ebp-0x40]
 	mov [esp+0x4], eax
 	mov dword [esp], 0xa
-	call R_AddWorkerCmd
-	jmp R_RenderScene_660
-R_RenderScene_240:
+	call _Z14R_AddWorkerCmd13WorkerCmdTypePv
+	jmp _Z13R_RenderScenePK8refdef_s_660
+_Z13R_RenderScenePK8refdef_s_240:
 	mov eax, [ebp-0x8c]
 	mov ecx, [ebp-0x104]
 	mov [ecx+0x5674], eax
@@ -2121,17 +2121,17 @@ R_RenderScene_240:
 	mov [ecx+0x5680], eax
 	mov eax, [ebp-0x7c]
 	mov [ecx+0x5684], eax
-	jmp R_RenderScene_680
-R_RenderScene_230:
+	jmp _Z13R_RenderScenePK8refdef_s_680
+_Z13R_RenderScenePK8refdef_s_230:
 	movss xmm2, dword [_float_0_00024414]
 	movaps xmm0, xmm2
 	subss xmm0, xmm1
 	pxor xmm3, xmm3
 	ucomiss xmm0, xmm3
-	jb R_RenderScene_690
+	jb _Z13R_RenderScenePK8refdef_s_690
 	movaps xmm1, xmm2
 	movss xmm0, dword [_float_4096_00000000]
-R_RenderScene_1010:
+_Z13R_RenderScenePK8refdef_s_1010:
 	subss xmm0, [_float_1_00000000]
 	movss [ebp-0x120], xmm0
 	movaps xmm7, xmm1
@@ -2141,11 +2141,11 @@ R_RenderScene_1010:
 	addss xmm6, xmm4
 	mov eax, [ebp-0x104]
 	cmp byte [eax+0x5658], 0x0
-	jz R_RenderScene_700
+	jz _Z13R_RenderScenePK8refdef_s_700
 	xorps xmm7, [_data16_80000000]
 	addss xmm6, [_float_1_00000000]
 	mov eax, [ebp-0x104]
-R_RenderScene_700:
+_Z13R_RenderScenePK8refdef_s_700:
 	add eax, 0x565c
 	movaps xmm5, xmm7
 	mov edx, [ebp-0x104]
@@ -2184,21 +2184,21 @@ R_RenderScene_700:
 	mulss xmm7, xmm4
 	movss [eax+0x8], xmm7
 	mov dword [eax+0xc], 0x0
-	jmp R_RenderScene_710
-R_RenderScene_350:
+	jmp _Z13R_RenderScenePK8refdef_s_710
+_Z13R_RenderScenePK8refdef_s_350:
 	mov eax, r_pretess
 	mov eax, [eax]
 	movzx edi, byte [eax+0xc]
 	mov ecx, edi
 	test cl, cl
-	jz R_RenderScene_720
-	call R_BeginPreTess
-	jmp R_RenderScene_720
-R_RenderScene_180:
+	jz _Z13R_RenderScenePK8refdef_s_720
+	call _Z14R_BeginPreTessv
+	jmp _Z13R_RenderScenePK8refdef_s_720
+_Z13R_RenderScenePK8refdef_s_180:
 	mov eax, r_dof_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_730
+	jz _Z13R_RenderScenePK8refdef_s_730
 	mov eax, [ebp-0xd8]
 	mov edx, [ebp-0x104]
 	mov [edx+0x5628], eax
@@ -2216,21 +2216,21 @@ R_RenderScene_180:
 	mov [edx+0x5640], eax
 	mov eax, [ebp-0xbc]
 	mov [edx+0x5644], eax
-	jmp R_RenderScene_740
-R_RenderScene_270:
+	jmp _Z13R_RenderScenePK8refdef_s_740
+_Z13R_RenderScenePK8refdef_s_270:
 	mov ebx, com_statmon
 	mov eax, [ebx]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_750
-R_RenderScene_290:
-	call R_Cinematic_IsStarted
+	jz _Z13R_RenderScenePK8refdef_s_750
+_Z13R_RenderScenePK8refdef_s_290:
+	call _Z21R_Cinematic_IsStartedv
 	test al, al
-	jz R_RenderScene_750
+	jz _Z13R_RenderScenePK8refdef_s_750
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_fontsconsolefont
-	call R_RegisterFont
+	call _Z14R_RegisterFontPKci
 	mov ebx, eax
-	call R_Cinematic_IsUnderrun
+	call _Z22R_Cinematic_IsUnderrunv
 	mov edx, _cstring_cine_underrun
 	test al, al
 	mov eax, _cstring_cine
@@ -2247,9 +2247,9 @@ R_RenderScene_290:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], 0x7fffffff
 	mov [esp], edx
-	call R_AddCmdDrawText
-	jmp R_RenderScene_750
-R_RenderScene_220:
+	call _Z16R_AddCmdDrawTextPKciP6Font_sfffffPKfi
+	jmp _Z13R_RenderScenePK8refdef_s_750
+_Z13R_RenderScenePK8refdef_s_220:
 	mov eax, [ebp-0xb8]
 	mov esi, [ebp-0x104]
 	mov [esi+0x5648], eax
@@ -2273,43 +2273,43 @@ R_RenderScene_220:
 	mov [esi+0x566c], eax
 	mov eax, [ebp-0x90]
 	mov [esi+0x5670], eax
-	jmp R_RenderScene_760
-R_RenderScene_400:
-	call R_CullDynamicPointLightsInCameraView
+	jmp _Z13R_RenderScenePK8refdef_s_760
+_Z13R_RenderScenePK8refdef_s_400:
+	call _Z36R_CullDynamicPointLightsInCameraViewv
 	mov dword [esp+0x4], _cstring_lights_partition
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	lea ebx, [ebp-0x30]
 	mov [esp], ebx
-	call R_GetPointLightPartitions
+	call _Z25R_GetPointLightPartitionsPPK8GfxLight
 	mov [ebp-0x108], eax
 	test eax, eax
-	jz R_RenderScene_770
+	jz _Z13R_RenderScenePK8refdef_s_770
 	mov dword [esp+0x4], _cstring_light_surfs_bsp
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov ecx, [ebp-0x108]
 	mov [esp+0x4], ecx
 	mov [esp], ebx
-	call R_GetBspLightSurfs
+	call _Z18R_GetBspLightSurfsPPK8GfxLighti
 	mov dword [esp+0x4], _cstring_light_surfs_smod
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov esi, [ebp-0x108]
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call R_GetStaticModelLightSurfs
+	call _Z26R_GetStaticModelLightSurfsPPK8GfxLighti
 	mov dword [esp+0x4], _cstring_light_surfs_scen
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call R_GetSceneEntLightSurfs
-	jmp R_RenderScene_770
-R_RenderScene_340:
-	call R_CullDynamicSpotLightInCameraView
+	call _Z23R_GetSceneEntLightSurfsPPK8GfxLighti
+	jmp _Z13R_RenderScenePK8refdef_s_770
+_Z13R_RenderScenePK8refdef_s_340:
+	call _Z34R_CullDynamicSpotLightInCameraViewv
 	test al, al
-	jnz R_RenderScene_780
+	jnz _Z13R_RenderScenePK8refdef_s_780
 	mov eax, [scene+0x114230]
 	mov edx, [ebp-0x104]
 	mov [edx+0x5598], eax
@@ -2348,12 +2348,12 @@ R_RenderScene_340:
 	mov dword [edx+0x55dc], 0x0
 	mov dword [edx+0x55e0], 0x1
 	cmp byte [scene+0x114231], 0x0
-	jz R_RenderScene_780
+	jz _Z13R_RenderScenePK8refdef_s_780
 	mov dword [esp+0x4], scene+0x114230
 	mov [esp], edx
-	call R_AddDynamicShadowableLight
-	jmp R_RenderScene_780
-R_RenderScene_40:
+	call _Z27R_AddDynamicShadowableLightP11GfxViewInfoPK8GfxLight
+	jmp _Z13R_RenderScenePK8refdef_s_780
+_Z13R_RenderScenePK8refdef_s_40:
 	mov byte [_ZZ20R_GetAllowShadowMapsvE19sDisableShadowsTest], 0x0
 	call _ZN10MacDisplay15SupportsShadowsEv
 	xor edx, edx
@@ -2361,17 +2361,17 @@ R_RenderScene_40:
 	movzx eax, byte [g_allowShadowMaps]
 	cmovnz edx, eax
 	mov [g_allowShadowMaps], dl
-	jmp R_RenderScene_790
-R_RenderScene_470:
-	call CL_UpdateSound
-	jmp R_RenderScene_800
-R_RenderScene_430:
-	call R_EndPreTess
-	jmp R_RenderScene_810
-R_RenderScene_460:
+	jmp _Z13R_RenderScenePK8refdef_s_790
+_Z13R_RenderScenePK8refdef_s_470:
+	call _Z14CL_UpdateSoundv
+	jmp _Z13R_RenderScenePK8refdef_s_800
+_Z13R_RenderScenePK8refdef_s_430:
+	call _Z12R_EndPreTessv
+	jmp _Z13R_RenderScenePK8refdef_s_810
+_Z13R_RenderScenePK8refdef_s_460:
 	mov dword [esp+0x4], _cstring_emit_light_surfs
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov ebx, [ebp-0x12c]
 	mov [esp+0xc], ebx
 	mov esi, [ebp-0x108]
@@ -2380,57 +2380,57 @@ R_RenderScene_460:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x104]
 	mov [esp], eax
-	call R_EmitPointLightPartitionSurfs
-	jmp R_RenderScene_820
-R_RenderScene_360:
-	call R_AddAllBspDrawSurfacesCamera
+	call _Z30R_EmitPointLightPartitionSurfsP11GfxViewInfoPPK8GfxLightiPKf
+	jmp _Z13R_RenderScenePK8refdef_s_820
+_Z13R_RenderScenePK8refdef_s_360:
+	call _Z29R_AddAllBspDrawSurfacesCamerav
 	mov eax, sm_sunEnable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_RenderScene_830
+	jnz _Z13R_RenderScenePK8refdef_s_830
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov ecx, [eax+0xd8]
 	test ecx, ecx
-	jnz R_RenderScene_840
-R_RenderScene_830:
+	jnz _Z13R_RenderScenePK8refdef_s_840
+_Z13R_RenderScenePK8refdef_s_830:
 	mov dword [esp+0x8], 0x20
 	mov dword [esp+0x4], 0x0
 	mov eax, frontEndDataOut
 	mov eax, [eax]
 	add eax, 0x118230
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	cmp byte [_ZZ20R_GetAllowShadowMapsvE19sDisableShadowsTest], 0x0
-	jnz R_RenderScene_850
-R_RenderScene_1030:
+	jnz _Z13R_RenderScenePK8refdef_s_850
+_Z13R_RenderScenePK8refdef_s_1030:
 	mov eax, sm_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_860
+	jz _Z13R_RenderScenePK8refdef_s_860
 	cmp byte [g_allowShadowMaps], 0x0
-	jnz R_RenderScene_870
-R_RenderScene_860:
+	jnz _Z13R_RenderScenePK8refdef_s_870
+_Z13R_RenderScenePK8refdef_s_860:
 	xor eax, eax
-R_RenderScene_1000:
+_Z13R_RenderScenePK8refdef_s_1000:
 	test eax, eax
-	jnz R_RenderScene_880
-R_RenderScene_1040:
+	jnz _Z13R_RenderScenePK8refdef_s_880
+_Z13R_RenderScenePK8refdef_s_1040:
 	mov esi, [ebp-0x104]
 	mov [esp+0x4], esi
 	mov esi, frontEndDataOut
 	mov eax, [esi]
 	mov [esp], eax
-	call R_UpdateDrawMethod
+	call _Z18R_UpdateDrawMethodP14GfxBackEndDataPK11GfxViewInfo
 	cmp dword [ebp-0x128], 0x2
-	jz R_RenderScene_890
+	jz _Z13R_RenderScenePK8refdef_s_890
 	mov eax, rgp
 	mov [ebp-0x190], eax
 	mov ecx, eax
-	jmp R_RenderScene_900
-R_RenderScene_370:
+	jmp _Z13R_RenderScenePK8refdef_s_900
+_Z13R_RenderScenePK8refdef_s_370:
 	cmp dword [ebp-0x128], 0x2
-	jnz R_RenderScene_910
+	jnz _Z13R_RenderScenePK8refdef_s_910
 	mov esi, [ebp-0x190]
 	mov eax, [esi+0x20a0]
 	mov ecx, [eax+0xd8]
@@ -2442,25 +2442,25 @@ R_RenderScene_370:
 	mov eax, 0x1
 	shl eax, cl
 	test [edx+ebx*4+0x118230], eax
-	jz R_RenderScene_910
+	jz _Z13R_RenderScenePK8refdef_s_910
 	mov dword [esp+0x4], _cstring_bsp_surfaces
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
-	call R_AddAllBspDrawSurfacesSunShadow
+	call _Z18PIXBeginNamedEventiPKcz
+	call _Z32R_AddAllBspDrawSurfacesSunShadowv
 	mov dword [esp+0x4], _cstring_static_model_sur
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
-	call R_AddAllStaticModelSurfacesSunShadow
-	jmp R_RenderScene_910
-R_RenderScene_510:
+	call _Z18PIXBeginNamedEventiPKcz
+	call _Z36R_AddAllStaticModelSurfacesSunShadowv
+	jmp _Z13R_RenderScenePK8refdef_s_910
+_Z13R_RenderScenePK8refdef_s_510:
 	mov esi, [ebp-0x104]
 	mov edx, [esi+0x55e0]
 	test edx, edx
-	jz R_RenderScene_920
+	jz _Z13R_RenderScenePK8refdef_s_920
 	mov eax, r_spotLightShadows
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_RenderScene_920
+	jz _Z13R_RenderScenePK8refdef_s_920
 	mov eax, comWorld
 	mov ecx, [eax+0x8]
 	mov ebx, ecx
@@ -2471,16 +2471,16 @@ R_RenderScene_510:
 	mov eax, 0x1
 	shl eax, cl
 	test [edx+ebx*4+0x118230], eax
-	jz R_RenderScene_920
+	jz _Z13R_RenderScenePK8refdef_s_920
 	mov eax, 0x6
-	jmp R_RenderScene_930
-R_RenderScene_920:
+	jmp _Z13R_RenderScenePK8refdef_s_930
+_Z13R_RenderScenePK8refdef_s_920:
 	mov eax, 0x5
-	jmp R_RenderScene_930
-R_RenderScene_280:
+	jmp _Z13R_RenderScenePK8refdef_s_930
+_Z13R_RenderScenePK8refdef_s_280:
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_fontsconsolefont
-	call R_RegisterFont
+	call _Z14R_RegisterFontPKci
 	mov dword [esp+0x24], 0x0
 	mov edx, colorRedFaded
 	mov [esp+0x20], edx
@@ -2493,21 +2493,21 @@ R_RenderScene_280:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x7fffffff
 	mov dword [esp], _cstring_glow
-	call R_AddCmdDrawText
+	call _Z16R_AddCmdDrawTextPKciP6Font_sfffffPKfi
 	mov eax, [ebx]
-	jmp R_RenderScene_940
-R_RenderScene_730:
+	jmp _Z13R_RenderScenePK8refdef_s_940
+_Z13R_RenderScenePK8refdef_s_730:
 	mov edi, [ebp-0x104]
 	add edi, 0x5628
 	cld
 	mov ecx, 0x8
 	xor eax, eax
 	rep stosd
-	jmp R_RenderScene_740
-R_RenderScene_210:
+	jmp _Z13R_RenderScenePK8refdef_s_740
+_Z13R_RenderScenePK8refdef_s_210:
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], _cstring_fontsconsolefont
-	call R_RegisterFont
+	call _Z14R_RegisterFontPKci
 	mov dword [esp+0x24], 0x0
 	mov edx, colorRedFaded
 	mov [esp+0x20], edx
@@ -2520,63 +2520,63 @@ R_RenderScene_210:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x7fffffff
 	mov dword [esp], _cstring_dof
-	call R_AddCmdDrawText
-	jmp R_RenderScene_190
-R_RenderScene_200:
+	call _Z16R_AddCmdDrawTextPKciP6Font_sfffffPKfi
+	jmp _Z13R_RenderScenePK8refdef_s_190
+_Z13R_RenderScenePK8refdef_s_200:
 	mov dword [esp+0x4], _cstring_depth_of_field_u
 	mov dword [esp], 0x1
-	call Com_Error
-	jmp R_RenderScene_950
-R_RenderScene_160:
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z13R_RenderScenePK8refdef_s_950
+_Z13R_RenderScenePK8refdef_s_160:
 	mov eax, edi
 	shr eax, 1
 	and edi, 0x1
 	or eax, edi
 	cvtsi2ss xmm0, eax
 	addss xmm0, xmm0
-	jmp R_RenderScene_960
-R_RenderScene_150:
+	jmp _Z13R_RenderScenePK8refdef_s_960
+_Z13R_RenderScenePK8refdef_s_150:
 	mov eax, esi
 	shr eax, 1
 	and esi, 0x1
 	or eax, esi
 	cvtsi2ss xmm1, eax
 	addss xmm1, xmm1
-	jmp R_RenderScene_970
-R_RenderScene_550:
+	jmp _Z13R_RenderScenePK8refdef_s_970
+_Z13R_RenderScenePK8refdef_s_550:
 	mov eax, gfxRenderTargets
 	mov eax, [eax+0x68]
 	test eax, eax
-	jz R_RenderScene_980
+	jz _Z13R_RenderScenePK8refdef_s_980
 	mov eax, 0x1
-	jmp R_RenderScene_990
-R_RenderScene_870:
+	jmp _Z13R_RenderScenePK8refdef_s_990
+_Z13R_RenderScenePK8refdef_s_870:
 	mov eax, 0x1
-	jmp R_RenderScene_1000
-R_RenderScene_840:
+	jmp _Z13R_RenderScenePK8refdef_s_1000
+_Z13R_RenderScenePK8refdef_s_840:
 	mov edx, ecx
 	sar edx, 0x5
 	and ecx, 0x1f
 	mov eax, 0xfffffffe
 	rol eax, cl
 	and [edx*4+scene+0xe4000], eax
-	jmp R_RenderScene_830
-R_RenderScene_980:
+	jmp _Z13R_RenderScenePK8refdef_s_830
+_Z13R_RenderScenePK8refdef_s_980:
 	mov dword [esp+0x4], _cstring_renderer_attempt
 	mov dword [esp], 0x1
-	call Com_Error
+	call _Z9Com_Error11errorParm_tPKcz
 	mov eax, 0x1
-	jmp R_RenderScene_990
-R_RenderScene_690:
+	jmp _Z13R_RenderScenePK8refdef_s_990
+_Z13R_RenderScenePK8refdef_s_690:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm1
-	jmp R_RenderScene_1010
-R_RenderScene_20:
+	jmp _Z13R_RenderScenePK8refdef_s_1010
+_Z13R_RenderScenePK8refdef_s_20:
 	mov dword [esp+0x4], _cstring_r_renderscene_nu
 	mov dword [esp], 0x2
-	call Com_Error
-	jmp R_RenderScene_1020
-R_RenderScene_850:
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z13R_RenderScenePK8refdef_s_1020
+_Z13R_RenderScenePK8refdef_s_850:
 	mov byte [_ZZ20R_GetAllowShadowMapsvE19sDisableShadowsTest], 0x0
 	call _ZN10MacDisplay15SupportsShadowsEv
 	xor edx, edx
@@ -2584,13 +2584,13 @@ R_RenderScene_850:
 	movzx eax, byte [g_allowShadowMaps]
 	cmovnz edx, eax
 	mov [g_allowShadowMaps], dl
-	jmp R_RenderScene_1030
-R_RenderScene_880:
+	jmp _Z13R_RenderScenePK8refdef_s_1030
+_Z13R_RenderScenePK8refdef_s_880:
 	mov ebx, [ebp-0x104]
 	mov [esp], ebx
-	call R_ChooseShadowedLights
-	jmp R_RenderScene_1040
-R_RenderScene_890:
+	call _Z22R_ChooseShadowedLightsP11GfxViewInfo
+	jmp _Z13R_RenderScenePK8refdef_s_1040
+_Z13R_RenderScenePK8refdef_s_890:
 	mov eax, rgp
 	mov [ebp-0x190], eax
 	mov eax, [eax+0x20a0]
@@ -2602,11 +2602,11 @@ R_RenderScene_890:
 	mov eax, 0x1
 	shl eax, cl
 	test [edx+ebx*4+0x118230], eax
-	jnz R_RenderScene_1050
-R_RenderScene_1180:
+	jnz _Z13R_RenderScenePK8refdef_s_1050
+_Z13R_RenderScenePK8refdef_s_1180:
 	mov ecx, [ebp-0x190]
-	jmp R_RenderScene_900
-R_RenderScene_670:
+	jmp _Z13R_RenderScenePK8refdef_s_900
+_Z13R_RenderScenePK8refdef_s_670:
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov ecx, [eax+0xd8]
@@ -2618,13 +2618,13 @@ R_RenderScene_670:
 	mov eax, 0x1
 	shl eax, cl
 	test [edx+ebx*4+0x118230], eax
-	jnz R_RenderScene_1060
-R_RenderScene_1170:
+	jnz _Z13R_RenderScenePK8refdef_s_1060
+_Z13R_RenderScenePK8refdef_s_1170:
 	mov esi, [ebp-0x104]
 	mov [esp], esi
-	call R_GenerateAllSortedSpotShadowDrawSurfs
-	jmp R_RenderScene_660
-R_RenderScene_490:
+	call _Z38R_GenerateAllSortedSpotShadowDrawSurfsP11GfxViewInfo
+	jmp _Z13R_RenderScenePK8refdef_s_660
+_Z13R_RenderScenePK8refdef_s_490:
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov eax, [edx+0x270]
@@ -2633,36 +2633,36 @@ R_RenderScene_490:
 	mov [esp+0x4], eax
 	mov eax, [ebx+0x13a0]
 	mov [esp], eax
-	call FX_GenerateMarkVertsForStaticModels
-	jmp R_RenderScene_1070
-R_RenderScene_500:
+	call _Z35FX_GenerateMarkVertsForStaticModelsiiPKh
+	jmp _Z13R_RenderScenePK8refdef_s_1070
+_Z13R_RenderScenePK8refdef_s_500:
 	lea esi, [ebp-0x20]
 	mov [esp+0x4], esi
 	mov eax, [scene+0x154c90]
 	mov [esp], eax
-	call FX_BeginGeneratingMarkVertsForEntModels
+	call _Z39FX_BeginGeneratingMarkVertsForEntModelsiPj
 	mov eax, [scene+0x12b42c]
 	test eax, eax
-	jz R_RenderScene_1080
+	jz _Z13R_RenderScenePK8refdef_s_1080
 	xor esi, esi
 	mov ebx, scene+0x12b430
-	jmp R_RenderScene_1090
-R_RenderScene_1100:
+	jmp _Z13R_RenderScenePK8refdef_s_1090
+_Z13R_RenderScenePK8refdef_s_1100:
 	add esi, 0x1
 	add ebx, 0x7c
 	mov eax, [scene+0x12b42c]
 	cmp esi, eax
-	jz R_RenderScene_1080
-R_RenderScene_1090:
+	jz _Z13R_RenderScenePK8refdef_s_1080
+_Z13R_RenderScenePK8refdef_s_1090:
 	movzx edi, word [ebx+0x6e]
 	mov eax, gfxCfg
 	cmp edi, [eax+0xc]
-	jae R_RenderScene_1100
+	jae _Z13R_RenderScenePK8refdef_s_1100
 	test byte [esi+scene+0x13ac30], 0x1
-	jz R_RenderScene_1100
+	jz _Z13R_RenderScenePK8refdef_s_1100
 	mov eax, [ebx+0x74]
 	mov [esp], eax
-	call CG_GetPoseLightingHandle
+	call _Z24CG_GetPoseLightingHandlePK7cpose_t
 	mov edx, [ebx+0x74]
 	mov [esp+0x18], edx
 	mov edx, [ebx+0x70]
@@ -2676,25 +2676,25 @@ R_RenderScene_1090:
 	mov [esp+0x4], edi
 	mov eax, [scene+0x154c90]
 	mov [esp], eax
-	call FX_GenerateMarkVertsForEntDObj
-	jmp R_RenderScene_1100
-R_RenderScene_1080:
+	call _Z30FX_GenerateMarkVertsForEntDObjiiPjthPK6DObj_sPK7cpose_t
+	jmp _Z13R_RenderScenePK8refdef_s_1100
+_Z13R_RenderScenePK8refdef_s_1080:
 	mov eax, [scene+0x13ba30]
 	test eax, eax
-	jz R_RenderScene_1110
+	jz _Z13R_RenderScenePK8refdef_s_1110
 	xor esi, esi
 	mov ebx, scene+0x13ba00
 	mov edi, gfxCfg
-R_RenderScene_1130:
+_Z13R_RenderScenePK8refdef_s_1130:
 	movzx edx, word [ebx+0x62]
 	cmp edx, [edi+0xc]
-	jae R_RenderScene_1120
+	jae _Z13R_RenderScenePK8refdef_s_1120
 	test byte [esi+scene+0x14da34], 0x1
-	jz R_RenderScene_1120
+	jz _Z13R_RenderScenePK8refdef_s_1120
 	movzx ecx, byte [ebx+0x78]
 	mov eax, [ebx+0x3c]
 	test eax, eax
-	jz R_RenderScene_1120
+	jz _Z13R_RenderScenePK8refdef_s_1120
 	lea eax, [ebx+0x40]
 	mov [esp+0x14], eax
 	movzx eax, cl
@@ -2707,33 +2707,33 @@ R_RenderScene_1130:
 	mov [esp+0x4], edx
 	mov eax, [scene+0x154c90]
 	mov [esp], eax
-	call FX_GenerateMarkVertsForEntXModel
-R_RenderScene_1120:
+	call _Z32FX_GenerateMarkVertsForEntXModeliiPjthPK18GfxScaledPlacement
+_Z13R_RenderScenePK8refdef_s_1120:
 	add esi, 0x1
 	add ebx, 0x48
 	mov eax, [scene+0x13ba30]
 	cmp eax, esi
-	jnz R_RenderScene_1130
-R_RenderScene_1110:
+	jnz _Z13R_RenderScenePK8refdef_s_1130
+_Z13R_RenderScenePK8refdef_s_1110:
 	mov eax, [scene+0x14f634]
 	test eax, eax
-	jz R_RenderScene_1140
+	jz _Z13R_RenderScenePK8refdef_s_1140
 	xor esi, esi
 	mov edi, gfxCfg
 	mov ebx, scene+0x14f600
-	jmp R_RenderScene_1150
-R_RenderScene_1160:
+	jmp _Z13R_RenderScenePK8refdef_s_1150
+_Z13R_RenderScenePK8refdef_s_1160:
 	add esi, 0x1
 	add ebx, 0x28
 	mov eax, [scene+0x14f634]
 	cmp eax, esi
-	jz R_RenderScene_1140
-R_RenderScene_1150:
+	jz _Z13R_RenderScenePK8refdef_s_1140
+_Z13R_RenderScenePK8refdef_s_1150:
 	movzx edx, word [ebx+0x3a]
 	cmp edx, [edi+0xc]
-	jae R_RenderScene_1160
+	jae _Z13R_RenderScenePK8refdef_s_1160
 	test byte [esi+scene+0x154638], 0x1
-	jz R_RenderScene_1160
+	jz _Z13R_RenderScenePK8refdef_s_1160
 	lea eax, [ebx+0x40]
 	mov [esp+0x10], eax
 	movzx eax, byte [ebx+0x5c]
@@ -2743,24 +2743,24 @@ R_RenderScene_1150:
 	mov [esp+0x4], edx
 	mov eax, [scene+0x154c90]
 	mov [esp], eax
-	call FX_GenerateMarkVertsForEntBrush
-	jmp R_RenderScene_1160
-R_RenderScene_1140:
+	call _Z31FX_GenerateMarkVertsForEntBrushiiPjhPK12GfxPlacement
+	jmp _Z13R_RenderScenePK8refdef_s_1160
+_Z13R_RenderScenePK8refdef_s_1140:
 	mov eax, [scene+0x154c90]
 	mov [esp], eax
-	call FX_EndGeneratingMarkVertsForEntModels
-	jmp R_RenderScene_480
-R_RenderScene_1060:
+	call _Z37FX_EndGeneratingMarkVertsForEntModelsi
+	jmp _Z13R_RenderScenePK8refdef_s_480
+_Z13R_RenderScenePK8refdef_s_1060:
 	mov dword [esp+0x4], _cstring_scene_ent_surfac
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
-	call R_AddAllSceneEntSurfacesSunShadow
-	call R_SortAllStaticModelSurfacesSunShadow
+	call _Z18PIXBeginNamedEventiPKcz
+	call _Z33R_AddAllSceneEntSurfacesSunShadowv
+	call _Z37R_SortAllStaticModelSurfacesSunShadowv
 	mov ebx, [ebp-0x104]
 	mov [esp], ebx
-	call R_MergeAndEmitSunShadowMapsSurfs
-	jmp R_RenderScene_1170
-R_RenderScene_1050:
+	call _Z32R_MergeAndEmitSunShadowMapsSurfsP11GfxViewInfo
+	jmp _Z13R_RenderScenePK8refdef_s_1170
+_Z13R_RenderScenePK8refdef_s_1050:
 	mov eax, rg
 	mov dword [eax+0x22f4], 0x1
 	mov ebx, [ebp-0x104]
@@ -2768,7 +2768,7 @@ R_RenderScene_1050:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp-0x134]
 	mov [esp], ecx
-	call R_SetupSunShadowMaps
+	call _Z20R_SetupSunShadowMapsPK12GfxViewParmsP12GfxSunShadow
 	mov edx, [ebp-0x104]
 	add edx, 0x5710
 	mov ecx, [ebp-0x18c]
@@ -2798,28 +2798,28 @@ R_RenderScene_1050:
 	mov eax, [edx+0xc]
 	mov [ecx+0xc], eax
 	mov [esp], ebx
-	call R_SunShadowMaps
-	jmp R_RenderScene_1180
+	call _Z15R_SunShadowMapsP12GfxSunShadow
+	jmp _Z13R_RenderScenePK8refdef_s_1180
 
 
 ;R_WaitEndTime()
-R_WaitEndTime:
+_Z13R_WaitEndTimev:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov dword [esp+0x4], _cstring_max_fps_spin
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov ebx, rg
-	jmp R_WaitEndTime_10
-R_WaitEndTime_20:
+	jmp _Z13R_WaitEndTimev_10
+_Z13R_WaitEndTimev_20:
 	mov dword [esp], 0x1
-	call Sys_Sleep
-R_WaitEndTime_10:
-	call Sys_Milliseconds
+	call _Z9Sys_Sleepi
+_Z13R_WaitEndTimev_10:
+	call _Z16Sys_Millisecondsv
 	cmp eax, [ebx+0x2268]
-	js R_WaitEndTime_20
+	js _Z13R_WaitEndTimev_20
 	add esp, 0x14
 	pop ebx
 	pop ebp
@@ -2827,7 +2827,7 @@ R_WaitEndTime_10:
 
 
 ;R_SetLodOrigin(refdef_s const*)
-R_SetLodOrigin:
+_Z14R_SetLodOriginPK8refdef_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2838,10 +2838,10 @@ R_SetLodOrigin:
 	mov esi, r_lockPvs
 	mov eax, [esi]
 	cmp byte [eax+0xb], 0x0
-	jnz R_SetLodOrigin_10
-R_SetLodOrigin_200:
+	jnz _Z14R_SetLodOriginPK8refdef_s_10
+_Z14R_SetLodOriginPK8refdef_s_200:
 	cmp byte [eax+0xc], 0x0
-	jz R_SetLodOrigin_20
+	jz _Z14R_SetLodOriginPK8refdef_s_20
 	mov esi, rg
 	mov eax, [lockPvsViewParms+0x100]
 	mov [esi+0x21dc], eax
@@ -2849,7 +2849,7 @@ R_SetLodOrigin_200:
 	mov [esi+0x21e0], eax
 	mov eax, [lockPvsViewParms+0x108]
 	mov [esi+0x21e4], eax
-R_SetLodOrigin_160:
+_Z14R_SetLodOriginPK8refdef_s_160:
 	movss xmm1, dword [_float_2_11867309]
 	mulss xmm1, [ebx+0x14]
 	mov eax, r_lodBiasRigid
@@ -2888,18 +2888,18 @@ R_SetLodOrigin_160:
 	mov eax, [edi]
 	mov eax, [eax+0x11e6c4]
 	test eax, eax
-	jnz R_SetLodOrigin_30
+	jnz _Z14R_SetLodOriginPK8refdef_s_30
 	mov ecx, [esi+0x21b8]
 	cmp edx, ecx
-	jge R_SetLodOrigin_40
+	jge _Z14R_SetLodOriginPK8refdef_s_40
 	mov ebx, [esi+0x21b4]
 	mov eax, ecx
 	sub eax, ebx
 	test eax, eax
-	jle R_SetLodOrigin_50
+	jle _Z14R_SetLodOriginPK8refdef_s_50
 	cvtsi2ss xmm0, eax
 	movss xmm6, dword [_float_1_00000000]
-R_SetLodOrigin_210:
+_Z14R_SetLodOriginPK8refdef_s_210:
 	sub edx, ebx
 	cvtsi2ss xmm2, edx
 	divss xmm2, xmm0
@@ -2953,11 +2953,11 @@ R_SetLodOrigin_210:
 	addss xmm1, xmm2
 	cvttss2si eax, xmm1
 	mov [esi+0x2197], al
-R_SetLodOrigin_30:
+_Z14R_SetLodOriginPK8refdef_s_30:
 	mov eax, [esi+0x21c8]
 	test eax, eax
-	jz R_SetLodOrigin_60
-R_SetLodOrigin_180:
+	jz _Z14R_SetLodOriginPK8refdef_s_60
+_Z14R_SetLodOriginPK8refdef_s_180:
 	mov edx, [edi]
 	mov eax, [esi+0x218c]
 	mov [edx+0x11e6a8], eax
@@ -2969,7 +2969,7 @@ R_SetLodOrigin_180:
 	mov [edx+0x11e6b4], eax
 	mov eax, [esi+0x219c]
 	mov [edx+0x11e6b8], eax
-R_SetLodOrigin_190:
+_Z14R_SetLodOriginPK8refdef_s_190:
 	mov ecx, [edi]
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
@@ -3007,9 +3007,9 @@ R_SetLodOrigin_190:
 	mov eax, [eax+0x3c]
 	mov [ecx+0x11e70c], eax
 	cmp byte [esi+0x2216], 0x0
-	jz R_SetLodOrigin_70
+	jz _Z14R_SetLodOriginPK8refdef_s_70
 	cmp byte [esi+0x2217], 0x0
-	jnz R_SetLodOrigin_80
+	jnz _Z14R_SetLodOriginPK8refdef_s_80
 	mov edx, [edi]
 	lea ecx, [edx+0x11e6e0]
 	mov eax, [esi+0x2224]
@@ -3018,9 +3018,9 @@ R_SetLodOrigin_190:
 	mov [ecx+0x4], eax
 	mov eax, [esi+0x222c]
 	mov [ecx+0x8], eax
-R_SetLodOrigin_70:
+_Z14R_SetLodOriginPK8refdef_s_70:
 	cmp byte [esi+0x2215], 0x0
-	jz R_SetLodOrigin_90
+	jz _Z14R_SetLodOriginPK8refdef_s_90
 	mov edx, [edi]
 	lea ecx, [edx+0x11e6d4]
 	mov eax, [esi+0x2218]
@@ -3029,23 +3029,23 @@ R_SetLodOrigin_70:
 	mov [ecx+0x4], eax
 	mov eax, [esi+0x2220]
 	mov [ecx+0x8], eax
-R_SetLodOrigin_90:
+_Z14R_SetLodOriginPK8refdef_s_90:
 	mov edx, [edi]
 	mov eax, sm_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_SetLodOrigin_100
+	jz _Z14R_SetLodOriginPK8refdef_s_100
 	cmp byte [esi+0x2216], 0x0
-	jz R_SetLodOrigin_110
-R_SetLodOrigin_130:
+	jz _Z14R_SetLodOriginPK8refdef_s_110
+_Z14R_SetLodOriginPK8refdef_s_130:
 	mov eax, 0x1
 	mov [edx+0x11822c], eax
 	mov edi, [edi]
 	cmp byte [esi+0x2216], 0x0
-	jz R_SetLodOrigin_120
-R_SetLodOrigin_140:
+	jz _Z14R_SetLodOriginPK8refdef_s_120
+_Z14R_SetLodOriginPK8refdef_s_140:
 	mov eax, 0x1
-R_SetLodOrigin_150:
+_Z14R_SetLodOriginPK8refdef_s_150:
 	mov [edi+0x11e710], eax
 	add esp, 0x3c
 	pop ebx
@@ -3053,30 +3053,30 @@ R_SetLodOrigin_150:
 	pop edi
 	pop ebp
 	ret
-R_SetLodOrigin_110:
+_Z14R_SetLodOriginPK8refdef_s_110:
 	mov eax, r_lightTweakSunDirection
 	mov eax, [eax]
 	lea ebx, [eax+0x2c]
 	lea ecx, [eax+0xc]
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm0, [eax+0x2c]
-	jnz R_SetLodOrigin_130
-	jp R_SetLodOrigin_130
+	jnz _Z14R_SetLodOriginPK8refdef_s_130
+	jp _Z14R_SetLodOriginPK8refdef_s_130
 	movss xmm0, dword [ecx+0x4]
 	ucomiss xmm0, [ebx+0x4]
-	jnz R_SetLodOrigin_130
-	jp R_SetLodOrigin_130
+	jnz _Z14R_SetLodOriginPK8refdef_s_130
+	jp _Z14R_SetLodOriginPK8refdef_s_130
 	movss xmm0, dword [ecx+0x8]
 	ucomiss xmm0, [ebx+0x8]
-	jp R_SetLodOrigin_130
-	jnz R_SetLodOrigin_130
-R_SetLodOrigin_100:
+	jp _Z14R_SetLodOriginPK8refdef_s_130
+	jnz _Z14R_SetLodOriginPK8refdef_s_130
+_Z14R_SetLodOriginPK8refdef_s_100:
 	xor eax, eax
 	mov [edx+0x11822c], eax
 	mov edi, [edi]
 	cmp byte [esi+0x2216], 0x0
-	jnz R_SetLodOrigin_140
-R_SetLodOrigin_120:
+	jnz _Z14R_SetLodOriginPK8refdef_s_140
+_Z14R_SetLodOriginPK8refdef_s_120:
 	mov eax, r_lightTweakSunDirection
 	mov ebx, [eax]
 	movss xmm0, dword [ebx+0xc]
@@ -3092,7 +3092,7 @@ R_SetLodOrigin_120:
 	subss xmm0, [ebp-0x1c]
 	mulss xmm0, [_float_360_00000000]
 	ucomiss xmm0, [_float_5_00000000]
-	ja R_SetLodOrigin_140
+	ja _Z14R_SetLodOriginPK8refdef_s_140
 	movss xmm0, dword [ebx+0x10]
 	subss xmm0, [ebx+0x30]
 	mulss xmm0, [_float_0_00277778]
@@ -3106,10 +3106,10 @@ R_SetLodOrigin_120:
 	subss xmm0, [ebp-0x20]
 	mulss xmm0, [_float_360_00000000]
 	ucomiss xmm0, [_float_5_00000000]
-	ja R_SetLodOrigin_140
+	ja _Z14R_SetLodOriginPK8refdef_s_140
 	xor eax, eax
-	jmp R_SetLodOrigin_150
-R_SetLodOrigin_20:
+	jmp _Z14R_SetLodOriginPK8refdef_s_150
+_Z14R_SetLodOriginPK8refdef_s_20:
 	lea edx, [ebx+0x18]
 	mov esi, rg
 	mov eax, [ebx+0x18]
@@ -3118,8 +3118,8 @@ R_SetLodOrigin_20:
 	mov [esi+0x21e0], eax
 	mov eax, [edx+0x8]
 	mov [esi+0x21e4], eax
-	jmp R_SetLodOrigin_160
-R_SetLodOrigin_80:
+	jmp _Z14R_SetLodOriginPK8refdef_s_160
+_Z14R_SetLodOriginPK8refdef_s_80:
 	mov ecx, [edi]
 	lea ebx, [ecx+0x11e6e0]
 	mov edx, [esi+0x223c]
@@ -3176,8 +3176,8 @@ R_SetLodOrigin_80:
 	movaps xmm0, xmm2
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm4
-	jb R_SetLodOrigin_170
-R_SetLodOrigin_220:
+	jb _Z14R_SetLodOriginPK8refdef_s_170
+_Z14R_SetLodOriginPK8refdef_s_220:
 	movaps xmm2, xmm6
 	mulss xmm5, xmm6
 	movss [ebx], xmm5
@@ -3186,8 +3186,8 @@ R_SetLodOrigin_220:
 	movss [edx], xmm0
 	mulss xmm2, [eax]
 	movss [eax], xmm2
-	jmp R_SetLodOrigin_70
-R_SetLodOrigin_40:
+	jmp _Z14R_SetLodOriginPK8refdef_s_70
+_Z14R_SetLodOriginPK8refdef_s_40:
 	mov eax, [esi+0x21b4]
 	mov [esi+0x218c], eax
 	mov [esi+0x2190], ecx
@@ -3199,8 +3199,8 @@ R_SetLodOrigin_40:
 	mov [esi+0x219c], eax
 	mov eax, [esi+0x21c8]
 	test eax, eax
-	jnz R_SetLodOrigin_180
-R_SetLodOrigin_60:
+	jnz _Z14R_SetLodOriginPK8refdef_s_180
+_Z14R_SetLodOriginPK8refdef_s_60:
 	mov edx, [edi]
 	lea eax, [edx+0x11e6a8]
 	mov dword [edx+0x11e6a8], 0x0
@@ -3208,27 +3208,27 @@ R_SetLodOrigin_60:
 	mov dword [eax+0x8], 0x0
 	mov dword [eax+0xc], 0x0
 	mov dword [eax+0x10], 0x0
-	jmp R_SetLodOrigin_190
-R_SetLodOrigin_10:
+	jmp _Z14R_SetLodOriginPK8refdef_s_190
+_Z14R_SetLodOriginPK8refdef_s_10:
 	mov [esp], eax
-	call Cvar_ClearModified
+	call _Z18Dvar_ClearModifiedPK6dvar_s
 	mov edx, lockPvsViewParms
 	mov eax, ebx
-	call R_SetViewParmsForScene
+	call _Z22R_SetViewParmsForScenePK8refdef_sP12GfxViewParms
 	mov eax, [esi]
-	jmp R_SetLodOrigin_200
-R_SetLodOrigin_50:
+	jmp _Z14R_SetLodOriginPK8refdef_s_200
+_Z14R_SetLodOriginPK8refdef_s_50:
 	movss xmm6, dword [_float_1_00000000]
 	movaps xmm0, xmm6
-	jmp R_SetLodOrigin_210
-R_SetLodOrigin_170:
+	jmp _Z14R_SetLodOriginPK8refdef_s_210
+_Z14R_SetLodOriginPK8refdef_s_170:
 	divss xmm6, xmm2
-	jmp R_SetLodOrigin_220
+	jmp _Z14R_SetLodOriginPK8refdef_s_220
 	nop
 
 
 ;R_UnlinkDynEnt(unsigned int, DynEntityDrawType)
-R_UnlinkDynEnt:
+_Z14R_UnlinkDynEntj17DynEntityDrawType:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -3238,19 +3238,19 @@ R_UnlinkDynEnt:
 	mov ebx, [ebp+0xc]
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call R_UnfilterDynEntFromCells
+	call _Z25R_UnfilterDynEntFromCellsj17DynEntityDrawType
 	mov [ebp+0xc], ebx
 	mov [ebp+0x8], esi
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
-	jmp R_UnlinkDynEntFromPrimaryLights
+	jmp _Z31R_UnlinkDynEntFromPrimaryLightsj17DynEntityDrawType
 	nop
 
 
 ;R_UnlinkEntity(unsigned int, unsigned int)
-R_UnlinkEntity:
+_Z14R_UnlinkEntityjj:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -3260,19 +3260,19 @@ R_UnlinkEntity:
 	mov ebx, [ebp+0xc]
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call R_UnfilterEntFromCells
+	call _Z22R_UnfilterEntFromCellsjj
 	mov [ebp+0xc], ebx
 	mov [ebp+0x8], esi
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
-	jmp R_UnlinkEntityFromPrimaryLights
+	jmp _Z31R_UnlinkEntityFromPrimaryLightsjj
 	nop
 
 
 ;R_GetBrushModel(unsigned int)
-R_GetBrushModel:
+_Z15R_GetBrushModelj:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -3287,7 +3287,7 @@ R_GetBrushModel:
 
 
 ;R_AddDObjToScene(DObj_s const*, cpose_t const*, unsigned int, unsigned int, float*, float)
-R_AddDObjToScene:
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3297,40 +3297,40 @@ R_AddDObjToScene:
 	mov esi, [ebp+0x14]
 	movss xmm0, dword [ebp+0x1c]
 	ucomiss xmm0, [_float_0_00000000]
-	jnz R_AddDObjToScene_10
-	jp R_AddDObjToScene_10
+	jnz _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_10
+	jp _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_10
 	test esi, esi
-	jz R_AddDObjToScene_20
-R_AddDObjToScene_10:
+	jz _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_20
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_10:
 	mov ebx, frontEndDataOut
 	mov eax, [ebx]
 	add eax, 0x11825c
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
-	call InterlockedExchangeAdd
+	call iInterlockedExchangeAdd
 	mov [ebp-0x34], eax
 	cmp eax, 0x7f
-	ja R_AddDObjToScene_30
+	ja _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_30
 	lea eax, [eax*8+0x118260]
 	add eax, [ebx]
 	movss xmm0, dword [ebp+0x1c]
 	movss [eax+0x4], xmm0
 	mov [eax], esi
-R_AddDObjToScene_70:
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_70:
 	and esi, 0x4
-	jnz R_AddDObjToScene_40
+	jnz _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_40
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call DObjGetTree
+	call _Z11DObjGetTreePK6DObj_s
 	test eax, eax
-	jz R_AddDObjToScene_50
-R_AddDObjToScene_40:
+	jz _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_50
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_40:
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], scene+0x12b42c
-	call InterlockedExchangeAdd
+	call iInterlockedExchangeAdd
 	mov edx, eax
 	cmp eax, 0x1ff
-	ja R_AddDObjToScene_60
+	ja _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_60
 	lea eax, [eax*4]
 	mov ebx, edx
 	shl ebx, 0x7
@@ -3348,22 +3348,22 @@ R_AddDObjToScene_40:
 	mov [edi+0x74], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call DObjGetRadius
+	call _Z13DObjGetRadiusPK6DObj_s
 	fstp dword [ebp-0x38]
 	lea eax, [ebx+0x4c]
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0xc]
 	mov [esp], ecx
-	call CG_GetPoseOrigin
+	call _Z16CG_GetPoseOriginPK7cpose_tPf
 	lea esi, [ebp-0x24]
 	mov [esp+0x4], esi
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call CG_GetPoseAngles
+	call _Z16CG_GetPoseAnglesPK7cpose_tPf
 	lea eax, [ebx+0x3c]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call AnglesToQuat
+	call _Z12AnglesToQuatPKfPf
 	mov dword [edi+0x28], 0x3f800000
 	movss xmm1, dword [ebp-0x38]
 	xorps xmm1, [_data16_80000000]
@@ -3394,59 +3394,59 @@ R_AddDObjToScene_40:
 	movzx ecx, word [ebp-0x34]
 	mov [edi+0x6c], cx
 	mov [esp], edi
-	call CG_PredictiveSkinCEntity
-R_AddDObjToScene_90:
+	call _Z24CG_PredictiveSkinCEntityP14GfxSceneEntity
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_90:
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddDObjToScene_20:
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_20:
 	mov dword [ebp-0x34], 0x0
-	jmp R_AddDObjToScene_70
-R_AddDObjToScene_60:
+	jmp _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_70
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_60:
 	mov dword [scene+0x12b42c], 0x200
 	mov dword [esp+0x4], 0x200
 	mov dword [esp], 0x1
-	call R_WarnOncePerFrame
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddDObjToScene_30:
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_30:
 	mov eax, [ebx]
 	mov dword [eax+0x11825c], 0x80
 	mov dword [esp+0x4], 0x80
 	mov dword [esp], 0x2
-	call R_WarnOncePerFrame
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddDObjToScene_50:
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_50:
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call DObjGetNumModels
+	call _Z16DObjGetNumModelsPK6DObj_s
 	sub eax, 0x1
-	jnz R_AddDObjToScene_40
+	jnz _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_40
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], scene+0x13ba30
-	call InterlockedExchangeAdd
+	call iInterlockedExchangeAdd
 	mov [ebp-0x2c], eax
 	cmp eax, 0x3ff
-	ja R_AddDObjToScene_80
+	ja _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_80
 	lea ebx, [eax+eax*8]
 	lea ebx, [ebx*8+scene+0x13ba00]
 	lea esi, [ebx+0x34]
 	mov dword [esp+0x4], 0x0
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov edi, eax
 	mov [esi+0x4], eax
 	mov ecx, [ebp+0x8]
@@ -3459,25 +3459,25 @@ R_AddDObjToScene_50:
 	mov [eax+edx*2], cx
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call CG_GetPoseLightingHandle
+	call _Z24CG_GetPoseLightingHandlePK7cpose_t
 	mov [esi+0x34], eax
 	mov [esp], edi
-	call XModelGetRadius
+	call _Z15XModelGetRadiusPK6XModel
 	fstp dword [ebp-0x30]
 	lea eax, [ebx+0x50]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call CG_GetPoseOrigin
+	call _Z16CG_GetPoseOriginPK7cpose_tPf
 	lea edi, [ebp-0x24]
 	mov [esp+0x4], edi
 	mov ecx, [ebp+0xc]
 	mov [esp], ecx
-	call CG_GetPoseAngles
+	call _Z16CG_GetPoseAnglesPK7cpose_tPf
 	lea eax, [ebx+0x40]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call AnglesToQuat
+	call _Z12AnglesToQuatPKfPf
 	mov dword [esi+0x28], 0x3f800000
 	movss xmm0, dword [ebp-0x30]
 	movss [esi+0x30], xmm0
@@ -3490,17 +3490,17 @@ R_AddDObjToScene_50:
 	mov [ebx+0x74], eax
 	movzx ecx, word [ebp-0x34]
 	mov [esi+0x2c], cx
-	jmp R_AddDObjToScene_90
-R_AddDObjToScene_80:
+	jmp _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_90
+_Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_80:
 	mov dword [scene+0x13ba30], 0x400
 	mov dword [esp+0x4], 0x400
 	mov dword [esp], 0x1
-	call R_WarnOncePerFrame
-	jmp R_AddDObjToScene_90
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
+	jmp _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff_90
 
 
 ;R_LinkDObjEntity(unsigned int, unsigned int, float*, float)
-R_LinkDObjEntity:
+_Z16R_LinkDObjEntityjjPff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3516,7 +3516,7 @@ R_LinkDObjEntity:
 	mov [esp+0x8], esi
 	mov [esp+0x4], edi
 	mov [esp], eax
-	call R_FilterDObjIntoCells
+	call _Z21R_FilterDObjIntoCellsjjPff
 	mov [ebp+0x14], ebx
 	mov [ebp+0x10], esi
 	mov [ebp+0xc], edi
@@ -3527,12 +3527,12 @@ R_LinkDObjEntity:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_LinkSphereEntityToPrimaryLights
+	jmp _Z33R_LinkSphereEntityToPrimaryLightsjjPKff
 	nop
 
 
 ;R_AddDObjSurfaces(GfxSceneEntity*, MaterialTechniqueType, GfxDrawSurf*, GfxDrawSurf*)
-R_AddDObjSurfaces:
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3543,57 +3543,57 @@ R_AddDObjSurfaces:
 	mov eax, [ebx+0x68]
 	mov [ebp-0x44], eax
 	test eax, eax
-	jz R_AddDObjSurfaces_10
+	jz _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__10
 	mov edx, [ebx+0x70]
 	mov [ebp-0x30], edx
 	mov [esp], edx
-	call DObjGetNumModels
+	call _Z16DObjGetNumModelsPK6DObj_s
 	mov [ebp-0x3c], eax
 	movzx eax, word [ebx+0x6c]
 	movzx edx, ax
 	test ax, ax
-	jnz R_AddDObjSurfaces_20
-R_AddDObjSurfaces_120:
+	jnz _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__20
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__120:
 	mov dword [ebp-0x20], 0x0
-R_AddDObjSurfaces_130:
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__130:
 	mov edi, [ebp-0x3c]
 	test edi, edi
-	jz R_AddDObjSurfaces_10
+	jz _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__10
 	mov [ebp-0x1c], ebx
 	mov dword [ebp-0x40], 0x0
 	mov ecx, ebx
-R_AddDObjSurfaces_90:
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__90:
 	movsx esi, byte [ecx+0x48]
 	test esi, esi
-	js R_AddDObjSurfaces_30
+	js _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__30
 	mov eax, [ebp-0x40]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x30]
 	mov [esp], edx
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov ebx, eax
 	mov [esp+0x4], esi
 	mov [esp], eax
-	call XModelGetSurfCount
+	call _Z18XModelGetSurfCountPK6XModeli
 	mov [ebp-0x34], eax
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call XModelGetSkins
+	call _Z14XModelGetSkinsPK6XModeli
 	mov [ebp-0x48], eax
 	mov esi, [ebp-0x34]
 	test esi, esi
-	jz R_AddDObjSurfaces_30
+	jz _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__30
 	mov dword [ebp-0x38], 0x0
-R_AddDObjSurfaces_80:
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__80:
 	mov ecx, [ebp-0x44]
 	mov eax, [ecx]
 	cmp eax, 0xfffffffe
-	jz R_AddDObjSurfaces_40
+	jz _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__40
 	cmp eax, 0xfffffffd
-	jz R_AddDObjSurfaces_50
+	jz _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__50
 	mov dword [ebp-0x28], 0x18
 	mov dword [ebp-0x2c], 0x9
-R_AddDObjSurfaces_100:
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__100:
 	mov eax, [ebp-0x38]
 	mov ecx, [ebp-0x48]
 	mov edx, [ecx+eax*4]
@@ -3602,10 +3602,10 @@ R_AddDObjSurfaces_100:
 	mov ecx, [ebp+0xc]
 	mov ebx, [eax+ecx*4+0xc]
 	test ebx, ebx
-	jz R_AddDObjSurfaces_60
+	jz _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__60
 	mov eax, [ebp+0x14]
 	cmp [ebp+0x10], eax
-	jae R_AddDObjSurfaces_70
+	jae _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__70
 	mov eax, frontEndDataOut
 	mov ecx, [ebp-0x44]
 	sub ecx, [eax]
@@ -3632,30 +3632,30 @@ R_AddDObjSurfaces_100:
 	mov [eax+0x4], ebx
 	add eax, 0x8
 	mov [ebp+0x10], eax
-R_AddDObjSurfaces_60:
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__60:
 	mov eax, [ebp-0x28]
-R_AddDObjSurfaces_110:
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__110:
 	add dword [ebp-0x38], 0x1
 	add [ebp-0x44], eax
 	mov edx, [ebp-0x38]
 	cmp [ebp-0x34], edx
-	jnz R_AddDObjSurfaces_80
-R_AddDObjSurfaces_30:
+	jnz _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__80
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__30:
 	add dword [ebp-0x40], 0x1
 	add dword [ebp-0x1c], 0x1
 	mov ecx, [ebp-0x40]
 	cmp [ebp-0x3c], ecx
-	jbe R_AddDObjSurfaces_10
+	jbe _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__10
 	mov ecx, [ebp-0x1c]
-	jmp R_AddDObjSurfaces_90
-R_AddDObjSurfaces_40:
+	jmp _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__90
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__40:
 	mov dword [ebp-0x28], 0x38
 	mov dword [ebp-0x2c], 0x7
-	jmp R_AddDObjSurfaces_100
-R_AddDObjSurfaces_50:
+	jmp _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__100
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__50:
 	mov eax, 0x4
-	jmp R_AddDObjSurfaces_110
-R_AddDObjSurfaces_10:
+	jmp _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__110
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__10:
 	mov eax, [ebp+0x10]
 	add esp, 0x4c
 	pop ebx
@@ -3663,38 +3663,38 @@ R_AddDObjSurfaces_10:
 	pop edi
 	pop ebp
 	ret
-R_AddDObjSurfaces_20:
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__20:
 	mov eax, frontEndDataOut
 	mov eax, [eax]
 	test byte [eax+edx*8+0x118260], 0x2
-	jz R_AddDObjSurfaces_120
+	jz _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__120
 	mov dword [ebp-0x20], 0x1
-	jmp R_AddDObjSurfaces_130
-R_AddDObjSurfaces_70:
+	jmp _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__130
+_Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__70:
 	mov dword [esp+0x4], _cstring_r_adddobjsurface
 	mov dword [esp], 0xf
-	call R_WarnOncePerFrame
-	jmp R_AddDObjSurfaces_30
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
+	jmp _Z17R_AddDObjSurfacesP14GfxSceneEntity21MaterialTechniqueTypeP11GfxDrawSurfS3__30
 	nop
 
 
 ;R_AllocSceneModel()
-R_AllocSceneModel:
+_Z17R_AllocSceneModelv:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], scene+0x13ba30
-	call InterlockedExchangeAdd
+	call iInterlockedExchangeAdd
 	mov ebx, eax
 	cmp eax, 0x3ff
-	jbe R_AllocSceneModel_10
+	jbe _Z17R_AllocSceneModelv_10
 	mov dword [scene+0x13ba30], 0x400
 	mov dword [esp+0x4], 0x400
 	mov dword [esp], 0x1
-	call R_WarnOncePerFrame
-R_AllocSceneModel_10:
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
+_Z17R_AllocSceneModelv_10:
 	mov eax, ebx
 	add esp, 0x14
 	pop ebx
@@ -3704,7 +3704,7 @@ R_AllocSceneModel_10:
 
 
 ;R_LinkBModelEntity(unsigned int, unsigned int, GfxBrushModel*)
-R_LinkBModelEntity:
+_Z18R_LinkBModelEntityjjP13GfxBrushModel:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3717,13 +3717,13 @@ R_LinkBModelEntity:
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call R_FilterBModelIntoCells
+	call _Z23R_FilterBModelIntoCellsjjP13GfxBrushModel
 	lea eax, [ebx+0xc]
 	mov [esp+0xc], eax
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call R_LinkBoxEntityToPrimaryLights
+	call _Z30R_LinkBoxEntityToPrimaryLightsjjPKfS0_
 	add esp, 0x1c
 	pop ebx
 	pop esi
@@ -3734,7 +3734,7 @@ R_LinkBModelEntity:
 
 
 ;R_AddBModelSurfaces(BModelDrawInfo*, GfxBrushModel const*, MaterialTechniqueType, GfxDrawSurf*, GfxDrawSurf*)
-R_AddBModelSurfaces:
+_Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3750,18 +3750,18 @@ R_AddBModelSurfaces:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_AddBModelSurfaces_10
+	jz _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__10
 	mov eax, [ebp+0xc]
 	movzx eax, word [eax+0x30]
 	mov [ebp-0x1c], eax
-R_AddBModelSurfaces_60:
+_Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__60:
 	mov eax, [ebp-0x1c]
 	test eax, eax
-	jz R_AddBModelSurfaces_20
+	jz _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__20
 	cmp edi, [ebp+0x18]
-	jae R_AddBModelSurfaces_30
+	jae _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__30
 	mov dword [ebp-0x4c], 0x0
-R_AddBModelSurfaces_50:
+_Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__50:
 	mov eax, [ebx+0x4]
 	mov eax, [eax+0x10]
 	mov [ebp-0x3c], eax
@@ -3772,7 +3772,7 @@ R_AddBModelSurfaces_50:
 	mov edx, [ebp+0x10]
 	mov eax, [eax+edx*4+0xc]
 	test eax, eax
-	jz R_AddBModelSurfaces_40
+	jz _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__40
 	mov eax, [ecx+0x8]
 	mov edx, [ecx+0xc]
 	mov ax, si
@@ -3781,20 +3781,20 @@ R_AddBModelSurfaces_50:
 	mov [edi], eax
 	mov [edi+0x4], edx
 	add edi, 0x8
-R_AddBModelSurfaces_40:
+_Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__40:
 	add dword [ebp-0x4c], 0x1
 	add ebx, 0x8
 	add esi, 0x2
 	mov eax, [ebp-0x4c]
 	cmp [ebp-0x1c], eax
-	jz R_AddBModelSurfaces_20
+	jz _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__20
 	cmp edi, [ebp+0x18]
-	jb R_AddBModelSurfaces_50
-R_AddBModelSurfaces_30:
+	jb _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__50
+_Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__30:
 	mov dword [esp+0x4], _cstring_r_addbmodelsurfa
 	mov dword [esp], 0xf
-	call R_WarnOncePerFrame
-R_AddBModelSurfaces_20:
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
+_Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__20:
 	mov eax, edi
 	add esp, 0x5c
 	pop ebx
@@ -3802,15 +3802,15 @@ R_AddBModelSurfaces_20:
 	pop edi
 	pop ebp
 	ret
-R_AddBModelSurfaces_10:
+_Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__10:
 	mov edx, [ebp+0xc]
 	movzx edx, word [edx+0x34]
 	mov [ebp-0x1c], edx
-	jmp R_AddBModelSurfaces_60
+	jmp _Z19R_AddBModelSurfacesP14BModelDrawInfoPK13GfxBrushModel21MaterialTechniqueTypeP11GfxDrawSurfS6__60
 
 
 ;R_AddXModelSurfaces(XModelDrawInfo*, XModel const*, MaterialTechniqueType, GfxDrawSurf*, GfxDrawSurf*)
-R_AddXModelSurfaces:
+_Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3828,18 +3828,18 @@ R_AddXModelSurfaces:
 	movzx ebx, word [edx]
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call XModelGetSurfCount
+	call _Z18XModelGetSurfCountPK6XModeli
 	mov [ebp-0x28], eax
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call XModelGetSkins
+	call _Z14XModelGetSkinsPK6XModeli
 	mov [ebp-0x30], eax
 	mov eax, [ebp-0x28]
 	test eax, eax
-	jz R_AddXModelSurfaces_10
+	jz _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__10
 	mov dword [ebp-0x2c], 0x0
-	jmp R_AddXModelSurfaces_20
-R_AddXModelSurfaces_60:
+	jmp _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__20
+_Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__60:
 	mov ebx, [ebp-0x2c]
 	mov eax, [ebp-0x30]
 	mov ecx, [eax+ebx*4]
@@ -3848,15 +3848,15 @@ R_AddXModelSurfaces_60:
 	mov ebx, [ebp+0x10]
 	mov eax, [eax+ebx*4+0xc]
 	test eax, eax
-	jz R_AddXModelSurfaces_30
+	jz _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__30
 	mov eax, [ebp+0x14]
 	cmp [ebp+0x18], eax
-	jbe R_AddXModelSurfaces_40
+	jbe _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__40
 	cmp edx, 0xfffffffe
-	jz R_AddXModelSurfaces_50
+	jz _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__50
 	mov dword [ebp-0x20], 0x8
 	mov dword [ebp-0x1c], 0x0
-R_AddXModelSurfaces_70:
+_Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__70:
 	mov eax, [ecx+0x8]
 	mov edx, [ecx+0xc]
 	mov ecx, eax
@@ -3872,24 +3872,24 @@ R_AddXModelSurfaces_70:
 	mov [eax+0x4], ebx
 	add eax, 0x8
 	mov [ebp+0x14], eax
-R_AddXModelSurfaces_30:
+_Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__30:
 	add dword [ebp-0x24], 0xe
 	add edi, 0x38
 	add dword [ebp-0x2c], 0x1
 	mov ecx, [ebp-0x2c]
 	cmp [ebp-0x28], ecx
-	jz R_AddXModelSurfaces_10
-R_AddXModelSurfaces_20:
+	jz _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__10
+_Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__20:
 	mov edx, [edi]
 	cmp edx, 0xfffffffd
-	jnz R_AddXModelSurfaces_60
+	jnz _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__60
 	add dword [ebp-0x24], 0x1
 	add edi, 0x4
 	add dword [ebp-0x2c], 0x1
 	mov ecx, [ebp-0x2c]
 	cmp [ebp-0x28], ecx
-	jnz R_AddXModelSurfaces_20
-R_AddXModelSurfaces_10:
+	jnz _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__20
+_Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__10:
 	mov eax, [ebp+0x14]
 	add esp, 0x3c
 	pop ebx
@@ -3897,20 +3897,20 @@ R_AddXModelSurfaces_10:
 	pop edi
 	pop ebp
 	ret
-R_AddXModelSurfaces_50:
+_Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__50:
 	mov dword [ebp-0x20], 0x7
 	mov dword [ebp-0x1c], 0x0
-	jmp R_AddXModelSurfaces_70
-R_AddXModelSurfaces_40:
+	jmp _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__70
+_Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__40:
 	mov dword [esp+0x4], _cstring_r_addxmodelsurfa
 	mov dword [esp], 0xf
-	call R_WarnOncePerFrame
-	jmp R_AddXModelSurfaces_10
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
+	jmp _Z19R_AddXModelSurfacesP14XModelDrawInfoPK6XModel21MaterialTechniqueTypeP11GfxDrawSurfS6__10
 	add [eax], al
 
 
 ;R_GetLocalClientNum()
-R_GetLocalClientNum:
+_Z19R_GetLocalClientNumv:
 	push ebp
 	mov ebp, esp
 	mov eax, [scene+0x154c90]
@@ -3919,7 +3919,7 @@ R_GetLocalClientNum:
 
 
 ;R_AddOmniLightToScene(float const*, float, float, float, float)
-R_AddOmniLightToScene:
+_Z21R_AddOmniLightToScenePKfffff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3936,18 +3936,18 @@ R_AddOmniLightToScene:
 	movss [ebp-0x18], xmm1
 	mov eax, rg
 	cmp byte [eax+0x140], 0x0
-	jz R_AddOmniLightToScene_10
+	jz _Z21R_AddOmniLightToScenePKfffff_10
 	mov esi, rgp
 	mov ecx, [esi+0x20a0]
 	test ecx, ecx
-	jz R_AddOmniLightToScene_10
+	jz _Z21R_AddOmniLightToScenePKfffff_10
 	ucomiss xmm0, [_float_0_00000000]
-	jp R_AddOmniLightToScene_20
-	jbe R_AddOmniLightToScene_10
-R_AddOmniLightToScene_20:
+	jp _Z21R_AddOmniLightToScenePKfffff_20
+	jbe _Z21R_AddOmniLightToScenePKfffff_10
+_Z21R_AddOmniLightToScenePKfffff_20:
 	mov eax, [scene+0x11422c]
 	cmp eax, 0x1f
-	jg R_AddOmniLightToScene_30
+	jg _Z21R_AddOmniLightToScenePKfffff_30
 	mov edx, eax
 	shl edx, 0x6
 	add edx, scene+0x114200
@@ -3982,27 +3982,27 @@ R_AddOmniLightToScene_20:
 	movss [eax+0x8], xmm0
 	mov byte [edi+0x1], 0x0
 	mov dword [edi+0x38], 0xffffffff
-R_AddOmniLightToScene_10:
+_Z21R_AddOmniLightToScenePKfffff_10:
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddOmniLightToScene_30:
+_Z21R_AddOmniLightToScenePKfffff_30:
 	mov dword [ebp+0x8], 0xa
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_WarnOncePerFrame
+	jmp _Z18R_WarnOncePerFrame14GfxWarningTypez
 	nop
 	add [eax], al
 
 
 ;R_AddSpotLightToScene(float const*, float const*, float, float, float, float)
-R_AddSpotLightToScene:
+_Z21R_AddSpotLightToScenePKfS0_ffff:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4022,32 +4022,32 @@ R_AddSpotLightToScene:
 	movss [ebp-0x30], xmm0
 	mov eax, rg
 	cmp byte [eax+0x140], 0x0
-	jz R_AddSpotLightToScene_10
+	jz _Z21R_AddSpotLightToScenePKfS0_ffff_10
 	mov eax, rgp
 	mov edi, [eax+0x20a0]
 	test edi, edi
-	jz R_AddSpotLightToScene_10
+	jz _Z21R_AddSpotLightToScenePKfS0_ffff_10
 	movss xmm0, dword [ebp-0x24]
 	ucomiss xmm0, [_float_0_00000000]
-	jp R_AddSpotLightToScene_20
-	jbe R_AddSpotLightToScene_10
-R_AddSpotLightToScene_20:
+	jp _Z21R_AddSpotLightToScenePKfS0_ffff_20
+	jbe _Z21R_AddSpotLightToScenePKfS0_ffff_10
+_Z21R_AddSpotLightToScenePKfS0_ffff_20:
 	cmp dword [scene+0x11422c], 0x1f
-	jg R_AddSpotLightToScene_30
+	jg _Z21R_AddSpotLightToScenePKfS0_ffff_30
 	mov edi, r_spotLightEndRadius
 	mov edx, [edi]
 	mov ebx, r_spotLightStartRadius
 	mov ecx, [ebx]
 	movss xmm0, dword [ecx+0xc]
 	ucomiss xmm0, [edx+0xc]
-	jae R_AddSpotLightToScene_40
-R_AddSpotLightToScene_70:
+	jae _Z21R_AddSpotLightToScenePKfS0_ffff_40
+_Z21R_AddSpotLightToScenePKfS0_ffff_70:
 	movss xmm1, dword [ebp-0x24]
 	addss xmm1, [ecx+0xc]
 	movss xmm0, dword [edx+0xc]
 	ucomiss xmm0, xmm1
-	jae R_AddSpotLightToScene_50
-R_AddSpotLightToScene_60:
+	jae _Z21R_AddSpotLightToScenePKfS0_ffff_50
+_Z21R_AddSpotLightToScenePKfS0_ffff_60:
 	mov eax, [scene+0x11422c]
 	mov ebx, eax
 	shl ebx, 0x6
@@ -4154,42 +4154,42 @@ R_AddSpotLightToScene_60:
 	mov edx, [ebp-0x4c]
 	mov [edx+0x1], al
 	mov dword [edx+0x38], 0xffffffff
-R_AddSpotLightToScene_10:
+_Z21R_AddSpotLightToScenePKfS0_ffff_10:
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddSpotLightToScene_30:
+_Z21R_AddSpotLightToScenePKfS0_ffff_30:
 	mov dword [ebp+0x8], 0xa
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_WarnOncePerFrame
-R_AddSpotLightToScene_50:
+	jmp _Z18R_WarnOncePerFrame14GfxWarningTypez
+_Z21R_AddSpotLightToScenePKfS0_ffff_50:
 	subss xmm1, [_float_0_10000000]
 	movss [esp+0x4], xmm1
 	mov [esp], edx
-	call Cvar_SetFloat
+	call _Z13Dvar_SetFloatPK6dvar_sf
 	mov edx, [edi]
 	mov ecx, [ebx]
-	jmp R_AddSpotLightToScene_60
-R_AddSpotLightToScene_40:
+	jmp _Z21R_AddSpotLightToScenePKfS0_ffff_60
+_Z21R_AddSpotLightToScenePKfS0_ffff_40:
 	addss xmm0, [_float_0_10000000]
 	movss [esp+0x4], xmm0
 	mov [esp], edx
-	call Cvar_SetFloat
+	call _Z13Dvar_SetFloatPK6dvar_sf
 	mov edx, [edi]
 	mov ecx, [ebx]
-	jmp R_AddSpotLightToScene_70
+	jmp _Z21R_AddSpotLightToScenePKfS0_ffff_70
 	nop
 
 
 ;R_AddDObjSurfacesCamera(GfxSceneEntity*, unsigned int, unsigned int, GfxDrawSurf**, GfxDrawSurf**)
-R_AddDObjSurfacesCamera:
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4200,25 +4200,25 @@ R_AddDObjSurfacesCamera:
 	mov eax, [eax+0x68]
 	mov [ebp-0x48], eax
 	test eax, eax
-	jz R_AddDObjSurfacesCamera_10
+	jz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__10
 	mov edx, [ebp+0x8]
 	mov edx, [edx+0x70]
 	mov [ebp-0x34], edx
 	mov [esp], edx
-	call DObjGetNumModels
+	call _Z16DObjGetNumModelsPK6DObj_s
 	mov [ebp-0x40], eax
 	mov ecx, [ebp+0x8]
 	movzx eax, word [ecx+0x6c]
 	movzx ebx, ax
 	mov [ebp-0x24], ebx
 	test ax, ax
-	jnz R_AddDObjSurfacesCamera_20
+	jnz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__20
 	xor edx, edx
 	mov dword [ebp-0x20], 0x0
-R_AddDObjSurfacesCamera_110:
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__110:
 	mov ecx, [ebp-0x40]
 	test ecx, ecx
-	jz R_AddDObjSurfacesCamera_10
+	jz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__10
 	mov ecx, [ebp+0x8]
 	mov [ebp-0x1c], ecx
 	mov dword [ebp-0x44], 0x0
@@ -4228,44 +4228,44 @@ R_AddDObjSurfacesCamera_110:
 	shl ebx, 0xa
 	mov [ebp-0x58], ebx
 	mov eax, ecx
-R_AddDObjSurfacesCamera_90:
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__90:
 	movsx esi, byte [eax+0x48]
 	test esi, esi
-	js R_AddDObjSurfacesCamera_30
+	js _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__30
 	mov edx, [ebp-0x44]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x34]
 	mov [esp], ecx
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov ebx, eax
 	mov [esp+0x4], esi
 	mov [esp], eax
-	call XModelGetSurfCount
+	call _Z18XModelGetSurfCountPK6XModeli
 	mov [ebp-0x38], eax
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call XModelGetSkins
+	call _Z14XModelGetSkinsPK6XModeli
 	mov edx, [ebp-0x38]
 	test edx, edx
-	jz R_AddDObjSurfacesCamera_30
+	jz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__30
 	mov dword [ebp-0x3c], 0x0
 	mov [ebp-0x50], eax
-R_AddDObjSurfacesCamera_80:
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__80:
 	mov ebx, [ebp-0x48]
 	mov eax, [ebx]
 	cmp eax, 0xfffffffe
-	jz R_AddDObjSurfacesCamera_40
+	jz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__40
 	cmp eax, 0xfffffffd
-	jz R_AddDObjSurfacesCamera_50
+	jz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__50
 	mov dword [ebp-0x2c], 0x18
 	mov dword [ebp-0x30], 0x9
-R_AddDObjSurfacesCamera_120:
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__120:
 	mov edx, [ebp-0x50]
 	mov eax, [edx]
 	movzx eax, byte [eax+0x3e]
 	movzx edx, al
 	cmp al, 0x3
-	jz R_AddDObjSurfacesCamera_60
+	jz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__60
 	shl edx, 0x2
 	mov ecx, [ebp+0x14]
 	add ecx, edx
@@ -4273,7 +4273,7 @@ R_AddDObjSurfacesCamera_120:
 	mov eax, [ecx]
 	mov ebx, [ebp+0x18]
 	cmp eax, [edx+ebx]
-	jae R_AddDObjSurfacesCamera_70
+	jae _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__70
 	movzx edx, word [ebp-0x24]
 	mov eax, [ebp-0x48]
 	mov [eax+0xe], dx
@@ -4316,67 +4316,67 @@ R_AddDObjSurfacesCamera_120:
 	mov [ecx], eax
 	mov [ecx+0x4], edx
 	add dword [ebx], 0x8
-R_AddDObjSurfacesCamera_60:
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__60:
 	mov eax, [ebp-0x2c]
-R_AddDObjSurfacesCamera_130:
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__130:
 	add dword [ebp-0x3c], 0x1
 	add dword [ebp-0x50], 0x4
 	add [ebp-0x48], eax
 	mov eax, [ebp-0x3c]
 	cmp [ebp-0x38], eax
-	jnz R_AddDObjSurfacesCamera_80
-R_AddDObjSurfacesCamera_30:
+	jnz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__80
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__30:
 	add dword [ebp-0x44], 0x1
 	add dword [ebp-0x1c], 0x1
 	mov edx, [ebp-0x44]
 	cmp [ebp-0x40], edx
-	jbe R_AddDObjSurfacesCamera_10
+	jbe _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__10
 	mov eax, [ebp-0x1c]
-	jmp R_AddDObjSurfacesCamera_90
-R_AddDObjSurfacesCamera_10:
+	jmp _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__90
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__10:
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddDObjSurfacesCamera_20:
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__20:
 	mov eax, frontEndDataOut
 	mov eax, [eax]
 	mov ecx, [eax+ebx*8+0x118260]
 	mov eax, sc_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddDObjSurfacesCamera_100
-R_AddDObjSurfacesCamera_140:
+	jnz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__100
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__140:
 	xor edx, edx
-R_AddDObjSurfacesCamera_150:
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__150:
 	xor eax, eax
 	test cl, 0x2
 	setnz al
 	mov [ebp-0x20], eax
-	jmp R_AddDObjSurfacesCamera_110
-R_AddDObjSurfacesCamera_40:
+	jmp _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__110
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__40:
 	mov dword [ebp-0x2c], 0x38
 	mov dword [ebp-0x30], 0x7
-	jmp R_AddDObjSurfacesCamera_120
-R_AddDObjSurfacesCamera_50:
+	jmp _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__120
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__50:
 	mov eax, 0x4
-	jmp R_AddDObjSurfacesCamera_130
-R_AddDObjSurfacesCamera_70:
+	jmp _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__130
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__70:
 	mov dword [esp+0x4], _cstring_r_adddobjsurface1
 	mov dword [esp], 0xf
-	call R_WarnOncePerFrame
-	jmp R_AddDObjSurfacesCamera_30
-R_AddDObjSurfacesCamera_100:
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
+	jmp _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__30
+_Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__100:
 	test ch, 0x1
-	jz R_AddDObjSurfacesCamera_140
+	jz _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__140
 	mov edx, 0x1
-	jmp R_AddDObjSurfacesCamera_150
+	jmp _Z23R_AddDObjSurfacesCameraP14GfxSceneEntityjjPP11GfxDrawSurfS3__150
 
 
 ;R_AddBModelSurfacesCamera(BModelDrawInfo*, GfxBrushModel const*, GfxDrawSurf**, GfxDrawSurf**, unsigned int)
-R_AddBModelSurfacesCamera:
+_Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4400,25 +4400,25 @@ R_AddBModelSurfacesCamera:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_AddBModelSurfacesCamera_10
+	jz _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_10
 	movzx ecx, word [ecx+0x30]
 	mov [ebp-0x18], ecx
-R_AddBModelSurfacesCamera_60:
+_Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_60:
 	mov eax, [ebp-0x18]
 	test eax, eax
-	jz R_AddBModelSurfacesCamera_20
+	jz _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_20
 	mov dword [ebp-0x1c], 0x0
 	movzx edx, dl
 	shl edx, 0x10
 	mov [ebp-0x2c], edx
-R_AddBModelSurfacesCamera_50:
+_Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_50:
 	mov eax, [ebp-0x14]
 	mov esi, [eax+0x4]
 	mov ecx, [esi+0x10]
 	movzx eax, byte [ecx+0x3e]
 	movzx edx, al
 	cmp al, 0x3
-	jz R_AddBModelSurfacesCamera_30
+	jz _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_30
 	lea eax, [edx*4]
 	mov edx, [ebp-0x24]
 	lea edi, [eax+edx]
@@ -4426,7 +4426,7 @@ R_AddBModelSurfacesCamera_50:
 	mov [ebp-0x20], ebx
 	mov edx, [ebp-0x28]
 	cmp ebx, [eax+edx]
-	jae R_AddBModelSurfacesCamera_40
+	jae _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_40
 	mov eax, [ecx+0x8]
 	mov edx, [ecx+0xc]
 	mov ax, [ebp-0x10]
@@ -4448,25 +4448,25 @@ R_AddBModelSurfacesCamera_50:
 	mov [ecx], eax
 	mov [ecx+0x4], edx
 	add dword [edi], 0x8
-R_AddBModelSurfacesCamera_30:
+_Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_30:
 	add dword [ebp-0x1c], 0x1
 	add dword [ebp-0x14], 0x8
 	add dword [ebp-0x10], 0x2
 	mov ebx, [ebp-0x1c]
 	cmp [ebp-0x18], ebx
-	jnz R_AddBModelSurfacesCamera_50
-R_AddBModelSurfacesCamera_20:
+	jnz _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_50
+_Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_20:
 	add esp, 0x20
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddBModelSurfacesCamera_10:
+_Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_10:
 	movzx ecx, word [ecx+0x34]
 	mov [ebp-0x18], ecx
-	jmp R_AddBModelSurfacesCamera_60
-R_AddBModelSurfacesCamera_40:
+	jmp _Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_60
+_Z25R_AddBModelSurfacesCameraP14BModelDrawInfoPK13GfxBrushModelPP11GfxDrawSurfS6_j_40:
 	mov dword [ebp+0xc], _cstring_r_addbmodelsurfa1
 	mov dword [ebp+0x8], 0xf
 	add esp, 0x20
@@ -4474,11 +4474,11 @@ R_AddBModelSurfacesCamera_40:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_WarnOncePerFrame
+	jmp _Z18R_WarnOncePerFrame14GfxWarningTypez
 
 
 ;R_AddParticleCloudToScene(Material*)
-R_AddParticleCloudToScene:
+_Z25R_AddParticleCloudToSceneP8Material:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4488,29 +4488,29 @@ R_AddParticleCloudToScene:
 	mov eax, [esi]
 	add eax, 0x118660
 	mov [esp], eax
-	call InterlockedIncrement
+	call iInterlockedIncrement
 	lea ebx, [eax-0x1]
 	cmp ebx, 0xff
-	jbe R_AddParticleCloudToScene_10
+	jbe _Z25R_AddParticleCloudToSceneP8Material_10
 	mov eax, [esi]
 	add eax, 0x118660
 	mov [esp], eax
-	call InterlockedDecrement
+	call iInterlockedDecrement
 	mov dword [esp], 0x9
-	call R_WarnOncePerFrame
+	call _Z18R_WarnOncePerFrame14GfxWarningTypez
 	xor eax, eax
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-R_AddParticleCloudToScene_10:
+_Z25R_AddParticleCloudToSceneP8Material_10:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_AddParticleCloudDrawSurf
+	call _Z26R_AddParticleCloudDrawSurfjP8Material
 	test al, al
-	jz R_AddParticleCloudToScene_20
+	jz _Z25R_AddParticleCloudToSceneP8Material_20
 	shl ebx, 0x6
 	lea eax, [ebx+0x6c000]
 	add eax, [esi]
@@ -4519,7 +4519,7 @@ R_AddParticleCloudToScene_10:
 	pop esi
 	pop ebp
 	ret
-R_AddParticleCloudToScene_20:
+_Z25R_AddParticleCloudToSceneP8Material_20:
 	xor eax, eax
 	add esp, 0x10
 	pop ebx
@@ -4529,7 +4529,7 @@ R_AddParticleCloudToScene_20:
 
 
 ;R_AddXModelSurfacesCamera(XModelDrawInfo*, XModel const*, float*, unsigned int, unsigned int, unsigned int, int, int, GfxDrawSurf**, GfxDrawSurf**, unsigned int)
-R_AddXModelSurfacesCamera:
+_Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4562,14 +4562,14 @@ R_AddXModelSurfacesCamera:
 	movzx ebx, word [edx]
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call XModelGetSurfCount
+	call _Z18XModelGetSurfCountPK6XModeli
 	mov [ebp-0x2c], eax
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call XModelGetSkins
+	call _Z14XModelGetSkinsPK6XModeli
 	mov edx, [ebp-0x2c]
 	test edx, edx
-	jz R_AddXModelSurfacesCamera_10
+	jz _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_10
 	mov dword [ebp-0x30], 0x0
 	mov ebx, edi
 	movzx edi, bl
@@ -4583,14 +4583,14 @@ R_AddXModelSurfacesCamera:
 	shl ecx, 0xa
 	mov [ebp-0x5c], ecx
 	mov [ebp-0x60], eax
-	jmp R_AddXModelSurfacesCamera_20
-R_AddXModelSurfacesCamera_60:
+	jmp _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_20
+_Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_60:
 	mov edx, [ebp-0x60]
 	mov eax, [edx]
 	movzx eax, byte [eax+0x3e]
 	movzx edx, al
 	cmp al, 0x3
-	jz R_AddXModelSurfacesCamera_30
+	jz _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_30
 	shl edx, 0x2
 	mov ebx, [ebp-0x4c]
 	add ebx, edx
@@ -4598,12 +4598,12 @@ R_AddXModelSurfacesCamera_60:
 	mov eax, [ebx]
 	mov ebx, [ebp-0x50]
 	cmp eax, [edx+ebx]
-	jae R_AddXModelSurfacesCamera_40
+	jae _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_40
 	cmp ecx, 0xfffffffe
-	jz R_AddXModelSurfacesCamera_50
+	jz _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_50
 	mov dword [ebp-0x20], 0x8
 	mov dword [ebp-0x1c], 0x0
-R_AddXModelSurfacesCamera_70:
+_Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_70:
 	movzx edx, word [ebp-0x38]
 	mov eax, [ebp-0x28]
 	mov [eax+0xe], dx
@@ -4640,19 +4640,19 @@ R_AddXModelSurfacesCamera_70:
 	mov [ecx], eax
 	mov [ecx+0x4], edx
 	add dword [ebx], 0x8
-R_AddXModelSurfacesCamera_30:
+_Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_30:
 	add dword [ebp-0x24], 0xe
 	add dword [ebp-0x28], 0x38
 	add dword [ebp-0x30], 0x1
 	add dword [ebp-0x60], 0x4
 	mov eax, [ebp-0x30]
 	cmp [ebp-0x2c], eax
-	jz R_AddXModelSurfacesCamera_10
-R_AddXModelSurfacesCamera_20:
+	jz _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_10
+_Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_20:
 	mov ebx, [ebp-0x28]
 	mov ecx, [ebx]
 	cmp ecx, 0xfffffffd
-	jnz R_AddXModelSurfacesCamera_60
+	jnz _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_60
 	add dword [ebp-0x24], 0x1
 	add ebx, 0x4
 	mov [ebp-0x28], ebx
@@ -4660,19 +4660,19 @@ R_AddXModelSurfacesCamera_20:
 	add dword [ebp-0x60], 0x4
 	mov eax, [ebp-0x30]
 	cmp [ebp-0x2c], eax
-	jnz R_AddXModelSurfacesCamera_20
-R_AddXModelSurfacesCamera_10:
+	jnz _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_20
+_Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_10:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddXModelSurfacesCamera_50:
+_Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_50:
 	mov dword [ebp-0x20], 0x7
 	mov dword [ebp-0x1c], 0x0
-	jmp R_AddXModelSurfacesCamera_70
-R_AddXModelSurfacesCamera_40:
+	jmp _Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_70
+_Z25R_AddXModelSurfacesCameraP14XModelDrawInfoPK6XModelPfjjjiiPP11GfxDrawSurfS7_j_40:
 	mov dword [ebp+0xc], _cstring_r_addxmodelsurfa1
 	mov dword [ebp+0x8], 0xf
 	add esp, 0x6c
@@ -4680,13 +4680,13 @@ R_AddXModelSurfacesCamera_40:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_WarnOncePerFrame
+	jmp _Z18R_WarnOncePerFrame14GfxWarningTypez
 	nop
 	add [eax], al
 
 
 ;R_SetupViewProjectionMatrices(GfxViewParms*)
-R_SetupViewProjectionMatrices:
+_Z29R_SetupViewProjectionMatricesP12GfxViewParms:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4698,11 +4698,11 @@ R_SetupViewProjectionMatrices:
 	lea eax, [ebx+0x40]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call MatrixMultiply44
+	call _Z16MatrixMultiply44PA4_KfS1_PA4_f
 	add ebx, 0xc0
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call MatrixInverse44
+	call _Z15MatrixInverse44PKfPf
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -4713,7 +4713,7 @@ R_SetupViewProjectionMatrices:
 
 
 ;R_AddBrushModelToSceneFromAngles(GfxBrushModel const*, float const*, float const*, unsigned int)
-R_AddBrushModelToSceneFromAngles:
+_Z32R_AddBrushModelToSceneFromAnglesPK13GfxBrushModelPKfS3_j:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4726,19 +4726,19 @@ R_AddBrushModelToSceneFromAngles:
 	mov [ebp-0x1c], eax
 	mov edi, [ebp+0x14]
 	cmp word [esi+0x30], 0x0
-	jnz R_AddBrushModelToSceneFromAngles_10
+	jnz _Z32R_AddBrushModelToSceneFromAnglesPK13GfxBrushModelPKfS3_j_10
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddBrushModelToSceneFromAngles_10:
+_Z32R_AddBrushModelToSceneFromAnglesPK13GfxBrushModelPKfS3_j_10:
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], scene+0x14f634
-	call InterlockedExchangeAdd
+	call iInterlockedExchangeAdd
 	cmp eax, 0x1ff
-	ja R_AddBrushModelToSceneFromAngles_20
+	ja _Z32R_AddBrushModelToSceneFromAnglesPK13GfxBrushModelPKfS3_j_20
 	lea eax, [eax+eax*4]
 	lea eax, [eax*8+scene+0x14f600]
 	lea edx, [eax+0x38]
@@ -4759,8 +4759,8 @@ R_AddBrushModelToSceneFromAngles_10:
 	pop esi
 	pop edi
 	pop ebp
-	jmp AnglesToQuat
-R_AddBrushModelToSceneFromAngles_20:
+	jmp _Z12AnglesToQuatPKfPf
+_Z32R_AddBrushModelToSceneFromAnglesPK13GfxBrushModelPKfS3_j_20:
 	mov dword [scene+0x14f634], 0x200
 	mov dword [ebp+0xc], 0x200
 	mov dword [ebp+0x8], 0x1
@@ -4769,7 +4769,7 @@ R_AddBrushModelToSceneFromAngles_20:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_WarnOncePerFrame
+	jmp _Z18R_WarnOncePerFrame14GfxWarningTypez
 
 
 ;Initialized global or static variables of r_scene:
@@ -4813,7 +4813,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x80000000, 0x0, 0x0, 0x0, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of r_scene:
@@ -4850,7 +4850,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x20
+g_fltMin: resb 0x10
 lockPvsViewParms: resb 0x160
 scene: resb 0x154d04
 

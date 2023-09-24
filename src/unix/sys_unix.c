@@ -570,7 +570,7 @@ void Sys_LoadLibraryError(char* errormessage, int maxlen)
 
 void* Sys_LoadLibrary(const char* dlfile)
 {
-	void* handle = dlopen(dlfile, RTLD_LAZY);
+	void* handle = dlopen(dlfile, RTLD_NOW);
 	currentLibHandle = handle;
 	if(handle == NULL)
 	{
@@ -1060,7 +1060,7 @@ signed int __cdecl Sys_ResetEvent(HANDLE handle)
 #ifdef __MACH__
       pthread_yield_np();
 #else
-      pthread_yield();
+      sched_yield();
 #endif
     }
     return 1;
@@ -1197,3 +1197,4 @@ threadid_t Sys_GetThreadHandleFromID(threadid_t ti)
 {
     return ti;
 }
+

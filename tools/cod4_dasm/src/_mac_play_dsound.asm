@@ -1,35 +1,35 @@
 ;Imports of mac_play_dsound:
-	extern DSOUNDRecord_NewSample
-	extern AIL_allocate_sample_handle
+	extern _Z22DSOUNDRecord_NewSamplev
+	extern iAIL_allocate_sample_handle
 	extern _Znwm
 	extern _ZN15CCircularBufferC1Em
-	extern AIL_init_sample
-	extern AIL_set_sample_playback_rate
+	extern iAIL_init_sample
+	extern iAIL_set_sample_playback_rate
 	extern _ZdlPv
 	extern _Unwind_Resume
-	extern AIL_sample_status
+	extern iAIL_sample_status
 	extern _ZN15CCircularBuffer11ReadPtrSizeEv
 	extern _ZN15CCircularBuffer7ReadPtrERm
-	extern AIL_set_sample_address
-	extern AIL_resume_sample
+	extern iAIL_set_sample_address
+	extern iAIL_resume_sample
 	extern _ZN15CCircularBuffer5WriteEPKvRm
 
 ;Exports of mac_play_dsound:
 	global COMFORTABLE_BUFFER_AMOUNT
 	global dsoundplay_initialized
-	global DSound_Init
-	global DSound_Frame
-	global DSound_Shutdown
-	global DSound_NewSample
-	global DSound_SampleFrame
-	global DSound_UpdateSample
+	global _Z11DSound_InithPKv
+	global _Z12DSound_Framev
+	global _Z15DSound_Shutdownv
+	global _Z16DSound_NewSamplev
+	global _Z18DSound_SampleFrameP15dsound_sample_t
+	global _Z19DSound_UpdateSampleP15dsound_sample_tPcj
 
 
 SECTION .text
 
 
 ;DSound_Init(unsigned char, void const*)
-DSound_Init:
+_Z11DSound_InithPKv:
 	push ebp
 	mov ebp, esp
 	mov eax, 0x1
@@ -44,7 +44,7 @@ DSound_Init:
 
 
 ;DSound_Frame()
-DSound_Frame:
+_Z12DSound_Framev:
 	push ebp
 	mov ebp, esp
 	pop ebp
@@ -53,7 +53,7 @@ DSound_Frame:
 
 
 ;DSound_Shutdown()
-DSound_Shutdown:
+_Z15DSound_Shutdownv:
 	push ebp
 	mov ebp, esp
 	mov byte [dsoundplay_initialized], 0x0
@@ -62,34 +62,34 @@ DSound_Shutdown:
 
 
 ;DSound_NewSample()
-DSound_NewSample:
+_Z16DSound_NewSamplev:
 	push ebp
 	mov ebp, esp
 	push esi
 	push ebx
 	sub esp, 0x10
 	cmp byte [dsoundplay_initialized], 0x0
-	jnz DSound_NewSample_10
-DSound_NewSample_20:
+	jnz _Z16DSound_NewSamplev_10
+_Z16DSound_NewSamplev_20:
 	xor ebx, ebx
-DSound_NewSample_40:
+_Z16DSound_NewSamplev_40:
 	mov eax, ebx
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-DSound_NewSample_10:
-	call DSOUNDRecord_NewSample
+_Z16DSound_NewSamplev_10:
+	call _Z22DSOUNDRecord_NewSamplev
 	mov ebx, eax
 	test eax, eax
-	jz DSound_NewSample_20
+	jz _Z16DSound_NewSamplev_20
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], 0x4d444449
-	call AIL_allocate_sample_handle
+	call iAIL_allocate_sample_handle
 	mov [ebx], eax
 	test eax, eax
-	jz DSound_NewSample_20
+	jz _Z16DSound_NewSamplev_20
 	mov dword [esp], 0x14
 	call _Znwm
 	mov esi, eax
@@ -98,23 +98,23 @@ DSound_NewSample_10:
 	call _ZN15CCircularBufferC1Em
 	mov [ebx+0x4], esi
 	cmp dword [ebx+0x14], 0x1
-	jz DSound_NewSample_30
+	jz _Z16DSound_NewSamplev_30
 	mov eax, 0x3
-DSound_NewSample_50:
+_Z16DSound_NewSamplev_50:
 	mov dword [esp+0x8], 0x0
 	mov [esp+0x4], eax
 	mov eax, [ebx]
 	mov [esp], eax
-	call AIL_init_sample
+	call iAIL_init_sample
 	mov eax, [ebx+0x8]
 	mov [esp+0x4], eax
 	mov eax, [ebx]
 	mov [esp], eax
-	call AIL_set_sample_playback_rate
-	jmp DSound_NewSample_40
-DSound_NewSample_30:
+	call iAIL_set_sample_playback_rate
+	jmp _Z16DSound_NewSamplev_40
+_Z16DSound_NewSamplev_30:
 	mov eax, 0x1
-	jmp DSound_NewSample_50
+	jmp _Z16DSound_NewSamplev_50
 	mov ebx, eax
 	mov [esp], esi
 	call _ZdlPv
@@ -123,7 +123,7 @@ DSound_NewSample_30:
 
 
 ;DSound_SampleFrame(dsound_sample_t*)
-DSound_SampleFrame:
+_Z18DSound_SampleFrameP15dsound_sample_t:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -131,21 +131,21 @@ DSound_SampleFrame:
 	mov ebx, [ebp+0x8]
 	mov eax, [ebx]
 	mov [esp], eax
-	call AIL_sample_status
+	call iAIL_sample_status
 	cmp eax, 0x2
-	jz DSound_SampleFrame_10
-DSound_SampleFrame_20:
+	jz _Z18DSound_SampleFrameP15dsound_sample_t_10
+_Z18DSound_SampleFrameP15dsound_sample_t_20:
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-DSound_SampleFrame_10:
+_Z18DSound_SampleFrameP15dsound_sample_t_10:
 	mov eax, [ebx+0x4]
 	mov [esp], eax
 	call _ZN15CCircularBuffer11ReadPtrSizeEv
 	mov [ebp-0xc], eax
 	cmp eax, [COMFORTABLE_BUFFER_AMOUNT]
-	jb DSound_SampleFrame_20
+	jb _Z18DSound_SampleFrameP15dsound_sample_t_20
 	lea eax, [ebp-0xc]
 	mov [esp+0x4], eax
 	mov eax, [ebx+0x4]
@@ -153,37 +153,37 @@ DSound_SampleFrame_10:
 	call _ZN15CCircularBuffer7ReadPtrERm
 	mov edx, eax
 	test eax, eax
-	jz DSound_SampleFrame_20
+	jz _Z18DSound_SampleFrameP15dsound_sample_t_20
 	mov eax, [ebp-0xc]
 	mov [esp+0x8], eax
 	mov [esp+0x4], edx
 	mov eax, [ebx]
 	mov [esp], eax
-	call AIL_set_sample_address
+	call iAIL_set_sample_address
 	mov eax, [ebx]
 	mov [esp], eax
-	call AIL_resume_sample
-	jmp DSound_SampleFrame_20
+	call iAIL_resume_sample
+	jmp _Z18DSound_SampleFrameP15dsound_sample_t_20
 	add [eax], al
 
 
 ;DSound_UpdateSample(dsound_sample_t*, char*, unsigned int)
-DSound_UpdateSample:
+_Z19DSound_UpdateSampleP15dsound_sample_tPcj:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x24
 	mov ebx, [ebp+0x10]
 	cmp byte [dsoundplay_initialized], 0x0
-	jz DSound_UpdateSample_10
+	jz _Z19DSound_UpdateSampleP15dsound_sample_tPcj_10
 	test ebx, ebx
-	jnz DSound_UpdateSample_20
+	jnz _Z19DSound_UpdateSampleP15dsound_sample_tPcj_20
 	xor eax, eax
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-DSound_UpdateSample_20:
+_Z19DSound_UpdateSampleP15dsound_sample_tPcj_20:
 	mov [ebp-0xc], ebx
 	lea eax, [ebp-0xc]
 	mov [esp+0x8], eax
@@ -198,7 +198,7 @@ DSound_UpdateSample_20:
 	pop ebx
 	pop ebp
 	ret
-DSound_UpdateSample_10:
+_Z19DSound_UpdateSampleP15dsound_sample_tPcj_10:
 	mov eax, 0xffffffff
 	add esp, 0x24
 	pop ebx

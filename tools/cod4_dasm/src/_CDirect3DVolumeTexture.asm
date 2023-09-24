@@ -25,6 +25,9 @@
 	extern _ZSt17__throw_bad_allocv
 	extern _ZSt20__throw_length_errorPKc
 	extern memmove
+	extern _ZTI8IUnknown
+	extern _ZTI14COpenGLTexture
+	extern _ZTI21IDirect3DBaseTexture9
 	extern _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv
 
 ;Exports of CDirect3DVolumeTexture:
@@ -71,8 +74,14 @@
 	global _ZNSt6vectorI7_D3DBOXSaIS0_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS0_S2_EERKS0_
 	global _ZNSt6vectorIP15CDirect3DVolumeSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_
 	global _ZNSt6vectorIP15CDirect3DVolumeSaIS1_EE7reserveEm
+	global _ZTI15CDirect3DVolume
+	global _ZTI16IDirect3DVolume9
+	global _ZTI22CDirect3DVolumeTexture
+	global _ZTI23IDirect3DVolumeTexture9
 	global _ZTV15CDirect3DVolume
 	global _ZTV22CDirect3DVolumeTexture
+	global _ZThn4_N22CDirect3DVolumeTextureD0Ev
+	global _ZThn4_N22CDirect3DVolumeTextureD1Ev
 
 
 SECTION .text
@@ -607,8 +616,6 @@ _ZN22CDirect3DVolumeTexture20GenerateMipSubLevelsEv:
 	pop ebp
 	ret
 	nop
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN22CDirect3DVolumeTextureD0Ev
 
 
 ;CDirect3DVolumeTexture::GetAutoGenFilterType()
@@ -1892,6 +1899,16 @@ _ZNSt6vectorIP15CDirect3DVolumeSaIS1_EE7reserveEm_10:
 	call _ZSt20__throw_length_errorPKc
 _ZNSt6vectorIP15CDirect3DVolumeSaIS1_EE7reserveEm_30:
 	call _ZSt17__throw_bad_allocv
+
+
+;non-virtual thunk to CDirect3DVolumeTexture::~CDirect3DVolumeTexture()
+_ZThn4_N22CDirect3DVolumeTextureD0Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN22CDirect3DVolumeTextureD0Ev
+
+
+;non-virtual thunk to CDirect3DVolumeTexture::~CDirect3DVolumeTexture()
+_ZThn4_N22CDirect3DVolumeTextureD1Ev:
 	add dword [esp+0x4], 0xfffffffc
 	jmp _ZN22CDirect3DVolumeTextureD1Ev
 
@@ -1902,10 +1919,18 @@ SECTION .data
 
 ;Initialized constant data of CDirect3DVolumeTexture:
 SECTION .rdata
+;VTypeInfoTable for CDirect3DVolume:
+_ZTI15CDirect3DVolume: dd 0x8, _cstring_15cdirect3dvolum, _ZTI16IDirect3DVolume9, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for IDirect3DVolume9:
+_ZTI16IDirect3DVolume9: dd 0x8, _cstring_16idirect3dvolum, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for CDirect3DVolumeTexture:
+_ZTI22CDirect3DVolumeTexture: dd 0x8, _cstring_22cdirect3dvolum, 0x0, 0x2, _ZTI23IDirect3DVolumeTexture9, 0x2, _ZTI14COpenGLTexture, 0x402
+;VTypeInfoTable for IDirect3DVolumeTexture9:
+_ZTI23IDirect3DVolumeTexture9: dd 0x8, _cstring_23idirect3dvolum, _ZTI21IDirect3DBaseTexture9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI23IDirect3DVolumeTexture9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CDirect3DVolume:
-_ZTV15CDirect3DVolume: dd 0x0, 0x3b4c80, _ZN15CDirect3DVolume14QueryInterfaceERK5_GUIDPPv, _ZN15CDirect3DVolume6AddRefEv, _ZN15CDirect3DVolume7ReleaseEv, _ZN15CDirect3DVolume9GetDeviceEPP16IDirect3DDevice9, _ZN15CDirect3DVolume14SetPrivateDataERK5_GUIDPKvmm, _ZN15CDirect3DVolume14GetPrivateDataERK5_GUIDPvPm, _ZN15CDirect3DVolume15FreePrivateDataERK5_GUID, _ZN15CDirect3DVolume12GetContainerERK5_GUIDPPv, _ZN15CDirect3DVolume7GetDescEP15_D3DVOLUME_DESC, _ZN15CDirect3DVolume7LockBoxEP14_D3DLOCKED_BOXPK7_D3DBOXm, _ZN15CDirect3DVolume9UnlockBoxEv, _ZN15CDirect3DVolumeD1Ev, _ZN15CDirect3DVolumeD0Ev, 0x0
+_ZTV15CDirect3DVolume: dd 0x0, _ZTI15CDirect3DVolume, _ZN15CDirect3DVolume14QueryInterfaceERK5_GUIDPPv, _ZN15CDirect3DVolume6AddRefEv, _ZN15CDirect3DVolume7ReleaseEv, _ZN15CDirect3DVolume9GetDeviceEPP16IDirect3DDevice9, _ZN15CDirect3DVolume14SetPrivateDataERK5_GUIDPKvmm, _ZN15CDirect3DVolume14GetPrivateDataERK5_GUIDPvPm, _ZN15CDirect3DVolume15FreePrivateDataERK5_GUID, _ZN15CDirect3DVolume12GetContainerERK5_GUIDPPv, _ZN15CDirect3DVolume7GetDescEP15_D3DVOLUME_DESC, _ZN15CDirect3DVolume7LockBoxEP14_D3DLOCKED_BOXPK7_D3DBOXm, _ZN15CDirect3DVolume9UnlockBoxEv, _ZN15CDirect3DVolumeD1Ev, _ZN15CDirect3DVolumeD0Ev, 0x0
 ;VTable for CDirect3DVolumeTexture:
-_ZTV22CDirect3DVolumeTexture: dd 0x0, 0x3b4cc0, _ZN22CDirect3DVolumeTexture14QueryInterfaceERK5_GUIDPPv, _ZN22CDirect3DVolumeTexture6AddRefEv, _ZN22CDirect3DVolumeTexture7ReleaseEv, _ZN22CDirect3DVolumeTexture9GetDeviceEPP16IDirect3DDevice9, _ZN22CDirect3DVolumeTexture14SetPrivateDataERK5_GUIDPKvmm, _ZN22CDirect3DVolumeTexture14GetPrivateDataERK5_GUIDPvPm, _ZN22CDirect3DVolumeTexture15FreePrivateDataERK5_GUID, _ZN22CDirect3DVolumeTexture11SetPriorityEm, _ZN22CDirect3DVolumeTexture11GetPriorityEv, _ZN22CDirect3DVolumeTexture7PreLoadEv, _ZN22CDirect3DVolumeTexture7GetTypeEv, _ZN22CDirect3DVolumeTexture6SetLODEm, _ZN22CDirect3DVolumeTexture6GetLODEv, _ZN22CDirect3DVolumeTexture13GetLevelCountEv, _ZN22CDirect3DVolumeTexture20SetAutoGenFilterTypeE21_D3DTEXTUREFILTERTYPE, _ZN22CDirect3DVolumeTexture20GetAutoGenFilterTypeEv, _ZN22CDirect3DVolumeTexture20GenerateMipSubLevelsEv, _ZN22CDirect3DVolumeTexture12GetLevelDescEjP15_D3DVOLUME_DESC, _ZN22CDirect3DVolumeTexture14GetVolumeLevelEjPP16IDirect3DVolume9, _ZN22CDirect3DVolumeTexture7LockBoxEjP14_D3DLOCKED_BOXPK7_D3DBOXm, _ZN22CDirect3DVolumeTexture9UnlockBoxEj, _ZN22CDirect3DVolumeTexture11AddDirtyBoxEPK7_D3DBOX, _ZN22CDirect3DVolumeTextureD1Ev, _ZN22CDirect3DVolumeTextureD0Ev, 0xfffffffc, 0x3b4cc0, 0x331b7e, 0x331708, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0
+_ZTV22CDirect3DVolumeTexture: dd 0x0, _ZTI22CDirect3DVolumeTexture, _ZN22CDirect3DVolumeTexture14QueryInterfaceERK5_GUIDPPv, _ZN22CDirect3DVolumeTexture6AddRefEv, _ZN22CDirect3DVolumeTexture7ReleaseEv, _ZN22CDirect3DVolumeTexture9GetDeviceEPP16IDirect3DDevice9, _ZN22CDirect3DVolumeTexture14SetPrivateDataERK5_GUIDPKvmm, _ZN22CDirect3DVolumeTexture14GetPrivateDataERK5_GUIDPvPm, _ZN22CDirect3DVolumeTexture15FreePrivateDataERK5_GUID, _ZN22CDirect3DVolumeTexture11SetPriorityEm, _ZN22CDirect3DVolumeTexture11GetPriorityEv, _ZN22CDirect3DVolumeTexture7PreLoadEv, _ZN22CDirect3DVolumeTexture7GetTypeEv, _ZN22CDirect3DVolumeTexture6SetLODEm, _ZN22CDirect3DVolumeTexture6GetLODEv, _ZN22CDirect3DVolumeTexture13GetLevelCountEv, _ZN22CDirect3DVolumeTexture20SetAutoGenFilterTypeE21_D3DTEXTUREFILTERTYPE, _ZN22CDirect3DVolumeTexture20GetAutoGenFilterTypeEv, _ZN22CDirect3DVolumeTexture20GenerateMipSubLevelsEv, _ZN22CDirect3DVolumeTexture12GetLevelDescEjP15_D3DVOLUME_DESC, _ZN22CDirect3DVolumeTexture14GetVolumeLevelEjPP16IDirect3DVolume9, _ZN22CDirect3DVolumeTexture7LockBoxEjP14_D3DLOCKED_BOXPK7_D3DBOXm, _ZN22CDirect3DVolumeTexture9UnlockBoxEj, _ZN22CDirect3DVolumeTexture11AddDirtyBoxEPK7_D3DBOX, _ZN22CDirect3DVolumeTextureD1Ev, _ZN22CDirect3DVolumeTextureD0Ev, 0xfffffffc, _ZTI22CDirect3DVolumeTexture, _ZThn4_N22CDirect3DVolumeTextureD1Ev, _ZThn4_N22CDirect3DVolumeTextureD0Ev, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0
 
 
 ;Zero initialized global or static variables of CDirect3DVolumeTexture:
@@ -1916,6 +1941,10 @@ SECTION .bss
 SECTION .rdata
 _cstring_vector_m_insert_:		db "vector::_M_insert_aux",0
 _cstring_vectorreserve:		db "vector::reserve",0
+_cstring_15cdirect3dvolum:		db "15CDirect3DVolume",0
+_cstring_16idirect3dvolum:		db "16IDirect3DVolume9",0
+_cstring_22cdirect3dvolum:		db "22CDirect3DVolumeTexture",0
+_cstring_23idirect3dvolum:		db "23IDirect3DVolumeTexture9",0
 
 
 

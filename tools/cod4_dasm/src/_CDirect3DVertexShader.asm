@@ -2,6 +2,8 @@
 	extern _ZN20COpenGLVertexProgramC2EP15CDirect3DDevicePKc
 	extern _ZN20COpenGLVertexProgramD2Ev
 	extern _ZdlPv
+	extern _ZTI20COpenGLVertexProgram
+	extern _ZTI8IUnknown
 
 ;Exports of CDirect3DVertexShader:
 	global _ZN21CDirect3DVertexShader11GetFunctionEPvPj
@@ -12,7 +14,11 @@
 	global _ZN21CDirect3DVertexShaderC1EP15CDirect3DDevicePKc
 	global _ZN21CDirect3DVertexShaderD0Ev
 	global _ZN21CDirect3DVertexShaderD1Ev
+	global _ZTI21CDirect3DVertexShader
+	global _ZTI22IDirect3DVertexShader9
 	global _ZTV21CDirect3DVertexShader
+	global _ZThn4_N21CDirect3DVertexShaderD0Ev
+	global _ZThn4_N21CDirect3DVertexShaderD1Ev
 
 
 SECTION .text
@@ -25,10 +31,6 @@ _ZN21CDirect3DVertexShader11GetFunctionEPvPj:
 	mov eax, 0x8876086c
 	pop ebp
 	ret
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN21CDirect3DVertexShaderD1Ev
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN21CDirect3DVertexShaderD0Ev
 
 
 ;CDirect3DVertexShader::QueryInterface(_GUID const&, void**)
@@ -160,14 +162,30 @@ _ZN21CDirect3DVertexShaderD1Ev:
 	nop
 
 
+;non-virtual thunk to CDirect3DVertexShader::~CDirect3DVertexShader()
+_ZThn4_N21CDirect3DVertexShaderD0Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN21CDirect3DVertexShaderD0Ev
+
+
+;non-virtual thunk to CDirect3DVertexShader::~CDirect3DVertexShader()
+_ZThn4_N21CDirect3DVertexShaderD1Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN21CDirect3DVertexShaderD1Ev
+
+
 ;Initialized global or static variables of CDirect3DVertexShader:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DVertexShader:
 SECTION .rdata
+;VTypeInfoTable for CDirect3DVertexShader:
+_ZTI21CDirect3DVertexShader: dd 0x8, _cstring_21cdirect3dverte, 0x0, 0x2, _ZTI22IDirect3DVertexShader9, 0x2, _ZTI20COpenGLVertexProgram, 0x402
+;VTypeInfoTable for IDirect3DVertexShader9:
+_ZTI22IDirect3DVertexShader9: dd 0x8, _cstring_22idirect3dverte, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI22IDirect3DVertexShader9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CDirect3DVertexShader:
-_ZTV21CDirect3DVertexShader: dd 0x0, 0x3b4b60, _ZN21CDirect3DVertexShader14QueryInterfaceERK5_GUIDPPv, _ZN21CDirect3DVertexShader6AddRefEv, _ZN21CDirect3DVertexShader7ReleaseEv, _ZN21CDirect3DVertexShader9GetDeviceEPP16IDirect3DDevice9, _ZN21CDirect3DVertexShader11GetFunctionEPvPj, _ZN21CDirect3DVertexShaderD1Ev, _ZN21CDirect3DVertexShaderD0Ev, 0xfffffffc, 0x3b4b60, 0x3310f0, 0x3310fa, 0x0, 0x0, 0x0
+_ZTV21CDirect3DVertexShader: dd 0x0, _ZTI21CDirect3DVertexShader, _ZN21CDirect3DVertexShader14QueryInterfaceERK5_GUIDPPv, _ZN21CDirect3DVertexShader6AddRefEv, _ZN21CDirect3DVertexShader7ReleaseEv, _ZN21CDirect3DVertexShader9GetDeviceEPP16IDirect3DDevice9, _ZN21CDirect3DVertexShader11GetFunctionEPvPj, _ZN21CDirect3DVertexShaderD1Ev, _ZN21CDirect3DVertexShaderD0Ev, 0xfffffffc, _ZTI21CDirect3DVertexShader, _ZThn4_N21CDirect3DVertexShaderD1Ev, _ZThn4_N21CDirect3DVertexShaderD0Ev, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of CDirect3DVertexShader:
@@ -176,6 +194,8 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
+_cstring_21cdirect3dverte:		db "21CDirect3DVertexShader",0
+_cstring_22idirect3dverte:		db "22IDirect3DVertexShader9",0
 
 
 

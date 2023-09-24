@@ -4,15 +4,15 @@
 	extern r_showPortals
 	extern colorLtYellow
 	extern frontEndDataOut
-	extern R_AddDebugBox
+	extern _Z13R_AddDebugBoxP12DebugGlobalsPKfS2_S2_
 
 ;Exports of r_dpvs_static:
 	global _GLOBAL__I__Z35R_AddCellStaticSurfacesInFrustumCmdPv
 	global g_surfaceVisData
 	global g_smodelVisData
-	global R_AddAabbTreeSurfacesInFrustum_r
-	global R_AddSkySurfacesDpvs
-	global R_AddCellStaticSurfacesInFrustumCmd
+	global _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet
+	global _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei
+	global _Z35R_AddCellStaticSurfacesInFrustumCmdPv
 
 
 SECTION .text
@@ -25,21 +25,21 @@ _GLOBAL__I__Z35R_AddCellStaticSurfacesInFrustumCmdPv:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -309,8 +309,8 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_AddAabbTreeSurfacesInFrustum_r(GfxAabbTree const*, DpvsClipPlaneSet const*)
-R_AddAabbTreeSurfacesInFrustum_r:
-R_AddAabbTreeSurfacesInFrustum_r_440:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_440:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -322,7 +322,7 @@ R_AddAabbTreeSurfacesInFrustum_r_440:
 	mov eax, [edx+0x40]
 	mov [ebp-0x108], eax
 	test eax, eax
-	jz R_AddAabbTreeSurfacesInFrustum_r_10
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_10
 	mov ecx, [edx]
 	movss xmm3, dword [ecx+0xc]
 	movss xmm6, dword [ecx]
@@ -342,17 +342,17 @@ R_AddAabbTreeSurfacesInFrustum_r_440:
 	addss xmm0, xmm1
 	pxor xmm7, xmm7
 	ucomiss xmm7, xmm0
-	jae R_AddAabbTreeSurfacesInFrustum_r_20
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_20
 	mov [ebp-0xb0], edi
 	mov dword [ebp-0x10c], 0x0
 	mov dword [ebp-0xb8], 0x0
-	jmp R_AddAabbTreeSurfacesInFrustum_r_30
-R_AddAabbTreeSurfacesInFrustum_r_50:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_30
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_50:
 	add dword [ebp-0x10c], 0x1
 	mov edx, [ebp-0x10c]
 	cmp [ebp-0x108], edx
-	jz R_AddAabbTreeSurfacesInFrustum_r_40
-R_AddAabbTreeSurfacesInFrustum_r_60:
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_40
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_60:
 	mov edx, [ebp-0xb0]
 	mov ecx, [edx+0x4]
 	movss xmm3, dword [ecx+0xc]
@@ -373,8 +373,8 @@ R_AddAabbTreeSurfacesInFrustum_r_60:
 	addss xmm1, xmm0
 	addss xmm2, xmm1
 	ucomiss xmm7, xmm2
-	jae R_AddAabbTreeSurfacesInFrustum_r_20
-R_AddAabbTreeSurfacesInFrustum_r_30:
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_20
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_30:
 	mov edi, esi
 	sub edi, eax
 	mulss xmm6, [edi+0xc]
@@ -388,7 +388,7 @@ R_AddAabbTreeSurfacesInFrustum_r_30:
 	mulss xmm4, [eax+0x1c]
 	addss xmm3, xmm4
 	ucomiss xmm3, xmm7
-	jae R_AddAabbTreeSurfacesInFrustum_r_50
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_50
 	mov eax, [ebp-0xb8]
 	mov [ebp+eax*4-0x5c], ecx
 	add eax, 0x1
@@ -396,14 +396,14 @@ R_AddAabbTreeSurfacesInFrustum_r_30:
 	add dword [ebp-0x10c], 0x1
 	mov edx, [ebp-0x10c]
 	cmp [ebp-0x108], edx
-	jnz R_AddAabbTreeSurfacesInFrustum_r_60
-R_AddAabbTreeSurfacesInFrustum_r_40:
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_60
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_40:
 	mov eax, [ebp-0xb8]
 	test eax, eax
-	jz R_AddAabbTreeSurfacesInFrustum_r_10
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_10
 	movzx eax, word [esi+0x18]
 	test ax, ax
-	jz R_AddAabbTreeSurfacesInFrustum_r_70
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_70
 	movzx eax, ax
 	mov [ebp-0x100], eax
 	mov ecx, [ebp-0x5c]
@@ -412,7 +412,7 @@ R_AddAabbTreeSurfacesInFrustum_r_40:
 	mov [ebp-0xb4], esi
 	mov dword [ebp-0x104], 0x0
 	mov esi, ecx
-R_AddAabbTreeSurfacesInFrustum_r_180:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_180:
 	mov dword [ebp-0x60], 0x0
 	movss xmm2, dword [esi+0xc]
 	movss xmm5, dword [esi]
@@ -432,16 +432,16 @@ R_AddAabbTreeSurfacesInFrustum_r_180:
 	mulss xmm1, [edi+ecx]
 	addss xmm0, xmm1
 	ucomiss xmm7, xmm0
-	jae R_AddAabbTreeSurfacesInFrustum_r_80
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_80
 	mov edx, esi
 	xor edi, edi
 	pxor xmm6, xmm6
-	jmp R_AddAabbTreeSurfacesInFrustum_r_90
-R_AddAabbTreeSurfacesInFrustum_r_110:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_90
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_110:
 	lea esi, [edi+0x1]
 	cmp [ebp-0xb8], esi
-	jz R_AddAabbTreeSurfacesInFrustum_r_100
-R_AddAabbTreeSurfacesInFrustum_r_120:
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_100
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_120:
 	mov edx, [ebp+edi*4-0x58]
 	movss xmm2, dword [edx+0xc]
 	movss xmm5, dword [edx]
@@ -461,9 +461,9 @@ R_AddAabbTreeSurfacesInFrustum_r_120:
 	mulss xmm1, [ecx+edi]
 	addss xmm0, xmm1
 	ucomiss xmm6, xmm0
-	jae R_AddAabbTreeSurfacesInFrustum_r_80
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_80
 	mov edi, esi
-R_AddAabbTreeSurfacesInFrustum_r_90:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_90:
 	mov esi, [ebp-0xb4]
 	sub esi, eax
 	mulss xmm5, [esi+0xc]
@@ -477,149 +477,149 @@ R_AddAabbTreeSurfacesInFrustum_r_90:
 	mulss xmm3, [eax+0x1c]
 	addss xmm2, xmm3
 	ucomiss xmm2, xmm7
-	jae R_AddAabbTreeSurfacesInFrustum_r_110
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_110
 	mov eax, [ebp-0x60]
 	mov [ebp+eax*4-0xa0], edx
 	add eax, 0x1
 	mov [ebp-0x60], eax
 	lea esi, [edi+0x1]
 	cmp [ebp-0xb8], esi
-	jnz R_AddAabbTreeSurfacesInFrustum_r_120
-R_AddAabbTreeSurfacesInFrustum_r_100:
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_120
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_100:
 	mov edi, [ebp-0x60]
 	test edi, edi
-	jnz R_AddAabbTreeSurfacesInFrustum_r_130
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_130
 	mov edi, [ebp-0xb4]
 	movzx eax, word [edi+0x22]
 	movzx esi, ax
 	test ax, ax
-	jz R_AddAabbTreeSurfacesInFrustum_r_140
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_140
 	mov ebx, [edi+0x24]
 	mov ecx, [g_smodelVisData]
 	xor edx, edx
-R_AddAabbTreeSurfacesInFrustum_r_150:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_150:
 	movzx eax, word [ebx+edx*2]
 	mov byte [ecx+eax], 0x1
 	add edx, 0x1
 	cmp esi, edx
-	ja R_AddAabbTreeSurfacesInFrustum_r_150
-R_AddAabbTreeSurfacesInFrustum_r_140:
+	ja _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_150
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_140:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddAabbTreeSurfacesInFrustum_r_160
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_160
 	mov eax, [ebp-0xb4]
 	movzx edx, word [eax+0x20]
 	movzx ecx, word [eax+0x1e]
-R_AddAabbTreeSurfacesInFrustum_r_460:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_460:
 	test ecx, ecx
-	jz R_AddAabbTreeSurfacesInFrustum_r_80
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_80
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov eax, [eax+0x28c]
 	lea esi, [eax+edx*2]
 	mov ebx, [g_surfaceVisData]
 	xor edx, edx
-R_AddAabbTreeSurfacesInFrustum_r_170:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_170:
 	movzx eax, word [esi+edx*2]
 	mov byte [ebx+eax], 0x1
 	add edx, 0x1
 	cmp ecx, edx
-	jnz R_AddAabbTreeSurfacesInFrustum_r_170
-R_AddAabbTreeSurfacesInFrustum_r_80:
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_170
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_80:
 	add dword [ebp-0x104], 0x1
 	add dword [ebp-0xb4], 0x2c
 	mov eax, [ebp-0x104]
 	cmp [ebp-0x100], eax
-	jbe R_AddAabbTreeSurfacesInFrustum_r_20
+	jbe _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_20
 	pxor xmm7, xmm7
 	mov esi, [ebp-0xac]
-	jmp R_AddAabbTreeSurfacesInFrustum_r_180
-R_AddAabbTreeSurfacesInFrustum_r_10:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_180
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_10:
 	movzx eax, word [esi+0x22]
 	movzx edi, ax
 	test ax, ax
-	jnz R_AddAabbTreeSurfacesInFrustum_r_190
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_190
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddAabbTreeSurfacesInFrustum_r_200
-R_AddAabbTreeSurfacesInFrustum_r_240:
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_200
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_240:
 	movzx edx, word [esi+0x20]
 	movzx ecx, word [esi+0x1e]
-R_AddAabbTreeSurfacesInFrustum_r_220:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_220:
 	test ecx, ecx
-	jz R_AddAabbTreeSurfacesInFrustum_r_20
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_20
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov eax, [eax+0x28c]
 	lea esi, [eax+edx*2]
 	mov ebx, [g_surfaceVisData]
 	xor edx, edx
-R_AddAabbTreeSurfacesInFrustum_r_210:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_210:
 	movzx eax, word [esi+edx*2]
 	mov byte [ebx+eax], 0x1
 	add edx, 0x1
 	cmp ecx, edx
-	jnz R_AddAabbTreeSurfacesInFrustum_r_210
-R_AddAabbTreeSurfacesInFrustum_r_20:
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_210
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_20:
 	add esp, 0x10c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddAabbTreeSurfacesInFrustum_r_200:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_200:
 	movzx edx, word [esi+0x1c]
 	movzx ecx, word [esi+0x1a]
-	jmp R_AddAabbTreeSurfacesInFrustum_r_220
-R_AddAabbTreeSurfacesInFrustum_r_190:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_220
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_190:
 	mov ebx, [esi+0x24]
 	mov ecx, [g_smodelVisData]
 	xor edx, edx
-R_AddAabbTreeSurfacesInFrustum_r_230:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_230:
 	movzx eax, word [ebx+edx*2]
 	mov byte [ecx+eax], 0x1
 	add edx, 0x1
 	cmp edi, edx
-	ja R_AddAabbTreeSurfacesInFrustum_r_230
+	ja _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_230
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddAabbTreeSurfacesInFrustum_r_200
-	jmp R_AddAabbTreeSurfacesInFrustum_r_240
-R_AddAabbTreeSurfacesInFrustum_r_130:
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_200
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_240
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_130:
 	mov edi, [ebp-0xb4]
 	movzx eax, word [edi+0x18]
 	test ax, ax
-	jnz R_AddAabbTreeSurfacesInFrustum_r_250
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_250
 	movzx eax, word [edi+0x22]
 	movzx ecx, ax
 	mov [ebp-0xf8], ecx
 	test ax, ax
-	jz R_AddAabbTreeSurfacesInFrustum_r_260
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_260
 	mov esi, [edi+0x24]
 	mov [ebp-0xfc], esi
 	mov edi, [g_smodelVisData]
 	mov [ebp-0xf4], edi
 	xor esi, esi
 	mov edx, edi
-	jmp R_AddAabbTreeSurfacesInFrustum_r_270
-R_AddAabbTreeSurfacesInFrustum_r_290:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_270
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_290:
 	mov eax, [ebp-0xf0]
 	mov byte [eax], 0x1
-R_AddAabbTreeSurfacesInFrustum_r_280:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_280:
 	add esi, 0x1
 	cmp [ebp-0xf8], esi
-	jbe R_AddAabbTreeSurfacesInFrustum_r_260
+	jbe _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_260
 	mov edx, [ebp-0xf4]
-R_AddAabbTreeSurfacesInFrustum_r_270:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_270:
 	mov eax, [ebp-0xfc]
 	movzx ecx, word [eax+esi*2]
 	add edx, ecx
 	mov [ebp-0xf0], edx
 	cmp byte [edx], 0x0
-	jnz R_AddAabbTreeSurfacesInFrustum_r_280
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_280
 	mov edi, rgp
 	mov edx, [edi+0x20a0]
 	lea eax, [ecx*4]
@@ -628,7 +628,7 @@ R_AddAabbTreeSurfacesInFrustum_r_270:
 	add ecx, [edx+0x290]
 	mov edi, [ebp-0x60]
 	test edi, edi
-	jz R_AddAabbTreeSurfacesInFrustum_r_290
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_290
 	mov eax, [ebp-0xa0]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -643,15 +643,15 @@ R_AddAabbTreeSurfacesInFrustum_r_270:
 	mulss xmm0, [ecx+edx]
 	addss xmm1, xmm0
 	ucomiss xmm7, xmm1
-	jae R_AddAabbTreeSurfacesInFrustum_r_280
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_280
 	xor eax, eax
-	jmp R_AddAabbTreeSurfacesInFrustum_r_300
-R_AddAabbTreeSurfacesInFrustum_r_310:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_300
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_310:
 	mov eax, ebx
-R_AddAabbTreeSurfacesInFrustum_r_300:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_300:
 	lea ebx, [eax+0x1]
 	cmp ebx, edi
-	jz R_AddAabbTreeSurfacesInFrustum_r_290
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_290
 	mov eax, [ebp+eax*4-0x9c]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -666,14 +666,14 @@ R_AddAabbTreeSurfacesInFrustum_r_300:
 	mulss xmm0, [edx+ecx]
 	addss xmm1, xmm0
 	ucomiss xmm7, xmm1
-	jb R_AddAabbTreeSurfacesInFrustum_r_310
-	jmp R_AddAabbTreeSurfacesInFrustum_r_280
-R_AddAabbTreeSurfacesInFrustum_r_70:
+	jb _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_310
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_280
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_70:
 	movzx eax, word [esi+0x22]
 	movzx edx, ax
 	mov [ebp-0xd4], edx
 	test ax, ax
-	jz R_AddAabbTreeSurfacesInFrustum_r_320
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_320
 	mov ecx, [esi+0x24]
 	mov [ebp-0xd8], ecx
 	mov edi, [g_smodelVisData]
@@ -682,13 +682,13 @@ R_AddAabbTreeSurfacesInFrustum_r_70:
 	mov dword [ebp-0xdc], 0x0
 	mov eax, [ebp-0xdc]
 	mov edx, ecx
-R_AddAabbTreeSurfacesInFrustum_r_370:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_370:
 	movzx ecx, word [edx+eax*2]
 	mov eax, [ebp-0xd0]
 	add eax, ecx
 	mov [ebp-0xcc], eax
 	cmp byte [eax], 0x0
-	jnz R_AddAabbTreeSurfacesInFrustum_r_330
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_330
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	lea eax, [ecx*4]
@@ -708,15 +708,15 @@ R_AddAabbTreeSurfacesInFrustum_r_370:
 	mulss xmm0, [ecx+eax]
 	addss xmm1, xmm0
 	ucomiss xmm7, xmm1
-	jae R_AddAabbTreeSurfacesInFrustum_r_330
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_330
 	xor eax, eax
-	jmp R_AddAabbTreeSurfacesInFrustum_r_340
-R_AddAabbTreeSurfacesInFrustum_r_360:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_340
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_360:
 	mov eax, ebx
-R_AddAabbTreeSurfacesInFrustum_r_340:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_340:
 	lea ebx, [eax+0x1]
 	cmp [ebp-0xb8], ebx
-	jz R_AddAabbTreeSurfacesInFrustum_r_350
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_350
 	mov eax, [ebp+eax*4-0x58]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -731,27 +731,27 @@ R_AddAabbTreeSurfacesInFrustum_r_340:
 	mulss xmm0, [edx+ecx]
 	addss xmm1, xmm0
 	ucomiss xmm7, xmm1
-	jb R_AddAabbTreeSurfacesInFrustum_r_360
-R_AddAabbTreeSurfacesInFrustum_r_330:
+	jb _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_360
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_330:
 	add dword [ebp-0xdc], 0x1
 	mov ecx, [ebp-0xdc]
 	cmp [ebp-0xd4], ecx
-	jbe R_AddAabbTreeSurfacesInFrustum_r_320
+	jbe _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_320
 	mov eax, ecx
 	mov edx, [ebp-0xd8]
-	jmp R_AddAabbTreeSurfacesInFrustum_r_370
-R_AddAabbTreeSurfacesInFrustum_r_320:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_370
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_320:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddAabbTreeSurfacesInFrustum_r_380
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_380
 	movzx edx, word [esi+0x20]
 	movzx esi, word [esi+0x1e]
 	mov [ebp-0xc4], esi
-R_AddAabbTreeSurfacesInFrustum_r_470:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_470:
 	mov ebx, [ebp-0xc4]
 	test ebx, ebx
-	jz R_AddAabbTreeSurfacesInFrustum_r_20
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_20
 	mov esi, rgp
 	mov eax, [esi+0x20a0]
 	mov eax, [eax+0x28c]
@@ -761,13 +761,13 @@ R_AddAabbTreeSurfacesInFrustum_r_470:
 	mov [ebp-0xc0], edi
 	mov esi, [ebp-0x5c]
 	xor edi, edi
-R_AddAabbTreeSurfacesInFrustum_r_430:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_430:
 	movzx eax, word [edx+edi*2]
 	mov ecx, [ebp-0xc0]
 	add ecx, eax
 	mov [ebp-0xbc], ecx
 	cmp byte [ecx], 0x0
-	jnz R_AddAabbTreeSurfacesInFrustum_r_390
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_390
 	mov ecx, rgp
 	mov edx, [ecx+0x20a0]
 	lea eax, [eax+eax*2]
@@ -787,15 +787,15 @@ R_AddAabbTreeSurfacesInFrustum_r_430:
 	mulss xmm0, [eax+edx+0x18]
 	addss xmm1, xmm0
 	ucomiss xmm7, xmm1
-	jae R_AddAabbTreeSurfacesInFrustum_r_390
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_390
 	xor eax, eax
-	jmp R_AddAabbTreeSurfacesInFrustum_r_400
-R_AddAabbTreeSurfacesInFrustum_r_420:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_400
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_420:
 	mov eax, ebx
-R_AddAabbTreeSurfacesInFrustum_r_400:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_400:
 	lea ebx, [eax+0x1]
 	cmp [ebp-0xb8], ebx
-	jz R_AddAabbTreeSurfacesInFrustum_r_410
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_410
 	mov eax, [ebp+eax*4-0x58]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -810,58 +810,58 @@ R_AddAabbTreeSurfacesInFrustum_r_400:
 	mulss xmm0, [edx+ecx]
 	addss xmm1, xmm0
 	ucomiss xmm7, xmm1
-	jb R_AddAabbTreeSurfacesInFrustum_r_420
-R_AddAabbTreeSurfacesInFrustum_r_390:
+	jb _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_420
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_390:
 	add edi, 0x1
 	cmp [ebp-0xc4], edi
-	jz R_AddAabbTreeSurfacesInFrustum_r_20
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_20
 	mov edx, [ebp-0xc8]
-	jmp R_AddAabbTreeSurfacesInFrustum_r_430
-R_AddAabbTreeSurfacesInFrustum_r_250:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_430
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_250:
 	mov ebx, edi
 	movzx edi, ax
 	add ebx, [ebx+0x28]
 	xor esi, esi
-R_AddAabbTreeSurfacesInFrustum_r_450:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_450:
 	lea edx, [ebp-0xa0]
 	mov eax, ebx
-	call R_AddAabbTreeSurfacesInFrustum_r_440
+	call _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_440
 	add esi, 0x1
 	add ebx, 0x2c
 	cmp edi, esi
-	ja R_AddAabbTreeSurfacesInFrustum_r_450
-	jmp R_AddAabbTreeSurfacesInFrustum_r_80
-R_AddAabbTreeSurfacesInFrustum_r_160:
+	ja _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_450
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_80
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_160:
 	mov ecx, [ebp-0xb4]
 	movzx edx, word [ecx+0x1c]
 	movzx ecx, word [ecx+0x1a]
-	jmp R_AddAabbTreeSurfacesInFrustum_r_460
-R_AddAabbTreeSurfacesInFrustum_r_380:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_460
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_380:
 	movzx edx, word [esi+0x1c]
 	movzx esi, word [esi+0x1a]
 	mov [ebp-0xc4], esi
-	jmp R_AddAabbTreeSurfacesInFrustum_r_470
-R_AddAabbTreeSurfacesInFrustum_r_410:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_470
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_410:
 	mov eax, [ebp-0xbc]
 	mov byte [eax], 0x1
-	jmp R_AddAabbTreeSurfacesInFrustum_r_390
-R_AddAabbTreeSurfacesInFrustum_r_350:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_390
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_350:
 	mov edx, [ebp-0xcc]
 	mov byte [edx], 0x1
-	jmp R_AddAabbTreeSurfacesInFrustum_r_330
-R_AddAabbTreeSurfacesInFrustum_r_260:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_330
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_260:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddAabbTreeSurfacesInFrustum_r_480
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_480
 	mov ecx, [ebp-0xb4]
 	movzx edx, word [ecx+0x20]
 	movzx esi, word [ecx+0x1e]
 	mov [ebp-0xe8], esi
-R_AddAabbTreeSurfacesInFrustum_r_540:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_540:
 	mov esi, [ebp-0xe8]
 	test esi, esi
-	jz R_AddAabbTreeSurfacesInFrustum_r_80
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_80
 	mov ecx, rgp
 	mov eax, [ecx+0x20a0]
 	mov eax, [eax+0x28c]
@@ -871,22 +871,22 @@ R_AddAabbTreeSurfacesInFrustum_r_540:
 	mov [ebp-0xe4], esi
 	xor esi, esi
 	mov edi, edx
-	jmp R_AddAabbTreeSurfacesInFrustum_r_490
-R_AddAabbTreeSurfacesInFrustum_r_510:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_490
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_510:
 	mov edi, [ebp-0xe0]
 	mov byte [edi], 0x1
-R_AddAabbTreeSurfacesInFrustum_r_500:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_500:
 	add esi, 0x1
 	cmp [ebp-0xe8], esi
-	jz R_AddAabbTreeSurfacesInFrustum_r_80
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_80
 	mov edi, [ebp-0xec]
-R_AddAabbTreeSurfacesInFrustum_r_490:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_490:
 	movzx edx, word [edi+esi*2]
 	mov eax, [ebp-0xe4]
 	add eax, edx
 	mov [ebp-0xe0], eax
 	cmp byte [eax], 0x0
-	jnz R_AddAabbTreeSurfacesInFrustum_r_500
+	jnz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_500
 	mov ecx, rgp
 	mov eax, [ecx+0x20a0]
 	lea ecx, [edx+edx*2]
@@ -895,7 +895,7 @@ R_AddAabbTreeSurfacesInFrustum_r_490:
 	lea ebx, [ecx+0x18]
 	mov edi, [ebp-0x60]
 	test edi, edi
-	jz R_AddAabbTreeSurfacesInFrustum_r_510
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_510
 	mov eax, [ebp-0xa0]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -910,15 +910,15 @@ R_AddAabbTreeSurfacesInFrustum_r_490:
 	mulss xmm0, [ecx+edx+0x18]
 	addss xmm1, xmm0
 	ucomiss xmm7, xmm1
-	jae R_AddAabbTreeSurfacesInFrustum_r_500
+	jae _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_500
 	xor eax, eax
-	jmp R_AddAabbTreeSurfacesInFrustum_r_520
-R_AddAabbTreeSurfacesInFrustum_r_530:
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_520
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_530:
 	mov eax, ecx
-R_AddAabbTreeSurfacesInFrustum_r_520:
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_520:
 	lea ecx, [eax+0x1]
 	cmp ecx, edi
-	jz R_AddAabbTreeSurfacesInFrustum_r_510
+	jz _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_510
 	mov eax, [ebp+eax*4-0x9c]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -933,19 +933,19 @@ R_AddAabbTreeSurfacesInFrustum_r_520:
 	mulss xmm0, [edx+ebx]
 	addss xmm1, xmm0
 	ucomiss xmm7, xmm1
-	jb R_AddAabbTreeSurfacesInFrustum_r_530
-	jmp R_AddAabbTreeSurfacesInFrustum_r_500
-R_AddAabbTreeSurfacesInFrustum_r_480:
+	jb _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_530
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_500
+_Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_480:
 	mov edi, [ebp-0xb4]
 	movzx edx, word [edi+0x1c]
 	movzx eax, word [edi+0x1a]
 	mov [ebp-0xe8], eax
-	jmp R_AddAabbTreeSurfacesInFrustum_r_540
+	jmp _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet_540
 	nop
 
 
 ;R_AddSkySurfacesDpvs(DpvsPlane const*, int)
-R_AddSkySurfacesDpvs:
+_Z20R_AddSkySurfacesDpvsPK9DpvsPlanei:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -961,11 +961,11 @@ R_AddSkySurfacesDpvs:
 	mov [g_surfaceVisData], edx
 	mov ecx, [ebp+0xc]
 	test ecx, ecx
-	jle R_AddSkySurfacesDpvs_10
+	jle _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_10
 	mov edx, [ebp+0x8]
 	xor esi, esi
 	lea ecx, [ebp-0x190]
-R_AddSkySurfacesDpvs_20:
+_Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_20:
 	mov eax, [edx]
 	mov [ecx], eax
 	mov eax, [edx+0x4]
@@ -981,39 +981,39 @@ R_AddSkySurfacesDpvs_20:
 	add ecx, 0x14
 	add edx, 0x14
 	cmp [ebp+0xc], esi
-	jnz R_AddSkySurfacesDpvs_20
-R_AddSkySurfacesDpvs_10:
+	jnz _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_20
+_Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_10:
 	mov edx, [ebx+0x20]
 	test edx, edx
-	jle R_AddSkySurfacesDpvs_30
+	jle _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_30
 	mov esi, [ebp-0x50]
 	xor edi, edi
 	pxor xmm3, xmm3
-	jmp R_AddSkySurfacesDpvs_40
-R_AddSkySurfacesDpvs_60:
+	jmp _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_40
+_Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_60:
 	mov eax, [ebp-0x1a0]
 	mov byte [eax], 0x1
-R_AddSkySurfacesDpvs_50:
+_Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_50:
 	add edi, 0x1
 	mov edx, rgp
 	mov ebx, [edx+0x20a0]
 	cmp edi, [ebx+0x20]
-	jge R_AddSkySurfacesDpvs_30
-R_AddSkySurfacesDpvs_40:
+	jge _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_30
+_Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_40:
 	mov eax, [ebx+0x24]
 	mov eax, [eax+edi*4]
 	mov edx, [ebp-0x1a4]
 	add edx, eax
 	mov [ebp-0x1a0], edx
 	cmp byte [edx], 0x0
-	jnz R_AddSkySurfacesDpvs_50
+	jnz _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_50
 	lea edx, [eax+eax*2]
 	shl edx, 0x4
 	add edx, [ebx+0x294]
 	lea ecx, [edx+0x18]
 	mov eax, [ebp+0xc]
 	test eax, eax
-	jz R_AddSkySurfacesDpvs_60
+	jz _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_60
 	movzx eax, byte [esi+0x10]
 	movss xmm1, dword [esi]
 	mulss xmm1, [eax+ecx]
@@ -1028,15 +1028,15 @@ R_AddSkySurfacesDpvs_40:
 	addss xmm1, xmm0
 	movaps xmm2, xmm3
 	ucomiss xmm3, xmm1
-	jae R_AddSkySurfacesDpvs_50
+	jae _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_50
 	xor eax, eax
-	jmp R_AddSkySurfacesDpvs_70
-R_AddSkySurfacesDpvs_80:
+	jmp _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_70
+_Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_80:
 	mov eax, ebx
-R_AddSkySurfacesDpvs_70:
+_Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_70:
 	lea ebx, [eax+0x1]
 	cmp [ebp+0xc], ebx
-	jbe R_AddSkySurfacesDpvs_60
+	jbe _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_60
 	mov eax, [ebp+eax*4-0x4c]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -1051,13 +1051,13 @@ R_AddSkySurfacesDpvs_70:
 	mulss xmm0, [edx+ecx]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jb R_AddSkySurfacesDpvs_80
+	jb _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_80
 	add edi, 0x1
 	mov edx, rgp
 	mov ebx, [edx+0x20a0]
 	cmp edi, [ebx+0x20]
-	jl R_AddSkySurfacesDpvs_40
-R_AddSkySurfacesDpvs_30:
+	jl _Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_40
+_Z20R_AddSkySurfacesDpvsPK9DpvsPlanei_30:
 	add esp, 0x198
 	pop ebx
 	pop esi
@@ -1067,7 +1067,7 @@ R_AddSkySurfacesDpvs_30:
 
 
 ;R_AddCellStaticSurfacesInFrustumCmd(void*)
-R_AddCellStaticSurfacesInFrustumCmd:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1089,7 +1089,7 @@ R_AddCellStaticSurfacesInFrustumCmd:
 	mov [ebp-0x228], esi
 	mov edi, [esi+0x1c]
 	test edi, edi
-	jz R_AddCellStaticSurfacesInFrustumCmd_10
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_10
 	mov eax, [ebp+0x8]
 	movzx esi, byte [eax+0x8]
 	mov eax, [eax]
@@ -1098,11 +1098,11 @@ R_AddCellStaticSurfacesInFrustumCmd:
 	mov [ebp-0x21c], ecx
 	mov ebx, esi
 	test bl, bl
-	jz R_AddCellStaticSurfacesInFrustumCmd_20
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_20
 	mov edx, eax
 	xor ebx, ebx
 	lea ecx, [ebp-0x1e0]
-R_AddCellStaticSurfacesInFrustumCmd_30:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_30:
 	mov eax, [edx]
 	mov [ecx], eax
 	mov eax, [edx+0x4]
@@ -1118,12 +1118,12 @@ R_AddCellStaticSurfacesInFrustumCmd_30:
 	add ecx, 0x14
 	add edx, 0x14
 	cmp [ebp-0x21c], ebx
-	ja R_AddCellStaticSurfacesInFrustumCmd_30
-R_AddCellStaticSurfacesInFrustumCmd_20:
+	ja _Z35R_AddCellStaticSurfacesInFrustumCmdPv_30
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_20:
 	mov dword [ebp-0x60], 0x0
 	mov eax, esi
 	test al, al
-	jz R_AddCellStaticSurfacesInFrustumCmd_40
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_40
 	mov edx, [ebp-0x5c]
 	movss xmm3, dword [edx+0xc]
 	movss xmm6, dword [edx]
@@ -1143,16 +1143,16 @@ R_AddCellStaticSurfacesInFrustumCmd_20:
 	addss xmm0, xmm1
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm0
-	jae R_AddCellStaticSurfacesInFrustumCmd_50
+	jae _Z35R_AddCellStaticSurfacesInFrustumCmdPv_50
 	mov dword [ebp-0x22c], 0x0
-	jmp R_AddCellStaticSurfacesInFrustumCmd_60
-R_AddCellStaticSurfacesInFrustumCmd_70:
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_60
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_70:
 	mov ebx, [ebp-0x22c]
 	add ebx, 0x1
 	mov [ebp-0x1ec], ebx
 	cmp [ebp-0x21c], ebx
-	jbe R_AddCellStaticSurfacesInFrustumCmd_40
-R_AddCellStaticSurfacesInFrustumCmd_80:
+	jbe _Z35R_AddCellStaticSurfacesInFrustumCmdPv_40
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_80:
 	mov ecx, [ebp-0x22c]
 	mov edx, [ebp+ecx*4-0x58]
 	movss xmm3, dword [edx+0xc]
@@ -1172,10 +1172,10 @@ R_AddCellStaticSurfacesInFrustumCmd_80:
 	mulss xmm1, [edi+ebx]
 	addss xmm0, xmm1
 	ucomiss xmm2, xmm0
-	jae R_AddCellStaticSurfacesInFrustumCmd_50
+	jae _Z35R_AddCellStaticSurfacesInFrustumCmdPv_50
 	mov ecx, [ebp-0x1ec]
 	mov [ebp-0x22c], ecx
-R_AddCellStaticSurfacesInFrustumCmd_60:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_60:
 	mov ecx, edi
 	sub ecx, eax
 	mulss xmm6, [ecx+0xc]
@@ -1189,7 +1189,7 @@ R_AddCellStaticSurfacesInFrustumCmd_60:
 	mulss xmm4, [eax+0x1c]
 	addss xmm3, xmm4
 	ucomiss xmm3, xmm2
-	jae R_AddCellStaticSurfacesInFrustumCmd_70
+	jae _Z35R_AddCellStaticSurfacesInFrustumCmdPv_70
 	mov eax, [ebp-0x60]
 	mov [ebp+eax*4-0xa0], edx
 	add eax, 0x1
@@ -1198,40 +1198,40 @@ R_AddCellStaticSurfacesInFrustumCmd_60:
 	add ebx, 0x1
 	mov [ebp-0x1ec], ebx
 	cmp [ebp-0x21c], ebx
-	ja R_AddCellStaticSurfacesInFrustumCmd_80
-R_AddCellStaticSurfacesInFrustumCmd_40:
+	ja _Z35R_AddCellStaticSurfacesInFrustumCmdPv_80
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_40:
 	mov eax, [ebp-0x60]
 	test eax, eax
-	jz R_AddCellStaticSurfacesInFrustumCmd_90
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_90
 	movzx eax, word [edi+0x18]
 	test ax, ax
-	jnz R_AddCellStaticSurfacesInFrustumCmd_100
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_100
 	movzx eax, word [edi+0x22]
 	movzx ecx, ax
 	mov [ebp-0x210], ecx
 	test ax, ax
-	jz R_AddCellStaticSurfacesInFrustumCmd_110
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_110
 	mov ebx, [edi+0x24]
 	mov [ebp-0x214], ebx
 	xor esi, esi
 	pxor xmm3, xmm3
 	mov eax, ebx
-	jmp R_AddCellStaticSurfacesInFrustumCmd_120
-R_AddCellStaticSurfacesInFrustumCmd_140:
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_120
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_140:
 	mov edx, [ebp-0x20c]
 	mov byte [edx], 0x1
-R_AddCellStaticSurfacesInFrustumCmd_130:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_130:
 	add esi, 0x1
 	cmp [ebp-0x210], esi
-	jbe R_AddCellStaticSurfacesInFrustumCmd_110
+	jbe _Z35R_AddCellStaticSurfacesInFrustumCmdPv_110
 	mov eax, [ebp-0x214]
-R_AddCellStaticSurfacesInFrustumCmd_120:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_120:
 	movzx ecx, word [eax+esi*2]
 	mov edx, [ebp-0x224]
 	add edx, ecx
 	mov [ebp-0x20c], edx
 	cmp byte [edx], 0x0
-	jnz R_AddCellStaticSurfacesInFrustumCmd_130
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_130
 	mov ebx, rgp
 	mov edx, [ebx+0x20a0]
 	lea eax, [ecx*4]
@@ -1241,7 +1241,7 @@ R_AddCellStaticSurfacesInFrustumCmd_120:
 	mov eax, [ebp-0x60]
 	mov [ebp-0x208], eax
 	test eax, eax
-	jz R_AddCellStaticSurfacesInFrustumCmd_140
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_140
 	mov eax, [ebp-0xa0]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -1257,15 +1257,15 @@ R_AddCellStaticSurfacesInFrustumCmd_120:
 	addss xmm1, xmm0
 	movaps xmm2, xmm3
 	ucomiss xmm3, xmm1
-	jae R_AddCellStaticSurfacesInFrustumCmd_130
+	jae _Z35R_AddCellStaticSurfacesInFrustumCmdPv_130
 	xor eax, eax
-	jmp R_AddCellStaticSurfacesInFrustumCmd_150
-R_AddCellStaticSurfacesInFrustumCmd_160:
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_150
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_160:
 	mov eax, ebx
-R_AddCellStaticSurfacesInFrustumCmd_150:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_150:
 	lea ebx, [eax+0x1]
 	cmp ebx, [ebp-0x208]
-	jz R_AddCellStaticSurfacesInFrustumCmd_140
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_140
 	mov eax, [ebp+eax*4-0x9c]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -1280,45 +1280,45 @@ R_AddCellStaticSurfacesInFrustumCmd_150:
 	mulss xmm0, [edx+ecx]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jb R_AddCellStaticSurfacesInFrustumCmd_160
-	jmp R_AddCellStaticSurfacesInFrustumCmd_130
-R_AddCellStaticSurfacesInFrustumCmd_90:
+	jb _Z35R_AddCellStaticSurfacesInFrustumCmdPv_160
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_130
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_90:
 	movzx eax, word [edi+0x22]
 	movzx ebx, ax
 	test ax, ax
-	jz R_AddCellStaticSurfacesInFrustumCmd_170
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_170
 	mov ecx, [edi+0x24]
 	xor edx, edx
-R_AddCellStaticSurfacesInFrustumCmd_180:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_180:
 	movzx eax, word [ecx+edx*2]
 	mov esi, [ebp-0x224]
 	mov byte [esi+eax], 0x1
 	add edx, 0x1
 	cmp ebx, edx
-	ja R_AddCellStaticSurfacesInFrustumCmd_180
-R_AddCellStaticSurfacesInFrustumCmd_170:
+	ja _Z35R_AddCellStaticSurfacesInFrustumCmdPv_180
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_170:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddCellStaticSurfacesInFrustumCmd_190
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_190
 	movzx edx, word [edi+0x20]
 	movzx ecx, word [edi+0x1e]
-R_AddCellStaticSurfacesInFrustumCmd_320:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_320:
 	test ecx, ecx
-	jz R_AddCellStaticSurfacesInFrustumCmd_200
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_200
 	mov ebx, rgp
 	mov eax, [ebx+0x20a0]
 	mov eax, [eax+0x28c]
 	lea ebx, [eax+edx*2]
 	xor edx, edx
-R_AddCellStaticSurfacesInFrustumCmd_210:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_210:
 	movzx eax, word [ebx+edx*2]
 	mov esi, [ebp-0x220]
 	mov byte [esi+eax], 0x1
 	add edx, 0x1
 	cmp ecx, edx
-	jnz R_AddCellStaticSurfacesInFrustumCmd_210
-R_AddCellStaticSurfacesInFrustumCmd_200:
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_210
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_200:
 	mov eax, [ebp+0x8]
 	mov eax, [eax+0x4]
 	mov [ebp-0x228], eax
@@ -1329,27 +1329,27 @@ R_AddCellStaticSurfacesInFrustumCmd_200:
 	mov ebx, [ebx+0x2c]
 	mov [ebp-0x1f4], ebx
 	test ecx, ecx
-	jnz R_AddCellStaticSurfacesInFrustumCmd_220
-R_AddCellStaticSurfacesInFrustumCmd_230:
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_220
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_230:
 	add esp, 0x23c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AddCellStaticSurfacesInFrustumCmd_50:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_50:
 	mov ecx, [ebp-0x228]
 	mov ebx, [ebp-0x228]
-R_AddCellStaticSurfacesInFrustumCmd_340:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_340:
 	mov ecx, [ecx+0x28]
 	mov [ebp-0x1f8], ecx
 	mov ebx, [ebx+0x2c]
 	mov [ebp-0x1f4], ebx
 	test ecx, ecx
-	jz R_AddCellStaticSurfacesInFrustumCmd_230
-R_AddCellStaticSurfacesInFrustumCmd_220:
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_230
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_220:
 	mov dword [ebp-0x1f0], 0x0
-R_AddCellStaticSurfacesInFrustumCmd_280:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_280:
 	mov esi, [ebp+0x8]
 	movzx edi, byte [esi+0x8]
 	mov edx, [esi]
@@ -1360,39 +1360,39 @@ R_AddCellStaticSurfacesInFrustumCmd_280:
 	shl ebx, 0x5
 	add ebx, [eax+0x298]
 	test edi, edi
-	jg R_AddCellStaticSurfacesInFrustumCmd_240
-R_AddCellStaticSurfacesInFrustumCmd_290:
+	jg _Z35R_AddCellStaticSurfacesInFrustumCmdPv_240
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_290:
 	mov eax, r_showPortals
 	mov eax, [eax]
 	test byte [eax+0xc], 0x1
-	jnz R_AddCellStaticSurfacesInFrustumCmd_250
-R_AddCellStaticSurfacesInFrustumCmd_310:
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_250
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_310:
 	mov ecx, [ebx+0x18]
 	test ecx, ecx
-	jz R_AddCellStaticSurfacesInFrustumCmd_260
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_260
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	mov edx, [ebx+0x1c]
 	mov eax, [eax+0x28c]
 	lea esi, [eax+edx*2]
 	test ecx, ecx
-	jle R_AddCellStaticSurfacesInFrustumCmd_260
+	jle _Z35R_AddCellStaticSurfacesInFrustumCmdPv_260
 	mov ecx, [g_surfaceVisData]
 	xor edx, edx
-R_AddCellStaticSurfacesInFrustumCmd_270:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_270:
 	movzx eax, word [esi+edx*2]
 	mov byte [ecx+eax], 0x1
 	add edx, 0x1
 	cmp edx, [ebx+0x18]
-	jl R_AddCellStaticSurfacesInFrustumCmd_270
-R_AddCellStaticSurfacesInFrustumCmd_260:
+	jl _Z35R_AddCellStaticSurfacesInFrustumCmdPv_270
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_260:
 	add dword [ebp-0x1f4], 0x4
 	add dword [ebp-0x1f0], 0x1
 	mov ecx, [ebp-0x1f8]
 	cmp [ebp-0x1f0], ecx
-	jnz R_AddCellStaticSurfacesInFrustumCmd_280
-	jmp R_AddCellStaticSurfacesInFrustumCmd_230
-R_AddCellStaticSurfacesInFrustumCmd_240:
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_280
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_230
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_240:
 	movzx eax, byte [edx+0x10]
 	movss xmm1, dword [edx]
 	mulss xmm1, [eax+ebx]
@@ -1407,12 +1407,12 @@ R_AddCellStaticSurfacesInFrustumCmd_240:
 	addss xmm1, xmm0
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm1
-	jae R_AddCellStaticSurfacesInFrustumCmd_260
+	jae _Z35R_AddCellStaticSurfacesInFrustumCmdPv_260
 	lea ecx, [edx+0x20]
 	mov esi, 0x1
-R_AddCellStaticSurfacesInFrustumCmd_300:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_300:
 	cmp edi, esi
-	jz R_AddCellStaticSurfacesInFrustumCmd_290
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_290
 	mov eax, ecx
 	add esi, 0x1
 	add ecx, 0x14
@@ -1429,14 +1429,14 @@ R_AddCellStaticSurfacesInFrustumCmd_300:
 	mulss xmm0, [edx+ebx]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jb R_AddCellStaticSurfacesInFrustumCmd_300
+	jb _Z35R_AddCellStaticSurfacesInFrustumCmdPv_300
 	add dword [ebp-0x1f4], 0x4
 	add dword [ebp-0x1f0], 0x1
 	mov ecx, [ebp-0x1f8]
 	cmp [ebp-0x1f0], ecx
-	jnz R_AddCellStaticSurfacesInFrustumCmd_280
-	jmp R_AddCellStaticSurfacesInFrustumCmd_230
-R_AddCellStaticSurfacesInFrustumCmd_250:
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_280
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_230
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_250:
 	mov eax, colorLtYellow
 	mov [esp+0xc], eax
 	lea eax, [ebx+0xc]
@@ -1446,50 +1446,50 @@ R_AddCellStaticSurfacesInFrustumCmd_250:
 	mov eax, [eax]
 	add eax, 0x11e71c
 	mov [esp], eax
-	call R_AddDebugBox
-	jmp R_AddCellStaticSurfacesInFrustumCmd_310
-R_AddCellStaticSurfacesInFrustumCmd_190:
+	call _Z13R_AddDebugBoxP12DebugGlobalsPKfS2_S2_
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_310
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_190:
 	movzx edx, word [edi+0x1c]
 	movzx ecx, word [edi+0x1a]
-	jmp R_AddCellStaticSurfacesInFrustumCmd_320
-R_AddCellStaticSurfacesInFrustumCmd_100:
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_320
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_100:
 	movzx eax, ax
 	mov [ebp-0x218], eax
 	mov ebx, edi
 	add ebx, [edi+0x28]
 	xor esi, esi
 	lea edi, [ebp-0xa0]
-R_AddCellStaticSurfacesInFrustumCmd_330:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_330:
 	mov edx, edi
 	mov eax, ebx
-	call R_AddAabbTreeSurfacesInFrustum_r
+	call _Z32R_AddAabbTreeSurfacesInFrustum_rPK11GfxAabbTreePK16DpvsClipPlaneSet
 	add esi, 0x1
 	add ebx, 0x2c
 	cmp [ebp-0x218], esi
-	ja R_AddCellStaticSurfacesInFrustumCmd_330
-R_AddCellStaticSurfacesInFrustumCmd_360:
+	ja _Z35R_AddCellStaticSurfacesInFrustumCmdPv_330
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_360:
 	mov edx, [ebp+0x8]
 	mov edx, [edx+0x4]
 	mov [ebp-0x228], edx
 	mov ecx, edx
 	mov ebx, edx
-	jmp R_AddCellStaticSurfacesInFrustumCmd_340
-R_AddCellStaticSurfacesInFrustumCmd_10:
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_340
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_10:
 	mov ecx, esi
 	mov ebx, esi
-	jmp R_AddCellStaticSurfacesInFrustumCmd_340
-R_AddCellStaticSurfacesInFrustumCmd_110:
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_340
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_110:
 	mov eax, r_drawDecals
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_AddCellStaticSurfacesInFrustumCmd_350
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_350
 	movzx edx, word [edi+0x20]
 	movzx edi, word [edi+0x1e]
 	mov [ebp-0x200], edi
-R_AddCellStaticSurfacesInFrustumCmd_430:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_430:
 	mov eax, [ebp-0x200]
 	test eax, eax
-	jz R_AddCellStaticSurfacesInFrustumCmd_360
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_360
 	mov ecx, rgp
 	mov eax, [ecx+0x20a0]
 	mov eax, [eax+0x28c]
@@ -1498,22 +1498,22 @@ R_AddCellStaticSurfacesInFrustumCmd_430:
 	xor esi, esi
 	pxor xmm3, xmm3
 	mov ebx, edx
-	jmp R_AddCellStaticSurfacesInFrustumCmd_370
-R_AddCellStaticSurfacesInFrustumCmd_400:
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_370
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_400:
 	mov ebx, [ebp-0x1fc]
 	mov byte [ebx], 0x1
-R_AddCellStaticSurfacesInFrustumCmd_390:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_390:
 	add esi, 0x1
 	cmp [ebp-0x200], esi
-	jz R_AddCellStaticSurfacesInFrustumCmd_380
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_380
 	mov ebx, [ebp-0x204]
-R_AddCellStaticSurfacesInFrustumCmd_370:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_370:
 	movzx edx, word [ebx+esi*2]
 	mov eax, [ebp-0x220]
 	add eax, edx
 	mov [ebp-0x1fc], eax
 	cmp byte [eax], 0x0
-	jnz R_AddCellStaticSurfacesInFrustumCmd_390
+	jnz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_390
 	mov ecx, rgp
 	mov eax, [ecx+0x20a0]
 	lea ecx, [edx+edx*2]
@@ -1522,7 +1522,7 @@ R_AddCellStaticSurfacesInFrustumCmd_370:
 	lea ebx, [ecx+0x18]
 	mov edi, [ebp-0x60]
 	test edi, edi
-	jz R_AddCellStaticSurfacesInFrustumCmd_400
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_400
 	mov eax, [ebp-0xa0]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [eax]
@@ -1538,15 +1538,15 @@ R_AddCellStaticSurfacesInFrustumCmd_370:
 	addss xmm1, xmm0
 	movaps xmm2, xmm3
 	ucomiss xmm3, xmm1
-	jae R_AddCellStaticSurfacesInFrustumCmd_390
+	jae _Z35R_AddCellStaticSurfacesInFrustumCmdPv_390
 	xor eax, eax
-	jmp R_AddCellStaticSurfacesInFrustumCmd_410
-R_AddCellStaticSurfacesInFrustumCmd_420:
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_410
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_420:
 	mov eax, ecx
-R_AddCellStaticSurfacesInFrustumCmd_410:
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_410:
 	lea ecx, [eax+0x1]
 	cmp ecx, edi
-	jz R_AddCellStaticSurfacesInFrustumCmd_400
+	jz _Z35R_AddCellStaticSurfacesInFrustumCmdPv_400
 	mov eax, [ebp+eax*4-0x9c]
 	movzx edx, byte [eax+0x10]
 	movss xmm1, dword [edx+ebx]
@@ -1561,20 +1561,20 @@ R_AddCellStaticSurfacesInFrustumCmd_410:
 	mulss xmm0, [edx+ebx]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jb R_AddCellStaticSurfacesInFrustumCmd_420
-	jmp R_AddCellStaticSurfacesInFrustumCmd_390
-R_AddCellStaticSurfacesInFrustumCmd_350:
+	jb _Z35R_AddCellStaticSurfacesInFrustumCmdPv_420
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_390
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_350:
 	movzx edx, word [edi+0x1c]
 	movzx edi, word [edi+0x1a]
 	mov [ebp-0x200], edi
-	jmp R_AddCellStaticSurfacesInFrustumCmd_430
-R_AddCellStaticSurfacesInFrustumCmd_380:
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_430
+_Z35R_AddCellStaticSurfacesInFrustumCmdPv_380:
 	mov esi, [ebp+0x8]
 	mov esi, [esi+0x4]
 	mov [ebp-0x228], esi
 	mov ecx, esi
 	mov ebx, esi
-	jmp R_AddCellStaticSurfacesInFrustumCmd_340
+	jmp _Z35R_AddCellStaticSurfacesInFrustumCmdPv_340
 	add [eax], al
 
 
@@ -1616,7 +1616,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of r_dpvs_static:

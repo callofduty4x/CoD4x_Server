@@ -41,6 +41,7 @@
 	extern _Znwm
 	extern _ZSt17__throw_bad_allocv
 	extern _ZSt20__throw_length_errorPKc
+	extern _ZTI12CSoundObject
 	extern _ZN12CSoundObject9TheadIdleEv
 	extern _ZN12CSoundObject13ChangedFormatEv
 	extern _ZN12CSoundObject17Changed3DPositionEv
@@ -64,6 +65,7 @@
 	global _ZN12CStreamSoundD1Ev
 	global _ZNSt6vectorIP12CStreamSoundSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_
 	global _ZNSt6vectorIP12CStreamSoundSaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE
+	global _ZTI12CStreamSound
 	global _ZN12CStreamSound10sQTStreamsE
 	global _ZTV12CStreamSound
 
@@ -78,22 +80,22 @@ _GLOBAL__I__ZN12CStreamSound10sQTStreamsE:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	leave
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov dword [_ZN12CStreamSound10sQTStreamsE], 0x0
 	mov dword [_ZN12CStreamSound10sQTStreamsE+0x4], 0x0
 	mov dword [_ZN12CStreamSound10sQTStreamsE+0x8], 0x0
@@ -956,8 +958,10 @@ SECTION .data
 
 ;Initialized constant data of MacMSS_Stream:
 SECTION .rdata
+;VTypeInfoTable for CStreamSound:
+_ZTI12CStreamSound: dd 0x8, _cstring_12cstreamsound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CStreamSound:
-_ZTV12CStreamSound: dd 0x0, 0x3b4f00, _ZN12CStreamSoundD1Ev, _ZN12CStreamSoundD0Ev, _ZN12CStreamSound7ReleaseEv, _ZN12CSoundObject9TheadIdleEv, _ZN12CStreamSound11stop_sampleEv, _ZN12CStreamSound13resume_sampleEv, _ZN12CStreamSound10end_sampleEv, _ZN12CStreamSound22get_sample_ms_positionEPiS0_, _ZN12CStreamSound22set_sample_ms_positionEi, _ZN12CStreamSound24set_sample_playback_rateEi, _ZN12CStreamSound11open_streamEPKc, _ZN12CStreamSound12close_streamEv, _ZN12CStreamSound13ChangedVolumeEv, _ZN12CSoundObject13ChangedFormatEv, _ZN12CSoundObject17Changed3DPositionEv, _ZN12CSoundObject18Changed3DDistancesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+_ZTV12CStreamSound: dd 0x0, _ZTI12CStreamSound, _ZN12CStreamSoundD1Ev, _ZN12CStreamSoundD0Ev, _ZN12CStreamSound7ReleaseEv, _ZN12CSoundObject9TheadIdleEv, _ZN12CStreamSound11stop_sampleEv, _ZN12CStreamSound13resume_sampleEv, _ZN12CStreamSound10end_sampleEv, _ZN12CStreamSound22get_sample_ms_positionEPiS0_, _ZN12CStreamSound22set_sample_ms_positionEi, _ZN12CStreamSound24set_sample_playback_rateEi, _ZN12CStreamSound11open_streamEPKc, _ZN12CStreamSound12close_streamEv, _ZN12CStreamSound13ChangedVolumeEv, _ZN12CSoundObject13ChangedFormatEv, _ZN12CSoundObject17Changed3DPositionEv, _ZN12CSoundObject18Changed3DDistancesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of MacMSS_Stream:
@@ -968,6 +972,7 @@ _ZN12CStreamSound10sQTStreamsE: resb 0x80
 ;All cstrings:
 SECTION .rdata
 _cstring_vector_m_insert_:		db "vector::_M_insert_aux",0
+_cstring_12cstreamsound:		db "12CStreamSound",0
 
 
 

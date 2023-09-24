@@ -41,6 +41,7 @@
 	global _ZN7CThreadD0Ev
 	global _ZN7CThreadD1Ev
 	global _ZN7CThreadD2Ev
+	global _ZTI7CThread
 	global _ZTV7CThread
 
 
@@ -484,8 +485,10 @@ SECTION .data
 
 ;Initialized constant data of MacThreads:
 SECTION .rdata
+;VTypeInfoTable for CThread:
+_ZTI7CThread: dd 0x8, _cstring_7cthread, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CThread:
-_ZTV7CThread: dd 0x0, 0x3b4c60, _ZN7CThreadD1Ev, _ZN7CThreadD0Ev, 0x0, 0x0, 0x0, 0x0
+_ZTV7CThread: dd 0x0, _ZTI7CThread, _ZN7CThreadD1Ev, _ZN7CThreadD0Ev, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of MacThreads:
@@ -495,6 +498,7 @@ sMPInitialized: resb 0x80
 
 ;All cstrings:
 SECTION .rdata
+_cstring_7cthread:		db "7CThread",0
 
 
 

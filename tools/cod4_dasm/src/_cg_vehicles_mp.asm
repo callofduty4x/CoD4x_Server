@@ -1,40 +1,40 @@
 ;Imports of cg_vehicles_mp:
 	extern cgArray
-	extern Sys_Milliseconds
+	extern _Z16Sys_Millisecondsv
 	extern cgMedia
 	extern scr_const
-	extern DObjGetBoneIndex
-	extern FX_PlayBoltedEffect
-	extern CG_ShouldPlaySoundOnLocalClient
-	extern CL_PickSoundAlias
-	extern SND_PlayBlendedSoundAliases
-	extern CG_TraceCapsule
-	extern MatrixIdentity33
-	extern FX_PlayOrientedEffect
-	extern va
+	extern _Z16DObjGetBoneIndexPK6DObj_sjPh
+	extern _Z19FX_PlayBoltedEffectiPK11FxEffectDefiii
+	extern _Z31CG_ShouldPlaySoundOnLocalClientiiPKfPKc
+	extern _Z17CL_PickSoundAliasPKc
+	extern _Z27SND_PlayBlendedSoundAliasesPK11snd_alias_tS1_ff12SndEntHandlePKfi18snd_alias_system_t
+	extern _Z15CG_TraceCapsuleP7trace_tPKfS2_S2_S2_ii
+	extern _Z16MatrixIdentity33PA3_f
+	extern _Z21FX_PlayOrientedEffectiPK11FxEffectDefiPKfPA3_S2_
+	extern _Z2vaPKcz
 	extern colorWhite
-	extern CG_DebugStarWithText
-	extern Vec3Basis_RightHanded
+	extern _Z20CG_DebugStarWithTextPKfS0_S0_PKcfi
+	extern _Z21Vec3Basis_RightHandedPKfPfS1_
 	extern cg_entitiesArray
-	extern Com_PrintWarning
+	extern _Z16Com_PrintWarningiPKcz
 	extern cgsArray
-	extern CG_PreProcess_GetDObj
-	extern CG_DObjGetWorldTagMatrix
+	extern _Z21CG_PreProcess_GetDObjiiiP6XModel
+	extern _Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf
 	extern memset
-	extern AxisToAngles
+	extern _Z12AxisToAnglesPA3_KfPf
 	extern floorf
-	extern R_AddDObjToScene
-	extern AnglesToAxis
-	extern DObjGetModel
-	extern XModelGetBasePose
-	extern MatrixTransformVector43
+	extern _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
+	extern _Z12AnglesToAxisPKfPA3_f
+	extern _Z12DObjGetModelPK6DObj_si
+	extern _Z17XModelGetBasePosePK6XModel
+	extern _Z23MatrixTransformVector43PKfPA3_S_Pf
 	extern vec3_origin
-	extern Cvar_RegisterBool
-	extern Cvar_RegisterFloat
+	extern _Z17Dvar_RegisterBoolPKchtS0_
+	extern _Z18Dvar_RegisterFloatPKcffftS0_
 	extern bgs
 	extern sinf
 	extern cosf
-	extern BG_VehiclesGetSlotTagName
+	extern _Z25BG_VehiclesGetSlotTagNamei
 
 ;Exports of cg_vehicles_mp:
 	global _GLOBAL__I_vehEffects
@@ -43,22 +43,22 @@
 	global _ZZ13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_tE9MYIDLELOW
 	global _ZZ13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_tE12MYENGINEHIGH
 	global _ZZ13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_tE11MYENGINELOW
-	global VehicleFXTest
-	global GetTagMatrix
-	global CG_Veh_Init
-	global CG_VehGunnerPOV
-	global CG_VehProcessEntity
-	global CG_VehRegisterDvars
-	global CG_VehPlayerVehicleSlot
-	global CG_VehSphereCoordsToPos
-	global Veh_GetTurretBarrelRoll
-	global Veh_IncTurretBarrelRoll
-	global CG_VehEntityUsingVehicle
-	global CG_VehLocalClientDriving
-	global CG_VehLocalClientVehicleSlot
-	global CG_VehSeatTransformForPlayer
-	global CG_VehLocalClientUsingVehicle
-	global CG_VehSeatOriginForLocalClient
+	global _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t
+	global _Z12GetTagMatrixiitPA3_fPf
+	global _Z11CG_Veh_Initv
+	global _Z15CG_VehGunnerPOViPfS_
+	global _Z19CG_VehProcessEntityiP9centity_s
+	global _Z19CG_VehRegisterDvarsv
+	global _Z23CG_VehPlayerVehicleSlotii
+	global _Z23CG_VehSphereCoordsToPosfffPf
+	global _Z23Veh_GetTurretBarrelRolliP9centity_s
+	global _Z23Veh_IncTurretBarrelRolliif
+	global _Z24CG_VehEntityUsingVehicleii
+	global _Z24CG_VehLocalClientDrivingi
+	global _Z28CG_VehLocalClientVehicleSloti
+	global _Z28CG_VehSeatTransformForPlayeriiPfS_
+	global _Z29CG_VehLocalClientUsingVehiclei
+	global _Z30CG_VehSeatOriginForLocalClientiPf
 	global heli_barrelRotation
 	global heli_barrelMaxVelocity
 	global heli_barrelSlowdown
@@ -78,21 +78,21 @@ _GLOBAL__I_vehEffects:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -362,7 +362,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;VehicleFXTest(int, DObj_s const*, centity_s*, vehfx_t*)
-VehicleFXTest:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -398,24 +398,24 @@ VehicleFXTest:
 	cvtsi2ss xmm0, eax
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jbe VehicleFXTest_10
+	jbe _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_10
 	divss xmm2, xmm0
 	movss [ebp-0xb8], xmm2
-VehicleFXTest_200:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_200:
 	mov ebx, [ebp+0x10]
 	mov eax, [ebx+0xd0]
 	cmp eax, 0xe
-	jz VehicleFXTest_20
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_20
 	cmp eax, 0xc
-	jz VehicleFXTest_30
-VehicleFXTest_110:
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_30
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110:
 	add esp, 0xdc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-VehicleFXTest_30:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_30:
 	mov eax, [ebp+0x10]
 	mov eax, [eax+0xcc]
 	mov [ebp-0xb0], eax
@@ -424,29 +424,29 @@ VehicleFXTest_30:
 	shl eax, 0x6
 	add eax, vehEffects
 	xor ebx, ebx
-VehicleFXTest_60:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_60:
 	cmp byte [eax], 0x0
-	jz VehicleFXTest_40
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_40
 	mov ecx, [ebp-0xb0]
 	cmp ecx, [eax+0x8]
-	jz VehicleFXTest_50
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_50
 	add ebx, 0x1
 	add eax, 0x28
 	cmp ebx, 0x8
-	jnz VehicleFXTest_60
-VehicleFXTest_40:
+	jnz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_60
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_40:
 	mov ebx, [ebp+0x8]
 	lea eax, [ebx+ebx*4]
 	shl eax, 0x6
 	add eax, vehEffects
 	xor ecx, ecx
-VehicleFXTest_80:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_80:
 	cmp byte [eax], 0x0
-	jz VehicleFXTest_70
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_70
 	add ecx, 0x1
 	add eax, 0x28
 	cmp ecx, 0x8
-	jnz VehicleFXTest_80
+	jnz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_80
 	mov edx, [ebp+0x8]
 	lea eax, [edx+edx*4]
 	shl eax, 0x6
@@ -454,7 +454,7 @@ VehicleFXTest_80:
 	mov esi, 0x1
 	and ecx, 0xffffff00
 	mov edi, eax
-VehicleFXTest_90:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_90:
 	lea edx, [ecx+ecx*4]
 	mov eax, [ebx+0x2c]
 	cmp eax, [edi+edx*8+vehEffects+0x4]
@@ -462,8 +462,8 @@ VehicleFXTest_90:
 	add esi, 0x1
 	add ebx, 0x28
 	cmp esi, 0x8
-	jnz VehicleFXTest_90
-VehicleFXTest_70:
+	jnz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_90
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_70:
 	lea ebx, [ecx+ecx*4]
 	mov ecx, [ebp+0x8]
 	lea eax, [ecx+ecx*4]
@@ -476,31 +476,31 @@ VehicleFXTest_70:
 	mov edi, esi
 	rep stosd
 	mov byte [ebx+vehEffects], 0x1
-	call Sys_Milliseconds
+	call _Z16Sys_Millisecondsv
 	mov [ebx+vehEffects+0x4], eax
 	mov eax, [ebp-0xb0]
 	mov [ebx+vehEffects+0x8], eax
-VehicleFXTest_240:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_240:
 	mov ebx, [esi+0xc]
-	call Sys_Milliseconds
+	call _Z16Sys_Millisecondsv
 	cmp ebx, eax
-	jle VehicleFXTest_100
-VehicleFXTest_220:
+	jle _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_100
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_220:
 	mov edx, [ebp+0x10]
 	cmp dword [edx+0x1a0], 0x3
-	jz VehicleFXTest_110
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
 	mov ebx, [esi+0x10]
-	call Sys_Milliseconds
+	call _Z16Sys_Millisecondsv
 	cmp ebx, eax
-	jg VehicleFXTest_110
+	jg _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
 	mov ecx, [ebp+0x10]
 	mov eax, [ecx+0x1a0]
 	cmp eax, 0x1
-	jz VehicleFXTest_120
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_120
 	cmp eax, 0x2
-	jz VehicleFXTest_130
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_130
 	test eax, eax
-	jnz VehicleFXTest_110
+	jnz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
 	mov eax, cgMedia
 	mov ebx, [eax+0x2774]
 	lea eax, [esi+0x24]
@@ -510,9 +510,9 @@ VehicleFXTest_220:
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0xc]
 	mov [esp], ecx
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	movzx eax, byte [esi+0x24]
-VehicleFXTest_280:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_280:
 	movzx eax, al
 	mov [esp+0x10], eax
 	mov edx, [ebp+0x10]
@@ -524,8 +524,8 @@ VehicleFXTest_280:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_PlayBoltedEffect
-	call Sys_Milliseconds
+	call _Z19FX_PlayBoltedEffectiPK11FxEffectDefiii
+	call _Z16Sys_Millisecondsv
 	add eax, 0x32
 	mov [esi+0x10], eax
 	add esp, 0xdc
@@ -534,40 +534,40 @@ VehicleFXTest_280:
 	pop edi
 	pop ebp
 	ret
-VehicleFXTest_20:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_20:
 	movss xmm0, dword [ebp-0xb8]
 	ucomiss xmm0, [_float_0_05000000]
-	jb VehicleFXTest_140
+	jb _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_140
 	ucomiss xmm0, [_float_0_60000002]
-	ja VehicleFXTest_140
-	jp VehicleFXTest_140
+	ja _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_140
+	jp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_140
 	mov eax, [ebp+0x14]
 	mov [ebp-0x9c], eax
 	mov dword [ebp-0xb4], 0x0
 	mov eax, [edi+0xfd7e8]
 	and eax, 0x80000003
-	js VehicleFXTest_150
-VehicleFXTest_170:
+	js _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_150
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_170:
 	cmp [ebp-0xb4], eax
-	jz VehicleFXTest_160
-VehicleFXTest_230:
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_160
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_230:
 	add dword [ebp-0xb4], 0x1
 	add dword [ebp-0x9c], 0x1
 	cmp dword [ebp-0xb4], 0x4
-	jz VehicleFXTest_140
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_140
 	mov edi, cgArray
 	mov eax, [edi+0xfd7e8]
 	and eax, 0x80000003
-	jns VehicleFXTest_170
-VehicleFXTest_150:
+	jns _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_170
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_150:
 	sub eax, 0x1
 	or eax, 0xfffffffc
 	add eax, 0x1
-	jmp VehicleFXTest_170
-VehicleFXTest_140:
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_170
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_140:
 	mov edx, [ebp+0x14]
 	cmp byte [edx+0x38], 0x0
-	jz VehicleFXTest_110
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
 	mov esi, edx
 	add esi, 0x3c
 	mov dword [esp+0xc], _cstring_hummer_engine_hi
@@ -577,47 +577,47 @@ VehicleFXTest_140:
 	mov [esp+0x4], eax
 	mov ebx, [ebp+0x8]
 	mov [esp], ebx
-	call CG_ShouldPlaySoundOnLocalClient
+	call _Z31CG_ShouldPlaySoundOnLocalClientiiPKfPKc
 	test al, al
-	jz VehicleFXTest_110
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
 	mov dword [esp], _cstring_hummer_engine_lo
-	call CL_PickSoundAlias
+	call _Z17CL_PickSoundAliasPKc
 	mov [ebp-0xac], eax
 	mov dword [esp], _cstring_hummer_engine_hi
-	call CL_PickSoundAlias
+	call _Z17CL_PickSoundAliasPKc
 	mov edi, eax
 	mov dword [esp], _cstring_hummer_idle_low
-	call CL_PickSoundAlias
+	call _Z17CL_PickSoundAliasPKc
 	mov [ebp-0xa8], eax
 	mov dword [esp], _cstring_hummer_idle_high
-	call CL_PickSoundAlias
+	call _Z17CL_PickSoundAliasPKc
 	mov [ebp-0xa4], eax
 	mov ecx, [ebp-0xac]
 	test ecx, ecx
-	jz VehicleFXTest_110
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
 	test edi, edi
-	jz VehicleFXTest_110
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
 	mov edx, [ebp-0xa8]
 	test edx, edx
-	jz VehicleFXTest_110
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
 	test eax, eax
-	jz VehicleFXTest_110
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
 	movss xmm1, dword [ebp-0xb8]
 	divss xmm1, dword [_float_0_80000001]
 	pxor xmm2, xmm2
 	movaps xmm0, xmm2
 	subss xmm0, xmm1
 	ucomiss xmm0, xmm2
-	jb VehicleFXTest_180
+	jb _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_180
 	movaps xmm1, xmm2
 	movss xmm3, dword [_float__1_00000000]
 	movss xmm0, dword [_float_1_00000000]
-VehicleFXTest_300:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_300:
 	ucomiss xmm3, xmm2
-	jb VehicleFXTest_190
+	jb _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_190
 	movaps xmm1, xmm0
 	movss [ebp-0xa0], xmm2
-VehicleFXTest_290:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_290:
 	mov eax, [ebp-0xbc]
 	mov ebx, [eax]
 	mov dword [esp+0x1c], 0x1
@@ -629,7 +629,7 @@ VehicleFXTest_290:
 	mov [esp+0x4], edi
 	mov edx, [ebp-0xac]
 	mov [esp], edx
-	call SND_PlayBlendedSoundAliases
+	call _Z27SND_PlayBlendedSoundAliasesPK11snd_alias_tS1_ff12SndEntHandlePKfi18snd_alias_system_t
 	mov dword [esp+0x1c], 0x1
 	mov dword [esp+0x18], 0x0
 	mov [esp+0x14], esi
@@ -641,12 +641,12 @@ VehicleFXTest_290:
 	mov [esp+0x4], eax
 	mov edx, [ebp-0xa8]
 	mov [esp], edx
-	call SND_PlayBlendedSoundAliases
-	jmp VehicleFXTest_110
-VehicleFXTest_10:
+	call _Z27SND_PlayBlendedSoundAliasesPK11snd_alias_tS1_ff12SndEntHandlePKfi18snd_alias_system_t
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_110
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_10:
 	movss [ebp-0xb8], xmm1
-	jmp VehicleFXTest_200
-VehicleFXTest_100:
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_200
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_100:
 	mov eax, 0xbf000000
 	mov [ebp-0x24], eax
 	mov [ebp-0x20], eax
@@ -677,28 +677,28 @@ VehicleFXTest_100:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x98]
 	mov [esp], eax
-	call CG_TraceCapsule
+	call _Z15CG_TraceCapsuleP7trace_tPKfS2_S2_S2_ii
 	movss xmm4, dword [ebp-0x98]
 	ucomiss xmm4, [_float_1_00000000]
-	jb VehicleFXTest_210
-VehicleFXTest_250:
+	jb _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_210
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_250:
 	mov ebx, 0x3e8
-VehicleFXTest_270:
-	call Sys_Milliseconds
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_270:
+	call _Z16Sys_Millisecondsv
 	lea eax, [ebx+eax]
 	mov [esi+0xc], eax
-	jmp VehicleFXTest_220
-VehicleFXTest_160:
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_220
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_160:
 	mov edx, [ebp-0x9c]
 	cmp byte [edx], 0x0
-	jz VehicleFXTest_230
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_230
 	cmp byte [edx+0x34], 0x0
-	jz VehicleFXTest_230
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_230
 	mov eax, cgMedia
 	mov esi, [eax+0x277c]
 	lea ebx, [ebp-0x6c]
 	mov [esp], ebx
-	call MatrixIdentity33
+	call _Z16MatrixIdentity33PA3_f
 	mov ecx, [ebp-0xb4]
 	lea eax, [ecx+ecx*2]
 	mov edx, [ebp+0x14]
@@ -711,15 +711,15 @@ VehicleFXTest_160:
 	mov [esp+0x4], esi
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_PlayOrientedEffect
+	call _Z21FX_PlayOrientedEffectiPK11FxEffectDefiPKfPA3_S2_
 	mov eax, [vehDebugClient]
 	cmp byte [eax+0xc], 0x0
-	jz VehicleFXTest_230
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_230
 	mov ebx, [ebp-0x9c]
 	movzx eax, byte [ebx+0x34]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_i
-	call va
+	call _Z2vaPKcz
 	mov dword [esp+0x14], 0x4
 	mov dword [esp+0x10], 0x3f800000
 	mov [esp+0xc], eax
@@ -728,10 +728,10 @@ VehicleFXTest_160:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0xc0]
 	mov [esp], eax
-	call CG_DebugStarWithText
-	jmp VehicleFXTest_230
-VehicleFXTest_50:
-	call Sys_Milliseconds
+	call _Z20CG_DebugStarWithTextPKfS0_S0_PKcfi
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_230
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_50:
+	call _Z16Sys_Millisecondsv
 	lea ecx, [ebx+ebx*4]
 	mov ebx, [ebp+0x8]
 	lea edx, [ebx+ebx*4]
@@ -739,9 +739,9 @@ VehicleFXTest_50:
 	lea ecx, [edx+ecx*8]
 	mov [ecx+vehEffects+0x4], eax
 	lea esi, [ecx+vehEffects]
-	jmp VehicleFXTest_240
-VehicleFXTest_210:
-	jp VehicleFXTest_250
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_240
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_210:
+	jp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_250
 	mov edx, [ebp+0x10]
 	movss xmm0, dword [edx+0x74]
 	movss xmm1, dword [ebp-0x3c]
@@ -772,7 +772,7 @@ VehicleFXTest_210:
 	sqrtss xmm1, xmm1
 	movss xmm0, dword [_float_1200_00000000]
 	ucomiss xmm0, xmm1
-	jbe VehicleFXTest_250
+	jbe _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_250
 	subss xmm1, [_float_350_00000000]
 	divss xmm1, dword [_float_850_00000000]
 	mulss xmm1, [_float_0_10000001]
@@ -790,14 +790,14 @@ VehicleFXTest_210:
 	lea eax, [ebp-0x60]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call Vec3Basis_RightHanded
+	call _Z21Vec3Basis_RightHandedPKfPfS1_
 	mov eax, [ebp-0x88]
 	and eax, 0x1f00000
 	cmp eax, 0x1400000
-	jz VehicleFXTest_260
+	jz _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_260
 	mov eax, cgMedia
 	mov edx, [eax+0x2764]
-VehicleFXTest_310:
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_310:
 	mov [esp+0x10], edi
 	lea eax, [ebp-0x48]
 	mov [esp+0xc], eax
@@ -807,9 +807,9 @@ VehicleFXTest_310:
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call FX_PlayOrientedEffect
-	jmp VehicleFXTest_270
-VehicleFXTest_120:
+	call _Z21FX_PlayOrientedEffectiPK11FxEffectDefiPKfPA3_S2_
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_270
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_120:
 	mov eax, cgMedia
 	mov ebx, [eax+0x2770]
 	lea eax, [esi+0x24]
@@ -819,10 +819,10 @@ VehicleFXTest_120:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	movzx eax, byte [esi+0x24]
-	jmp VehicleFXTest_280
-VehicleFXTest_130:
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_280
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_130:
 	mov eax, cgMedia
 	mov ebx, [eax+0x276c]
 	lea eax, [esi+0x25]
@@ -832,27 +832,27 @@ VehicleFXTest_130:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	movzx eax, byte [esi+0x25]
-	jmp VehicleFXTest_280
-VehicleFXTest_190:
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_280
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_190:
 	subss xmm0, xmm1
 	movss [ebp-0xa0], xmm0
-	jmp VehicleFXTest_290
-VehicleFXTest_180:
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_290
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_180:
 	movss xmm0, dword [_float_1_00000000]
 	movaps xmm3, xmm1
 	subss xmm3, xmm0
-	jmp VehicleFXTest_300
-VehicleFXTest_260:
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_300
+_Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_260:
 	mov eax, cgMedia
 	mov edx, [eax+0x2768]
-	jmp VehicleFXTest_310
+	jmp _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t_310
 	nop
 
 
 ;GetTagMatrix(int, int, unsigned short, float (*) [3], float*)
-GetTagMatrix:
+_Z12GetTagMatrixiitPA3_fPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -870,14 +870,14 @@ GetTagMatrix:
 	lea ebx, [edx+eax]
 	add ebx, cg_entitiesArray
 	cmp byte [ebx+0x1c0], 0x0
-	jnz GetTagMatrix_10
+	jnz _Z12GetTagMatrixiitPA3_fPf_10
 	mov dword [esp+0x4], _cstring_vehicle_being_us
-GetTagMatrix_30:
+_Z12GetTagMatrixiitPA3_fPf_30:
 	mov dword [esp], 0xe
-	call Com_PrintWarning
+	call _Z16Com_PrintWarningiPKcz
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call MatrixIdentity33
+	call _Z16MatrixIdentity33PA3_f
 	xor eax, eax
 	mov [esi], eax
 	mov [esi+0x4], eax
@@ -888,7 +888,7 @@ GetTagMatrix_30:
 	pop edi
 	pop ebp
 	ret
-GetTagMatrix_10:
+_Z12GetTagMatrixiitPA3_fPf_10:
 	lea ecx, [ebx+0xcc]
 	mov edx, [ecx+0xd8]
 	mov eax, cgsArray
@@ -899,10 +899,10 @@ GetTagMatrix_10:
 	mov eax, [ebx+0xcc]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call CG_PreProcess_GetDObj
+	call _Z21CG_PreProcess_GetDObjiiiP6XModel
 	mov edx, eax
 	test eax, eax
-	jz GetTagMatrix_20
+	jz _Z12GetTagMatrixiitPA3_fPf_20
 	mov [esp+0x10], esi
 	mov eax, [ebp+0x8]
 	mov [esp+0xc], eax
@@ -910,22 +910,22 @@ GetTagMatrix_10:
 	mov [esp+0x8], eax
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call CG_DObjGetWorldTagMatrix
+	call _Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-GetTagMatrix_20:
+_Z12GetTagMatrixiitPA3_fPf_20:
 	mov dword [esp+0x4], _cstring_gettagmatrix_una
-	jmp GetTagMatrix_30
+	jmp _Z12GetTagMatrixiitPA3_fPf_30
 	nop
 	add [eax], al
 
 
 ;CG_Veh_Init()
-CG_Veh_Init:
+_Z11CG_Veh_Initv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -938,7 +938,7 @@ CG_Veh_Init:
 
 
 ;CG_VehGunnerPOV(int, float*, float*)
-CG_VehGunnerPOV:
+_Z15CG_VehGunnerPOViPfS_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -960,11 +960,11 @@ CG_VehGunnerPOV:
 	mov [esp+0x4], ebx
 	lea ebx, [ebp-0x3c]
 	mov [esp], ebx
-	call GetTagMatrix
+	call _Z12GetTagMatrixiitPA3_fPf
 	mov eax, [ebp+0x10]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call AxisToAngles
+	call _Z12AxisToAnglesPA3_KfPf
 	add esp, 0x4c
 	pop ebx
 	pop esi
@@ -974,7 +974,7 @@ CG_VehGunnerPOV:
 
 
 ;CG_VehProcessEntity(int, centity_s*)
-CG_VehProcessEntity:
+_Z19CG_VehProcessEntityiP9centity_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -986,17 +986,17 @@ CG_VehProcessEntity:
 	mov [ebp-0x148], eax
 	lea edi, [esi+0xcc]
 	test byte [edi+0x8], 0x20
-	jnz CG_VehProcessEntity_10
+	jnz _Z19CG_VehProcessEntityiP9centity_s_10
 	cmp byte [esi+0x1c0], 0x0
-	jnz CG_VehProcessEntity_20
-CG_VehProcessEntity_10:
+	jnz _Z19CG_VehProcessEntityiP9centity_s_20
+_Z19CG_VehProcessEntityiP9centity_s_10:
 	add esp, 0x1ac
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_VehProcessEntity_20:
+_Z19CG_VehProcessEntityiP9centity_s_20:
 	mov edx, [edi+0xd8]
 	mov eax, cgsArray
 	mov eax, [eax+edx*4+0x294]
@@ -1007,17 +1007,17 @@ CG_VehProcessEntity_20:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_PreProcess_GetDObj
+	call _Z21CG_PreProcess_GetDObjiiiP6XModel
 	mov [ebp-0x144], eax
 	test eax, eax
-	jz CG_VehProcessEntity_10
+	jz _Z19CG_VehProcessEntityiP9centity_s_10
 	mov byte [ebp-0xe4], 0x0
 	xor eax, eax
-CG_VehProcessEntity_30:
+_Z19CG_VehProcessEntityiP9centity_s_30:
 	mov byte [eax+ebp-0x11c], 0x0
 	add eax, 0x1
 	cmp eax, 0x4
-	jnz CG_VehProcessEntity_30
+	jnz _Z19CG_VehProcessEntityiP9centity_s_30
 	mov eax, [ebp-0x148]
 	movss xmm2, dword [eax+0x4c]
 	movss xmm0, dword [edi+0x54]
@@ -1122,7 +1122,7 @@ CG_VehProcessEntity_30:
 	mov [esp+0x4], esi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Veh_GetTurretBarrelRoll
+	call _Z23Veh_GetTurretBarrelRolliP9centity_s
 	fstp dword [esi+0x48]
 	mov edx, [ebp-0x148]
 	movss xmm2, dword [edx+0x54]
@@ -1159,32 +1159,32 @@ CG_VehProcessEntity_30:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x144]
 	mov [esp], eax
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	lea eax, [esi+0x61]
 	mov [esp+0x8], eax
 	movzx eax, word [ebx+0x160]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x144]
 	mov [esp], edx
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	lea eax, [esi+0x62]
 	mov [esp+0x8], eax
 	movzx eax, word [ebx+0x164]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x144]
 	mov [esp], eax
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	cmp dword [esi+0x8], 0x2
-	jz CG_VehProcessEntity_40
+	jz _Z19CG_VehProcessEntityiP9centity_s_40
 	mov eax, esi
 	mov edx, 0x4
-CG_VehProcessEntity_50:
+_Z19CG_VehProcessEntityiP9centity_s_50:
 	mov byte [eax+0x5c], 0xfe
 	add eax, 0x1
 	sub edx, 0x1
-	jnz CG_VehProcessEntity_50
+	jnz _Z19CG_VehProcessEntityiP9centity_s_50
 	lea ebx, [esi+0x1c]
-CG_VehProcessEntity_80:
+_Z19CG_VehProcessEntityiP9centity_s_80:
 	lea eax, [ebp-0x11c]
 	mov [esp+0xc], eax
 	mov [esp+0x8], esi
@@ -1192,7 +1192,7 @@ CG_VehProcessEntity_80:
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call VehicleFXTest
+	call _Z13VehicleFXTestiPK6DObj_sP9centity_sP7vehfx_t
 	mov eax, [esi+0x1c]
 	mov [ebp-0x24], eax
 	mov eax, [ebx+0x4]
@@ -1204,7 +1204,7 @@ CG_VehProcessEntity_80:
 	mov ebx, [edx+0x58]
 	pxor xmm0, xmm0
 	test ebx, ebx
-	js CG_VehProcessEntity_60
+	js _Z19CG_VehProcessEntityiP9centity_s_60
 	mov ecx, cgArray
 	mov eax, [edi+0x60]
 	sub eax, ebx
@@ -1216,7 +1216,7 @@ CG_VehProcessEntity_80:
 	sub eax, edx
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [_float_0_00100000]
-CG_VehProcessEntity_60:
+_Z19CG_VehProcessEntityiP9centity_s_60:
 	movss [esp+0x14], xmm0
 	lea eax, [ebp-0x24]
 	mov [esp+0x10], eax
@@ -1226,14 +1226,14 @@ CG_VehProcessEntity_60:
 	mov [esp+0x4], esi
 	mov eax, [ebp-0x144]
 	mov [esp], eax
-	call R_AddDObjToScene
+	call _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
 	add esp, 0x1ac
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_VehProcessEntity_40:
+_Z19CG_VehProcessEntityiP9centity_s_40:
 	lea eax, [ebp-0xe0]
 	mov [esp+0x10], eax
 	lea eax, [ebp-0xd4]
@@ -1243,7 +1243,7 @@ CG_VehProcessEntity_40:
 	mov edx, [ebp-0x144]
 	mov [esp+0x4], edx
 	mov [esp], esi
-	call CG_DObjGetWorldTagMatrix
+	call _Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf
 	mov byte [ebp-0xe4], 0x1
 	movss xmm0, dword [esi+0x50]
 	movss [ebp-0x138], xmm0
@@ -1251,7 +1251,7 @@ CG_VehProcessEntity_40:
 	mov [esp+0x4], eax
 	lea eax, [esi+0x28]
 	mov [esp], eax
-	call AnglesToAxis
+	call _Z12AnglesToAxisPKfPA3_f
 	lea ebx, [esi+0x1c]
 	mov eax, [esi+0x1c]
 	mov [ebp-0x80], eax
@@ -1262,9 +1262,9 @@ CG_VehProcessEntity_40:
 	mov dword [esp+0x4], 0x0
 	mov edx, [ebp-0x144]
 	mov [esp], edx
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov [esp], eax
-	call XModelGetBasePose
+	call _Z17XModelGetBasePosePK6XModel
 	mov [ebp-0x140], eax
 	mov [ebp-0x130], esi
 	mov [ebp-0x12c], esi
@@ -1276,7 +1276,7 @@ CG_VehProcessEntity_40:
 	lea edx, [esi+0x5c]
 	mov [ebp-0x178], edx
 	mov eax, edx
-CG_VehProcessEntity_90:
+_Z19CG_VehProcessEntityiP9centity_s_90:
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x134]
 	mov eax, [edx]
@@ -1284,10 +1284,10 @@ CG_VehProcessEntity_90:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x144]
 	mov [esp], eax
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	test eax, eax
-	jnz CG_VehProcessEntity_70
-CG_VehProcessEntity_110:
+	jnz _Z19CG_VehProcessEntityiP9centity_s_70
+_Z19CG_VehProcessEntityiP9centity_s_110:
 	add dword [ebp-0x13c], 0x1
 	add dword [ebp-0x178], 0x1
 	add dword [ebp-0x174], 0xc
@@ -1295,10 +1295,10 @@ CG_VehProcessEntity_110:
 	add dword [ebp-0x130], 0x1
 	add dword [ebp-0x12c], 0x2
 	cmp dword [ebp-0x13c], 0x4
-	jz CG_VehProcessEntity_80
+	jz _Z19CG_VehProcessEntityiP9centity_s_80
 	mov eax, [ebp-0x178]
-	jmp CG_VehProcessEntity_90
-CG_VehProcessEntity_70:
+	jmp _Z19CG_VehProcessEntityiP9centity_s_90
+_Z19CG_VehProcessEntityiP9centity_s_70:
 	lea eax, [ebp-0x30]
 	mov [esp+0x8], eax
 	lea edx, [ebp-0xa4]
@@ -1309,7 +1309,7 @@ CG_VehProcessEntity_70:
 	mov edx, [ebp-0x140]
 	lea eax, [edx+eax+0x10]
 	mov [esp], eax
-	call MatrixTransformVector43
+	call _Z23MatrixTransformVector43PKfPA3_S_Pf
 	movss xmm0, dword [ebp-0x8c]
 	mulss xmm0, [_float_40_00000000]
 	addss xmm0, [ebp-0x30]
@@ -1346,7 +1346,7 @@ CG_VehProcessEntity_70:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x74]
 	mov [esp], eax
-	call CG_TraceCapsule
+	call _Z15CG_TraceCapsuleP7trace_tPKfS2_S2_S2_ii
 	movss xmm2, dword [ebp-0x74]
 	movaps xmm0, xmm2
 	mulss xmm0, [_float_65535_00000000]
@@ -1358,10 +1358,10 @@ CG_VehProcessEntity_70:
 	mov edx, [eax+0xfd7e8]
 	and edx, 0x80000003
 	mov eax, edx
-	js CG_VehProcessEntity_100
-CG_VehProcessEntity_120:
+	js _Z19CG_VehProcessEntityiP9centity_s_100
+_Z19CG_VehProcessEntityiP9centity_s_120:
 	cmp [ebp-0x13c], eax
-	jnz CG_VehProcessEntity_110
+	jnz _Z19CG_VehProcessEntityiP9centity_s_110
 	mov eax, [ebp-0x13c]
 	mov byte [eax+ebp-0x11c], 0x1
 	movss xmm1, dword [ebp-0x3c]
@@ -1388,17 +1388,17 @@ CG_VehProcessEntity_120:
 	sar eax, 0x14
 	mov edx, [ebp-0x13c]
 	mov [ebp+edx-0xe8], al
-	jmp CG_VehProcessEntity_110
-CG_VehProcessEntity_100:
+	jmp _Z19CG_VehProcessEntityiP9centity_s_110
+_Z19CG_VehProcessEntityiP9centity_s_100:
 	sub eax, 0x1
 	or eax, 0xfffffffc
 	add eax, 0x1
-	jmp CG_VehProcessEntity_120
+	jmp _Z19CG_VehProcessEntityiP9centity_s_120
 	nop
 
 
 ;CG_VehRegisterDvars()
-CG_VehRegisterDvars:
+_Z19CG_VehRegisterDvarsv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1409,7 +1409,7 @@ CG_VehRegisterDvars:
 	mov dword [esp+0x8], 0x80
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], _cstring_vehdebugclient
-	call Cvar_RegisterBool
+	call _Z17Dvar_RegisterBoolPKchtS0_
 	mov [vehDebugClient], eax
 	mov dword [esp+0x14], _cstring_how_far_away_the
 	mov dword [esp+0x10], 0x80
@@ -1418,7 +1418,7 @@ CG_VehRegisterDvars:
 	mov dword [esp+0x8], 0x3f800000
 	mov dword [esp+0x4], 0x43960000
 	mov dword [esp], _cstring_vehdriverviewdis
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [vehDriverViewDist], eax
 	mov dword [esp+0x14], _cstring_how_far_the_driv
 	mov dword [esp+0x10], 0x80
@@ -1426,7 +1426,7 @@ CG_VehRegisterDvars:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x42480000
 	mov dword [esp], _cstring_vehdriverviewfoc
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [vehDriverViewFocusRange], eax
 	mov dword [esp+0x14], _cstring_how_much_to_rota
 	mov dword [esp+0x10], 0x0
@@ -1436,7 +1436,7 @@ CG_VehRegisterDvars:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], 0x428c0000
 	mov dword [esp], _cstring_heli_barrelrotat
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [heli_barrelRotation], eax
 	mov dword [esp+0x14], _cstring_null
 	mov dword [esp+0x10], 0x0
@@ -1445,7 +1445,7 @@ CG_VehRegisterDvars:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], 0x449c4000
 	mov dword [esp], _cstring_heli_barrelmaxve
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [heli_barrelMaxVelocity], eax
 	mov dword [esp+0x14], _cstring_null
 	mov dword [esp+0x10], 0x0
@@ -1453,7 +1453,7 @@ CG_VehRegisterDvars:
 	mov [esp+0x8], ebx
 	mov [esp+0x4], edi
 	mov dword [esp], _cstring_heli_barrelslowd
-	call Cvar_RegisterFloat
+	call _Z18Dvar_RegisterFloatPKcffftS0_
 	mov [heli_barrelSlowdown], eax
 	add esp, 0x2c
 	pop ebx
@@ -1465,7 +1465,7 @@ CG_VehRegisterDvars:
 
 
 ;CG_VehPlayerVehicleSlot(int, int)
-CG_VehPlayerVehicleSlot:
+_Z23CG_VehPlayerVehicleSlotii:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0xc]
@@ -1477,12 +1477,12 @@ CG_VehPlayerVehicleSlot:
 	add eax, edx
 	add eax, cg_entitiesArray
 	cmp dword [eax+0xd0], 0x1
-	jz CG_VehPlayerVehicleSlot_10
+	jz _Z23CG_VehPlayerVehicleSlotii_10
 	xor eax, eax
 	mov eax, [eax+0x4c4]
 	pop ebp
 	ret
-CG_VehPlayerVehicleSlot_10:
+_Z23CG_VehPlayerVehicleSlotii_10:
 	mov edx, [eax+0x158]
 	lea eax, [edx+edx*8]
 	mov ecx, eax
@@ -1498,7 +1498,7 @@ CG_VehPlayerVehicleSlot_10:
 
 
 ;CG_VehSphereCoordsToPos(float, float, float, float*)
-CG_VehSphereCoordsToPos:
+_Z23CG_VehSphereCoordsToPosfffPf:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1552,7 +1552,7 @@ CG_VehSphereCoordsToPos:
 
 
 ;Veh_GetTurretBarrelRoll(int, centity_s*)
-Veh_GetTurretBarrelRoll:
+_Z23Veh_GetTurretBarrelRolliP9centity_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1568,30 +1568,30 @@ Veh_GetTurretBarrelRoll:
 	lea edx, [eax+vehEffects]
 	xor ecx, ecx
 	mov ebx, eax
-Veh_GetTurretBarrelRoll_30:
+_Z23Veh_GetTurretBarrelRolliP9centity_s_30:
 	cmp byte [edx], 0x0
-	jz Veh_GetTurretBarrelRoll_10
+	jz _Z23Veh_GetTurretBarrelRolliP9centity_s_10
 	mov eax, [ebp-0x1c]
 	cmp eax, [edx+0x8]
-	jz Veh_GetTurretBarrelRoll_20
+	jz _Z23Veh_GetTurretBarrelRolliP9centity_s_20
 	add ecx, 0x1
 	add ebx, 0x28
 	add edx, 0x28
 	cmp ecx, 0x8
-	jnz Veh_GetTurretBarrelRoll_30
-Veh_GetTurretBarrelRoll_10:
+	jnz _Z23Veh_GetTurretBarrelRolliP9centity_s_30
+_Z23Veh_GetTurretBarrelRolliP9centity_s_10:
 	mov edx, [ebp+0x8]
 	lea eax, [edx+edx*4]
 	shl eax, 0x6
 	add eax, vehEffects
 	xor ecx, ecx
-Veh_GetTurretBarrelRoll_50:
+_Z23Veh_GetTurretBarrelRolliP9centity_s_50:
 	cmp byte [eax], 0x0
-	jz Veh_GetTurretBarrelRoll_40
+	jz _Z23Veh_GetTurretBarrelRolliP9centity_s_40
 	add ecx, 0x1
 	add eax, 0x28
 	cmp ecx, 0x8
-	jnz Veh_GetTurretBarrelRoll_50
+	jnz _Z23Veh_GetTurretBarrelRolliP9centity_s_50
 	mov edx, [ebp+0x8]
 	lea eax, [edx+edx*4]
 	shl eax, 0x6
@@ -1599,7 +1599,7 @@ Veh_GetTurretBarrelRoll_50:
 	mov edi, 0x1
 	and ecx, 0xffffff00
 	mov esi, eax
-Veh_GetTurretBarrelRoll_60:
+_Z23Veh_GetTurretBarrelRolliP9centity_s_60:
 	lea edx, [ecx+ecx*4]
 	mov eax, [ebx+0x2c]
 	cmp eax, [esi+edx*8+vehEffects+0x4]
@@ -1607,8 +1607,8 @@ Veh_GetTurretBarrelRoll_60:
 	add edi, 0x1
 	add ebx, 0x28
 	cmp edi, 0x8
-	jnz Veh_GetTurretBarrelRoll_60
-Veh_GetTurretBarrelRoll_40:
+	jnz _Z23Veh_GetTurretBarrelRolliP9centity_s_60
+_Z23Veh_GetTurretBarrelRolliP9centity_s_40:
 	lea ebx, [ecx+ecx*4]
 	mov edx, [ebp+0x8]
 	lea eax, [edx+edx*4]
@@ -1621,11 +1621,11 @@ Veh_GetTurretBarrelRoll_40:
 	mov edi, esi
 	rep stosd
 	mov byte [ebx+vehEffects], 0x1
-	call Sys_Milliseconds
+	call _Z16Sys_Millisecondsv
 	mov [ebx+vehEffects+0x4], eax
 	mov eax, [ebp-0x1c]
 	mov [ebx+vehEffects+0x8], eax
-Veh_GetTurretBarrelRoll_100:
+_Z23Veh_GetTurretBarrelRolliP9centity_s_100:
 	mov eax, cgArray
 	mov eax, [eax+0x46128]
 	mov edx, eax
@@ -1638,18 +1638,18 @@ Veh_GetTurretBarrelRoll_100:
 	addss xmm1, [esi+0x1c]
 	movss [esi+0x1c], xmm1
 	ucomiss xmm1, [_float_360_00000000]
-	jbe Veh_GetTurretBarrelRoll_70
+	jbe _Z23Veh_GetTurretBarrelRolliP9centity_s_70
 	subss xmm1, [_float_360_00000000]
 	movss [esi+0x1c], xmm1
-Veh_GetTurretBarrelRoll_70:
+_Z23Veh_GetTurretBarrelRolliP9centity_s_70:
 	mov eax, [heli_barrelSlowdown]
 	mulss xmm0, [eax+0xc]
 	divss xmm0, dword [_float__1000_00000000]
 	addss xmm0, [esi+0x18]
 	movss [esi+0x18], xmm0
 	ucomiss xmm0, [_float_0_00000000]
-	jb Veh_GetTurretBarrelRoll_80
-Veh_GetTurretBarrelRoll_90:
+	jb _Z23Veh_GetTurretBarrelRolliP9centity_s_80
+_Z23Veh_GetTurretBarrelRolliP9centity_s_90:
 	fld dword [esi+0x1c]
 	add esp, 0x1c
 	pop ebx
@@ -1657,8 +1657,8 @@ Veh_GetTurretBarrelRoll_90:
 	pop edi
 	pop ebp
 	ret
-Veh_GetTurretBarrelRoll_80:
-	jp Veh_GetTurretBarrelRoll_90
+_Z23Veh_GetTurretBarrelRolliP9centity_s_80:
+	jp _Z23Veh_GetTurretBarrelRolliP9centity_s_90
 	xor eax, eax
 	mov [esi+0x18], eax
 	fld dword [esi+0x1c]
@@ -1668,16 +1668,16 @@ Veh_GetTurretBarrelRoll_80:
 	pop edi
 	pop ebp
 	ret
-Veh_GetTurretBarrelRoll_20:
-	call Sys_Milliseconds
+_Z23Veh_GetTurretBarrelRolliP9centity_s_20:
+	call _Z16Sys_Millisecondsv
 	mov [ebx+vehEffects+0x4], eax
 	lea esi, [ebx+vehEffects]
-	jmp Veh_GetTurretBarrelRoll_100
+	jmp _Z23Veh_GetTurretBarrelRolliP9centity_s_100
 	nop
 
 
 ;Veh_IncTurretBarrelRoll(int, int, float)
-Veh_IncTurretBarrelRoll:
+_Z23Veh_IncTurretBarrelRolliif:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1690,30 +1690,30 @@ Veh_IncTurretBarrelRoll:
 	lea edx, [eax+vehEffects]
 	xor ecx, ecx
 	mov ebx, eax
-Veh_IncTurretBarrelRoll_30:
+_Z23Veh_IncTurretBarrelRolliif_30:
 	cmp byte [edx], 0x0
-	jz Veh_IncTurretBarrelRoll_10
+	jz _Z23Veh_IncTurretBarrelRolliif_10
 	mov eax, [ebp+0xc]
 	cmp eax, [edx+0x8]
-	jz Veh_IncTurretBarrelRoll_20
+	jz _Z23Veh_IncTurretBarrelRolliif_20
 	add ecx, 0x1
 	add ebx, 0x28
 	add edx, 0x28
 	cmp ecx, 0x8
-	jnz Veh_IncTurretBarrelRoll_30
-Veh_IncTurretBarrelRoll_10:
+	jnz _Z23Veh_IncTurretBarrelRolliif_30
+_Z23Veh_IncTurretBarrelRolliif_10:
 	mov edx, [ebp+0x8]
 	lea eax, [edx+edx*4]
 	shl eax, 0x6
 	add eax, vehEffects
 	xor ecx, ecx
-Veh_IncTurretBarrelRoll_50:
+_Z23Veh_IncTurretBarrelRolliif_50:
 	cmp byte [eax], 0x0
-	jz Veh_IncTurretBarrelRoll_40
+	jz _Z23Veh_IncTurretBarrelRolliif_40
 	add ecx, 0x1
 	add eax, 0x28
 	cmp ecx, 0x8
-	jnz Veh_IncTurretBarrelRoll_50
+	jnz _Z23Veh_IncTurretBarrelRolliif_50
 	mov edx, [ebp+0x8]
 	lea eax, [edx+edx*4]
 	shl eax, 0x6
@@ -1721,7 +1721,7 @@ Veh_IncTurretBarrelRoll_50:
 	mov edi, 0x1
 	and ecx, 0xffffff00
 	mov esi, eax
-Veh_IncTurretBarrelRoll_60:
+_Z23Veh_IncTurretBarrelRolliif_60:
 	lea edx, [ecx+ecx*4]
 	mov eax, [ebx+0x2c]
 	cmp eax, [esi+edx*8+vehEffects+0x4]
@@ -1729,8 +1729,8 @@ Veh_IncTurretBarrelRoll_60:
 	add edi, 0x1
 	add ebx, 0x28
 	cmp edi, 0x8
-	jnz Veh_IncTurretBarrelRoll_60
-Veh_IncTurretBarrelRoll_40:
+	jnz _Z23Veh_IncTurretBarrelRolliif_60
+_Z23Veh_IncTurretBarrelRolliif_40:
 	lea ebx, [ecx+ecx*4]
 	mov edx, [ebp+0x8]
 	lea eax, [edx+edx*4]
@@ -1743,11 +1743,11 @@ Veh_IncTurretBarrelRoll_40:
 	mov edi, esi
 	rep stosd
 	mov byte [ebx+vehEffects], 0x1
-	call Sys_Milliseconds
+	call _Z16Sys_Millisecondsv
 	mov [ebx+vehEffects+0x4], eax
 	mov eax, [ebp+0xc]
 	mov [ebx+vehEffects+0x8], eax
-Veh_IncTurretBarrelRoll_70:
+_Z23Veh_IncTurretBarrelRolliif_70:
 	mov eax, [heli_barrelMaxVelocity]
 	movss xmm2, dword [eax+0xc]
 	movss xmm1, dword [ebp+0x10]
@@ -1766,15 +1766,15 @@ Veh_IncTurretBarrelRoll_70:
 	pop edi
 	pop ebp
 	ret
-Veh_IncTurretBarrelRoll_20:
-	call Sys_Milliseconds
+_Z23Veh_IncTurretBarrelRolliif_20:
+	call _Z16Sys_Millisecondsv
 	mov [ebx+vehEffects+0x4], eax
 	lea esi, [ebx+vehEffects]
-	jmp Veh_IncTurretBarrelRoll_70
+	jmp _Z23Veh_IncTurretBarrelRolliif_70
 
 
 ;CG_VehEntityUsingVehicle(int, int)
-CG_VehEntityUsingVehicle:
+_Z24CG_VehEntityUsingVehicleii:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0xc]
@@ -1786,12 +1786,12 @@ CG_VehEntityUsingVehicle:
 	add eax, edx
 	add eax, cg_entitiesArray
 	cmp dword [eax+0xd0], 0x1
-	jz CG_VehEntityUsingVehicle_10
-CG_VehEntityUsingVehicle_20:
+	jz _Z24CG_VehEntityUsingVehicleii_10
+_Z24CG_VehEntityUsingVehicleii_20:
 	xor eax, eax
 	pop ebp
 	ret
-CG_VehEntityUsingVehicle_10:
+_Z24CG_VehEntityUsingVehicleii_10:
 	mov edx, [eax+0x158]
 	lea eax, [edx+edx*8]
 	mov ecx, eax
@@ -1802,9 +1802,9 @@ CG_VehEntityUsingVehicle_10:
 	mov edx, [edx]
 	lea eax, [edx+eax*4+0x99a04]
 	test eax, eax
-	jz CG_VehEntityUsingVehicle_20
+	jz _Z24CG_VehEntityUsingVehicleii_20
 	cmp dword [eax+0x4c0], 0x3ff
-	jz CG_VehEntityUsingVehicle_20
+	jz _Z24CG_VehEntityUsingVehicleii_20
 	mov eax, 0x1
 	pop ebp
 	ret
@@ -1812,7 +1812,7 @@ CG_VehEntityUsingVehicle_10:
 
 
 ;CG_VehLocalClientDriving(int)
-CG_VehLocalClientDriving:
+_Z24CG_VehLocalClientDrivingi:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1825,16 +1825,16 @@ CG_VehLocalClientDriving:
 	lea eax, [edx+eax*2]
 	lea eax, [ebx+eax*4+0xe9f34]
 	cmp dword [eax+0x4c0], 0x3ff
-	jz CG_VehLocalClientDriving_10
+	jz _Z24CG_VehLocalClientDrivingi_10
 	mov eax, [eax+0x4c4]
 	test eax, eax
-	jz CG_VehLocalClientDriving_20
-CG_VehLocalClientDriving_10:
+	jz _Z24CG_VehLocalClientDrivingi_20
+_Z24CG_VehLocalClientDrivingi_10:
 	xor eax, eax
 	pop ebx
 	pop ebp
 	ret
-CG_VehLocalClientDriving_20:
+_Z24CG_VehLocalClientDrivingi_20:
 	mov eax, 0x1
 	pop ebx
 	pop ebp
@@ -1844,7 +1844,7 @@ CG_VehLocalClientDriving_20:
 
 
 ;CG_VehLocalClientVehicleSlot(int)
-CG_VehLocalClientVehicleSlot:
+_Z28CG_VehLocalClientVehicleSloti:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1863,7 +1863,7 @@ CG_VehLocalClientVehicleSlot:
 
 
 ;CG_VehSeatTransformForPlayer(int, int, float*, float*)
-CG_VehSeatTransformForPlayer:
+_Z28CG_VehSeatTransformForPlayeriiPfS_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1879,13 +1879,13 @@ CG_VehSeatTransformForPlayer:
 	add eax, edx
 	add eax, cg_entitiesArray
 	cmp dword [eax+0xd0], 0x1
-	jz CG_VehSeatTransformForPlayer_10
+	jz _Z28CG_VehSeatTransformForPlayeriiPfS__10
 	xor eax, eax
-CG_VehSeatTransformForPlayer_40:
+_Z28CG_VehSeatTransformForPlayeriiPfS__40:
 	mov edi, [eax+0x4c4]
 	mov ebx, [eax+0x4c0]
 	mov [esp], edi
-	call BG_VehiclesGetSlotTagName
+	call _Z25BG_VehiclesGetSlotTagNamei
 	movzx ecx, ax
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
@@ -1893,18 +1893,18 @@ CG_VehSeatTransformForPlayer_40:
 	mov [esp], esi
 	mov edx, ebx
 	mov eax, [ebp+0x8]
-	call GetTagMatrix
+	call _Z12GetTagMatrixiitPA3_fPf
 	mov eax, [ebp+0x14]
 	test eax, eax
-	jz CG_VehSeatTransformForPlayer_20
+	jz _Z28CG_VehSeatTransformForPlayeriiPfS__20
 	mov eax, [ebp+0x14]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call AxisToAngles
-CG_VehSeatTransformForPlayer_20:
+	call _Z12AxisToAnglesPA3_KfPf
+_Z28CG_VehSeatTransformForPlayeriiPfS__20:
 	mov ebx, [ebp+0x10]
 	test ebx, ebx
-	jz CG_VehSeatTransformForPlayer_30
+	jz _Z28CG_VehSeatTransformForPlayeriiPfS__30
 	mov eax, [ebp-0x24]
 	mov edx, [ebp+0x10]
 	mov [edx], eax
@@ -1913,17 +1913,17 @@ CG_VehSeatTransformForPlayer_20:
 	movss xmm0, dword [ebp-0x1c]
 	movss [edx+0x8], xmm0
 	cmp edi, 0x1
-	ja CG_VehSeatTransformForPlayer_30
+	ja _Z28CG_VehSeatTransformForPlayeriiPfS__30
 	addss xmm0, [_float__35_00000000]
 	movss [edx+0x8], xmm0
-CG_VehSeatTransformForPlayer_30:
+_Z28CG_VehSeatTransformForPlayeriiPfS__30:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_VehSeatTransformForPlayer_10:
+_Z28CG_VehSeatTransformForPlayeriiPfS__10:
 	mov edx, [eax+0x158]
 	lea eax, [edx+edx*8]
 	mov ecx, eax
@@ -1933,11 +1933,11 @@ CG_VehSeatTransformForPlayer_10:
 	mov edx, bgs
 	mov edx, [edx]
 	lea eax, [edx+eax*4+0x99a04]
-	jmp CG_VehSeatTransformForPlayer_40
+	jmp _Z28CG_VehSeatTransformForPlayeriiPfS__40
 
 
 ;CG_VehLocalClientUsingVehicle(int)
-CG_VehLocalClientUsingVehicle:
+_Z29CG_VehLocalClientUsingVehiclei:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -1958,7 +1958,7 @@ CG_VehLocalClientUsingVehicle:
 
 
 ;CG_VehSeatOriginForLocalClient(int, float*)
-CG_VehSeatOriginForLocalClient:
+_Z30CG_VehSeatOriginForLocalClientiPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1977,7 +1977,7 @@ CG_VehSeatOriginForLocalClient:
 	mov edi, [eax+0x4c4]
 	mov ebx, [eax+0x4c0]
 	mov [esp], edi
-	call BG_VehiclesGetSlotTagName
+	call _Z25BG_VehiclesGetSlotTagNamei
 	movzx ecx, ax
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
@@ -1985,9 +1985,9 @@ CG_VehSeatOriginForLocalClient:
 	mov [esp], eax
 	mov edx, ebx
 	mov eax, [ebp+0x8]
-	call GetTagMatrix
+	call _Z12GetTagMatrixiitPA3_fPf
 	test esi, esi
-	jz CG_VehSeatOriginForLocalClient_10
+	jz _Z30CG_VehSeatOriginForLocalClientiPf_10
 	mov eax, [ebp-0x24]
 	mov [esi], eax
 	mov eax, [ebp-0x20]
@@ -1995,10 +1995,10 @@ CG_VehSeatOriginForLocalClient:
 	movss xmm0, dword [ebp-0x1c]
 	movss [esi+0x8], xmm0
 	cmp edi, 0x1
-	ja CG_VehSeatOriginForLocalClient_10
+	ja _Z30CG_VehSeatOriginForLocalClientiPf_10
 	addss xmm0, [_float__35_00000000]
 	movss [esi+0x8], xmm0
-CG_VehSeatOriginForLocalClient_10:
+_Z30CG_VehSeatOriginForLocalClientiPf_10:
 	add esp, 0x4c
 	pop ebx
 	pop esi
@@ -2047,7 +2047,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of cg_vehicles_mp:
@@ -2084,7 +2084,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 heli_barrelRotation: resb 0x4
 heli_barrelMaxVelocity: resb 0x4
 heli_barrelSlowdown: resb 0x4

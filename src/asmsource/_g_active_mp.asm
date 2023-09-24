@@ -17,7 +17,6 @@
 	extern BG_WeaponFireRecoil
 	extern crandom
 	extern Vec2Normalize
-	extern g_playerCollisionEjectSpeed
 	extern g_gravity
 	extern G_ModelName
 	extern SL_ConvertToString
@@ -43,7 +42,7 @@
 	extern CL_AddDebugStarWithText
 	extern SV_SetConfigstring
 	extern _Z14G_SafeDObjFreeP9gentity_s
-	extern turret_think_client
+	extern ClientEndFrame_TurretThink_Stub
 	extern memset
 	extern Pmove
 	extern SV_UnlinkEntity
@@ -938,17 +937,9 @@ ClientEndFrame_370:
 	mov byte [ecx+0x16b], 0x0
 	jmp ClientEndFrame_390
 ClientEndFrame_340:
-	mov edx, [eax+0x59c]
-	lea eax, [edx+edx*8]
-	lea eax, [edx+eax*2]
-	mov ecx, eax
-	shl ecx, 0x5
-	add eax, ecx
-	add eax, edx
-	mov edx, level
-	add eax, [edx+0x4]
+	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call turret_think_client
+	call ClientEndFrame_TurretThink_Stub
 	jmp ClientEndFrame_330
 
 

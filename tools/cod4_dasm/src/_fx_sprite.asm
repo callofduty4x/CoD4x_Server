@@ -1,19 +1,19 @@
 ;Imports of fx_sprite:
-	extern R_GetLocalClientNum
+	extern _Z19R_GetLocalClientNumv
 	extern cgArray
-	extern R_ReserveCodeMeshVerts
-	extern R_ReserveCodeMeshIndices
-	extern R_AddCodeMeshDrawSurf
-	extern R_GetCodeMeshVerts
+	extern _Z22R_ReserveCodeMeshVertsiPt
+	extern _Z24R_ReserveCodeMeshIndicesiPP16r_double_index_t
+	extern _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
+	extern _Z18R_GetCodeMeshVertst
 
 ;Exports of fx_sprite:
 	global _GLOBAL__I_spuVertBuffer
 	global g_spriteInfo
-	global FX_BuildSpriteCodeMeshVerts
-	global FX_SpriteAdd
-	global FX_SpriteBegin
-	global FX_SpriteGetInfo
-	global FX_SpriteGenerateVerts
+	global _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi
+	global _Z12FX_SpriteAddP8FxSprite
+	global _Z14FX_SpriteBeginv
+	global _Z16FX_SpriteGetInfov
+	global _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd
 
 
 SECTION .text
@@ -26,21 +26,21 @@ _GLOBAL__I_spuVertBuffer:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -310,7 +310,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;FX_BuildSpriteCodeMeshVerts(Material*, float const*, float, unsigned char const*, int)
-FX_BuildSpriteCodeMeshVerts:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -329,11 +329,11 @@ FX_BuildSpriteCodeMeshVerts:
 	movss xmm6, dword [edx+0x8]
 	movss [ebp-0x70], xmm6
 	test byte [ebp+0x8], 0x1
-	jz FX_BuildSpriteCodeMeshVerts_10
+	jz _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_10
 	addss xmm6, [ebp-0x7c]
 	movss [ebp-0x70], xmm6
-FX_BuildSpriteCodeMeshVerts_10:
-	call R_GetLocalClientNum
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_10:
+	call _Z19R_GetLocalClientNumv
 	mov ebx, cgArray
 	movss xmm0, dword [ebp-0x7c]
 	mulss xmm0, [ebx+0x492f8]
@@ -344,7 +344,7 @@ FX_BuildSpriteCodeMeshVerts_10:
 	movss xmm6, dword [ebp-0x7c]
 	mulss xmm6, [ebx+0x49300]
 	movss [ebp-0x64], xmm6
-	call R_GetLocalClientNum
+	call _Z19R_GetLocalClientNumv
 	movss xmm0, dword [ebp-0x7c]
 	mulss xmm0, [ebx+0x49304]
 	movss [ebp-0x50], xmm0
@@ -354,27 +354,27 @@ FX_BuildSpriteCodeMeshVerts_10:
 	movss xmm6, dword [ebp-0x7c]
 	mulss xmm6, [ebx+0x4930c]
 	movss [ebp-0x58], xmm6
-	call R_GetLocalClientNum
+	call _Z19R_GetLocalClientNumv
 	lea eax, [ebp-0x1a]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x4
-	call R_ReserveCodeMeshVerts
+	call _Z22R_ReserveCodeMeshVertsiPt
 	test al, al
-	jnz FX_BuildSpriteCodeMeshVerts_20
-FX_BuildSpriteCodeMeshVerts_30:
+	jnz _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_20
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_30:
 	add esp, 0xac
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_BuildSpriteCodeMeshVerts_20:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_20:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x6
-	call R_ReserveCodeMeshIndices
+	call _Z24R_ReserveCodeMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_BuildSpriteCodeMeshVerts_30
+	jz _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_30
 	movzx ecx, word [ebp-0x1a]
 	mov edx, [ebp-0x20]
 	lea eax, [ecx+0x1]
@@ -399,7 +399,7 @@ FX_BuildSpriteCodeMeshVerts_20:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x78]
 	mov [esp], eax
-	call R_AddCodeMeshDrawSurf
+	call _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
 	movss xmm0, dword [ebp-0x5c]
 	addss xmm0, [ebp-0x50]
 	movss [ebp-0x44], xmm0
@@ -491,7 +491,7 @@ FX_BuildSpriteCodeMeshVerts_20:
 	movzx eax, word [ebp-0x1a]
 	mov [esp], eax
 	movss [ebp-0x98], xmm5
-	call R_GetCodeMeshVerts
+	call _Z18R_GetCodeMeshVertst
 	mov esi, eax
 	movss xmm0, dword [ebp-0x68]
 	addss xmm0, [ebp-0x44]
@@ -515,11 +515,11 @@ FX_BuildSpriteCodeMeshVerts_20:
 	sar eax, 0xe
 	cmp eax, 0x3ffe
 	movss xmm5, dword [ebp-0x98]
-	jg FX_BuildSpriteCodeMeshVerts_40
+	jg _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_40
 	cmp eax, 0xffffc000
-	jg FX_BuildSpriteCodeMeshVerts_50
+	jg _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_50
 	xor eax, eax
-FX_BuildSpriteCodeMeshVerts_130:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_130:
 	mov ecx, edx
 	or ecx, eax
 	mov dword [ebp-0x28], 0x0
@@ -530,9 +530,9 @@ FX_BuildSpriteCodeMeshVerts_130:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_BuildSpriteCodeMeshVerts_60
+	jle _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_60
 	mov eax, 0x3fff
-FX_BuildSpriteCodeMeshVerts_270:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_270:
 	or edx, eax
 	shl ecx, 0x10
 	lea eax, [edx+ecx]
@@ -561,9 +561,9 @@ FX_BuildSpriteCodeMeshVerts_270:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_BuildSpriteCodeMeshVerts_70
+	jle _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_70
 	mov eax, 0x3fff
-FX_BuildSpriteCodeMeshVerts_250:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_250:
 	mov ebx, edx
 	or ebx, eax
 	mov dword [ebp-0x28], 0x0
@@ -574,9 +574,9 @@ FX_BuildSpriteCodeMeshVerts_250:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_BuildSpriteCodeMeshVerts_80
+	jle _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_80
 	mov eax, 0x3fff
-FX_BuildSpriteCodeMeshVerts_230:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_230:
 	or edx, eax
 	shl ebx, 0x10
 	lea eax, [edx+ebx]
@@ -605,9 +605,9 @@ FX_BuildSpriteCodeMeshVerts_230:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_BuildSpriteCodeMeshVerts_90
+	jle _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_90
 	mov eax, 0x3fff
-FX_BuildSpriteCodeMeshVerts_210:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_210:
 	mov ebx, edx
 	or ebx, eax
 	mov dword [ebp-0x28], 0x3f800000
@@ -618,9 +618,9 @@ FX_BuildSpriteCodeMeshVerts_210:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_BuildSpriteCodeMeshVerts_100
+	jle _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_100
 	mov eax, 0x3fff
-FX_BuildSpriteCodeMeshVerts_190:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_190:
 	or edx, eax
 	shl ebx, 0x10
 	lea eax, [edx+ebx]
@@ -648,9 +648,9 @@ FX_BuildSpriteCodeMeshVerts_190:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_BuildSpriteCodeMeshVerts_110
+	jle _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_110
 	mov eax, 0x3fff
-FX_BuildSpriteCodeMeshVerts_170:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_170:
 	mov ebx, edx
 	or ebx, eax
 	mov dword [ebp-0x28], 0x3f800000
@@ -661,9 +661,9 @@ FX_BuildSpriteCodeMeshVerts_170:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_BuildSpriteCodeMeshVerts_120
+	jle _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_120
 	mov eax, 0x3fff
-FX_BuildSpriteCodeMeshVerts_150:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_150:
 	or edx, eax
 	shl ebx, 0x10
 	lea eax, [edx+ebx]
@@ -676,73 +676,73 @@ FX_BuildSpriteCodeMeshVerts_150:
 	pop edi
 	pop ebp
 	ret
-FX_BuildSpriteCodeMeshVerts_40:
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_40:
 	mov eax, 0x3fff
-	jmp FX_BuildSpriteCodeMeshVerts_130
-FX_BuildSpriteCodeMeshVerts_120:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_130
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_120:
 	cmp eax, 0xffffc000
-	jg FX_BuildSpriteCodeMeshVerts_140
+	jg _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_140
 	xor eax, eax
-	jmp FX_BuildSpriteCodeMeshVerts_150
-FX_BuildSpriteCodeMeshVerts_110:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_150
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_110:
 	cmp eax, 0xffffc000
-	jg FX_BuildSpriteCodeMeshVerts_160
+	jg _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_160
 	xor eax, eax
-	jmp FX_BuildSpriteCodeMeshVerts_170
-FX_BuildSpriteCodeMeshVerts_100:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_170
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_100:
 	cmp eax, 0xffffc000
-	jg FX_BuildSpriteCodeMeshVerts_180
+	jg _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_180
 	xor eax, eax
-	jmp FX_BuildSpriteCodeMeshVerts_190
-FX_BuildSpriteCodeMeshVerts_90:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_190
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_90:
 	cmp eax, 0xffffc000
-	jg FX_BuildSpriteCodeMeshVerts_200
+	jg _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_200
 	xor eax, eax
-	jmp FX_BuildSpriteCodeMeshVerts_210
-FX_BuildSpriteCodeMeshVerts_80:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_210
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_80:
 	cmp eax, 0xffffc000
-	jg FX_BuildSpriteCodeMeshVerts_220
+	jg _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_220
 	xor eax, eax
-	jmp FX_BuildSpriteCodeMeshVerts_230
-FX_BuildSpriteCodeMeshVerts_70:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_230
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_70:
 	cmp eax, 0xffffc000
-	jg FX_BuildSpriteCodeMeshVerts_240
+	jg _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_240
 	xor eax, eax
-	jmp FX_BuildSpriteCodeMeshVerts_250
-FX_BuildSpriteCodeMeshVerts_60:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_250
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_60:
 	cmp eax, 0xffffc000
-	jg FX_BuildSpriteCodeMeshVerts_260
+	jg _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_260
 	xor eax, eax
-	jmp FX_BuildSpriteCodeMeshVerts_270
-FX_BuildSpriteCodeMeshVerts_50:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_270
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_50:
 	and eax, 0x3fff
-	jmp FX_BuildSpriteCodeMeshVerts_130
-FX_BuildSpriteCodeMeshVerts_260:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_130
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_260:
 	and eax, 0x3fff
-	jmp FX_BuildSpriteCodeMeshVerts_270
-FX_BuildSpriteCodeMeshVerts_240:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_270
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_240:
 	and eax, 0x3fff
-	jmp FX_BuildSpriteCodeMeshVerts_250
-FX_BuildSpriteCodeMeshVerts_220:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_250
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_220:
 	and eax, 0x3fff
-	jmp FX_BuildSpriteCodeMeshVerts_230
-FX_BuildSpriteCodeMeshVerts_200:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_230
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_200:
 	and eax, 0x3fff
-	jmp FX_BuildSpriteCodeMeshVerts_210
-FX_BuildSpriteCodeMeshVerts_180:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_210
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_180:
 	and eax, 0x3fff
-	jmp FX_BuildSpriteCodeMeshVerts_190
-FX_BuildSpriteCodeMeshVerts_160:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_190
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_160:
 	and eax, 0x3fff
-	jmp FX_BuildSpriteCodeMeshVerts_170
-FX_BuildSpriteCodeMeshVerts_140:
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_170
+_Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_140:
 	and eax, 0x3fff
-	jmp FX_BuildSpriteCodeMeshVerts_150
+	jmp _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi_150
 	nop
 
 
 ;FX_SpriteAdd(FxSprite*)
-FX_SpriteAdd:
+_Z12FX_SpriteAddP8FxSprite:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -750,7 +750,7 @@ FX_SpriteAdd:
 	mov ebx, [ebp+0x8]
 	mov esi, [g_spriteInfo]
 	cmp esi, 0x60
-	jz FX_SpriteAdd_10
+	jz _Z12FX_SpriteAddP8FxSprite_10
 	mov ecx, g_spriteInfo+0x10
 	mov edx, esi
 	shl edx, 0x5
@@ -772,7 +772,7 @@ FX_SpriteAdd:
 	mov [edx+ecx+0x1c], eax
 	lea eax, [esi+0x1]
 	mov [g_spriteInfo], eax
-FX_SpriteAdd_10:
+_Z12FX_SpriteAddP8FxSprite_10:
 	pop ebx
 	pop esi
 	pop ebp
@@ -780,7 +780,7 @@ FX_SpriteAdd_10:
 
 
 ;FX_SpriteBegin()
-FX_SpriteBegin:
+_Z14FX_SpriteBeginv:
 	push ebp
 	mov ebp, esp
 	mov dword [g_spriteInfo], 0x0
@@ -790,7 +790,7 @@ FX_SpriteBegin:
 
 
 ;FX_SpriteGetInfo()
-FX_SpriteGetInfo:
+_Z16FX_SpriteGetInfov:
 	push ebp
 	mov ebp, esp
 	mov eax, g_spriteInfo
@@ -799,7 +799,7 @@ FX_SpriteGetInfo:
 
 
 ;FX_SpriteGenerateVerts(FxGenerateVertsCmd*)
-FX_SpriteGenerateVerts:
+_Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -811,7 +811,7 @@ FX_SpriteGenerateVerts:
 	mov [ebp-0x38], eax
 	mov edx, [eax]
 	test edx, edx
-	jle FX_SpriteGenerateVerts_10
+	jle _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_10
 	mov dword [ebp-0x3c], 0x0
 	mov edx, [ebp+0x8]
 	add edx, 0x14
@@ -820,8 +820,8 @@ FX_SpriteGenerateVerts:
 	add edi, 0x20
 	mov ebx, eax
 	add ebx, 0x10
-	jmp FX_SpriteGenerateVerts_20
-FX_SpriteGenerateVerts_40:
+	jmp _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_20
+_Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_40:
 	movss xmm2, dword [ebx+0x14]
 	mov eax, [ebx]
 	mov [ebp-0x30], eax
@@ -845,18 +845,18 @@ FX_SpriteGenerateVerts_40:
 	cvtss2sd xmm0, xmm1
 	movsd xmm3, qword [_double_0_00000100]
 	ucomisd xmm3, xmm0
-	jbe FX_SpriteGenerateVerts_30
-FX_SpriteGenerateVerts_60:
+	jbe _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_30
+_Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_60:
 	add dword [ebp-0x3c], 0x1
 	add ebx, 0x20
 	mov eax, [ebp-0x3c]
 	mov edx, [ebp-0x38]
 	cmp eax, [edx]
-	jge FX_SpriteGenerateVerts_10
-FX_SpriteGenerateVerts_20:
+	jge _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_10
+_Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_20:
 	mov esi, [ebx+0x1c]
 	test esi, 0x2
-	jnz FX_SpriteGenerateVerts_40
+	jnz _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_40
 	movss xmm2, dword [ebx+0x18]
 	movss xmm3, dword [ebx+0x14]
 	mov edx, [ebx]
@@ -866,7 +866,7 @@ FX_SpriteGenerateVerts_20:
 	lea edx, [ebx+0x10]
 	mov [ebp-0x24], edx
 	ucomiss xmm2, [_float_0_00000000]
-	jbe FX_SpriteGenerateVerts_50
+	jbe _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_50
 	movss xmm1, dword [ebx+0x4]
 	mov eax, [ebp+0x8]
 	subss xmm1, [eax+0x14]
@@ -883,11 +883,11 @@ FX_SpriteGenerateVerts_20:
 	cvtss2sd xmm0, xmm1
 	movsd xmm4, qword [_double_0_00000100]
 	ucomisd xmm4, xmm0
-	ja FX_SpriteGenerateVerts_60
+	ja _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_60
 	movss [ebp-0x58], xmm1
 	movss [ebp-0x68], xmm2
 	movss [ebp-0x78], xmm3
-	call R_GetLocalClientNum
+	call _Z19R_GetLocalClientNumv
 	movss xmm3, dword [ebp-0x78]
 	movaps xmm0, xmm3
 	mov eax, cgArray
@@ -897,31 +897,31 @@ FX_SpriteGenerateVerts_20:
 	divss xmm0, xmm1
 	movss xmm2, dword [ebp-0x68]
 	ucomiss xmm2, xmm0
-	ja FX_SpriteGenerateVerts_70
+	ja _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_70
 	mov ecx, [ebp-0x24]
-FX_SpriteGenerateVerts_80:
+_Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_80:
 	mov [esp], esi
 	movaps xmm0, xmm3
 	mov edx, [ebp-0x1c]
 	mov eax, [ebp-0x20]
-	call FX_BuildSpriteCodeMeshVerts
+	call _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi
 	add dword [ebp-0x3c], 0x1
 	add ebx, 0x20
 	mov eax, [ebp-0x3c]
 	mov edx, [ebp-0x38]
 	cmp eax, [edx]
-	jl FX_SpriteGenerateVerts_20
-FX_SpriteGenerateVerts_10:
+	jl _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_20
+_Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_10:
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_SpriteGenerateVerts_30:
+_Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_30:
 	movss [ebp-0x58], xmm1
 	movss [ebp-0x68], xmm2
-	call R_GetLocalClientNum
+	call _Z19R_GetLocalClientNumv
 	movss xmm1, dword [ebp-0x58]
 	movss xmm2, dword [ebp-0x68]
 	mulss xmm2, xmm1
@@ -933,16 +933,16 @@ FX_SpriteGenerateVerts_30:
 	movaps xmm0, xmm2
 	mov edx, [ebp-0x28]
 	mov eax, [ebp-0x30]
-	call FX_BuildSpriteCodeMeshVerts
-	jmp FX_SpriteGenerateVerts_60
-FX_SpriteGenerateVerts_70:
+	call _Z27FX_BuildSpriteCodeMeshVertsP8MaterialPKffPKhi
+	jmp _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_60
+_Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_70:
 	divss xmm2, xmm0
 	mulss xmm3, xmm2
 	mov ecx, [ebp-0x24]
-	jmp FX_SpriteGenerateVerts_80
-FX_SpriteGenerateVerts_50:
+	jmp _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_80
+_Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_50:
 	mov ecx, edx
-	jmp FX_SpriteGenerateVerts_80
+	jmp _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd_80
 
 
 ;Initialized global or static variables of fx_sprite:
@@ -983,7 +983,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of fx_sprite:
@@ -1020,7 +1020,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 g_spriteInfo: resb 0xc80
 
 

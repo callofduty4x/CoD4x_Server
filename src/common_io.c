@@ -211,6 +211,22 @@ void QDECL Com_PrintWarning( conChannel_t channel, const char *fmt, ... ) {
         Com_PrintMessage( channel, msg, MSG_WARNING);
 }
 
+void QDECL Com_DPrintWarning( conChannel_t channel, const char *fmt, ... ) {
+	va_list		argptr;
+	char		msg[MAXPRINTMSG];
+
+	if (!Com_IsDeveloper()) {
+		return;
+	}
+
+	memcpy(msg, "^3Warning: ", 12);
+
+	va_start(argptr, fmt);
+	Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
+	va_end(argptr);
+
+    Com_PrintMessage(channel, msg, MSG_WARNING);
+}
 
 /*
 =============

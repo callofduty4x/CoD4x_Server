@@ -353,15 +353,12 @@ unsigned int __cdecl FindVariableIndexInternal2(unsigned int name, unsigned int 
 
 unsigned int __cdecl FindVariableIndexInternal(unsigned int parentId, unsigned int name)
 {
-  VariableValueInternal *parentValue;
-
   assert(parentId != 0);
-
-  parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
-
+#ifndef NDEBUG
+  VariableValueInternal *parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
   assert((parentValue->w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
-
   assert(IsObject( parentValue ));
+#endif
   return FindVariableIndexInternal2(name, (parentId + 101 * name) % (VARIABLELIST_CHILD_SIZE -1) + 1);
 }
 
@@ -936,17 +933,16 @@ unsigned int __cdecl GetNewVariableIndexInternal2(unsigned int parentId, unsigne
 
 unsigned int __cdecl GetVariableIndexInternal(unsigned int parentId, unsigned int name)
 {
-  VariableValueInternal *parentValue; 
+  assert(parentId != 0);
   unsigned int newIndex;
   unsigned int index;
 
-  assert(parentId != 0);
-
-  parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
-
+#ifndef NDEBUG
+  VariableValueInternal *parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
   assert((parentValue->w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
   assert((parentValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   assert(IsObject( parentValue ));
+#endif
 
   index = (parentId + name * 101) % (VARIABLELIST_CHILD_SIZE -1) + 1;
   newIndex = FindVariableIndexInternal2(name, index);
@@ -1128,17 +1124,17 @@ unsigned int __cdecl SGetObjectA(unsigned int id)
 void __regparm2 CopyArray(unsigned int parentId, unsigned int newParentId)
 {
   unsigned int nextSibling;
-  VariableValueInternal *parentValue;
   VariableValueInternal *entryValue;
   int type;
   VariableValueInternal *newEntryValue;
   unsigned int id;
 
-  parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
-
+#ifndef NDEBUG
+  VariableValueInternal *parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
   assert((parentValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   assert(IsObject( parentValue ));
   assert(VAR_TYPE(parentValue) == VAR_ARRAY);
+#endif
 
   id = gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN].nextSibling;
   if ( id )
@@ -1566,7 +1562,6 @@ add_array:
 
 void __cdecl SafeRemoveVariable(unsigned int parentId, unsigned int unsignedValue)
 {
-  VariableValueInternal *entryValue;
   unsigned int index;
   unsigned int id;
 
@@ -1574,10 +1569,12 @@ void __cdecl SafeRemoveVariable(unsigned int parentId, unsigned int unsignedValu
   if ( index )
   {
     id = gScrVarGlob.variableList[index + VARIABLELIST_CHILD_BEGIN].hash.id;
-    entryValue = &gScrVarGlob.variableList[id + VARIABLELIST_CHILD_BEGIN];
 
+#ifndef NDEBUG
+    VariableValueInternal *entryValue = &gScrVarGlob.variableList[id + VARIABLELIST_CHILD_BEGIN];
     assert((entryValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
     assert(!IsObject(entryValue));
+#endif
 
     MakeVariableExternal(index, &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN]);
     FreeChildValue(parentId, id);
@@ -1886,16 +1883,16 @@ void __cdecl ClearVariableValue(unsigned int id)
 
 void __cdecl ClearVariableField(unsigned int parentId, unsigned int name, VariableValue *value)
 {
-  VariableValueInternal *entryValue;
   unsigned int classnum;
   VariableValueInternal *parentValue; 
   unsigned int fieldId;
 
-  entryValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
+#ifndef NDEBUG
+  VariableValueInternal *entryValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
   assert((entryValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   assert(IsObject(entryValue));
-
   assert((VAR_TYPE(entryValue) >= FIRST_OBJECT && VAR_TYPE(entryValue) < FIRST_NONFIELD_OBJECT) || (VAR_TYPE(entryValue) >= FIRST_DEAD_OBJECT));
+#endif
 
   if ( FindVariableIndexInternal(parentId, name) )
   {
@@ -2097,14 +2094,14 @@ unsigned int __cdecl FindLastSibling(unsigned int parentId)
 
 double __regparm1 Scr_GetObjectUsage(unsigned int parentId)
 {
-  VariableValueInternal *parentValue;
   float usage;
   unsigned int id;
 
-  parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
-
+#ifndef NDEBUG
+  VariableValueInternal *parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
   assert((parentValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   assert(IsObject( parentValue ));
+#endif
   
   usage = 1.0;
   for ( id = FindFirstSibling(parentId); id; id = FindNextSibling(id) )
@@ -2857,15 +2854,16 @@ void __cdecl SetVariableFieldValue(unsigned int id, VariableValue *value)
 
 unsigned int __cdecl Scr_GetVariableFieldIndex(unsigned int parentId, unsigned int name)
 {
-  VariableValueInternal *entryValue;
   unsigned int index;
   int type;
   
   assert(parentId != 0);
 
-  entryValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
+#ifndef NDEBUG
+  VariableValueInternal *entryValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
   assert((entryValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   assert(IsObject( entryValue ));
+#endif
 
   type = VAR_TYPE((&gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN]));
   if ( type <= VAR_OBJECT )
@@ -3004,12 +3002,13 @@ static unsigned int Scr_GetNumScriptThreads( )
 static double Scr_GetEndonUsage(unsigned int parentId)
 {
   unsigned int obj;
-  VariableValueInternal *parentValue;
   unsigned int id;
 
-  parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
+#ifndef NDEBUG
+  VariableValueInternal *parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
   assert((parentValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   assert(IsObject( parentValue ));
+#endif
 
   id = FindObjectVariable(gScrVarPub.pauseArrayId, parentId);
   if ( !id )

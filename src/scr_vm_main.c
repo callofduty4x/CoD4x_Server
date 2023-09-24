@@ -298,7 +298,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("strctrlstrip", GScr_StrCtrlStrip, 0 );
 	Scr_AddFunction("toupper", GScr_ToUpper, 0 );
 	Scr_AddFunction("strreplace", GScr_StrReplace, 0 );
-	
+    Scr_AddFunction("usercall", Scr_Usercall, 0);
 }
 
 void Scr_AddStockMethods()
@@ -307,6 +307,7 @@ void Scr_AddStockMethods()
 
     //PlayerCmd
 
+    Scr_AddMethod("usercall", PlayerCmd_Usercall, 0);
 	Scr_AddMethod("giveweapon", PlayerCmd_giveWeapon, 0 );
 	Scr_AddMethod("takeweapon", PlayerCmd_takeWeapon, 0 );
 	Scr_AddMethod("takeallweapons", PlayerCmd_takeAllWeapons, 0 );

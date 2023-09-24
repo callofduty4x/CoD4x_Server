@@ -2990,7 +2990,7 @@ void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
 }
 
 
-int kbitmask[33] =
+unsigned int kbitmask[33] =
 {
   0,
   1,
@@ -3827,8 +3827,10 @@ void MSG_ReadDeltaObjectiveFields(msg_t *msg, int time, objective_t *from, objec
 
 void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_t *to, int count)
 {
+#ifndef NDEBUG
   int alignY;
   int alignX;
+#endif
   int numFields;
   unsigned int lc;
   int i, y;
@@ -3851,12 +3853,15 @@ void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_
 		MSG_ReadDeltaField(msg, time, &from[i], &to[i], &hudElemFields[y], 0, 0);
 	}
 
-    for ( ; y < numFields; ++y )
-    {
+	/*
+    	for ( ; y < numFields; ++y )
+    	{
 		int offset = hudElemFields[y].offset;
 		((byte*)&to[i])[offset] = ((byte*)&from[i])[offset];
 	}
-
+	*/
+	  
+#ifndef NDEBUG
 	assertx((!(from[i].alignOrg & ~15)), "(from[i].alignOrg) = %i", from[i].alignOrg);
 	assertx((!(to[i].alignOrg & ~15)), "(to[i].alignOrg) = %i", to[i].alignOrg);
 
@@ -3871,6 +3876,7 @@ void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_
 	
 	alignY = to[i].alignOrg & 3;
 	assertx((alignY == 0 || alignY == 1 || alignY == 2), "(to[i].alignOrg) = %i", to[i].alignOrg);
+#endif
 	
   }
   while ( inuse < count && to[inuse].type )
@@ -3925,12 +3931,14 @@ void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, cons
 		MSG_ReadDeltaField(msg, time, from, to, &stateFields[i], print, noXor);	
 	}
 
+	/*
 	for ( i = lc; i < numFields; ++i )
 	{
 		int offset = stateFields[i].offset;
 		*(uint32_t *)&((byte*)to)[offset] = *(uint32_t *)&((byte*)from)[offset];
 	}
-
+	*/
+	
 	if ( !readOriginAndVel )
 	{
 #ifndef DEDICATEDONLY

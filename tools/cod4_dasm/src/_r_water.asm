@@ -2,18 +2,18 @@
 	extern sin
 	extern FFT_Init
 	extern r_picmip_water
-	extern Image_UploadData
-	extern R_DownsampleMipMapBilinear
+	extern _Z16Image_UploadDataPK8GfxImage10_D3DFORMAT17_D3DCUBEMAP_FACESjPKh
+	extern _Z26R_DownsampleMipMapBilinearPKhiiiPh
 	extern FFT
 
 ;Exports of r_water:
 	global _GLOBAL__I__Z28R_UploadWaterTextureInternalPv
 	global waterGlobStatic
 	global waterGlob
-	global R_InitWater
-	global Load_PicmipWater
-	global R_UploadWaterTexture
-	global R_UploadWaterTextureInternal
+	global _Z11R_InitWaterv
+	global _Z16Load_PicmipWaterPP7water_t
+	global _Z20R_UploadWaterTextureP7water_tf
+	global _Z28R_UploadWaterTextureInternalPv
 
 
 SECTION .text
@@ -26,21 +26,21 @@ _GLOBAL__I__Z28R_UploadWaterTextureInternalPv:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -310,7 +310,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_InitWater()
-R_InitWater:
+_Z11R_InitWaterv:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -318,7 +318,7 @@ R_InitWater:
 	sub esp, 0x20
 	xor ebx, ebx
 	mov esi, waterGlobStatic
-R_InitWater_10:
+_Z11R_InitWaterv_10:
 	cvtsi2ss xmm0, ebx
 	mulss xmm0, [_float_0_35156250]
 	cvtss2sd xmm0, xmm0
@@ -331,7 +331,7 @@ R_InitWater_10:
 	add ebx, 0x1
 	add esi, 0x4
 	cmp ebx, 0x400
-	jnz R_InitWater_10
+	jnz _Z11R_InitWaterv_10
 	mov dword [esp+0x4], waterGlobStatic+0x1000
 	mov dword [esp], waterGlobStatic+0x1800
 	call FFT_Init
@@ -343,7 +343,7 @@ R_InitWater_10:
 
 
 ;Load_PicmipWater(water_t**)
-Load_PicmipWater:
+_Z16Load_PicmipWaterPP7water_t:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -369,8 +369,8 @@ Load_PicmipWater:
 	cmovg eax, edi
 	mov [ebp-0x18], eax
 	cmp [ebp-0x1c], edx
-	jz Load_PicmipWater_10
-Load_PicmipWater_60:
+	jz _Z16Load_PicmipWaterPP7water_t_10
+_Z16Load_PicmipWaterPP7water_t_60:
 	mov eax, edx
 	cdq
 	idiv dword [ebp-0x1c]
@@ -382,7 +382,7 @@ Load_PicmipWater_60:
 	mov edi, [ebp-0x18]
 	mov [eax+0x10], edi
 	test edx, edx
-	jle Load_PicmipWater_20
+	jle _Z16Load_PicmipWaterPP7water_t_20
 	mov eax, [ebp-0x24]
 	sub eax, 0x1
 	imul eax, [ebp-0x24]
@@ -391,14 +391,14 @@ Load_PicmipWater_60:
 	xor edi, edi
 	mov dword [ebp-0x10], 0x0
 	mov dword [ebp-0x14], 0x0
-Load_PicmipWater_50:
+_Z16Load_PicmipWaterPP7water_t_50:
 	mov eax, [ebp-0x18]
 	test eax, eax
-	jle Load_PicmipWater_30
+	jle _Z16Load_PicmipWaterPP7water_t_30
 	mov esi, [ebp-0x10]
 	shl esi, 0x3
 	xor ebx, ebx
-Load_PicmipWater_40:
+_Z16Load_PicmipWaterPP7water_t_40:
 	mov edx, [ebp+0x8]
 	mov eax, [edx]
 	mov ecx, [eax+0x4]
@@ -411,49 +411,49 @@ Load_PicmipWater_40:
 	add ebx, 0x1
 	add esi, 0x8
 	cmp [ebp-0x18], ebx
-	jnz Load_PicmipWater_40
-Load_PicmipWater_30:
+	jnz _Z16Load_PicmipWaterPP7water_t_40
+_Z16Load_PicmipWaterPP7water_t_30:
 	add edi, [ebp-0x20]
 	add dword [ebp-0x14], 0x1
 	mov esi, [ebp-0x14]
 	cmp [ebp-0x1c], esi
-	jnz Load_PicmipWater_50
-Load_PicmipWater_20:
+	jnz _Z16Load_PicmipWaterPP7water_t_50
+_Z16Load_PicmipWaterPP7water_t_20:
 	add esp, 0x18
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Load_PicmipWater_10:
+_Z16Load_PicmipWaterPP7water_t_10:
 	cmp eax, esi
-	jnz Load_PicmipWater_60
-	jmp Load_PicmipWater_20
+	jnz _Z16Load_PicmipWaterPP7water_t_60
+	jmp _Z16Load_PicmipWaterPP7water_t_20
 
 
 ;R_UploadWaterTexture(water_t*, float)
-R_UploadWaterTexture:
+_Z20R_UploadWaterTextureP7water_tf:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	movss xmm0, dword [ebp+0xc]
 	mov eax, [ebp+0x8]
 	ucomiss xmm0, [eax]
-	jp R_UploadWaterTexture_10
-	jnz R_UploadWaterTexture_10
+	jp _Z20R_UploadWaterTextureP7water_tf_10
+	jnz _Z20R_UploadWaterTextureP7water_tf_10
 	leave
 	ret
-R_UploadWaterTexture_10:
+_Z20R_UploadWaterTextureP7water_tf_10:
 	movss [eax], xmm0
 	lea eax, [ebp+0x8]
 	mov [esp], eax
-	call R_UploadWaterTextureInternal
+	call _Z28R_UploadWaterTextureInternalPv
 	leave
 	ret
 
 
 ;R_UploadWaterTextureInternal(void*)
-R_UploadWaterTextureInternal:
+_Z28R_UploadWaterTextureInternalPv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -476,14 +476,14 @@ R_UploadWaterTextureInternal:
 	mov edx, [edx+0x8]
 	mov ecx, [ecx+0x4]
 	test esi, esi
-	jle R_UploadWaterTextureInternal_10
+	jle _Z28R_UploadWaterTextureInternalPv_10
 	xor edi, edi
 	mov ebx, waterGlob
 	xorps xmm5, xmm5
 	movss xmm3, dword [_data16_4f000000]
 	movss xmm4, dword [_data16_4f800000]
-	jmp R_UploadWaterTextureInternal_20
-R_UploadWaterTextureInternal_40:
+	jmp _Z28R_UploadWaterTextureInternalPv_20
+_Z28R_UploadWaterTextureInternalPv_40:
 	mov dword [ebx], 0x0
 	mov dword [ebx+0x4], 0x0
 	add edi, 0x1
@@ -491,11 +491,11 @@ R_UploadWaterTextureInternal_40:
 	add ecx, 0x8
 	add ebx, 0x8
 	cmp esi, edi
-	jz R_UploadWaterTextureInternal_30
-R_UploadWaterTextureInternal_20:
+	jz _Z28R_UploadWaterTextureInternalPv_30
+_Z28R_UploadWaterTextureInternalPv_20:
 	mov eax, [edx]
 	test eax, eax
-	jz R_UploadWaterTextureInternal_40
+	jz _Z28R_UploadWaterTextureInternalPv_40
 	movaps xmm0, xmm6
 	mulss xmm0, [edx]
 	maxss xmm0, xmm5
@@ -527,40 +527,40 @@ R_UploadWaterTextureInternal_20:
 	add ecx, 0x8
 	add ebx, 0x8
 	cmp esi, edi
-	jnz R_UploadWaterTextureInternal_20
-R_UploadWaterTextureInternal_30:
+	jnz _Z28R_UploadWaterTextureInternalPv_20
+_Z28R_UploadWaterTextureInternalPv_30:
 	mov eax, [ebp-0x48]
 	mov eax, [eax+0xc]
 	mov [ebp-0x7c], eax
-R_UploadWaterTextureInternal_10:
+_Z28R_UploadWaterTextureInternalPv_10:
 	cmp dword [ebp-0x7c], 0x1
-	jz R_UploadWaterTextureInternal_50
+	jz _Z28R_UploadWaterTextureInternalPv_50
 	mov dword [ebp-0x44], 0x0
 	mov edx, 0x1
-R_UploadWaterTextureInternal_60:
+_Z28R_UploadWaterTextureInternalPv_60:
 	add dword [ebp-0x44], 0x1
 	mov eax, edx
 	movzx ecx, byte [ebp-0x44]
 	shl eax, cl
 	cmp [ebp-0x7c], eax
-	jnz R_UploadWaterTextureInternal_60
-R_UploadWaterTextureInternal_370:
+	jnz _Z28R_UploadWaterTextureInternalPv_60
+_Z28R_UploadWaterTextureInternalPv_370:
 	mov ebx, [ebp-0x48]
 	mov edi, [ebx+0x10]
 	test edi, edi
-	jg R_UploadWaterTextureInternal_70
-R_UploadWaterTextureInternal_320:
+	jg _Z28R_UploadWaterTextureInternalPv_70
+_Z28R_UploadWaterTextureInternalPv_320:
 	mov esi, [ebp-0x7c]
 	test esi, esi
-	jz R_UploadWaterTextureInternal_80
+	jz _Z28R_UploadWaterTextureInternalPv_80
 	mov dword [ebp-0x40], 0x0
-R_UploadWaterTextureInternal_100:
+_Z28R_UploadWaterTextureInternalPv_100:
 	add dword [ebp-0x40], 0x1
 	mov edx, [ebp-0x40]
 	cmp [ebp-0x7c], edx
-	jbe R_UploadWaterTextureInternal_90
+	jbe _Z28R_UploadWaterTextureInternalPv_90
 	test edx, edx
-	jz R_UploadWaterTextureInternal_100
+	jz _Z28R_UploadWaterTextureInternalPv_100
 	mov eax, [ebp-0x7c]
 	imul eax, edx
 	shl eax, 0x3
@@ -568,7 +568,7 @@ R_UploadWaterTextureInternal_100:
 	xor edi, edi
 	mov edx, eax
 	mov ebx, eax
-R_UploadWaterTextureInternal_110:
+_Z28R_UploadWaterTextureInternalPv_110:
 	mov eax, [edx+waterGlob]
 	mov edx, [edx+waterGlob+0x4]
 	mov [ebp-0xa0], eax
@@ -589,30 +589,30 @@ R_UploadWaterTextureInternal_110:
 	add ebx, 0x8
 	mov [ebp-0x1c], ebx
 	cmp [ebp-0x40], edi
-	jz R_UploadWaterTextureInternal_100
+	jz _Z28R_UploadWaterTextureInternalPv_100
 	mov edx, ebx
 	mov ebx, [ebp-0x1c]
-	jmp R_UploadWaterTextureInternal_110
-R_UploadWaterTextureInternal_90:
+	jmp _Z28R_UploadWaterTextureInternalPv_110
+_Z28R_UploadWaterTextureInternalPv_90:
 	mov ecx, [ebp-0x48]
 	mov ecx, [ecx+0xc]
 	mov [ebp-0x7c], ecx
-R_UploadWaterTextureInternal_80:
+_Z28R_UploadWaterTextureInternalPv_80:
 	mov ebx, [ebp-0x7c]
 	test ebx, ebx
-	jg R_UploadWaterTextureInternal_120
-R_UploadWaterTextureInternal_360:
+	jg _Z28R_UploadWaterTextureInternalPv_120
+_Z28R_UploadWaterTextureInternalPv_360:
 	mov ecx, [ebp-0x7c]
 	test ecx, ecx
-	jz R_UploadWaterTextureInternal_130
+	jz _Z28R_UploadWaterTextureInternalPv_130
 	mov dword [ebp-0x3c], 0x0
-R_UploadWaterTextureInternal_150:
+_Z28R_UploadWaterTextureInternalPv_150:
 	add dword [ebp-0x3c], 0x1
 	mov edx, [ebp-0x3c]
 	cmp [ebp-0x7c], edx
-	jbe R_UploadWaterTextureInternal_140
+	jbe _Z28R_UploadWaterTextureInternalPv_140
 	test edx, edx
-	jz R_UploadWaterTextureInternal_150
+	jz _Z28R_UploadWaterTextureInternalPv_150
 	mov eax, [ebp-0x7c]
 	imul eax, edx
 	shl eax, 0x3
@@ -620,7 +620,7 @@ R_UploadWaterTextureInternal_150:
 	xor edi, edi
 	mov edx, eax
 	mov ebx, eax
-R_UploadWaterTextureInternal_160:
+_Z28R_UploadWaterTextureInternalPv_160:
 	mov eax, [edx+waterGlob]
 	mov edx, [edx+waterGlob+0x4]
 	mov [ebp-0xa0], eax
@@ -641,11 +641,11 @@ R_UploadWaterTextureInternal_160:
 	add ebx, 0x8
 	mov [ebp-0x20], ebx
 	cmp [ebp-0x3c], edi
-	jz R_UploadWaterTextureInternal_150
+	jz _Z28R_UploadWaterTextureInternalPv_150
 	mov edx, ebx
 	mov ebx, [ebp-0x20]
-	jmp R_UploadWaterTextureInternal_160
-R_UploadWaterTextureInternal_140:
+	jmp _Z28R_UploadWaterTextureInternalPv_160
+_Z28R_UploadWaterTextureInternalPv_140:
 	mov ecx, [ebp-0x48]
 	mov ecx, [ecx+0xc]
 	mov [ebp-0x7c], ecx
@@ -654,15 +654,15 @@ R_UploadWaterTextureInternal_140:
 	imul eax, [ebx+0x10]
 	mov [ebp-0xa4], eax
 	test eax, eax
-	js R_UploadWaterTextureInternal_170
-R_UploadWaterTextureInternal_210:
+	js _Z28R_UploadWaterTextureInternalPv_170
+_Z28R_UploadWaterTextureInternalPv_210:
 	cvtsi2ss xmm0, eax
 	movss xmm4, dword [_float_1_00000000]
 	divss xmm4, xmm0
 	mov edx, [ebp-0xa4]
 	test edx, edx
-	jnz R_UploadWaterTextureInternal_180
-R_UploadWaterTextureInternal_220:
+	jnz _Z28R_UploadWaterTextureInternalPv_180
+_Z28R_UploadWaterTextureInternalPv_220:
 	mov dword [esp+0x10], waterGlob+0x8000
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x0
@@ -670,19 +670,19 @@ R_UploadWaterTextureInternal_220:
 	mov edx, [ebp-0x48]
 	mov eax, [edx+0x40]
 	mov [esp], eax
-	call Image_UploadData
+	call _Z16Image_UploadDataPK8GfxImage10_D3DFORMAT17_D3DCUBEMAP_FACESjPKh
 	mov ecx, [ebp-0x48]
 	mov ebx, [ecx+0xc]
 	cmp ebx, 0x1
-	jle R_UploadWaterTextureInternal_190
+	jle _Z28R_UploadWaterTextureInternalPv_190
 	mov edi, 0x1
-R_UploadWaterTextureInternal_200:
+_Z28R_UploadWaterTextureInternalPv_200:
 	mov dword [esp+0x10], waterGlob+0x8000
 	mov dword [esp+0xc], 0x1
 	mov [esp+0x8], ebx
 	mov [esp+0x4], ebx
 	mov dword [esp], waterGlob+0x8000
-	call R_DownsampleMipMapBilinear
+	call _Z26R_DownsampleMipMapBilinearPKhiiiPh
 	mov dword [esp+0x10], waterGlob+0x8000
 	mov [esp+0xc], edi
 	mov dword [esp+0x8], 0x0
@@ -690,26 +690,26 @@ R_UploadWaterTextureInternal_200:
 	mov edx, [ebp-0x48]
 	mov eax, [edx+0x40]
 	mov [esp], eax
-	call Image_UploadData
+	call _Z16Image_UploadDataPK8GfxImage10_D3DFORMAT17_D3DCUBEMAP_FACESjPKh
 	sar ebx, 1
 	add edi, 0x1
 	cmp ebx, 0x1
-	jg R_UploadWaterTextureInternal_200
-R_UploadWaterTextureInternal_190:
+	jg _Z28R_UploadWaterTextureInternalPv_200
+_Z28R_UploadWaterTextureInternalPv_190:
 	add esp, 0xbc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_UploadWaterTextureInternal_130:
+_Z28R_UploadWaterTextureInternalPv_130:
 	mov eax, [ebp-0x7c]
 	mov ebx, [ebp-0x48]
 	imul eax, [ebx+0x10]
 	mov [ebp-0xa4], eax
 	test eax, eax
-	jns R_UploadWaterTextureInternal_210
-R_UploadWaterTextureInternal_170:
+	jns _Z28R_UploadWaterTextureInternalPv_210
+_Z28R_UploadWaterTextureInternalPv_170:
 	shr eax, 1
 	mov edx, [ebp-0xa4]
 	and edx, 0x1
@@ -720,8 +720,8 @@ R_UploadWaterTextureInternal_170:
 	divss xmm4, xmm0
 	mov edx, [ebp-0xa4]
 	test edx, edx
-	jz R_UploadWaterTextureInternal_220
-R_UploadWaterTextureInternal_180:
+	jz _Z28R_UploadWaterTextureInternalPv_220
+_Z28R_UploadWaterTextureInternalPv_180:
 	mov dword [ebp-0x34], waterGlob+0x8
 	mov dword [ebp-0x30], waterGlob+0xc
 	mov dword [ebp-0x2c], waterGlob+0x10
@@ -732,8 +732,8 @@ R_UploadWaterTextureInternal_180:
 	mov esi, waterGlob
 	mov ebx, waterGlob+0x4
 	movss xmm5, dword [_float_255_99899292]
-	jmp R_UploadWaterTextureInternal_230
-R_UploadWaterTextureInternal_270:
+	jmp _Z28R_UploadWaterTextureInternalPv_230
+_Z28R_UploadWaterTextureInternalPv_270:
 	movaps xmm0, xmm5
 	cvttss2si eax, xmm0
 	mov [ebp-0x4c], al
@@ -743,10 +743,10 @@ R_UploadWaterTextureInternal_270:
 	subss xmm0, [_float_1_00000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jb R_UploadWaterTextureInternal_240
-R_UploadWaterTextureInternal_280:
+	jb _Z28R_UploadWaterTextureInternalPv_240
+_Z28R_UploadWaterTextureInternalPv_280:
 	movaps xmm0, xmm5
-R_UploadWaterTextureInternal_290:
+_Z28R_UploadWaterTextureInternalPv_290:
 	cvttss2si eax, xmm0
 	mov ecx, [ebp-0x4c]
 	mov ch, al
@@ -757,9 +757,9 @@ R_UploadWaterTextureInternal_290:
 	subss xmm0, [_float_1_00000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jb R_UploadWaterTextureInternal_250
+	jb _Z28R_UploadWaterTextureInternalPv_250
 	movaps xmm0, xmm5
-R_UploadWaterTextureInternal_340:
+_Z28R_UploadWaterTextureInternalPv_340:
 	cvttss2si eax, xmm0
 	movzx eax, al
 	shl eax, 0x10
@@ -771,9 +771,9 @@ R_UploadWaterTextureInternal_340:
 	subss xmm0, [_float_1_00000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jb R_UploadWaterTextureInternal_260
+	jb _Z28R_UploadWaterTextureInternalPv_260
 	movaps xmm0, xmm5
-R_UploadWaterTextureInternal_330:
+_Z28R_UploadWaterTextureInternalPv_330:
 	cvttss2si eax, xmm0
 	shl eax, 0x18
 	and dword [ebp-0x4c], 0xffffff
@@ -792,8 +792,8 @@ R_UploadWaterTextureInternal_330:
 	mov eax, edx
 	sub eax, waterGlob+0x8000
 	cmp eax, [ebp-0xa4]
-	jae R_UploadWaterTextureInternal_220
-R_UploadWaterTextureInternal_230:
+	jae _Z28R_UploadWaterTextureInternalPv_220
+_Z28R_UploadWaterTextureInternalPv_230:
 	movss xmm2, dword [esi]
 	movss xmm3, dword [ebx]
 	mov ecx, [ebp-0x34]
@@ -829,7 +829,7 @@ R_UploadWaterTextureInternal_230:
 	subss xmm0, [_float_1_00000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jae R_UploadWaterTextureInternal_270
+	jae _Z28R_UploadWaterTextureInternalPv_270
 	movaps xmm0, xmm2
 	mulss xmm0, xmm5
 	cvttss2si eax, xmm0
@@ -840,18 +840,18 @@ R_UploadWaterTextureInternal_230:
 	subss xmm0, [_float_1_00000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jae R_UploadWaterTextureInternal_280
-R_UploadWaterTextureInternal_240:
+	jae _Z28R_UploadWaterTextureInternalPv_280
+_Z28R_UploadWaterTextureInternalPv_240:
 	movaps xmm0, xmm1
 	mulss xmm0, xmm5
-	jmp R_UploadWaterTextureInternal_290
-R_UploadWaterTextureInternal_70:
+	jmp _Z28R_UploadWaterTextureInternalPv_290
+_Z28R_UploadWaterTextureInternalPv_70:
 	xor ebx, ebx
 	mov edx, [ebp-0x48]
-	jmp R_UploadWaterTextureInternal_300
-R_UploadWaterTextureInternal_310:
+	jmp _Z28R_UploadWaterTextureInternalPv_300
+_Z28R_UploadWaterTextureInternalPv_310:
 	mov edx, ecx
-R_UploadWaterTextureInternal_300:
+_Z28R_UploadWaterTextureInternalPv_300:
 	mov dword [esp+0xc], waterGlobStatic+0x1000
 	mov dword [esp+0x8], waterGlobStatic+0x1800
 	mov eax, [ebp-0x44]
@@ -864,21 +864,21 @@ R_UploadWaterTextureInternal_300:
 	add ebx, 0x1
 	mov ecx, [ebp-0x48]
 	cmp [ecx+0x10], ebx
-	jg R_UploadWaterTextureInternal_310
+	jg _Z28R_UploadWaterTextureInternalPv_310
 	mov ebx, [ecx+0xc]
 	mov [ebp-0x7c], ebx
-	jmp R_UploadWaterTextureInternal_320
-R_UploadWaterTextureInternal_260:
+	jmp _Z28R_UploadWaterTextureInternalPv_320
+_Z28R_UploadWaterTextureInternalPv_260:
 	movaps xmm0, xmm1
 	mulss xmm0, xmm5
-	jmp R_UploadWaterTextureInternal_330
-R_UploadWaterTextureInternal_250:
+	jmp _Z28R_UploadWaterTextureInternalPv_330
+_Z28R_UploadWaterTextureInternalPv_250:
 	movaps xmm0, xmm1
 	mulss xmm0, xmm5
-	jmp R_UploadWaterTextureInternal_340
-R_UploadWaterTextureInternal_120:
+	jmp _Z28R_UploadWaterTextureInternalPv_340
+_Z28R_UploadWaterTextureInternalPv_120:
 	xor ebx, ebx
-R_UploadWaterTextureInternal_350:
+_Z28R_UploadWaterTextureInternalPv_350:
 	mov dword [esp+0xc], waterGlobStatic+0x1000
 	mov dword [esp+0x8], waterGlobStatic+0x1800
 	mov eax, [ebp-0x44]
@@ -894,11 +894,11 @@ R_UploadWaterTextureInternal_350:
 	mov ecx, [ecx+0xc]
 	mov [ebp-0x7c], ecx
 	cmp ecx, ebx
-	jg R_UploadWaterTextureInternal_350
-	jmp R_UploadWaterTextureInternal_360
-R_UploadWaterTextureInternal_50:
+	jg _Z28R_UploadWaterTextureInternalPv_350
+	jmp _Z28R_UploadWaterTextureInternalPv_360
+_Z28R_UploadWaterTextureInternalPv_50:
 	mov dword [ebp-0x44], 0x0
-	jmp R_UploadWaterTextureInternal_370
+	jmp _Z28R_UploadWaterTextureInternalPv_370
 	nop
 
 
@@ -940,7 +940,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x2891cb, 0x2891d4, 0x2891dd, 0x2891e6, 0x2891ef, 0x2891f8, 0x289201, 0x28920a, 0x289213, 0x28921e, 0x289227, 0x289230, 0x289239, 0x289242, 0x28925d, 0x28927b, 0x289284, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of r_water:
@@ -977,7 +977,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 waterGlobStatic: resb 0x1c00
 waterGlob: resb 0x9000
 

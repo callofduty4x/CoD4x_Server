@@ -8,11 +8,11 @@
 #define PMF_LADDER 0x8
 #define JUMP_LAND_SLOWDOWN_TIME 1800
 
-cvar_t* jump_height;
-cvar_t* jump_stepSize;
-cvar_t* jump_slowdownEnable;
-cvar_t* jump_ladderPushVel;
-cvar_t* jump_spreadAdd;
+extern "C" cvar_t* jump_height;
+extern "C" cvar_t* jump_stepSize;
+extern "C" cvar_t* jump_slowdownEnable;
+extern "C" cvar_t* jump_ladderPushVel;
+extern "C" cvar_t* jump_spreadAdd;
 
 extern "C" float Dirty_GetJumpHeight(unsigned int num);
 

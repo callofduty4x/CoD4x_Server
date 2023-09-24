@@ -1,5 +1,6 @@
 ;Imports of CDirect3DSwapChain:
 	extern _ZdlPv
+	extern _ZTI8IUnknown
 
 ;Exports of CDirect3DSwapChain:
 	global _ZN18CDirect3DSwapChain13GetBackBufferEj19_D3DBACKBUFFER_TYPEPP17IDirect3DSurface9
@@ -16,6 +17,8 @@
 	global _ZN18CDirect3DSwapChainC1Ev
 	global _ZN18CDirect3DSwapChainD0Ev
 	global _ZN18CDirect3DSwapChainD1Ev
+	global _ZTI18CDirect3DSwapChain
+	global _ZTI19IDirect3DSwapChain9
 	global _ZTV18CDirect3DSwapChain
 
 
@@ -222,8 +225,12 @@ SECTION .data
 
 ;Initialized constant data of CDirect3DSwapChain:
 SECTION .rdata
+;VTypeInfoTable for CDirect3DSwapChain:
+_ZTI18CDirect3DSwapChain: dd 0x8, _cstring_18cdirect3dswapc, _ZTI19IDirect3DSwapChain9, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for IDirect3DSwapChain9:
+_ZTI19IDirect3DSwapChain9: dd 0x8, _cstring_19idirect3dswapc, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CDirect3DSwapChain:
-_ZTV18CDirect3DSwapChain: dd 0x0, 0x3b49c0, _ZN18CDirect3DSwapChain14QueryInterfaceERK5_GUIDPPv, _ZN18CDirect3DSwapChain6AddRefEv, _ZN18CDirect3DSwapChain7ReleaseEv, _ZN18CDirect3DSwapChain7PresentEPK7tagRECTS2_P6HWND__PK8_RGNDATAm, _ZN18CDirect3DSwapChain18GetFrontBufferDataEP17IDirect3DSurface9, _ZN18CDirect3DSwapChain13GetBackBufferEj19_D3DBACKBUFFER_TYPEPP17IDirect3DSurface9, _ZN18CDirect3DSwapChain15GetRasterStatusEP17_D3DRASTER_STATUS, _ZN18CDirect3DSwapChain14GetDisplayModeEP15_D3DDISPLAYMODE, _ZN18CDirect3DSwapChain9GetDeviceEPP16IDirect3DDevice9, _ZN18CDirect3DSwapChain20GetPresentParametersEP23_D3DPRESENT_PARAMETERS_, _ZN18CDirect3DSwapChainD1Ev, _ZN18CDirect3DSwapChainD0Ev, 0x0, 0x0
+_ZTV18CDirect3DSwapChain: dd 0x0, _ZTI18CDirect3DSwapChain, _ZN18CDirect3DSwapChain14QueryInterfaceERK5_GUIDPPv, _ZN18CDirect3DSwapChain6AddRefEv, _ZN18CDirect3DSwapChain7ReleaseEv, _ZN18CDirect3DSwapChain7PresentEPK7tagRECTS2_P6HWND__PK8_RGNDATAm, _ZN18CDirect3DSwapChain18GetFrontBufferDataEP17IDirect3DSurface9, _ZN18CDirect3DSwapChain13GetBackBufferEj19_D3DBACKBUFFER_TYPEPP17IDirect3DSurface9, _ZN18CDirect3DSwapChain15GetRasterStatusEP17_D3DRASTER_STATUS, _ZN18CDirect3DSwapChain14GetDisplayModeEP15_D3DDISPLAYMODE, _ZN18CDirect3DSwapChain9GetDeviceEPP16IDirect3DDevice9, _ZN18CDirect3DSwapChain20GetPresentParametersEP23_D3DPRESENT_PARAMETERS_, _ZN18CDirect3DSwapChainD1Ev, _ZN18CDirect3DSwapChainD0Ev, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of CDirect3DSwapChain:
@@ -232,6 +239,8 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
+_cstring_18cdirect3dswapc:		db "18CDirect3DSwapChain",0
+_cstring_19idirect3dswapc:		db "19IDirect3DSwapChain9",0
 
 
 

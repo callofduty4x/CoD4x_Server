@@ -1,30 +1,30 @@
 ;Imports of rb_debug:
 	extern tess
 	extern gfxCmdBufSourceState
-	extern R_Set3D
-	extern RB_EndTessSurface
-	extern R_ConvertColorToBytes
+	extern _Z7R_Set3DP20GfxCmdBufSourceState
+	extern _Z17RB_EndTessSurfacev
+	extern _Z21R_ConvertColorToBytesPKfPh
 	extern backEnd
-	extern RB_DrawTextInSpace
-	extern RB_DrawLines3D
+	extern _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m
+	extern _Z14RB_DrawLines3DiiPK14GfxPointVertexh
 	extern backEndData
 	extern sin
-	extern va
-	extern R_AddDebugString
+	extern _Z2vaPKcz
+	extern _Z16R_AddDebugStringP12DebugGlobalsPKfS2_fPKc
 	extern rgp
-	extern RB_BeginSurface
-	extern RB_TessOverflow
+	extern _Z15RB_BeginSurfacePK8Material21MaterialTechniqueType
+	extern _Z15RB_TessOverflowv
 
 ;Exports of rb_debug:
 	global _GLOBAL__I__Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex
 	global g_debugExternLineVerts
 	global g_debugLineVerts
 	global g_debugPolyVerts
-	global RB_DrawDebugStrings
-	global RB_DrawDebugLines
-	global RB_DrawDebug
-	global RB_AddDebugLine
-	global RB_DrawDebugPolys
+	global _Z19RB_DrawDebugStringsP15trDebugString_ti
+	global _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex
+	global _Z12RB_DrawDebugPK12GfxViewParms
+	global _Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex
+	global _Z17RB_DrawDebugPolysv
 
 
 SECTION .text
@@ -37,21 +37,21 @@ _GLOBAL__I__Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -321,7 +321,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;RB_DrawDebugStrings(trDebugString_t*, int)
-RB_DrawDebugStrings:
+_Z19RB_DrawDebugStringsP15trDebugString_ti:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -331,37 +331,37 @@ RB_DrawDebugStrings:
 	mov ebx, eax
 	mov esi, edx
 	test edx, edx
-	jz RB_DrawDebugStrings_10
+	jz _Z19RB_DrawDebugStringsP15trDebugString_ti_10
 	mov eax, tess
 	mov edx, [eax+0x22a948]
 	test edx, edx
-	jnz RB_DrawDebugStrings_20
+	jnz _Z19RB_DrawDebugStringsP15trDebugString_ti_20
 	mov edi, gfxCmdBufSourceState
 	mov [esp], edi
-	call R_Set3D
+	call _Z7R_Set3DP20GfxCmdBufSourceState
 	test esi, esi
-	jg RB_DrawDebugStrings_30
-RB_DrawDebugStrings_60:
+	jg _Z19RB_DrawDebugStringsP15trDebugString_ti_30
+_Z19RB_DrawDebugStringsP15trDebugString_ti_60:
 	mov eax, tess
 	mov eax, [eax+0x22a948]
 	test eax, eax
-	jnz RB_DrawDebugStrings_40
-RB_DrawDebugStrings_10:
+	jnz _Z19RB_DrawDebugStringsP15trDebugString_ti_40
+_Z19RB_DrawDebugStringsP15trDebugString_ti_10:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawDebugStrings_40:
-	call RB_EndTessSurface
+_Z19RB_DrawDebugStringsP15trDebugString_ti_40:
+	call _Z17RB_EndTessSurfacev
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawDebugStrings_30:
+_Z19RB_DrawDebugStringsP15trDebugString_ti_30:
 	lea eax, [edi+0xdd0]
 	mov [ebp-0x48], eax
 	lea eax, [edi+0xdd4]
@@ -371,12 +371,12 @@ RB_DrawDebugStrings_30:
 	lea eax, [edi+0xde0]
 	mov [ebp-0x3c], eax
 	mov dword [ebp-0x4c], 0x0
-RB_DrawDebugStrings_50:
+_Z19RB_DrawDebugStringsP15trDebugString_ti_50:
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	lea eax, [ebx+0xc]
 	mov [esp], eax
-	call R_ConvertColorToBytes
+	call _Z21R_ConvertColorToBytesPKfPh
 	movss xmm0, dword [ebx+0x1c]
 	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
@@ -412,28 +412,28 @@ RB_DrawDebugStrings_50:
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x20]
 	mov [esp], eax
-	call RB_DrawTextInSpace
+	call _Z18RB_DrawTextInSpacePKcP6Font_sPKfS4_S4_m
 	add dword [ebp-0x4c], 0x1
 	sub ebx, 0xffffff80
 	cmp esi, [ebp-0x4c]
-	jnz RB_DrawDebugStrings_50
+	jnz _Z19RB_DrawDebugStringsP15trDebugString_ti_50
 	mov eax, tess
 	mov eax, [eax+0x22a948]
 	test eax, eax
-	jz RB_DrawDebugStrings_10
-	jmp RB_DrawDebugStrings_40
-RB_DrawDebugStrings_20:
-	call RB_EndTessSurface
+	jz _Z19RB_DrawDebugStringsP15trDebugString_ti_10
+	jmp _Z19RB_DrawDebugStringsP15trDebugString_ti_40
+_Z19RB_DrawDebugStringsP15trDebugString_ti_20:
+	call _Z17RB_EndTessSurfacev
 	mov edi, gfxCmdBufSourceState
 	mov [esp], edi
-	call R_Set3D
+	call _Z7R_Set3DP20GfxCmdBufSourceState
 	test esi, esi
-	jle RB_DrawDebugStrings_60
-	jmp RB_DrawDebugStrings_30
+	jle _Z19RB_DrawDebugStringsP15trDebugString_ti_60
+	jmp _Z19RB_DrawDebugStringsP15trDebugString_ti_30
 
 
 ;RB_DrawDebugLines(trDebugLine_t*, int, GfxPointVertex*)
-RB_DrawDebugLines:
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -444,43 +444,43 @@ RB_DrawDebugLines:
 	mov [ebp-0x20], edx
 	mov [ebp-0x24], ecx
 	test edx, edx
-	jz RB_DrawDebugLines_10
+	jz _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_10
 	mov eax, tess
 	mov esi, [eax+0x22a948]
 	test esi, esi
-	jnz RB_DrawDebugLines_20
+	jnz _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_20
 	mov eax, gfxCmdBufSourceState
 	mov [esp], eax
-	call R_Set3D
+	call _Z7R_Set3DP20GfxCmdBufSourceState
 	mov ecx, [ebx+0x28]
 	test ecx, ecx
 	setnz al
 	mov edi, eax
 	mov edx, [ebp-0x20]
 	test edx, edx
-	jle RB_DrawDebugLines_30
-RB_DrawDebugLines_90:
+	jle _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_30
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_90:
 	mov esi, ebx
 	mov dword [ebp-0x1c], 0x0
 	xor edx, edx
-RB_DrawDebugLines_60:
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_60:
 	mov eax, [esi+0x28]
 	test eax, eax
 	setnz bl
 	mov eax, edi
 	cmp bl, al
-	jz RB_DrawDebugLines_40
+	jz _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_40
 	mov eax, edx
 	shr eax, 0x1f
 	add eax, edx
 	mov edx, edi
 	mov ecx, eax
 	sar ecx, 1
-	jnz RB_DrawDebugLines_50
-RB_DrawDebugLines_80:
+	jnz _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_50
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_80:
 	mov edi, ebx
 	xor edx, edx
-RB_DrawDebugLines_40:
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_40:
 	mov eax, edi
 	movzx ebx, al
 	mov eax, [ebp-0x24]
@@ -493,71 +493,71 @@ RB_DrawDebugLines_40:
 	lea eax, [esi+0xc]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call RB_AddDebugLine
+	call _Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex
 	mov edx, eax
 	add dword [ebp-0x1c], 0x1
 	add esi, 0x2c
 	mov eax, [ebp-0x1c]
 	cmp [ebp-0x20], eax
-	jnz RB_DrawDebugLines_60
+	jnz _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_60
 	mov eax, edx
 	shr eax, 0x1f
 	lea edx, [eax+edx]
 	sar edx, 1
 	test edx, edx
-	jnz RB_DrawDebugLines_70
-RB_DrawDebugLines_10:
+	jnz _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_70
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_10:
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawDebugLines_30:
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_30:
 	movzx ebx, al
 	xor edx, edx
 	test edx, edx
-	jz RB_DrawDebugLines_10
-RB_DrawDebugLines_70:
+	jz _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_10
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_70:
 	movzx eax, bl
 	mov [esp+0xc], eax
 	mov eax, [ebp-0x24]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x1
 	mov [esp], edx
-	call RB_DrawLines3D
+	call _Z14RB_DrawLines3DiiPK14GfxPointVertexh
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawDebugLines_50:
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_50:
 	movzx eax, dl
 	mov [esp+0xc], eax
 	mov eax, [ebp-0x24]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x1
 	mov [esp], ecx
-	call RB_DrawLines3D
-	jmp RB_DrawDebugLines_80
-RB_DrawDebugLines_20:
-	call RB_EndTessSurface
+	call _Z14RB_DrawLines3DiiPK14GfxPointVertexh
+	jmp _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_80
+_Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_20:
+	call _Z17RB_EndTessSurfacev
 	mov eax, gfxCmdBufSourceState
 	mov [esp], eax
-	call R_Set3D
+	call _Z7R_Set3DP20GfxCmdBufSourceState
 	mov ecx, [ebx+0x28]
 	test ecx, ecx
 	setnz al
 	mov edi, eax
 	mov edx, [ebp-0x20]
 	test edx, edx
-	jg RB_DrawDebugLines_90
-	jmp RB_DrawDebugLines_30
+	jg _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_90
+	jmp _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex_30
 
 
 ;RB_DrawDebug(GfxViewParms const*)
-RB_DrawDebug:
+_Z12RB_DrawDebugPK12GfxViewParms:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -568,17 +568,17 @@ RB_DrawDebug:
 	mov eax, [edi]
 	mov edx, [eax+0x11e768]
 	test edx, edx
-	jle RB_DrawDebug_10
+	jle _Z12RB_DrawDebugPK12GfxViewParms_10
 	mov dword [ebp-0x30], 0x0
 	xor ebx, ebx
 	mov edx, [ebp+0x8]
 	add edx, 0x11c
 	mov [ebp-0x2c], edx
 	mov [ebp-0x3c], edi
-	jmp RB_DrawDebug_20
-RB_DrawDebug_40:
+	jmp _Z12RB_DrawDebugPK12GfxViewParms_20
+_Z12RB_DrawDebugPK12GfxViewParms_40:
 	cvtsi2ss xmm2, ecx
-RB_DrawDebug_50:
+_Z12RB_DrawDebugPK12GfxViewParms_50:
 	cvtsi2sd xmm0, ecx
 	mulsd xmm0, [_double_0_01256637]
 	cvtsi2sd xmm1, dword [ebp-0x30]
@@ -612,7 +612,7 @@ RB_DrawDebug_50:
 	mov eax, [eax+ebx+0x1c]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_i
-	call va
+	call _Z2vaPKcz
 	mov edx, [edi]
 	mov [esp+0x10], eax
 	mov dword [esp+0xc], 0x3f000000
@@ -624,25 +624,25 @@ RB_DrawDebug_50:
 	mov [esp+0x4], eax
 	add edx, 0x11e71c
 	mov [esp], edx
-	call R_AddDebugString
+	call _Z16R_AddDebugStringP12DebugGlobalsPKfS2_fPKc
 	mov edi, [ebp-0x3c]
-RB_DrawDebug_30:
+_Z12RB_DrawDebugPK12GfxViewParms_30:
 	add dword [ebp-0x30], 0x1
 	mov eax, [edi]
 	add ebx, 0x28
 	mov edx, [ebp-0x30]
 	cmp edx, [eax+0x11e768]
-	jge RB_DrawDebug_10
-RB_DrawDebug_20:
+	jge _Z12RB_DrawDebugPK12GfxViewParms_10
+_Z12RB_DrawDebugPK12GfxViewParms_20:
 	mov edx, ebx
 	add edx, [eax+0x11e764]
 	mov eax, gfxCmdBufSourceState
 	mov eax, [eax+0xf3c]
 	mov ecx, eax
 	sub ecx, [edx+0x20]
-	js RB_DrawDebug_30
+	js _Z12RB_DrawDebugPK12GfxViewParms_30
 	cmp ecx, [edx+0x24]
-	jg RB_DrawDebug_30
+	jg _Z12RB_DrawDebugPK12GfxViewParms_30
 	mov dword [edx+0x18], 0x3f800000
 	mov eax, [edi]
 	mov esi, ebx
@@ -650,7 +650,7 @@ RB_DrawDebug_20:
 	mov edx, [esi+0x24]
 	lea eax, [ecx+ecx]
 	cmp eax, edx
-	jle RB_DrawDebug_40
+	jle _Z12RB_DrawDebugPK12GfxViewParms_40
 	cvtsi2ss xmm2, ecx
 	movaps xmm0, xmm2
 	mulss xmm0, [_float__2_00000000]
@@ -658,36 +658,36 @@ RB_DrawDebug_20:
 	divss xmm0, xmm1
 	addss xmm0, [_float_2_00000000]
 	movss [esi+0x18], xmm0
-	jmp RB_DrawDebug_50
-RB_DrawDebug_10:
-	call RB_DrawDebugPolys
+	jmp _Z12RB_DrawDebugPK12GfxViewParms_50
+_Z12RB_DrawDebugPK12GfxViewParms_10:
+	call _Z17RB_DrawDebugPolysv
 	mov ebx, backEndData
 	mov eax, [ebx]
 	mov edx, [eax+0x11e750]
 	mov eax, [eax+0x11e74c]
 	mov ecx, g_debugLineVerts
-	call RB_DrawDebugLines
+	call _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex
 	mov eax, [ebx]
 	mov edx, [eax+0x11e75c]
 	mov eax, [eax+0x11e758]
 	mov ecx, g_debugExternLineVerts
-	call RB_DrawDebugLines
+	call _Z17RB_DrawDebugLinesP13trDebugLine_tiP14GfxPointVertex
 	mov eax, [ebx]
 	mov dword [eax+0x11e750], 0x0
 	mov eax, [ebx]
 	mov edx, [eax+0x11e738]
 	mov eax, [eax+0x11e734]
-	call RB_DrawDebugStrings
+	call _Z19RB_DrawDebugStringsP15trDebugString_ti
 	mov eax, [ebx]
 	mov edx, [eax+0x11e744]
 	mov eax, [eax+0x11e740]
-	call RB_DrawDebugStrings
+	call _Z19RB_DrawDebugStringsP15trDebugString_ti
 	mov eax, tess
 	mov edi, [eax+0x22a948]
 	test edi, edi
-	jz RB_DrawDebug_60
-	call RB_EndTessSurface
-RB_DrawDebug_60:
+	jz _Z12RB_DrawDebugPK12GfxViewParms_60
+	call _Z17RB_EndTessSurfacev
+_Z12RB_DrawDebugPK12GfxViewParms_60:
 	add esp, 0x6c
 	pop ebx
 	pop esi
@@ -697,7 +697,7 @@ RB_DrawDebug_60:
 
 
 ;RB_AddDebugLine(float const*, float const*, float const*, unsigned char, int, int, GfxPointVertex*)
-RB_AddDebugLine:
+_Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -710,16 +710,16 @@ RB_AddDebugLine:
 	movzx eax, byte [ebp+0x14]
 	lea esi, [edx+0x2]
 	cmp esi, [ebp+0x1c]
-	jg RB_AddDebugLine_10
+	jg _Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex_10
 	mov eax, edx
-RB_AddDebugLine_20:
+_Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex_20:
 	shl eax, 0x4
 	lea ebx, [eax+ebx]
 	lea eax, [ebx+0xc]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x10]
 	mov [esp], eax
-	call R_ConvertColorToBytes
+	call _Z21R_ConvertColorToBytesPKfPh
 	lea edx, [ebx+0x10]
 	mov eax, [ebx+0xc]
 	mov [edx+0xc], eax
@@ -743,7 +743,7 @@ RB_AddDebugLine_20:
 	pop edi
 	pop ebp
 	ret
-RB_AddDebugLine_10:
+_Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex_10:
 	movzx eax, al
 	mov [esp+0xc], eax
 	mov [esp+0x8], ebx
@@ -753,14 +753,14 @@ RB_AddDebugLine_10:
 	add eax, edx
 	sar eax, 1
 	mov [esp], eax
-	call RB_DrawLines3D
+	call _Z14RB_DrawLines3DiiPK14GfxPointVertexh
 	xor eax, eax
 	mov esi, 0x2
-	jmp RB_AddDebugLine_20
+	jmp _Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex_20
 
 
 ;RB_DrawDebugPolys()
-RB_DrawDebugPolys:
+_Z17RB_DrawDebugPolysv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -771,44 +771,44 @@ RB_DrawDebugPolys:
 	mov eax, [ebx]
 	mov eax, [eax+0x11e72c]
 	test eax, eax
-	jz RB_DrawDebugPolys_10
+	jz _Z17RB_DrawDebugPolysv_10
 	mov eax, tess
 	mov eax, [eax+0x22a948]
 	test eax, eax
-	jnz RB_DrawDebugPolys_20
-RB_DrawDebugPolys_190:
+	jnz _Z17RB_DrawDebugPolysv_20
+_Z17RB_DrawDebugPolysv_190:
 	mov eax, gfxCmdBufSourceState
 	mov [esp], eax
-	call R_Set3D
+	call _Z7R_Set3DP20GfxCmdBufSourceState
 	mov dword [esp+0x4], 0x4
 	mov eax, rgp
 	mov eax, [eax+0x2034]
 	mov [esp], eax
-	call RB_BeginSurface
+	call _Z15RB_BeginSurfacePK8Material21MaterialTechniqueType
 	mov edx, [ebx]
 	mov edi, [edx+0x11e72c]
 	test edi, edi
-	jg RB_DrawDebugPolys_30
-RB_DrawDebugPolys_170:
-	call RB_EndTessSurface
+	jg _Z17RB_DrawDebugPolysv_30
+_Z17RB_DrawDebugPolysv_170:
+	call _Z17RB_EndTessSurfacev
 	mov ebx, backEndData
 	mov edx, [ebx]
 	mov ecx, [edx+0x11e72c]
 	test ecx, ecx
-	jle RB_DrawDebugPolys_40
+	jle _Z17RB_DrawDebugPolysv_40
 	mov dword [ebp-0x38], 0x0
 	xor ecx, ecx
 	mov dword [ebp-0x30], 0x0
 	mov [ebp-0x48], ebx
-	jmp RB_DrawDebugPolys_50
-RB_DrawDebugPolys_70:
+	jmp _Z17RB_DrawDebugPolysv_50
+_Z17RB_DrawDebugPolysv_70:
 	add dword [ebp-0x38], 0x1
 	mov edx, [ebx]
 	add dword [ebp-0x30], 0x18
 	mov eax, [ebp-0x38]
 	cmp eax, [edx+0x11e72c]
-	jge RB_DrawDebugPolys_60
-RB_DrawDebugPolys_50:
+	jge _Z17RB_DrawDebugPolysv_60
+_Z17RB_DrawDebugPolysv_50:
 	mov esi, [ebp-0x30]
 	add esi, [edx+0x11e728]
 	mov eax, [esi+0x10]
@@ -819,14 +819,14 @@ RB_DrawDebugPolys_50:
 	mov eax, [esi+0x14]
 	lea edx, [eax-0x1]
 	test eax, eax
-	jle RB_DrawDebugPolys_70
+	jle _Z17RB_DrawDebugPolysv_70
 	mov ebx, [ebp-0x34]
 	xor edi, edi
-	jmp RB_DrawDebugPolys_80
-RB_DrawDebugPolys_90:
+	jmp _Z17RB_DrawDebugPolysv_80
+_Z17RB_DrawDebugPolysv_90:
 	mov edx, edi
 	mov edi, eax
-RB_DrawDebugPolys_80:
+_Z17RB_DrawDebugPolysv_80:
 	mov dword [esp+0x18], g_debugPolyVerts
 	mov dword [esp+0x14], 0xaa5
 	mov [esp+0x10], ecx
@@ -837,37 +837,37 @@ RB_DrawDebugPolys_80:
 	mov edx, [ebp-0x34]
 	lea eax, [edx+eax*4]
 	mov [esp], eax
-	call RB_AddDebugLine
+	call _Z15RB_AddDebugLinePKfS0_S0_hiiP14GfxPointVertex
 	mov ecx, eax
 	lea eax, [edi+0x1]
 	add ebx, 0xc
 	cmp eax, [esi+0x14]
-	jl RB_DrawDebugPolys_90
+	jl _Z17RB_DrawDebugPolysv_90
 	mov ebx, [ebp-0x48]
 	add dword [ebp-0x38], 0x1
 	mov edx, [ebx]
 	add dword [ebp-0x30], 0x18
 	mov eax, [ebp-0x38]
 	cmp eax, [edx+0x11e72c]
-	jl RB_DrawDebugPolys_50
-RB_DrawDebugPolys_60:
+	jl _Z17RB_DrawDebugPolysv_50
+_Z17RB_DrawDebugPolysv_60:
 	mov eax, ecx
 	shr eax, 0x1f
 	add eax, ecx
 	sar eax, 1
-	jnz RB_DrawDebugPolys_100
+	jnz _Z17RB_DrawDebugPolysv_100
 	mov eax, [ebx]
 	mov dword [eax+0x11e72c], 0x0
-RB_DrawDebugPolys_10:
+_Z17RB_DrawDebugPolysv_10:
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawDebugPolys_40:
+_Z17RB_DrawDebugPolysv_40:
 	mov eax, edx
-RB_DrawDebugPolys_200:
+_Z17RB_DrawDebugPolysv_200:
 	mov dword [eax+0x11e72c], 0x0
 	add esp, 0x5c
 	pop ebx
@@ -875,10 +875,10 @@ RB_DrawDebugPolys_200:
 	pop edi
 	pop ebp
 	ret
-RB_DrawDebugPolys_30:
+_Z17RB_DrawDebugPolysv_30:
 	mov dword [ebp-0x40], 0x0
 	mov dword [ebp-0x2c], 0x0
-RB_DrawDebugPolys_160:
+_Z17RB_DrawDebugPolysv_160:
 	mov eax, [ebp-0x2c]
 	add eax, [edx+0x11e728]
 	mov [ebp-0x44], eax
@@ -890,26 +890,26 @@ RB_DrawDebugPolys_160:
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	mov [esp], ecx
-	call R_ConvertColorToBytes
+	call _Z21R_ConvertColorToBytesPKfPh
 	mov edx, [ebp-0x44]
 	mov eax, [edx+0x14]
 	lea edx, [eax+eax*2-0x6]
 	mov edi, tess
 	add eax, [edi+0x22a94c]
 	cmp eax, 0x154a
-	jg RB_DrawDebugPolys_110
+	jg _Z17RB_DrawDebugPolysv_110
 	add edx, [edi+0x22a948]
 	cmp edx, 0x100000
-	jg RB_DrawDebugPolys_110
-RB_DrawDebugPolys_180:
+	jg _Z17RB_DrawDebugPolysv_110
+_Z17RB_DrawDebugPolysv_180:
 	mov ecx, [ebp-0x44]
 	mov esi, [ecx+0x14]
 	test esi, esi
-	jle RB_DrawDebugPolys_120
+	jle _Z17RB_DrawDebugPolysv_120
 	mov esi, ebx
 	mov dword [ebp-0x3c], 0x0
 	mov edx, [ebp-0x3c]
-RB_DrawDebugPolys_130:
+_Z17RB_DrawDebugPolysv_130:
 	add edx, [edi+0x22a94c]
 	mov ebx, [ebp-0x1c]
 	shl edx, 0x5
@@ -931,15 +931,15 @@ RB_DrawDebugPolys_130:
 	mov edx, [ebp-0x3c]
 	mov eax, [ebp-0x44]
 	cmp edx, [eax+0x14]
-	jl RB_DrawDebugPolys_130
+	jl _Z17RB_DrawDebugPolysv_130
 	mov ecx, eax
-RB_DrawDebugPolys_120:
+_Z17RB_DrawDebugPolysv_120:
 	mov eax, [ecx+0x14]
 	cmp eax, 0x2
-	jle RB_DrawDebugPolys_140
+	jle _Z17RB_DrawDebugPolysv_140
 	mov ecx, 0x2
 	mov ebx, [edi+0x22a94c]
-RB_DrawDebugPolys_150:
+_Z17RB_DrawDebugPolysv_150:
 	mov edx, [edi+0x22a948]
 	mov [edi+edx*2+0x2a940], bx
 	lea eax, [ecx+ebx]
@@ -952,8 +952,8 @@ RB_DrawDebugPolys_150:
 	mov edx, [ebp-0x44]
 	mov eax, [edx+0x14]
 	cmp ecx, eax
-	jl RB_DrawDebugPolys_150
-RB_DrawDebugPolys_140:
+	jl _Z17RB_DrawDebugPolysv_150
+_Z17RB_DrawDebugPolysv_140:
 	add [edi+0x22a94c], eax
 	add dword [ebp-0x40], 0x1
 	mov eax, backEndData
@@ -961,23 +961,23 @@ RB_DrawDebugPolys_140:
 	add dword [ebp-0x2c], 0x18
 	mov ecx, [ebp-0x40]
 	cmp ecx, [edx+0x11e72c]
-	jl RB_DrawDebugPolys_160
-	jmp RB_DrawDebugPolys_170
-RB_DrawDebugPolys_110:
-	call RB_TessOverflow
-	jmp RB_DrawDebugPolys_180
-RB_DrawDebugPolys_20:
-	call RB_EndTessSurface
-	jmp RB_DrawDebugPolys_190
-RB_DrawDebugPolys_100:
+	jl _Z17RB_DrawDebugPolysv_160
+	jmp _Z17RB_DrawDebugPolysv_170
+_Z17RB_DrawDebugPolysv_110:
+	call _Z15RB_TessOverflowv
+	jmp _Z17RB_DrawDebugPolysv_180
+_Z17RB_DrawDebugPolysv_20:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z17RB_DrawDebugPolysv_190
+_Z17RB_DrawDebugPolysv_100:
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], g_debugPolyVerts
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
-	call RB_DrawLines3D
+	call _Z14RB_DrawLines3DiiPK14GfxPointVertexh
 	mov ebx, backEndData
 	mov eax, [ebx]
-	jmp RB_DrawDebugPolys_200
+	jmp _Z17RB_DrawDebugPolysv_200
 
 
 ;Initialized global or static variables of rb_debug:
@@ -1018,7 +1018,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x298138, 0x298138, 0x298100, 0x298100, 0x29811e, 0x29811e, 0x298100, 0x298100, 0x298145, 0x298145, 0x298100, 0x298100, 0x29810d, 0x29812b, 0x298100, 0x298100, 0x45300000, 0x43300000, 0x0, 0x0, 0x0, 0x45300000, 0x0, 0x43300000, 0x45300000, 0x43300000, 0x0, 0x0, 0x0, 0x45300000, 0x0, 0x43300000, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of rb_debug:
@@ -1055,7 +1055,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x20
+g_fltMin: resb 0x10
 g_debugExternLineVerts: resb 0xaa60
 g_debugLineVerts: resb 0xaa60
 g_debugPolyVerts: resb 0xaaa0

@@ -50,7 +50,7 @@ Capsules are handled differently though.
 ===================
 */
 
-clipHandle_t CM_TempBoxModel( const vec3_t mins, const vec3_t maxs, int capsule ) {
+clipHandle_t CM_TempBoxModel( const vec3_t mins, const vec3_t maxs ) {
 
 	TraceThreadInfo* tti = Sys_GetValue(3);
 
@@ -108,7 +108,7 @@ void __cdecl CM_LoadMapData_FastFile(const char *name)
 
 #ifndef BSPC
 
-void __cdecl CM_LoadMapData_LoadObj(const char *name)
+void CM_LoadMapData_LoadObj(const char *name)
 {
   if ( cm.isInUse == qfalse || Q_stricmp(cm.name, name) )
   {

@@ -196,6 +196,12 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 
 			}else{
 				*/
+				if(cl->state == CS_CONNECTED)
+				{
+					Com_DPrintf(CON_CHANNEL_SERVER,"Rejected connection from %s. DoS attack detected by emulating client 1.8\n", NET_AdrToString(&cl->netchan.remoteAddress));
+					return;
+				}
+				
 				SV_DropClient( cl, "silent" );
 				newcl = cl;
 				Com_Printf(CON_CHANNEL_SERVER,"reconnected: %s\n", NET_AdrToString(from));
@@ -237,7 +243,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			if(version < 9)
 			{
 				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "Please install the unofficial CoD4X-update you can find at http://cod4x.me\n",
+							    "Please install the unofficial CoD4X-update you can find at http://cod4x.ovh\n",
 							    sv_protocol->integer);
 			}else{
 #ifdef BETA_RELEASE
@@ -245,9 +251,17 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 							    "This is a beta server. Sorry, but you can not connect to it with a release build of CoD4X.\n",
 							     sv_protocol->integer);
 #else
-				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "Please restart CoD4 and see on the main-menu if a new update is available\n"
-							    "{OOBErrorParser protocolmismatch CoD4X" Q3_VERSION " %d}", sv_protocol->integer, sv_protocol->integer);
+				if(version >= 21)
+				{
+					NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
+									"Please restart CoD4 and see on the main-menu if a new update is available\n"
+									"{OOBErrorParser protocolmismatch CoD4X" Q3_VERSION " %d}", sv_protocol->integer, sv_protocol->integer);
+				}else{
+					NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
+									"To update to protocol version 21 please look in CoD4X serverlist (ingame server browser) for an updating-server\n"
+									"or install the new client update manually from https://cod4x.ovh\n"
+									"Note: Ingame autoupdate will not work", sv_protocol->integer);					
+				}
 #endif
 			}
 			Com_Printf(CON_CHANNEL_SERVER,"rejected connect from version %i\n", version);
@@ -518,7 +532,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		}
 		if(svs.time - newcl->updateBeginTime > 18000)
 		{
-			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", "Can not connect to server because the update backend is unavailable\nTo join this server you have to install the required update manually.\nPlease visit www.cod4x.me/clupdate");
+			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", "Can not connect to server because the update backend is unavailable\nTo join this server you have to install the required update manually.\nPlease visit www.cod4x.ovh/clupdate");
 			Com_Printf(CON_CHANNEL_SERVER,"Rejected client %s because updatebackend is unavailable\n", nick);
 			SV_FreeClientScriptId(newcl);
 			Com_Memset(newcl, 0, sizeof(client_t));
@@ -663,7 +677,7 @@ void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
 		}
 		rijndael_done(&skey);
 	}
-	Com_Printf(CON_CHANNEL_SERVER,"Received packet %i of stats data\n", 0);
+	Com_DPrintf(CON_CHANNEL_SERVER,"Received packet %i of stats data\n", 0);
 	cl->receivedstats = 1;
 }
 
@@ -988,6 +1002,7 @@ each of the backup packets.
 ==================
 */
 __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delta ) {
+    int x, y, z;
 	int i, key, clientNum;
 	unsigned int *ackTime;
 	unsigned int sysTime;
@@ -1056,9 +1071,12 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 		oldcmd = cmd;
 	}
 
-	*((uint32_t*)&cl->predictedOrigin[0]) = MSG_ReadLong(msg);
-	*((uint32_t*)&cl->predictedOrigin[1]) = MSG_ReadLong(msg);
-	*((uint32_t*)&cl->predictedOrigin[2]) = MSG_ReadLong(msg);
+    x = MSG_ReadLong(msg);
+    y = MSG_ReadLong(msg);
+    z = MSG_ReadLong(msg);
+    memcpy(&cl->predictedOrigin[0], &x, sizeof(x));
+    memcpy(&cl->predictedOrigin[1], &y, sizeof(y));
+    memcpy(&cl->predictedOrigin[2], &z, sizeof(z));
 	cl->predictedOriginServerTime = MSG_ReadLong(msg);
 
 
@@ -1165,10 +1183,10 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 		return;
 	}
 
-/*
-	if(client->netchan.remoteAddress.type != NA_BOT && ((sv_pure->integer != 0 && client->pureAuthentic == 0) || !psvs.serverAuth))
+
+	if(client->netchan.remoteAddress.type != NA_BOT && ((sv_pure->integer != 0 && client->pureAuthentic == 0)))
 		return;
-*/
+
 	Com_DPrintf(CON_CHANNEL_SERVER, "Going from CS_PRIMED to CS_ACTIVE for %s\n", client->name );
 	client->state = CS_ACTIVE;
 
@@ -1186,16 +1204,16 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	if(cmd)
 		client->lastUsercmd = *cmd;
 
-	// call the game begin function
-	ClientBegin( clientNum );
-
 	// a bad cp command was sent, drop the client
 	if ( client->netchan.remoteAddress.type != NA_BOT && sv_pure->integer != 0 && client->pureAuthentic == 2) {
 		SV_DropClient( client, "EXE_UNPURECLIENTDETECTED" );
 		return;
 	}
 
-	SV_SApiSteamIDToString(client->steamid, psti, sizeof(psti));
+	// call the game begin function
+	ClientBegin( clientNum );
+
+	SV_SApiSteamIDToString(client->playerid ? client->playerid : client->steamid, psti, sizeof(psti));
 
 	//It was never intended to make a new demo for each fast_restart.
 	//SV_SpawnServer() stops the demo and cleans the name which did not happen here which resulted in strange naming bug
@@ -1220,8 +1238,6 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	{
 		client->connectedTime = svs.time;
 	}
-
-	client->pureAuthentic = 1;
 
 	HL2Rcon_EventClientEnterWorld( clientNum );
 	PHandler_Event(PLUGINS_ONCLIENTENTERWORLD, client);
@@ -1807,7 +1823,7 @@ void SV_SendClientGameState( client_t *client ) {
 	//Gamestate contains all the config updates. So we acknowledge here all old messages
 	client->configDataAcknowledge = svs.configDataSequence;
 
-	Com_DPrintf(CON_CHANNEL_SERVER,"configDataAcknowledge is now %d and configDataSequence is now %d\n", client->configDataAcknowledge, svs.configDataSequence);
+//	Com_DPrintf(CON_CHANNEL_SERVER,"configDataAcknowledge is now %d and configDataSequence is now %d\n", client->configDataAcknowledge, svs.configDataSequence);
 
 	client->gamestateSent = 1;
 }
@@ -1887,7 +1903,7 @@ __optimize3 __regparm2 void SV_ExecuteClientMessage( client_t *cl, msg_t *msg ) 
 		}
 		return;
 	}
-
+	cl->gamestateSent = 2; //need this to know when player received the gamestate
 
 	while(qtrue)
 	{
@@ -2035,14 +2051,6 @@ qboolean SV_VerifyFastFiles(client_t *cl)
 	return qtrue;
 }
 
-bool SV_IsKnownIwdLocalization(int localization)
-{
-    if(localization < 5)
-    {
-        return true;
-    }
-    return false;
-}
 
 
 
@@ -2065,7 +2073,6 @@ This routine would be a bit simpler with a goto but i abstained
 
 void __cdecl SV_VerifyPaks_f(client_t *cl)
 {
-#if 0
   signed int bGood = 1;
   char *pArg;
   char *pPaks;
@@ -2094,11 +2101,17 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
     if ( *pArg == '@' )
 #endif
     {
-    Com_Printf(CON_CHANNEL_SYSTEM, "^5Fix me - need to detect old versions of cp command\n");
       pArg = SV_Cmd_Argv(nCurArg++);
       pArg++; // Skip L
       cl->localization = atoi( pArg );
-
+//#if(10*(SYS_COMMONVERSION) >= 200)
+      pArg = SV_Cmd_Argv(nCurArg++);
+      int clserverid = atoi(pArg);
+      if((clserverid & 0xffffff00) != (sv.start_frameTime & 0xffffff00))
+      {
+          return;
+      }
+//#endif
       //Parsing the PAK checksums
       i = 0;
       while ( nCurArg < nClientPaks && SV_Cmd_Argv(nCurArg)[0] != '#')
@@ -2147,14 +2160,10 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
           }
           if ( k >= nServerPaks )
           {
-//            Com_Printf(CON_CHANNEL_SERVER, "Unknown checksum %d\n", nClientChkSum[i]);
-//            if(SV_IsKnownIwdLocalization(cl->localization))
-            {
-                Com_Printf(CON_CHANNEL_SERVER, "Unknown checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
-//                bGood = 0; //Ignore this yet - logging only
-                bPrint = 1;
-            }
-        //    break;
+            Com_DPrintf(CON_CHANNEL_SERVER, "Bad checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
+            bGood = 0; //Ignore this yet - logging only
+            bPrint = 1;
+            break;
           }
         }
         if ( bGood )
@@ -2166,17 +2175,12 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
           }
           if ( (nClientPaks ^ nChkSum1) != nClientChkSum[nClientPaks] )
           {
-            if(SV_IsKnownIwdLocalization(cl->localization))
-            {
-//                bGood = 0;//Ignore since it is impossible to validate this yet without localized iwd info
-            }
+            bGood = 0;//Ignore since it is impossible to validate this yet without localized iwd info
           }
         }
         if( bGood )
         {
             bGood = SV_VerifyFastFiles(cl);
-            Com_Printf(CON_CHANNEL_SERVER, "Localization: %d connected\n", cl->localization);
-
         }
       }
 
@@ -2191,12 +2195,11 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
     bGood = 0;
   }
 
-//  if( bPrint )
+  if( bPrint )
   {
       char buffer[1024];
-      Com_Printf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
+      Com_DPrintf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
   }
-
 
   if ( bGood )
   {
@@ -2206,11 +2209,6 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   {
     cl->pureAuthentic = 2;
   }
-#else
-    cl->pureAuthentic = 1;
-#endif
-
-
 }
 
 
@@ -2722,7 +2720,7 @@ client_t* SV_ReadPackets(netadr_t *from, unsigned short qport)
 		// some address translating routers periodically change UDP
 		// port assignments
 		if ( cl->netchan.remoteAddress.port != from->port ) {
-			Com_Printf(CON_CHANNEL_SERVER, "SV_ReceiveStats: fixing up a translated port\n" );
+//			Com_Printf(CON_CHANNEL_SERVER, "SV_ReceiveStats: fixing up a translated port\n" ); //Some ISPs became terrible with their CGNAT - we don't wanna see this anymore
 			cl->netchan.remoteAddress.port = from->port;
 		}
 		return cl;
@@ -3062,7 +3060,7 @@ void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
   }
   else
   {
-    Com_PrintError(CON_CHANNEL_SERVER, "Invalid command time %i from client %s, current server time is %i", cmd->serverTime, cl->name, svs.time);
+    Com_PrintError(CON_CHANNEL_SERVER, "Invalid command time %i from client %s, current server time is %i\n", cmd->serverTime, cl->name, svs.time);
 /*
     if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
     {
@@ -3072,3 +3070,18 @@ void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
   }
 }
 
+
+void SV_UpdatePlayername(client_t* client, const char* name)
+{
+	Q_strncpyz(client->name, name, sizeof(client->name));
+	SV_UpdateClientConfigInfo(client);
+}
+//Can be used to change the name of any player connected to the server
+void SV_UpdatePlayernameById(unsigned int clientnum, const char* name)
+{
+	if(clientnum > sv_maxclients->integer)
+	{
+		return;
+	}
+	SV_UpdatePlayername(&svs.clients[clientnum], name);
+}

@@ -27,6 +27,8 @@
 
 // A Mach-O loader for linux.
 
+#pragma msg !3a78c4
+
 #include <assert.h>
 #include <dlfcn.h>
 #include <err.h>
@@ -101,8 +103,50 @@ struct Timer {
   clock_t start_time;
 };
 
+
+static bool isSystemSymbol(char* name)
+{
+      const char *names[] = {
+        "VirtualAlloc", "VirtualFree", "ResetEvent", "SetEvent", "CreateEventA", "SetThreadPriority", "ResumeThread", "SuspendThread", "DuplicateHandle", "InterlockedIncrement", "InterlockedDecrement", "InterlockedCompareExchange", "InterlockedExchangeAdd",
+        "CreateFileA", "GetFileSize", "timeGetTime", "InterlockedExchange"
+      };
+      for(unsigned int i = 0; i < sizeof(names) / sizeof(names[0]); ++i)
+      {
+          if(strcmp(names[i], name) == 0)
+          {
+              return true;
+          }
+      }
+      return false;
+}
+
+
+static bool AppendToSystemFunctionName(char* fn)
+{
+  char namebuffer[256];
+  strcpy(namebuffer +1, fn);
+
+  if(isSystemSymbol(fn))
+  {
+    namebuffer[0] = 'i';
+    strcpy(fn, namebuffer);
+    return true;
+  }
+  if(strncmp(fn, "AIL_", 4) == 0)
+  {
+    namebuffer[0] = 'i';
+    strcpy(fn, namebuffer);
+    return true;
+  }
+  return false;
+}
+
 static void TranslateFunctionName(char* fn)
 {
+  if(AppendToSystemFunctionName(fn) == true)
+  {
+      return;
+  }
   if(strcmp(fn, "I_strncpyz") == 0)
   {
     fn[0] = 'Q';
@@ -135,7 +179,7 @@ static void TranslateFunctionName(char* fn)
   }
   if(strcmp(fn, "I_strnicmp") == 0)
   {
-    strcpy(fn, "Q_stricmpn");
+    fn[0] = 'Q';
     return;
   }
   if(strcmp(fn, "I_strcmp") == 0)
@@ -207,11 +251,11 @@ static void TranslateFunctionName(char* fn)
 static const char* FunctionnameFromMangled(const char* mangledname)
 {
   static char demangledname[256];
-  char classname[128];
-  char funcname[128];
+//  char classname[128];
+//  char funcname[128];
 
-  funcname[0] = 0;
-  classname[0] = 0;
+//  funcname[0] = 0;
+//  classname[0] = 0;
 
   const char* orgname = mangledname;
   if(mangledname[0] != '_')
@@ -220,6 +264,8 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     TranslateFunctionName(demangledname);
     return demangledname;
   }
+  return mangledname;
+/*
   ++mangledname;
   if(mangledname[0] == '_')
   {
@@ -272,9 +318,698 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     strcat(demangledname, classname);
   }
   TranslateFunctionName(demangledname);
-  return demangledname;
+  return demangledname;*/
 }
 
+/***************************************************************************************************
+class ShadowFileMap
+******************************************************************************************************/
+class ShadowFileMap {
+ public:
+
+  enum SymbolType
+  {
+    SYM_NONE,
+    SYM_PROC,
+    SYM_GLOBCONST,
+    SYM_DATAVAR,
+    SYM_VAR,
+    SYM_CONSTVAR,
+    SYM_CONSTVAR4,
+    SYM_CONSTVAR8,
+    SYM_CSTRING,
+    SYM_CFSTRING,
+    SYM_VTABLE,
+    SYM_OBJECT,
+    SYM_IMPORT,
+    SYM_POINTERS,
+    SYM_VITABLE,
+  };
+  struct SectionData
+  {
+    const char* name;
+    SymbolType type;
+    uint32_t start;
+    uint32_t end;
+  };
+  struct Symbol;
+  struct ObjectMap
+  {
+    string objectname;
+    Symbol *symbols[20000]; //List of symbols belong to this objectfile
+    int symbolcount;
+  };
+  struct Symbol
+  {
+    uint32_t address;
+    string name;
+    uint8_t section;
+    uint32_t size;
+    SymbolType type;
+    bool _export;
+    ObjectMap* object;
+  };
+
+
+  const char* symtypename(SymbolType type)
+  {
+    switch(type)
+    {
+      case SYM_NONE: return "SYM_NONE";
+      case SYM_PROC: return "SYM_PROC";
+      case SYM_GLOBCONST: return "SYM_GLOBCONST";
+      case SYM_DATAVAR: return "SYM_DATAVAR";
+      case SYM_VAR: return "SYM_VAR";
+      case SYM_CONSTVAR: return "SYM_CONSTVAR";
+      case SYM_CONSTVAR4: return "SYM_CONSTVAR4";
+      case SYM_CONSTVAR8: return "SYM_CONSTVAR8";
+      case SYM_CSTRING: return "SYM_CSTRING";
+      case SYM_CFSTRING: return "SYM_CFSTRING";
+      case SYM_VTABLE: return "SYM_VTABLE";
+      case SYM_VITABLE: return "SYM_VITABLE";
+      case SYM_OBJECT: return "SYM_OBJECT";
+      case SYM_IMPORT: return "SYM_IMPORT";
+      case SYM_POINTERS: return "SYM_POINTERS";
+      default: return "JUNK";
+    }
+  }
+
+  const char* sectionname(uint8_t section)
+  {
+    static char unknown[20];
+    switch(section)
+    {
+
+  case 1: return "text";
+  case 2: return "cstring"; //Constant strings
+  case 3: return "text2";
+  case 7: return "literal4"; //Constant most are float
+  case 8: return "text3";
+  case 9: return "const9"; //Constant stuff
+  case 10: return "const_coal10"; //Discarded probably just debug info
+  case 11: return "literal8"; //Constant maybe doubles?
+  case 12: return "data"; //Data preinitialized variable data
+  case 14: return "gcc_except_tab"; //Discard - no idea what to do with it
+  case 15: return "cfstring";
+  case 17: return "const_coal17"; //Discarded probably just debug info
+  case 18: return "const18"; //Const stuff also vtables!
+  case 19: return "bss"; //rw memory - zero initialized
+  case 20: return "common"; //rw memory - zero initialized
+  case 21: return "pointers";
+	default:
+        sprintf(unknown, "unknown: %d", section);
+        return unknown;
+    }
+  }
+
+  bool discard(uint8_t section, uint8_t type, const char* name)
+  {
+    if(section >= 19 && section < 27 )
+    {
+        return true;
+    }
+    if(section == 10 || section == 17) //const_coal - probably not needed
+    {
+      return true;
+    }
+    if(section == 14) //Exception table
+    {
+      return true;
+    }
+    if((section == 1 || section == 3 || section == 8) && type != 0x22 && type != 0x24)
+    {
+      return true;
+    }
+    if(section == 0)
+    {
+        if(type == 0x66)
+	{
+		return false;
+	}
+	return true;
+    }
+    if(section == 4)
+    {
+	return true;
+    }
+    if(type == 0x4e || type == 0x2e)
+    {
+    	if(name[0])
+    	{
+    		printf("Error non empty name\n");
+    		exit(1);
+    	}
+      return true;
+    }
+    if(type == 0x44 || type == 0xc0)
+    {
+    	if(name[0])
+    	{
+    		printf("Error non empty name\n");
+    		exit(1);
+    	}
+      return true;
+    }
+    return false;
+  }
+
+  bool inSymbolFilter(const char* name)
+  {
+    unsigned int i;
+    const char* filter[] = { "DB_EnumXAssets_LoadObj", "DB_GetAllXAssetOfType_LoadObj", "DB_EnumXAssets", "DB_GetAllXAssetOfType" };
+    for(i = 0; i < sizeof(filter)/sizeof(filter[0]); ++i)
+    {
+      if(strcmp(FunctionnameFromMangled(name), filter[i]) == 0)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void AddUserSymbols(const char* name)
+  {
+    string newsr;
+    if(strcmp(name, "db_memory") == 0)
+    {
+    /*
+        newsr = "_Z22DB_EnumXAssets_LoadObj10XAssetTypePFv12XAssetHeaderPvES1_h";
+        addsymbol(newsr, 0x1cd17e, 1, SYM_PROC);
+        newsr = "_Z14DB_EnumXAssets10XAssetTypePFv12XAssetHeaderPvES1_h";
+        addsymbol(newsr, 0x1cd244, 1, SYM_PROC);
+        newsr = "_Z29DB_GetAllXAssetOfType_LoadObj10XAssetTypeP12XAssetHeaderi";
+        addsymbol(newsr, 0x1cd51a, 1, SYM_PROC);
+        newsr = "_Z21DB_GetAllXAssetOfType10XAssetTypeP12XAssetHeaderi";
+        addsymbol(newsr, 0x1cd420, 1, SYM_PROC);
+        */
+    }
+  }
+  void SymbolRename(string *name)
+  {
+    if(name->compare("__tolower") == 0 || name->compare("tolower_dup_1") == 0)
+    {
+      name->assign("tolower"); //3rd Argument gets just discarded
+      return;
+    }
+    if(name->compare("dx") == 0)
+    {
+        name->assign("dx_ctx"); //dx is not allowed
+        return;
+    }
+    if(name->compare("fs") == 0)
+    {
+        name->assign("gFs"); //fs is not allowed. Use gFs like in BlackOps
+        return;
+    }
+    if(name->compare("_Z10VM_Executev") ==0)
+    {
+      name->assign("_Z18VM_ExecuteInternalv");
+      return;
+    }
+
+  }
+
+  void add(const MachO& mach, uintptr_t base) {
+    SymbolMap* symbol_map = new SymbolMap();
+    symbol_map->filename = mach.filename();
+    symbol_map->base = base;
+    SymbolType type;
+    if (!maps_.insert(make_pair(base, symbol_map)).second) {
+      err(1, "dupicated base addr: %p in %s",
+          (void*)base, mach.filename().c_str());
+    }
+    string initsr("initobj");
+    addsymbol(initsr, 0, 0, SYM_OBJECT);
+
+    for (size_t i = 0; i < mach.symbols().size(); i++)
+    {
+      MachO::Symbol sym = mach.symbols()[i];
+
+      if(discard(sym.section, sym.type, sym.name.c_str()))
+      {
+        continue;
+      }
+
+      if(sym.type == 0x66)
+      {
+        type = SYM_OBJECT;
+        if (sym.name.empty())
+        {
+          char unkstr[20];
+          sprintf(unkstr, "unknown%d", objectcount +1);
+          sym.name.assign(unkstr);
+        }
+      }else if(sym.type == 0x22 || sym.type == 0x24 || (sym.type == 0xe && sym.section == 5)){
+
+        if(sym.section == 6)
+        {
+          type = SYM_GLOBCONST;
+        }else{
+          type = SYM_PROC;
+        }
+        if (sym.name.empty())
+        {
+          printf("Error empty name\n");
+          exit(1);
+        }
+
+        if(sym.section == 5 && sym.addr >= 0x395f10 && sym.addr <= 0x395f10 + 0xdbc3)
+        {
+          
+        }else
+
+/*
+        if(sym.section == 3 && sym.addr >= 0x32e788 && sym.addr <= 0x32e788 + 0xaeea)
+        {
+          
+        }else if(sym.section == 8 && sym.addr >= 0x376f58 && sym.addr <= 0x376f58 + 0xce79){
+
+        }else */
+        if(sym.addr < 0x2aa0 || sym.addr > 0x312158){
+          printf("Error 0x%llx is not in __text\n", sym.addr);
+          exit(1);
+        }
+      }else if((sym.type & 0x0e) != 0x0e){
+        continue;
+
+      }else if((sym.type & 0x0e) != 0x0e){
+        continue;
+
+      }else if(sym.section == 2){
+        type = SYM_CSTRING;
+      }else if(sym.section == 4 || sym.section == 6 || sym.section == 14){
+        if(sym.section == 14)
+        {
+          if(strncmp(sym.name.c_str(), "__ZTV", 5) == 0)
+          {
+            type = SYM_VTABLE;
+          }else{
+            type = SYM_CONSTVAR;
+          }
+        }else{
+          type = SYM_CONSTVAR;
+        }
+
+      }else if(sym.section == 7 || sym.section == 15){
+        type = SYM_CSTRING;
+      }else if(sym.section == 9){
+        type = SYM_DATAVAR;
+      }else if(sym.section == 16 || sym.section == 17){
+        type = SYM_VAR;
+/*
+      }else if(sym.type == 0x0e){
+        continue;
+
+      }else if(sym.type == 0x1e){
+        continue;
+*/
+      }else{
+        printf("Error: Bad symbol type %x, section %d\n", sym.type, sym.section);
+        exit(1);
+      }
+
+      if (sym.name.empty())
+      {
+        printf("Error: Symbol with empty name - type: %d\n", type);
+        exit(1);
+      }
+
+      const char* name = sym.name.c_str();
+      if(type == SYM_OBJECT)
+      {
+        if(name[0] && name[1])
+        {
+          char* s = strrchr((char*)name, '/');
+          if(s)
+          {
+            name = s+1;
+          }
+          s = strrchr((char*)name, '(');
+          if(s)
+          {
+            name = s+1;
+            s = strrchr((char*)name, ')');
+            if(s)
+            {
+              *s = 0;
+            }
+          }
+          int l = strlen(name);
+          if(l > 2 && name[l-1] == 'o' && name[l-2] == '.')
+          {
+            ((char*)name)[l-2] = 0;
+          }
+        }
+              }
+      if(*name == '_')
+      {
+        ++name;
+      }
+
+      string newsr(name);
+
+      if(!inSymbolFilter(name))
+      {
+        addsymbol(newsr, sym.addr, sym.section, type);
+        if(type == SYM_OBJECT)
+        {
+          //Add missing symbols
+          if(strcmp(name, "buildNumber_mp") == 0)
+          {
+            initsr.assign("build_string_buffer_ptr");
+            addsymbol(initsr, 0x3a9cc0, 12, SYM_DATAVAR);
+          }
+        }
+      }
+    }
+
+
+    string importobjname("imports");
+
+    addsymbol(importobjname, 0, 0, SYM_OBJECT);
+
+
+    for (size_t i = 0; i < mach.binds().size(); i++)
+    {
+      MachO::Bind* bind = mach.binds()[i];
+
+      if (bind->name == NULL || bind->name[0] == 0)
+      {
+//        printf("Error: Bind sym with empty name\n");
+        continue;
+        exit(1);
+      }
+
+      const char* name = bind->name;
+
+      if(*name == '_')
+      {
+        ++name;
+      }
+      string newsr(name);
+      type = SYM_PROC;
+
+      addsymbol(newsr, bind->vmaddr, 0, type);
+
+    }
+
+    sortsymbolsandcalc();
+
+  }
+
+  void printObjectmaps()
+  {
+    int i, j;
+    printf("Objectmap print...\n");
+
+    for(i = 0; i < objectcount; ++i)
+    {
+      ObjectMap *o = &objects[i];
+      printf("Current object %s\nContains: \n", o->objectname.c_str());
+      for(j = 0; j < o->symbolcount; ++j)
+      {
+        printf("%s, %s, 0x%x, %d\n", o->symbols[j]->name.c_str(), symtypename(o->symbols[j]->type), o->symbols[j]->address, o->symbols[j]->size);
+      }
+      printf("\n\n");
+    }
+  }
+
+  static int addressCompare(const void* s1,const void* s2)
+  {
+    SymbolSorted *sym1 = (SymbolSorted*)s1;
+    SymbolSorted *sym2 = (SymbolSorted*)s2;
+
+    if(sym1->address < sym2->address) return -1;
+    if(sym1->address > sym2->address) return 1;
+
+    printf("Error: Duplicate address detected\n");
+    exit(1);
+
+    return 0;
+  }
+
+  int getSymbolForName(string name, Symbol* s)
+  {
+    int i;
+
+    for(i = 0; i < 20000; ++i)
+    {
+        if(!symbolssorted[i].symbol)
+        {
+            continue;
+        }
+        if(symbolssorted[i].symbol->name == name)
+        {
+            *s = *(symbolssorted[i].symbol);
+            return s->address;
+        }
+    }
+    return -1;
+  }
+
+  static bool getSectionDetailsForAddress(uint32_t address, SectionData *s)
+  {
+    unsigned int i;
+
+    static SectionData sectiondata[] = {{"JUNK", SYM_NONE, 0,0}, {"text", SYM_PROC, 0x2aa0, 0x312157},
+       {"cstring", SYM_CSTRING, 0x312158, 0x358c87}, {"JUNK", SYM_NONE, 0, 0},
+       {"literal4", SYM_CONSTVAR4, 0x395908, 0x395f0f}, {"text", SYM_PROC, 0x395f10, 0x3a3adf},
+       {"const", SYM_CONSTVAR, 0x3a3ae0, 0x3c4a8c}, {"const", SYM_CONSTVAR, 0x3c4a8d, 0x3c4c17}, {"literal8", SYM_CONSTVAR8, 0x3c4c18, 0x3c4fff},
+       {"data", SYM_DATAVAR, 0x3c5000, 0x3d18c8}, {"JUNK", SYM_NONE, 0, 0}, {"JUNK", SYM_NONE, 0, 0},
+       {"cfstring", SYM_CFSTRING, 0x3d4a10, 0x3d4ea0}, {"const_data", SYM_DATAVAR, 0x3d4f80,0x3dd69f}, {"const_coal", SYM_CONSTVAR, 0x3dd6a0,0x3ddb7f},
+       {"common", SYM_VAR, 0x3ddb80, 0xcb3ff00}, {"bss", SYM_VAR, 0xcb3ff00, 0xd5e7000},
+       {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0},
+       {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0},
+	{"pointers", SYM_POINTERS, 0xd5e8000, 0xd5e8f00},
+       {"jump_table", SYM_IMPORT, 0xd5e8f00, 0xd5ea000}};
+
+
+    for(i = 0; i < sizeof(sectiondata)/sizeof(sectiondata[0]); ++i)
+    {
+      if(address >= sectiondata[i].start && address <= sectiondata[i].end)
+      {
+        *s = sectiondata[i];
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  void sortsymbolsandcalc()
+  {
+    int i;
+
+    qsort(symbolssorted, symbolcount, sizeof(symbolssorted[0]), addressCompare);
+
+    for(i = 0; i < symbolcount; ++i)
+    {
+      int size;
+      if(i < symbolcount -1 && symbolssorted[i+1].symbol->section == symbolssorted[i].symbol->section)
+      {
+        size = symbolssorted[i+1].address - symbolssorted[i].address;
+    
+      }else{
+        SectionData s;
+        if(!getSectionDetailsForAddress(symbolssorted[i].address, &s))
+        {
+          printf("Error Address %x out of bounds of sections\n", symbolssorted[i].address);
+          exit(1);
+        }
+        size = s.end - symbolssorted[i].address;
+      }
+      symbolssorted[i].symbol->size = size;
+    }
+
+  }
+
+  void addsymbol(string &name, uint32_t address, uint8_t section, SymbolType type)
+  {
+    string aname;
+    if(currentobject == NULL && type != SYM_OBJECT)
+    {
+      return;
+    }
+    if(type == SYM_OBJECT)
+    {
+      objects[objectcount].objectname = name;
+      objects[objectcount].symbolcount = 0;
+      currentobject = &objects[objectcount];
+      objectcount++;
+      if(objectcount > 1000)
+      {
+        printf("Error: Exceeded max objects\n");
+        exit(1);
+      }
+      AddUserSymbols(name.c_str());
+      return;
+    }
+    int i;
+    //Find different symbols with same address
+    for(i = 0; i < symbolcount; ++i)
+    {
+      if(symbols[i].address == address)
+      {
+        if(symbols[i].name.compare(name) != 0)
+        {
+          //for(int z=0; z < symbolcount; ++z){if(symbols[z].name.compare("_Z12VEH_JoltBodyP9gentity_sPKffff")==0){printf("found at %x idx %d\n", symbols[z].address, z);}}
+          printf("Duplicate address with different name detected!\n");
+        }
+        return;
+      }
+      if(symbols[i].name.compare(name) == 0)
+      {
+        //Special fix for _Z12VEH_JoltBodyP9gentity_sPKffff which exists as a copy with same name:
+        if(name.compare("_Z12VEH_JoltBodyP9gentity_sPKffff") ==0)
+        {
+          name.assign("_Z17VEH_JoltBody_copyP9gentity_sPKffff");
+        }
+
+//        dup = true;
+      }
+    }
+    /*
+    if(currentobject->objectname.compare("imports") != 0)
+    {
+        //Find different address with same name in same object
+        for(i = 0; i < currentobject->symbolcount; ++i)
+        {
+          if(currentobject->symbols[i]->name.compare(name) == 0)
+          {
+            printf("FATAL: different symbol with same name detected in current module\n");
+            printf("module: %s ", currentobject->objectname.c_str());
+            printf("name: %s ", currentobject->symbols[i]->name.c_str());
+            printf("size: %x ", currentobject->symbols[i]->size);
+            printf("export: %x ", currentobject->symbols[i]->_export);
+            printf("addresses: 0x%x 0x%x\n", currentobject->symbols[i]->address,  address);
+            //exit(-1);
+            return;
+          }
+        }
+    }
+    */
+    SymbolRename(&name);
+
+    aname = name;
+    int dupcount = 0;
+
+    if(currentobject->objectname.compare("imports") != 0)
+    {
+        for(i = 0; i < symbolcount; ++i)
+        {
+            if(symbols[i].name.compare(aname) == 0)
+            {
+              dupcount++;
+              symbols[i]._export = false;
+            }
+        }
+    }
+    symbols[symbolcount].name = aname;
+    symbols[symbolcount].address = address;
+    symbols[symbolcount].section = section;
+    symbols[symbolcount].type = type;
+    symbols[symbolcount]._export = dupcount == 0;
+    symbols[symbolcount].object = currentobject;
+
+    symbolssorted[symbolcount].address = address;
+    symbolssorted[symbolcount].symbol = &symbols[symbolcount];
+    symbolssorted[symbolcount].obj = currentobject;
+
+    currentobject->symbols[currentobject->symbolcount] = &symbols[symbolcount];
+    currentobject->symbolcount++;
+
+    symbolcount++;
+    if(symbolcount > 20000 || currentobject->symbolcount > 20000)
+    {
+      printf("Error: Exceeded max symbols\n");
+      exit(1);
+    }
+  }
+
+  void addWatchDog(uintptr_t addr) {
+    bool r = maps_.insert(make_pair(addr, (SymbolMap*)NULL)).second;
+    CHECK(r);
+  }
+
+  const char* dumpSymbol(void* p) {
+    uintptr_t addr = reinterpret_cast<uintptr_t>(p);
+    map<uintptr_t, SymbolMap*>::const_iterator found = maps_.upper_bound(addr);
+    if (found == maps_.begin() || found == maps_.end()) {
+      return NULL;
+    }
+
+    --found;
+    return dumpSymbolFromMap(*found->second, addr);
+  }
+
+  ObjectMap* getObjectMap(unsigned int index)
+  {
+    if(index < (unsigned int)objectcount)
+      return &objects[index];
+    else
+      return NULL;
+  }
+
+ private:
+
+  struct SymbolMap {
+    string filename;
+    map<uintptr_t, string> symbols;
+    uintptr_t base;
+  };
+  struct SymbolSorted
+  {
+    uint32_t address;
+    ObjectMap *obj; //reference to object file
+    Symbol *symbol; //reference to symbol details
+  };
+
+
+  ObjectMap objects[1000]; //All objectfiles
+  ObjectMap *currentobject;
+  int objectcount;
+  SymbolSorted symbolssorted[20000]; //All symbols sorted by address
+  Symbol symbols[20000]; //Stores all symbols with details - does not contain SYM_OBJECT
+  int symbolcount;
+
+
+
+  const char* dumpSymbolFromMap(const SymbolMap& symbol_map, uintptr_t addr) {
+    uintptr_t file_offset = addr - symbol_map.base;
+
+    // Use lower_bound as PC may be in just after call.
+    map<uintptr_t, string>::const_iterator found =
+        symbol_map.symbols.lower_bound(addr);
+    if (found == symbol_map.symbols.begin()) {
+      snprintf(dumped_stack_frame_buf_, 4095, "%s [%p(%lx)]",
+               symbol_map.filename.c_str(), (void*)addr, (long)file_offset);
+      return dumped_stack_frame_buf_;
+    }
+
+    --found;
+    const char* name = found->second.c_str();
+    uintptr_t func_offset = addr - found->first;
+    snprintf(dumped_stack_frame_buf_, 4095, "%s(%s+%lx) [%p(%lx)]",
+             symbol_map.filename.c_str(), name, (long)func_offset,
+             (void*)addr, (long)file_offset);
+    return dumped_stack_frame_buf_;
+  }
+
+  map<uintptr_t, SymbolMap*> maps_;
+
+  char dumped_stack_frame_buf_[4096];
+
+};
+
+
+
+
+
+
+
+/***************************************************************************************************
+class FileMap
+******************************************************************************************************/
 
 class FileMap {
  public:
@@ -295,7 +1030,8 @@ class FileMap {
     SYM_VTABLE,
     SYM_OBJECT,
     SYM_IMPORT,
-    SYM_POINTERS
+    SYM_POINTERS,
+    SYM_VITABLE
   };
   struct SectionData
   {
@@ -338,6 +1074,7 @@ class FileMap {
       case SYM_CSTRING: return "SYM_CSTRING";
       case SYM_CFSTRING: return "SYM_CFSTRING";
       case SYM_VTABLE: return "SYM_VTABLE";
+      case SYM_VITABLE: return "SYM_VITABLE";
       case SYM_OBJECT: return "SYM_OBJECT";
       case SYM_IMPORT: return "SYM_IMPORT";
       case SYM_POINTERS: return "SYM_POINTERS";
@@ -383,12 +1120,22 @@ class FileMap {
     {
       return true;
     }
+
+    if(section == 3 && type == 0x1e)
+    {
+      return false;
+    }
+
     if((section == 1 || section == 3 || section == 8) && type != 0x22 && type != 0x24)
     {
       return true;
     }
     if(section == 0)
     {
+	if(strncmp(name, "__ZTI", 5) == 0)
+	{
+		return false;
+	}
         if(type == 0x66)
 	{
 		return false;
@@ -456,6 +1203,11 @@ class FileMap {
       name->assign("tolower"); //3rd Argument gets just discarded
       return;
     }
+    if(name->compare("__toupper") == 0)
+    {
+      name->assign("toupper"); //3rd Argument gets just discarded
+      return;
+    }
     if(name->compare("dx") == 0)
     {
         name->assign("dx_ctx"); //dx is not allowed
@@ -472,6 +1224,83 @@ class FileMap {
       return;
     }
 
+  }
+
+
+  unsigned int FindAddrForVITabName(string name)
+  {
+  struct vtabaddrlist_s
+  {
+      uint32_t addr;
+      const char* name;
+  };
+  static struct vtabaddrlist_s list[] =
+  {
+  { 0x3b4660, "__ZTI9CDirect3D"},
+  { 0x3b4680, "__ZTI10IDirect3D9"},
+  { 0x3b46a0, "__ZTI8IUnknown"},
+  { 0x3b46e0, "__ZTI20CDirect3DCubeTexture"},
+  { 0x3b4700, "__ZTI21IDirect3DCubeTexture9"},
+  { 0x3b4720, "__ZTI21IDirect3DBaseTexture9"},
+  { 0x3b4740, "__ZTI18IDirect3DResource9"},
+  { 0x3b4860, "__ZTI15CDirect3DDevice"},
+  { 0x3b4880, "__ZTI16IDirect3DDevice9"},
+  { 0x3b48a0, "__ZTI20CDirect3DIndexBuffer"},
+  { 0x3b48c0, "__ZTI21IDirect3DIndexBuffer9"},
+  { 0x3b4920, "__ZTI20CDirect3DPixelShader"},
+  { 0x3b4940, "__ZTI21IDirect3DPixelShader9"},
+  { 0x3b4960, "__ZTI25COpenGLARBFragmentProgram"},
+  { 0x3b4980, "__ZTI16CDirect3DSurface"},
+  { 0x3b49a0, "__ZTI17IDirect3DSurface9"},
+  { 0x3b49c0, "__ZTI18CDirect3DSwapChain"},
+  { 0x3b49e0, "__ZTI19IDirect3DSwapChain9"},
+  { 0x3b4a00, "__ZTI16CDirect3DTexture"},
+  { 0x3b4a20, "__ZTI17IDirect3DTexture9"},
+  { 0x3b4aa0, "__ZTI21CDirect3DVertexBuffer"},
+  { 0x3b4ac0, "__ZTI22IDirect3DVertexBuffer9"},
+  { 0x3b4b20, "__ZTI26CDirect3DVertexDeclaration"},
+  { 0x3b4b40, "__ZTI27IDirect3DVertexDeclaration9"},
+  { 0x3b4b60, "__ZTI21CDirect3DVertexShader"},
+  { 0x3b4b80, "__ZTI22IDirect3DVertexShader9"},
+  { 0x3b4bc0, "__ZTI13CMemoryBuffer"},
+  { 0x3b4be0, "__ZTI20COpenGLVertexProgram"},
+  { 0x3b4c00, "__ZTI7COpenGL"},
+  { 0x3b4c20, "__ZTI14CMacGameEngine"},
+  { 0x3b4c40, "__ZTI17CCallOfDutyEngine"},
+  { 0x3b4c60, "__ZTI7CThread"},
+  { 0x3b4c80, "__ZTI15CDirect3DVolume"},
+  { 0x3b4ca0, "__ZTI16IDirect3DVolume9"},
+  { 0x3b4cc0, "__ZTI22CDirect3DVolumeTexture"},
+  { 0x3b4ce0, "__ZTI23IDirect3DVolumeTexture9"},
+  { 0x3b4d60, "__ZTI11CD3DXBuffer"},
+  { 0x3b4d80, "__ZTI11ID3DXBuffer"},
+  { 0x3b4da0, "__ZTI10dxUserGeom"},
+  { 0x3b4dc0, "__ZTI6dxGeom"},
+  { 0x3b4de0, "__ZTI5dBase"},
+  { 0x3b4e20, "__ZTI7dxSpace"},
+  { 0x3b4e40, "__ZTI13dxSimpleSpace"},
+  { 0x3b4e60, "__ZTI5dxBox"},
+  { 0x3b4e80, "__ZTI15dxGeomTransform"},
+  { 0x3b4ea0, "__ZTI12CSoundEngine"},
+  { 0x3b4ec0, "__ZTI12CSoundObject"},
+  { 0x3b4ee0, "__ZTI12CSampleSound"},
+  { 0x3b4f00, "__ZTI12CStreamSound"},
+  { 0x3b4f20, "__ZTI14CDirect3DQuery"},
+  { 0x3b4f40, "__ZTI15IDirect3DQuery9"},
+  { 0x3b4f60, "__ZTI19COpenGLBufferObject"},
+  { 0x3b4f80, "__ZTI15TextureInfoType"},
+  { 0x3b4fa0, "__ZTI14COpenGLTexture"},
+  { 0, NULL }
+  };
+    int i;
+    for(i = 0; list[i].addr; ++i)
+    {
+        if(name.compare(list[i].name) == 0)
+        {
+            return list[i].addr;
+        }
+    }
+    return -1;
   }
 
   void add(const MachO& mach, uintptr_t base) {
@@ -525,11 +1354,25 @@ class FileMap {
     {
       MachO::Symbol sym = mach.symbols()[i];
 
+      if(sym.name.compare("__ZThn4_N20CDirect3DCubeTextureD0Ev") == 0)
+      {
+//	__asm("int $3");
+      }
       if(discard(sym.section, sym.type, sym.name.c_str()))
       {
         continue;
       }
-      if(sym.type == 0x66)
+
+      if(sym.name.compare(0, 5, "__ZTI") == 0)
+      {
+        type = SYM_VITABLE;
+        sym.addr = FindAddrForVITabName(sym.name);
+        if(sym.addr == 0xffffffff)
+        {
+            continue;
+        }
+      }
+      else if(sym.type == 0x66)
       {
         type = SYM_OBJECT;
         if (sym.name.empty())
@@ -538,9 +1381,12 @@ class FileMap {
           sprintf(unkstr, "unknown%d", objectcount +1);
           sym.name.assign(unkstr);
         }
+      }else if((sym.type & 0x0e) == 0x0e && sym.section == 3){
+          type = SYM_PROC;
+
       }else if(sym.type == 0x22 || sym.type == 0x24){
-        
-        if(sym.section == 8)
+
+        if(sym.section == 9)
         {
           type = SYM_GLOBCONST;
         }else{
@@ -558,7 +1404,7 @@ class FileMap {
         }else if(sym.section == 8 && sym.addr >= 0x374a3c && sym.addr <= 0x38203c){
 
         }else if(sym.addr < 0x2f00 || sym.addr > 0x2e4f05){
-          printf("Error not in __TEXT\n");
+          printf("Error not in __text\n");
           exit(1);
         }
       }else if((sym.type & 0x0e) != 0x0e){
@@ -618,7 +1464,7 @@ class FileMap {
             ((char*)name)[l-2] = 0;
           }
         }
-              }
+      }
       if(*name == '_')
       {
         ++name;
@@ -636,8 +1482,28 @@ class FileMap {
           {
             initsr.assign("build_string_buffer_ptr");
             addsymbol(initsr, 0x3a9cc0, 12, SYM_DATAVAR);
+          }else
+	  if(strcmp(name, "collision_kernel") == 0)
+          {
+            newsr = "_ZTV6dxGeom";
+            addsymbol(newsr, 0x3b4e00, 18, SYM_VTABLE);
+            newsr = "_ZTI6dxGeom";
+            addsymbol(newsr, 0x3b4dc0, 18, SYM_VITABLE);
           }
         }
+/*        if(type == SYM_VTABLE)
+        {
+            uint32_t vitabaddr = sym.addr + 4;
+
+            if(*(uint32_t*)vitabaddr >= 0x3b4660 && *(uint32_t*)vitabaddr < 0x3b57a0)
+            {
+                char newname[128];
+                strcpy(newname, name);
+                newname[3] = 'I';
+                initsr.assign(newname);
+                addsymbol(initsr, *(uint32_t*)vitabaddr, 18, SYM_VITABLE);
+            }
+        }*/
       }
     }
 
@@ -767,6 +1633,29 @@ class FileMap {
         printf("Fatal error in symbol search: s->address > address\n");
         exit(-1);
       }
+      if(s->size < address - s->address)
+      {
+          if(s->name.compare("HIDReportError:F(0,1)") == 0)
+          {
+              return -1;
+          }
+          if(s->name.compare("__i686.get_pc_thunk.cx") == 0)
+          {
+              return -1;
+          }
+          if(s->name.compare("CFPropertyListCreateFromXMLData") == 0)
+          {
+              return -1;
+          }
+	  if(address >= 0x3b4044 && address < 0x3b4583)
+	  {
+		return -1;
+	  }
+          printf("Out of range symbol: %s address 0x%x\n", s->name.c_str(), address);
+          __asm("int $3");
+
+          return -1;
+      }
       return address - s->address;
     }
     return -1;
@@ -776,11 +1665,11 @@ class FileMap {
   {
     unsigned int i;
 
-    static SectionData sectiondata[22] = {{"JUNK", SYM_NONE, 0,0}, {"text", SYM_PROC, 0x2f00, 0x2e4f05}, {"cstring", SYM_CSTRING,0x2e4f08, 0x32e0a7},
+    static SectionData sectiondata[] = {{"JUNK", SYM_NONE, 0,0}, {"text", SYM_PROC, 0x2f00, 0x2e4f05}, {"cstring", SYM_CSTRING,0x2e4f08, 0x32e0a7},
        {"text", SYM_PROC, 0x32e0a8, 0x33a02d}, {"JUNK", SYM_NONE, 0, 0}, {"JUNK", SYM_NONE, 0 ,0}, {"JUNK", SYM_NONE, 0, 0}, 
        {"literal4", SYM_CONSTVAR4, 0x374440, 0x374a3b}, {"text", SYM_PROC, 0x374a3c, 0x382040}, {"const", SYM_CONSTVAR, 0x382060, 0x3a381f},
        {"JUNK", SYM_NONE, 0, 0}, {"literal8", SYM_CONSTVAR8, 0x3a3c10, 0x3a3fef}, {"data", SYM_DATAVAR, 0x3a4000, 0x3b0def},
-       {"JUNK", SYM_NONE, 0, 0}, {"cfstring", SYM_CFSTRING, 0x3b4044, 0x3b4583}, {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0},
+       {"JUNK", SYM_NONE, 0, 0}, {"JUNK", SYM_NONE, 0, 0}, {"cfstring", SYM_CFSTRING, 0x3b4044, 0x3b4583}, {"JUNK", SYM_NONE, 0,0}, {"const_coal", SYM_CONSTVAR, 0x3b4660, 0x3b4fbf},
        {"const", SYM_CONSTVAR, 0x3b4fc0, 0x3bd573}, {"bss", SYM_VAR, 0x3bd580, 0xe6828b},{"common", SYM_VAR, 0xe68300, 0xd5cbd7f},
        {"pointers", SYM_POINTERS, 0xd5cc000, 0xd5ccef7}, {"jump_table", SYM_IMPORT, 0xd5ccef8,0xd5cdc6c}};
 
@@ -796,6 +1685,70 @@ class FileMap {
     return false;
   }
 
+  unsigned int JumpTableInRange(unsigned int startaddress, unsigned int stopaddress)
+  {
+
+    static unsigned int jumptablestarts[ ] = {
+	0x382060, 0x382084, 0x382124, 0x382450, 0x382474, 0x382498, 0x3824c8, 0x3824f8,
+	0x38251c, 0x382540, 0x382564, 0x382588, 0x3825ac, 0x3825d0, 0x3825f4, 0x382618,
+	0x382648, 0x382678, 0x38269c, 0x3826c0, 0x3826e4, 0x382708, 0x38272c, 0x382750,
+	0x382774, 0x382798, 0x3827bc, 0x3827e0, 0x382804, 0x382840, 0x382100, 0x382a98,
+	0x382ac4, 0x382a48, 0x382a74, 0x382b10, 0x382c78, 0x382dc0, 0x382ef0, 0x382eb4,
+	0x3832b0, 0x383360, 0x383400, 0x383510, 0x3835ac, 0x383648, 0x383460, 0x383740,
+	0x38394c, 0x383b00, 0x383b18, 0x383b30, 0x383c64, 0x383c78, 0x383cf0, 0x383d08,
+	0x383d34, 0x383d4c, 0x383d64, 0x3844b0, 0x384414, 0x3843f0, 0x3847e0, 0x384840,
+	0x384890, 0x3848e0, 0x384be0, 0x384e60, 0x384ebc, 0x384ea0, 0x3850a0, 0x385390,
+	0x385480, 0x3854c0, 0x3854e0, 0x385500, 0x385520, 0x3855c0, 0x3856e0, 0x385700,
+	0x385740, 0x385df0, 0x385e1c, 0x385e48, 0x387910, 0x387a50, 0x387ab0, 0x387acc,
+	0x387bc8, 0x387bf0, 0x387c18, 0x387ba0, 0x387cf0, 0x388040, 0x3884b8, 0x3884f0,
+	0x388528, 0x388560, 0x388480, 0x388598, 0x3885d0, 0x388608, 0x38b280, 0x38b38c,
+	0x38b490, 0x38b4ac, 0x38b694, 0x38b5a8, 0x38b74c, 0x38b7c4, 0x38b940, 0x38b900,
+	0x38b970, 0x38be1c, 0x38c038, 0x38c1c8, 0x38bbdc, 0x38bdf8, 0x38b9c0, 0x38f420,
+	0x38f638, 0x38f820, 0x38fd20, 0x38fe90, 0x38feb4, 0x390014, 0x38ff20, 0x39011c,
+	0x390148, 0x390200, 0x38ff50, 0x390500, 0x390cc0, 0x390d40, 0x390d64, 0x390dac,
+	0x390dd0, 0x390e08, 0x390e2c, 0x390d88, 0x390dec, 0x390ff0, 0x390e60, 0x391400,
+	0x391c90, 0x391ce0, 0x391d20, 0x391d60, 0x391db0, 0x392210, 0x392260, 0x3920a0,
+	0x391f84, 0x391f60, 0x392050, 0x391fc0, 0x391fe4, 0x392008, 0x39202c, 0x392150,
+	0x3920c0, 0x3920e4, 0x392108, 0x39212c, 0x392990, 0x3929a8, 0x392a2c, 0x393660,
+	0x39f6a0, 0x39f6cc, 0x39f6f8, 0x3a0180, 0x3a0270, 0x3a0b00, 0x3a1320, 0x3a1920,
+	0x3a2100, 0x3a2300, 0x3a2500
+    };
+
+    unsigned int i;
+
+    for(i = 0; i < sizeof(jumptablestarts) / sizeof(jumptablestarts[0]); ++i)
+    {
+        if(jumptablestarts[i] < stopaddress && jumptablestarts[i] > startaddress)
+        {
+            return jumptablestarts[i];
+        }
+    }
+    return 0;
+  }
+
+  unsigned int ManualSizeofSymbol(unsigned int startaddress, string name)
+  {
+      if(startaddress == 0x382d40)
+      {
+          return 0x10;
+      }
+
+      if(startaddress == 0x3839c0)
+      {
+          return 0x10;
+      }
+      if(name.find("__uint4") != std::string::npos)
+      {
+          return 0x10;
+      }
+      if(name.find("g_fltMin") != std::string::npos)
+      {
+          return 0x10;
+      }
+      return 0;
+  }
+
+
   void sortsymbolsandcalc()
   {
     int i;
@@ -805,9 +1758,21 @@ class FileMap {
     for(i = 0; i < symbolcount; ++i)
     {
       int size;
+
       if(i < symbolcount -1 && symbolssorted[i+1].symbol->section == symbolssorted[i].symbol->section)
       {
         size = symbolssorted[i+1].address - symbolssorted[i].address;
+        unsigned int mansize = ManualSizeofSymbol(symbolssorted[i].address, symbolssorted[i].symbol->name);
+        if(mansize > 0)
+        {
+            size = mansize;
+        }else{
+            unsigned int jumptab = JumpTableInRange(symbolssorted[i].address, symbolssorted[i+1].address);
+            if(jumptab > 0)
+            {
+                size = jumptab - symbolssorted[i].address;
+            }
+        }
       }else{
         SectionData s;
         if(!getSectionDetailsForAddress(symbolssorted[i].address, &s))
@@ -852,7 +1817,7 @@ class FileMap {
         if(symbols[i].name.compare(name) != 0)
         {
           //for(int z=0; z < symbolcount; ++z){if(symbols[z].name.compare("_Z12VEH_JoltBodyP9gentity_sPKffff")==0){printf("found at %x idx %d\n", symbols[z].address, z);}}
-          printf("Duplicate address with different name detected!\n");
+          printf("Duplicate address 0x%x with different name detected! %s\n", address, name.c_str());
         }
         return;
       }
@@ -995,7 +1960,13 @@ class FileMap {
 
 };
 
+
+/***************************************************************************************************
+End of Symbol handling
+******************************************************************************************************/
+
 static FileMap g_file_map;
+static ShadowFileMap g_shadowfile_map;
 
 #ifdef __x86_64__
 static const char* ARCH_NAME = "x86-64";
@@ -1004,8 +1975,6 @@ static const int BITS = 64;
 static const char* ARCH_NAME = "i386";
 static const int BITS = 32;
 #endif
-
-static char* g_darwin_executable_path;
 
 static Timer g_timer;
 
@@ -1032,7 +2001,6 @@ bool dasmIsJump(enum ud_mnemonic_code mnemonic)
 }
 
 class MachDisassembler* dasm_ptr;
-
 
 class MachDisassembler
 {
@@ -1255,10 +2223,520 @@ public:
     return false;
   }
 
-  static bool isFunctionPointer(uint32_t location, int endaddress)
+  static bool LookupShadowImageFunctionPtr(string name, unsigned int location, unsigned int target)
+  {
+    ShadowFileMap::Symbol sym;
+    if(g_shadowfile_map.getSymbolForName(name, &sym) == -1)
+    {
+        printf("LookupShadowImageFunctionPtr: Symbol %s not found!\n", name.c_str());
+        return false;
+    }
+    ud_t ud_obj;
+    enum ud_mnemonic_code mnemonic;
+
+    initDisassembler( &ud_obj );
+
+    uint64_t pc = sym.address;
+
+    ud_set_input_buffer(&ud_obj, (uint8_t*)sym.address + 0x40000000, sym.size);
+    ud_set_pc(&ud_obj, pc);
+    ud_obj.inp_buf_index = 0;
+    while(ud_disassemble(&ud_obj) && !ud_input_end(&ud_obj))
+    {
+        mnemonic = ud_insn_mnemonic(&ud_obj);
+        if(mnemonic == UD_Imov)
+        {
+	    struct ud_operand* op0 = &ud_obj.operand[0];
+	    struct ud_operand* op1 = &ud_obj.operand[1];
+	    if(op0->size != 32 || op1->size != 32)
+	    {
+		continue;
+	    }
+	    if(op1->lval.udword == target)
+	    {
+		printf("Function ptr not found\n");
+		return false;
+	    }
+        }
+    }
+    return true;
+  }
+
+  static bool isRDataPointersInSymbol(string &name)
+  {
+      const char *names[] = {
+       "corpseEntityStateFields", "entityStateFields", "eventEntityStateFields", "hudElemFields", "itemEntityStateFields", "loopFxEntityStateFields", 
+       "missileEntityStateFields", "objectiveFields", "playerEntityStateFields", "playerStateFields", "scriptMoverStateFields", "soundBlendEntityStateFields",
+       "vehicleEntityStateFields", "commandList", "itemParseKeywords", "menuParseKeywords", "serverFilters", "s_capsCheckInt", "constructorTable", "rb_tessTable",
+       "gfxCmdBufContext", "s_builtInMaterials", "s_lyrTechSetNames", "s_stateMapDstWireframeBitGroup", "s_wireframeBitNames", "s_stencilBitNames", "s_stencilOpFrontPassBitNames",
+       "s_stateMapDstPolygonOffsetBitGroup", "s_polygonOffsetBitNames", "s_colorWriteRgbBitNames", "s_colorWriteAlphaBitNames", "s_stateMapDstDepthWriteBitGroup",
+       "s_depthWriteBitNames", "s_stateMapDstDepthTestBitGroup", "s_depthTestBitNames", "s_stateMapDstCullFaceBitGroup", "s_cullFaceBitNames", "s_stateMapDstBlendFuncRgbBitGroup",
+       "s_stateMapDstBlendFuncAlphaBitGroup", "s_stateMapDstBlendFuncRgbBitGroup", "s_blendOpRgbBitNames", "s_blendOpRgbBitNames", "s_srcBlendRgbBitNames", "_ZZ29Material_TechniqueTypeForNamePKcE5C.439",
+       "s_dstBlendRgbBitNames", "s_stateMapDstAlphaTestBitGroup", "s_alphaTestBitNames", "allowedDvarNames", "s_materialFeatures", "uiStatDvarPrefix", "functions", "methods", "static_ltree", "static_dtree",
+       "static_bl_desc", "static_d_desc", "static_l_desc", "g_materialTypeInfo", "keynames", "keynames_localized", "builtinChannels", "serverStatusDvars", "g_pszSndAliasKeyNames", "sa_spkrMapIdentifierStrings",
+       "punctuation", "netSources", "snd_outputConfigurationStrings", "g_highPrecisionParts", "physPresetFields", "axisTable", "jointNames", "geomNames", "stateEntries", "s_aspectRatioNames",
+       "s_rendererNames", "r_forceLodNames", "fbColorDebugNames", "r_clearNames", "s_aaAlphaNames", "showPixelCostNames", "normalMapNames", "colorMapNames", "gpuSyncNames",
+       "debugShaderNames", "mipFilterNames", "imageTypeName", "g_imageProgNames", "g_platform_name", "s_renderTargetNames", "sunDvarNames", "s_warnFormat", "snd_draw3DNames",
+       "snd_draw3DNames", "snd_eqTypeStrings", "snd_roomStrings", "kHighQualityKey", "_ZZ18R_VerifyFieldNamesPPKcS0_E6fields", "kInWindowModeKey", "kDisplayRectKey", "kDisplayIndexKey", "kFirstTimeKey",
+       "sANSI_VK_Map", "sFrench_ISO_VK_Map", "sGerman_ISO_VK_Map", "sItalian_ISO_VK_Map", "kBuildTag", "kProductTag", "EndToken", "_ZZ24Sys_GetSemaphoreFileNamevE18sSemaphoreFileName",
+       "virtualKeyConvert", "animEventTypesStr", "animMoveTypesStr", "animStateStr", "animConditionsTable", "animWeaponClassStr", "animConditionMountedStr", "animWeaponPositionStr",
+       "animStrafeStateStr", "animPerkStateStr", "animConditionsStr", "animParseModesStr", "globalFilename", "animBodyPartsStr", "controller_names", "s_mantleAnimNames", "entityTypeNames",
+       "bg_soundRoomTypes", "bg_ShockScreenTypeNames", "bgShockDvarNames", "eventnames", "pmoveHandlers", "weapIconRatioNames", "ammoCounterClipNames", "overlayInterfaceNames",
+       "stickinessNames", "guidedMissileNames", "activeReticleNames", "offhandClassNames", "szProjectileExplosionNames", "szWeapStanceNames", "impactTypeNames", "penetrateTypeNames", "szWeapFireTypeNames",
+       "szWeapInventoryTypeNames", "szWeapOverlayReticleNames", "szWeapClassNames", "szWeapTypeNames", "szWeapTypeNames", "bg_perkNames", "dollardirectives", "default_punctuations",
+       "visionDefFields", "_ZZ16SetDefaultVisioniE19MYDEFAULTVISIONNAME", "offhandStrings", "cg_drawMaterialNames", "snd_drawInfoStrings", "cg_drawFpsNames", "cg_drawTalkNames",
+       "wheelTags", "frenchNumberKeysMap", "defaultGameWindowFilters", "customClassDvars", "svc_strings", "_ZZ16CL_CubemapShot_fvE10szShotName", "DB_GetXAssetSizeHandler", "DB_XAssetSetNameHandler",
+       "g_assetNames", "g_block_mem_name", "g_defaultAssetName", "dynEntClassNames", "g_he_vertalign", "g_he_horzalign", "g_he_aligny", "g_he_alignx", "g_he_font", "hintStrings",
+       "accuracyDirName", "s_vehicleFields", "s_vehicleTypeNames", "s_wheelTags", "g_HitLocNames", "DB_XAssetGetNameHandler", "DB_DynamicCloneXAssetHandler", "DB_RemoveXAssetHandler",
+       "DB_XAssetPool", "DB_FreeXAssetHeaderHandler", "DB_InitPoolHeaderHandler", "DB_AllocXAssetHeaderHandler", "s_flashTags", "modNames", "_ZZ22G_LocalizedStringIndexPKcE12origErrorMsg",
+       "g_entinfoNames", "entityHandlers", "g_purgeableEnts", "s_flashTags", "modNames", "_ZZ22G_LocalizedStringIndexPKcE12origErrorMsg", "g_entinfoNames", "entityHandlers",
+       "g_purgeableEnts", "s_lockThreadNames", "noticeErrors", "g_dedicatedEnumNames", "build_string_buffer_ptr", "netsrcString", "propertyNames", "var_typename", "g_classMap",
+       "ucmds", "g_languages", "validOperations", "g_expOperatorNames", "_ZZ12String_AllocPKcE10staticNULL", "MonthAbbrev", "_ZZ22R_GetBspOmniLightSurfsPK8GfxLightiP18GfxBspDrawSurfDataE9allowSurf", 
+       "_ZZ28R_MarkFragments_WorldBrushesP8MarkInfoE9allowSurf", "_ZZ22R_GetBspSpotLightSurfsPK8GfxLightiP18GfxBspDrawSurfDataE9allowSurf"
+
+      };
+      for(unsigned int i = 0; i < sizeof(names) / sizeof(names[0]); ++i)
+      {
+          if(name.compare(names[i]) == 0)
+          {
+              return true;
+          }
+      }
+      return false;
+  }
+
+
+  static bool isRDataPointerReference(uint64_t address, uint64_t location)
+  {
+      FileMap::Symbol sym;
+      ShadowFileMap::Symbol shadowsym;
+
+      if(location % 4 != 0)
+      {
+          return false;
+      }
+
+      int x = g_file_map.getSymbolForAddress(location, &sym);
+
+
+      if(x == -1)
+      {
+        printf("isRDataPointerReference: Symbol not found A\n");
+          return false;
+      }
+      if(sym.name.compare(0,4,"_ZTV") == 0)
+      {
+          return true;
+      }
+      if(sym.name.compare("RB_RenderCommandTable") == 0)
+      {
+          return true;
+      }
+
+      if(sym.name.compare(0,9,"g_swizzle") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare(0,8,"g_select") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare(0,6,"g_keep") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare(0,13,"waveletDecode") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare("directives") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare("g_TypeName") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare("g_FleshTypeName") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare("s_drawElemHandler") == 0)
+      {
+          return true;
+      }
+      if(sym.name.compare("s_elemFields") == 0)
+      {
+          return true;
+      }
+      if(sym.name.compare("s_allFlagDefs") == 0)
+      {
+          return true;
+      }
+      if(sym.name.compare("fields") == 0)
+      {
+          return true;
+      }
+      if(sym.name.compare("s_methods") == 0)
+      {
+          return true;
+      }
+      if(sym.name.compare("s_bspOnlySpawns") == 0)
+      {
+          return true;
+      }
+      if(sym.name.compare("s_bspOrDynamicSpawns") == 0)
+      {
+          return true;
+      }
+
+      if(sym.name.compare("s_netFieldList") == 0)
+      {
+          return true;
+      }
+
+      if(sym.name.compare("fxStateFields") == 0)
+      {
+          return true;
+      }
+
+      if(sym.name.compare("helicopterEntityStateFields") == 0)
+      {
+          return true;
+      }
+
+      if(sym.name.compare("planeStateFields") == 0)
+      {
+	return true;
+      }
+
+      if(sym.name.compare("archivedEntityFields") == 0)
+      {
+	return true;
+      }
+      if(sym.name.compare("clientStateFields") == 0)
+      {
+	return true;
+      }
+
+      if(sym.name.compare("needsTraceSwizzle.142602") == 0)
+      {
+          return false;
+      }
+
+      if(sym.name.compare("quadIndices.154841") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare("s_streamSourceInfo") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare("s_streamDestInfo") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare("s_rightToLeft") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare("bl_order") == 0)
+      {
+          return false;
+      }
+
+      if(sym.name.compare("_ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE15templateIndices") == 0)
+      {
+          return false;
+      }
+
+      if(sym.name.compare("riflePriorityMap") == 0)
+      {
+          return false;
+      }
+
+      if(sym.name.compare("kbitmask") == 0)
+      {
+          return false;
+      }
+
+
+      if(sym.name.compare("msg_hData") == 0)
+      {
+          return false;
+      }
+
+      if(sym.name.compare("yydefgoto") == 0)
+      {
+          return false;
+      }
+      if(sym.name.compare(0,32,"_ZZ21SE_GetString_FastFilePKcE1s") == 0)
+      {
+          return true;
+      }
+
+
+
+      if(location >= 0x3bbcd0 && location <= 0x3bc030)
+      {
+          if((location + 0x10) % 0x14 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(location >= 0x3bc080 && location <= 0x3bc0b0)
+      {
+          if((location + 0x4) % 0x8 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(location >= 0x3bcc60 && location < 0x3bcd60)
+      {
+          if(location % 0x8 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+
+      if(location >= 0x3bc6c0 && location < 0x3bc760)
+      {
+          if(location % 0x10 == 0 || (location +4) % 0x10 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(location >= 0x3bca00 && location < 0x3bca60)
+      {
+          if(location % 0x8 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(0x3b5fac == location || 0x3b5fa8 == location)
+      {
+          return true;
+      }
+
+
+      if(location == 0x3839c8 || location == 0x3839cc)
+      {
+          return false;
+      }
+      if(location >= 0x3b5860 && location < 0x3b5980)
+      {
+          return true;
+      }
+      if(location >= 0x3b5980 && location < 0x3b5aa0)
+      {
+          return true;
+      }
+      if(location >= 0x3b5aa0 && location <= 0x3b5ab4)
+      {
+          if(location % 0x8 == 0)
+          {
+              return true;
+          }
+          return false;
+
+      }
+
+      if(location >= 0x3bc760 && location < 0x3bca80)
+      {
+          if(location % 0x8 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(location >= 0x3bcae0 && location < 0x3bcb10)
+      {
+          if(location % 0x10 == 0 || (location +4) % 0x10 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(location >= 0x3bcf00 && location < 0x3bd080)
+      {
+          if(location % 0x10 == 0 || (location +4) % 0x10 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(location >= 0x3ac4a0 && location <= 0x3af8a4)
+      {
+          if((location+0xc) % 0x10 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(location >= 0x3a52a0 && location <= 0x3a6a1c)
+      {
+          if((location) % 0xc == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(location >= 0x3ab700 && location <= 0x3abb90)
+      {
+          if((location + 4) % 0x14 == 0)
+          {
+              return true;
+          }
+          return false;
+      }
+
+      if(isConstant(address))
+      {
+          return false;
+      }
+
+
+      if(isRDataPointersInSymbol(sym.name))
+      {
+          return true;
+      }
+
+      unsigned int i;
+      for(i = 0; i < dasm_ptr->globjumptableCount; ++i)
+      {
+          if(location >= dasm_ptr->globjumptables[i].address && location < dasm_ptr->globjumptables[i].address + sizeof(int*) * dasm_ptr->globjumptables[i].size)
+          {
+//	      printf("IS jumptable\n");
+              return true;
+          }
+      }
+/*
+      x = g_shadowfile_map.getSymbolForName(sym.name, &shadowsym);
+      if(x == 0 || x == -1)
+      {
+
+          printf("isRDataPointerReference: 0x%llx 0x%llx %s\n", location, address ,sym.name.c_str());// not found at 0x%llx 0x%llx\n", sym.name.c_str(), address, location);
+          return false;
+      }
+*/
+
+      printf("Unhandled isRDataPointerReference: 0x%llx 0x%llx \"%s\"\n", location, address, sym.name.c_str());
+      return true;
+  }
+
+  static bool isDataPointerReference(uint64_t address, uint64_t location)
+  {
+      FileMap::Symbol sym;
+      ShadowFileMap::Symbol shadowsym;
+
+      if(location % 4 != 0)
+      {
+          return false;
+      }
+
+      int x = g_file_map.getSymbolForAddress(location, &sym);
+
+
+      if(x == -1)
+      {
+        printf("isDataPointerReference: Symbol not found A\n");
+          return false;
+      }
+      printf("Unhandled isDataPointerReference: 0x%llx 0x%llx \"%s\"\n", location, address, sym.name.c_str());
+      return true;
+  }
+
+
+  static bool LookupShadowImageDataPtr(ud_t* srcud_obj, string name, unsigned int location)
+  {
+    ShadowFileMap::Symbol sym;
+//    printf("Lookup %s\n", name.c_str());
+    if(g_shadowfile_map.getSymbolForName(name, &sym) == -1)
+    {
+//        printf("Missing Symbol: %s\n", name.c_str());
+        return true;
+    }
+
+    if(srcud_obj->operand[1].size != 32 || srcud_obj->operand[0].size != 32)
+    {
+        printf("LookupShadowImageFunctionPtr: Operand mismatch\n");
+        return false;
+    }
+
+
+    enum ud_mnemonic_code findmnemonic = ud_insn_mnemonic(srcud_obj);
+
+
+    ud_t ud_obj;
+    enum ud_mnemonic_code mnemonic;
+
+    initDisassembler( &ud_obj );
+
+    uint64_t pc = sym.address;
+
+    ud_set_input_buffer(&ud_obj, (uint8_t*)sym.address + 0x40000000, sym.size);
+    ud_set_pc(&ud_obj, pc);
+    ud_obj.inp_buf_index = 0;
+//    printf("Symbol %s:\n", name.c_str());
+
+
+//    printf("%llx:  %s %x\n", ud_insn_off(srcud_obj), ud_insn_asm(srcud_obj), srcud_obj->operand[1].lval.udword);
+
+
+    while(ud_disassemble(&ud_obj) && !ud_input_end(&ud_obj))
+    {
+        mnemonic = ud_insn_mnemonic(&ud_obj);
+        if(findmnemonic == mnemonic)
+        {
+	    if(ud_obj.operand[1].size != 32 || ud_obj.operand[0].size != 32)
+	    {
+		continue;
+	    }
+
+//            printf("  %llx:  %s \n", ud_insn_off(&ud_obj), ud_insn_asm(&ud_obj));
+            if(ud_obj.operand[1].lval.udword == srcud_obj->operand[1].lval.udword)
+            {
+        	static int k;
+//                printf("Found IMM in %s at %llx: %s\n", name.c_str() ,ud_insn_off(&ud_obj), ud_insn_asm(&ud_obj));
+                if(k % 8 == 0)
+                {
+        		printf("\n\t\t0x%06llx, ", ud_insn_off(srcud_obj));
+		}else{
+        		printf("0x%06llx, ", ud_insn_off(srcud_obj));
+		}
+		++k;
+                return false;
+            }
+        }
+//        printf("  %llx:  %s\n", ud_insn_off(&ud_obj), ud_insn_asm(&ud_obj));
+    }
+
+    return true;
+
+  }
+
+
+
+  static bool isFunctionPointer(uint32_t location, int endaddress, const string curfuncname)
   {
     ud_t ud_obj;
     enum ud_mnemonic_code mnemonic;
+
 
     if(isFunctionPointerWhitelist(location))
     {
@@ -1280,7 +2758,7 @@ public:
       return false;
     }
     mnemonic = ud_insn_mnemonic(&ud_obj);
-    
+
     if(mnemonic == UD_Icmp) //cmp happens only once and it is function pointer - so ignore it
     {
       return true;
@@ -1290,6 +2768,8 @@ public:
       printf("Error\n");
       return false;
     }
+
+
     struct ud_operand* op0 = &ud_obj.operand[0];
     struct ud_operand* op1 = &ud_obj.operand[1];
 
@@ -1313,7 +2793,16 @@ public:
       printf("Junk mov\n");
       return false;
     }
-
+/*
+//Completed to check
+    if(op1->lval.udword > 0x2f00)
+    {
+        if(!LookupShadowImageFunctionPtr(curfuncname, location, op1->lval.udword))
+        {
+            printf("Not a function ptr %s 0x%x -> 0x%x\n", curfuncname.c_str(), location, op1->lval.udword);
+        }
+    }
+*/
     if(op0->type == UD_OP_MEM)
     {
       if (ud_obj.pfx_seg) {
@@ -1355,7 +2844,7 @@ public:
             if(off != 0)
             {
               printf("Error: No symbol for address@0x%llx\n", ud_obj.insn_offset);
-              return false;              
+              return false;
             }
             if(!FunctionArgPtr(s.name.c_str(), arg))
             {
@@ -1459,10 +2948,11 @@ public:
   {
 
     int i;
-    uint32_t constants[] = {0x900000, 0x1400000, 0x646162, 0x820011, 0x800811, 0x810011, 0x800000, 0x400208, 480000, 0x1600080, 0xffff00, 0x400000, 0xa00000, 0xa000000, 0xfffffe, 0xffffff, 0x1000000, 0xff00ff, 0x1f00000, 0x484c68, 0x46380c, 0x46382c, 0x504526, 0x48468c, 0x484660, 0x463840, 0x484a90, 0x463820,
-                            0x43c000, 0x463800, 0x463804, 0x463808, 0x463838, 0xfe7fff, 0x7e8000, 0x802011, 0x802013, 0x803003, 0x806c31, 0x807fff, 0x810211, 0x700000, 0x600000, 0x600001, 0x400000,
-                            0x39294c, 0x2dbc514, 0x2dbc518, 0x624451c, 0x8246aa0, 0x8246aa4, 0x8246aa8, 0x8246aac,
-                            0x504504, 0x4e3cf0, 0x0};
+    uint32_t constants[] = {0x3e80, 0xc000, 0x4000, 0x6000, 0x8000, 0x7fff, 0x8000000, 0x900000, 0x1400000, 0x646162, 0x820011, 0x800811, 0x810011, 0x800000, 0x400208, 480000, 0x1600080, 0xffff00, 0x400000, 0xa00000, 0xa000000, 0xfffffe, 0xffffff, 0x1000000, 0xff00ff, 0x1f00000, 0x484c68, 0x46380c, 0x46382c, 0x504526, 0x48468c, 0x484660, 0x463840, 0x484a90, 0x463820,
+                            0x43c000, 0x463800, 0x463804, 0x463808, 0x463838, 0xfe7fff, 0x7e8000, 0x802011, 0x802013, 0x803003, 0x806c31, 0x807fff, 0x810211, 0x700000, 0x600000, 0x600001, 0x400000, 0x1010101, 0x1010001,
+                            0x39294c, 0x2dbc514, 0x2dbc518, 0x624451c, 0x8246aa0, 0x8246aa4, 0x8246aa8, 0x8246aac, 0x7000000, 0xf0000, 0xf00000, 0x504504, 0x4e3cf0, 0x3800, 0x3000,
+                            0x0 };
+
     for(i = 0; constants[i]; ++i)
     {
       if(constants[i] == address)
@@ -1474,11 +2964,75 @@ public:
 
   }
 
+
+
+    static bool isConstantAtInstruction(uint32_t _eip){
+	unsigned int i;
+        uint32_t addresses[] = {
+                0x004e07, 0x00662d, 0x006634, 0x006798, 0x006c3f, 0x006d4c, 0x32f115, 0x32f27b,
+                0x32f28c, 0x00a381, 0x00a1cb, 0x00ae3d, 0x00b622, 0x00b647, 0x00b442, 0x00b467,
+                0x32faaa, 0x32fbb5, 0x32fbc6, 0x00c82f, 0x00c860, 0x00c867, 0x00c877, 0x00c87e,
+                0x00c906, 0x00ed02, 0x00ed0c, 0x00ed3e, 0x00ed45, 0x00ed55, 0x00ed5c, 0x00edd6,
+                0x3307aa, 0x330a55, 0x330c12, 0x330c23, 0x33140a, 0x331529, 0x33153a, 0x331845,
+                0x33196c, 0x33197d, 0x02c1dc, 0x045936, 0x04f6cd, 0x0638d5, 0x063e13, 0x08f96e,
+                0x0c5524, 0x0c5541, 0x0c6c65, 0x0c6caa, 0x0db376, 0x0db39b, 0x0db3e1, 0x0db467,
+                0x0d9e5b, 0x0dcb17, 0x0dce87, 0x0dd285, 0x0de091, 0x0de0d2, 0x0df420, 0x0df46a,
+                0x0e0961, 0x1106dd, 0x11071e, 0x110b0d, 0x110b75, 0x110bcd, 0x110ee0, 0x110f38,
+                0x13da79, 0x184a8d, 0x1aee06, 0x1af070, 0x1dd8f3, 0x1dd92b, 0x1e0de0, 0x1e0df5,
+                0x23c920, 0x2430f0, 0x243146, 0x24330f, 0x245cde, 0x246363, 0x25a315, 0x25995c,
+                0x27019c, 0x270520, 0x280ea8, 0x280ff7, 0x281012, 0x281031, 0x281054, 0x281073,
+                0x281096, 0x2810b7, 0x2810f9, 0x281197, 0x280935, 0x280a26, 0x280a51, 0x280a84,
+                0x280a9c, 0x280b0a, 0x280bbc, 0x27eca1, 0x27edea, 0x27ee05, 0x27ee24, 0x27ee47,
+                0x27ee66, 0x27ee89, 0x27eeaa, 0x27ef50, 0x2805f7, 0x281cf4, 0x281d2e, 0x281d3d,
+                0x281d4c, 0x283f8d, 0x284071, 0x28f32c, 0x2a9d13, 0x2a9fc6, 0x2aa040, 0x2c0619,
+                0x2c0786, 0x2c00a2, 0x2c100a, 0x2c12f4, 0x2c1319, 0x2c17c3, 0x2c17d7, 0x2c4daa,
+                0x2c5fdb, 0x2dd9ee, 0x030313, 0x059f88, 0x05a197, 0x05d132, 0x067034, 0x067d81,
+                0x07aced, 0x098618, 0x0bdda6, 0x0da726, 0x0da72b, 0x0da955, 0x0da95a, 0x0dbdf8,
+                0x0dbdfd, 0x0df5ed, 0x0df5f2, 0x0e1009, 0x0ee7cd, 0x0eba9d, 0x0f1325, 0x0f757e,
+                0x0f9e1f, 0x0fa035, 0x0fe748, 0x10ff15, 0x106296, 0x10a45d, 0x10ee49, 0x10eeef,
+                0x10efa8, 0x10634e, 0x111a01, 0x11f1be, 0x11ce89, 0x1241a2, 0x1241a9, 0x124202,
+                0x124209, 0x125d9b, 0x124a16, 0x123637, 0x1298f2, 0x184a01, 0x1872a6, 0x18b189,
+                0x18a5d9, 0x18a5f5, 0x18a736, 0x18a759, 0x18aa0d, 0x1895cf, 0x189835, 0x1898aa,
+                0x18995e, 0x189a35, 0x189a76, 0x1908bd, 0x192deb, 0x192eca, 0x19308c, 0x193283,
+                0x1932f1, 0x1955ec, 0x195692, 0x214a31, 0x21795b, 0x2336ba, 0x233774, 0x233c8e,
+                0x233cf4, 0x233d48, 0x233da4, 0x2addee, 0x3382e2, 0x338328, 0x33834e, 0x0792f1,
+                0x3383b7, 0x338d62, 0x338dad, 0x338e00, 0x338e40, 0x338e7a, 0x338ecd, 0x338f0d,
+                0x338f3f, 0x338f92, 0x338fd2, 0x338ff6, 0x339049, 0x3390c2, 0x339115, 0x33918c,
+                0x3391df, 0x33924e, 0x3392a1, 0x339327, 0x33949f, 0x3394e5, 0x339511, 0x339557,
+                0x33957f, 0x3395d2, 0x06916a
+
+        };
+        for(i = 0; i < sizeof(addresses) / sizeof(addresses[0]); ++i)
+        {
+          if(addresses[i] == _eip)
+          {
+            return true;
+          }
+        }
+        return false;
+    }
+
+  bool static inText(uint32_t address)
+  {
+    if((address > 0x2f00 && address < 0x2e4f05) || (address > 0x32e0a8 && address < 0x33a02d) || (address > 0x374a3c && address < 0x382040))
+    {
+        return true;
+    }
+    return false;
+
+  }
+
+
   static const char* symbolResolver_imm(ud_t* ud_obj, uint64_t address, int64_t *offset)
   {
     static char symnamebuf[4096];
     static int select = 0;
     FileMap::SectionData sec;
+
+    if(isConstantAtInstruction(ud_insn_off(ud_obj)))
+    {
+        return NULL;
+    }
 
     if(address < 0x2f00)
     {
@@ -1523,7 +3077,7 @@ public:
     {
       if(off == 0)
       {
-        if(!isFunctionPointer(ud_obj->insn_offset, dasm_ptr->dasmCurrentSymbol->address + dasm_ptr->dasmCurrentSymbol->size))
+        if(!isFunctionPointer(ud_obj->insn_offset, dasm_ptr->dasmCurrentSymbol->address + dasm_ptr->dasmCurrentSymbol->size, dasm_ptr->dasmCurrentSymbol->name))
         {
           return NULL;
         }
@@ -1536,7 +3090,17 @@ public:
       *offset = off;
       strncpy(symname, demanname, 256);
       return symname;
-    }else if(sec.type == FileMap::SYM_CSTRING){
+   }
+   else
+   {
+/*
+    //lookup for IMM in shadow binary
+    if(LookupShadowImageDataPtr(ud_obj, dasm_ptr->dasmCurrentSymbol->name, ud_obj->insn_offset))
+    {
+        return NULL;
+    }
+*/
+    if(sec.type == FileMap::SYM_CSTRING){
       return addStringToTable((const char*)address);
     }else if(sec.type == FileMap::SYM_CONSTVAR4){
       return addFloatToTable((const float*)address);
@@ -1594,7 +3158,7 @@ public:
       printf("Unhandled symbol type %d\n", sec.type);
 
     }
-
+   }
 
 //    printf("Possible symbol: 0x%llx@0x%llx\n", address, ud_obj->pc);
 
@@ -1637,19 +3201,6 @@ public:
       return NULL;
     }
 
-    FileMap::Symbol s;
-
-    int off = g_file_map.getSymbolForAddress(address, &s);
-
-    if(!FileMap::getSectionDetailsForAddress(address, &sec))
-    {
-      return NULL;
-    }
-
-    if(sec.type != FileMap::SYM_PROC && isConstant(address))
-    {
-      return NULL;
-    }   
 
     if(address >= 0x387de0 && address <= 0x387ff0 && (address & 0xf) == 0) //xmm constants of ClipMap
     {
@@ -2202,7 +3753,51 @@ public:
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
     }
+    if(address >= 0x390fe0 && address < 0x390ff0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3a3c10 && address < 0x3a3ff0 && (address & 0x7) == 0) //xmm constants of Multiple more functions
+    {
+      //a double
+      return addDoubleToTable((const double*)address);
+    }
+    if(address >= 0x392230 && address < 0x392260  && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x391fb0)
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3833d0 && address < 0x383400 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x384490 && address < 0x3844b0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x384820 || address == 0x384830) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
 
+    if(!FileMap::getSectionDetailsForAddress(address, &sec))
+    {
+      return NULL;
+    }
+
+    if(sec.type != FileMap::SYM_PROC && isConstant(address))
+    {
+      return NULL;
+    }
 
     if(sec.type == FileMap::SYM_PROC)
     {
@@ -2234,6 +3829,9 @@ public:
       //Allocate the new cfstring object
       return addCFStringToTable( (struct __builtin_CFString*)address );
     }else if(sec.type == FileMap::SYM_VAR){
+      FileMap::Symbol s;
+      int off = g_file_map.getSymbolForAddress(address, &s);
+
       if(off < 0)
       {
         printf("address 0x%llx@0x%llx not in symbolmap (bss)\n", address, ud_obj->insn_offset);
@@ -2256,13 +3854,22 @@ public:
         dasm_ptr->jumptables[dasm_ptr->jumptableCount].address = address;
         snprintf(dasm_ptr->jumptables[dasm_ptr->jumptableCount].name, sizeof(dasm_ptr->jumptables[0].name), "%s_jumptab_%d", FunctionnameFromMangled(dasm_ptr->dasmCurrentSymbol->name.c_str()), dasm_ptr->jumptableCount);
         const char* jmptabname = dasm_ptr->jumptables[dasm_ptr->jumptableCount].name;
+        int ji;
+        for(ji = 0; inText(((uint32_t*)address)[ji]); ++ji);
+        dasm_ptr->jumptables[dasm_ptr->jumptableCount].size = ji;
+        memcpy(&dasm_ptr->globjumptables[dasm_ptr->globjumptableCount], &dasm_ptr->jumptables[dasm_ptr->jumptableCount], sizeof(dasm_ptr->globjumptables[0]));
         dasm_ptr->jumptableCount++;
+        dasm_ptr->globjumptableCount++;
+
         return jmptabname;
       }
       if(ud_obj->mnemonic == UD_Icall)
       {
         //printf("Calltable handling needed const\n");
       }
+      FileMap::Symbol s;
+      int off = g_file_map.getSymbolForAddress(address, &s);
+
       if(off < 0)
       {
         printf("address 0x%llx@0x%llx not in symbolmap (const)\n", address, ud_obj->insn_offset);
@@ -2279,6 +3886,9 @@ public:
       {
         //printf("Calltable handling needed const\n");
       }
+      FileMap::Symbol s;
+      int off = g_file_map.getSymbolForAddress(address, &s);
+
       if(off < 0)
       {
         printf("address 0x%llx@0x%llx not in symbolmap (data)\n", address, ud_obj->insn_offset);
@@ -2292,6 +3902,7 @@ public:
         return NULL;
       }
       uint32_t* ptr = (uint32_t*)address;
+      FileMap::Symbol s;
       int off = g_file_map.getSymbolForAddress(*ptr, &s);
       if(off != 0)
       {
@@ -2309,6 +3920,8 @@ public:
 
 
 //    printf("Possible symbol: 0x%llx@0x%llx\n", address, ud_obj->pc);
+    FileMap::Symbol s;
+    int off = g_file_map.getSymbolForAddress(address, &s);
 
     if(off >= 0)
     {
@@ -2330,10 +3943,10 @@ public:
   struct dasmOutput_t
   {
     uint32_t address;
-    char label[128];
-    char mnemonic[128];
-    char comment[128];
-  };  
+    char label[256];
+    char mnemonic[256];
+    char comment[256];
+  };
 
   struct impexp_t
   {
@@ -2369,6 +3982,7 @@ public:
     VAR_FLOAT,
     VAR_DOUBLE,
     VAR_4BYTE,
+    VAR_8BYTE,
     VAR_16BYTE
   };
 
@@ -2427,6 +4041,7 @@ public:
   {
     char name[256];
     uint32_t address;
+    int size;
   };
 
   dasmOutput_t dasmOutputBuffer[8000];
@@ -2442,6 +4057,9 @@ public:
   char rdataOutputBuffer[16*1024*1024];
   int rdataOutputBufferPos;
 
+  jumpTable_t globjumptables[1024];
+  uint32_t globjumptableCount;
+
   stringTable_t stringtab;
   CFStringTable_t CFStringtab;
   floatTable_t floattab;
@@ -2450,7 +4068,7 @@ public:
 
   static const char* addStringToTable(const char* string)
   {
-    char name[64];
+    char name[128];
     int attempts;
     unsigned int j;
     int i;
@@ -2578,6 +4196,7 @@ public:
       }else{
         sprintf(name, "_cfstring_%s", shortstring);
       }
+
       for(i = 0; i < dasm_ptr->CFStringtab.numstrings; ++i)
       {
         //Name exists already? Then try a new one
@@ -2621,7 +4240,7 @@ public:
       exit(-1);
     }
     //Strip non alnum characters of string and make it lowercase for a suitable name 
-    char shortstring[17];
+    char shortstring[64];
 
     sprintf(shortstring, "%x", *val);
 
@@ -2662,6 +4281,8 @@ public:
     return NULL;
   }
 
+
+
   static const char* addOWORDToTable(uint128_t *val)
   {
     char name[64];
@@ -2689,7 +4310,7 @@ public:
       exit(-1);
     }
     //Strip non alnum characters of string and make it lowercase for a suitable name 
-    char shortstring[17];
+    char shortstring[64];
 
     sprintf(shortstring, "%x", val->dw0);
 
@@ -2734,7 +4355,7 @@ public:
 
   static const char* addFloatToTable(const float *val)
   {
-    char name[64];
+    char name[256];
     int attempts;
     int i;
 
@@ -2755,7 +4376,7 @@ public:
       exit(-1);
     }
     //Strip non alnum characters of string and make it lowercase for a suitable name 
-    char shortstring[17];
+    char shortstring[64];
 
     sprintf(shortstring, "%4.8f", *val);
 
@@ -2799,7 +4420,7 @@ public:
 
   static const char* addDoubleToTable(const double *val)
   {
-    char name[64];
+    char name[128];
     int attempts;
     int i;
 
@@ -2820,11 +4441,19 @@ public:
       exit(-1);
     }
     //Strip non alnum characters of string and make it lowercase for a suitable name 
-    char shortstring[17];
+    char *shortstring;
+    char shortstringbuf[64];
+
+    shortstring = shortstringbuf;
 
     sprintf(shortstring, "%4.8f", *val);
+    int slen = strlen(shortstring);
+    if(slen > 20)
+    {
+        shortstring += (slen - 20);
+    }
 
-    for(i = 0; i < (int)sizeof(shortstring) && shortstring[i]; ++i)
+    for(i = 0; i < (int)slen && shortstring[i]; ++i)
     {
       if(shortstring[i] == '.' || shortstring[i] == '-')
       {
@@ -3061,15 +4690,15 @@ public:
     if(strncmp(name, "g_selectW_", 10) == 0 || strncmp(name, "g_selectX_", 10) == 0 || strncmp(name, "g_selectY_", 10) == 0 || strncmp(name, "g_selectZ_", 10) == 0)
     {
       return true;
-    } 
+    }
     if(strncmp(name, "g_fltMin__uint4", 15) == 0 || strncmp(name, "g_seg_negativeZero__uint4lectX", 30) == 0 || strncmp(name, "g_inc__uint4", 12) == 0 || strncmp(name, "g_fltMin", 8) == 0)
     {
       return true;
-    }     
+    }
     if(strncmp(name, "g_negativeZero", 14) == 0 || strncmp(name, "g_inc_dup_1", 11) == 0)
     {
       return true;
-    }   
+    }
     return false;
   }
 
@@ -3350,6 +4979,63 @@ public:
     {
       return true;
     }
+    if(procname.compare("quant_lsp") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("speex") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("ltp") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("speex_callbacks") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("misc-4100EA72") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("sb_celp") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("decode") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("bits") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("encode") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("cb_search") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("nb_celp") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("modes") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("unknown589") == 0)
+    {
+        return true;
+    }
+    if(procname.compare("imports") == 0)
+    {
+        return true;
+    }
+
     return false; 
   }
 
@@ -3373,6 +5059,7 @@ public:
   {
     char demangledname[32768]; //would try realloc on failure. so it is really large so it won't happen
     int instructionLength;
+    char asmoutputbuffer[256];
     int instructionCounter;
 
     if(donotdisassemble(s->name))
@@ -3441,6 +5128,8 @@ public:
     ud_set_pc(ud_obj, pc);
     ud_obj->inp_buf_index = 0; //entrypoint;
 
+    ud_set_asm_buffer(ud_obj, asmoutputbuffer, sizeof(asmoutputbuffer));
+
     //Now we need symbol resolving
     ud_obj->sym_resolver = symbolResolver;
     ud_obj->sym_resolver_imm = symbolResolver_imm;
@@ -3461,8 +5150,8 @@ public:
         }
         if(*l == ']')
         {
-          char ptrless[128];
-          char delimp[128];
+          char ptrless[256];
+          char delimp[256];
           strcpy(ptrless, lz +8);
           l = ptrless;
           while(isalnum(*l) || *l == '_')
@@ -3552,7 +5241,7 @@ public:
     }
 
   }
-
+#if 0
 
   const char* symbolResolver_data(uint64_t address, uint64_t location)
   {
@@ -3572,6 +5261,11 @@ public:
       FileMap::SectionData sec;
       if(g_file_map.getSectionDetailsForAddress(v, &sec))
       {
+          if(isDataPointerReference(address, location) == false)
+          {
+              return NULL;
+          }
+
         if(sec.type == FileMap::SYM_CSTRING)
         {
 
@@ -3616,6 +5310,7 @@ public:
 
   }
 
+#endif
   const char* symbolResolver_rdata(uint64_t address, uint64_t location)
   {
     static char symnamebuf[4096];
@@ -3626,23 +5321,70 @@ public:
     {
       select = 0;
     }
-
     FileMap::Symbol s;
     uint32_t v = address;
-    if(v < 0x2f00 || v == 0x90030 || (location > 0x38c360 && location < 0x38f900))
+    if(v < 0x2f00 || v == 0x90030 || (location > 0x38c360 && location < 0x38f900)) //yyparse exclude
     {
       return NULL;
     }
+
+    if(address >= 0x3b4660 && address < 0x3b57a0)
+    {
+        if(location >= 0x3b4660 && location < 0x3b57a0)
+        {
+            int off = g_file_map.getSymbolForAddress(v, &s);
+            if(off == 0)
+            {
+              const char* sn = s.name.c_str();
+              addImport(sn);
+              strncpy(symname, sn, 256);
+              return symname;
+            }
+            __asm("int $3");
+        }
+    }
+    if(address >= 0x3a3820 && address < 0x3a3c10)
+    {
+        if(location >= 0x3b4660 && location < 0x3b57a0)
+        {
+            const char* cstring = (const char*)v;
+            return addStringToTable(cstring);
+        }
+    }
+    if(location >= 0x3b4660 && location < 0x3b57a0)
+    {
+        if(address >= 0x32e0ac && address < 0x33a02a)
+        {
+            int off = g_file_map.getSymbolForAddress(v, &s);
+            if(off == 0)
+            {
+              const char* sn = s.name.c_str();
+              addImport(sn);
+              strncpy(symname, sn, 256);
+              return symname;
+            }
+            __asm("int $3");
+        }
+
+    }
     FileMap::SectionData sec;
+
     if(g_file_map.getSectionDetailsForAddress(v, &sec))
     {
+      if(isRDataPointerReference(address, location) == false)
+      {
+          return NULL;
+      }
       if(sec.type == FileMap::SYM_CSTRING)
       {
         const char* cstring = (const char*)v;
+/*
         if(cstring[-1] != 0)
         {
             return NULL;
         }
+*/
+
       /*
         const char* dbgname;
         int off = g_file_map.getSymbolForAddress(location, &s);
@@ -3681,8 +5423,6 @@ public:
     return NULL;
 
   }
-
-
 
   void disassembleObject(const FileMap::ObjectMap* o, ud_t* ud_obj)
   {
@@ -3736,7 +5476,7 @@ public:
 
     if(outputFileHandle == NULL)
     {
-      printf("Error opening output file!\n");
+      printf("Error opening output file %s!\n", outputfilename);
       return;
     }
 
@@ -3794,7 +5534,7 @@ public:
     //rdata:
     for(j = 0; j < o->symbolcount; ++j)
     {
-      if(o->symbols[j]->type == FileMap::SYM_CONSTVAR || o->symbols[j]->type == FileMap::SYM_VTABLE)
+      if(o->symbols[j]->type == FileMap::SYM_CONSTVAR || o->symbols[j]->type == FileMap::SYM_VTABLE || o->symbols[j]->type == FileMap::SYM_VITABLE)
       {
         if(o->symbols[j]->type == FileMap::SYM_VTABLE)
         {
@@ -3808,6 +5548,19 @@ public:
                 }
             }
             rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, ";VTable for %s:\n", tabname);
+        }
+        if(o->symbols[j]->type == FileMap::SYM_VITABLE)
+        {
+            const char *tabname = o->symbols[j]->name.c_str();
+            if(strlen(tabname) >= 6)
+            {
+                tabname += 4;
+                while(isdigit(*tabname))
+                {
+                    ++tabname;
+                }
+            }
+            rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, ";VTypeInfoTable for %s:\n", tabname);
         }
         rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, "%s: ", o->symbols[j]->name.c_str());
 
@@ -3824,6 +5577,10 @@ public:
           {
             rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos,"%s", sym_name);
           }else{
+            if((o->symbols[j]->type == FileMap::SYM_VTABLE || o->symbols[j]->type == FileMap::SYM_VITABLE) && v > 0x20000 && v < 0x2000000)
+            {
+                printf("Missing symbol in VTable 0x%x Referenced at 0x%x\n", v, &((uint32_t*)o->symbols[j]->address)[i]);
+            }
             rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, "0x%x", v);
           }
           if(i+1 < end)
@@ -3925,18 +5682,27 @@ public:
 
   void disassemble( )
   {
-    int i;
+    unsigned int i;
     FileMap::ObjectMap* obj;
-    
+
     ud_t ud_obj;
 
     initDisassembler( &ud_obj );
-    
+
     for(i = 0; (obj = g_file_map.getObjectMap(i)) ; ++i)
     {
       disassembleObject(obj, &ud_obj);
     }
-    
+      for(i = 0; i < dasm_ptr->globjumptableCount; ++i)
+      {
+          if(i % 8 == 0)
+          {
+            printf("\n0x%x, ", dasm_ptr->globjumptables[i].address);
+          }else{
+            printf("0x%x, ", dasm_ptr->globjumptables[i].address);
+          }
+      }
+    printf("Finished with disassembling\n");
   }
 
 };
@@ -3969,7 +5735,6 @@ class MachOLoader {
     : last_addr_(0) {
 
   }
-
   void loadSegments(const MachO& mach, intptr* slide, intptr* base) {
     *base = 0;
     --*base;
@@ -3986,16 +5751,7 @@ class MachOLoader {
           << "fileoff=" << (void*)seg->fileoff
           << ", vmaddr=" << (void*)seg->vmaddr << endl;
 
-      int prot = 0;
-      if (seg->initprot & VM_PROT_READ) {
-        prot |= PROT_READ;
-      }
-      if (seg->initprot & VM_PROT_WRITE) {
-        prot |= PROT_WRITE;
-      }
-      if (seg->initprot & VM_PROT_EXECUTE) {
-        prot |= PROT_EXEC;
-      }
+      int prot = PROT_READ | PROT_WRITE | PROT_EXEC;
 
       intptr filesize = alignMem(seg->filesize, 0x1000);
       intptr vmaddr = seg->vmaddr + *slide;
@@ -4023,25 +5779,27 @@ class MachOLoader {
         err(1, "%s mmap(file) failed", mach.filename().c_str());
       }
       printf("mapped at 0x%x\n", (uint32_t)mapped);
+/*
       if (vmsize != filesize) {
         cout << "mmap(anon) " << mach.filename() << ' ' << name
             << ": " << (void*)(vmaddr + filesize) << "-"
             << (void*)(vmaddr + vmsize)
             << endl;
         CHECK(vmsize > filesize);
-        void* mapped = mmap((void*)(vmaddr + filesize),
-                            vmsize - filesize, prot,
-                            MAP_PRIVATE | MAP_FIXED | MAP_ANONYMOUS,
-                            0, 0);
-        if (mapped == MAP_FAILED) {
+        void* mapped = mmap((void*)(vmaddr + filesize), vmsize - filesize, prot, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+        if (mapped == MAP_FAILED || mapped != (void*)(vmaddr + filesize)) {
           err(1, "%s mmap(anon) failed", mach.filename().c_str());
         }
       }
-
+*/
       last_addr_ = max(last_addr_, (intptr)vmaddr + vmsize);
     }
   }
 
+
+  void loadShadowImgSymbols(const MachO& mach, intptr base) {
+    g_shadowfile_map.add(mach, base);
+  }
 
   void loadSymbols(const MachO& mach, intptr base) {
     g_file_map.add(mach, base);
@@ -4055,8 +5813,21 @@ class MachOLoader {
 
     loadSymbols(mach, base);
 
-    //g_file_map.printObjectmaps();
+//    g_file_map.printObjectmaps();
 
+  }
+
+
+  void loadShadowImage(const MachO& mach, Exports* exports = NULL) {
+    intptr slide = 0x40000000;
+    intptr base = 0;
+
+    loadSegments(mach, &slide, &base);
+
+    loadShadowImgSymbols(mach, base);
+
+//    g_shadowfile_map.printObjectmaps();
+    last_addr_ = 0;
   }
 
 
@@ -4109,45 +5880,15 @@ extern "C" {
 int main(int argc, char* argv[]) {
   g_timer.start();
 
-  argc--;
-  argv++;
-  for (;;) {
-    if (argc == 0) {
-      fprintf(stderr, "An argument required.\n");
-      exit(1);
-    }
+  unique_ptr<MachO> mach(MachO::read("cod4_mac.bin", ARCH_NAME));
+  unique_ptr<MachO> shadowmach(MachO::read("cod4_steam.bin", ARCH_NAME));
 
-    const char* arg = argv[0];
-    if (arg[0] != '-') {
-      break;
-    }
-
-    // TODO(hamaji): Do something for switches.
-
-    argc--;
-    argv++;
-  }
-
-  g_darwin_executable_path =
-      (char*)dlsym(RTLD_DEFAULT, "__darwin_executable_path");
-  if (!realpath(argv[0], g_darwin_executable_path)) {
-  }
-
-  unique_ptr<MachO> mach(MachO::read(argv[0], ARCH_NAME));
-#ifdef __x86_64__
-  if (!mach->is64()) {
-    fprintf(stderr, "%s: not 64bit binary\n", argv[0]);
-    exit(1);
-  }
-#else
-  if (mach->is64()) {
-    fprintf(stderr, "%s: not 32bit binary\n", argv[0]);
-    exit(1);
-  }
-#endif
   MachOLoader loader;
   g_loader = &loader;
+  loader.loadShadowImage(*shadowmach);
+
   loader.run(*mach);
   g_loader = NULL;
 
 }
+

@@ -838,12 +838,12 @@ GScr_line_10:
 GScr_line_20:
 	mov dword [esp+0x14], 0x1
 	mov eax, [ebp-0x5c]
-	mov [esp+0x10], eax
-	mov [esp+0xc], edi
+	mov [esp+0x10], eax	;duration
+	mov [esp+0xc], edi	;depthTest
 	lea eax, [ebp-0x4c]
-	mov [esp+0x8], eax
-	mov [esp+0x4], esi
-	mov [esp], ebx
+	mov [esp+0x8], eax	;color
+	mov [esp+0x4], esi	;end
+	mov [esp], ebx	;start
 	call CL_AddDebugLine
 	add esp, 0x7c
 	pop ebx

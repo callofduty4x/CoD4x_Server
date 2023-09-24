@@ -38,16 +38,13 @@
 	extern AUGraphOpen
 	extern AUGraphGetNodeInfo
 	extern AudioUnitSetProperty
-	extern _Znaj
+	extern _Znam
 	extern AUGraphUpdate
 	extern _ZN12CSampleSoundC1ER12CSoundEnginem
-	extern g_fileBuf
 	extern AUGraphConnectNodeInput
 	extern AUGraphInitialize
 	extern AUGraphStart
 	extern _ZN7CThread3RunEPv
-	extern pushed
-	extern g_XAnimPartsPool
 	extern GetMainEventLoop
 	extern InstallEventLoopTimer
 	extern QTInstallNextTaskNeededSoonerCallback
@@ -63,6 +60,7 @@
 	extern memmove
 	extern _ZSt17__throw_bad_allocv
 	extern _ZSt20__throw_length_errorPKc
+	extern _ZTI7CThread
 
 ;Exports of MacMSS_Engine:
 	global _ZN12CSoundEngine10WakeEngineEv
@@ -100,6 +98,7 @@
 	global _ZNSt6vectorIP12CSoundObjectSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_
 	global _ZNSt6vectorIP12CSoundObjectSaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE
 	global _ZNSt6vectorIP12CSoundObjectSaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EES7_
+	global _ZTI12CSoundEngine
 	global _ZTV12CSoundEngine
 
 
@@ -976,7 +975,7 @@ _ZN12CSoundEngineC1Emh_50:
 _ZN12CSoundEngineC1Emh_60:
 	shl eax, 0x2
 	mov [esp], eax
-	call _Znaj
+	call _Znam
 	mov [esi+0x54], eax
 	mov ecx, [esi+0x50]
 	test ecx, ecx
@@ -1080,7 +1079,7 @@ _ZN12CSoundEngineC1Emh_140:
 	jb _ZN12CSoundEngineC1Emh_140
 	jmp _ZN12CSoundEngineC1Emh_90
 _ZN12CSoundEngineC1Emh_100:
-	mov dword [ebp-0x80], g_fileBuf+0x48004
+	mov dword [ebp-0x80], 0x6c0004
 _ZN12CSoundEngineC1Emh_230:
 	mov dword [ebp-0x7c], 0x0
 	mov dword [ebp-0x78], 0x0
@@ -1242,7 +1241,7 @@ _ZN12CSoundEngineC1Emh_190:
 	mov [esi+0x1c0], eax
 	jmp _ZN12CSoundEngineC1Emh_220
 _ZN12CSoundEngineC1Emh_110:
-	mov dword [ebp-0x80], pushed+0x8885
+	mov dword [ebp-0x80], 0x760005
 	jmp _ZN12CSoundEngineC1Emh_230
 _ZN12CSoundEngineC1Emh_70:
 	mov eax, [ebp-0x24]
@@ -1267,7 +1266,7 @@ _ZN12CSoundEngineC1Emh_160:
 	call AudioUnitSetProperty
 	jmp _ZN12CSoundEngineC1Emh_240
 _ZN12CSoundEngineC1Emh_120:
-	mov dword [ebp-0x80], g_XAnimPartsPool+0x310a2
+	mov dword [ebp-0x80], 0x650002
 	jmp _ZN12CSoundEngineC1Emh_230
 _ZN12CSoundEngineC1Emh_40:
 	mov dword [esp], 0x4
@@ -2004,8 +2003,10 @@ SECTION .data
 
 ;Initialized constant data of MacMSS_Engine:
 SECTION .rdata
+;VTypeInfoTable for CSoundEngine:
+_ZTI12CSoundEngine: dd 0x8, _cstring_12csoundengine, _ZTI7CThread, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CSoundEngine:
-_ZTV12CSoundEngine: dd 0x0, 0x3b4ea0, _ZN12CSoundEngineD1Ev, _ZN12CSoundEngineD0Ev, _ZN12CSoundEngine7ExecuteEPv, 0x0, 0x0, 0x0
+_ZTV12CSoundEngine: dd 0x0, _ZTI12CSoundEngine, _ZN12CSoundEngineD1Ev, _ZN12CSoundEngineD0Ev, _ZN12CSoundEngine7ExecuteEPv, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of MacMSS_Engine:
@@ -2015,6 +2016,7 @@ SECTION .bss
 ;All cstrings:
 SECTION .rdata
 _cstring_vector_m_insert_:		db "vector::_M_insert_aux",0
+_cstring_12csoundengine:		db "12CSoundEngine",0
 
 
 

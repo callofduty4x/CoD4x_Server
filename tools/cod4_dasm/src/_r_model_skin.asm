@@ -1,5 +1,5 @@
 ;Imports of r_model_skin:
-	extern Vec3UnpackUnitVec
+	extern _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	extern dx_ctx
 	extern sys_SSE
 	extern gfxBuf
@@ -11,24 +11,24 @@
 	global sse_one
 	global sse_encodeShift
 	global sse_encodeScale
-	global LocalMatrixTransformVector43
-	global MatrixTransformVertexAndBasis
-	global R_SkinXSurfaceRigidSse
-	global R_SkinXSurfaceWeightSseBlockOut
-	global R_SkinXSurfaceWeightSseBlockOut
-	global R_SkinXSurfaceWeightSseBlockOut
-	global R_SkinXSurfaceWeightSseOut
-	global R_SkinXSurfaceRigidSseOut
-	global R_SkinXSurfaceWeightSseBlockInOut
-	global R_SkinXSurfaceWeightSseBlock
-	global R_SkinXSurfaceWeightSseBlock
-	global R_SkinXSurfaceWeightSseBlock
-	global R_SkinXSurfaceWeightSse
-	global R_SkinXSurfaceSkinnedSse
-	global R_SkinXModelCmd
-	global Vec3Mad
-	global Vec3Copy
-	global Vec3Scale
+	global _Z28LocalMatrixTransformVector43PKfPK11DObjSkelMatPf
+	global _Z29MatrixTransformVertexAndBasisPKff13PackedUnitVecS1_PK11DObjSkelMatP15GfxPackedVertex
+	global _Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex
+	global _Z31R_SkinXSurfaceWeightSseBlockOutILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi
+	global _Z31R_SkinXSurfaceWeightSseBlockOutILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi
+	global _Z31R_SkinXSurfaceWeightSseBlockOutILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi
+	global _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS_
+	global _Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex
+	global _Z33R_SkinXSurfaceWeightSseBlockInOutILi7E22Sse_SkinVertexSimple_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPK21GfxPackedVertexNormalPS9_PS1_Pi
+	global _Z28R_SkinXSurfaceWeightSseBlockILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi
+	global _Z28R_SkinXSurfaceWeightSseBlockILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi
+	global _Z28R_SkinXSurfaceWeightSseBlockILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi
+	global _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS_
+	global _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv
+	global _Z15R_SkinXModelCmdPv
+	global _Z7Vec3MadPKffS0_Pf
+	global _Z8Vec3CopyPKfPf
+	global _Z9Vec3ScalePKffPf
 
 
 SECTION .text
@@ -41,11 +41,11 @@ _GLOBAL__I__Z15R_SkinXModelCmdPv:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;LocalMatrixTransformVector43(float const*, DObjSkelMat const*, float*)
-LocalMatrixTransformVector43:
+_Z28LocalMatrixTransformVector43PKfPK11DObjSkelMatPf:
 	push ebp
 	mov ebp, esp
 	movss xmm1, dword [eax]
@@ -83,17 +83,17 @@ LocalMatrixTransformVector43:
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -363,7 +363,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;MatrixTransformVertexAndBasis(float const*, float, PackedUnitVec, PackedUnitVec, DObjSkelMat const*, GfxPackedVertex*)
-MatrixTransformVertexAndBasis:
+_Z29MatrixTransformVertexAndBasisPKff13PackedUnitVecS1_PK11DObjSkelMatP15GfxPackedVertex:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -413,7 +413,7 @@ MatrixTransformVertexAndBasis:
 	lea eax, [ebp-0x28]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	movss xmm1, dword [ebp-0x28]
 	movss xmm4, dword [ebp-0x24]
 	movss xmm5, dword [ebp-0x20]
@@ -470,7 +470,7 @@ MatrixTransformVertexAndBasis:
 	mov [esp], edi
 	movss [ebp-0x48], xmm6
 	movss [ebp-0x58], xmm7
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	movss xmm0, dword [ebp-0x28]
 	movss xmm4, dword [ebp-0x24]
 	movss xmm5, dword [ebp-0x20]
@@ -528,7 +528,7 @@ MatrixTransformVertexAndBasis:
 
 
 ;R_SkinXSurfaceRigidSse(XSurface const*, int, DObjSkelMat const*, GfxPackedVertex*)
-R_SkinXSurfaceRigidSse:
+_Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -540,22 +540,22 @@ R_SkinXSurfaceRigidSse:
 	mov edx, [eax+0x1c]
 	mov eax, [eax+0x20]
 	test eax, eax
-	jz R_SkinXSurfaceRigidSse_10
+	jz _Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_10
 	mov ecx, [ebp+0x8]
 	mov dword [ebp-0x24], 0x0
 	mov dword [ebp-0x3c], 0x0
 	mov ebx, [ebp-0x40]
-	jmp R_SkinXSurfaceRigidSse_20
-R_SkinXSurfaceRigidSse_30:
+	jmp _Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_20
+_Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_30:
 	add dword [ebp-0x24], 0x1
 	add dword [ebp-0x3c], 0xc
 	mov ebx, [ebp-0x24]
 	mov eax, [ebp-0x40]
 	cmp [eax+0x20], ebx
-	jbe R_SkinXSurfaceRigidSse_10
-R_SkinXSurfaceRigidSse_50:
+	jbe _Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_10
+_Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_50:
 	mov ebx, eax
-R_SkinXSurfaceRigidSse_20:
+_Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_20:
 	mov eax, [ebp-0x3c]
 	add eax, [ebx+0x24]
 	movzx ebx, word [eax+0x2]
@@ -566,11 +566,11 @@ R_SkinXSurfaceRigidSse_20:
 	movaps xmm5, [eax+0x20]
 	movaps xmm4, [eax+0x30]
 	test ebx, ebx
-	jle R_SkinXSurfaceRigidSse_30
+	jle _Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_30
 	pxor mm5, mm5
 	pxor mm4, mm4
 	xor eax, eax
-R_SkinXSurfaceRigidSse_40:
+_Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_40:
 	prefetchnta [edx+0x80]
 	movaps xmm2, [edx]
 	mov esi, [edx+0x10]
@@ -673,14 +673,14 @@ R_SkinXSurfaceRigidSse_40:
 	add edx, 0x20
 	add ecx, 0x20
 	cmp ebx, eax
-	jnz R_SkinXSurfaceRigidSse_40
+	jnz _Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_40
 	add dword [ebp-0x24], 0x1
 	add dword [ebp-0x3c], 0xc
 	mov ebx, [ebp-0x24]
 	mov eax, [ebp-0x40]
 	cmp [eax+0x20], ebx
-	ja R_SkinXSurfaceRigidSse_50
-R_SkinXSurfaceRigidSse_10:
+	ja _Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_50
+_Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex_10:
 	add esp, 0x3c
 	pop ebx
 	pop esi
@@ -690,7 +690,7 @@ R_SkinXSurfaceRigidSse_10:
 
 
 ;void R_SkinXSurfaceWeightSseBlockOut<7, Sse_SkinVertex_3>(GfxPackedVertex const*, unsigned short const*, int, DObjSkelMat const*, GfxPackedVertexNormal*, GfxPackedVertex*, int*)
-R_SkinXSurfaceWeightSseBlockOut:
+_Z31R_SkinXSurfaceWeightSseBlockOutILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -704,7 +704,7 @@ R_SkinXSurfaceWeightSseBlockOut:
 	mov eax, [eax]
 	mov [ebp-0x28], eax
 	test ecx, ecx
-	jg R_SkinXSurfaceWeightSseBlockOut_10
+	jg _Z31R_SkinXSurfaceWeightSseBlockOutILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_10
 	mov edi, eax
 	mov eax, [ebp+0x14]
 	mov [eax], edi
@@ -714,7 +714,7 @@ R_SkinXSurfaceWeightSseBlockOut:
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceWeightSseBlockOut_10:
+_Z31R_SkinXSurfaceWeightSseBlockOutILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_10:
 	mov edx, eax
 	pxor mm5, mm5
 	pxor mm4, mm4
@@ -729,10 +729,10 @@ R_SkinXSurfaceWeightSseBlockOut_10:
 	mov dword [ebp-0x34], 0x0
 	mov esi, ebx
 	mov [ebp-0x88], ebx
-	jmp R_SkinXSurfaceWeightSseBlockOut_20
-R_SkinXSurfaceWeightSseBlockOut_30:
+	jmp _Z31R_SkinXSurfaceWeightSseBlockOutILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_20
+_Z31R_SkinXSurfaceWeightSseBlockOutILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_30:
 	mov esi, [ebp-0x88]
-R_SkinXSurfaceWeightSseBlockOut_20:
+_Z31R_SkinXSurfaceWeightSseBlockOutILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_20:
 	prefetchnta [ebx]
 	movaps xmm0, [esi-0x80]
 	movaps [ebp-0x98], xmm0
@@ -942,7 +942,7 @@ R_SkinXSurfaceWeightSseBlockOut_20:
 	mov [ebp-0x7c], eax
 	mov esi, [ebp-0x34]
 	cmp [ebp-0x38], esi
-	jnz R_SkinXSurfaceWeightSseBlockOut_30
+	jnz _Z31R_SkinXSurfaceWeightSseBlockOutILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_30
 	add [ebp-0x28], esi
 	mov edi, [ebp-0x28]
 	mov eax, [ebp+0x14]
@@ -957,7 +957,7 @@ R_SkinXSurfaceWeightSseBlockOut_20:
 
 
 ;void R_SkinXSurfaceWeightSseBlockOut<5, Sse_SkinVertex_2>(GfxPackedVertex const*, unsigned short const*, int, DObjSkelMat const*, GfxPackedVertexNormal*, GfxPackedVertex*, int*)
-R_SkinXSurfaceWeightSseBlockOut:
+_Z31R_SkinXSurfaceWeightSseBlockOutILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -971,7 +971,7 @@ R_SkinXSurfaceWeightSseBlockOut:
 	mov eax, [eax]
 	mov [ebp-0x34], eax
 	test ecx, ecx
-	jg R_SkinXSurfaceWeightSseBlockOut_10
+	jg _Z31R_SkinXSurfaceWeightSseBlockOutILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_10
 	mov edx, eax
 	mov edi, [ebp+0x14]
 	mov [edi], edx
@@ -981,7 +981,7 @@ R_SkinXSurfaceWeightSseBlockOut:
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceWeightSseBlockOut_10:
+_Z31R_SkinXSurfaceWeightSseBlockOutILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_10:
 	mov edx, eax
 	pxor mm5, mm5
 	pxor mm4, mm4
@@ -994,7 +994,7 @@ R_SkinXSurfaceWeightSseBlockOut_10:
 	lea edi, [eax+edx*8]
 	mov dword [ebp-0x44], 0x0
 	mov esi, ebx
-R_SkinXSurfaceWeightSseBlockOut_20:
+_Z31R_SkinXSurfaceWeightSseBlockOutILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_20:
 	prefetchnta [ebx]
 	mov eax, [esi-0x70]
 	mov edx, [esi-0x6c]
@@ -1173,7 +1173,7 @@ R_SkinXSurfaceWeightSseBlockOut_20:
 	add edi, 0x8
 	mov eax, [ebp-0x44]
 	cmp [ebp-0x48], eax
-	jnz R_SkinXSurfaceWeightSseBlockOut_20
+	jnz _Z31R_SkinXSurfaceWeightSseBlockOutILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_20
 	add [ebp-0x34], eax
 	mov edx, [ebp-0x34]
 	mov edi, [ebp+0x14]
@@ -1188,7 +1188,7 @@ R_SkinXSurfaceWeightSseBlockOut_20:
 
 
 ;void R_SkinXSurfaceWeightSseBlockOut<3, Sse_SkinVertex_1>(GfxPackedVertex const*, unsigned short const*, int, DObjSkelMat const*, GfxPackedVertexNormal*, GfxPackedVertex*, int*)
-R_SkinXSurfaceWeightSseBlockOut:
+_Z31R_SkinXSurfaceWeightSseBlockOutILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1202,7 +1202,7 @@ R_SkinXSurfaceWeightSseBlockOut:
 	mov eax, [eax]
 	mov [ebp-0x20], eax
 	test ecx, ecx
-	jg R_SkinXSurfaceWeightSseBlockOut_10
+	jg _Z31R_SkinXSurfaceWeightSseBlockOutILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_10
 	mov edx, eax
 	mov edi, [ebp+0x14]
 	mov [edi], edx
@@ -1212,7 +1212,7 @@ R_SkinXSurfaceWeightSseBlockOut:
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceWeightSseBlockOut_10:
+_Z31R_SkinXSurfaceWeightSseBlockOutILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_10:
 	mov edx, eax
 	pxor mm5, mm5
 	pxor mm4, mm4
@@ -1225,7 +1225,7 @@ R_SkinXSurfaceWeightSseBlockOut_10:
 	lea edi, [eax+edx*8]
 	mov dword [ebp-0x2c], 0x0
 	mov esi, ebx
-R_SkinXSurfaceWeightSseBlockOut_20:
+_Z31R_SkinXSurfaceWeightSseBlockOutILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_20:
 	prefetchnta [ebx]
 	mov eax, [esi-0x70]
 	mov edx, [esi-0x6c]
@@ -1373,7 +1373,7 @@ R_SkinXSurfaceWeightSseBlockOut_20:
 	add edi, 0x8
 	mov eax, [ebp-0x2c]
 	cmp [ebp-0x30], eax
-	jnz R_SkinXSurfaceWeightSseBlockOut_20
+	jnz _Z31R_SkinXSurfaceWeightSseBlockOutILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi_20
 	add [ebp-0x20], eax
 	mov edx, [ebp-0x20]
 	mov edi, [ebp+0x14]
@@ -1388,7 +1388,7 @@ R_SkinXSurfaceWeightSseBlockOut_20:
 
 
 ;R_SkinXSurfaceWeightSseOut(GfxPackedVertex const*, XSurfaceVertexInfo const*, DObjSkelMat const*, GfxPackedVertexNormal*, GfxPackedVertex*)
-R_SkinXSurfaceWeightSseOut:
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1402,27 +1402,27 @@ R_SkinXSurfaceWeightSseOut:
 	mov esi, [edx+0x8]
 	movzx eax, word [edx]
 	cmp ax, 0x0
-	jz R_SkinXSurfaceWeightSseOut_10
+	jz _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__10
 	cwde
 	mov [ebp-0x3c], eax
-	jg R_SkinXSurfaceWeightSseOut_20
+	jg _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__20
 	xor eax, eax
-R_SkinXSurfaceWeightSseOut_100:
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__100:
 	mov [ebp-0x1c], eax
 	movsx eax, word [ebx]
 	lea esi, [esi+eax*2]
-R_SkinXSurfaceWeightSseOut_10:
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__10:
 	movzx eax, word [ebx+0x2]
 	test ax, ax
-	jnz R_SkinXSurfaceWeightSseOut_30
-R_SkinXSurfaceWeightSseOut_70:
+	jnz _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__30
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__70:
 	movzx eax, word [ebx+0x4]
 	test ax, ax
-	jnz R_SkinXSurfaceWeightSseOut_40
-R_SkinXSurfaceWeightSseOut_60:
+	jnz _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__40
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__60:
 	movzx eax, word [ebx+0x6]
 	test ax, ax
-	jz R_SkinXSurfaceWeightSseOut_50
+	jz _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__50
 	movsx ecx, ax
 	lea eax, [ebp-0x1c]
 	mov [esp+0xc], eax
@@ -1434,15 +1434,15 @@ R_SkinXSurfaceWeightSseOut_60:
 	mov [esp], eax
 	mov edx, esi
 	mov eax, [ebp-0x40]
-	call R_SkinXSurfaceWeightSseBlockOut
-R_SkinXSurfaceWeightSseOut_50:
+	call _Z31R_SkinXSurfaceWeightSseBlockOutILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__50:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceWeightSseOut_40:
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__40:
 	movsx ecx, ax
 	lea eax, [ebp-0x1c]
 	mov [esp+0xc], eax
@@ -1454,12 +1454,12 @@ R_SkinXSurfaceWeightSseOut_40:
 	mov [esp], edx
 	mov edx, esi
 	mov eax, [ebp-0x40]
-	call R_SkinXSurfaceWeightSseBlockOut
+	call _Z31R_SkinXSurfaceWeightSseBlockOutILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi
 	movsx eax, word [ebx+0x4]
 	lea eax, [eax+eax*4]
 	lea esi, [esi+eax*2]
-	jmp R_SkinXSurfaceWeightSseOut_60
-R_SkinXSurfaceWeightSseOut_30:
+	jmp _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__60
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__30:
 	movsx ecx, ax
 	lea eax, [ebp-0x1c]
 	mov [esp+0xc], eax
@@ -1471,12 +1471,12 @@ R_SkinXSurfaceWeightSseOut_30:
 	mov [esp], eax
 	mov edx, esi
 	mov eax, [ebp-0x40]
-	call R_SkinXSurfaceWeightSseBlockOut
+	call _Z31R_SkinXSurfaceWeightSseBlockOutILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatP21GfxPackedVertexNormalPS1_Pi
 	movsx eax, word [ebx+0x2]
 	lea eax, [eax+eax*2]
 	lea esi, [esi+eax*2]
-	jmp R_SkinXSurfaceWeightSseOut_70
-R_SkinXSurfaceWeightSseOut_20:
+	jmp _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__70
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__20:
 	pxor mm5, mm5
 	pxor mm4, mm4
 	mov eax, [ebp-0x40]
@@ -1485,10 +1485,10 @@ R_SkinXSurfaceWeightSseOut_20:
 	mov edi, [ebp+0x8]
 	mov dword [ebp-0x2c], 0x0
 	mov edx, eax
-	jmp R_SkinXSurfaceWeightSseOut_80
-R_SkinXSurfaceWeightSseOut_90:
+	jmp _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__80
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__90:
 	mov edx, eax
-R_SkinXSurfaceWeightSseOut_80:
+_Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__80:
 	prefetchnta [edx+0x80]
 	movaps xmm2, [edx]
 	mov eax, [edx+0x10]
@@ -1603,13 +1603,13 @@ R_SkinXSurfaceWeightSseOut_80:
 	add ecx, 0x20
 	add edi, 0x8
 	cmp [ebp-0x3c], edx
-	jnz R_SkinXSurfaceWeightSseOut_90
+	jnz _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__90
 	mov eax, edx
-	jmp R_SkinXSurfaceWeightSseOut_100
+	jmp _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS__100
 
 
 ;R_SkinXSurfaceRigidSseOut(XSurface const*, int, DObjSkelMat const*, GfxPackedVertexNormal*, GfxPackedVertex*)
-R_SkinXSurfaceRigidSseOut:
+_Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1621,24 +1621,24 @@ R_SkinXSurfaceRigidSseOut:
 	mov edx, [eax+0x1c]
 	mov ecx, [eax+0x20]
 	test ecx, ecx
-	jz R_SkinXSurfaceRigidSseOut_10
+	jz _Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_10
 	mov ecx, [ebp+0xc]
 	mov eax, [ebp+0x8]
 	mov [ebp-0x4c], eax
 	mov dword [ebp-0x2c], 0x0
 	mov dword [ebp-0x1c], 0x0
 	mov ebx, [ebp-0x50]
-	jmp R_SkinXSurfaceRigidSseOut_20
-R_SkinXSurfaceRigidSseOut_30:
+	jmp _Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_20
+_Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_30:
 	add dword [ebp-0x2c], 0x1
 	add dword [ebp-0x1c], 0xc
 	mov eax, [ebp-0x2c]
 	mov edi, [ebp-0x50]
 	cmp [edi+0x20], eax
-	jbe R_SkinXSurfaceRigidSseOut_10
-R_SkinXSurfaceRigidSseOut_50:
+	jbe _Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_10
+_Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_50:
 	mov ebx, edi
-R_SkinXSurfaceRigidSseOut_20:
+_Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_20:
 	mov eax, [ebp-0x1c]
 	add eax, [ebx+0x24]
 	movzx ebx, word [eax+0x2]
@@ -1649,12 +1649,12 @@ R_SkinXSurfaceRigidSseOut_20:
 	movaps xmm5, [eax+0x20]
 	movaps xmm4, [eax+0x30]
 	test ebx, ebx
-	jle R_SkinXSurfaceRigidSseOut_30
+	jle _Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_30
 	pxor mm5, mm5
 	pxor mm4, mm4
 	mov eax, 0x1
 	add ebx, 0x1
-R_SkinXSurfaceRigidSseOut_40:
+_Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_40:
 	prefetchnta [edx+0x80]
 	movaps xmm2, [edx]
 	mov esi, [edx+0x10]
@@ -1761,14 +1761,14 @@ R_SkinXSurfaceRigidSseOut_40:
 	mov [ebp-0x4c], esi
 	add eax, 0x1
 	cmp ebx, eax
-	jnz R_SkinXSurfaceRigidSseOut_40
+	jnz _Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_40
 	add dword [ebp-0x2c], 0x1
 	add dword [ebp-0x1c], 0xc
 	mov eax, [ebp-0x2c]
 	mov edi, [ebp-0x50]
 	cmp [edi+0x20], eax
-	ja R_SkinXSurfaceRigidSseOut_50
-R_SkinXSurfaceRigidSseOut_10:
+	ja _Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_50
+_Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex_10:
 	add esp, 0x4c
 	pop ebx
 	pop esi
@@ -1778,7 +1778,7 @@ R_SkinXSurfaceRigidSseOut_10:
 
 
 ;void R_SkinXSurfaceWeightSseBlockInOut<7, Sse_SkinVertexSimple_3>(GfxPackedVertex const*, unsigned short const*, int, DObjSkelMat const*, GfxPackedVertexNormal const*, GfxPackedVertexNormal*, GfxPackedVertex*, int*)
-R_SkinXSurfaceWeightSseBlockInOut:
+_Z33R_SkinXSurfaceWeightSseBlockInOutILi7E22Sse_SkinVertexSimple_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPK21GfxPackedVertexNormalPS9_PS1_Pi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1792,7 +1792,7 @@ R_SkinXSurfaceWeightSseBlockInOut:
 	mov eax, [eax]
 	mov [ebp-0x2c], eax
 	test ecx, ecx
-	jg R_SkinXSurfaceWeightSseBlockInOut_10
+	jg _Z33R_SkinXSurfaceWeightSseBlockInOutILi7E22Sse_SkinVertexSimple_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPK21GfxPackedVertexNormalPS9_PS1_Pi_10
 	mov edx, eax
 	mov ecx, [ebp+0x18]
 	mov [ecx], edx
@@ -1802,7 +1802,7 @@ R_SkinXSurfaceWeightSseBlockInOut:
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceWeightSseBlockInOut_10:
+_Z33R_SkinXSurfaceWeightSseBlockInOutILi7E22Sse_SkinVertexSimple_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPK21GfxPackedVertexNormalPS9_PS1_Pi_10:
 	pxor mm2, mm2
 	mov edx, eax
 	shl edx, 0x5
@@ -1822,10 +1822,10 @@ R_SkinXSurfaceWeightSseBlockInOut_10:
 	lea edx, [eax+edx+0x80]
 	mov [ebp-0x7c], edx
 	mov eax, edx
-	jmp R_SkinXSurfaceWeightSseBlockInOut_20
-R_SkinXSurfaceWeightSseBlockInOut_30:
+	jmp _Z33R_SkinXSurfaceWeightSseBlockInOutILi7E22Sse_SkinVertexSimple_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPK21GfxPackedVertexNormalPS9_PS1_Pi_20
+_Z33R_SkinXSurfaceWeightSseBlockInOutILi7E22Sse_SkinVertexSimple_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPK21GfxPackedVertexNormalPS9_PS1_Pi_30:
 	mov eax, [ebp-0x7c]
-R_SkinXSurfaceWeightSseBlockInOut_20:
+_Z33R_SkinXSurfaceWeightSseBlockInOutILi7E22Sse_SkinVertexSimple_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPK21GfxPackedVertexNormalPS9_PS1_Pi_20:
 	mov edx, [ebp-0x1c]
 	prefetchnta [edx]
 	prefetchnta [esi]
@@ -1962,7 +1962,7 @@ R_SkinXSurfaceWeightSseBlockInOut_20:
 	add edi, 0x8
 	mov eax, [ebp-0x44]
 	cmp [ebp-0x50], eax
-	jnz R_SkinXSurfaceWeightSseBlockInOut_30
+	jnz _Z33R_SkinXSurfaceWeightSseBlockInOutILi7E22Sse_SkinVertexSimple_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPK21GfxPackedVertexNormalPS9_PS1_Pi_30
 	add [ebp-0x2c], eax
 	mov edx, [ebp-0x2c]
 	mov ecx, [ebp+0x18]
@@ -1977,7 +1977,7 @@ R_SkinXSurfaceWeightSseBlockInOut_20:
 
 
 ;void R_SkinXSurfaceWeightSseBlock<3, Sse_SkinVertex_1>(GfxPackedVertex const*, unsigned short const*, int, DObjSkelMat const*, GfxPackedVertex*, int*)
-R_SkinXSurfaceWeightSseBlock:
+_Z28R_SkinXSurfaceWeightSseBlockILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1990,7 +1990,7 @@ R_SkinXSurfaceWeightSseBlock:
 	mov eax, [eax]
 	mov [ebp-0x20], eax
 	test ecx, ecx
-	jg R_SkinXSurfaceWeightSseBlock_10
+	jg _Z28R_SkinXSurfaceWeightSseBlockILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_10
 	mov edx, eax
 	mov eax, [ebp+0x10]
 	mov [eax], edx
@@ -2000,7 +2000,7 @@ R_SkinXSurfaceWeightSseBlock:
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceWeightSseBlock_10:
+_Z28R_SkinXSurfaceWeightSseBlockILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_10:
 	pxor mm5, mm5
 	pxor mm4, mm4
 	shl eax, 0x5
@@ -2010,7 +2010,7 @@ R_SkinXSurfaceWeightSseBlock_10:
 	mov [ebp-0x7c], edx
 	xor edi, edi
 	mov esi, ebx
-R_SkinXSurfaceWeightSseBlock_20:
+_Z28R_SkinXSurfaceWeightSseBlockILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_20:
 	prefetchnta [ebx]
 	mov eax, [esi-0x70]
 	mov edx, [esi-0x6c]
@@ -2155,7 +2155,7 @@ R_SkinXSurfaceWeightSseBlock_20:
 	add esi, 0x20
 	add ecx, 0x20
 	cmp [ebp-0x2c], edi
-	jnz R_SkinXSurfaceWeightSseBlock_20
+	jnz _Z28R_SkinXSurfaceWeightSseBlockILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_20
 	add [ebp-0x20], edi
 	mov edx, [ebp-0x20]
 	mov eax, [ebp+0x10]
@@ -2170,7 +2170,7 @@ R_SkinXSurfaceWeightSseBlock_20:
 
 
 ;void R_SkinXSurfaceWeightSseBlock<5, Sse_SkinVertex_2>(GfxPackedVertex const*, unsigned short const*, int, DObjSkelMat const*, GfxPackedVertex*, int*)
-R_SkinXSurfaceWeightSseBlock:
+_Z28R_SkinXSurfaceWeightSseBlockILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2183,7 +2183,7 @@ R_SkinXSurfaceWeightSseBlock:
 	mov eax, [eax]
 	mov [ebp-0x44], eax
 	test ecx, ecx
-	jg R_SkinXSurfaceWeightSseBlock_10
+	jg _Z28R_SkinXSurfaceWeightSseBlockILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_10
 	mov edx, eax
 	mov eax, [ebp+0x10]
 	mov [eax], edx
@@ -2193,7 +2193,7 @@ R_SkinXSurfaceWeightSseBlock:
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceWeightSseBlock_10:
+_Z28R_SkinXSurfaceWeightSseBlockILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_10:
 	pxor mm6, mm6
 	pxor mm5, mm5
 	shl eax, 0x5
@@ -2203,7 +2203,7 @@ R_SkinXSurfaceWeightSseBlock_10:
 	mov [ebp-0x8c], edx
 	xor edi, edi
 	mov esi, ebx
-R_SkinXSurfaceWeightSseBlock_20:
+_Z28R_SkinXSurfaceWeightSseBlockILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_20:
 	prefetchnta [ebx]
 	movaps xmm5, [esi-0x80]
 	mov eax, [esi-0x70]
@@ -2381,7 +2381,7 @@ R_SkinXSurfaceWeightSseBlock_20:
 	add esi, 0x20
 	add ecx, 0x20
 	cmp [ebp-0x54], edi
-	jnz R_SkinXSurfaceWeightSseBlock_20
+	jnz _Z28R_SkinXSurfaceWeightSseBlockILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_20
 	add [ebp-0x44], edi
 	mov edx, [ebp-0x44]
 	mov eax, [ebp+0x10]
@@ -2395,7 +2395,7 @@ R_SkinXSurfaceWeightSseBlock_20:
 
 
 ;void R_SkinXSurfaceWeightSseBlock<7, Sse_SkinVertex_3>(GfxPackedVertex const*, unsigned short const*, int, DObjSkelMat const*, GfxPackedVertex*, int*)
-R_SkinXSurfaceWeightSseBlock:
+_Z28R_SkinXSurfaceWeightSseBlockILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2408,7 +2408,7 @@ R_SkinXSurfaceWeightSseBlock:
 	mov eax, [eax]
 	mov [ebp-0x28], eax
 	test ecx, ecx
-	jg R_SkinXSurfaceWeightSseBlock_10
+	jg _Z28R_SkinXSurfaceWeightSseBlockILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_10
 	mov esi, eax
 	mov edx, [ebp+0x10]
 	mov [edx], esi
@@ -2418,7 +2418,7 @@ R_SkinXSurfaceWeightSseBlock:
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceWeightSseBlock_10:
+_Z28R_SkinXSurfaceWeightSseBlockILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_10:
 	pxor mm5, mm5
 	pxor mm4, mm4
 	shl eax, 0x5
@@ -2428,10 +2428,10 @@ R_SkinXSurfaceWeightSseBlock_10:
 	mov dword [ebp-0x34], 0x0
 	mov [ebp-0x7c], ebx
 	mov esi, ebx
-	jmp R_SkinXSurfaceWeightSseBlock_20
-R_SkinXSurfaceWeightSseBlock_30:
+	jmp _Z28R_SkinXSurfaceWeightSseBlockILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_20
+_Z28R_SkinXSurfaceWeightSseBlockILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_30:
 	mov esi, [ebp-0x7c]
-R_SkinXSurfaceWeightSseBlock_20:
+_Z28R_SkinXSurfaceWeightSseBlockILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_20:
 	prefetchnta [ebx]
 	movaps xmm0, [esi-0x80]
 	movaps [ebp-0x98], xmm0
@@ -2637,7 +2637,7 @@ R_SkinXSurfaceWeightSseBlock_20:
 	add ecx, 0x20
 	mov eax, [ebp-0x34]
 	cmp [ebp-0x38], eax
-	jnz R_SkinXSurfaceWeightSseBlock_30
+	jnz _Z28R_SkinXSurfaceWeightSseBlockILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi_30
 	add [ebp-0x28], eax
 	mov esi, [ebp-0x28]
 	mov edx, [ebp+0x10]
@@ -2652,7 +2652,7 @@ R_SkinXSurfaceWeightSseBlock_20:
 
 
 ;R_SkinXSurfaceWeightSse(GfxPackedVertex const*, XSurfaceVertexInfo const*, DObjSkelMat const*, GfxPackedVertex*)
-R_SkinXSurfaceWeightSse:
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2666,27 +2666,27 @@ R_SkinXSurfaceWeightSse:
 	mov esi, [edx+0x8]
 	movzx eax, word [edx]
 	cmp ax, 0x0
-	jz R_SkinXSurfaceWeightSse_10
+	jz _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__10
 	cwde
 	mov [ebp-0x34], eax
-	jg R_SkinXSurfaceWeightSse_20
+	jg _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__20
 	xor eax, eax
-R_SkinXSurfaceWeightSse_100:
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__100:
 	mov [ebp-0x1c], eax
 	movsx eax, word [ebx]
 	lea esi, [esi+eax*2]
-R_SkinXSurfaceWeightSse_10:
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__10:
 	movzx eax, word [ebx+0x2]
 	test ax, ax
-	jnz R_SkinXSurfaceWeightSse_30
-R_SkinXSurfaceWeightSse_70:
+	jnz _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__30
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__70:
 	movzx eax, word [ebx+0x4]
 	test ax, ax
-	jnz R_SkinXSurfaceWeightSse_40
-R_SkinXSurfaceWeightSse_60:
+	jnz _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__40
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__60:
 	movzx eax, word [ebx+0x6]
 	test ax, ax
-	jz R_SkinXSurfaceWeightSse_50
+	jz _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__50
 	movsx ecx, ax
 	lea eax, [ebp-0x1c]
 	mov [esp+0x8], eax
@@ -2696,15 +2696,15 @@ R_SkinXSurfaceWeightSse_60:
 	mov [esp], edx
 	mov edx, esi
 	mov eax, [ebp-0x38]
-	call R_SkinXSurfaceWeightSseBlock
-R_SkinXSurfaceWeightSse_50:
+	call _Z28R_SkinXSurfaceWeightSseBlockILi7E16Sse_SkinVertex_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__50:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceWeightSse_40:
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__40:
 	movsx ecx, ax
 	lea eax, [ebp-0x1c]
 	mov [esp+0x8], eax
@@ -2714,12 +2714,12 @@ R_SkinXSurfaceWeightSse_40:
 	mov [esp], edx
 	mov edx, esi
 	mov eax, [ebp-0x38]
-	call R_SkinXSurfaceWeightSseBlock
+	call _Z28R_SkinXSurfaceWeightSseBlockILi5E16Sse_SkinVertex_2EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi
 	movsx eax, word [ebx+0x4]
 	lea eax, [eax+eax*4]
 	lea esi, [esi+eax*2]
-	jmp R_SkinXSurfaceWeightSse_60
-R_SkinXSurfaceWeightSse_30:
+	jmp _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__60
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__30:
 	movsx ecx, ax
 	lea eax, [ebp-0x1c]
 	mov [esp+0x8], eax
@@ -2729,12 +2729,12 @@ R_SkinXSurfaceWeightSse_30:
 	mov [esp], edx
 	mov edx, esi
 	mov eax, [ebp-0x38]
-	call R_SkinXSurfaceWeightSseBlock
+	call _Z28R_SkinXSurfaceWeightSseBlockILi3E16Sse_SkinVertex_1EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPS1_Pi
 	movsx eax, word [ebx+0x2]
 	lea eax, [eax+eax*2]
 	lea esi, [esi+eax*2]
-	jmp R_SkinXSurfaceWeightSse_70
-R_SkinXSurfaceWeightSse_20:
+	jmp _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__70
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__20:
 	pxor mm5, mm5
 	pxor mm4, mm4
 	mov eax, [ebp-0x38]
@@ -2742,10 +2742,10 @@ R_SkinXSurfaceWeightSse_20:
 	mov ecx, [ebp+0x8]
 	xor edi, edi
 	mov edx, eax
-	jmp R_SkinXSurfaceWeightSse_80
-R_SkinXSurfaceWeightSse_90:
+	jmp _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__80
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__90:
 	mov edx, eax
-R_SkinXSurfaceWeightSse_80:
+_Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__80:
 	prefetchnta [edx+0x80]
 	movaps xmm2, [edx]
 	mov eax, [edx+0x10]
@@ -2856,14 +2856,14 @@ R_SkinXSurfaceWeightSse_80:
 	mov [ebp-0x5c], eax
 	add ecx, 0x20
 	cmp [ebp-0x34], edi
-	jnz R_SkinXSurfaceWeightSse_90
+	jnz _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__90
 	mov eax, edi
-	jmp R_SkinXSurfaceWeightSse_100
+	jmp _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS__100
 	nop
 
 
 ;R_SkinXSurfaceSkinnedSse(XSurface const*, DObjSkelMat const*, GfxPackedVertexNormal const*, GfxPackedVertexNormal*, void*)
-R_SkinXSurfaceSkinnedSse:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2875,27 +2875,27 @@ R_SkinXSurfaceSkinnedSse:
 	mov edi, ecx
 	mov edx, [ebp+0x8]
 	test edx, edx
-	jz R_SkinXSurfaceSkinnedSse_10
+	jz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_10
 	test ecx, ecx
-	jz R_SkinXSurfaceSkinnedSse_20
+	jz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_20
 	cmp byte [eax+0x1], 0x0
-	jnz R_SkinXSurfaceSkinnedSse_30
+	jnz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_30
 	mov ecx, [ebp+0xc]
 	mov edx, [eax+0x1c]
 	mov esi, [eax+0x20]
 	test esi, esi
-	jz R_SkinXSurfaceSkinnedSse_40
+	jz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_40
 	mov dword [ebp-0xc4], 0x0
 	mov dword [ebp-0x3c], 0x0
-	jmp R_SkinXSurfaceSkinnedSse_50
-R_SkinXSurfaceSkinnedSse_60:
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_50
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_60:
 	mov esi, ebx
 	add dword [ebp-0xc4], 0x1
 	add dword [ebp-0x3c], 0xc
 	mov eax, [ebp-0xc4]
 	cmp [esi+0x20], eax
-	jbe R_SkinXSurfaceSkinnedSse_40
-R_SkinXSurfaceSkinnedSse_50:
+	jbe _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_40
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_50:
 	mov eax, [ebp-0x3c]
 	mov ebx, [ebp-0xe8]
 	add eax, [ebx+0x24]
@@ -2908,9 +2908,9 @@ R_SkinXSurfaceSkinnedSse_50:
 	movaps xmm5, [eax+0x20]
 	movaps xmm4, [eax+0x30]
 	test esi, esi
-	jle R_SkinXSurfaceSkinnedSse_60
+	jle _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_60
 	xor eax, eax
-R_SkinXSurfaceSkinnedSse_70:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_70:
 	prefetchnta [edx+0x80]
 	prefetchnta [edi+0x80]
 	movaps xmm3, [edx]
@@ -2951,21 +2951,21 @@ R_SkinXSurfaceSkinnedSse_70:
 	add ebx, 0x8
 	mov [ebp+0x8], ebx
 	cmp [ebp-0xe4], eax
-	jnz R_SkinXSurfaceSkinnedSse_70
+	jnz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_70
 	mov esi, [ebp-0xe8]
 	add dword [ebp-0xc4], 0x1
 	add dword [ebp-0x3c], 0xc
 	mov eax, [ebp-0xc4]
 	cmp [esi+0x20], eax
-	ja R_SkinXSurfaceSkinnedSse_50
-R_SkinXSurfaceSkinnedSse_40:
+	ja _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_50
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_40:
 	add esp, 0xfc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceSkinnedSse_30:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_30:
 	mov edx, [ebp-0xe8]
 	add edx, 0x10
 	mov [ebp-0xac], edx
@@ -2978,12 +2978,12 @@ R_SkinXSurfaceSkinnedSse_30:
 	mov esi, [ebp-0xe8]
 	movzx eax, word [esi+0x10]
 	cmp ax, 0x0
-	jz R_SkinXSurfaceSkinnedSse_80
+	jz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_80
 	cwde
 	mov [ebp-0xa4], eax
-	jg R_SkinXSurfaceSkinnedSse_90
+	jg _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_90
 	xor eax, eax
-R_SkinXSurfaceSkinnedSse_200:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_200:
 	mov [ebp-0x1c], eax
 	mov edx, [ebp-0xac]
 	movsx eax, word [edx]
@@ -2993,8 +2993,8 @@ R_SkinXSurfaceSkinnedSse_200:
 	mov ebx, edx
 	movzx eax, word [ebx+0x2]
 	test ax, ax
-	jz R_SkinXSurfaceSkinnedSse_100
-R_SkinXSurfaceSkinnedSse_140:
+	jz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_100
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_140:
 	cwde
 	mov [ebp-0x88], eax
 	mov esi, [ebp-0xa8]
@@ -3002,9 +3002,9 @@ R_SkinXSurfaceSkinnedSse_140:
 	mov [ebp-0x6c], eax
 	mov ebx, [ebp-0x88]
 	test ebx, ebx
-	jg R_SkinXSurfaceSkinnedSse_110
+	jg _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_110
 	mov ecx, eax
-R_SkinXSurfaceSkinnedSse_260:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_260:
 	mov [ebp-0x1c], ecx
 	mov ebx, [ebp-0xac]
 	movsx eax, word [ebx+0x2]
@@ -3012,19 +3012,19 @@ R_SkinXSurfaceSkinnedSse_260:
 	lea esi, [esi+eax*2]
 	mov [ebp-0xa8], esi
 	mov edx, ebx
-R_SkinXSurfaceSkinnedSse_150:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_150:
 	movzx eax, word [edx+0x4]
 	test ax, ax
-	jz R_SkinXSurfaceSkinnedSse_120
+	jz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_120
 	cwde
 	mov [ebp-0x64], eax
 	mov ebx, [ebp-0xa8]
 	mov ecx, [ebp-0x1c]
 	mov [ebp-0x48], ecx
 	test eax, eax
-	jg R_SkinXSurfaceSkinnedSse_130
+	jg _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_130
 	mov esi, ebx
-R_SkinXSurfaceSkinnedSse_230:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_230:
 	mov [ebp-0x1c], ecx
 	mov ebx, [ebp-0xac]
 	movsx eax, word [ebx+0x4]
@@ -3032,10 +3032,10 @@ R_SkinXSurfaceSkinnedSse_230:
 	lea esi, [esi+eax*2]
 	mov [ebp-0xa8], esi
 	mov edx, ebx
-R_SkinXSurfaceSkinnedSse_120:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_120:
 	movzx eax, word [edx+0x6]
 	test ax, ax
-	jz R_SkinXSurfaceSkinnedSse_40
+	jz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_40
 	movsx ecx, ax
 	lea eax, [ebp-0x1c]
 	mov [esp+0x10], eax
@@ -3048,34 +3048,34 @@ R_SkinXSurfaceSkinnedSse_120:
 	mov [esp], eax
 	mov edx, [ebp-0xa8]
 	mov eax, [ebp-0x60]
-	call R_SkinXSurfaceWeightSseBlockInOut
+	call _Z33R_SkinXSurfaceWeightSseBlockInOutILi7E22Sse_SkinVertexSimple_3EvPK15GfxPackedVertexPKtiPK11DObjSkelMatPK21GfxPackedVertexNormalPS9_PS1_Pi
 	add esp, 0xfc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_SkinXSurfaceSkinnedSse_80:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_80:
 	mov ebx, edx
 	movzx eax, word [ebx+0x2]
 	test ax, ax
-	jnz R_SkinXSurfaceSkinnedSse_140
-R_SkinXSurfaceSkinnedSse_100:
+	jnz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_140
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_100:
 	mov edx, ebx
-	jmp R_SkinXSurfaceSkinnedSse_150
-R_SkinXSurfaceSkinnedSse_10:
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_150
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_10:
 	cmp byte [eax+0x1], 0x0
-	jnz R_SkinXSurfaceSkinnedSse_160
+	jnz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_160
 	movzx edx, word [eax+0x2]
 	mov ecx, [ebp+0xc]
 	mov [esp], ecx
 	mov ecx, [ebp-0xc8]
-	call R_SkinXSurfaceRigidSse
-	jmp R_SkinXSurfaceSkinnedSse_40
-R_SkinXSurfaceSkinnedSse_20:
+	call _Z22R_SkinXSurfaceRigidSsePK8XSurfaceiPK11DObjSkelMatP15GfxPackedVertex
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_40
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_20:
 	mov edx, [ebp-0xe8]
 	cmp byte [edx+0x1], 0x0
-	jnz R_SkinXSurfaceSkinnedSse_170
+	jnz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_170
 	mov eax, edx
 	movzx edx, word [edx+0x2]
 	mov ebx, [ebp+0xc]
@@ -3083,18 +3083,18 @@ R_SkinXSurfaceSkinnedSse_20:
 	mov esi, [ebp+0x8]
 	mov [esp], esi
 	mov ecx, [ebp-0xc8]
-	call R_SkinXSurfaceRigidSseOut
-	jmp R_SkinXSurfaceSkinnedSse_40
-R_SkinXSurfaceSkinnedSse_160:
+	call _Z25R_SkinXSurfaceRigidSseOutPK8XSurfaceiPK11DObjSkelMatP21GfxPackedVertexNormalP15GfxPackedVertex
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_40
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_160:
 	mov edx, eax
 	add edx, 0x10
 	mov eax, [eax+0x1c]
 	mov esi, [ebp+0xc]
 	mov [esp], esi
 	mov ecx, [ebp-0xc8]
-	call R_SkinXSurfaceWeightSse
-	jmp R_SkinXSurfaceSkinnedSse_40
-R_SkinXSurfaceSkinnedSse_170:
+	call _Z23R_SkinXSurfaceWeightSsePK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatPS_
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_40
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_170:
 	add edx, 0x10
 	mov ecx, [ebp-0xe8]
 	mov eax, [ecx+0x1c]
@@ -3103,19 +3103,19 @@ R_SkinXSurfaceSkinnedSse_170:
 	mov esi, [ebp+0x8]
 	mov [esp], esi
 	mov ecx, [ebp-0xc8]
-	call R_SkinXSurfaceWeightSseOut
-	jmp R_SkinXSurfaceSkinnedSse_40
-R_SkinXSurfaceSkinnedSse_90:
+	call _Z26R_SkinXSurfaceWeightSseOutPK15GfxPackedVertexPK18XSurfaceVertexInfoPK11DObjSkelMatP21GfxPackedVertexNormalPS_
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_40
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_90:
 	mov esi, [ebp-0x60]
 	mov [ebp-0xdc], edi
 	mov ebx, [ebp+0xc]
 	mov ecx, [ebp+0x8]
 	mov dword [ebp-0x8c], 0x0
 	mov eax, edi
-	jmp R_SkinXSurfaceSkinnedSse_180
-R_SkinXSurfaceSkinnedSse_190:
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_180
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_190:
 	mov eax, [ebp-0xdc]
-R_SkinXSurfaceSkinnedSse_180:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_180:
 	prefetchnta [esi+0x80]
 	prefetchnta [eax+0x80]
 	movaps xmm3, [esi]
@@ -3161,9 +3161,9 @@ R_SkinXSurfaceSkinnedSse_180:
 	add ecx, 0x8
 	mov eax, [ebp-0x8c]
 	cmp [ebp-0xa4], eax
-	jnz R_SkinXSurfaceSkinnedSse_190
-	jmp R_SkinXSurfaceSkinnedSse_200
-R_SkinXSurfaceSkinnedSse_130:
+	jnz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_190
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_200
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_130:
 	pxor mm3, mm3
 	mov edx, ecx
 	shl edx, 0x5
@@ -3182,10 +3182,10 @@ R_SkinXSurfaceSkinnedSse_130:
 	lea edx, [eax+edx+0x80]
 	mov [ebp-0xdc], edx
 	mov eax, edx
-	jmp R_SkinXSurfaceSkinnedSse_210
-R_SkinXSurfaceSkinnedSse_220:
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_210
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_220:
 	mov eax, [ebp-0xdc]
-R_SkinXSurfaceSkinnedSse_210:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_210:
 	mov edx, [ebp-0x38]
 	prefetchnta [edx]
 	prefetchnta [ecx]
@@ -3294,12 +3294,12 @@ R_SkinXSurfaceSkinnedSse_210:
 	mov [ebp-0x34], eax
 	mov edx, [ebp-0x5c]
 	cmp [ebp-0x64], edx
-	jnz R_SkinXSurfaceSkinnedSse_220
+	jnz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_220
 	add [ebp-0x48], edx
 	mov ecx, [ebp-0x48]
 	mov esi, [ebp-0xa8]
-	jmp R_SkinXSurfaceSkinnedSse_230
-R_SkinXSurfaceSkinnedSse_110:
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_230
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_110:
 	pxor mm2, mm2
 	movaps xmm7, [sse_weightScale]
 	shl eax, 0x5
@@ -3317,10 +3317,10 @@ R_SkinXSurfaceSkinnedSse_110:
 	mov edx, [ebp-0x60]
 	lea edx, [edx+eax+0x80]
 	mov [ebp-0xdc], edx
-	jmp R_SkinXSurfaceSkinnedSse_240
-R_SkinXSurfaceSkinnedSse_250:
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_240
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_250:
 	mov edx, [ebp-0xdc]
-R_SkinXSurfaceSkinnedSse_240:
+_Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_240:
 	mov eax, [ebp-0x30]
 	prefetchnta [eax]
 	prefetchnta [ecx]
@@ -3395,16 +3395,16 @@ R_SkinXSurfaceSkinnedSse_240:
 	mov [ebp-0x2c], eax
 	mov edx, [ebp-0x84]
 	cmp [ebp-0x88], edx
-	jnz R_SkinXSurfaceSkinnedSse_250
+	jnz _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_250
 	add [ebp-0x6c], edx
 	mov ecx, [ebp-0x6c]
 	mov esi, [ebp-0xa8]
-	jmp R_SkinXSurfaceSkinnedSse_260
+	jmp _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv_260
 	nop
 
 
 ;R_SkinXModelCmd(void*)
-R_SkinXModelCmd:
+_Z15R_SkinXModelCmdPv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3413,14 +3413,14 @@ R_SkinXModelCmd:
 	sub esp, 0x219c
 	mov eax, dx_ctx
 	cmp byte [eax+0x2c6c], 0x0
-	jnz R_SkinXModelCmd_10
+	jnz _Z15R_SkinXModelCmdPv_10
 	mov eax, sys_SSE
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz R_SkinXModelCmd_20
-R_SkinXModelCmd_150:
+	jnz _Z15R_SkinXModelCmdPv_20
+_Z15R_SkinXModelCmdPv_150:
 	mov byte [ebp-0x2149], 0x0
-R_SkinXModelCmd_160:
+_Z15R_SkinXModelCmdPv_160:
 	mov eax, gfxBuf
 	movzx edx, byte [eax+0x24008c]
 	mov [ebp-0x2125], dl
@@ -3432,20 +3432,20 @@ R_SkinXModelCmd_160:
 	mov [ebp-0x2140], edx
 	mov ecx, [ebp+0x8]
 	cmp word [ecx+0x18], 0x0
-	jz R_SkinXModelCmd_10
+	jz _Z15R_SkinXModelCmdPv_10
 	mov dword [ebp-0x213c], 0xffffffff
 	mov dword [ebp-0x2148], 0x0
 	mov byte [ebp-0x2126], 0x0
 	mov [ebp-0x2150], eax
-R_SkinXModelCmd_140:
+_Z15R_SkinXModelCmdPv_140:
 	mov eax, [ebp-0x2144]
 	mov [ebp-0x2134], eax
 	cmp dword [eax], 0xfffffffd
-	jz R_SkinXModelCmd_30
+	jz _Z15R_SkinXModelCmdPv_30
 	movzx edx, byte [eax+0xc]
 	mov [ebp-0x207c], edx
 	cmp [ebp-0x213c], edx
-	jz R_SkinXModelCmd_40
+	jz _Z15R_SkinXModelCmdPv_40
 	mov ecx, [ebp-0x2144]
 	movzx eax, byte [ecx+0xd]
 	add eax, edx
@@ -3456,7 +3456,7 @@ R_SkinXModelCmd_140:
 	sub edx, eax
 	mov ecx, [ebp-0x2138]
 	cmp [ebp-0x207c], ecx
-	jge R_SkinXModelCmd_50
+	jge _Z15R_SkinXModelCmdPv_50
 	lea ebx, [edx+eax]
 	mov esi, [ebp-0x2140]
 	add esi, eax
@@ -3467,15 +3467,15 @@ R_SkinXModelCmd_140:
 	add edx, eax
 	mov [ebp-0x208c], edx
 	mov edi, [ebp-0x207c]
-	jmp R_SkinXModelCmd_60
-R_SkinXModelCmd_80:
+	jmp _Z15R_SkinXModelCmdPv_60
+_Z15R_SkinXModelCmdPv_80:
 	lea eax, [ebp-0x30]
 	mov [ebp-0x2154], eax
 	mov [esp+0x8], eax
 	mov eax, [ebx+0x1c]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call Vec3Scale
+	call _Z9Vec3ScalePKffPf
 	movss xmm0, dword [ebp-0x30]
 	movaps xmm4, xmm0
 	mulss xmm4, [ebx]
@@ -3565,7 +3565,7 @@ R_SkinXModelCmd_80:
 	mov [esp], esi
 	movss [ebp-0x2178], xmm4
 	movss [ebp-0x2188], xmm7
-	call Vec3Scale
+	call _Z9Vec3ScalePKffPf
 	movss xmm3, dword [ebp-0x30]
 	movaps xmm0, xmm3
 	mulss xmm0, [esi]
@@ -3627,7 +3627,7 @@ R_SkinXModelCmd_80:
 	mov [esp+0x4], eax
 	lea eax, [esi+0x10]
 	mov [esp], eax
-	call Vec3Copy
+	call _Z8Vec3CopyPKfPf
 	mov dword [ebp-0x3c], 0x3f800000
 	lea eax, [ebp-0x2078]
 	add eax, [ebp-0x2090]
@@ -3749,15 +3749,15 @@ R_SkinXModelCmd_80:
 	mov dword [eax+0x1c], 0x0
 	mov dword [eax+0x2c], 0x0
 	mov dword [eax+0x3c], 0x3f800000
-R_SkinXModelCmd_70:
+_Z15R_SkinXModelCmdPv_70:
 	add edi, 0x1
 	add ebx, 0x20
 	add esi, 0x20
 	add dword [ebp-0x2090], 0x40
 	add dword [ebp-0x208c], 0x40
 	cmp edi, [ebp-0x2138]
-	jz R_SkinXModelCmd_50
-R_SkinXModelCmd_60:
+	jz _Z15R_SkinXModelCmdPv_50
+_Z15R_SkinXModelCmdPv_60:
 	mov edx, edi
 	sar edx, 0x5
 	mov ecx, edi
@@ -3766,41 +3766,41 @@ R_SkinXModelCmd_60:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4+0x8], eax
-	jz R_SkinXModelCmd_70
+	jz _Z15R_SkinXModelCmdPv_70
 	cmp byte [ebp-0x2126], 0x0
-	jz R_SkinXModelCmd_80
+	jz _Z15R_SkinXModelCmdPv_80
 	emms
 	mov byte [ebp-0x2126], 0x0
-	jmp R_SkinXModelCmd_80
-R_SkinXModelCmd_50:
+	jmp _Z15R_SkinXModelCmdPv_80
+_Z15R_SkinXModelCmdPv_50:
 	mov edx, [ebp-0x207c]
 	mov [ebp-0x213c], edx
-R_SkinXModelCmd_40:
+_Z15R_SkinXModelCmdPv_40:
 	mov ecx, [ebp-0x2144]
 	mov eax, [ecx]
 	cmp eax, 0xfffffffe
-	jz R_SkinXModelCmd_90
+	jz _Z15R_SkinXModelCmdPv_90
 	add ecx, 0x18
 	mov [ebp-0x2144], ecx
 	mov edx, [ebp-0x2134]
 	mov edx, [edx+0x4]
 	mov [ebp-0x212c], edx
 	test eax, eax
-	js R_SkinXModelCmd_100
+	js _Z15R_SkinXModelCmdPv_100
 	mov ecx, [ebp-0x2150]
 	add eax, [ecx+0x5c]
 	mov [ebp-0x2130], eax
-R_SkinXModelCmd_320:
+_Z15R_SkinXModelCmdPv_320:
 	cmp byte [ebp-0x2149], 0x0
-	jz R_SkinXModelCmd_110
+	jz _Z15R_SkinXModelCmdPv_110
 	cmp byte [ebp-0x2126], 0x0
-	jz R_SkinXModelCmd_120
-R_SkinXModelCmd_330:
+	jz _Z15R_SkinXModelCmdPv_120
+_Z15R_SkinXModelCmdPv_330:
 	cmp byte [ebp-0x2125], 0x0
-	jnz R_SkinXModelCmd_130
+	jnz _Z15R_SkinXModelCmdPv_130
 	xor ecx, ecx
 	xor ebx, ebx
-R_SkinXModelCmd_250:
+_Z15R_SkinXModelCmdPv_250:
 	mov eax, [ebp-0x213c]
 	shl eax, 0x6
 	lea edx, [ebp+eax-0x2078]
@@ -3808,58 +3808,58 @@ R_SkinXModelCmd_250:
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	mov eax, [ebp-0x212c]
-	call R_SkinXSurfaceSkinnedSse
-R_SkinXModelCmd_170:
+	call _Z24R_SkinXSurfaceSkinnedSsePK8XSurfacePK11DObjSkelMatPK21GfxPackedVertexNormalPS5_Pv
+_Z15R_SkinXModelCmdPv_170:
 	add dword [ebp-0x2148], 0x1
 	mov ecx, [ebp+0x8]
 	movzx eax, word [ecx+0x18]
 	cmp [ebp-0x2148], eax
-	jb R_SkinXModelCmd_140
+	jb _Z15R_SkinXModelCmdPv_140
 	cmp byte [ebp-0x2126], 0x0
-	jz R_SkinXModelCmd_10
+	jz _Z15R_SkinXModelCmdPv_10
 	emms
-R_SkinXModelCmd_10:
+_Z15R_SkinXModelCmdPv_10:
 	add esp, 0x219c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_SkinXModelCmd_20:
+_Z15R_SkinXModelCmdPv_20:
 	mov eax, r_sse_skinning
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz R_SkinXModelCmd_150
+	jz _Z15R_SkinXModelCmdPv_150
 	mov byte [ebp-0x2149], 0x1
-	jmp R_SkinXModelCmd_160
-R_SkinXModelCmd_30:
+	jmp _Z15R_SkinXModelCmdPv_160
+_Z15R_SkinXModelCmdPv_30:
 	add dword [ebp-0x2144], 0x4
-	jmp R_SkinXModelCmd_170
-R_SkinXModelCmd_110:
+	jmp _Z15R_SkinXModelCmdPv_170
+_Z15R_SkinXModelCmdPv_110:
 	mov eax, [ebp-0x213c]
 	shl eax, 0x6
 	lea eax, [ebp+eax-0x2078]
 	mov [ebp-0x20cc], eax
 	mov edx, [ebp-0x212c]
 	cmp byte [edx+0x1], 0x0
-	jnz R_SkinXModelCmd_180
+	jnz _Z15R_SkinXModelCmdPv_180
 	mov esi, [ebp-0x2130]
 	mov ebx, [edx+0x1c]
 	mov ecx, [edx+0x20]
 	test ecx, ecx
-	jz R_SkinXModelCmd_170
+	jz _Z15R_SkinXModelCmdPv_170
 	mov dword [ebp-0x2108], 0x0
 	mov dword [ebp-0x2094], 0x0
-	jmp R_SkinXModelCmd_190
-R_SkinXModelCmd_200:
+	jmp _Z15R_SkinXModelCmdPv_190
+_Z15R_SkinXModelCmdPv_200:
 	mov edx, ecx
-R_SkinXModelCmd_220:
+_Z15R_SkinXModelCmdPv_220:
 	add dword [ebp-0x2108], 0x1
 	add dword [ebp-0x2094], 0xc
 	mov ecx, [ebp-0x2108]
 	cmp ecx, [edx+0x20]
-	jae R_SkinXModelCmd_170
-R_SkinXModelCmd_190:
+	jae _Z15R_SkinXModelCmdPv_170
+_Z15R_SkinXModelCmdPv_190:
 	mov eax, [ebp-0x2094]
 	mov ecx, [ebp-0x212c]
 	add eax, [ecx+0x24]
@@ -3869,9 +3869,9 @@ R_SkinXModelCmd_190:
 	add eax, [ebp-0x20cc]
 	mov [ebp-0x2100], eax
 	test edx, edx
-	jle R_SkinXModelCmd_200
+	jle _Z15R_SkinXModelCmdPv_200
 	xor edi, edi
-R_SkinXModelCmd_210:
+_Z15R_SkinXModelCmdPv_210:
 	mov ecx, [ebx+0x1c]
 	mov edx, [ebx+0x18]
 	movss xmm0, dword [ebx+0xc]
@@ -3879,7 +3879,7 @@ R_SkinXModelCmd_210:
 	mov eax, [ebp-0x2100]
 	mov [esp], eax
 	mov eax, ebx
-	call MatrixTransformVertexAndBasis
+	call _Z29MatrixTransformVertexAndBasisPKff13PackedUnitVecS1_PK11DObjSkelMatP15GfxPackedVertex
 	mov eax, [ebx+0x10]
 	mov [esi+0x10], eax
 	mov eax, [ebx+0x14]
@@ -3888,32 +3888,32 @@ R_SkinXModelCmd_210:
 	add ebx, 0x20
 	add esi, 0x20
 	cmp [ebp-0x2104], edi
-	jnz R_SkinXModelCmd_210
+	jnz _Z15R_SkinXModelCmdPv_210
 	mov edx, [ebp-0x212c]
-	jmp R_SkinXModelCmd_220
-R_SkinXModelCmd_90:
+	jmp _Z15R_SkinXModelCmdPv_220
+_Z15R_SkinXModelCmdPv_90:
 	add dword [ebp-0x2144], 0x38
-	jmp R_SkinXModelCmd_170
-R_SkinXModelCmd_130:
+	jmp _Z15R_SkinXModelCmdPv_170
+_Z15R_SkinXModelCmdPv_130:
 	mov ecx, [ebp-0x2134]
 	mov edx, [ecx]
 	test edx, edx
-	js R_SkinXModelCmd_230
+	js _Z15R_SkinXModelCmdPv_230
 	sar edx, 0x5
 	mov ecx, [ebp-0x2150]
 	mov eax, [ecx+0x240080]
 	lea ebx, [eax+edx*8]
-R_SkinXModelCmd_370:
+_Z15R_SkinXModelCmdPv_370:
 	mov eax, [ebp-0x2134]
 	mov edx, [eax+0x14]
 	test edx, edx
-	js R_SkinXModelCmd_240
+	js _Z15R_SkinXModelCmdPv_240
 	sar edx, 0x5
 	mov ecx, [ebp-0x2150]
 	mov eax, [ecx+0x240084]
 	lea ecx, [eax+edx*8]
-	jmp R_SkinXModelCmd_250
-R_SkinXModelCmd_180:
+	jmp _Z15R_SkinXModelCmdPv_250
+_Z15R_SkinXModelCmdPv_180:
 	mov eax, edx
 	add eax, 0x10
 	mov [ebp-0x20fc], eax
@@ -3925,13 +3925,13 @@ R_SkinXModelCmd_180:
 	mov edx, [ebp-0x212c]
 	movzx eax, word [edx+0x10]
 	test ax, ax
-	jnz R_SkinXModelCmd_260
+	jnz _Z15R_SkinXModelCmdPv_260
 	mov dword [ebp-0x20f8], 0x0
-R_SkinXModelCmd_350:
+_Z15R_SkinXModelCmdPv_350:
 	mov ecx, [ebp-0x20fc]
 	movzx edx, word [ecx+0x2]
 	test dx, dx
-	jz R_SkinXModelCmd_270
+	jz _Z15R_SkinXModelCmdPv_270
 	mov eax, [ebp-0x20f8]
 	shl eax, 0x5
 	mov esi, [ebp-0x2130]
@@ -3942,19 +3942,19 @@ R_SkinXModelCmd_350:
 	add ebx, eax
 	mov edi, [ebp-0x20f4]
 	test edx, edx
-	jg R_SkinXModelCmd_280
+	jg _Z15R_SkinXModelCmdPv_280
 	mov edx, edi
-R_SkinXModelCmd_410:
+_Z15R_SkinXModelCmdPv_410:
 	mov ecx, [ebp-0x20fc]
 	movsx eax, word [ecx+0x2]
 	add [ebp-0x20f8], eax
 	lea eax, [eax+eax*2]
 	lea edx, [edx+eax*2]
 	mov [ebp-0x20f4], edx
-R_SkinXModelCmd_270:
+_Z15R_SkinXModelCmdPv_270:
 	movzx edx, word [ecx+0x4]
 	test dx, dx
-	jz R_SkinXModelCmd_290
+	jz _Z15R_SkinXModelCmdPv_290
 	mov eax, [ebp-0x20f8]
 	shl eax, 0x5
 	mov edi, [ebp-0x2130]
@@ -3965,9 +3965,9 @@ R_SkinXModelCmd_270:
 	add ebx, eax
 	mov esi, [ebp-0x20f4]
 	test edx, edx
-	jg R_SkinXModelCmd_300
+	jg _Z15R_SkinXModelCmdPv_300
 	mov ecx, esi
-R_SkinXModelCmd_390:
+_Z15R_SkinXModelCmdPv_390:
 	mov edx, [ebp-0x20fc]
 	movsx eax, word [edx+0x4]
 	add [ebp-0x20f8], eax
@@ -3975,10 +3975,10 @@ R_SkinXModelCmd_390:
 	lea ecx, [ecx+eax*2]
 	mov [ebp-0x20f4], ecx
 	mov eax, edx
-R_SkinXModelCmd_360:
+_Z15R_SkinXModelCmdPv_360:
 	movzx edx, word [eax+0x6]
 	test dx, dx
-	jz R_SkinXModelCmd_170
+	jz _Z15R_SkinXModelCmdPv_170
 	mov eax, [ebp-0x20f8]
 	shl eax, 0x5
 	mov edi, [ebp-0x2130]
@@ -3989,11 +3989,11 @@ R_SkinXModelCmd_360:
 	add ebx, eax
 	mov esi, [ebp-0x20f4]
 	test edx, edx
-	jle R_SkinXModelCmd_170
+	jle _Z15R_SkinXModelCmdPv_170
 	mov dword [ebp-0x20c4], 0x0
 	lea edx, [ebp-0x30]
 	mov [ebp-0x2154], edx
-R_SkinXModelCmd_310:
+_Z15R_SkinXModelCmdPv_310:
 	movzx eax, word [esi]
 	add eax, [ebp-0x20cc]
 	mov ecx, [ebx+0x1c]
@@ -4002,7 +4002,7 @@ R_SkinXModelCmd_310:
 	mov [esp+0x4], edi
 	mov [esp], eax
 	mov eax, ebx
-	call MatrixTransformVertexAndBasis
+	call _Z29MatrixTransformVertexAndBasisPKff13PackedUnitVecS1_PK11DObjSkelMatP15GfxPackedVertex
 	movzx eax, word [esi+0x4]
 	cvtsi2ss xmm0, eax
 	movss xmm1, dword [_float_0_00001526]
@@ -4012,13 +4012,13 @@ R_SkinXModelCmd_310:
 	add edx, [ebp-0x20cc]
 	lea ecx, [ebp-0x24]
 	mov eax, ebx
-	call LocalMatrixTransformVector43
+	call _Z28LocalMatrixTransformVector43PKfPK11DObjSkelMatPf
 	lea eax, [ebp-0x24]
 	mov [esp+0x8], eax
 	movss xmm0, dword [ebp-0x20c0]
 	movss [esp+0x4], xmm0
 	mov [esp], eax
-	call Vec3Scale
+	call _Z9Vec3ScalePKffPf
 	movzx eax, word [esi+0x8]
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [_float_0_00001526]
@@ -4030,7 +4030,7 @@ R_SkinXModelCmd_310:
 	mov ecx, [ebp-0x2154]
 	mov eax, ebx
 	movss [ebp-0x2168], xmm0
-	call LocalMatrixTransformVector43
+	call _Z28LocalMatrixTransformVector43PKfPK11DObjSkelMatPf
 	lea eax, [ebp-0x24]
 	mov [esp+0xc], eax
 	mov edx, [ebp-0x2154]
@@ -4038,7 +4038,7 @@ R_SkinXModelCmd_310:
 	movss xmm0, dword [ebp-0x2168]
 	movss [esp+0x4], xmm0
 	mov [esp], eax
-	call Vec3Mad
+	call _Z7Vec3MadPKffS0_Pf
 	movzx eax, word [esi+0xc]
 	cvtsi2ss xmm0, eax
 	movss xmm1, dword [_float_0_00001526]
@@ -4048,7 +4048,7 @@ R_SkinXModelCmd_310:
 	add edx, [ebp-0x20cc]
 	mov ecx, [ebp-0x2154]
 	mov eax, ebx
-	call LocalMatrixTransformVector43
+	call _Z28LocalMatrixTransformVector43PKfPK11DObjSkelMatPf
 	lea eax, [ebp-0x24]
 	mov [esp+0xc], eax
 	mov edx, [ebp-0x2154]
@@ -4056,7 +4056,7 @@ R_SkinXModelCmd_310:
 	movss xmm0, dword [ebp-0x2084]
 	movss [esp+0x4], xmm0
 	mov [esp], eax
-	call Vec3Mad
+	call _Z7Vec3MadPKffS0_Pf
 	mov [esp+0xc], edi
 	mov [esp+0x8], edi
 	movss xmm0, dword [ebp-0x2080]
@@ -4067,7 +4067,7 @@ R_SkinXModelCmd_310:
 	movss [esp+0x4], xmm0
 	lea eax, [ebp-0x24]
 	mov [esp], eax
-	call Vec3Mad
+	call _Z7Vec3MadPKffS0_Pf
 	mov eax, [ebx+0x10]
 	mov [edi+0x10], eax
 	mov eax, [ebx+0x14]
@@ -4078,45 +4078,45 @@ R_SkinXModelCmd_310:
 	add edi, 0x20
 	mov edx, [ebp-0x20c4]
 	cmp [ebp-0x20c8], edx
-	jnz R_SkinXModelCmd_310
-	jmp R_SkinXModelCmd_170
-R_SkinXModelCmd_100:
+	jnz _Z15R_SkinXModelCmdPv_310
+	jmp _Z15R_SkinXModelCmdPv_170
+_Z15R_SkinXModelCmdPv_100:
 	mov eax, [ebp-0x2134]
 	mov eax, [eax+0x14]
 	mov [ebp-0x2130], eax
-	jmp R_SkinXModelCmd_320
-R_SkinXModelCmd_120:
+	jmp _Z15R_SkinXModelCmdPv_320
+_Z15R_SkinXModelCmdPv_120:
 	emms
 	mov byte [ebp-0x2126], 0x1
-	jmp R_SkinXModelCmd_330
-R_SkinXModelCmd_260:
+	jmp _Z15R_SkinXModelCmdPv_330
+_Z15R_SkinXModelCmdPv_260:
 	mov edi, ecx
 	cwde
 	mov [ebp-0x20f0], eax
 	test eax, eax
-	jg R_SkinXModelCmd_340
+	jg _Z15R_SkinXModelCmdPv_340
 	mov edx, ecx
-R_SkinXModelCmd_430:
+_Z15R_SkinXModelCmdPv_430:
 	mov eax, [ebp-0x20fc]
 	movsx eax, word [eax]
 	mov [ebp-0x20f8], eax
 	lea edx, [edx+eax*2]
 	mov [ebp-0x20f4], edx
-	jmp R_SkinXModelCmd_350
-R_SkinXModelCmd_290:
+	jmp _Z15R_SkinXModelCmdPv_350
+_Z15R_SkinXModelCmdPv_290:
 	mov eax, ecx
-	jmp R_SkinXModelCmd_360
-R_SkinXModelCmd_240:
+	jmp _Z15R_SkinXModelCmdPv_360
+_Z15R_SkinXModelCmdPv_240:
 	xor ecx, ecx
-	jmp R_SkinXModelCmd_250
-R_SkinXModelCmd_230:
+	jmp _Z15R_SkinXModelCmdPv_250
+_Z15R_SkinXModelCmdPv_230:
 	xor ebx, ebx
-	jmp R_SkinXModelCmd_370
-R_SkinXModelCmd_300:
+	jmp _Z15R_SkinXModelCmdPv_370
+_Z15R_SkinXModelCmdPv_300:
 	mov dword [ebp-0x20d8], 0x0
 	lea eax, [ebp-0x30]
 	mov [ebp-0x2154], eax
-R_SkinXModelCmd_380:
+_Z15R_SkinXModelCmdPv_380:
 	movzx eax, word [esi]
 	add eax, [ebp-0x20cc]
 	mov ecx, [ebx+0x1c]
@@ -4125,7 +4125,7 @@ R_SkinXModelCmd_380:
 	mov [esp+0x4], edi
 	mov [esp], eax
 	mov eax, ebx
-	call MatrixTransformVertexAndBasis
+	call _Z29MatrixTransformVertexAndBasisPKff13PackedUnitVecS1_PK11DObjSkelMatP15GfxPackedVertex
 	movzx eax, word [esi+0x4]
 	cvtsi2ss xmm0, eax
 	movss xmm1, dword [_float_0_00001526]
@@ -4135,13 +4135,13 @@ R_SkinXModelCmd_380:
 	add edx, [ebp-0x20cc]
 	lea ecx, [ebp-0x24]
 	mov eax, ebx
-	call LocalMatrixTransformVector43
+	call _Z28LocalMatrixTransformVector43PKfPK11DObjSkelMatPf
 	lea eax, [ebp-0x24]
 	mov [esp+0x8], eax
 	movss xmm0, dword [ebp-0x20d0]
 	movss [esp+0x4], xmm0
 	mov [esp], eax
-	call Vec3Scale
+	call _Z9Vec3ScalePKffPf
 	movzx eax, word [esi+0x8]
 	cvtsi2ss xmm0, eax
 	movss xmm1, dword [_float_0_00001526]
@@ -4151,7 +4151,7 @@ R_SkinXModelCmd_380:
 	add edx, [ebp-0x20cc]
 	mov ecx, [ebp-0x2154]
 	mov eax, ebx
-	call LocalMatrixTransformVector43
+	call _Z28LocalMatrixTransformVector43PKfPK11DObjSkelMatPf
 	lea eax, [ebp-0x24]
 	mov [esp+0xc], eax
 	mov edx, [ebp-0x2154]
@@ -4159,7 +4159,7 @@ R_SkinXModelCmd_380:
 	movss xmm0, dword [ebp-0x20d4]
 	movss [esp+0x4], xmm0
 	mov [esp], eax
-	call Vec3Mad
+	call _Z7Vec3MadPKffS0_Pf
 	mov [esp+0xc], edi
 	mov [esp+0x8], edi
 	movss xmm1, dword [ebp-0x20d0]
@@ -4169,7 +4169,7 @@ R_SkinXModelCmd_380:
 	movss [esp+0x4], xmm0
 	lea edx, [ebp-0x24]
 	mov [esp], edx
-	call Vec3Mad
+	call _Z7Vec3MadPKffS0_Pf
 	mov eax, [ebx+0x10]
 	mov [edi+0x10], eax
 	mov eax, [ebx+0x14]
@@ -4180,14 +4180,14 @@ R_SkinXModelCmd_380:
 	add edi, 0x20
 	mov ecx, [ebp-0x20d8]
 	cmp [ebp-0x20dc], ecx
-	jnz R_SkinXModelCmd_380
+	jnz _Z15R_SkinXModelCmdPv_380
 	mov ecx, [ebp-0x20f4]
-	jmp R_SkinXModelCmd_390
-R_SkinXModelCmd_280:
+	jmp _Z15R_SkinXModelCmdPv_390
+_Z15R_SkinXModelCmdPv_280:
 	mov dword [ebp-0x20e4], 0x0
 	lea eax, [ebp-0x30]
 	mov [ebp-0x2154], eax
-R_SkinXModelCmd_400:
+_Z15R_SkinXModelCmdPv_400:
 	movzx eax, word [edi]
 	add eax, [ebp-0x20cc]
 	mov ecx, [ebx+0x1c]
@@ -4196,7 +4196,7 @@ R_SkinXModelCmd_400:
 	mov [esp+0x4], esi
 	mov [esp], eax
 	mov eax, ebx
-	call MatrixTransformVertexAndBasis
+	call _Z29MatrixTransformVertexAndBasisPKff13PackedUnitVecS1_PK11DObjSkelMatP15GfxPackedVertex
 	movzx eax, word [edi+0x4]
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [_float_0_00001526]
@@ -4205,13 +4205,13 @@ R_SkinXModelCmd_400:
 	add edx, [ebp-0x20cc]
 	mov ecx, [ebp-0x2154]
 	mov eax, ebx
-	call LocalMatrixTransformVector43
+	call _Z28LocalMatrixTransformVector43PKfPK11DObjSkelMatPf
 	mov eax, [ebp-0x2154]
 	mov [esp+0x8], eax
 	movss xmm0, dword [ebp-0x20e0]
 	movss [esp+0x4], xmm0
 	mov [esp], eax
-	call Vec3Scale
+	call _Z9Vec3ScalePKffPf
 	mov [esp+0xc], esi
 	mov [esp+0x8], esi
 	movss xmm0, dword [_float_1_00000000]
@@ -4219,7 +4219,7 @@ R_SkinXModelCmd_400:
 	movss [esp+0x4], xmm0
 	mov eax, [ebp-0x2154]
 	mov [esp], eax
-	call Vec3Mad
+	call _Z7Vec3MadPKffS0_Pf
 	mov eax, [ebx+0x10]
 	mov [esi+0x10], eax
 	mov eax, [ebx+0x14]
@@ -4230,14 +4230,14 @@ R_SkinXModelCmd_400:
 	add esi, 0x20
 	mov edx, [ebp-0x20e4]
 	cmp [ebp-0x20e8], edx
-	jnz R_SkinXModelCmd_400
+	jnz _Z15R_SkinXModelCmdPv_400
 	mov edx, [ebp-0x20f4]
-	jmp R_SkinXModelCmd_410
-R_SkinXModelCmd_340:
+	jmp _Z15R_SkinXModelCmdPv_410
+_Z15R_SkinXModelCmdPv_340:
 	mov ebx, [ebp-0x2088]
 	mov esi, [ebp-0x2130]
 	mov dword [ebp-0x20ec], 0x0
-R_SkinXModelCmd_420:
+_Z15R_SkinXModelCmdPv_420:
 	movzx eax, word [edi]
 	add eax, [ebp-0x20cc]
 	mov ecx, [ebx+0x1c]
@@ -4246,7 +4246,7 @@ R_SkinXModelCmd_420:
 	mov [esp+0x4], esi
 	mov [esp], eax
 	mov eax, ebx
-	call MatrixTransformVertexAndBasis
+	call _Z29MatrixTransformVertexAndBasisPKff13PackedUnitVecS1_PK11DObjSkelMatP15GfxPackedVertex
 	mov eax, [ebx+0x10]
 	mov [esi+0x10], eax
 	mov eax, [ebx+0x14]
@@ -4257,14 +4257,14 @@ R_SkinXModelCmd_420:
 	add esi, 0x20
 	mov ecx, [ebp-0x20ec]
 	cmp [ebp-0x20f0], ecx
-	jnz R_SkinXModelCmd_420
+	jnz _Z15R_SkinXModelCmdPv_420
 	mov edx, [ebp-0x20f4]
-	jmp R_SkinXModelCmd_430
+	jmp _Z15R_SkinXModelCmdPv_430
 	add [eax], al
 
 
 ;Vec3Mad(float const*, float, float const*, float*)
-Vec3Mad:
+_Z7Vec3MadPKffS0_Pf:
 	push ebp
 	mov ebp, esp
 	mov ecx, [ebp+0x8]
@@ -4288,7 +4288,7 @@ Vec3Mad:
 
 
 ;Vec3Copy(float const*, float*)
-Vec3Copy:
+_Z8Vec3CopyPKfPf:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0x8]
@@ -4305,7 +4305,7 @@ Vec3Copy:
 
 
 ;Vec3Scale(float const*, float, float*)
-Vec3Scale:
+_Z9Vec3ScalePKffPf:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0x8]
@@ -4402,7 +4402,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

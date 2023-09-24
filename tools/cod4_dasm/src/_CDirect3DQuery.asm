@@ -5,6 +5,7 @@
 	extern glGenQueriesARB
 	extern _ZdlPv
 	extern glDeleteQueriesARB
+	extern _ZTI8IUnknown
 
 ;Exports of CDirect3DQuery:
 	global _ZN14CDirect3DQuery11GetDataSizeEv
@@ -18,6 +19,8 @@
 	global _ZN14CDirect3DQueryC1E13_D3DQUERYTYPE
 	global _ZN14CDirect3DQueryD0Ev
 	global _ZN14CDirect3DQueryD1Ev
+	global _ZTI14CDirect3DQuery
+	global _ZTI15IDirect3DQuery9
 	global _ZTV14CDirect3DQuery
 
 
@@ -270,8 +273,12 @@ SECTION .data
 
 ;Initialized constant data of CDirect3DQuery:
 SECTION .rdata
+;VTypeInfoTable for CDirect3DQuery:
+_ZTI14CDirect3DQuery: dd 0x8, _cstring_14cdirect3dquery, _ZTI15IDirect3DQuery9, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for IDirect3DQuery9:
+_ZTI15IDirect3DQuery9: dd 0x8, _cstring_15idirect3dquery, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CDirect3DQuery:
-_ZTV14CDirect3DQuery: dd 0x0, 0x3b4f20, _ZN14CDirect3DQuery14QueryInterfaceERK5_GUIDPPv, _ZN14CDirect3DQuery6AddRefEv, _ZN14CDirect3DQuery7ReleaseEv, _ZN14CDirect3DQuery9GetDeviceEPP16IDirect3DDevice9, _ZN14CDirect3DQuery7GetTypeEv, _ZN14CDirect3DQuery11GetDataSizeEv, _ZN14CDirect3DQuery5IssueEm, _ZN14CDirect3DQuery7GetDataEPvmm, _ZN14CDirect3DQueryD1Ev, _ZN14CDirect3DQueryD0Ev, 0x0, 0x0, 0x0, 0x0
+_ZTV14CDirect3DQuery: dd 0x0, _ZTI14CDirect3DQuery, _ZN14CDirect3DQuery14QueryInterfaceERK5_GUIDPPv, _ZN14CDirect3DQuery6AddRefEv, _ZN14CDirect3DQuery7ReleaseEv, _ZN14CDirect3DQuery9GetDeviceEPP16IDirect3DDevice9, _ZN14CDirect3DQuery7GetTypeEv, _ZN14CDirect3DQuery11GetDataSizeEv, _ZN14CDirect3DQuery5IssueEm, _ZN14CDirect3DQuery7GetDataEPvmm, _ZN14CDirect3DQueryD1Ev, _ZN14CDirect3DQueryD0Ev, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of CDirect3DQuery:
@@ -280,6 +287,8 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
+_cstring_14cdirect3dquery:		db "14CDirect3DQuery",0
+_cstring_15idirect3dquery:		db "15IDirect3DQuery9",0
 
 
 

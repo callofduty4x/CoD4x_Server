@@ -1,16 +1,16 @@
 #include "q_shared.h"
 #include "cvar.h"
 
-cvar_t* perk_weapSpreadMultiplier;
-cvar_t* perk_weapReloadMultiplier;
-cvar_t* perk_weapRateMultiplier;
-cvar_t* perk_extraBreath;
-cvar_t* perk_bulletPenetrationMultiplier;
-cvar_t* perk_grenadeDeath;
-cvar_t* perk_parabolicRadius;
-cvar_t* perk_parabolicAngle;
-cvar_t* perk_parabolicIcon;
-cvar_t* perk_sprintMultiplier;
+extern "C" cvar_t* perk_weapSpreadMultiplier;
+extern "C" cvar_t* perk_weapReloadMultiplier;
+extern "C" cvar_t* perk_weapRateMultiplier;
+extern "C" cvar_t* perk_extraBreath;
+extern "C" cvar_t* perk_bulletPenetrationMultiplier;
+extern "C" cvar_t* perk_grenadeDeath;
+extern "C" cvar_t* perk_parabolicRadius;
+extern "C" cvar_t* perk_parabolicAngle;
+extern "C" cvar_t* perk_parabolicIcon;
+extern "C" cvar_t* perk_sprintMultiplier;
 
 
 

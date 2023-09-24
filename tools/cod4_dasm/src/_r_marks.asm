@@ -1,53 +1,53 @@
 ;Imports of r_marks:
 	extern rgp
-	extern BoxOnPlaneSide
+	extern _Z14BoxOnPlaneSidePKfS0_PK8cplane_s
 	extern memcpy
-	extern Vec3UnpackUnitVec
-	extern MatrixTransformVector43
-	extern Com_Memset
-	extern XModelGetSurfaces
-	extern XModelGetSkins
-	extern DObjGetSurfaces
-	extern CG_DObjCalcPose
-	extern DObjGetHidePartBits
-	extern DObjGetNumModels
-	extern DObjGetModel
-	extern DObjNumBones
-	extern XModelGetBasePose
-	extern Com_Printf
-	extern MatrixMultiply43
-	extern MatrixTransposeTransformVector
-	extern XSurfaceVisitTrianglesInAabb
-	extern CG_GetPoseAngles
-	extern AnglesToAxis
-	extern CG_GetPoseOrigin
-	extern MatrixTranspose
-	extern AxisCopy
+	extern _Z17Vec3UnpackUnitVec13PackedUnitVecPf
+	extern _Z23MatrixTransformVector43PKfPA3_S_Pf
+	extern _Z10Com_MemsetPvii
+	extern _Z17XModelGetSurfacesPK6XModelPP8XSurfacei
+	extern _Z14XModelGetSkinsPK6XModeli
+	extern _Z15DObjGetSurfacesPK6DObj_sPiPKc
+	extern _Z15CG_DObjCalcPosePK7cpose_tPK6DObj_sPi
+	extern _Z19DObjGetHidePartBitsPK6DObj_sPj
+	extern _Z16DObjGetNumModelsPK6DObj_s
+	extern _Z12DObjGetModelPK6DObj_si
+	extern _Z12DObjNumBonesPK6DObj_s
+	extern _Z17XModelGetBasePosePK6XModel
+	extern _Z10Com_PrintfiPKcz
+	extern _Z16MatrixMultiply43PA3_KfS1_PA3_f
+	extern _Z30MatrixTransposeTransformVectorPKfPA3_S_Pf
+	extern _Z28XSurfaceVisitTrianglesInAabbPK8XSurfacejPKfS3_PFhPvPPK15GfxPackedVertexS8_ES4_
+	extern _Z16CG_GetPoseAnglesPK7cpose_tPf
+	extern _Z12AnglesToAxisPKfPA3_f
+	extern _Z16CG_GetPoseOriginPK7cpose_tPf
+	extern _Z15MatrixTransposePA3_KfPA3_f
+	extern _Z8AxisCopyPA3_KfPA3_f
 
 ;Exports of r_marks:
 	global _GLOBAL__I__Z19R_RegisterMarkDvarsv
-	global R_AllowMarks
-	global R_AllowSmodelMarks
-	global R_AABBTreeSurfacesTwoLists_r
-	global R_AABBTreeSurfaces_r
-	global R_AABBTreeStaticModels_r
-	global R_BoxStaticModels_r
-	global R_BoxSurfaces_r
-	global R_ChopPolyBehindPlane
-	global R_ChopWorldPolyBehindPlane
-	global R_AABBTreeCylinderSurfaces_r
-	global R_CylinderSurfaces_r
+	global _Z12R_AllowMarksiPv
+	global _Z18R_AllowSmodelMarksi
+	global _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj
+	global _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj
+	global _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi
+	global _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh
+	global _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh
+	global _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf
+	global _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf
+	global _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj
+	global _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh
 	global _ZZ28R_MarkFragments_WorldBrushesP8MarkInfoE9allowSurf
-	global R_MarkModelCoreCallback
-	global R_MarkModelCoreCallback
-	global R_BoxSurfaces
-	global R_BoxStaticModels
-	global R_CylinderSurfaces
-	global R_MarkFragments_Go
-	global R_MarkFragments_Begin
-	global R_MarkFragments_AddDObj
-	global R_MarkFragments_AddBModel
-	global R_MarkUtil_GetDObjAnimMatAndHideParts
+	global _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4_
+	global _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4_
+	global _Z13R_BoxSurfacesPKfS0_PPFiiPvES1_PPP10GfxSurfacejPjj
+	global _Z17R_BoxStaticModelsPKfS0_PFiiEPti
+	global _Z18R_CylinderSurfacesPKfS0_fPK9DpvsPlanejPFiiPvES4_PP10GfxSurfacej
+	global _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5_
+	global _Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material
+	global _Z23R_MarkFragments_AddDObjP8MarkInfoP6DObj_sP7cpose_tt
+	global _Z25R_MarkFragments_AddBModelP8MarkInfoP13GfxBrushModelP7cpose_tt
+	global _Z37R_MarkUtil_GetDObjAnimMatAndHidePartsPK6DObj_sPK7cpose_tPPK11DObjAnimMatPj
 
 
 SECTION .text
@@ -60,11 +60,11 @@ _GLOBAL__I__Z19R_RegisterMarkDvarsv:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;R_AllowMarks(int, void*)
-R_AllowMarks:
+_Z12R_AllowMarksiPv:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -75,21 +75,21 @@ R_AllowMarks:
 	shl eax, 0x4
 	mov eax, [eax+edx+0x10]
 	test byte [eax+0x3d], 0x4
-	jnz R_AllowMarks_10
+	jnz _Z12R_AllowMarksiPv_10
 	test byte [eax+0x4], 0x4
-	jnz R_AllowMarks_10
+	jnz _Z12R_AllowMarksiPv_10
 	mov ecx, [ebp+0xc]
 	mov edx, [ecx+0x10]
 	mov eax, [eax+0x10]
 	and eax, edx
 	cmp edx, eax
-	jz R_AllowMarks_20
-R_AllowMarks_10:
+	jz _Z12R_AllowMarksiPv_20
+_Z12R_AllowMarksiPv_10:
 	xor eax, eax
 	movzx eax, al
 	pop ebp
 	ret
-R_AllowMarks_20:
+_Z12R_AllowMarksiPv_20:
 	mov eax, 0x1
 	movzx eax, al
 	pop ebp
@@ -97,7 +97,7 @@ R_AllowMarks_20:
 
 
 ;R_AllowSmodelMarks(int)
-R_AllowSmodelMarks:
+_Z18R_AllowSmodelMarksi:
 	push ebp
 	mov ebp, esp
 	mov eax, 0x1
@@ -106,17 +106,17 @@ R_AllowSmodelMarks:
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -386,8 +386,8 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_AABBTreeSurfacesTwoLists_r(GfxAabbTree*, float const*, float const*, int (**)(int, void*), void*, GfxSurface***, unsigned int, unsigned int*)
-R_AABBTreeSurfacesTwoLists_r:
-R_AABBTreeSurfacesTwoLists_r_70:
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj:
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_70:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -399,56 +399,56 @@ R_AABBTreeSurfacesTwoLists_r_70:
 	mov [ebp-0x40], ecx
 	movss xmm1, dword [edx]
 	ucomiss xmm1, [eax+0xc]
-	ja R_AABBTreeSurfacesTwoLists_r_10
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	movss xmm0, dword [eax]
 	ucomiss xmm0, [ecx]
-	ja R_AABBTreeSurfacesTwoLists_r_10
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	lea eax, [edx+0x4]
 	mov [ebp-0x3c], eax
 	movss xmm0, dword [edx+0x4]
 	ucomiss xmm0, [esi+0x10]
-	ja R_AABBTreeSurfacesTwoLists_r_10
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	add ecx, 0x4
 	mov [ebp-0x38], ecx
 	movss xmm0, dword [esi+0x4]
 	mov edx, [ebp-0x40]
 	ucomiss xmm0, [edx+0x4]
-	ja R_AABBTreeSurfacesTwoLists_r_10
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	lea ecx, [edi+0x8]
 	mov [ebp-0x34], ecx
 	movss xmm0, dword [edi+0x8]
 	ucomiss xmm0, [esi+0x14]
-	ja R_AABBTreeSurfacesTwoLists_r_10
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	add edx, 0x8
 	mov [ebp-0x30], edx
 	movss xmm0, dword [esi+0x8]
 	mov eax, [ebp-0x40]
 	ucomiss xmm0, [eax+0x8]
-	ja R_AABBTreeSurfacesTwoLists_r_10
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	cmp word [esi+0x18], 0x0
-	jnz R_AABBTreeSurfacesTwoLists_r_20
+	jnz _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_20
 	movzx eax, word [esi+0x1c]
 	cmp word [esi+0x1a], 0x0
-	jz R_AABBTreeSurfacesTwoLists_r_10
+	jz _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	mov ecx, [ebp+0x14]
 	mov edx, [ebp+0x18]
 	cmp ecx, [edx]
-	jbe R_AABBTreeSurfacesTwoLists_r_10
+	jbe _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	add edx, 0x4
 	mov [ebp-0x2c], edx
 	mov edx, [ebp+0x14]
 	mov ecx, [ebp+0x18]
 	cmp edx, [ecx+0x4]
-	jbe R_AABBTreeSurfacesTwoLists_r_10
+	jbe _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	add eax, eax
 	mov [ebp-0x1c], eax
 	mov dword [ebp-0x24], 0x0
 	mov ecx, eax
-	jmp R_AABBTreeSurfacesTwoLists_r_30
-R_AABBTreeSurfacesTwoLists_r_60:
+	jmp _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_30
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_60:
 	movss xmm1, dword [edi]
 	mov ecx, [ebp-0x1c]
-R_AABBTreeSurfacesTwoLists_r_30:
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_30:
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov eax, [edx+0x28c]
@@ -458,52 +458,52 @@ R_AABBTreeSurfacesTwoLists_r_30:
 	shl ebx, 0x4
 	add ebx, [edx+0x294]
 	ucomiss xmm1, [ebx+0x24]
-	ja R_AABBTreeSurfacesTwoLists_r_40
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_40
 	movss xmm0, dword [ebx+0x18]
 	mov eax, [ebp-0x40]
 	ucomiss xmm0, [eax]
-	ja R_AABBTreeSurfacesTwoLists_r_40
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_40
 	mov edx, [ebp-0x3c]
 	movss xmm0, dword [edx]
 	ucomiss xmm0, [ebx+0x28]
-	ja R_AABBTreeSurfacesTwoLists_r_40
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_40
 	movss xmm0, dword [ebx+0x1c]
 	mov ecx, [ebp-0x38]
 	ucomiss xmm0, [ecx]
-	ja R_AABBTreeSurfacesTwoLists_r_40
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_40
 	mov eax, [ebp-0x34]
 	movss xmm0, dword [eax]
 	ucomiss xmm0, [ebx+0x2c]
-	ja R_AABBTreeSurfacesTwoLists_r_40
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_40
 	movss xmm0, dword [ebx+0x20]
 	mov edx, [ebp-0x30]
 	ucomiss xmm0, [edx]
-	jbe R_AABBTreeSurfacesTwoLists_r_50
-R_AABBTreeSurfacesTwoLists_r_40:
+	jbe _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_50
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_40:
 	add dword [ebp-0x24], 0x1
 	movzx eax, word [esi+0x1a]
 	cmp [ebp-0x24], eax
-	jae R_AABBTreeSurfacesTwoLists_r_10
+	jae _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	mov ecx, [ebp+0x14]
 	mov edx, [ebp+0x18]
 	cmp ecx, [edx]
-	jbe R_AABBTreeSurfacesTwoLists_r_10
+	jbe _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
 	add dword [ebp-0x1c], 0x2
 	mov eax, [ebp-0x2c]
 	cmp ecx, [eax]
-	ja R_AABBTreeSurfacesTwoLists_r_60
-R_AABBTreeSurfacesTwoLists_r_10:
+	ja _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_60
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10:
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AABBTreeSurfacesTwoLists_r_20:
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_20:
 	mov ebx, esi
 	add ebx, [esi+0x28]
 	mov dword [ebp-0x28], 0x0
-R_AABBTreeSurfacesTwoLists_r_80:
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_80:
 	mov edx, [ebp+0x18]
 	mov [esp+0x10], edx
 	mov ecx, [ebp+0x14]
@@ -517,14 +517,14 @@ R_AABBTreeSurfacesTwoLists_r_80:
 	mov ecx, [ebp-0x40]
 	mov edx, edi
 	mov eax, ebx
-	call R_AABBTreeSurfacesTwoLists_r_70
+	call _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_70
 	add dword [ebp-0x28], 0x1
 	add ebx, 0x2c
 	movzx eax, word [esi+0x18]
 	cmp [ebp-0x28], eax
-	jb R_AABBTreeSurfacesTwoLists_r_80
-	jmp R_AABBTreeSurfacesTwoLists_r_10
-R_AABBTreeSurfacesTwoLists_r_50:
+	jb _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_80
+	jmp _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_10
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_50:
 	mov ecx, [ebp+0xc]
 	mov [esp+0x4], ecx
 	mov eax, [ebp-0x20]
@@ -532,7 +532,7 @@ R_AABBTreeSurfacesTwoLists_r_50:
 	mov edx, [ebp+0x8]
 	call dword [edx]
 	test eax, eax
-	jz R_AABBTreeSurfacesTwoLists_r_90
+	jz _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_90
 	mov ecx, [ebp+0x18]
 	mov edx, [ecx]
 	mov ecx, [ebp+0x10]
@@ -540,7 +540,7 @@ R_AABBTreeSurfacesTwoLists_r_50:
 	mov [eax+edx*4], ebx
 	mov eax, [ebp+0x18]
 	add dword [eax], 0x1
-R_AABBTreeSurfacesTwoLists_r_90:
+_Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_90:
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x20]
@@ -548,7 +548,7 @@ R_AABBTreeSurfacesTwoLists_r_90:
 	mov edx, [ebp+0x8]
 	call dword [edx+0x4]
 	test eax, eax
-	jz R_AABBTreeSurfacesTwoLists_r_40
+	jz _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_40
 	mov ecx, [ebp-0x2c]
 	mov edx, [ecx]
 	mov ecx, [ebp+0x10]
@@ -556,13 +556,13 @@ R_AABBTreeSurfacesTwoLists_r_90:
 	mov [eax+edx*4], ebx
 	mov eax, [ebp-0x2c]
 	add dword [eax], 0x1
-	jmp R_AABBTreeSurfacesTwoLists_r_40
+	jmp _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj_40
 	nop
 
 
 ;R_AABBTreeSurfaces_r(GfxAabbTree*, float const*, float const*, int (*)(int, void*), void*, GfxSurface**, unsigned int, unsigned int*)
-R_AABBTreeSurfaces_r:
-R_AABBTreeSurfaces_r_60:
+_Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj:
+_Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_60:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -574,49 +574,49 @@ R_AABBTreeSurfaces_r_60:
 	mov [ebp-0x38], ecx
 	movss xmm0, dword [edx]
 	ucomiss xmm0, [eax+0xc]
-	ja R_AABBTreeSurfaces_r_10
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 	movss xmm0, dword [eax]
 	ucomiss xmm0, [ecx]
-	ja R_AABBTreeSurfaces_r_10
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 	lea eax, [edx+0x4]
 	mov [ebp-0x34], eax
 	movss xmm0, dword [edx+0x4]
 	ucomiss xmm0, [esi+0x10]
-	ja R_AABBTreeSurfaces_r_10
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 	add ecx, 0x4
 	mov [ebp-0x30], ecx
 	movss xmm0, dword [esi+0x4]
 	mov edx, [ebp-0x38]
 	ucomiss xmm0, [edx+0x4]
-	ja R_AABBTreeSurfaces_r_10
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 	lea ecx, [edi+0x8]
 	mov [ebp-0x2c], ecx
 	movss xmm0, dword [edi+0x8]
 	ucomiss xmm0, [esi+0x14]
-	ja R_AABBTreeSurfaces_r_10
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 	add edx, 0x8
 	mov [ebp-0x28], edx
 	movss xmm0, dword [esi+0x8]
 	mov eax, [ebp-0x38]
 	ucomiss xmm0, [eax+0x8]
-	ja R_AABBTreeSurfaces_r_10
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 	cmp word [esi+0x18], 0x0
-	jnz R_AABBTreeSurfaces_r_20
+	jnz _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_20
 	movzx eax, word [esi+0x1c]
 	cmp word [esi+0x1a], 0x0
-	jz R_AABBTreeSurfaces_r_10
+	jz _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 	mov ecx, [ebp+0x14]
 	mov edx, [ebp+0x18]
 	cmp ecx, [edx]
-	jbe R_AABBTreeSurfaces_r_10
+	jbe _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 	add eax, eax
 	mov [ebp-0x1c], eax
 	mov dword [ebp-0x20], 0x0
 	mov ecx, eax
-	jmp R_AABBTreeSurfaces_r_30
-R_AABBTreeSurfaces_r_50:
+	jmp _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_30
+_Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_50:
 	mov ecx, [ebp-0x1c]
-R_AABBTreeSurfaces_r_30:
+_Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_30:
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	mov eax, [eax+0x28c]
@@ -626,7 +626,7 @@ R_AABBTreeSurfaces_r_30:
 	mov [esp], ebx
 	call dword [ebp+0x8]
 	test eax, eax
-	jz R_AABBTreeSurfaces_r_40
+	jz _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_40
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	lea edx, [ebx+ebx*2]
@@ -634,55 +634,55 @@ R_AABBTreeSurfaces_r_30:
 	add edx, [eax+0x294]
 	movss xmm0, dword [edi]
 	ucomiss xmm0, [edx+0x24]
-	ja R_AABBTreeSurfaces_r_40
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_40
 	movss xmm0, dword [edx+0x18]
 	mov ecx, [ebp-0x38]
 	ucomiss xmm0, [ecx]
-	ja R_AABBTreeSurfaces_r_40
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_40
 	mov eax, [ebp-0x34]
 	movss xmm0, dword [eax]
 	ucomiss xmm0, [edx+0x28]
-	ja R_AABBTreeSurfaces_r_40
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_40
 	movss xmm0, dword [edx+0x1c]
 	mov ecx, [ebp-0x30]
 	ucomiss xmm0, [ecx]
-	ja R_AABBTreeSurfaces_r_40
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_40
 	mov eax, [ebp-0x2c]
 	movss xmm0, dword [eax]
 	ucomiss xmm0, [edx+0x2c]
-	ja R_AABBTreeSurfaces_r_40
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_40
 	movss xmm0, dword [edx+0x20]
 	mov ecx, [ebp-0x28]
 	ucomiss xmm0, [ecx]
-	ja R_AABBTreeSurfaces_r_40
+	ja _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_40
 	mov ecx, [ebp+0x18]
 	mov eax, [ecx]
 	mov ecx, [ebp+0x10]
 	mov [ecx+eax*4], edx
 	mov eax, [ebp+0x18]
 	add dword [eax], 0x1
-R_AABBTreeSurfaces_r_40:
+_Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_40:
 	add dword [ebp-0x20], 0x1
 	movzx eax, word [esi+0x1a]
 	cmp [ebp-0x20], eax
-	jae R_AABBTreeSurfaces_r_10
+	jae _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 	add dword [ebp-0x1c], 0x2
 	mov ecx, [ebp+0x14]
 	mov edx, [ebp+0x18]
 	cmp [edx], ecx
-	jb R_AABBTreeSurfaces_r_50
-R_AABBTreeSurfaces_r_10:
+	jb _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_50
+_Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AABBTreeSurfaces_r_20:
+_Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_20:
 	mov ebx, esi
 	add ebx, [esi+0x28]
 	mov dword [ebp-0x24], 0x0
-R_AABBTreeSurfaces_r_70:
+_Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_70:
 	mov edx, [ebp+0x18]
 	mov [esp+0x10], edx
 	mov ecx, [ebp+0x14]
@@ -696,18 +696,18 @@ R_AABBTreeSurfaces_r_70:
 	mov ecx, [ebp-0x38]
 	mov edx, edi
 	mov eax, ebx
-	call R_AABBTreeSurfaces_r_60
+	call _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_60
 	add dword [ebp-0x24], 0x1
 	add ebx, 0x2c
 	movzx eax, word [esi+0x18]
 	cmp [ebp-0x24], eax
-	jb R_AABBTreeSurfaces_r_70
-	jmp R_AABBTreeSurfaces_r_10
+	jb _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_70
+	jmp _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj_10
 
 
 ;R_AABBTreeStaticModels_r(GfxAabbTree*, float const*, float const*, int (*)(int), unsigned short*, int, int*)
-R_AABBTreeStaticModels_r:
-R_AABBTreeStaticModels_r_70:
+_Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi:
+_Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_70:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -719,41 +719,41 @@ R_AABBTreeStaticModels_r_70:
 	mov edi, ecx
 	movss xmm0, dword [edx]
 	ucomiss xmm0, [eax+0xc]
-	ja R_AABBTreeStaticModels_r_10
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	movss xmm0, dword [eax]
 	ucomiss xmm0, [ecx]
-	ja R_AABBTreeStaticModels_r_10
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	lea eax, [edx+0x4]
 	mov [ebp-0x38], eax
 	movss xmm0, dword [edx+0x4]
 	ucomiss xmm0, [ebx+0x10]
-	ja R_AABBTreeStaticModels_r_10
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	lea edx, [ecx+0x4]
 	mov [ebp-0x34], edx
 	movss xmm0, dword [ebx+0x4]
 	ucomiss xmm0, [ecx+0x4]
-	ja R_AABBTreeStaticModels_r_10
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	lea ecx, [esi+0x8]
 	mov [ebp-0x30], ecx
 	movss xmm0, dword [esi+0x8]
 	ucomiss xmm0, [ebx+0x14]
-	ja R_AABBTreeStaticModels_r_10
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	lea eax, [edi+0x8]
 	mov [ebp-0x2c], eax
 	movss xmm0, dword [ebx+0x8]
 	ucomiss xmm0, [edi+0x8]
-	ja R_AABBTreeStaticModels_r_10
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	movzx edx, word [ebx+0x18]
 	test dx, dx
-	jnz R_AABBTreeStaticModels_r_20
+	jnz _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_20
 	cmp word [ebx+0x22], 0x0
-	jz R_AABBTreeStaticModels_r_10
+	jz _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	mov ecx, [ebp+0x10]
 	mov edx, [ebp+0x14]
 	cmp ecx, [edx]
-	jle R_AABBTreeStaticModels_r_10
+	jle _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	mov dword [ebp-0x24], 0x0
-R_AABBTreeStaticModels_r_60:
+_Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_60:
 	mov eax, [ebx+0x24]
 	mov ecx, [ebp-0x24]
 	movzx eax, word [eax+ecx*2]
@@ -761,7 +761,7 @@ R_AABBTreeStaticModels_r_60:
 	mov [esp], eax
 	call dword [ebp+0x8]
 	test eax, eax
-	jz R_AABBTreeStaticModels_r_30
+	jz _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	mov eax, [ebp-0x20]
@@ -772,67 +772,67 @@ R_AABBTreeStaticModels_r_60:
 	add ecx, [edx+0x290]
 	movss xmm0, dword [esi]
 	ucomiss xmm0, [ecx+0xc]
-	ja R_AABBTreeStaticModels_r_30
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30
 	movss xmm0, dword [ecx]
 	ucomiss xmm0, [edi]
-	ja R_AABBTreeStaticModels_r_30
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30
 	mov eax, [ebp-0x38]
 	movss xmm0, dword [eax]
 	ucomiss xmm0, [ecx+0x10]
-	ja R_AABBTreeStaticModels_r_30
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30
 	movss xmm0, dword [ecx+0x4]
 	mov edx, [ebp-0x34]
 	ucomiss xmm0, [edx]
-	ja R_AABBTreeStaticModels_r_30
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30
 	mov eax, [ebp-0x30]
 	movss xmm0, dword [eax]
 	ucomiss xmm0, [ecx+0x14]
-	ja R_AABBTreeStaticModels_r_30
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30
 	movss xmm0, dword [ecx+0x8]
 	mov edx, [ebp-0x2c]
 	ucomiss xmm0, [edx]
-	ja R_AABBTreeStaticModels_r_30
+	ja _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30
 	mov ecx, [ebp+0x14]
 	mov edx, [ecx]
 	test edx, edx
-	jle R_AABBTreeStaticModels_r_40
+	jle _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_40
 	mov ecx, [ebp+0xc]
 	movzx eax, word [ecx]
 	cmp [ebp-0x20], eax
-	jz R_AABBTreeStaticModels_r_30
+	jz _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30
 	xor ecx, ecx
-R_AABBTreeStaticModels_r_50:
+_Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_50:
 	add ecx, 0x1
 	cmp ecx, edx
-	jz R_AABBTreeStaticModels_r_40
+	jz _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_40
 	mov eax, [ebp+0xc]
 	movzx eax, word [eax+ecx*2]
 	cmp [ebp-0x20], eax
-	jnz R_AABBTreeStaticModels_r_50
-R_AABBTreeStaticModels_r_30:
+	jnz _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_50
+_Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30:
 	add dword [ebp-0x24], 0x1
 	movzx eax, word [ebx+0x22]
 	cmp [ebp-0x24], eax
-	jge R_AABBTreeStaticModels_r_10
+	jge _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	mov eax, [ebp+0x10]
 	mov ecx, [ebp+0x14]
 	cmp eax, [ecx]
-	jg R_AABBTreeStaticModels_r_60
-R_AABBTreeStaticModels_r_10:
+	jg _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_60
+_Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AABBTreeStaticModels_r_20:
+_Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_20:
 	mov eax, ebx
 	add eax, [ebx+0x28]
 	test dx, dx
-	jz R_AABBTreeStaticModels_r_10
+	jz _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
 	mov [ebp-0x1c], eax
 	mov dword [ebp-0x28], 0x0
-R_AABBTreeStaticModels_r_80:
+_Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_80:
 	mov edx, [ebp+0x14]
 	mov [esp+0xc], edx
 	mov ecx, [ebp+0x10]
@@ -844,25 +844,25 @@ R_AABBTreeStaticModels_r_80:
 	mov ecx, edi
 	mov edx, esi
 	mov eax, [ebp-0x1c]
-	call R_AABBTreeStaticModels_r_70
+	call _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_70
 	add dword [ebp-0x28], 0x1
 	add dword [ebp-0x1c], 0x2c
 	movzx eax, word [ebx+0x18]
 	cmp [ebp-0x28], eax
-	jl R_AABBTreeStaticModels_r_80
-	jmp R_AABBTreeStaticModels_r_10
-R_AABBTreeStaticModels_r_40:
+	jl _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_80
+	jmp _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_10
+_Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_40:
 	movzx eax, word [ebp-0x20]
 	mov ecx, [ebp+0xc]
 	mov [ecx+edx*2], ax
 	mov edx, [ebp+0x14]
 	add dword [edx], 0x1
-	jmp R_AABBTreeStaticModels_r_30
+	jmp _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi_30
 
 
 ;R_BoxStaticModels_r(mnode_t*, float const*, float const*, int (*)(int), unsigned short*, int, int*, unsigned char*)
-R_BoxStaticModels_r:
-R_BoxStaticModels_r_40:
+_Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh:
+_Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_40:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -886,13 +886,13 @@ R_BoxStaticModels_r_40:
 	mov eax, [eax+0x20a0]
 	mov esi, [eax+0xf0]
 	add esi, 0x1
-R_BoxStaticModels_r_80:
+_Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_80:
 	movzx edx, word [ebx]
 	movzx eax, dx
 	mov ecx, eax
 	sub ecx, esi
-	js R_BoxStaticModels_r_10
-R_BoxStaticModels_r_50:
+	js _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_10
+_Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_50:
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	lea eax, [ecx+ecx*4]
@@ -902,11 +902,11 @@ R_BoxStaticModels_r_50:
 	mov [esp+0x4], edi
 	mov edx, [ebp-0x1c]
 	mov [esp], edx
-	call BoxOnPlaneSide
+	call _Z14BoxOnPlaneSidePKfS0_PK8cplane_s
 	cmp eax, 0x1
-	jz R_BoxStaticModels_r_20
+	jz _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_20
 	cmp eax, 0x2
-	jz R_BoxStaticModels_r_30
+	jz _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_30
 	lea eax, [ebx+0x4]
 	mov edx, [ebp-0x30]
 	mov [esp+0x10], edx
@@ -920,18 +920,18 @@ R_BoxStaticModels_r_50:
 	mov [esp], edx
 	mov ecx, edi
 	mov edx, [ebp-0x1c]
-	call R_BoxStaticModels_r_40
-R_BoxStaticModels_r_30:
+	call _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_40
+_Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_30:
 	movzx eax, word [ebx+0x2]
 	lea ebx, [ebx+eax*2]
 	movzx edx, word [ebx]
 	movzx eax, dx
 	mov ecx, eax
 	sub ecx, esi
-	jns R_BoxStaticModels_r_50
-R_BoxStaticModels_r_10:
+	jns _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_50
+_Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_10:
 	test dx, dx
-	jz R_BoxStaticModels_r_60
+	jz _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_60
 	lea ebx, [eax-0x1]
 	mov ecx, ebx
 	and ecx, 0x7
@@ -944,18 +944,18 @@ R_BoxStaticModels_r_10:
 	movzx edx, byte [ecx]
 	movzx eax, dl
 	test eax, esi
-	jz R_BoxStaticModels_r_70
-R_BoxStaticModels_r_60:
+	jz _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_70
+_Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_60:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_BoxStaticModels_r_20:
+_Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_20:
 	add ebx, 0x4
-	jmp R_BoxStaticModels_r_80
-R_BoxStaticModels_r_70:
+	jmp _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_80
+_Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh_70:
 	or edx, esi
 	mov [ecx], dl
 	mov eax, rgp
@@ -980,12 +980,12 @@ R_BoxStaticModels_r_70:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_AABBTreeStaticModels_r
+	jmp _Z24R_AABBTreeStaticModels_rP11GfxAabbTreePKfS2_PFiiEPtiPi
 
 
 ;R_BoxSurfaces_r(mnode_t*, float const*, float const*, int (**)(int, void*), void*, GfxSurface***, unsigned int, unsigned int*, unsigned int, unsigned char*)
-R_BoxSurfaces_r:
-R_BoxSurfaces_r_40:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_40:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1013,13 +1013,13 @@ R_BoxSurfaces_r_40:
 	mov eax, [eax+0x20a0]
 	mov esi, [eax+0xf0]
 	add esi, 0x1
-R_BoxSurfaces_r_150:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_150:
 	movzx edx, word [ebx]
 	movzx eax, dx
 	mov ecx, eax
 	sub ecx, esi
-	js R_BoxSurfaces_r_10
-R_BoxSurfaces_r_50:
+	js _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_10
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_50:
 	mov eax, rgp
 	mov edx, [eax+0x20a0]
 	lea eax, [ecx+ecx*4]
@@ -1029,11 +1029,11 @@ R_BoxSurfaces_r_50:
 	mov edx, [ebp-0x6c]
 	mov [esp+0x4], edx
 	mov [esp], edi
-	call BoxOnPlaneSide
+	call _Z14BoxOnPlaneSidePKfS0_PK8cplane_s
 	cmp eax, 0x1
-	jz R_BoxSurfaces_r_20
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_20
 	cmp eax, 0x2
-	jz R_BoxSurfaces_r_30
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_30
 	lea eax, [ebx+0x4]
 	mov ecx, [ebp-0x88]
 	mov [esp+0x18], ecx
@@ -1051,20 +1051,20 @@ R_BoxSurfaces_r_50:
 	mov [esp], ecx
 	mov ecx, [ebp-0x6c]
 	mov edx, edi
-	call R_BoxSurfaces_r_40
-R_BoxSurfaces_r_30:
+	call _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_40
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_30:
 	movzx eax, word [ebx+0x2]
 	lea ebx, [ebx+eax*2]
 	movzx edx, word [ebx]
 	movzx eax, dx
 	mov ecx, eax
 	sub ecx, esi
-	jns R_BoxSurfaces_r_50
-R_BoxSurfaces_r_10:
+	jns _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_50
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_10:
 	test dx, dx
-	jz R_BoxSurfaces_r_60
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_60
 	cmp dword [ebp-0x84], 0x1
-	jz R_BoxSurfaces_r_70
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_70
 	lea ebx, [eax-0x1]
 	mov ecx, ebx
 	and ecx, 0x7
@@ -1077,7 +1077,7 @@ R_BoxSurfaces_r_10:
 	movzx edx, byte [ecx]
 	movzx eax, dl
 	test eax, esi
-	jnz R_BoxSurfaces_r_60
+	jnz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_60
 	or edx, esi
 	mov [ecx], dl
 	mov ecx, rgp
@@ -1090,10 +1090,10 @@ R_BoxSurfaces_r_10:
 	add esi, [edx+0x104]
 	mov ecx, [esi+0x28]
 	test ecx, ecx
-	jle R_BoxSurfaces_r_80
+	jle _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_80
 	mov dword [ebp-0x2c], 0x0
 	mov ecx, [ebp-0x8c]
-R_BoxSurfaces_r_140:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_140:
 	mov edx, [ecx+0x20a0]
 	mov eax, [esi+0x2c]
 	mov ecx, [ebp-0x2c]
@@ -1102,57 +1102,57 @@ R_BoxSurfaces_r_140:
 	add ebx, [edx+0x298]
 	movss xmm1, dword [edi]
 	ucomiss xmm1, [ebx+0xc]
-	ja R_BoxSurfaces_r_90
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	movss xmm0, dword [ebx]
 	mov eax, [ebp-0x6c]
 	ucomiss xmm0, [eax]
-	ja R_BoxSurfaces_r_90
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	lea edx, [edi+0x4]
 	mov [ebp-0x44], edx
 	movss xmm0, dword [edi+0x4]
 	ucomiss xmm0, [ebx+0x10]
-	ja R_BoxSurfaces_r_90
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	add eax, 0x4
 	mov [ebp-0x40], eax
 	movss xmm0, dword [ebx+0x4]
 	mov ecx, [ebp-0x6c]
 	ucomiss xmm0, [ecx+0x4]
-	ja R_BoxSurfaces_r_90
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	lea eax, [edi+0x8]
 	mov [ebp-0x3c], eax
 	movss xmm0, dword [edi+0x8]
 	ucomiss xmm0, [ebx+0x14]
-	ja R_BoxSurfaces_r_90
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	add ecx, 0x8
 	mov [ebp-0x38], ecx
 	movss xmm0, dword [ebx+0x8]
 	mov edx, [ebp-0x6c]
 	ucomiss xmm0, [edx+0x8]
-	ja R_BoxSurfaces_r_90
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	mov eax, [ebx+0x1c]
 	mov edx, [ebx+0x18]
 	test edx, edx
-	jle R_BoxSurfaces_r_90
+	jle _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	mov edx, [ebp-0x7c]
 	mov ecx, [ebp-0x80]
 	cmp [ecx], edx
-	jae R_BoxSurfaces_r_90
+	jae _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	add ecx, 0x4
 	mov [ebp-0x34], ecx
 	mov ecx, [ebp-0x80]
 	cmp [ecx+0x4], edx
-	jae R_BoxSurfaces_r_90
+	jae _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	add eax, eax
 	mov [ebp-0x1c], eax
 	mov dword [ebp-0x30], 0x0
 	mov ecx, [ebp-0x8c]
-	jmp R_BoxSurfaces_r_100
-R_BoxSurfaces_r_130:
+	jmp _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_100
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_130:
 	mov eax, rgp
 	mov [ebp-0x8c], eax
 	movss xmm1, dword [edi]
 	mov ecx, eax
-R_BoxSurfaces_r_100:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_100:
 	mov edx, [ecx+0x20a0]
 	mov eax, [edx+0x28c]
 	mov ecx, [ebp-0x1c]
@@ -1165,61 +1165,61 @@ R_BoxSurfaces_r_100:
 	add eax, ecx
 	mov [ebp-0x24], eax
 	ucomiss xmm1, [eax+0x24]
-	ja R_BoxSurfaces_r_110
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110
 	movss xmm0, dword [eax+0x18]
 	mov eax, [ebp-0x6c]
 	ucomiss xmm0, [eax]
-	ja R_BoxSurfaces_r_110
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110
 	mov edx, [ebp-0x44]
 	movss xmm0, dword [edx]
 	mov ecx, [ebp-0x24]
 	ucomiss xmm0, [ecx+0x28]
-	ja R_BoxSurfaces_r_110
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110
 	movss xmm0, dword [ecx+0x1c]
 	mov eax, [ebp-0x40]
 	ucomiss xmm0, [eax]
-	ja R_BoxSurfaces_r_110
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110
 	mov edx, [ebp-0x3c]
 	movss xmm0, dword [edx]
 	ucomiss xmm0, [ecx+0x2c]
-	ja R_BoxSurfaces_r_110
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110
 	movss xmm0, dword [ecx+0x20]
 	mov ecx, [ebp-0x38]
 	ucomiss xmm0, [ecx]
-	jbe R_BoxSurfaces_r_120
-R_BoxSurfaces_r_110:
+	jbe _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_120
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110:
 	add dword [ebp-0x30], 0x1
 	mov eax, [ebp-0x30]
 	cmp [ebx+0x18], eax
-	jle R_BoxSurfaces_r_90
+	jle _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	mov ecx, [ebp-0x7c]
 	mov edx, [ebp-0x80]
 	cmp ecx, [edx]
-	jbe R_BoxSurfaces_r_90
+	jbe _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90
 	add dword [ebp-0x1c], 0x2
 	mov eax, [ebp-0x34]
 	cmp ecx, [eax]
-	ja R_BoxSurfaces_r_130
-R_BoxSurfaces_r_90:
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_130
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_90:
 	add dword [ebp-0x2c], 0x1
 	mov edx, [ebp-0x2c]
 	cmp edx, [esi+0x28]
-	jge R_BoxSurfaces_r_80
+	jge _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_80
 	mov eax, rgp
 	mov [ebp-0x8c], eax
 	mov ecx, eax
-	jmp R_BoxSurfaces_r_140
-R_BoxSurfaces_r_20:
+	jmp _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_140
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_20:
 	add ebx, 0x4
-	jmp R_BoxSurfaces_r_150
-R_BoxSurfaces_r_60:
+	jmp _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_150
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_60:
 	add esp, 0xbc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_BoxSurfaces_r_80:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_80:
 	mov eax, [esi+0x1c]
 	mov ecx, [ebp-0x80]
 	mov [ebp+0x18], ecx
@@ -1238,8 +1238,8 @@ R_BoxSurfaces_r_80:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_AABBTreeSurfacesTwoLists_r
-R_BoxSurfaces_r_70:
+	jmp _Z28R_AABBTreeSurfacesTwoLists_rP11GfxAabbTreePKfS2_PPFiiPvES3_PPP10GfxSurfacejPj
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_70:
 	mov edx, [ebp-0x78]
 	mov edx, [edx]
 	mov [ebp-0x48], edx
@@ -1258,7 +1258,7 @@ R_BoxSurfaces_r_70:
 	movzx edx, byte [ecx]
 	movzx eax, dl
 	test eax, esi
-	jnz R_BoxSurfaces_r_60
+	jnz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_60
 	or edx, esi
 	mov [ecx], dl
 	mov eax, rgp
@@ -1271,10 +1271,10 @@ R_BoxSurfaces_r_70:
 	add esi, [edx+0x104]
 	mov ecx, [esi+0x28]
 	test ecx, ecx
-	jle R_BoxSurfaces_r_160
+	jle _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_160
 	mov dword [ebp-0x50], 0x0
 	mov ecx, [ebp-0x8c]
-R_BoxSurfaces_r_220:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_220:
 	mov eax, [ecx+0x20a0]
 	mov edx, [esi+0x2c]
 	mov ecx, [ebp-0x50]
@@ -1283,45 +1283,45 @@ R_BoxSurfaces_r_220:
 	add ebx, [eax+0x298]
 	movss xmm0, dword [edi]
 	ucomiss xmm0, [ebx+0xc]
-	ja R_BoxSurfaces_r_170
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	movss xmm0, dword [ebx]
 	mov eax, [ebp-0x6c]
 	ucomiss xmm0, [eax]
-	ja R_BoxSurfaces_r_170
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	lea edx, [edi+0x4]
 	mov [ebp-0x64], edx
 	movss xmm0, dword [edi+0x4]
 	ucomiss xmm0, [ebx+0x10]
-	ja R_BoxSurfaces_r_170
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	add eax, 0x4
 	mov [ebp-0x60], eax
 	movss xmm0, dword [ebx+0x4]
 	mov ecx, [ebp-0x6c]
 	ucomiss xmm0, [ecx+0x4]
-	ja R_BoxSurfaces_r_170
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	lea eax, [edi+0x8]
 	mov [ebp-0x5c], eax
 	movss xmm0, dword [edi+0x8]
 	ucomiss xmm0, [ebx+0x14]
-	ja R_BoxSurfaces_r_170
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	add ecx, 0x8
 	mov [ebp-0x58], ecx
 	movss xmm0, dword [ebx+0x8]
 	mov edx, [ebp-0x6c]
 	ucomiss xmm0, [edx+0x8]
-	ja R_BoxSurfaces_r_170
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	mov eax, [ebx+0x1c]
 	mov edx, [ebx+0x18]
 	test edx, edx
-	jle R_BoxSurfaces_r_170
+	jle _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	mov edx, [ebp-0x7c]
 	mov ecx, [ebp-0x80]
 	cmp edx, [ecx]
-	jbe R_BoxSurfaces_r_170
+	jbe _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	add eax, eax
 	mov [ebp-0x20], eax
 	mov dword [ebp-0x54], 0x0
-R_BoxSurfaces_r_210:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_210:
 	mov edx, [ebp-0x8c]
 	mov eax, [edx+0x20a0]
 	mov eax, [eax+0x28c]
@@ -1334,7 +1334,7 @@ R_BoxSurfaces_r_210:
 	mov [esp], edx
 	call dword [ebp-0x68]
 	test eax, eax
-	jz R_BoxSurfaces_r_180
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180
 	mov ecx, [ebp-0x8c]
 	mov eax, [ecx+0x20a0]
 	mov ecx, [ebp-0x4c]
@@ -1343,66 +1343,66 @@ R_BoxSurfaces_r_210:
 	add edx, [eax+0x294]
 	movss xmm0, dword [edi]
 	ucomiss xmm0, [edx+0x24]
-	ja R_BoxSurfaces_r_180
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180
 	movss xmm0, dword [edx+0x18]
 	mov eax, [ebp-0x6c]
 	ucomiss xmm0, [eax]
-	ja R_BoxSurfaces_r_180
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180
 	mov ecx, [ebp-0x64]
 	movss xmm0, dword [ecx]
 	ucomiss xmm0, [edx+0x28]
-	ja R_BoxSurfaces_r_180
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180
 	movss xmm0, dword [edx+0x1c]
 	mov eax, [ebp-0x60]
 	ucomiss xmm0, [eax]
-	ja R_BoxSurfaces_r_180
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180
 	mov ecx, [ebp-0x5c]
 	movss xmm0, dword [ecx]
 	ucomiss xmm0, [edx+0x2c]
-	ja R_BoxSurfaces_r_180
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180
 	movss xmm0, dword [edx+0x20]
 	mov eax, [ebp-0x58]
 	ucomiss xmm0, [eax]
-	ja R_BoxSurfaces_r_180
+	ja _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180
 	mov ecx, [ebp-0x80]
 	mov ecx, [ecx]
 	mov [ebp-0xa0], ecx
 	test ecx, ecx
-	jz R_BoxSurfaces_r_190
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_190
 	mov eax, [ebp-0x48]
 	cmp edx, [eax]
-	jz R_BoxSurfaces_r_180
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180
 	xor ecx, ecx
-R_BoxSurfaces_r_200:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_200:
 	add ecx, 0x1
 	cmp ecx, [ebp-0xa0]
-	jz R_BoxSurfaces_r_190
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_190
 	mov eax, [ebp-0x48]
 	cmp edx, [eax+ecx*4]
-	jnz R_BoxSurfaces_r_200
-R_BoxSurfaces_r_180:
+	jnz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_200
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180:
 	add dword [ebp-0x54], 0x1
 	mov ecx, [ebp-0x54]
 	cmp ecx, [ebx+0x18]
-	jge R_BoxSurfaces_r_170
+	jge _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	add dword [ebp-0x20], 0x2
 	mov edx, [ebp-0x7c]
 	mov eax, [ebp-0x80]
 	cmp edx, [eax]
-	jbe R_BoxSurfaces_r_170
+	jbe _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170
 	mov ecx, rgp
 	mov [ebp-0x8c], ecx
-	jmp R_BoxSurfaces_r_210
-R_BoxSurfaces_r_170:
+	jmp _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_210
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_170:
 	add dword [ebp-0x50], 0x1
 	mov ecx, [ebp-0x50]
 	cmp ecx, [esi+0x28]
-	jge R_BoxSurfaces_r_160
+	jge _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_160
 	mov edx, rgp
 	mov [ebp-0x8c], edx
 	mov ecx, edx
-	jmp R_BoxSurfaces_r_220
-R_BoxSurfaces_r_160:
+	jmp _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_220
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_160:
 	mov eax, [esi+0x1c]
 	mov edx, [ebp-0x80]
 	mov [ebp+0x18], edx
@@ -1421,8 +1421,8 @@ R_BoxSurfaces_r_160:
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_AABBTreeSurfaces_r
-R_BoxSurfaces_r_120:
+	jmp _Z20R_AABBTreeSurfaces_rP11GfxAabbTreePKfS2_PFiiPvES3_PP10GfxSurfacejPj
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_120:
 	mov eax, [ebp-0x74]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x28]
@@ -1430,40 +1430,40 @@ R_BoxSurfaces_r_120:
 	mov ecx, [ebp-0x70]
 	call dword [ecx]
 	test eax, eax
-	jz R_BoxSurfaces_r_230
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_230
 	mov eax, [ebp-0x78]
 	mov ecx, [eax]
 	mov edx, [ebp-0x80]
 	mov edx, [edx]
 	mov [ebp-0xa0], edx
 	test edx, edx
-	jz R_BoxSurfaces_r_240
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_240
 	mov eax, [ebp-0x24]
 	cmp eax, [ecx]
-	jz R_BoxSurfaces_r_230
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_230
 	xor edx, edx
-R_BoxSurfaces_r_250:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_250:
 	add edx, 0x1
 	cmp edx, [ebp-0xa0]
-	jz R_BoxSurfaces_r_240
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_240
 	mov eax, [ebp-0x24]
 	cmp eax, [ecx+edx*4]
-	jnz R_BoxSurfaces_r_250
-	jmp R_BoxSurfaces_r_230
-R_BoxSurfaces_r_190:
+	jnz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_250
+	jmp _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_230
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_190:
 	mov ecx, [ebp-0xa0]
 	mov eax, [ebp-0x48]
 	mov [eax+ecx*4], edx
 	mov edx, [ebp-0x80]
 	add dword [edx], 0x1
-	jmp R_BoxSurfaces_r_180
-R_BoxSurfaces_r_240:
+	jmp _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_180
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_240:
 	mov eax, [ebp-0x24]
 	mov edx, [ebp-0xa0]
 	mov [ecx+edx*4], eax
 	mov edx, [ebp-0x80]
 	add dword [edx], 0x1
-R_BoxSurfaces_r_230:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_230:
 	mov ecx, [ebp-0x74]
 	mov [esp+0x4], ecx
 	mov eax, [ebp-0x28]
@@ -1471,37 +1471,37 @@ R_BoxSurfaces_r_230:
 	mov edx, [ebp-0x70]
 	call dword [edx+0x4]
 	test eax, eax
-	jz R_BoxSurfaces_r_110
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110
 	mov eax, [ebp-0x78]
 	mov ecx, [eax+0x4]
 	mov edx, [ebp-0x34]
 	mov edx, [edx]
 	mov [ebp-0x9c], edx
 	test edx, edx
-	jz R_BoxSurfaces_r_260
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_260
 	mov edx, [ebp-0x24]
 	cmp edx, [ecx]
-	jz R_BoxSurfaces_r_110
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110
 	xor eax, eax
-R_BoxSurfaces_r_270:
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_270:
 	add eax, 0x1
 	cmp eax, [ebp-0x9c]
-	jz R_BoxSurfaces_r_260
+	jz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_260
 	mov edx, [ebp-0x24]
 	cmp edx, [ecx+eax*4]
-	jnz R_BoxSurfaces_r_270
-	jmp R_BoxSurfaces_r_110
-R_BoxSurfaces_r_260:
+	jnz _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_270
+	jmp _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110
+_Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_260:
 	mov edx, [ebp-0x24]
 	mov eax, [ebp-0x9c]
 	mov [ecx+eax*4], edx
 	mov ecx, [ebp-0x34]
 	add dword [ecx], 0x1
-	jmp R_BoxSurfaces_r_110
+	jmp _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh_110
 
 
 ;R_ChopPolyBehindPlane(int, FxModelMarkPoint const*, FxModelMarkPoint*, float const*)
-R_ChopPolyBehindPlane:
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1517,28 +1517,28 @@ R_ChopPolyBehindPlane:
 	mov dword [ebp-0x1c], 0x0
 	mov ecx, [ebp-0x84]
 	test ecx, ecx
-	jg R_ChopPolyBehindPlane_10
+	jg _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_10
 	xor edx, edx
-R_ChopPolyBehindPlane_130:
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_130:
 	mov eax, [ebp-0x74]
 	mov [ebp+edx*4-0x74], eax
 	mov eax, [ebp-0x4c]
 	mov [ebp+edx*4-0x4c], eax
 	mov edi, [ebp-0x24]
 	test edi, edi
-	jz R_ChopPolyBehindPlane_20
+	jz _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_20
 	mov esi, [ebp-0x20]
 	test esi, esi
-	jz R_ChopPolyBehindPlane_30
+	jz _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_30
 	mov ebx, [ebp-0x84]
 	test ebx, ebx
-	jle R_ChopPolyBehindPlane_20
+	jle _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_20
 	xor ebx, ebx
 	mov dword [ebp-0x80], 0x0
-	jmp R_ChopPolyBehindPlane_40
-R_ChopPolyBehindPlane_80:
+	jmp _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_40
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_80:
 	test esi, esi
-	jnz R_ChopPolyBehindPlane_50
+	jnz _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_50
 	mov eax, [ebp-0x80]
 	lea ecx, [eax+eax*2]
 	shl ecx, 0x3
@@ -1568,13 +1568,13 @@ R_ChopPolyBehindPlane_80:
 	mov eax, [eax+edx+0x14]
 	mov [ecx+edi+0x14], eax
 	add dword [ebp-0x80], 0x1
-R_ChopPolyBehindPlane_50:
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_50:
 	lea edi, [ebx+0x1]
 	mov eax, [ebp+edi*4-0x74]
 	cmp eax, 0x2
-	jz R_ChopPolyBehindPlane_60
+	jz _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_60
 	cmp esi, eax
-	jz R_ChopPolyBehindPlane_60
+	jz _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_60
 	movss xmm2, dword [ebp+ebx*4-0x4c]
 	movaps xmm0, xmm2
 	subss xmm0, [ebp+edi*4-0x4c]
@@ -1633,15 +1633,15 @@ R_ChopPolyBehindPlane_50:
 	addss xmm1, xmm2
 	movss [eax+0x8], xmm1
 	add dword [ebp-0x80], 0x1
-R_ChopPolyBehindPlane_60:
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_60:
 	cmp [ebp-0x84], edi
-	jle R_ChopPolyBehindPlane_70
-R_ChopPolyBehindPlane_90:
+	jle _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_70
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_90:
 	mov ebx, edi
-R_ChopPolyBehindPlane_40:
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_40:
 	mov esi, [ebp+ebx*4-0x74]
 	cmp esi, 0x2
-	jnz R_ChopPolyBehindPlane_80
+	jnz _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_80
 	mov edi, [ebp-0x80]
 	lea ecx, [edi+edi*2]
 	shl ecx, 0x3
@@ -1664,8 +1664,8 @@ R_ChopPolyBehindPlane_40:
 	add dword [ebp-0x80], 0x1
 	lea edi, [ebx+0x1]
 	cmp [ebp-0x84], edi
-	jg R_ChopPolyBehindPlane_90
-R_ChopPolyBehindPlane_70:
+	jg _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_90
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_70:
 	mov edx, [ebp-0x80]
 	mov [ebp-0x84], edx
 	mov eax, edx
@@ -1675,7 +1675,7 @@ R_ChopPolyBehindPlane_70:
 	pop edi
 	pop ebp
 	ret
-R_ChopPolyBehindPlane_20:
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_20:
 	mov dword [ebp-0x84], 0x0
 	mov eax, [ebp-0x84]
 	add esp, 0x9c
@@ -1684,7 +1684,7 @@ R_ChopPolyBehindPlane_20:
 	pop edi
 	pop ebp
 	ret
-R_ChopPolyBehindPlane_10:
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_10:
 	movss xmm5, dword [eax]
 	movss xmm4, dword [eax+0x4]
 	movss xmm3, dword [eax+0x8]
@@ -1693,8 +1693,8 @@ R_ChopPolyBehindPlane_10:
 	movss xmm7, dword [_float__0_50000000]
 	movss xmm6, dword [_float_0_50000000]
 	xor ecx, ecx
-	jmp R_ChopPolyBehindPlane_100
-R_ChopPolyBehindPlane_120:
+	jmp _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_100
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_120:
 	mov dword [ecx+ebp-0x74], 0x0
 	mov eax, [ecx+ebp-0x74]
 	add dword [ebp+eax*4-0x24], 0x1
@@ -1702,8 +1702,8 @@ R_ChopPolyBehindPlane_120:
 	add ecx, 0x4
 	add edx, 0x18
 	cmp [ebp-0x84], ebx
-	jz R_ChopPolyBehindPlane_110
-R_ChopPolyBehindPlane_100:
+	jz _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_110
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_100:
 	movaps xmm1, xmm5
 	mulss xmm1, [edx]
 	movaps xmm0, xmm4
@@ -1715,7 +1715,7 @@ R_ChopPolyBehindPlane_100:
 	subss xmm1, xmm2
 	movss [ecx+ebp-0x4c], xmm1
 	ucomiss xmm1, xmm6
-	ja R_ChopPolyBehindPlane_120
+	ja _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_120
 	xor eax, eax
 	ucomiss xmm7, xmm1
 	setbe al
@@ -1726,11 +1726,11 @@ R_ChopPolyBehindPlane_100:
 	add ecx, 0x4
 	add edx, 0x18
 	cmp [ebp-0x84], ebx
-	jnz R_ChopPolyBehindPlane_100
-R_ChopPolyBehindPlane_110:
+	jnz _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_100
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_110:
 	mov edx, [ebp-0x84]
-	jmp R_ChopPolyBehindPlane_130
-R_ChopPolyBehindPlane_30:
+	jmp _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_130
+_Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf_30:
 	mov edx, [ebp-0x84]
 	lea eax, [edx+edx*2]
 	shl eax, 0x3
@@ -1750,7 +1750,7 @@ R_ChopPolyBehindPlane_30:
 
 
 ;R_ChopWorldPolyBehindPlane(int, FxWorldMarkPoint const*, FxWorldMarkPoint*, float const*)
-R_ChopWorldPolyBehindPlane:
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1766,28 +1766,28 @@ R_ChopWorldPolyBehindPlane:
 	mov dword [ebp-0x1c], 0x0
 	mov ecx, [ebp-0x84]
 	test ecx, ecx
-	jg R_ChopWorldPolyBehindPlane_10
+	jg _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_10
 	xor edx, edx
-R_ChopWorldPolyBehindPlane_130:
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_130:
 	mov eax, [ebp-0x74]
 	mov [ebp+edx*4-0x74], eax
 	mov eax, [ebp-0x4c]
 	mov [ebp+edx*4-0x4c], eax
 	mov edi, [ebp-0x24]
 	test edi, edi
-	jz R_ChopWorldPolyBehindPlane_20
+	jz _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_20
 	mov esi, [ebp-0x20]
 	test esi, esi
-	jz R_ChopWorldPolyBehindPlane_30
+	jz _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_30
 	mov ebx, [ebp-0x84]
 	test ebx, ebx
-	jle R_ChopWorldPolyBehindPlane_20
+	jle _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_20
 	xor ebx, ebx
 	mov dword [ebp-0x80], 0x0
-	jmp R_ChopWorldPolyBehindPlane_40
-R_ChopWorldPolyBehindPlane_80:
+	jmp _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_40
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_80:
 	test esi, esi
-	jnz R_ChopWorldPolyBehindPlane_50
+	jnz _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_50
 	mov eax, [ebp-0x80]
 	lea ecx, [eax+eax*2]
 	shl ecx, 0x3
@@ -1817,13 +1817,13 @@ R_ChopWorldPolyBehindPlane_80:
 	mov eax, [eax+edx+0x14]
 	mov [ecx+edi+0x14], eax
 	add dword [ebp-0x80], 0x1
-R_ChopWorldPolyBehindPlane_50:
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_50:
 	lea edi, [ebx+0x1]
 	mov eax, [ebp+edi*4-0x74]
 	cmp eax, 0x2
-	jz R_ChopWorldPolyBehindPlane_60
+	jz _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_60
 	cmp esi, eax
-	jz R_ChopWorldPolyBehindPlane_60
+	jz _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_60
 	movss xmm2, dword [ebp+ebx*4-0x4c]
 	movaps xmm0, xmm2
 	subss xmm0, [ebp+edi*4-0x4c]
@@ -1882,15 +1882,15 @@ R_ChopWorldPolyBehindPlane_50:
 	addss xmm1, xmm2
 	movss [eax+0x8], xmm1
 	add dword [ebp-0x80], 0x1
-R_ChopWorldPolyBehindPlane_60:
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_60:
 	cmp [ebp-0x84], edi
-	jle R_ChopWorldPolyBehindPlane_70
-R_ChopWorldPolyBehindPlane_90:
+	jle _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_70
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_90:
 	mov ebx, edi
-R_ChopWorldPolyBehindPlane_40:
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_40:
 	mov esi, [ebp+ebx*4-0x74]
 	cmp esi, 0x2
-	jnz R_ChopWorldPolyBehindPlane_80
+	jnz _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_80
 	mov edi, [ebp-0x80]
 	lea ecx, [edi+edi*2]
 	shl ecx, 0x3
@@ -1913,8 +1913,8 @@ R_ChopWorldPolyBehindPlane_40:
 	add dword [ebp-0x80], 0x1
 	lea edi, [ebx+0x1]
 	cmp [ebp-0x84], edi
-	jg R_ChopWorldPolyBehindPlane_90
-R_ChopWorldPolyBehindPlane_70:
+	jg _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_90
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_70:
 	mov edx, [ebp-0x80]
 	mov [ebp-0x84], edx
 	mov eax, edx
@@ -1924,7 +1924,7 @@ R_ChopWorldPolyBehindPlane_70:
 	pop edi
 	pop ebp
 	ret
-R_ChopWorldPolyBehindPlane_20:
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_20:
 	mov dword [ebp-0x84], 0x0
 	mov eax, [ebp-0x84]
 	add esp, 0x9c
@@ -1933,7 +1933,7 @@ R_ChopWorldPolyBehindPlane_20:
 	pop edi
 	pop ebp
 	ret
-R_ChopWorldPolyBehindPlane_10:
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_10:
 	movss xmm5, dword [eax]
 	movss xmm4, dword [eax+0x4]
 	movss xmm3, dword [eax+0x8]
@@ -1942,8 +1942,8 @@ R_ChopWorldPolyBehindPlane_10:
 	movss xmm7, dword [_float__0_50000000]
 	movss xmm6, dword [_float_0_50000000]
 	xor ecx, ecx
-	jmp R_ChopWorldPolyBehindPlane_100
-R_ChopWorldPolyBehindPlane_120:
+	jmp _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_100
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_120:
 	mov dword [ecx+ebp-0x74], 0x0
 	mov eax, [ecx+ebp-0x74]
 	add dword [ebp+eax*4-0x24], 0x1
@@ -1951,8 +1951,8 @@ R_ChopWorldPolyBehindPlane_120:
 	add ecx, 0x4
 	add edx, 0x18
 	cmp [ebp-0x84], ebx
-	jz R_ChopWorldPolyBehindPlane_110
-R_ChopWorldPolyBehindPlane_100:
+	jz _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_110
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_100:
 	movaps xmm1, xmm5
 	mulss xmm1, [edx]
 	movaps xmm0, xmm4
@@ -1964,7 +1964,7 @@ R_ChopWorldPolyBehindPlane_100:
 	subss xmm1, xmm2
 	movss [ecx+ebp-0x4c], xmm1
 	ucomiss xmm1, xmm6
-	ja R_ChopWorldPolyBehindPlane_120
+	ja _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_120
 	xor eax, eax
 	ucomiss xmm7, xmm1
 	setbe al
@@ -1975,11 +1975,11 @@ R_ChopWorldPolyBehindPlane_100:
 	add ecx, 0x4
 	add edx, 0x18
 	cmp [ebp-0x84], ebx
-	jnz R_ChopWorldPolyBehindPlane_100
-R_ChopWorldPolyBehindPlane_110:
+	jnz _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_100
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_110:
 	mov edx, [ebp-0x84]
-	jmp R_ChopWorldPolyBehindPlane_130
-R_ChopWorldPolyBehindPlane_30:
+	jmp _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_130
+_Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf_30:
 	mov edx, [ebp-0x84]
 	lea eax, [edx+edx*2]
 	shl eax, 0x3
@@ -1999,8 +1999,8 @@ R_ChopWorldPolyBehindPlane_30:
 
 
 ;R_AABBTreeCylinderSurfaces_r(GfxAabbTree*, DpvsPlane const*, unsigned int, int (*)(int, void*), void*, GfxSurface**, unsigned int, unsigned int*)
-R_AABBTreeCylinderSurfaces_r:
-R_AABBTreeCylinderSurfaces_r_30:
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj:
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_30:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2011,14 +2011,14 @@ R_AABBTreeCylinderSurfaces_r_30:
 	mov [ebp-0x28], edx
 	mov [ebp-0x2c], ecx
 	test ecx, ecx
-	jnz R_AABBTreeCylinderSurfaces_r_10
-R_AABBTreeCylinderSurfaces_r_60:
+	jnz _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_10
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_60:
 	cmp word [edi+0x18], 0x0
-	jz R_AABBTreeCylinderSurfaces_r_20
+	jz _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_20
 	mov ebx, edi
 	add ebx, [edi+0x28]
 	xor esi, esi
-R_AABBTreeCylinderSurfaces_r_40:
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_40:
 	mov eax, [ebp+0x18]
 	mov [esp+0x10], eax
 	mov edx, [ebp+0x14]
@@ -2032,20 +2032,20 @@ R_AABBTreeCylinderSurfaces_r_40:
 	mov ecx, [ebp-0x2c]
 	mov edx, [ebp-0x28]
 	mov eax, ebx
-	call R_AABBTreeCylinderSurfaces_r_30
+	call _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_30
 	add esi, 0x1
 	add ebx, 0x2c
 	movzx eax, word [edi+0x18]
 	cmp esi, eax
-	jb R_AABBTreeCylinderSurfaces_r_40
-R_AABBTreeCylinderSurfaces_r_50:
+	jb _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_40
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_50:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AABBTreeCylinderSurfaces_r_10:
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_10:
 	movzx eax, byte [edx+0x10]
 	movss xmm1, dword [edx]
 	mulss xmm1, [eax+edi]
@@ -2060,14 +2060,14 @@ R_AABBTreeCylinderSurfaces_r_10:
 	addss xmm1, xmm0
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm1
-	jae R_AABBTreeCylinderSurfaces_r_50
+	jae _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_50
 	mov ebx, edx
 	add ebx, 0x20
 	xor ecx, ecx
-R_AABBTreeCylinderSurfaces_r_70:
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_70:
 	add ecx, 0x1
 	cmp [ebp-0x2c], ecx
-	jz R_AABBTreeCylinderSurfaces_r_60
+	jz _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_60
 	mov eax, ebx
 	add ebx, 0x14
 	movzx edx, byte [eax+0x4]
@@ -2083,44 +2083,44 @@ R_AABBTreeCylinderSurfaces_r_70:
 	mulss xmm0, [edx+edi]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jb R_AABBTreeCylinderSurfaces_r_70
+	jb _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_70
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_AABBTreeCylinderSurfaces_r_20:
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_20:
 	movzx eax, word [edi+0x1c]
 	cmp word [edi+0x1a], 0x0
-	jz R_AABBTreeCylinderSurfaces_r_50
+	jz _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_50
 	mov edx, [ebp+0x14]
 	mov ecx, [ebp+0x18]
 	cmp edx, [ecx]
-	jbe R_AABBTreeCylinderSurfaces_r_50
+	jbe _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_50
 	add eax, eax
 	mov [ebp-0x1c], eax
 	mov dword [ebp-0x24], 0x0
 	mov ecx, eax
-	jmp R_AABBTreeCylinderSurfaces_r_80
-R_AABBTreeCylinderSurfaces_r_100:
+	jmp _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_80
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_100:
 	mov edx, [ebp+0x18]
 	mov eax, [edx]
 	mov ecx, [ebp+0x10]
 	mov [ecx+eax*4], ebx
 	add dword [edx], 0x1
-R_AABBTreeCylinderSurfaces_r_90:
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_90:
 	add dword [ebp-0x24], 0x1
 	movzx eax, word [edi+0x1a]
 	cmp [ebp-0x24], eax
-	jae R_AABBTreeCylinderSurfaces_r_50
+	jae _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_50
 	add dword [ebp-0x1c], 0x2
 	mov ecx, [ebp+0x14]
 	mov edx, [ebp+0x18]
 	cmp ecx, [edx]
-	jbe R_AABBTreeCylinderSurfaces_r_50
+	jbe _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_50
 	mov ecx, [ebp-0x1c]
-R_AABBTreeCylinderSurfaces_r_80:
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_80:
 	mov esi, rgp
 	mov eax, [esi+0x20a0]
 	mov eax, [eax+0x28c]
@@ -2130,7 +2130,7 @@ R_AABBTreeCylinderSurfaces_r_80:
 	mov [esp], ebx
 	call dword [ebp+0x8]
 	test eax, eax
-	jz R_AABBTreeCylinderSurfaces_r_90
+	jz _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_90
 	mov eax, [esi+0x20a0]
 	lea ebx, [ebx+ebx*2]
 	shl ebx, 0x4
@@ -2138,7 +2138,7 @@ R_AABBTreeCylinderSurfaces_r_80:
 	lea esi, [ebx+0x18]
 	mov eax, [ebp-0x2c]
 	test eax, eax
-	jz R_AABBTreeCylinderSurfaces_r_100
+	jz _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_100
 	mov edx, [ebp-0x28]
 	movzx eax, byte [edx+0x10]
 	movss xmm1, dword [edx]
@@ -2154,15 +2154,15 @@ R_AABBTreeCylinderSurfaces_r_80:
 	addss xmm1, xmm0
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm1
-	jae R_AABBTreeCylinderSurfaces_r_90
+	jae _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_90
 	mov ecx, edx
 	add ecx, 0x20
 	mov dword [ebp-0x20], 0x0
-R_AABBTreeCylinderSurfaces_r_110:
+_Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_110:
 	add dword [ebp-0x20], 0x1
 	mov eax, [ebp-0x20]
 	cmp [ebp-0x2c], eax
-	jz R_AABBTreeCylinderSurfaces_r_100
+	jz _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_100
 	mov eax, ecx
 	add ecx, 0x14
 	movzx edx, byte [eax+0x4]
@@ -2178,14 +2178,14 @@ R_AABBTreeCylinderSurfaces_r_110:
 	mulss xmm0, [edx+esi]
 	addss xmm1, xmm0
 	ucomiss xmm2, xmm1
-	jb R_AABBTreeCylinderSurfaces_r_110
-	jmp R_AABBTreeCylinderSurfaces_r_90
+	jb _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_110
+	jmp _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj_90
 	nop
 
 
 ;R_CylinderSurfaces_r(mnode_t*, float const*, float const*, float, DpvsPlane const*, unsigned int, int (*)(int, void*), void*, GfxSurface**, unsigned int, unsigned int*, unsigned char*)
-R_CylinderSurfaces_r:
-R_CylinderSurfaces_r_150:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_150:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2213,13 +2213,13 @@ R_CylinderSurfaces_r_150:
 	mov [ebp-0x28], eax
 	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x84], xmm0
-R_CylinderSurfaces_r_180:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_180:
 	movzx ecx, word [ebx]
 	movzx eax, cx
 	mov edx, eax
 	sub edx, esi
-	js R_CylinderSurfaces_r_10
-R_CylinderSurfaces_r_30:
+	js _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_10
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_30:
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	lea edx, [edx+edx*4]
@@ -2258,16 +2258,16 @@ R_CylinderSurfaces_r_30:
 	mulss xmm0, xmm4
 	pxor xmm3, xmm3
 	ucomiss xmm0, xmm3
-	jbe R_CylinderSurfaces_r_20
+	jbe _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_20
 	movss xmm1, dword [_data16_7fffffff]
 	movaps xmm0, xmm5
 	andps xmm0, xmm1
 	ucomiss xmm0, [ebp-0x80]
-	jb R_CylinderSurfaces_r_20
+	jb _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_20
 	movaps xmm0, xmm4
 	andps xmm0, xmm1
 	ucomiss xmm0, [ebp-0x80]
-	jb R_CylinderSurfaces_r_20
+	jb _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_20
 	xor edx, edx
 	ucomiss xmm3, xmm5
 	seta dl
@@ -2279,10 +2279,10 @@ R_CylinderSurfaces_r_30:
 	movzx eax, cx
 	mov edx, eax
 	sub edx, esi
-	jns R_CylinderSurfaces_r_30
-R_CylinderSurfaces_r_10:
+	jns _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_30
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_10:
 	test cx, cx
-	jz R_CylinderSurfaces_r_40
+	jz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_40
 	lea ebx, [eax-0x1]
 	mov ecx, ebx
 	and ecx, 0x7
@@ -2294,7 +2294,7 @@ R_CylinderSurfaces_r_10:
 	movzx edx, byte [ecx]
 	movzx eax, dl
 	test eax, esi
-	jnz R_CylinderSurfaces_r_40
+	jnz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_40
 	or edx, esi
 	mov [ecx], dl
 	mov edi, rgp
@@ -2308,23 +2308,23 @@ R_CylinderSurfaces_r_10:
 	mov eax, [ebp-0x60]
 	mov ebx, [eax+0x28]
 	test ebx, ebx
-	jle R_CylinderSurfaces_r_50
+	jle _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_50
 	mov dword [ebp-0x64], 0x0
-	jmp R_CylinderSurfaces_r_60
-R_CylinderSurfaces_r_80:
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_60
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_80:
 	mov eax, [esi+0x1c]
 	mov edx, [esi+0x18]
 	test edx, edx
-	jg R_CylinderSurfaces_r_70
-R_CylinderSurfaces_r_90:
+	jg _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_70
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_90:
 	add dword [ebp-0x64], 0x1
 	mov ecx, [ebp-0x64]
 	mov eax, [ebp-0x60]
 	cmp ecx, [eax+0x28]
-	jge R_CylinderSurfaces_r_50
-R_CylinderSurfaces_r_110:
+	jge _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_50
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_110:
 	mov edi, rgp
-R_CylinderSurfaces_r_60:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_60:
 	mov edx, [edi+0x20a0]
 	mov ecx, [ebp-0x60]
 	mov eax, [ecx+0x2c]
@@ -2334,7 +2334,7 @@ R_CylinderSurfaces_r_60:
 	add esi, [edx+0x298]
 	mov ecx, [ebp+0xc]
 	test ecx, ecx
-	jz R_CylinderSurfaces_r_80
+	jz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_80
 	mov edx, [ebp+0x8]
 	movzx eax, byte [edx+0x10]
 	movss xmm1, dword [edx]
@@ -2350,14 +2350,14 @@ R_CylinderSurfaces_r_60:
 	addss xmm1, xmm0
 	pxor xmm3, xmm3
 	ucomiss xmm3, xmm1
-	jae R_CylinderSurfaces_r_90
+	jae _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_90
 	mov ecx, edx
 	add ecx, 0x20
 	xor ebx, ebx
-R_CylinderSurfaces_r_100:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_100:
 	add ebx, 0x1
 	cmp [ebp+0xc], ebx
-	jz R_CylinderSurfaces_r_80
+	jz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_80
 	mov eax, ecx
 	add ecx, 0x14
 	movzx edx, byte [eax+0x4]
@@ -2373,13 +2373,13 @@ R_CylinderSurfaces_r_100:
 	mulss xmm0, [edx+esi]
 	addss xmm1, xmm0
 	ucomiss xmm3, xmm1
-	jb R_CylinderSurfaces_r_100
+	jb _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_100
 	add dword [ebp-0x64], 0x1
 	mov ecx, [ebp-0x64]
 	mov eax, [ebp-0x60]
 	cmp ecx, [eax+0x28]
-	jl R_CylinderSurfaces_r_110
-R_CylinderSurfaces_r_50:
+	jl _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_110
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_50:
 	mov eax, [eax+0x1c]
 	mov ecx, [ebp+0x20]
 	mov [esp+0x10], ecx
@@ -2393,15 +2393,15 @@ R_CylinderSurfaces_r_50:
 	mov [esp], ecx
 	mov ecx, [ebp+0xc]
 	mov edx, [ebp+0x8]
-	call R_AABBTreeCylinderSurfaces_r
-R_CylinderSurfaces_r_40:
+	call _Z28R_AABBTreeCylinderSurfaces_rP11GfxAabbTreePK9DpvsPlanejPFiiPvES4_PP10GfxSurfacejPj
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_40:
 	add esp, 0xac
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_CylinderSurfaces_r_20:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_20:
 	movss xmm0, dword [ebp-0x74]
 	subss xmm0, xmm6
 	movss [ebp-0x50], xmm0
@@ -2414,8 +2414,8 @@ R_CylinderSurfaces_r_20:
 	movaps xmm0, xmm4
 	subss xmm0, xmm5
 	ucomiss xmm0, xmm3
-	jz R_CylinderSurfaces_r_120
-R_CylinderSurfaces_r_200:
+	jz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_120
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_200:
 	movss xmm2, dword [_float_1_00000000]
 	movaps xmm1, xmm2
 	divss xmm1, xmm0
@@ -2424,9 +2424,9 @@ R_CylinderSurfaces_r_200:
 	subss xmm1, xmm5
 	mulss xmm1, [ebp-0x7c]
 	ucomiss xmm1, xmm3
-	jbe R_CylinderSurfaces_r_130
+	jbe _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_130
 	ucomiss xmm2, xmm1
-	jbe R_CylinderSurfaces_r_130
+	jbe _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_130
 	movss xmm0, dword [ebp-0x50]
 	mulss xmm0, xmm1
 	addss xmm6, xmm0
@@ -2439,7 +2439,7 @@ R_CylinderSurfaces_r_200:
 	addss xmm1, [ebp-0x78]
 	movss [ebp-0x34], xmm1
 	ucomiss xmm5, [ebp-0x84]
-	jb R_CylinderSurfaces_r_140
+	jb _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_140
 	lea eax, [ebx+0x4]
 	mov [esp+0x1c], edi
 	mov edx, [ebp+0x20]
@@ -2460,21 +2460,21 @@ R_CylinderSurfaces_r_200:
 	lea ecx, [ebp-0x3c]
 	lea edx, [ebp-0x24]
 	movss [ebp-0x98], xmm5
-	call R_CylinderSurfaces_r_150
+	call _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_150
 	movss xmm5, dword [ebp-0x98]
-R_CylinderSurfaces_r_190:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_190:
 	movss xmm1, dword [ebp-0x80]
 	subss xmm1, xmm5
 	mulss xmm1, [ebp-0x7c]
 	ucomiss xmm1, [_float_0_00000000]
-	jbe R_CylinderSurfaces_r_160
+	jbe _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_160
 	ucomiss xmm1, [_float_1_00000000]
-	jb R_CylinderSurfaces_r_170
-R_CylinderSurfaces_r_160:
+	jb _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_170
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_160:
 	movzx eax, word [ebx+0x2]
 	lea ebx, [ebx+eax*2]
-	jmp R_CylinderSurfaces_r_180
-R_CylinderSurfaces_r_130:
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_180
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_130:
 	lea eax, [ebx+0x4]
 	mov [esp+0x1c], edi
 	mov edx, [ebp+0x20]
@@ -2495,11 +2495,11 @@ R_CylinderSurfaces_r_130:
 	lea ecx, [ebp-0x30]
 	lea edx, [ebp-0x24]
 	movss [ebp-0x98], xmm5
-	call R_CylinderSurfaces_r_150
+	call _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_150
 	movss xmm5, dword [ebp-0x98]
-	jmp R_CylinderSurfaces_r_190
-R_CylinderSurfaces_r_120:
-	jp R_CylinderSurfaces_r_200
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_190
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_120:
+	jp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_200
 	lea eax, [ebx+0x4]
 	mov [esp+0x1c], edi
 	mov edx, [ebp+0x20]
@@ -2519,9 +2519,9 @@ R_CylinderSurfaces_r_120:
 	movss xmm0, dword [ebp-0x80]
 	lea ecx, [ebp-0x30]
 	lea edx, [ebp-0x24]
-	call R_CylinderSurfaces_r_150
-	jmp R_CylinderSurfaces_r_160
-R_CylinderSurfaces_r_140:
+	call _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_150
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_160
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_140:
 	lea eax, [ebx+0x4]
 	mov [esp+0x1c], edi
 	mov ecx, [ebp+0x20]
@@ -2542,11 +2542,11 @@ R_CylinderSurfaces_r_140:
 	lea ecx, [ebp-0x30]
 	lea edx, [ebp-0x3c]
 	movss [ebp-0x98], xmm5
-	call R_CylinderSurfaces_r_150
+	call _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_150
 	movss xmm5, dword [ebp-0x98]
-	jmp R_CylinderSurfaces_r_190
-R_CylinderSurfaces_r_170:
-	jp R_CylinderSurfaces_r_160
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_190
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_170:
+	jp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_160
 	movss xmm2, dword [ebp-0x50]
 	mulss xmm2, xmm1
 	addss xmm2, [ebp-0x24]
@@ -2560,49 +2560,49 @@ R_CylinderSurfaces_r_170:
 	movss [ebp-0x34], xmm1
 	movss xmm3, dword [ebp-0x80]
 	ucomiss xmm3, xmm5
-	jae R_CylinderSurfaces_r_210
+	jae _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_210
 	movss [ebp-0x24], xmm2
 	movss [ebp-0x20], xmm0
 	movss [ebp-0x1c], xmm1
-	jmp R_CylinderSurfaces_r_160
-R_CylinderSurfaces_r_210:
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_160
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_210:
 	movss [ebp-0x30], xmm2
 	movss [ebp-0x2c], xmm0
 	movss [ebp-0x28], xmm1
-	jmp R_CylinderSurfaces_r_160
-R_CylinderSurfaces_r_70:
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_160
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_70:
 	mov edx, [ebp+0x1c]
 	mov ecx, [ebp+0x20]
 	cmp edx, [ecx]
-	jbe R_CylinderSurfaces_r_90
+	jbe _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_90
 	add eax, eax
 	mov [ebp-0x4c], eax
 	mov dword [ebp-0x68], 0x0
 	mov ecx, eax
-	jmp R_CylinderSurfaces_r_220
-R_CylinderSurfaces_r_250:
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_220
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_250:
 	mov ecx, [ebp+0x20]
 	mov edx, [ecx]
 	test edx, edx
-	jnz R_CylinderSurfaces_r_230
-R_CylinderSurfaces_r_270:
+	jnz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_230
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_270:
 	mov eax, [ebp+0x18]
 	mov [eax+edx*4], ebx
 	mov edx, [ebp+0x20]
 	add dword [edx], 0x1
-R_CylinderSurfaces_r_240:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_240:
 	add dword [ebp-0x68], 0x1
 	mov ecx, [ebp-0x68]
 	cmp ecx, [esi+0x18]
-	jge R_CylinderSurfaces_r_90
+	jge _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_90
 	add dword [ebp-0x4c], 0x2
 	mov edx, [ebp+0x1c]
 	mov eax, [ebp+0x20]
 	cmp edx, [eax]
-	jbe R_CylinderSurfaces_r_90
+	jbe _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_90
 	mov edi, rgp
 	mov ecx, [ebp-0x4c]
-R_CylinderSurfaces_r_220:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_220:
 	mov eax, [edi+0x20a0]
 	mov eax, [eax+0x28c]
 	movzx ebx, word [eax+ecx]
@@ -2611,7 +2611,7 @@ R_CylinderSurfaces_r_220:
 	mov [esp], ebx
 	call dword [ebp+0x10]
 	test eax, eax
-	jz R_CylinderSurfaces_r_240
+	jz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_240
 	mov eax, [edi+0x20a0]
 	lea ebx, [ebx+ebx*2]
 	shl ebx, 0x4
@@ -2619,7 +2619,7 @@ R_CylinderSurfaces_r_220:
 	lea edi, [ebx+0x18]
 	mov eax, [ebp+0xc]
 	test eax, eax
-	jz R_CylinderSurfaces_r_250
+	jz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_250
 	mov edx, [ebp+0x8]
 	movzx eax, byte [edx+0x10]
 	movss xmm1, dword [edx]
@@ -2635,15 +2635,15 @@ R_CylinderSurfaces_r_220:
 	addss xmm1, xmm0
 	pxor xmm3, xmm3
 	ucomiss xmm3, xmm1
-	jae R_CylinderSurfaces_r_240
+	jae _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_240
 	mov ecx, edx
 	add ecx, 0x20
 	mov dword [ebp-0x5c], 0x0
-R_CylinderSurfaces_r_260:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_260:
 	add dword [ebp-0x5c], 0x1
 	mov eax, [ebp-0x5c]
 	cmp [ebp+0xc], eax
-	jz R_CylinderSurfaces_r_250
+	jz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_250
 	mov eax, ecx
 	add ecx, 0x14
 	movzx edx, byte [eax+0x4]
@@ -2659,25 +2659,25 @@ R_CylinderSurfaces_r_260:
 	mulss xmm0, [edx+edi]
 	addss xmm1, xmm0
 	ucomiss xmm3, xmm1
-	jb R_CylinderSurfaces_r_260
-	jmp R_CylinderSurfaces_r_240
-R_CylinderSurfaces_r_230:
+	jb _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_260
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_240
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_230:
 	mov ecx, [ebp+0x18]
 	cmp ebx, [ecx]
-	jz R_CylinderSurfaces_r_240
+	jz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_240
 	xor eax, eax
-R_CylinderSurfaces_r_280:
+_Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_280:
 	add eax, 0x1
 	cmp eax, edx
-	jz R_CylinderSurfaces_r_270
+	jz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_270
 	mov ecx, [ebp+0x18]
 	cmp ebx, [ecx+eax*4]
-	jnz R_CylinderSurfaces_r_280
-	jmp R_CylinderSurfaces_r_240
+	jnz _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_280
+	jmp _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh_240
 
 
 ;unsigned char R_MarkModelCoreCallback<(unsigned char)0>(void*, GfxPackedVertex const**, GfxPackedVertex const**)
-R_MarkModelCoreCallback:
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2688,7 +2688,7 @@ R_MarkModelCoreCallback:
 	xor ebx, ebx
 	lea esi, [ebp-0x1fc]
 	mov ecx, esi
-R_MarkModelCoreCallback_10:
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__10:
 	mov edx, [edi+ebx*4]
 	mov eax, [edx]
 	mov [ecx], eax
@@ -2704,7 +2704,7 @@ R_MarkModelCoreCallback_10:
 	add ecx, 0x18
 	add esi, 0x1c
 	cmp ebx, 0x3
-	jnz R_MarkModelCoreCallback_10
+	jnz _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__10
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0xc]
 	movss xmm2, dword [ebp-0x1e4]
@@ -2743,7 +2743,7 @@ R_MarkModelCoreCallback_10:
 	addss xmm1, xmm0
 	pxor xmm0, xmm0
 	ucomiss xmm0, xmm1
-	ja R_MarkModelCoreCallback_20
+	ja _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__20
 	mulss xmm1, xmm1
 	mulss xmm7, xmm7
 	mulss xmm3, xmm3
@@ -2752,17 +2752,17 @@ R_MarkModelCoreCallback_10:
 	addss xmm7, xmm6
 	mulss xmm7, [_float_0_25000000]
 	ucomiss xmm7, xmm1
-	jbe R_MarkModelCoreCallback_30
-R_MarkModelCoreCallback_20:
+	jbe _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__30
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__20:
 	mov eax, 0x1
-R_MarkModelCoreCallback_80:
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__80:
 	add esp, 0x22c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_MarkModelCoreCallback_30:
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__30:
 	mov ebx, [edx]
 	mov [ebp-0x228], ebx
 	mov edi, [edx+0x4]
@@ -2788,39 +2788,39 @@ R_MarkModelCoreCallback_30:
 	mov dword [ebp-0x210], 0x0
 	mov dword [ebp-0x220], 0x3
 	mov dword [ebp-0x20c], 0x0
-R_MarkModelCoreCallback_50:
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__50:
 	mov eax, [ebp-0x210]
 	test eax, eax
-	jz R_MarkModelCoreCallback_40
+	jz _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__40
 	lea ecx, [ebp-0x1fc]
-R_MarkModelCoreCallback_90:
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__90:
 	mov eax, [ebp-0x210]
 	lea edx, [eax+eax*2]
 	lea edx, [edx+edx*8]
 	lea edx, [ebp+edx*8-0x1fc]
 	mov [esp], ebx
 	mov eax, [ebp-0x220]
-	call R_ChopPolyBehindPlane
+	call _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf
 	mov [ebp-0x220], eax
 	xor dword [ebp-0x210], 0x1
 	test eax, eax
-	jz R_MarkModelCoreCallback_20
+	jz _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__20
 	add dword [ebp-0x20c], 0x1
 	add ebx, 0x10
 	cmp dword [ebp-0x20c], 0x6
-	jnz R_MarkModelCoreCallback_50
+	jnz _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__50
 	cmp edi, eax
-	jl R_MarkModelCoreCallback_60
+	jl _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__60
 	lea eax, [eax+eax*2-0x6]
 	cmp esi, eax
-	jge R_MarkModelCoreCallback_70
-R_MarkModelCoreCallback_60:
+	jge _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__70
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__60:
 	xor eax, eax
-	jmp R_MarkModelCoreCallback_80
-R_MarkModelCoreCallback_40:
+	jmp _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__80
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__40:
 	lea ecx, [ebp-0x124]
-	jmp R_MarkModelCoreCallback_90
-R_MarkModelCoreCallback_70:
+	jmp _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__90
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__70:
 	mov ebx, [ebp+0x10]
 	mov eax, [ebx]
 	mov eax, [eax+0x18]
@@ -2831,7 +2831,7 @@ R_MarkModelCoreCallback_70:
 	lea ebx, [ebp-0x28]
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	xor esi, esi
 	mov [ebp-0x1c], esi
 	mov eax, [ebp-0x28]
@@ -2849,7 +2849,7 @@ R_MarkModelCoreCallback_70:
 	mov [ebp-0x1c], eax
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov [ebp-0x1c], esi
 	mov eax, [ebp-0x28]
 	mov [ebp-0x40], eax
@@ -2865,7 +2865,7 @@ R_MarkModelCoreCallback_70:
 	mov [ebp-0x1c], eax
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov [ebp-0x1c], esi
 	mov eax, [ebp-0x28]
 	mov [ebp-0x34], eax
@@ -2875,14 +2875,14 @@ R_MarkModelCoreCallback_70:
 	mov [ebp-0x2c], eax
 	mov esi, [ebp-0x220]
 	test esi, esi
-	jle R_MarkModelCoreCallback_100
+	jle _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__100
 	mov edx, [ebp-0x210]
 	lea eax, [edx+edx*2]
 	lea eax, [eax+eax*8]
 	mov ecx, [ebp-0x21c]
 	xor ebx, ebx
 	lea edx, [ebp+eax*8-0x1fc]
-R_MarkModelCoreCallback_110:
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__110:
 	mov eax, [edx]
 	mov [ecx], eax
 	mov eax, [edx+0x4]
@@ -2922,15 +2922,15 @@ R_MarkModelCoreCallback_110:
 	add edx, 0x18
 	add ecx, 0x20
 	cmp ebx, [ebp-0x220]
-	jnz R_MarkModelCoreCallback_110
-R_MarkModelCoreCallback_100:
+	jnz _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__110
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__100:
 	cmp dword [ebp-0x220], 0x2
-	jle R_MarkModelCoreCallback_120
+	jle _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__120
 	movzx esi, word [ebp-0x224]
 	mov ebx, esi
 	lea edx, [ebx+0x1]
 	mov ecx, 0x2
-R_MarkModelCoreCallback_130:
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__130:
 	mov edi, [ebp-0x218]
 	mov [edi], dx
 	lea eax, [esi+ecx]
@@ -2949,10 +2949,10 @@ R_MarkModelCoreCallback_130:
 	add ecx, 0x1
 	add edx, 0x1
 	cmp ecx, [ebp-0x220]
-	jnz R_MarkModelCoreCallback_130
-R_MarkModelCoreCallback_120:
+	jnz _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__130
+_Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__120:
 	cmp dword [ebp-0x220], 0xffffffff
-	jz R_MarkModelCoreCallback_60
+	jz _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__60
 	mov edx, [ebp-0x220]
 	mov eax, [ebp-0x228]
 	add [eax+0x43c], edx
@@ -2962,11 +2962,11 @@ R_MarkModelCoreCallback_120:
 	sub eax, 0x2
 	mov edi, [ebp-0x228]
 	mov [edi+0x438], eax
-	jmp R_MarkModelCoreCallback_20
+	jmp _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4__20
 
 
 ;unsigned char R_MarkModelCoreCallback<(unsigned char)1>(void*, GfxPackedVertex const**, GfxPackedVertex const**)
-R_MarkModelCoreCallback:
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2976,7 +2976,7 @@ R_MarkModelCoreCallback:
 	xor esi, esi
 	lea edi, [ebp-0x1fc]
 	mov ebx, edi
-R_MarkModelCoreCallback_10:
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__10:
 	mov eax, [ebp+0xc]
 	mov edx, [eax+esi*4]
 	mov eax, [edx]
@@ -2991,7 +2991,7 @@ R_MarkModelCoreCallback_10:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x28]
 	mov [esp], eax
-	call MatrixTransformVector43
+	call _Z23MatrixTransformVector43PKfPA3_S_Pf
 	mov dword [ebx+0xc], 0x0
 	mov dword [ebx+0x10], 0x0
 	mov dword [ebx+0x14], 0x0
@@ -3000,7 +3000,7 @@ R_MarkModelCoreCallback_10:
 	add ebx, 0x18
 	add edi, 0x1c
 	cmp esi, 0x3
-	jnz R_MarkModelCoreCallback_10
+	jnz _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__10
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0xc]
 	movss xmm2, dword [ebp-0x1e4]
@@ -3039,7 +3039,7 @@ R_MarkModelCoreCallback_10:
 	addss xmm1, xmm0
 	pxor xmm0, xmm0
 	ucomiss xmm0, xmm1
-	ja R_MarkModelCoreCallback_20
+	ja _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__20
 	mulss xmm1, xmm1
 	mulss xmm7, xmm7
 	mulss xmm3, xmm3
@@ -3048,17 +3048,17 @@ R_MarkModelCoreCallback_10:
 	addss xmm7, xmm6
 	mulss xmm7, [_float_0_25000000]
 	ucomiss xmm7, xmm1
-	jbe R_MarkModelCoreCallback_30
-R_MarkModelCoreCallback_20:
+	jbe _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__30
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__20:
 	mov eax, 0x1
-R_MarkModelCoreCallback_80:
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__80:
 	add esp, 0x23c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_MarkModelCoreCallback_30:
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__30:
 	mov ebx, [edx+0x18]
 	mov [ebp-0x210], ebx
 	mov edi, [edx]
@@ -3089,38 +3089,38 @@ R_MarkModelCoreCallback_30:
 	mov dword [ebp-0x214], 0x0
 	mov dword [ebp-0x224], 0x3
 	mov dword [ebp-0x20c], 0x6
-R_MarkModelCoreCallback_50:
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__50:
 	mov eax, [ebp-0x214]
 	test eax, eax
-	jz R_MarkModelCoreCallback_40
+	jz _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__40
 	lea ecx, [ebp-0x1fc]
-R_MarkModelCoreCallback_90:
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__90:
 	mov eax, [ebp-0x214]
 	lea edx, [eax+eax*2]
 	lea edx, [edx+edx*8]
 	lea edx, [ebp+edx*8-0x1fc]
 	mov [esp], ebx
 	mov eax, [ebp-0x224]
-	call R_ChopPolyBehindPlane
+	call _Z21R_ChopPolyBehindPlaneiPK16FxModelMarkPointPS_PKf
 	mov [ebp-0x224], eax
 	xor dword [ebp-0x214], 0x1
 	test eax, eax
-	jz R_MarkModelCoreCallback_20
+	jz _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__20
 	add ebx, 0x10
 	sub dword [ebp-0x20c], 0x1
-	jnz R_MarkModelCoreCallback_50
+	jnz _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__50
 	cmp edi, eax
-	jl R_MarkModelCoreCallback_60
+	jl _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__60
 	lea eax, [eax+eax*2-0x6]
 	cmp esi, eax
-	jge R_MarkModelCoreCallback_70
-R_MarkModelCoreCallback_60:
+	jge _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__70
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__60:
 	xor eax, eax
-	jmp R_MarkModelCoreCallback_80
-R_MarkModelCoreCallback_40:
+	jmp _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__80
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__40:
 	lea ecx, [ebp-0x124]
-	jmp R_MarkModelCoreCallback_90
-R_MarkModelCoreCallback_70:
+	jmp _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__90
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__70:
 	mov ebx, [ebp+0x10]
 	mov eax, [ebx]
 	mov eax, [eax+0x18]
@@ -3131,7 +3131,7 @@ R_MarkModelCoreCallback_70:
 	lea edi, [ebp-0x28]
 	mov [esp+0x4], edi
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	xor ebx, ebx
 	mov [ebp-0x1c], ebx
 	movss xmm2, dword [ebp-0x28]
@@ -3176,7 +3176,7 @@ R_MarkModelCoreCallback_70:
 	lea edx, [ebp-0x28]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov [ebp-0x1c], ebx
 	movss xmm2, dword [ebp-0x28]
 	movss xmm3, dword [ebp-0x24]
@@ -3216,7 +3216,7 @@ R_MarkModelCoreCallback_70:
 	lea edx, [ebp-0x28]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov [ebp-0x1c], ebx
 	movss xmm2, dword [ebp-0x28]
 	movss xmm3, dword [ebp-0x24]
@@ -3248,14 +3248,14 @@ R_MarkModelCoreCallback_70:
 	movss [ebp-0x2c], xmm2
 	mov eax, [ebp-0x224]
 	test eax, eax
-	jle R_MarkModelCoreCallback_100
+	jle _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__100
 	mov edi, [ebp-0x214]
 	lea eax, [edi+edi*2]
 	lea eax, [eax+eax*8]
 	mov ecx, [ebp-0x220]
 	xor ebx, ebx
 	lea edx, [ebp+eax*8-0x1fc]
-R_MarkModelCoreCallback_110:
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__110:
 	mov eax, [edx]
 	mov [ecx], eax
 	mov eax, [edx+0x4]
@@ -3295,15 +3295,15 @@ R_MarkModelCoreCallback_110:
 	add edx, 0x18
 	add ecx, 0x20
 	cmp [ebp-0x224], ebx
-	jnz R_MarkModelCoreCallback_110
-R_MarkModelCoreCallback_100:
+	jnz _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__110
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__100:
 	cmp dword [ebp-0x224], 0x2
-	jle R_MarkModelCoreCallback_120
+	jle _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__120
 	movzx esi, word [ebp-0x228]
 	mov ebx, esi
 	lea edx, [ebx+0x1]
 	mov ecx, 0x2
-R_MarkModelCoreCallback_130:
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__130:
 	mov eax, [ebp-0x21c]
 	mov [eax], dx
 	lea eax, [esi+ecx]
@@ -3323,10 +3323,10 @@ R_MarkModelCoreCallback_130:
 	add ecx, 0x1
 	add edx, 0x1
 	cmp [ebp-0x224], ecx
-	jnz R_MarkModelCoreCallback_130
-R_MarkModelCoreCallback_120:
+	jnz _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__130
+_Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__120:
 	cmp dword [ebp-0x224], 0xffffffff
-	jz R_MarkModelCoreCallback_60
+	jz _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__60
 	mov edx, [ebp-0x224]
 	mov eax, [ebp-0x22c]
 	add [eax+0x43c], edx
@@ -3336,12 +3336,12 @@ R_MarkModelCoreCallback_120:
 	sub eax, 0x2
 	mov edi, [ebp-0x22c]
 	mov [edi+0x438], eax
-	jmp R_MarkModelCoreCallback_20
+	jmp _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4__20
 	nop
 
 
 ;R_BoxSurfaces(float const*, float const*, int (**)(int, void*), void*, GfxSurface***, unsigned int, unsigned int*, unsigned int)
-R_BoxSurfaces:
+_Z13R_BoxSurfacesPKfS0_PPFiiPvES1_PPP10GfxSurfacejPjj:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3357,16 +3357,16 @@ R_BoxSurfaces:
 	mov dword [esp+0x4], 0x0
 	lea edi, [ebp-0x98]
 	mov [esp], edi
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	test ebx, ebx
-	jz R_BoxSurfaces_10
+	jz _Z13R_BoxSurfacesPKfS0_PPFiiPvES1_PPP10GfxSurfacejPjj_10
 	xor eax, eax
-R_BoxSurfaces_20:
+_Z13R_BoxSurfacesPKfS0_PPFiiPvES1_PPP10GfxSurfacejPjj_20:
 	mov dword [esi+eax*4], 0x0
 	add eax, 0x1
 	cmp ebx, eax
-	jnz R_BoxSurfaces_20
-R_BoxSurfaces_10:
+	jnz _Z13R_BoxSurfacesPKfS0_PPFiiPvES1_PPP10GfxSurfacejPjj_20
+_Z13R_BoxSurfacesPKfS0_PPFiiPvES1_PPP10GfxSurfacejPjj_10:
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	mov eax, [eax+0xf8]
@@ -3383,7 +3383,7 @@ R_BoxSurfaces_10:
 	mov [esp], edx
 	mov ecx, [ebp+0xc]
 	mov edx, [ebp+0x8]
-	call R_BoxSurfaces_r
+	call _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh
 	add esp, 0xac
 	pop ebx
 	pop esi
@@ -3394,7 +3394,7 @@ R_BoxSurfaces_10:
 
 
 ;R_BoxStaticModels(float const*, float const*, int (*)(int), unsigned short*, int)
-R_BoxStaticModels:
+_Z17R_BoxStaticModelsPKfS0_PFiiEPti:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -3407,7 +3407,7 @@ R_BoxStaticModels:
 	mov dword [esp+0x4], 0x0
 	lea ebx, [ebp-0x98]
 	mov [esp], ebx
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov dword [ebp-0xc], 0x0
 	mov eax, [esi+0x20a0]
 	mov eax, [eax+0xf8]
@@ -3422,7 +3422,7 @@ R_BoxStaticModels:
 	mov [esp], edx
 	mov ecx, [ebp+0xc]
 	mov edx, [ebp+0x8]
-	call R_BoxStaticModels_r
+	call _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh
 	mov eax, [ebp-0xc]
 	add esp, 0xb0
 	pop ebx
@@ -3433,7 +3433,7 @@ R_BoxStaticModels:
 
 
 ;R_CylinderSurfaces(float const*, float const*, float, DpvsPlane const*, unsigned int, int (*)(int, void*), void*, GfxSurface**, unsigned int)
-R_CylinderSurfaces:
+_Z18R_CylinderSurfacesPKfS0_fPK9DpvsPlanejPFiiPvES4_PP10GfxSurfacej:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -3446,7 +3446,7 @@ R_CylinderSurfaces:
 	mov dword [esp+0x4], 0x0
 	lea ebx, [ebp-0x98]
 	mov [esp], ebx
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov dword [ebp-0xc], 0x0
 	mov eax, [esi+0x20a0]
 	mov eax, [eax+0xf8]
@@ -3468,7 +3468,7 @@ R_CylinderSurfaces:
 	movss xmm0, dword [ebp+0x10]
 	mov ecx, [ebp+0xc]
 	mov edx, [ebp+0x8]
-	call R_CylinderSurfaces_r
+	call _Z20R_CylinderSurfaces_rP7mnode_tPKfS2_fPK9DpvsPlanejPFiiPvES6_PP10GfxSurfacejPjPh
 	mov eax, [ebp-0xc]
 	add esp, 0xb0
 	pop ebx
@@ -3479,7 +3479,7 @@ R_CylinderSurfaces:
 
 
 ;R_MarkFragments_Go(MarkInfo*, void (*)(void*, int, FxMarkTri*, int, FxMarkPoint*, float const*, float const*), void*, int, FxMarkTri*, int, FxMarkPoint*)
-R_MarkFragments_Go:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3503,14 +3503,14 @@ R_MarkFragments_Go:
 	mov [edx+0x444], eax
 	mov edi, [edx+0xe8]
 	test edi, edi
-	jz R_MarkFragments_Go_10
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__10
 	mov ebx, [ebp+0x8]
 	mov eax, [ebx+0x12c]
 	test eax, eax
-	jz R_MarkFragments_Go_20
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__20
 	mov dword [ebp-0x8d4], 0x0
 	mov eax, [ebp-0x8d4]
-R_MarkFragments_Go_110:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__110:
 	mov edx, [ebp+0x8]
 	movzx ecx, word [edx+eax*2+0xec]
 	mov eax, rgp
@@ -3570,70 +3570,70 @@ R_MarkFragments_Go_110:
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x8d0]
 	mov [esp], edx
-	call XModelGetSurfaces
+	call _Z17XModelGetSurfacesPK6XModelPP8XSurfacei
 	mov edi, eax
 	mov dword [esp+0x4], 0x0
 	mov ecx, [ebp-0x8d0]
 	mov [esp], ecx
-	call XModelGetSkins
+	call _Z14XModelGetSkinsPK6XModeli
 	mov [ebp-0x8cc], eax
 	test edi, edi
-	jz R_MarkFragments_Go_30
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__30
 	xor ebx, ebx
 	xor esi, esi
-	jmp R_MarkFragments_Go_40
-R_MarkFragments_Go_70:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__40
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__70:
 	add esi, 0x38
 	cmp ebx, 0x40
-	jz R_MarkFragments_Go_30
-R_MarkFragments_Go_40:
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__30
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__40:
 	mov edx, [ebp-0x8cc]
 	mov eax, [edx+ebx*4]
 	mov ecx, [ebp+0x8]
 	mov edx, [ecx+0x4c]
 	test byte [eax+0x3d], 0x4
-	jnz R_MarkFragments_Go_50
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__50
 	test byte [eax+0x4], 0x4
-	jnz R_MarkFragments_Go_50
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__50
 	mov edx, [edx+0x10]
 	mov eax, [eax+0x10]
 	and eax, edx
 	cmp edx, eax
-	jz R_MarkFragments_Go_60
-R_MarkFragments_Go_50:
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__60
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__50:
 	add ebx, 0x1
 	cmp edi, ebx
-	jnz R_MarkFragments_Go_70
-R_MarkFragments_Go_30:
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__70
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__30:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx+0x438]
 	test edx, edx
-	jnz R_MarkFragments_Go_80
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__80
 	mov edi, [ebx+0x43c]
 	test edi, edi
-	jz R_MarkFragments_Go_90
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__90
 	mov eax, [ebp+0x8]
-R_MarkFragments_Go_200:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__200:
 	mov dword [eax+0x438], 0x0
 	mov dword [eax+0x43c], 0x0
-R_MarkFragments_Go_90:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__90:
 	add dword [ebp-0x8d4], 0x1
 	mov edx, [ebp-0x8d4]
 	mov ecx, [ebp+0x8]
 	cmp edx, [ecx+0x12c]
-	jz R_MarkFragments_Go_100
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__100
 	mov eax, edx
-	jmp R_MarkFragments_Go_110
-R_MarkFragments_Go_100:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__110
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__100:
 	mov ebx, ecx
-R_MarkFragments_Go_20:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__20:
 	mov esi, [ebx+0x2b0]
 	test esi, esi
-	jz R_MarkFragments_Go_120
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__120
 	mov dword [ebp-0x8b4], 0x0
 	mov esi, [ebp-0x8b4]
 	mov edx, [ebp+0x8]
-R_MarkFragments_Go_230:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__230:
 	lea eax, [esi+esi*2]
 	lea eax, [edx+eax*4+0x130]
 	mov ecx, [eax]
@@ -3652,30 +3652,30 @@ R_MarkFragments_Go_230:
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x8a4]
 	mov [esp], edx
-	call DObjGetSurfaces
+	call _Z15DObjGetSurfacesPK6DObj_sPiPKc
 	lea ecx, [ebp-0x74]
 	mov [esp+0x8], ecx
 	mov esi, [ebp-0x8a4]
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call CG_DObjCalcPose
+	call _Z15CG_DObjCalcPosePK7cpose_tPK6DObj_sPi
 	mov [ebp-0x8a8], eax
 	lea eax, [ebp-0xe4]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call DObjGetHidePartBits
+	call _Z19DObjGetHidePartBitsPK6DObj_sPj
 	mov [esp], esi
-	call DObjGetNumModels
+	call _Z16DObjGetNumModelsPK6DObj_s
 	mov [ebp-0x8ac], eax
 	test eax, eax
-	jz R_MarkFragments_Go_130
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__130
 	mov dword [ebp-0x8a0], 0x0
 	mov dword [ebp-0x8b0], 0x0
 	mov edx, [ebp+0x8]
 	add edx, 0xc
 	mov [ebp-0x944], edx
 	mov ebx, [ebp-0x8b0]
-R_MarkFragments_Go_180:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__180:
 	mov byte [ebp-0x5a], 0x0
 	mov byte [ebp-0x5b], 0x0
 	movzx ecx, word [ebp-0x8b6]
@@ -3686,51 +3686,51 @@ R_MarkFragments_Go_180:
 	mov [esp+0x4], ebx
 	mov esi, [ebp-0x8a4]
 	mov [esp], esi
-	call DObjGetModel
+	call _Z12DObjGetModelPK6DObj_si
 	mov [ebp-0x89c], eax
 	mov [esp], esi
-	call DObjNumBones
+	call _Z12DObjNumBonesPK6DObj_s
 	mov dword [esp+0x8], 0x0
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x89c]
 	mov [esp], edx
-	call XModelGetSurfaces
+	call _Z17XModelGetSurfacesPK6XModelPP8XSurfacei
 	mov [ebp-0x890], eax
 	mov ecx, [ebp-0x89c]
 	mov [esp], ecx
-	call XModelGetBasePose
+	call _Z17XModelGetBasePosePK6XModel
 	mov [ebp-0x898], eax
 	mov dword [esp+0x4], 0x0
 	mov ebx, [ebp-0x89c]
 	mov [esp], ebx
-	call XModelGetSkins
+	call _Z14XModelGetSkinsPK6XModeli
 	mov [ebp-0x894], eax
 	mov ebx, [ebp-0x890]
 	test ebx, ebx
-	jz R_MarkFragments_Go_140
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__140
 	xor edi, edi
 	mov dword [ebp-0x7dc], 0x0
-R_MarkFragments_Go_170:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__170:
 	mov esi, [ebp-0x894]
 	mov eax, [esi+edi*4]
 	mov ecx, [ebp+0x8]
 	mov edx, [ecx+0x4c]
 	test byte [eax+0x3d], 0x4
-	jnz R_MarkFragments_Go_150
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__150
 	test byte [eax+0x4], 0x4
-	jnz R_MarkFragments_Go_150
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__150
 	mov edx, [edx+0x10]
 	mov eax, [eax+0x10]
 	and eax, edx
 	cmp edx, eax
-	jz R_MarkFragments_Go_160
-R_MarkFragments_Go_150:
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__160
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__150:
 	add edi, 0x1
 	add dword [ebp-0x7dc], 0x38
 	cmp [ebp-0x890], edi
-	jnz R_MarkFragments_Go_170
-R_MarkFragments_Go_140:
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__170
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__140:
 	mov ebx, [ebp-0x89c]
 	movzx eax, byte [ebx+0x4]
 	add [ebp-0x8a0], eax
@@ -3739,12 +3739,12 @@ R_MarkFragments_Go_140:
 	add dword [ebp-0x8b0], 0x1
 	mov esi, [ebp-0x8b0]
 	cmp [ebp-0x8ac], esi
-	jz R_MarkFragments_Go_130
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__130
 	mov ebx, esi
-	jmp R_MarkFragments_Go_180
-R_MarkFragments_Go_250:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__180
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__250:
 	mov ecx, [ebp+0x8]
-R_MarkFragments_Go_660:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__660:
 	cvtss2sd xmm0, [ecx+0x8]
 	movsd [esp+0x24], xmm0
 	cvtss2sd xmm0, [ecx+0x4]
@@ -3757,33 +3757,33 @@ R_MarkFragments_Go_660:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_r_markfragments_
 	mov dword [esp], 0xe
-	call Com_Printf
-R_MarkFragments_Go_120:
+	call _Z10Com_PrintfiPKcz
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__120:
 	add esp, 0x99c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_MarkFragments_Go_80:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__80:
 	mov ecx, [ebx+0x43c]
 	test ecx, ecx
-	jnz R_MarkFragments_Go_190
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__190
 	mov eax, ebx
-	jmp R_MarkFragments_Go_200
-R_MarkFragments_Go_160:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__200
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__160:
 	mov ebx, [ebp-0x7dc]
 	add ebx, [ebp-0x1c]
 	mov [ebp-0x888], ebx
 	cmp byte [ebx+0x1], 0x0
-	jnz R_MarkFragments_Go_150
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__150
 	mov ecx, [ebx+0x20]
 	test ecx, ecx
-	jz R_MarkFragments_Go_150
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__150
 	mov dword [ebp-0x88c], 0x0
 	mov dword [ebp-0x7e0], 0x0
 	mov esi, [ebp-0x888]
-R_MarkFragments_Go_220:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__220:
 	mov eax, [esi+0x24]
 	mov edx, [ebp-0x7e0]
 	movzx eax, word [eax+edx]
@@ -3797,25 +3797,25 @@ R_MarkFragments_Go_220:
 	mov eax, 0x80000000
 	shr eax, cl
 	test [ebp+edx*4-0xe4], eax
-	jz R_MarkFragments_Go_210
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__210
 	mov edx, esi
-R_MarkFragments_Go_290:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__290:
 	add dword [ebp-0x88c], 0x1
 	add dword [ebp-0x7e0], 0xc
 	mov ecx, [ebp-0x88c]
 	cmp ecx, [edx+0x20]
-	jz R_MarkFragments_Go_150
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__150
 	mov esi, edx
-	jmp R_MarkFragments_Go_220
-R_MarkFragments_Go_130:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__220
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__130:
 	add dword [ebp-0x8b4], 0x1
 	mov eax, [ebp-0x8b4]
 	mov edx, [ebp+0x8]
 	cmp eax, [edx+0x2b0]
-	jz R_MarkFragments_Go_120
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__120
 	mov esi, eax
-	jmp R_MarkFragments_Go_230
-R_MarkFragments_Go_210:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__230
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__210:
 	mov eax, ebx
 	shl eax, 0x5
 	mov esi, [ebp-0x898]
@@ -4036,11 +4036,11 @@ R_MarkFragments_Go_210:
 	mov [esp+0x4], edx
 	lea ecx, [ebp-0x114]
 	mov [esp], ecx
-	call MatrixMultiply43
+	call _Z16MatrixMultiply43PA3_KfS1_PA3_f
 	mov eax, [ebp+0x8]
 	add eax, 0x78
 	lea edx, [ebp-0x228]
-R_MarkFragments_Go_240:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__240:
 	movss xmm2, dword [eax]
 	movaps xmm1, xmm2
 	mulss xmm1, [ebp-0x144]
@@ -4083,7 +4083,7 @@ R_MarkFragments_Go_240:
 	add edx, 0x10
 	lea ecx, [ebp-0x1c8]
 	cmp ecx, edx
-	jnz R_MarkFragments_Go_240
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__240
 	lea eax, [ebp-0x74]
 	mov [esp+0x8], eax
 	lea edx, [ebp-0x144]
@@ -4091,7 +4091,7 @@ R_MarkFragments_Go_240:
 	mov eax, [ebp+0x8]
 	add eax, 0x24
 	mov [esp], eax
-	call MatrixTransposeTransformVector
+	call _Z30MatrixTransposeTransformVectorPKfPA3_S_Pf
 	movss xmm0, dword [esi+0x1c]
 	movaps xmm3, xmm0
 	mulss xmm3, [esi]
@@ -4261,7 +4261,7 @@ R_MarkFragments_Go_240:
 	mov [esp+0x4], eax
 	lea edx, [ebp-0x174]
 	mov [esp], edx
-	call MatrixMultiply43
+	call _Z16MatrixMultiply43PA3_KfS1_PA3_f
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx]
 	mov [ebp-0x34], eax
@@ -4274,7 +4274,7 @@ R_MarkFragments_Go_240:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x34]
 	mov [esp], eax
-	call MatrixTransformVector43
+	call _Z23MatrixTransformVector43PKfPA3_S_Pf
 	mov eax, [ebp+0x8]
 	movss xmm2, dword [eax+0x48]
 	movaps xmm0, xmm2
@@ -4305,7 +4305,7 @@ R_MarkFragments_Go_240:
 	mov [ebp-0x80], ecx
 	lea eax, [ebp-0x90]
 	mov [esp+0x14], eax
-	mov dword [esp+0x10], R_MarkModelCoreCallback
+	mov dword [esp+0x10], _Z23R_MarkModelCoreCallbackILh0EEhPvPPK15GfxPackedVertexS4_
 	lea eax, [ebp-0x44]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x28]
@@ -4314,29 +4314,29 @@ R_MarkFragments_Go_240:
 	mov [esp+0x4], ebx
 	mov esi, [ebp-0x888]
 	mov [esp], esi
-	call XSurfaceVisitTrianglesInAabb
+	call _Z28XSurfaceVisitTrianglesInAabbPK8XSurfacejPKfS3_PFhPvPPK15GfxPackedVertexS8_ES4_
 	test al, al
-	jz R_MarkFragments_Go_250
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__250
 	mov eax, [ebp+0x8]
 	mov edx, [eax+0x43c]
 	test edx, edx
-	jnz R_MarkFragments_Go_260
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__260
 	mov ecx, eax
-R_MarkFragments_Go_510:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__510:
 	mov edx, [ecx+0x438]
 	test edx, edx
-	jnz R_MarkFragments_Go_270
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__270
 	mov eax, [ecx+0x43c]
 	test eax, eax
-	jz R_MarkFragments_Go_280
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__280
 	mov eax, [ebp+0x8]
-R_MarkFragments_Go_530:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__530:
 	mov dword [eax+0x438], 0x0
 	mov dword [eax+0x43c], 0x0
-R_MarkFragments_Go_280:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__280:
 	mov edx, [ebp-0x888]
-	jmp R_MarkFragments_Go_290
-R_MarkFragments_Go_190:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__290
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__190:
 	mov eax, ebx
 	add eax, 0x30
 	mov [esp+0x18], eax
@@ -4351,8 +4351,8 @@ R_MarkFragments_Go_190:
 	mov [esp], eax
 	call dword [ebx+0x440]
 	mov eax, [ebp+0x8]
-	jmp R_MarkFragments_Go_200
-R_MarkFragments_Go_10:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__200
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__10:
 	lea ecx, [ebp-0x7d8]
 	mov [ebp-0x5c], ecx
 	mov esi, [edx+0x4c]
@@ -4363,7 +4363,7 @@ R_MarkFragments_Go_10:
 	mov dword [esp+0x4], 0x0
 	lea eax, [ebp-0x228]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov dword [ebp-0x1c], 0x0
 	mov ecx, [ebp+0x8]
 	add ecx, 0x6c
@@ -4381,10 +4381,10 @@ R_MarkFragments_Go_10:
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov dword [esp], _ZZ28R_MarkFragments_WorldBrushesP8MarkInfoE9allowSurf
-	call R_BoxSurfaces_r
+	call _Z15R_BoxSurfaces_rP7mnode_tPKfS2_PPFiiPvES3_PPP10GfxSurfacejPjjPh
 	mov esi, [ebp-0x1c]
 	test esi, esi
-	jz R_MarkFragments_Go_300
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__300
 	mov dword [ebp-0x91c], 0x0
 	mov byte [ebp-0x915], 0x0
 	mov esi, [ebp+0x8]
@@ -4400,14 +4400,14 @@ R_MarkFragments_Go_10:
 	add ecx, 0x2c
 	mov [ebp-0x958], ecx
 	mov ebx, [ebp-0x91c]
-	jmp R_MarkFragments_Go_310
-R_MarkFragments_Go_330:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__310
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__330:
 	add dword [ebp-0x91c], 0x1
 	mov esi, [ebp-0x91c]
 	cmp [ebp-0x1c], esi
-	jbe R_MarkFragments_Go_320
+	jbe _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__320
 	mov ebx, esi
-R_MarkFragments_Go_310:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__310:
 	mov edi, [ebp+ebx*4-0x7d8]
 	movzx eax, byte [edi+0x14]
 	mov [ebp-0x80e], al
@@ -4415,13 +4415,13 @@ R_MarkFragments_Go_310:
 	setnz al
 	mov edx, [ebp+0x8]
 	cmp al, [edx+0xe4]
-	jnz R_MarkFragments_Go_330
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__330
 	movzx ecx, byte [edi+0x15]
 	mov [ebp-0x80f], cl
 	test cl, cl
 	setnz al
 	cmp al, [edx+0xe5]
-	jnz R_MarkFragments_Go_330
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__330
 	movzx ebx, byte [edi+0x16]
 	mov [ebp-0x810], bl
 	mov eax, rgp
@@ -4438,18 +4438,18 @@ R_MarkFragments_Go_310:
 	mov [ebp-0x908], edx
 	movzx esi, word [edi+0xa]
 	test esi, esi
-	jle R_MarkFragments_Go_330
+	jle _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__330
 	mov dword [ebp-0x914], 0x0
 	mov [ebp-0x950], edx
-	jmp R_MarkFragments_Go_340
-R_MarkFragments_Go_350:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__340
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__350:
 	add dword [ebp-0x914], 0x1
 	add dword [ebp-0x908], 0x6
 	add dword [ebp-0x950], 0x6
 	cmp esi, [ebp-0x914]
-	jle R_MarkFragments_Go_330
+	jle _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__330
 	mov edx, [ebp-0x950]
-R_MarkFragments_Go_340:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__340:
 	movzx eax, word [edx+0x4]
 	lea ebx, [eax+eax*4]
 	lea ebx, [eax+ebx*2]
@@ -4504,7 +4504,7 @@ R_MarkFragments_Go_340:
 	addss xmm1, xmm0
 	pxor xmm0, xmm0
 	ucomiss xmm0, xmm1
-	ja R_MarkFragments_Go_350
+	ja _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__350
 	mulss xmm1, xmm1
 	mulss xmm7, xmm7
 	mulss xmm3, xmm3
@@ -4513,11 +4513,11 @@ R_MarkFragments_Go_340:
 	addss xmm7, xmm6
 	mulss xmm7, [_float_0_25000000]
 	ucomiss xmm7, xmm1
-	ja R_MarkFragments_Go_350
+	ja _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__350
 	xor ebx, ebx
 	lea esi, [ebp-0x3d8]
 	mov ecx, esi
-R_MarkFragments_Go_360:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__360:
 	mov edx, [ebp-0x908]
 	movzx eax, word [edx+ebx*2]
 	lea edx, [eax+eax*4]
@@ -4538,12 +4538,12 @@ R_MarkFragments_Go_360:
 	add ecx, 0x18
 	add esi, 0x1c
 	cmp ebx, 0x3
-	jnz R_MarkFragments_Go_360
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__360
 	mov ebx, [ebp-0x940]
 	mov dword [ebp-0x90c], 0x0
 	mov dword [ebp-0x910], 0x3
 	xor esi, esi
-R_MarkFragments_Go_380:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__380:
 	cmp dword [ebp-0x90c], 0x1
 	sbb ecx, ecx
 	and ecx, 0xd8
@@ -4555,21 +4555,21 @@ R_MarkFragments_Go_380:
 	lea edx, [ebp+edx*8-0x3d8]
 	mov [esp], ebx
 	mov eax, [ebp-0x910]
-	call R_ChopWorldPolyBehindPlane
+	call _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf
 	mov [ebp-0x910], eax
 	test eax, eax
-	jz R_MarkFragments_Go_370
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__370
 	xor dword [ebp-0x90c], 0x1
 	add esi, 0x1
 	add ebx, 0x10
 	cmp esi, 0x6
-	jnz R_MarkFragments_Go_380
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__380
 	mov edx, [ebp+0x8]
 	mov ebx, [edx+0x43c]
 	mov eax, [edx+0x58]
 	sub eax, ebx
 	cmp [ebp-0x910], eax
-	jg R_MarkFragments_Go_390
+	jg _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__390
 	mov ecx, [edx+0x438]
 	mov esi, [ebp-0x910]
 	lea edx, [esi+esi*2-0x6]
@@ -4577,17 +4577,17 @@ R_MarkFragments_Go_380:
 	mov eax, [esi+0x50]
 	sub eax, ecx
 	cmp edx, eax
-	jg R_MarkFragments_Go_400
+	jg _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__400
 	lea edx, [ecx+ecx*2]
 	mov eax, [esi+0x54]
 	lea edx, [eax+edx*4]
 	cmp dword [ebp-0x910], 0x2
-	jle R_MarkFragments_Go_410
+	jle _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__410
 	mov [ebp-0x7e8], bx
 	mov esi, ebx
 	lea ecx, [ebx+0x1]
 	mov ebx, 0x2
-R_MarkFragments_Go_420:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__420:
 	mov [edx], cx
 	movzx eax, word [ebp-0x7e8]
 	add eax, ebx
@@ -4605,8 +4605,8 @@ R_MarkFragments_Go_420:
 	add ebx, 0x1
 	add ecx, 0x1
 	cmp [ebp-0x910], ebx
-	jnz R_MarkFragments_Go_420
-R_MarkFragments_Go_410:
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__420
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__410:
 	mov edx, [ebp-0x950]
 	movzx eax, word [edx]
 	lea edx, [eax+eax*4]
@@ -4643,7 +4643,7 @@ R_MarkFragments_Go_410:
 	lea edx, [ebp-0xe4]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov dword [ebp-0xd8], 0x0
 	mov eax, [ebp-0xe4]
 	mov [ebp-0xb4], eax
@@ -4659,7 +4659,7 @@ R_MarkFragments_Go_410:
 	lea ecx, [ebp-0xe4]
 	mov [esp+0x4], ecx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov dword [ebp-0xd8], 0x0
 	mov eax, [ebp-0xe4]
 	mov [ebp-0xa8], eax
@@ -4675,7 +4675,7 @@ R_MarkFragments_Go_410:
 	lea eax, [ebp-0x44]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov dword [ebp-0x38], 0x0
 	mov eax, [ebp-0x44]
 	mov [ebp-0x9c], eax
@@ -4690,14 +4690,14 @@ R_MarkFragments_Go_410:
 	add edx, [ebx+0x5c]
 	mov ebx, [ebp-0x910]
 	test ebx, ebx
-	jle R_MarkFragments_Go_430
+	jle _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__430
 	mov ecx, edx
 	xor ebx, ebx
 	mov esi, [ebp-0x90c]
 	lea eax, [esi+esi*2]
 	lea eax, [eax+eax*8]
 	lea edx, [ebp+eax*8-0x3d8]
-R_MarkFragments_Go_440:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__440:
 	mov eax, [edx]
 	mov [ecx], eax
 	mov eax, [edx+0x4]
@@ -4753,10 +4753,10 @@ R_MarkFragments_Go_440:
 	add edx, 0x18
 	add ecx, 0x20
 	cmp [ebp-0x910], ebx
-	jnz R_MarkFragments_Go_440
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__440
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x43c]
-R_MarkFragments_Go_430:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__430:
 	add eax, [ebp-0x910]
 	mov ecx, [ebp+0x8]
 	mov [ecx+0x43c], eax
@@ -4767,10 +4767,10 @@ R_MarkFragments_Go_430:
 	mov [ecx+0x438], eax
 	mov byte [ebp-0x915], 0x1
 	movzx esi, word [edi+0xa]
-	jmp R_MarkFragments_Go_350
-R_MarkFragments_Go_320:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__350
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__320:
 	cmp byte [ebp-0x915], 0x0
-	jz R_MarkFragments_Go_300
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__300
 	mov eax, [ebp+0x8]
 	add eax, 0x30
 	mov [esp+0x18], eax
@@ -4791,12 +4791,12 @@ R_MarkFragments_Go_320:
 	mov ecx, [ebp+0x8]
 	mov dword [ecx+0x438], 0x0
 	mov dword [ecx+0x43c], 0x0
-R_MarkFragments_Go_300:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__300:
 	mov ebx, [ebp+0x8]
 	mov ebx, [ebx+0x434]
 	mov [ebp-0x8fc], ebx
 	test ebx, ebx
-	jz R_MarkFragments_Go_120
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__120
 	mov dword [ebp-0x900], 0x0
 	mov esi, [ebp+0x8]
 	add esi, 0x24
@@ -4809,26 +4809,26 @@ R_MarkFragments_Go_300:
 	mov [ebp-0x94c], edx
 	mov ecx, edx
 	mov esi, edx
-R_MarkFragments_Go_500:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__500:
 	movzx ecx, word [ecx+0x8]
 	mov [ebp-0x80a], cx
 	lea ebx, [ebp-0x34]
 	mov [esp+0x4], ebx
 	mov eax, [esi+0x4]
 	mov [esp], eax
-	call CG_GetPoseAngles
+	call _Z16CG_GetPoseAnglesPK7cpose_tPf
 	lea eax, [ebp-0x7d8]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call AnglesToAxis
+	call _Z12AnglesToAxisPKfPA3_f
 	lea ecx, [ebp-0x7b4]
 	mov [esp+0x4], ecx
 	mov eax, [esi+0x4]
 	mov [esp], eax
-	call CG_GetPoseOrigin
+	call _Z16CG_GetPoseOriginPK7cpose_tPf
 	mov eax, [ebp-0x940]
 	lea edx, [ebp-0x228]
-R_MarkFragments_Go_450:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__450:
 	movss xmm2, dword [eax]
 	movaps xmm1, xmm2
 	mulss xmm1, [ebp-0x7d8]
@@ -4871,14 +4871,14 @@ R_MarkFragments_Go_450:
 	add edx, 0x10
 	lea ebx, [ebp-0x1c8]
 	cmp edx, ebx
-	jnz R_MarkFragments_Go_450
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__450
 	lea esi, [ebp-0x74]
 	mov [esp+0x8], esi
 	lea eax, [ebp-0x7d8]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x93c]
 	mov [esp], edx
-	call MatrixTransposeTransformVector
+	call _Z30MatrixTransposeTransformVectorPKfPA3_S_Pf
 	mov ecx, [ebp-0x94c]
 	mov eax, [ecx]
 	movzx ebx, word [eax+0x32]
@@ -4887,12 +4887,12 @@ R_MarkFragments_Go_450:
 	add eax, ebx
 	mov [ebp-0x8f4], eax
 	cmp ebx, eax
-	jz R_MarkFragments_Go_460
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__460
 	lea edi, [ebx+ebx*2]
 	shl edi, 0x4
 	mov byte [ebp-0x8f5], 0x0
 	mov dword [ebp-0x7e4], 0x0
-R_MarkFragments_Go_490:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__490:
 	mov eax, rgp
 	mov ecx, [eax+0x20a0]
 	mov esi, [ecx+0x294]
@@ -4902,28 +4902,28 @@ R_MarkFragments_Go_490:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx+0x4c]
 	test byte [eax+0x3d], 0x4
-	jnz R_MarkFragments_Go_470
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__470
 	test byte [eax+0x4], 0x4
-	jnz R_MarkFragments_Go_470
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__470
 	mov edx, [edx+0x10]
 	mov eax, [eax+0x10]
 	and eax, edx
 	cmp edx, eax
-	jz R_MarkFragments_Go_480
-R_MarkFragments_Go_470:
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__480
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__470:
 	add dword [ebp-0x7e4], 0x1
 	add edi, 0x30
 	mov eax, [ebp-0x8f4]
 	sub eax, [ebp-0x8f0]
 	cmp eax, [ebp-0x7e4]
-	jnz R_MarkFragments_Go_490
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__490
 	cmp byte [ebp-0x8f5], 0x0
-	jz R_MarkFragments_Go_460
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__460
 	lea ecx, [ebp-0xe4]
 	mov [esp+0x4], ecx
 	lea ebx, [ebp-0x7d8]
 	mov [esp], ebx
-	call MatrixTranspose
+	call _Z15MatrixTransposePA3_KfPA3_f
 	movss xmm0, dword [_data16_80000000]
 	movss xmm2, dword [ebp-0x7b4]
 	xorps xmm2, xmm0
@@ -4961,7 +4961,7 @@ R_MarkFragments_Go_470:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call MatrixTransformVector43
+	call _Z23MatrixTransformVector43PKfPA3_S_Pf
 	lea ebx, [ebp-0x44]
 	mov [esp+0x8], ebx
 	lea ecx, [ebp-0x7d8]
@@ -4969,7 +4969,7 @@ R_MarkFragments_Go_470:
 	mov eax, [ebp+0x8]
 	add eax, 0x30
 	mov [esp], eax
-	call MatrixTransposeTransformVector
+	call _Z30MatrixTransposeTransformVectorPKfPA3_S_Pf
 	mov [esp+0x18], ebx
 	mov [esp+0x14], esi
 	mov ebx, [ebp+0x8]
@@ -4986,16 +4986,16 @@ R_MarkFragments_Go_470:
 	call dword [ebx+0x440]
 	mov dword [ebx+0x438], 0x0
 	mov dword [ebx+0x43c], 0x0
-R_MarkFragments_Go_460:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__460:
 	add dword [ebp-0x900], 0x1
 	add dword [ebp-0x94c], 0xc
 	mov esi, [ebp-0x900]
 	cmp [ebp-0x8fc], esi
-	jz R_MarkFragments_Go_120
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__120
 	mov ecx, [ebp-0x94c]
 	mov esi, [ebp-0x94c]
-	jmp R_MarkFragments_Go_500
-R_MarkFragments_Go_260:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__500
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__260:
 	add eax, 0x18
 	mov [esp+0x8], eax
 	lea edx, [ebp-0x144]
@@ -5003,17 +5003,17 @@ R_MarkFragments_Go_260:
 	mov eax, [ebp+0x8]
 	add eax, 0x30
 	mov [esp], eax
-	call MatrixTransposeTransformVector
+	call _Z30MatrixTransposeTransformVectorPKfPA3_S_Pf
 	mov ecx, [ebp+0x8]
-	jmp R_MarkFragments_Go_510
-R_MarkFragments_Go_270:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__510
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__270:
 	mov ebx, ecx
 	mov ecx, [ecx+0x43c]
 	test ecx, ecx
-	jnz R_MarkFragments_Go_520
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__520
 	mov eax, ebx
-	jmp R_MarkFragments_Go_530
-R_MarkFragments_Go_520:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__530
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__520:
 	mov eax, ebx
 	add eax, 0x18
 	mov [esp+0x18], eax
@@ -5029,20 +5029,20 @@ R_MarkFragments_Go_520:
 	mov [esp], eax
 	call dword [ebx+0x440]
 	mov eax, [ebp+0x8]
-	jmp R_MarkFragments_Go_530
-R_MarkFragments_Go_480:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__530
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__480:
 	movzx eax, byte [esi+0x14]
 	mov [ebp-0x80b], al
 	cmp al, 0x1f
 	setnz al
 	cmp al, [ebx+0xe4]
-	jnz R_MarkFragments_Go_470
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__470
 	movzx edx, byte [esi+0x15]
 	mov [ebp-0x80c], dl
 	test dl, dl
 	setnz al
 	cmp al, [ebx+0xe5]
-	jnz R_MarkFragments_Go_470
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__470
 	movzx ebx, byte [esi+0x16]
 	mov [ebp-0x80d], bl
 	mov eax, [esi+0x4]
@@ -5057,10 +5057,10 @@ R_MarkFragments_Go_480:
 	mov [ebp-0x8dc], edx
 	movzx esi, word [esi+0xa]
 	test esi, esi
-	jle R_MarkFragments_Go_470
+	jle _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__470
 	mov dword [ebp-0x8e8], 0x0
 	mov [ebp-0x948], edx
-R_MarkFragments_Go_560:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__560:
 	mov edx, [ebp-0x948]
 	movzx eax, word [edx+0x4]
 	lea ebx, [eax+eax*4]
@@ -5113,7 +5113,7 @@ R_MarkFragments_Go_560:
 	addss xmm1, xmm0
 	pxor xmm0, xmm0
 	ucomiss xmm0, xmm1
-	ja R_MarkFragments_Go_540
+	ja _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__540
 	mulss xmm1, xmm1
 	mulss xmm7, xmm7
 	mulss xmm3, xmm3
@@ -5122,19 +5122,19 @@ R_MarkFragments_Go_560:
 	addss xmm7, xmm6
 	mulss xmm7, [_float_0_25000000]
 	ucomiss xmm7, xmm1
-	jbe R_MarkFragments_Go_550
-R_MarkFragments_Go_540:
+	jbe _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__550
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__540:
 	add dword [ebp-0x8e8], 0x1
 	add dword [ebp-0x8dc], 0x6
 	add dword [ebp-0x948], 0x6
 	cmp [ebp-0x8e8], esi
-	jl R_MarkFragments_Go_560
-	jmp R_MarkFragments_Go_470
-R_MarkFragments_Go_550:
+	jl _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__560
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__470
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__550:
 	xor ebx, ebx
 	lea esi, [ebp-0x3d8]
 	mov ecx, esi
-R_MarkFragments_Go_570:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__570:
 	mov edx, [ebp-0x8dc]
 	movzx eax, word [edx+ebx*2]
 	lea edx, [eax+eax*4]
@@ -5155,11 +5155,11 @@ R_MarkFragments_Go_570:
 	add ecx, 0x18
 	add esi, 0x1c
 	cmp ebx, 0x3
-	jnz R_MarkFragments_Go_570
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__570
 	mov dword [ebp-0x8e0], 0x0
 	mov dword [ebp-0x8e4], 0x3
 	lea ebx, [ebp-0x228]
-R_MarkFragments_Go_590:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__590:
 	cmp dword [ebp-0x8e0], 0x1
 	sbb ecx, ecx
 	and ecx, 0xd8
@@ -5171,22 +5171,22 @@ R_MarkFragments_Go_590:
 	lea edx, [ebp+edx*8-0x3d8]
 	mov [esp], ebx
 	mov eax, [ebp-0x8e4]
-	call R_ChopWorldPolyBehindPlane
+	call _Z26R_ChopWorldPolyBehindPlaneiPK16FxWorldMarkPointPS_PKf
 	mov [ebp-0x8e4], eax
 	test eax, eax
-	jz R_MarkFragments_Go_580
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__580
 	xor esi, 0x1
 	mov [ebp-0x8e0], esi
 	add ebx, 0x10
 	lea eax, [ebp-0x1c8]
 	cmp eax, ebx
-	jnz R_MarkFragments_Go_590
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__590
 	mov edx, [ebp+0x8]
 	mov ebx, [edx+0x43c]
 	mov eax, [edx+0x58]
 	sub eax, ebx
 	cmp [ebp-0x8e4], eax
-	jg R_MarkFragments_Go_390
+	jg _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__390
 	mov ecx, [edx+0x438]
 	mov esi, [ebp-0x8e4]
 	lea edx, [esi+esi*2-0x6]
@@ -5194,17 +5194,17 @@ R_MarkFragments_Go_590:
 	mov eax, [esi+0x50]
 	sub eax, ecx
 	cmp edx, eax
-	jg R_MarkFragments_Go_400
+	jg _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__400
 	lea edx, [ecx+ecx*2]
 	mov eax, [esi+0x54]
 	lea edx, [eax+edx*4]
 	cmp dword [ebp-0x8e4], 0x2
-	jle R_MarkFragments_Go_600
+	jle _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__600
 	mov [ebp-0x7e6], bx
 	mov esi, ebx
 	lea ecx, [ebx+0x1]
 	mov ebx, 0x2
-R_MarkFragments_Go_610:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__610:
 	mov [edx], cx
 	movzx eax, word [ebp-0x7e6]
 	add eax, ebx
@@ -5223,8 +5223,8 @@ R_MarkFragments_Go_610:
 	add ebx, 0x1
 	add ecx, 0x1
 	cmp [ebp-0x8e4], ebx
-	jnz R_MarkFragments_Go_610
-R_MarkFragments_Go_600:
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__610
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__600:
 	mov edx, [ebp-0x948]
 	movzx eax, word [edx]
 	lea edx, [eax+eax*4]
@@ -5261,7 +5261,7 @@ R_MarkFragments_Go_600:
 	lea edx, [ebp-0xe4]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov dword [ebp-0xd8], 0x0
 	mov eax, [ebp-0xe4]
 	mov [ebp-0xb4], eax
@@ -5277,7 +5277,7 @@ R_MarkFragments_Go_600:
 	lea ecx, [ebp-0x44]
 	mov [esp+0x4], ecx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov dword [ebp-0x38], 0x0
 	mov eax, [ebp-0x44]
 	mov [ebp-0xa8], eax
@@ -5293,7 +5293,7 @@ R_MarkFragments_Go_600:
 	lea ebx, [ebp-0x44]
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call Vec3UnpackUnitVec
+	call _Z17Vec3UnpackUnitVec13PackedUnitVecPf
 	mov dword [ebp-0x38], 0x0
 	mov eax, [ebp-0x44]
 	mov [ebp-0x9c], eax
@@ -5308,14 +5308,14 @@ R_MarkFragments_Go_600:
 	add edx, [esi+0x5c]
 	mov ecx, [ebp-0x8e4]
 	test ecx, ecx
-	jle R_MarkFragments_Go_620
+	jle _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__620
 	mov ecx, edx
 	xor ebx, ebx
 	mov edx, [ebp-0x8e0]
 	lea eax, [edx+edx*2]
 	lea eax, [eax+eax*8]
 	lea edx, [ebp+eax*8-0x3d8]
-R_MarkFragments_Go_630:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__630:
 	mov eax, [edx]
 	mov [ecx], eax
 	mov eax, [edx+0x4]
@@ -5371,10 +5371,10 @@ R_MarkFragments_Go_630:
 	add edx, 0x18
 	add ecx, 0x20
 	cmp [ebp-0x8e4], ebx
-	jnz R_MarkFragments_Go_630
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__630
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x43c]
-R_MarkFragments_Go_620:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__620:
 	add eax, [ebp-0x8e4]
 	mov ebx, [ebp+0x8]
 	mov [ebx+0x43c], eax
@@ -5386,8 +5386,8 @@ R_MarkFragments_Go_620:
 	mov byte [ebp-0x8f5], 0x1
 	mov eax, [ebp-0x8ec]
 	movzx esi, word [eax+0xa]
-	jmp R_MarkFragments_Go_540
-R_MarkFragments_Go_60:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__540
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__60:
 	mov eax, ebx
 	or al, 0x40
 	mov [ebp-0x59], al
@@ -5397,7 +5397,7 @@ R_MarkFragments_Go_60:
 	xor ecx, ecx
 	lea edx, [ebp-0xb4]
 	lea eax, [ebp-0xe4]
-R_MarkFragments_Go_640:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__640:
 	movss xmm0, dword [ebp-0x8c0]
 	mulss xmm0, [edx]
 	movss [eax], xmm0
@@ -5411,7 +5411,7 @@ R_MarkFragments_Go_640:
 	add eax, 0xc
 	add edx, 0xc
 	cmp ecx, 0x3
-	jnz R_MarkFragments_Go_640
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__640
 	mov edx, [ebp-0x8bc]
 	mov eax, [edx]
 	mov [ebp-0xc0], eax
@@ -5438,7 +5438,7 @@ R_MarkFragments_Go_640:
 	lea eax, [ebp-0x34]
 	mov [esp], eax
 	movss [ebp-0x968], xmm2
-	call MatrixTransposeTransformVector
+	call _Z30MatrixTransposeTransformVectorPKfPA3_S_Pf
 	movss xmm2, dword [ebp-0x968]
 	movaps xmm3, xmm2
 	mulss xmm3, [ebp-0x44]
@@ -5480,12 +5480,12 @@ R_MarkFragments_Go_640:
 	mov edx, [ebp-0x8c8]
 	mov eax, [edx+0x20]
 	test eax, eax
-	jz R_MarkFragments_Go_50
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__50
 	mov dword [ebp-0x8c4], 0x0
-R_MarkFragments_Go_650:
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__650:
 	lea ecx, [ebp-0x90]
 	mov [esp+0x14], ecx
-	mov dword [esp+0x10], R_MarkModelCoreCallback
+	mov dword [esp+0x10], _Z23R_MarkModelCoreCallbackILh1EEhPvPPK15GfxPackedVertexS4_
 	lea eax, [ebp-0x28]
 	mov [esp+0xc], eax
 	lea edx, [ebp-0x74]
@@ -5494,33 +5494,33 @@ R_MarkFragments_Go_650:
 	mov [esp+0x4], ecx
 	mov eax, [ebp-0x8c8]
 	mov [esp], eax
-	call XSurfaceVisitTrianglesInAabb
+	call _Z28XSurfaceVisitTrianglesInAabbPK8XSurfacejPKfS3_PFhPvPPK15GfxPackedVertexS8_ES4_
 	test al, al
-	jz R_MarkFragments_Go_250
+	jz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__250
 	add dword [ebp-0x8c4], 0x1
 	mov ecx, [ebp-0x8c4]
 	mov edx, [ebp-0x8c8]
 	cmp [edx+0x20], ecx
-	jnz R_MarkFragments_Go_650
-	jmp R_MarkFragments_Go_50
-R_MarkFragments_Go_580:
+	jnz _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__650
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__50
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__580:
 	mov edx, [ebp-0x8ec]
 	movzx esi, word [edx+0xa]
-	jmp R_MarkFragments_Go_540
-R_MarkFragments_Go_400:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__540
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__400:
 	mov ecx, esi
-	jmp R_MarkFragments_Go_660
-R_MarkFragments_Go_390:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__660
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__390:
 	mov ecx, edx
-	jmp R_MarkFragments_Go_660
-R_MarkFragments_Go_370:
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__660
+_Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__370:
 	movzx esi, word [edi+0xa]
-	jmp R_MarkFragments_Go_350
+	jmp _Z18R_MarkFragments_GoP8MarkInfoPFvPviP9FxMarkTriiP11FxMarkPointPKfS7_ES1_iS3_iS5__350
 	add [eax], al
 
 
 ;R_MarkFragments_Begin(MarkInfo*, MarkFragmentsAgainstEnum, float const*, float const (*) [3], float, float const*, Material*)
-R_MarkFragments_Begin:
+_Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5542,7 +5542,7 @@ R_MarkFragments_Begin:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x14]
 	mov [esp], eax
-	call AxisCopy
+	call _Z8AxisCopyPA3_KfPA3_f
 	lea edx, [edi+0xd8]
 	mov eax, [ebx]
 	mov [edi+0xd8], eax
@@ -5572,7 +5572,7 @@ R_MarkFragments_Begin:
 	lea ecx, [edi+0x3c]
 	mov dword [ebp-0xac], 0x1
 	movss xmm2, dword [_data16_7fffffff]
-R_MarkFragments_Begin_10:
+_Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material_10:
 	movss xmm1, dword [esi]
 	andps xmm1, xmm2
 	movss xmm0, dword [ebx]
@@ -5599,14 +5599,14 @@ R_MarkFragments_Begin_10:
 	add ebx, 0x4
 	add ecx, 0x4
 	cmp dword [ebp-0xac], 0x4
-	jnz R_MarkFragments_Begin_10
+	jnz _Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material_10
 	movss xmm4, dword [edi+0x48]
 	mov edx, [ebp-0xb8]
 	lea eax, [edi+0x78]
 	lea ecx, [edi+0x88]
 	mov ebx, 0x3
 	movss xmm3, dword [_data16_80000000]
-R_MarkFragments_Begin_20:
+_Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material_20:
 	movss xmm0, dword [edx]
 	movss [eax], xmm0
 	movss xmm1, dword [edx+0x4]
@@ -5640,10 +5640,10 @@ R_MarkFragments_Begin_20:
 	add eax, 0x20
 	add ecx, 0x20
 	sub ebx, 0x1
-	jnz R_MarkFragments_Begin_20
+	jnz _Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material_20
 	mov esi, [ebp+0xc]
 	test esi, esi
-	jnz R_MarkFragments_Begin_30
+	jnz _Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material_30
 	mov dword [edi+0x434], 0x0
 	add esp, 0xdc
 	pop ebx
@@ -5651,7 +5651,7 @@ R_MarkFragments_Begin_20:
 	pop edi
 	pop ebp
 	ret
-R_MarkFragments_Begin_30:
+_Z21R_MarkFragments_BeginP8MarkInfo24MarkFragmentsAgainstEnumPKfPA3_S2_fS3_P8Material_30:
 	mov esi, rgp
 	mov eax, [esi+0x20a0]
 	mov eax, [eax+0x100]
@@ -5659,7 +5659,7 @@ R_MarkFragments_Begin_30:
 	mov dword [esp+0x4], 0x0
 	lea ebx, [ebp-0xa8]
 	mov [esp], ebx
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	mov dword [ebp-0x1c], 0x0
 	mov eax, [esi+0x20a0]
 	mov eax, [eax+0xf8]
@@ -5669,10 +5669,10 @@ R_MarkFragments_Begin_30:
 	mov dword [esp+0x8], 0x20
 	lea edx, [edi+0xec]
 	mov [esp+0x4], edx
-	mov dword [esp], R_AllowSmodelMarks
+	mov dword [esp], _Z18R_AllowSmodelMarksi
 	mov ecx, [ebp-0xb4]
 	mov edx, [ebp-0xb0]
-	call R_BoxStaticModels_r
+	call _Z19R_BoxStaticModels_rP7mnode_tPKfS2_PFiiEPtiPiPh
 	mov eax, [ebp-0x1c]
 	mov [edi+0x12c], eax
 	mov dword [edi+0x2b0], 0x0
@@ -5687,7 +5687,7 @@ R_MarkFragments_Begin_30:
 
 
 ;R_MarkFragments_AddDObj(MarkInfo*, DObj_s*, cpose_t*, unsigned short)
-R_MarkFragments_AddDObj:
+_Z23R_MarkFragments_AddDObjP8MarkInfoP6DObj_sP7cpose_tt:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -5695,7 +5695,7 @@ R_MarkFragments_AddDObj:
 	mov ecx, [ebp+0x14]
 	mov eax, [edx+0x2b0]
 	cmp eax, 0x20
-	jz R_MarkFragments_AddDObj_10
+	jz _Z23R_MarkFragments_AddDObjP8MarkInfoP6DObj_sP7cpose_tt_10
 	lea eax, [eax+eax*2]
 	lea eax, [edx+eax*4+0x130]
 	mov ebx, [ebp+0xc]
@@ -5708,7 +5708,7 @@ R_MarkFragments_AddDObj:
 	pop ebx
 	pop ebp
 	ret
-R_MarkFragments_AddDObj_10:
+_Z23R_MarkFragments_AddDObjP8MarkInfoP6DObj_sP7cpose_tt_10:
 	and eax, 0xffffff00
 	pop ebx
 	pop ebp
@@ -5717,7 +5717,7 @@ R_MarkFragments_AddDObj_10:
 
 
 ;R_MarkFragments_AddBModel(MarkInfo*, GfxBrushModel*, cpose_t*, unsigned short)
-R_MarkFragments_AddBModel:
+_Z25R_MarkFragments_AddBModelP8MarkInfoP13GfxBrushModelP7cpose_tt:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -5726,7 +5726,7 @@ R_MarkFragments_AddBModel:
 	mov ebx, [ebp+0x14]
 	mov eax, [ecx+0x434]
 	cmp eax, 0x20
-	jz R_MarkFragments_AddBModel_10
+	jz _Z25R_MarkFragments_AddBModelP8MarkInfoP13GfxBrushModelP7cpose_tt_10
 	lea eax, [eax+eax*2]
 	lea eax, [ecx+eax*4+0x2b0]
 	lea edx, [eax+0x4]
@@ -5741,7 +5741,7 @@ R_MarkFragments_AddBModel:
 	pop esi
 	pop ebp
 	ret
-R_MarkFragments_AddBModel_10:
+_Z25R_MarkFragments_AddBModelP8MarkInfoP13GfxBrushModelP7cpose_tt_10:
 	and eax, 0xffffff00
 	pop ebx
 	pop esi
@@ -5750,7 +5750,7 @@ R_MarkFragments_AddBModel_10:
 
 
 ;R_MarkUtil_GetDObjAnimMatAndHideParts(DObj_s const*, cpose_t const*, DObjAnimMat const**, unsigned int*)
-R_MarkUtil_GetDObjAnimMatAndHideParts:
+_Z37R_MarkUtil_GetDObjAnimMatAndHidePartsPK6DObj_sPK7cpose_tPPK11DObjAnimMatPj:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5768,18 +5768,18 @@ R_MarkUtil_GetDObjAnimMatAndHideParts:
 	lea ebx, [ebp-0x28]
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call DObjGetSurfaces
+	call _Z15DObjGetSurfacesPK6DObj_sPiPKc
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call CG_DObjCalcPose
+	call _Z15CG_DObjCalcPosePK7cpose_tPK6DObj_sPi
 	mov edx, [ebp+0x10]
 	mov [edx], eax
 	mov eax, [ebp+0x14]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call DObjGetHidePartBits
+	call _Z19DObjGetHidePartBitsPK6DObj_sPj
 	add esp, 0x4c
 	pop ebx
 	pop esi
@@ -5791,7 +5791,7 @@ R_MarkUtil_GetDObjAnimMatAndHideParts:
 
 ;Initialized global or static variables of r_marks:
 SECTION .data
-_ZZ28R_MarkFragments_WorldBrushesP8MarkInfoE9allowSurf: dd R_AllowMarks, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+_ZZ28R_MarkFragments_WorldBrushesP8MarkInfoE9allowSurf: dd _Z12R_AllowMarksiPv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Initialized constant data of r_marks:
@@ -5828,7 +5828,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of r_marks:
@@ -5865,7 +5865,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

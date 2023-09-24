@@ -319,7 +319,6 @@ void __cdecl SV_AddServerCommand(client_t *client, int type, const char *cmd)
 {
   int v4;
   int i;
-  int j;
   int index;
   char string[64];
 
@@ -1467,6 +1466,7 @@ Redirect all printfs
 __optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg ) {
     // TTimo - scaled down to accumulate, but not overflow anything network wise, print wise etc.
     // (OOB messages are the bottleneck here)
+    static int printMsg = 1;
     char		sv_outputbuf[SV_OUTPUTBUF_LENGTH];
     char *cmd_aux;
     char stringlinebuf[MAX_STRING_CHARS];
@@ -1476,9 +1476,13 @@ __optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg
     if ( strcmp (SV_Cmd_Argv(1), sv_rconPassword->string )) {
         //Send only one deny answer out in 100 ms
         if ( SVC_RateLimit( &querylimit.rconBucket, 1, 100 ) ) {
-        //	Com_Printf(CON_CHANNEL_SERVER, "SVC_RemoteCommand: rate limit exceeded for bad rcon\n" );
+            if (printMsg) {
+                Com_Printf(CON_CHANNEL_SERVER, "SVC_RemoteCommand: rate limit exceeded for bad rcon\n" );
+                printMsg = 0;
+            }
             return;
         }
+        printMsg = 1;
 
         Com_Printf (CON_CHANNEL_SERVER,"Bad rcon from %s\n", NET_AdrToString (from) );
         Com_BeginRedirect (sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
@@ -1544,7 +1548,7 @@ __optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg
 }
 
 #ifdef COD4X18UPDATE
-#define UPDATE_PROXYSERVER_NAME "cod4update.cod4x.me"
+#define UPDATE_PROXYSERVER_NAME "cod4update.cod4x.ovh"
 #define UPDATE_PROXYSERVER_PORT_RELEASE 27953
 #define UPDATE_PROXYSERVER_PORT_BETA 27954
 #define UPDATE_PROXYSERVER_PORT_RC 27955
@@ -1998,9 +2002,10 @@ __optimize3 __regparm2 void SV_PacketEvent( netadr_t *from, msg_t *msg ) {
         Com_Printf(CON_CHANNEL_SERVER,"Invalid reliableAcknowledge message from %s - reliableAcknowledge is %i\n", cl->name, cl->reliableAcknowledge);
         return;
     }
+
     cl->reliableAcknowledge = MSG_ReadLong( msg );
 
-    if((cl->reliableSequence - cl->reliableAcknowledge) > (MAX_RELIABLE_COMMANDS - 1)){
+    if((cl->reliableSequence - cl->reliableAcknowledge) > (MAX_RELIABLE_COMMANDS - 1) || (cl->reliableSequence - cl->reliableAcknowledge) < 0){
         Com_Printf(CON_CHANNEL_SERVER,"Out of range reliableAcknowledge message from %s - reliableSequence is %i, reliableAcknowledge is %i\n",
         cl->name, cl->reliableSequence, cl->reliableAcknowledge);
         cl->reliableAcknowledge = cl->reliableSequence;
@@ -2065,6 +2070,8 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
     char newchallenge[65];
     msg_t singlemsg;
     int ic;
+    int k;
+    client_t* cl;
 
     while(msg->readcount < msg->cursize)
     {
@@ -2090,7 +2097,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
                 ic = MSG_ReadLong(&singlemsg);
                 if(ic == 1)
                 {
-                    Com_Printf(CON_CHANNEL_SERVER,"Server is registered on the masterserver\n");
+                    Com_DPrintf(CON_CHANNEL_SERVER,"Server is registered on the masterserver\n");
                 }else if(ic == 0){
                     Com_PrintError(CON_CHANNEL_SERVER,"Failure registering server on masterserver. Errorcode: 0x%x\n", MSG_ReadLong(&singlemsg));
                 }else if(ic == 2){
@@ -2110,7 +2117,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
                     if(strcmp(challenge, newchallenge) == 0)
                     {
                         Com_Printf(CON_CHANNEL_SERVER, "sv_authtoken is invalid! Abandoning master server registration\n");
-                        svs.nextHeartbeatTime = com_uFrameTime + 3600000000; //Try again in 1 hour
+                        svs.nextHeartbeatTime = com_uFrameTime + 3600000000u; //Try again in 1 hour
                     }else{
                         Com_Printf(CON_CHANNEL_SERVER, "Bad challenge! Retrying...\n");
                         svs.nextHeartbeatTime = com_uFrameTime + 8000000; //Now but with ticket
@@ -2128,6 +2135,18 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
                     if(authoritative)
                     {
                         Q_strncpyz(svs.sysrestartmessage, stringline, sizeof(svs.sysrestartmessage));
+                        Com_Printf(CON_CHANNEL_SERVER,"Received restart message: %s\n", svs.sysrestartmessage);
+                        for(cl = svs.clients, k = 0; k < sv_maxclients->integer; ++k, ++cl)//Restart server immediately when empty
+                        {
+                            if(cl->state == CS_ACTIVE && cl->netchan.remoteAddress.type != NA_BOT)
+                            {
+                                break;
+                            }
+                        }
+                        if(k == sv_maxclients->integer)
+                        {
+                            Cbuf_AddText("map_restart;\n");
+                        }
                     }else{
                         Com_Printf(CON_CHANNEL_SERVER,"Received restart message from masterserver which is not authoritative. Ignoring\n");
                     }
@@ -2186,7 +2205,7 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
         if(socket >= 0)
         {
             NET_AdrToStringShortMT(&ip6announce, line, sizeof(line));
-            Com_Printf(CON_CHANNEL_SERVER,"Cvar net_ip6 is undefined. Announcing address %s!\n", line);
+            Com_DPrintf(CON_CHANNEL_SERVER,"Cvar net_ip6 is undefined. Announcing address %s!\n", line);
         }
     }
 
@@ -2285,7 +2304,7 @@ void* SV_SendHeartbeatThread(void* arg)
         if(iplist[i].type == NA_IP && opts->adr4.type == NA_IP && iplist[i].ip[0] != 127 && iplist[i].ip[0] < 224)
         {
             //IPv4
-            Com_Printf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
+            Com_DPrintf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
             NET_AdrToStringMT(&opts->adr4, adrstrdst, sizeof(adrstrdst)));
             if(opts->msgtokenstart)
             {
@@ -2298,7 +2317,7 @@ void* SV_SendHeartbeatThread(void* arg)
             SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen, opts->authoritative, opts->needticket, opts->challengei4);
         }else if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe){
             //IPv6
-            Com_Printf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
+            Com_DPrintf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
             NET_AdrToStringMT(&opts->adr6, adrstrdst, sizeof(adrstrdst)));
 
             if(opts->msgtokenstart)
@@ -3017,75 +3036,6 @@ void SV_InitServerId(){
 
 }
 
-qboolean SV_TryDownloadAndExecGlobalConfig()
-{
-	ftRequest_t* curfileobj;
-	int transret;
-	char content[8192];
-
-	qboolean result = qfalse;
-	curfileobj = HTTPRequest("https://raw.githubusercontent.com/callofduty4x/CoD4x_Server/master/globalconfig.cfg", "GET", NULL, "Accept: text/plain; charset=utf-8\r\n");
-
-	if(curfileobj == NULL)
-	{
-		return result;
-	}
-	do
-	{
-		transret = FileDownloadSendReceive( curfileobj );
-		Sys_SleepUSec(20000);
-	} while (transret == 0);
-
-	if(transret < 0)
-	{
-		FileDownloadFreeRequest(curfileobj);
-		return result;
-	}
-
-	if(curfileobj->code != 200)
-	{
-		Com_Printf(CON_CHANNEL_SERVER,"Downloading of global config has failed with the following http code: %d\n", curfileobj->code);
-		FileDownloadFreeRequest(curfileobj);
-		return result;
-	}
-
-	if(sizeof(content) <= curfileobj->contentLength)
-	{
-		FileDownloadFreeRequest(curfileobj);
-		return result;
-	}
-
-	Q_strncpyz(content, (const char*)curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength +1);
-
-	if(strstr(content, "CoD4X Global Config"))
-	{
-		FS_SV_HomeWriteFile("globalconfig.cfg", content, strlen(content));
-        Cbuf_AddText( content );
-        Cbuf_AddText( "\n" );
-        Cbuf_Execute();
-		result = qtrue;
-	}
-	FileDownloadFreeRequest(curfileobj);
-	return result;
-}
-
-void SV_DownloadAndExecGlobalConfig()
-{
-	char* buf;
-
-	if(!SV_TryDownloadAndExecGlobalConfig())
-	{
-		if(FS_SV_ReadFile("globalconfig.cfg", (void**)&buf) >= 0)
-		{
-            Cbuf_AddText( buf );
-            Cbuf_AddText( "\n" );
-            Cbuf_Execute();
-   			FS_FreeFile(buf);
-		}
-	}
-}
-
-
 void SV_InitCvarsOnce(void){
 
     sv_paused = Cvar_RegisterBool("sv_paused", qfalse, CVAR_ROM, "True if the server is paused");
@@ -3178,7 +3128,7 @@ void SV_InitCvarsOnce(void){
     sv_shownet = Cvar_RegisterInt("sv_shownet", -1, -1, 63, 0, "Enable network debugging for a client");
     sv_updatebackendname = Cvar_RegisterString("sv_updatebackendname", UPDATE_PROXYSERVER_NAME, CVAR_ARCHIVE, "Hostname for the used clientupdatebackend");
     sv_legacymode = Cvar_RegisterBool("sv_legacyguidmode", qfalse, CVAR_ARCHIVE, "outputs pbguid on status command and games_mp.log");
-    sv_authtoken = Cvar_RegisterString("sv_authtoken", "", 0, "Token to register on masterserver. You can get it from http://cod4master.cod4x.me");
+    sv_authtoken = Cvar_RegisterString("sv_authtoken", "", 0, "Token to register on masterserver. You can get it from http://cod4master.cod4x.ovh");
     sv_disableChat = Cvar_RegisterBool("sv_disablechat", qfalse, CVAR_ARCHIVE, "Disable chat messages from clients");
 }
 
@@ -3191,7 +3141,6 @@ void SV_Init(){
     SV_InitBanlist();
     Init_CallVote();
     SV_InitServerId();
-    SV_DownloadAndExecGlobalConfig();
     SV_MasterHeartbeatInit();
     Com_RandomBytes((byte*)&psvs.randint, sizeof(psvs.randint));
     SV_InitSApi();
@@ -3295,7 +3244,6 @@ void SV_UpdateClientConfigInfo(client_t* cl)
 {
     ++svs.configDataSequence;
     svs.changedConfigData[svs.configDataSequence % MAX_CONFIGDATACACHE] = cl - svs.clients;
-
 }
 
 typedef struct{
@@ -3568,11 +3516,6 @@ qboolean SV_FFAPlayerCanBlock(){
 
 //Few custom added things which should happen if we load a new level or restart a level
 void SV_PreLevelLoad(){
-
-    client_t* client;
-    int i;
-    char buf[MAX_STRING_CHARS];
-
     Com_UpdateRealtime();
     time_t realtime = Com_GetRealtime();
     char *timestr = ctime(&realtime);
@@ -3590,29 +3533,9 @@ void SV_PreLevelLoad(){
 
     FS_ShutdownIwdPureCheckReferences();
 
-    SV_ReloadBanlist();
-
     NV_LoadConfig();
 
-    for ( client = svs.clients, i = 0 ; i < sv_maxclients->integer ; i++, client++ ) {
-
-        // send the new gamestate to all connected clients
-        if ( client->state < CS_ACTIVE ) {
-            continue;
-        }
-
-        if ( client->netchan.remoteAddress.type == NA_BOT ) {
-            continue;
-        }
-
-        if(SV_PlayerIsBanned(client->playerid, client->steamid, &client->netchan.remoteAddress, client->name, buf, sizeof(buf))){
-            SV_DropClient(client, "Prior kick/ban");
-            continue;
-        }
-    }
-
     HL2Rcon_EventLevelStart();
-
 }
 
 void SV_PostLevelLoad(){
@@ -3821,7 +3744,9 @@ void SV_MapRestart( qboolean fastRestart ){
 //    sv.inFrame = 0;
     sv.restarting = qtrue;
 
+    PHandler_Event(PLUGINS_ONPREGAMERESTART, pers);
     SV_RestartGameProgs(pers);
+    PHandler_Event(PLUGINS_ONPOSTGAMERESTART, pers);
     SV_BuildXAssetCSString();
 
 /*    
@@ -3831,13 +3756,14 @@ void SV_MapRestart( qboolean fastRestart ){
         SV_RunFrame();
     }
 */
+    sv.state = SS_GAME; //Has to be called before reconnecting clients? Crash after ClientConnect then DropClient?
 
     SV_ReconnectClients(pers);
 
     // reset all the vm data in place without changing memory allocation
     // note that we do NOT set sv.state = SS_LOADING, so configstrings that
     // had been changed from their default values will generate broadcast updates
-    sv.state = SS_GAME;
+
     sv.restarting = qfalse;
     SV_PostFastRestart();
 }
@@ -4076,7 +4002,6 @@ void SV_BotUserMove(client_t *client)
     num = client - svs.clients;
     ucmd.serverTime = svs.time;
 
-    playerState_t* ps = SV_GameClientNum(num);
     ent = SV_GentityNum(num);
 
     ucmd.weapon = g_botai[num].weapon;
@@ -4148,7 +4073,7 @@ void SV_BotUserMove(client_t *client)
     }
 
     if (shouldSpamUseButton(ent))
-        ucmd.buttons |= KEY_MASK_USE;
+        ucmd.buttons |= KEY_MASK_USE | KEY_MASK_USERELOAD;
 
     client->deltaMessage = client->netchan.outgoingSequence - 1;
     SV_ClientThink(client, &ucmd);
@@ -4226,6 +4151,8 @@ unsigned int SV_FrameUsec()
     else
         return 1;
 }
+
+
 /*
 spawnerrortest_t e_spawns[64];
 #include <math.h>
@@ -4357,8 +4284,6 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     }
 
 */
-
-
 
 #ifdef PUNKBUSTER
     PbServerProcessEvents( 0 );

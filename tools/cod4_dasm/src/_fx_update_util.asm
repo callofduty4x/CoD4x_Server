@@ -2,26 +2,26 @@
 	extern fx_randomTable
 	extern sinf
 	extern cosf
-	extern InterlockedIncrement
-	extern UnitQuatToAxis
-	extern Vec3Basis_RightHanded
+	extern iInterlockedIncrement
+	extern _Z14UnitQuatToAxisPKfPA3_f
+	extern _Z21Vec3Basis_RightHandedPKfPfS1_
 	extern floorf
-	extern FX_RandomDir
+	extern _Z12FX_RandomDiriPf
 	extern fx_serverVisClient
 
 ;Exports of fx_update_util:
 	global _GLOBAL__I__Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf
-	global FX_CullSphere
-	global FX_GetElemAxis
-	global FX_AddVisBlocker
-	global FX_GetOrientation
-	global FX_GetSpawnOrigin
-	global FX_GetVelocityAtTime
-	global FX_OffsetSpawnOrigin
-	global FX_GetOriginForTrailElem
-	global FX_ToggleVisBlockerFrame
-	global FX_OrientationPosToWorldPos
-	global FX_OrientationPosFromWorldPos
+	global _Z13FX_CullSpherePK8FxCamerajPKff
+	global _Z14FX_GetElemAxisPK9FxElemDefiPK13orientation_tfPA3_f
+	global _Z16FX_AddVisBlockerP8FxSystemPKfff
+	global _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t
+	global _Z17FX_GetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf
+	global _Z20FX_GetVelocityAtTimePK9FxElemDefiffPK13orientation_tPKfPf
+	global _Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf
+	global _Z24FX_GetOriginForTrailElemP8FxEffectPK9FxElemDefPK14FxSpatialFrameiPfS7_S7_
+	global _Z24FX_ToggleVisBlockerFrameP8FxSystemS0_
+	global _Z27FX_OrientationPosToWorldPosPK13orientation_tPKfPf
+	global _Z29FX_OrientationPosFromWorldPosPK13orientation_tPKfPf
 
 
 SECTION .text
@@ -34,21 +34,21 @@ _GLOBAL__I__Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -318,7 +318,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;FX_CullSphere(FxCamera const*, unsigned int, float const*, float)
-FX_CullSphere:
+_Z13FX_CullSpherePK8FxCamerajPKff:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -327,7 +327,7 @@ FX_CullSphere:
 	mov esi, [ebp+0xc]
 	mov edx, [ebp+0x10]
 	test esi, esi
-	jz FX_CullSphere_10
+	jz _Z13FX_CullSpherePK8FxCamerajPKff_10
 	lea eax, [ebx+0x10]
 	movss xmm5, dword [edx]
 	movss xmm4, dword [edx+0x4]
@@ -345,13 +345,13 @@ FX_CullSphere:
 	addss xmm0, xmm1
 	subss xmm0, [ebx+0x1c]
 	ucomiss xmm2, xmm0
-	jae FX_CullSphere_20
+	jae _Z13FX_CullSpherePK8FxCamerajPKff_20
 	mov ecx, ebx
 	xor edx, edx
-FX_CullSphere_30:
+_Z13FX_CullSpherePK8FxCamerajPKff_30:
 	add edx, 0x1
 	cmp esi, edx
-	jz FX_CullSphere_10
+	jz _Z13FX_CullSpherePK8FxCamerajPKff_10
 	mov eax, edx
 	shl eax, 0x4
 	lea eax, [eax+ebx+0x10]
@@ -366,14 +366,14 @@ FX_CullSphere_30:
 	subss xmm0, [ecx+0x2c]
 	add ecx, 0x10
 	ucomiss xmm2, xmm0
-	jb FX_CullSphere_30
-FX_CullSphere_20:
+	jb _Z13FX_CullSpherePK8FxCamerajPKff_30
+_Z13FX_CullSpherePK8FxCamerajPKff_20:
 	mov eax, 0x1
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-FX_CullSphere_10:
+_Z13FX_CullSpherePK8FxCamerajPKff_10:
 	xor eax, eax
 	pop ebx
 	pop esi
@@ -384,7 +384,7 @@ FX_CullSphere_10:
 
 
 ;FX_GetElemAxis(FxElemDef const*, int, orientation_t const*, float, float (*) [3])
-FX_GetElemAxis:
+_Z14FX_GetElemAxisPK9FxElemDefiPK13orientation_tfPA3_f:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -575,7 +575,7 @@ FX_GetElemAxis:
 
 
 ;FX_AddVisBlocker(FxSystem*, float const*, float, float)
-FX_AddVisBlocker:
+_Z16FX_AddVisBlockerP8FxSystemPKfff:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -587,7 +587,7 @@ FX_AddVisBlocker:
 	mov eax, [ecx+0x1000]
 	add eax, 0x1
 	cmp eax, 0xff
-	jg FX_AddVisBlocker_10
+	jg _Z16FX_AddVisBlockerP8FxSystemPKfff_10
 	shl eax, 0x4
 	lea edx, [ecx+eax]
 	mov eax, [ebx]
@@ -606,8 +606,8 @@ FX_AddVisBlocker:
 	mov [edx+0xe], ax
 	lea eax, [ecx+0x1000]
 	mov [esp], eax
-	call InterlockedIncrement
-FX_AddVisBlocker_10:
+	call iInterlockedIncrement
+_Z16FX_AddVisBlockerP8FxSystemPKfff_10:
 	add esp, 0x14
 	pop ebx
 	pop ebp
@@ -616,7 +616,7 @@ FX_AddVisBlocker_10:
 
 
 ;FX_GetOrientation(FxElemDef const*, FxSpatialFrame const*, FxSpatialFrame const*, int, orientation_t*)
-FX_GetOrientation:
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -631,7 +631,7 @@ FX_GetOrientation:
 	mov ebx, [ebp+0x18]
 	mov eax, [esi]
 	and eax, 0xc0
-	jnz FX_GetOrientation_10
+	jnz _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_10
 	xor eax, eax
 	mov [ebx], eax
 	mov [ebx+0x4], eax
@@ -655,17 +655,17 @@ FX_GetOrientation:
 	pop edi
 	pop ebp
 	ret
-FX_GetOrientation_10:
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_10:
 	cmp eax, 0x40
-	jz FX_GetOrientation_20
+	jz _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_20
 	add eax, 0xffffff80
-	jz FX_GetOrientation_30
+	jz _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_30
 	mov [esp+0xc], ebx
 	mov ecx, [ebp-0x28]
 	mov [esp+0x8], ecx
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call FX_GetSpawnOrigin
+	call _Z17FX_GetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf
 	lea eax, [ebx+0xc]
 	mov [ebp-0x24], eax
 	pxor xmm3, xmm3
@@ -683,7 +683,7 @@ FX_GetOrientation_10:
 	mov [esp+0x4], esi
 	mov [esp], edi
 	movss [ebp-0x38], xmm3
-	call FX_OffsetSpawnOrigin
+	call _Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf
 	movss xmm4, dword [ebx+0xc]
 	movaps xmm0, xmm4
 	addss xmm0, [ebx]
@@ -708,10 +708,10 @@ FX_GetOrientation_10:
 	xorps xmm0, xmm5
 	movss xmm3, dword [ebp-0x38]
 	ucomiss xmm0, xmm3
-	jb FX_GetOrientation_40
+	jb _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_40
 	movss xmm6, dword [_float_1_00000000]
 	movaps xmm1, xmm6
-FX_GetOrientation_110:
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_110:
 	mulss xmm4, xmm1
 	mov ecx, [ebp-0x24]
 	movss [ecx], xmm4
@@ -724,19 +724,19 @@ FX_GetOrientation_110:
 	movss [ecx], xmm1
 	pxor xmm4, xmm4
 	ucomiss xmm2, xmm4
-	jz FX_GetOrientation_50
-FX_GetOrientation_90:
+	jz _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_50
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_90:
 	mov eax, [esi]
 	and eax, 0x30
 	cmp eax, 0x10
-	jz FX_GetOrientation_60
+	jz _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_60
 	movss xmm0, dword [ebx+0x14]
 	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_0_99900001]
-	jb FX_GetOrientation_70
+	jb _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_70
 	movaps xmm2, xmm4
 	movaps xmm1, xmm6
-FX_GetOrientation_100:
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_100:
 	lea edx, [ebx+0x18]
 	movaps xmm3, xmm1
 	mov esi, [ebp-0x1c]
@@ -772,8 +772,8 @@ FX_GetOrientation_100:
 	movaps xmm0, xmm1
 	xorps xmm0, xmm5
 	ucomiss xmm0, xmm4
-	jb FX_GetOrientation_80
-FX_GetOrientation_120:
+	jb _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_80
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_120:
 	movaps xmm1, xmm6
 	mulss xmm3, xmm6
 	movss [edx], xmm3
@@ -811,20 +811,20 @@ FX_GetOrientation_120:
 	pop edi
 	pop ebp
 	ret
-FX_GetOrientation_50:
-	jp FX_GetOrientation_90
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_50:
+	jp _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_90
 	mov eax, [ebp-0x24]
 	mov dword [eax], 0x3f800000
 	mov ecx, [ebp-0x20]
 	movss [ecx], xmm4
 	mov eax, [ebp-0x1c]
 	movss [eax], xmm4
-	jmp FX_GetOrientation_90
-FX_GetOrientation_70:
+	jmp _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_90
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_70:
 	movaps xmm2, xmm6
 	movaps xmm1, xmm4
-	jmp FX_GetOrientation_100
-FX_GetOrientation_20:
+	jmp _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_100
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_20:
 	lea edx, [edi+0x10]
 	mov eax, [edi+0x10]
 	mov [ebx], eax
@@ -840,8 +840,8 @@ FX_GetOrientation_20:
 	pop esi
 	pop edi
 	pop ebp
-	jmp UnitQuatToAxis
-FX_GetOrientation_30:
+	jmp _Z14UnitQuatToAxisPKfPA3_f
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_30:
 	lea edx, [ecx+0x10]
 	mov eax, [ecx+0x10]
 	mov [ebx], eax
@@ -857,16 +857,16 @@ FX_GetOrientation_30:
 	pop esi
 	pop edi
 	pop ebp
-	jmp UnitQuatToAxis
-FX_GetOrientation_40:
+	jmp _Z14UnitQuatToAxisPKfPA3_f
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_40:
 	movss xmm6, dword [_float_1_00000000]
 	movaps xmm1, xmm6
 	divss xmm1, xmm2
-	jmp FX_GetOrientation_110
-FX_GetOrientation_80:
+	jmp _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_110
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_80:
 	divss xmm6, xmm1
-	jmp FX_GetOrientation_120
-FX_GetOrientation_60:
+	jmp _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_120
+_Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t_60:
 	lea eax, [ebx+0x24]
 	mov [ebp+0x10], eax
 	lea eax, [ebx+0x18]
@@ -878,11 +878,11 @@ FX_GetOrientation_60:
 	pop esi
 	pop edi
 	pop ebp
-	jmp Vec3Basis_RightHanded
+	jmp _Z21Vec3Basis_RightHandedPKfPfS1_
 
 
 ;FX_GetSpawnOrigin(FxSpatialFrame const*, FxElemDef const*, int, float*)
-FX_GetSpawnOrigin:
+_Z17FX_GetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -903,7 +903,7 @@ FX_GetSpawnOrigin:
 	mulss xmm3, [eax+0x4c]
 	addss xmm3, [eax+0x48]
 	test byte [eax], 0x2
-	jnz FX_GetSpawnOrigin_10
+	jnz _Z17FX_GetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf_10
 	lea eax, [esi+0x10]
 	addss xmm1, [esi+0x10]
 	movss [ebx], xmm1
@@ -916,14 +916,14 @@ FX_GetSpawnOrigin:
 	pop esi
 	pop ebp
 	ret
-FX_GetSpawnOrigin_10:
+_Z17FX_GetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf_10:
 	lea eax, [ebp-0x2c]
 	mov [esp+0x4], eax
 	mov [esp], esi
 	movss [ebp-0x48], xmm1
 	movss [ebp-0x58], xmm2
 	movss [ebp-0x68], xmm3
-	call UnitQuatToAxis
+	call _Z14UnitQuatToAxisPKfPA3_f
 	lea eax, [esi+0x10]
 	movss xmm1, dword [ebp-0x48]
 	movaps xmm0, xmm1
@@ -970,7 +970,7 @@ FX_GetSpawnOrigin_10:
 
 
 ;FX_GetVelocityAtTime(FxElemDef const*, int, float, float, orientation_t const*, float const*, float*)
-FX_GetVelocityAtTime:
+_Z20FX_GetVelocityAtTimePK9FxElemDefiffPK13orientation_tPKfPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1024,7 +1024,7 @@ FX_GetVelocityAtTime:
 	movss xmm5, dword [ebp-0x48]
 	movss xmm6, dword [ebp-0x58]
 	movss xmm7, dword [ebp-0x68]
-	jz FX_GetVelocityAtTime_10
+	jz _Z20FX_GetVelocityAtTimePK9FxElemDefiffPK13orientation_tPKfPf_10
 	lea edx, [ecx+0x90]
 	lea eax, [ecx+0x30]
 	movaps xmm2, xmm5
@@ -1066,9 +1066,9 @@ FX_GetVelocityAtTime:
 	movss [esi+0x8], xmm1
 	mov edx, [ebp+0x8]
 	mov eax, [edx]
-FX_GetVelocityAtTime_10:
+_Z20FX_GetVelocityAtTimePK9FxElemDefiffPK13orientation_tPKfPf_10:
 	test eax, 0x1000000
-	jz FX_GetVelocityAtTime_20
+	jz _Z20FX_GetVelocityAtTimePK9FxElemDefiffPK13orientation_tPKfPf_20
 	lea eax, [ecx+0x60]
 	movaps xmm0, xmm5
 	mulss xmm0, [ecx+0xc]
@@ -1125,7 +1125,7 @@ FX_GetVelocityAtTime_10:
 	mulss xmm3, xmm1
 	addss xmm3, [esi+0x8]
 	movss [esi+0x8], xmm3
-FX_GetVelocityAtTime_20:
+_Z20FX_GetVelocityAtTimePK9FxElemDefiffPK13orientation_tPKfPf_20:
 	add esp, 0x6c
 	pop ebx
 	pop esi
@@ -1136,7 +1136,7 @@ FX_GetVelocityAtTime_20:
 
 
 ;FX_OffsetSpawnOrigin(FxSpatialFrame const*, FxElemDef const*, int, float*)
-FX_OffsetSpawnOrigin:
+_Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1148,9 +1148,9 @@ FX_OffsetSpawnOrigin:
 	mov esi, [ebp+0x14]
 	mov eax, [edi]
 	and eax, 0x30
-	jz FX_OffsetSpawnOrigin_10
+	jz _Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf_10
 	cmp eax, 0x10
-	jz FX_OffsetSpawnOrigin_20
+	jz _Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf_20
 	mov eax, fx_randomTable
 	movss xmm0, dword [eax+ebx*4+0x2c]
 	movss [ebp-0x50], xmm0
@@ -1166,7 +1166,7 @@ FX_OffsetSpawnOrigin:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call UnitQuatToAxis
+	call _Z14UnitQuatToAxisPKfPA3_f
 	movss xmm0, dword [ebp-0x4c]
 	movss [esp], xmm0
 	call sinf
@@ -1215,18 +1215,18 @@ FX_OffsetSpawnOrigin:
 	mulss xmm1, [ebp-0x40]
 	addss xmm1, [esi+0x8]
 	movss [esi+0x8], xmm1
-FX_OffsetSpawnOrigin_10:
+_Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf_10:
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_OffsetSpawnOrigin_20:
+_Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf_20:
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call FX_RandomDir
+	call _Z12FX_RandomDiriPf
 	mov eax, fx_randomTable
 	movss xmm1, dword [eax+ebx*4+0x2c]
 	mulss xmm1, [edi+0x54]
@@ -1251,7 +1251,7 @@ FX_OffsetSpawnOrigin_20:
 
 
 ;FX_GetOriginForTrailElem(FxEffect*, FxElemDef const*, FxSpatialFrame const*, int, float*, float*, float*)
-FX_GetOriginForTrailElem:
+_Z24FX_GetOriginForTrailElemP8FxEffectPK9FxElemDefPK14FxSpatialFrameiPfS7_S7_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1264,7 +1264,7 @@ FX_GetOriginForTrailElem:
 	lea eax, [ebp-0x3c]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call UnitQuatToAxis
+	call _Z14UnitQuatToAxisPKfPA3_f
 	mov eax, [ebp-0x30]
 	mov [ebx], eax
 	mov eax, [ebp-0x2c]
@@ -1284,7 +1284,7 @@ FX_GetOriginForTrailElem:
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call FX_GetSpawnOrigin
+	call _Z17FX_GetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf
 	mov eax, [ebp+0x18]
 	mov [esp+0xc], eax
 	mov eax, [ebp+0x14]
@@ -1292,7 +1292,7 @@ FX_GetOriginForTrailElem:
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call FX_OffsetSpawnOrigin
+	call _Z20FX_OffsetSpawnOriginPK14FxSpatialFramePK9FxElemDefiPf
 	add esp, 0x4c
 	pop ebx
 	pop esi
@@ -1303,7 +1303,7 @@ FX_GetOriginForTrailElem:
 
 
 ;FX_ToggleVisBlockerFrame(FxSystem*, FxSystem*)
-FX_ToggleVisBlockerFrame:
+_Z24FX_ToggleVisBlockerFrameP8FxSystemS0_:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -1320,7 +1320,7 @@ FX_ToggleVisBlockerFrame:
 
 
 ;FX_OrientationPosToWorldPos(orientation_t const*, float const*, float*)
-FX_OrientationPosToWorldPos:
+_Z27FX_OrientationPosToWorldPosPK13orientation_tPKfPf:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -1362,7 +1362,7 @@ FX_OrientationPosToWorldPos:
 
 
 ;FX_OrientationPosFromWorldPos(orientation_t const*, float const*, float*)
-FX_OrientationPosFromWorldPos:
+_Z29FX_OrientationPosFromWorldPosPK13orientation_tPKfPf:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -1441,7 +1441,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of fx_update_util:
@@ -1478,7 +1478,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

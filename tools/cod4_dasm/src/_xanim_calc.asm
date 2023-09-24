@@ -1,15 +1,15 @@
 ;Imports of xanim_calc:
-	extern SL_ConvertToString
-	extern GetAnimInfo
-	extern Com_PrintWarning
+	extern _Z18SL_ConvertToStringj
+	extern _Z11GetAnimInfoi
+	extern _Z16Com_PrintWarningiPKcz
 
 ;Exports of xanim_calc:
 	global _GLOBAL__I__Z13XAnim_SetTimefiP9XAnimTime
-	global XAnim_GetTimeIndex
-	global XAnimCalcParts
-	global XAnimCalc
-	global DObjCalcAnim
-	global XAnim_CalcDeltaForTime
+	global _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
+	global _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE
+	global _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat
+	global _Z12DObjCalcAnimPK6DObj_sPi
+	global _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4
 
 
 SECTION .text
@@ -22,11 +22,11 @@ _GLOBAL__I__Z13XAnim_SetTimefiP9XAnimTime:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;void XAnim_GetTimeIndex<unsigned short>(XAnimTime const*, unsigned short const*, int, int*, float*)
-XAnim_GetTimeIndex:
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -43,32 +43,32 @@ XAnim_GetTimeIndex:
 	lea edx, [edx+ecx*2]
 	movzx eax, word [edx]
 	cmp esi, eax
-	jae XAnim_GetTimeIndex_10
+	jae _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_10
 	mov ebx, ecx
 	mov dword [ebp-0x18], 0x0
-XAnim_GetTimeIndex_40:
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_40:
 	sub ebx, 0x1
 	lea edx, [edi+ebx*2]
 	movzx eax, word [edx]
 	cmp esi, eax
-	jae XAnim_GetTimeIndex_20
-XAnim_GetTimeIndex_50:
+	jae _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_20
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_50:
 	mov ecx, [ebp-0x18]
 	add ecx, ebx
 	shr ecx, 1
 	lea edx, [edi+ecx*2]
 	movzx eax, word [edx]
 	cmp esi, eax
-	jb XAnim_GetTimeIndex_30
+	jb _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_30
 	lea eax, [ecx+0x1]
 	mov [ebp-0x18], eax
 	movzx eax, word [edi+eax*2]
 	cmp esi, eax
-	jae XAnim_GetTimeIndex_40
-XAnim_GetTimeIndex_100:
+	jae _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_40
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_100:
 	lea ebx, [edx+0x2]
 	mov [ebp-0x10], ebx
-XAnim_GetTimeIndex_60:
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_60:
 	movzx edx, word [edx]
 	cvtsi2ss xmm0, edx
 	mov eax, [ebp-0x1c]
@@ -88,74 +88,74 @@ XAnim_GetTimeIndex_60:
 	pop edi
 	pop ebp
 	ret
-XAnim_GetTimeIndex_30:
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_30:
 	mov ebx, ecx
 	sub ebx, 0x1
 	lea edx, [edi+ebx*2]
 	movzx eax, word [edx]
 	cmp esi, eax
-	jb XAnim_GetTimeIndex_50
-XAnim_GetTimeIndex_20:
+	jb _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_50
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_20:
 	lea eax, [edx+0x2]
 	mov [ebp-0x10], eax
 	mov ecx, ebx
 	mov ebx, eax
-	jmp XAnim_GetTimeIndex_60
-XAnim_GetTimeIndex_10:
+	jmp _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_60
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_10:
 	lea eax, [edx+0x2]
 	mov [ebp-0x10], eax
 	movzx eax, word [edx+0x2]
 	cmp esi, eax
-	jb XAnim_GetTimeIndex_70
+	jb _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_70
 	lea ebx, [ecx+0x1]
 	mov eax, [ebp-0x20]
 	mov [ebp-0x14], eax
-XAnim_GetTimeIndex_120:
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_120:
 	add ebx, 0x1
 	movzx eax, word [edi+ebx*2]
 	cmp esi, eax
-	jb XAnim_GetTimeIndex_80
-XAnim_GetTimeIndex_110:
+	jb _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_80
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_110:
 	mov ecx, [ebp-0x14]
 	add ecx, ebx
 	shr ecx, 1
 	lea edx, [edi+ecx*2]
 	movzx eax, word [edx]
 	cmp esi, eax
-	jb XAnim_GetTimeIndex_90
+	jb _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_90
 	lea ebx, [ecx+0x1]
 	movzx eax, word [edi+ebx*2]
 	cmp esi, eax
-	jb XAnim_GetTimeIndex_100
+	jb _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_100
 	add ebx, 0x1
 	movzx eax, word [edi+ebx*2]
 	cmp esi, eax
-	jae XAnim_GetTimeIndex_110
-XAnim_GetTimeIndex_80:
+	jae _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_110
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_80:
 	lea ecx, [ebx-0x1]
 	lea edx, [edi+ecx*2]
-	jmp XAnim_GetTimeIndex_100
-XAnim_GetTimeIndex_90:
+	jmp _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_100
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_90:
 	mov [ebp-0x14], ecx
-	jmp XAnim_GetTimeIndex_120
-XAnim_GetTimeIndex_70:
+	jmp _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_120
+_Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_70:
 	mov ebx, [ebp-0x10]
-	jmp XAnim_GetTimeIndex_60
+	jmp _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf_60
 	nop
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -425,7 +425,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;void XAnimCalcParts<unsigned short>(XAnimParts const*, unsigned char const*, float, float, DObjAnimMat*, bitarray<128u> const*)
-XAnimCalcParts:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -458,9 +458,9 @@ XAnimCalcParts:
 	movzx eax, byte [esi+0x12]
 	movzx edi, al
 	test al, al
-	jnz XAnimCalcParts_10
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_10
 	mov dword [ebp-0xf8], 0x0
-XAnimCalcParts_500:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_500:
 	add esi, 0x12
 	mov [ebp-0x138], esi
 	movzx eax, byte [esi+0x1]
@@ -468,10 +468,10 @@ XAnimCalcParts_500:
 	mov [ebp-0xf0], edi
 	mov ecx, [ebp-0xf8]
 	cmp edi, ecx
-	jbe XAnimCalcParts_20
+	jbe _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_20
 	mov dword [ebp-0x10c], 0x0
-	jmp XAnimCalcParts_30
-XAnimCalcParts_60:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_30
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_60:
 	lea eax, [ebx+edi*2+0x2]
 	mov [ebp-0x108], eax
 	mov edx, esi
@@ -482,8 +482,8 @@ XAnimCalcParts_60:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jz XAnimCalcParts_40
-XAnimCalcParts_80:
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_40
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_80:
 	mov eax, [ebp-0x12c]
 	lea eax, [eax+edi*4+0x4]
 	mov [ebp-0x12c], eax
@@ -491,8 +491,8 @@ XAnimCalcParts_80:
 	mov eax, [ebp-0xf0]
 	sub eax, [ebp-0xf8]
 	cmp eax, [ebp-0x10c]
-	jz XAnimCalcParts_50
-XAnimCalcParts_30:
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_50
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_30:
 	mov eax, [ebp-0x13c]
 	add eax, [ebp-0x10c]
 	mov edx, [ebp-0xf8]
@@ -502,7 +502,7 @@ XAnimCalcParts_30:
 	mov ebx, ecx
 	add ebx, 0x2
 	cmp edi, 0x3f
-	jle XAnimCalcParts_60
+	jle _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_60
 	lea eax, [edi-0x1]
 	sar eax, 0x8
 	add eax, 0x1
@@ -517,12 +517,12 @@ XAnimCalcParts_30:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jz XAnimCalcParts_70
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_70
 	mov eax, [ebp-0x124]
 	lea eax, [eax+edi*2+0x2]
 	mov [ebp-0x124], eax
-	jmp XAnimCalcParts_80
-XAnimCalcParts_40:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_80
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_40:
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x1c]
@@ -530,8 +530,8 @@ XAnimCalcParts_40:
 	mov ecx, edi
 	mov edx, ebx
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
-XAnimCalcParts_90:
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_90:
 	mov edx, [ebp-0x1c]
 	mov ecx, [ebp-0x12c]
 	lea edx, [ecx+edx*4]
@@ -588,8 +588,8 @@ XAnimCalcParts_90:
 	mulss xmm3, [ebp-0xc4]
 	addss xmm2, xmm3
 	movss [eax+0xc], xmm2
-	jmp XAnimCalcParts_80
-XAnimCalcParts_70:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_80
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_70:
 	lea edx, [ebp-0x30]
 	mov [esp+0x4], edx
 	lea eax, [ebp-0x20]
@@ -597,7 +597,7 @@ XAnimCalcParts_70:
 	mov ecx, [ebp-0x120]
 	mov edx, ebx
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	mov edx, [ebp-0x20]
 	mov eax, edx
 	shl eax, 0x8
@@ -615,28 +615,28 @@ XAnimCalcParts_70:
 	lea eax, [ebp-0x1c]
 	mov [esp], eax
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	mov eax, [ebp-0x1c]
 	add eax, [ebp-0x20]
 	mov [ebp-0x1c], eax
 	mov eax, [ebp-0x124]
 	lea eax, [eax+edi*2+0x2]
 	mov [ebp-0x124], eax
-	jmp XAnimCalcParts_90
-XAnimCalcParts_50:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_90
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_50:
 	mov edx, [ebp-0x10c]
 	add [ebp-0xf8], edx
 	mov ecx, [ebp-0x138]
-XAnimCalcParts_470:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_470:
 	movzx eax, byte [ecx+0x2]
 	add eax, [ebp-0xf0]
 	mov [ebp-0xec], eax
 	mov edx, [ebp-0xf8]
 	cmp eax, edx
-	jbe XAnimCalcParts_100
+	jbe _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_100
 	mov dword [ebp-0x110], 0x0
-	jmp XAnimCalcParts_110
-XAnimCalcParts_140:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_110
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_140:
 	lea edx, [ebx+esi*2+0x2]
 	mov [ebp-0x108], edx
 	mov edx, edi
@@ -647,8 +647,8 @@ XAnimCalcParts_140:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jz XAnimCalcParts_120
-XAnimCalcParts_160:
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_120
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_160:
 	mov eax, [ebp-0x12c]
 	lea eax, [eax+esi*8+0x8]
 	mov [ebp-0x12c], eax
@@ -656,8 +656,8 @@ XAnimCalcParts_160:
 	mov eax, [ebp-0xec]
 	sub eax, [ebp-0xf8]
 	cmp [ebp-0x110], eax
-	jz XAnimCalcParts_130
-XAnimCalcParts_110:
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_130
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_110:
 	mov eax, [ebp-0x13c]
 	add eax, [ebp-0x110]
 	mov ecx, [ebp-0xf8]
@@ -667,7 +667,7 @@ XAnimCalcParts_110:
 	mov ebx, eax
 	add ebx, 0x2
 	cmp esi, 0x3f
-	jle XAnimCalcParts_140
+	jle _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_140
 	lea eax, [esi-0x1]
 	sar eax, 0x8
 	add eax, 0x1
@@ -682,22 +682,22 @@ XAnimCalcParts_110:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jz XAnimCalcParts_150
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_150
 	mov eax, [ebp-0x124]
 	lea eax, [eax+esi*2+0x2]
 	mov [ebp-0x124], eax
-	jmp XAnimCalcParts_160
-XAnimCalcParts_130:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_160
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_130:
 	mov edx, [ebp-0x110]
 	add [ebp-0xf8], edx
 	mov ecx, [ebp-0x138]
 	mov edx, [ebp-0xf8]
-XAnimCalcParts_100:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_100:
 	movzx eax, byte [ecx+0x3]
 	add eax, [ebp-0xec]
 	mov [ebp-0xe8], eax
 	cmp eax, edx
-	jbe XAnimCalcParts_170
+	jbe _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_170
 	mov dword [ebp-0x114], 0x0
 	movss xmm1, dword [_float_0_00003052]
 	mov ecx, [ebp-0x108]
@@ -706,7 +706,7 @@ XAnimCalcParts_100:
 	add edi, edx
 	sub eax, edx
 	mov [ebp-0x148], eax
-XAnimCalcParts_190:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_190:
 	movzx esi, byte [edi]
 	mov eax, esi
 	shr eax, 0x5
@@ -716,7 +716,7 @@ XAnimCalcParts_190:
 	shr edx, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+eax*4], edx
-	jnz XAnimCalcParts_180
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_180
 	mov dword [ebp-0xc0], 0x0
 	mov dword [ebp-0xbc], 0x0
 	mov edx, [ebp-0x15c]
@@ -759,24 +759,24 @@ XAnimCalcParts_190:
 	mulss xmm0, [ebp-0xc4]
 	addss xmm0, [eax+0xc]
 	movss [eax+0xc], xmm0
-XAnimCalcParts_180:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_180:
 	add dword [ebp-0x114], 0x1
 	add edi, 0x1
 	add dword [ebp-0x15c], 0x4
 	mov ecx, [ebp-0x148]
 	cmp [ebp-0x114], ecx
-	jnz XAnimCalcParts_190
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_190
 	mov eax, [ebp-0x114]
 	add [ebp-0xf8], eax
 	mov edx, [ebp-0x108]
 	lea edx, [edx+eax*4]
 	mov [ebp-0x108], edx
 	mov ecx, [ebp-0x138]
-XAnimCalcParts_170:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_170:
 	movzx eax, byte [ecx+0x4]
 	add eax, [ebp-0xe8]
 	cmp eax, [ebp-0xf8]
-	jbe XAnimCalcParts_200
+	jbe _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_200
 	mov dword [ebp-0x118], 0x0
 	movss xmm1, dword [_float_0_00003052]
 	mov edi, [ebp-0x108]
@@ -786,10 +786,10 @@ XAnimCalcParts_170:
 	sub eax, [ebp-0xf8]
 	mov [ebp-0x14c], eax
 	mov ecx, edx
-	jmp XAnimCalcParts_210
-XAnimCalcParts_230:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_210
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_230:
 	mov ecx, [ebp-0x158]
-XAnimCalcParts_210:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_210:
 	movzx esi, byte [ecx]
 	mov eax, esi
 	shr eax, 0x5
@@ -799,7 +799,7 @@ XAnimCalcParts_210:
 	shr edx, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+eax*4], edx
-	jnz XAnimCalcParts_220
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_220
 	movsx eax, word [edi]
 	cvtsi2ss xmm0, eax
 	mulss xmm0, xmm1
@@ -847,26 +847,26 @@ XAnimCalcParts_210:
 	mulss xmm0, [ebp-0xb4]
 	addss xmm0, [eax+0xc]
 	movss [eax+0xc], xmm0
-XAnimCalcParts_220:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_220:
 	add dword [ebp-0x118], 0x1
 	add dword [ebp-0x158], 0x1
 	add edi, 0x8
 	mov eax, [ebp-0x118]
 	cmp [ebp-0x14c], eax
-	jnz XAnimCalcParts_230
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_230
 	mov edx, [ebp-0x108]
 	lea edx, [edx+eax*8]
 	mov [ebp-0x108], edx
 	mov ecx, [ebp-0x138]
-XAnimCalcParts_200:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_200:
 	movzx eax, byte [ecx+0x5]
 	movzx edx, al
 	mov [ebp-0xe4], edx
 	test al, al
-	jz XAnimCalcParts_240
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_240
 	mov dword [ebp-0xf4], 0x0
-	jmp XAnimCalcParts_250
-XAnimCalcParts_280:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_250
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_280:
 	lea eax, [ebx+ecx*2+0x2]
 	mov [ebp-0x108], eax
 	mov edx, esi
@@ -877,9 +877,9 @@ XAnimCalcParts_280:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jz XAnimCalcParts_260
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_260
 	mov edx, [ebp-0x104]
-XAnimCalcParts_300:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_300:
 	add dword [ebp-0xf4], 0x1
 	add dword [ebp-0x134], 0x18
 	lea eax, [edx+edx*2]
@@ -888,8 +888,8 @@ XAnimCalcParts_300:
 	mov [ebp-0x130], eax
 	mov eax, [ebp-0xf4]
 	cmp [ebp-0xe4], eax
-	jbe XAnimCalcParts_270
-XAnimCalcParts_250:
+	jbe _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_270
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_250:
 	mov ecx, [ebp-0x100]
 	movzx eax, byte [ecx]
 	mov edx, [ebp-0x13c]
@@ -902,7 +902,7 @@ XAnimCalcParts_250:
 	mov ebx, [ebp-0x108]
 	add ebx, 0x2
 	cmp ecx, 0x3f
-	jle XAnimCalcParts_280
+	jle _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_280
 	mov eax, ecx
 	sub eax, 0x1
 	sar eax, 0x8
@@ -917,14 +917,14 @@ XAnimCalcParts_250:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jz XAnimCalcParts_290
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_290
 	mov edx, [ebp-0x124]
 	mov eax, [ebp-0x104]
 	lea edx, [edx+eax*2+0x2]
 	mov [ebp-0x124], edx
 	mov edx, eax
-	jmp XAnimCalcParts_300
-XAnimCalcParts_150:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_300
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_150:
 	lea edx, [ebp-0x30]
 	mov [esp+0x4], edx
 	lea eax, [ebp-0x1c]
@@ -932,7 +932,7 @@ XAnimCalcParts_150:
 	mov ecx, [ebp-0x11c]
 	mov edx, ebx
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	mov edx, [ebp-0x1c]
 	mov eax, edx
 	shl eax, 0x8
@@ -950,14 +950,14 @@ XAnimCalcParts_150:
 	lea eax, [ebp-0x20]
 	mov [esp], eax
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	mov eax, [ebp-0x20]
 	add eax, [ebp-0x1c]
 	mov [ebp-0x20], eax
 	mov eax, [ebp-0x124]
 	lea eax, [eax+esi*2+0x2]
 	mov [ebp-0x124], eax
-XAnimCalcParts_310:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_310:
 	mov edx, [ebp-0x20]
 	mov ecx, [ebp-0x12c]
 	lea edx, [ecx+edx*8]
@@ -1026,8 +1026,8 @@ XAnimCalcParts_310:
 	mulss xmm3, [ebp-0xb4]
 	addss xmm2, xmm3
 	movss [eax+0xc], xmm2
-	jmp XAnimCalcParts_160
-XAnimCalcParts_120:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_160
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_120:
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x20]
@@ -1035,9 +1035,9 @@ XAnimCalcParts_120:
 	mov ecx, esi
 	mov edx, ebx
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
-	jmp XAnimCalcParts_310
-XAnimCalcParts_260:
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_310
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_260:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x24]
@@ -1045,8 +1045,8 @@ XAnimCalcParts_260:
 	mov ecx, [ebp-0x104]
 	mov edx, ebx
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
-XAnimCalcParts_320:
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_320:
 	mov eax, [ebp-0x24]
 	lea eax, [eax+eax*2]
 	add eax, [ebp-0x130]
@@ -1137,8 +1137,8 @@ XAnimCalcParts_320:
 	addss xmm0, [esi+0x1c]
 	movss [esi+0x1c], xmm0
 	mov edx, [ebp-0x104]
-	jmp XAnimCalcParts_300
-XAnimCalcParts_290:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_300
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_290:
 	lea ecx, [ebp-0x30]
 	mov [esp+0x4], ecx
 	lea eax, [ebp-0x1c]
@@ -1146,7 +1146,7 @@ XAnimCalcParts_290:
 	mov ecx, edi
 	mov edx, ebx
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	mov edx, [ebp-0x1c]
 	mov eax, edx
 	shl eax, 0x8
@@ -1164,7 +1164,7 @@ XAnimCalcParts_290:
 	lea eax, [ebp-0x24]
 	mov [esp], eax
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	mov eax, [ebp-0x24]
 	add eax, [ebp-0x1c]
 	mov [ebp-0x24], eax
@@ -1172,30 +1172,30 @@ XAnimCalcParts_290:
 	mov eax, [ebp-0x104]
 	lea edx, [edx+eax*2+0x2]
 	mov [ebp-0x124], edx
-	jmp XAnimCalcParts_320
-XAnimCalcParts_240:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_320
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_240:
 	mov dword [ebp-0xf4], 0x0
 	mov ecx, [ebp-0xf4]
-XAnimCalcParts_510:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_510:
 	mov edx, [ebp-0x138]
 	movzx eax, byte [edx+0x6]
 	add eax, [ebp-0xe4]
 	mov [ebp-0xe0], eax
 	cmp eax, ecx
-	ja XAnimCalcParts_330
+	ja _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_330
 	mov edi, ecx
-XAnimCalcParts_420:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_420:
 	mov ecx, [ebp-0x138]
 	movzx eax, byte [ecx+0x7]
 	add eax, [ebp-0xe0]
 	mov [ebp-0xdc], eax
 	cmp eax, edi
-	jbe XAnimCalcParts_340
+	jbe _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_340
 	mov esi, [ebp-0x100]
 	sub eax, edi
 	add eax, esi
 	mov [ebp-0x150], eax
-XAnimCalcParts_360:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_360:
 	movzx eax, byte [esi]
 	mov edx, [ebp-0x13c]
 	movzx ebx, byte [edx+eax]
@@ -1207,7 +1207,7 @@ XAnimCalcParts_360:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jnz XAnimCalcParts_350
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_350
 	shl ebx, 0x5
 	mov edx, [ebp-0x144]
 	add edx, ebx
@@ -1228,26 +1228,26 @@ XAnimCalcParts_360:
 	movss xmm0, dword [ebp-0x140]
 	addss xmm0, [edx+0x1c]
 	movss [edx+0x1c], xmm0
-XAnimCalcParts_350:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_350:
 	add esi, 0x1
 	add dword [ebp-0x134], 0xc
 	cmp [ebp-0x150], esi
-	jnz XAnimCalcParts_360
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_360
 	mov eax, edi
 	sub eax, [ebp-0x100]
 	mov edx, [ebp-0x150]
 	lea edi, [eax+edx]
 	mov [ebp-0x100], edx
 	mov ecx, [ebp-0x138]
-XAnimCalcParts_340:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_340:
 	movzx eax, byte [ecx+0x8]
 	add eax, [ebp-0xdc]
 	cmp eax, edi
-	jbe XAnimCalcParts_370
+	jbe _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_370
 	mov esi, [ebp-0x100]
 	sub eax, edi
 	lea edi, [esi+eax]
-XAnimCalcParts_390:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_390:
 	movzx eax, byte [esi]
 	mov edx, [ebp-0x13c]
 	movzx ebx, byte [eax+edx]
@@ -1259,30 +1259,30 @@ XAnimCalcParts_390:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jnz XAnimCalcParts_380
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_380
 	shl ebx, 0x5
 	mov eax, [ebp-0x144]
 	add eax, ebx
 	movss xmm0, dword [ebp-0x140]
 	addss xmm0, [eax+0x1c]
 	movss [eax+0x1c], xmm0
-XAnimCalcParts_380:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_380:
 	add esi, 0x1
 	cmp esi, edi
-	jnz XAnimCalcParts_390
-XAnimCalcParts_370:
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_390
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_370:
 	add esp, 0x16c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-XAnimCalcParts_330:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_330:
 	mov [ebp-0xfc], ecx
 	mov edx, [ebp-0xe0]
 	mov [ebp-0x154], edx
-	jmp XAnimCalcParts_400
-XAnimCalcParts_430:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_400
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_430:
 	lea eax, [ebx+ecx*2+0x2]
 	mov [ebp-0x108], eax
 	mov edx, esi
@@ -1293,9 +1293,9 @@ XAnimCalcParts_430:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jz XAnimCalcParts_410
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_410
 	mov ecx, [ebp-0x128]
-XAnimCalcParts_450:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_450:
 	add dword [ebp-0xfc], 0x1
 	add dword [ebp-0x134], 0x18
 	lea eax, [ecx+ecx*2]
@@ -1304,8 +1304,8 @@ XAnimCalcParts_450:
 	mov [ebp-0x12c], edx
 	mov edi, [ebp-0x154]
 	cmp edi, [ebp-0xfc]
-	jz XAnimCalcParts_420
-XAnimCalcParts_400:
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_420
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_400:
 	mov ecx, [ebp-0x100]
 	movzx eax, byte [ecx]
 	mov edx, [ebp-0x13c]
@@ -1318,7 +1318,7 @@ XAnimCalcParts_400:
 	mov ebx, [ebp-0x108]
 	add ebx, 0x2
 	cmp ecx, 0x3f
-	jle XAnimCalcParts_430
+	jle _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_430
 	mov eax, ecx
 	sub eax, 0x1
 	sar eax, 0x8
@@ -1333,14 +1333,14 @@ XAnimCalcParts_400:
 	shr eax, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+edx*4], eax
-	jz XAnimCalcParts_440
+	jz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_440
 	mov edx, [ebp-0x124]
 	mov eax, [ebp-0x128]
 	lea edx, [edx+eax*2+0x2]
 	mov [ebp-0x124], edx
 	mov ecx, eax
-	jmp XAnimCalcParts_450
-XAnimCalcParts_410:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_450
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_410:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x1c]
@@ -1348,8 +1348,8 @@ XAnimCalcParts_410:
 	mov ecx, [ebp-0x128]
 	mov edx, ebx
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
-XAnimCalcParts_460:
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_460:
 	mov eax, [ebp-0x1c]
 	lea eax, [eax+eax*2]
 	mov ecx, [ebp-0x12c]
@@ -1442,8 +1442,8 @@ XAnimCalcParts_460:
 	addss xmm0, [esi+0x1c]
 	movss [esi+0x1c], xmm0
 	mov ecx, [ebp-0x128]
-	jmp XAnimCalcParts_450
-XAnimCalcParts_440:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_450
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_440:
 	lea ecx, [ebp-0x30]
 	mov [esp+0x4], ecx
 	lea eax, [ebp-0x24]
@@ -1451,7 +1451,7 @@ XAnimCalcParts_440:
 	mov ecx, edi
 	mov edx, ebx
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	mov edx, [ebp-0x24]
 	mov eax, edx
 	shl eax, 0x8
@@ -1469,7 +1469,7 @@ XAnimCalcParts_440:
 	lea eax, [ebp-0x1c]
 	mov [esp], eax
 	lea eax, [ebp-0x30]
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	mov eax, [ebp-0x1c]
 	add eax, [ebp-0x24]
 	mov [ebp-0x1c], eax
@@ -1477,13 +1477,13 @@ XAnimCalcParts_440:
 	mov eax, [ebp-0x128]
 	lea edx, [edx+eax*2+0x2]
 	mov [ebp-0x124], edx
-	jmp XAnimCalcParts_460
-XAnimCalcParts_20:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_460
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_20:
 	mov ecx, esi
-	jmp XAnimCalcParts_470
-XAnimCalcParts_10:
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_470
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_10:
 	mov dword [ebp-0xf8], 0x0
-XAnimCalcParts_490:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_490:
 	mov eax, [ebp-0x13c]
 	mov edx, [ebp-0xf8]
 	movzx ebx, byte [eax+edx]
@@ -1495,27 +1495,27 @@ XAnimCalcParts_490:
 	shr edx, cl
 	mov ecx, [ebp+0x8]
 	test [ecx+eax*4], edx
-	jnz XAnimCalcParts_480
+	jnz _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_480
 	shl ebx, 0x5
 	mov eax, [ebp-0x144]
 	add eax, ebx
 	movss xmm0, dword [ebp-0x140]
 	addss xmm0, [eax+0xc]
 	movss [eax+0xc], xmm0
-XAnimCalcParts_480:
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_480:
 	add dword [ebp-0xf8], 0x1
 	cmp edi, [ebp-0xf8]
-	ja XAnimCalcParts_490
-	jmp XAnimCalcParts_500
-XAnimCalcParts_270:
+	ja _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_490
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_500
+_Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_270:
 	mov ecx, eax
-	jmp XAnimCalcParts_510
+	jmp _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE_510
 	nop
 
 
 ;XAnimCalc(DObj_s const*, XAnimInfo*, float, unsigned char, unsigned char, XAnimCalcAnimInfo*, int, DObjAnimMat*)
-XAnimCalc:
-XAnimCalc_900:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_900:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1529,22 +1529,22 @@ XAnimCalc_900:
 	movzx eax, byte [ebp+0x8]
 	mov [ebp-0x215], al
 	cmp word [edx+0x12], 0x0
-	jz XAnimCalc_10
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_10
 	test cl, cl
-	jnz XAnimCalc_20
-XAnimCalc_470:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_20
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_470:
 	mov ecx, [edi+0x14]
 	mov [ebp-0x1dc], ecx
 	movzx eax, word [edi+0x12]
 	mov [esp], eax
 	movss [ebp-0x268], xmm7
-	call SL_ConvertToString
+	call _Z18SL_ConvertToStringj
 	mov esi, eax
 	mov edx, [ebp+0xc]
 	mov ecx, eax
 	mov ebx, 0x4
 	movss xmm7, dword [ebp-0x268]
-XAnimCalc_30:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_30:
 	mov eax, [edx+0x6010]
 	not eax
 	and eax, [ecx]
@@ -1552,14 +1552,14 @@ XAnimCalc_30:
 	add edx, 0x4
 	add ecx, 0x4
 	sub ebx, 0x1
-	jnz XAnimCalc_30
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_30
 	movss xmm5, dword [edi+0x18]
 	ucomiss xmm5, [_float_1_00000000]
-	jp XAnimCalc_40
-	jnz XAnimCalc_40
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_40
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_40
 	mov edx, [ebp-0x1dc]
 	mov ecx, [ebp-0x1dc]
-XAnimCalc_620:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_620:
 	add esi, 0x11
 	mov [ebp-0x1fc], esi
 	mov eax, [ebp+0xc]
@@ -1586,7 +1586,7 @@ XAnimCalc_620:
 	movzx eax, byte [ecx+0x12]
 	movzx esi, al
 	test al, al
-	jnz XAnimCalc_50
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_50
 	mov dword [ebp-0x154], 0x0
 	mov ebx, [ebp-0x1dc]
 	movzx eax, byte [ebx+0x13]
@@ -1594,16 +1594,16 @@ XAnimCalc_620:
 	mov [ebp-0x134], esi
 	mov eax, [ebp-0x154]
 	cmp esi, eax
-	jbe XAnimCalc_60
-XAnimCalc_520:
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_60
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_520:
 	mov dword [ebp-0x18c], 0x0
 	movss xmm1, dword [_float_0_00003052]
-	jmp XAnimCalc_70
-XAnimCalc_100:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_70
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_100:
 	mov eax, [ebp-0x158]
 	lea eax, [ebx+eax+0x1]
 	mov [ebp-0x158], eax
-XAnimCalc_630:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_630:
 	mov edx, esi
 	shr edx, 0x5
 	mov ecx, esi
@@ -1612,8 +1612,8 @@ XAnimCalc_630:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jz XAnimCalc_80
-XAnimCalc_120:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_80
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_120:
 	mov eax, [ebp-0x1ec]
 	lea edi, [eax+ebx*4]
 	add edi, 0x4
@@ -1622,8 +1622,8 @@ XAnimCalc_120:
 	mov eax, [ebp-0x134]
 	sub eax, [ebp-0x154]
 	cmp [ebp-0x18c], eax
-	jz XAnimCalc_90
-XAnimCalc_70:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_90
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_70:
 	mov eax, [ebp-0x154]
 	add eax, [ebp-0x18c]
 	mov edx, [ebp-0x1fc]
@@ -1634,9 +1634,9 @@ XAnimCalc_70:
 	mov [ebp-0x1f8], ecx
 	mov eax, [ebp-0x1e8]
 	test eax, eax
-	jnz XAnimCalc_100
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_100
 	cmp ebx, 0x3f
-	ja XAnimCalc_110
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_110
 	mov edx, [ebp-0x1f8]
 	lea edx, [edx+ebx*2+0x2]
 	mov [ebp-0x1f8], edx
@@ -1648,8 +1648,8 @@ XAnimCalc_70:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_120
-XAnimCalc_80:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_120
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_80:
 	mov edx, [ebp-0x1ec]
 	lea edi, [edx+ebx*4]
 	mov dword [ebp-0xd0], 0x0
@@ -1699,8 +1699,8 @@ XAnimCalc_80:
 	mov eax, [ebp-0x134]
 	sub eax, [ebp-0x154]
 	cmp [ebp-0x18c], eax
-	jnz XAnimCalc_70
-XAnimCalc_90:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_70
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_90:
 	mov ecx, [ebp-0x18c]
 	add [ebp-0x154], ecx
 	mov ebx, [ebp-0x1dc]
@@ -1709,14 +1709,14 @@ XAnimCalc_90:
 	add eax, [ebp-0x134]
 	mov [ebp-0x130], eax
 	cmp eax, edx
-	ja XAnimCalc_130
-XAnimCalc_530:
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_130
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_530:
 	movzx eax, byte [ebx+0x15]
 	add eax, [ebp-0x130]
 	mov [ebp-0x12c], eax
 	cmp eax, edx
-	jbe XAnimCalc_140
-XAnimCalc_600:
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_140
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_600:
 	mov dword [ebp-0x194], 0x0
 	movss xmm1, dword [_float_0_00003052]
 	mov ecx, [ebp-0x1f8]
@@ -1725,7 +1725,7 @@ XAnimCalc_600:
 	add edi, edx
 	sub eax, edx
 	mov [ebp-0x21c], eax
-XAnimCalc_160:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_160:
 	movzx esi, byte [edi]
 	mov eax, esi
 	shr eax, 0x5
@@ -1735,7 +1735,7 @@ XAnimCalc_160:
 	shr edx, cl
 	mov ebx, [ebp-0x1e4]
 	test [ebx+eax*4], edx
-	jnz XAnimCalc_150
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_150
 	mov dword [ebp-0xd0], 0x0
 	mov dword [ebp-0xcc], 0x0
 	mov edx, [ebp-0x24c]
@@ -1778,24 +1778,24 @@ XAnimCalc_160:
 	mulss xmm0, [ebp-0xd4]
 	addss xmm0, [eax+0xc]
 	movss [eax+0xc], xmm0
-XAnimCalc_150:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_150:
 	add dword [ebp-0x194], 0x1
 	add edi, 0x1
 	add dword [ebp-0x24c], 0x4
 	mov ecx, [ebp-0x21c]
 	cmp [ebp-0x194], ecx
-	jnz XAnimCalc_160
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_160
 	mov ebx, [ebp-0x194]
 	add [ebp-0x154], ebx
 	mov eax, [ebp-0x1f8]
 	lea eax, [eax+ebx*4]
 	mov [ebp-0x1f8], eax
 	mov edx, [ebp-0x1dc]
-XAnimCalc_610:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_610:
 	movzx eax, byte [edx+0x16]
 	add eax, [ebp-0x12c]
 	cmp eax, [ebp-0x154]
-	jbe XAnimCalc_170
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_170
 	mov dword [ebp-0x198], 0x0
 	movss xmm1, dword [_float_0_00003052]
 	mov edi, [ebp-0x1f8]
@@ -1805,10 +1805,10 @@ XAnimCalc_610:
 	sub eax, [ebp-0x154]
 	mov [ebp-0x220], eax
 	mov ebx, ecx
-	jmp XAnimCalc_180
-XAnimCalc_200:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_180
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_200:
 	mov ebx, [ebp-0x248]
-XAnimCalc_180:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_180:
 	movzx esi, byte [ebx]
 	mov eax, esi
 	shr eax, 0x5
@@ -1818,7 +1818,7 @@ XAnimCalc_180:
 	shr edx, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+eax*4], edx
-	jnz XAnimCalc_190
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_190
 	movsx eax, word [edi]
 	cvtsi2ss xmm0, eax
 	mulss xmm0, xmm1
@@ -1866,40 +1866,40 @@ XAnimCalc_180:
 	mulss xmm0, [ebp-0xc4]
 	addss xmm0, [eax+0xc]
 	movss [eax+0xc], xmm0
-XAnimCalc_190:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_190:
 	add dword [ebp-0x198], 0x1
 	add dword [ebp-0x248], 0x1
 	add edi, 0x8
 	mov ebx, [ebp-0x198]
 	cmp [ebp-0x220], ebx
-	jnz XAnimCalc_200
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_200
 	mov eax, [ebp-0x1f8]
 	lea eax, [eax+ebx*8]
 	mov [ebp-0x1f8], eax
 	mov edx, [ebp-0x1dc]
-XAnimCalc_170:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_170:
 	movzx eax, byte [edx+0x17]
 	movzx ecx, al
 	mov [ebp-0x128], ecx
 	test al, al
-	jnz XAnimCalc_210
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_210
 	xor edi, edi
-XAnimCalc_750:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_750:
 	mov ebx, [ebp-0x1dc]
 	movzx eax, byte [ebx+0x18]
 	add eax, [ebp-0x128]
 	mov [ebp-0x124], eax
 	cmp eax, edi
-	jbe XAnimCalc_220
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_220
 	movaps xmm3, xmm7
 	mulss xmm3, [_float_0_00000000]
 	mov [ebp-0x150], edi
 	mov [ebp-0x244], eax
-	jmp XAnimCalc_230
-XAnimCalc_250:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_230
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_250:
 	lea edx, [edx+esi+0x1]
 	mov [ebp-0x158], edx
-XAnimCalc_650:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_650:
 	mov edx, ebx
 	shr edx, 0x5
 	mov ecx, ebx
@@ -1908,11 +1908,11 @@ XAnimCalc_650:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jz XAnimCalc_240
-XAnimCalc_270:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_240
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_270:
 	lea eax, [esi+esi*2]
 	lea esi, [eax+eax]
-XAnimCalc_280:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_280:
 	add dword [ebp-0x150], 0x1
 	add dword [ebp-0x1f4], 0x18
 	mov ecx, [ebp-0x1ec]
@@ -1920,8 +1920,8 @@ XAnimCalc_280:
 	mov [ebp-0x1ec], esi
 	mov edi, [ebp-0x244]
 	cmp edi, [ebp-0x150]
-	jz XAnimCalc_220
-XAnimCalc_230:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_220
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_230:
 	mov edx, [ebp-0x158]
 	movzx eax, byte [edx]
 	mov ecx, [ebp-0x1fc]
@@ -1934,9 +1934,9 @@ XAnimCalc_230:
 	mov [ebp-0x1f8], eax
 	mov eax, [ebp-0x1e8]
 	test eax, eax
-	jnz XAnimCalc_250
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_250
 	cmp esi, 0x3f
-	ja XAnimCalc_260
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_260
 	mov ecx, [ebp-0x1f8]
 	lea ecx, [ecx+esi*2+0x2]
 	mov [ebp-0x1f8], ecx
@@ -1948,8 +1948,8 @@ XAnimCalc_230:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_270
-XAnimCalc_240:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_270
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_240:
 	shl ebx, 0x5
 	add ebx, [ebp+0x14]
 	lea ecx, [ebx+0x10]
@@ -2026,21 +2026,21 @@ XAnimCalc_240:
 	movaps xmm0, xmm7
 	addss xmm0, [ebx+0x1c]
 	movss [ebx+0x1c], xmm0
-	jmp XAnimCalc_280
-XAnimCalc_10:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_280
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_10:
 	movzx eax, word [edx+0xc]
 	movzx edx, ax
 	test ax, ax
-	jnz XAnimCalc_290
-XAnimCalc_340:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_290
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_340:
 	mov ecx, esi
 	test cl, cl
-	jz XAnimCalc_300
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
 	mov eax, [ebp-0x214]
 	cmp byte [eax+0xa], 0x0
-	jz XAnimCalc_300
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
 	xor ebx, ebx
-XAnimCalc_320:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_320:
 	mov edx, ebx
 	shr edx, 0x5
 	mov ecx, ebx
@@ -2049,7 +2049,7 @@ XAnimCalc_320:
 	shr eax, cl
 	mov ecx, [ebp+0xc]
 	test [ecx+edx*4+0x6010], eax
-	jnz XAnimCalc_310
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_310
 	xor eax, eax
 	mov edx, [ebp+0x14]
 	mov [edx], eax
@@ -2063,43 +2063,43 @@ XAnimCalc_320:
 	mov [ecx+0x10], eax
 	mov [edx+0x4], eax
 	mov [edx+0x8], eax
-XAnimCalc_310:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_310:
 	add ebx, 0x1
 	add dword [ebp+0x14], 0x20
 	mov edx, [ebp-0x214]
 	movzx eax, byte [edx+0xa]
 	cmp eax, ebx
-	jg XAnimCalc_320
-XAnimCalc_300:
+	jg _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_320
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300:
 	add esp, 0x27c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-XAnimCalc_290:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_290:
 	mov [esp], edx
 	movss [ebp-0x268], xmm7
-	call GetAnimInfo
+	call _Z11GetAnimInfoi
 	mov ebx, eax
 	movss xmm0, dword [eax+0x2c]
 	movss [ebp-0x20c], xmm0
 	movss xmm7, dword [ebp-0x268]
 	ucomiss xmm0, [_float_0_00000000]
-	jp XAnimCalc_330
-	jnz XAnimCalc_330
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_330
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_330
 	movzx eax, word [eax+0xa]
 	movzx edx, ax
 	test ax, ax
-	jnz XAnimCalc_290
-	jmp XAnimCalc_340
-XAnimCalc_40:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_290
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_340
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_40:
 	mov ebx, [ebp-0x1dc]
 	movzx eax, word [ebx+0xe]
 	test ax, ax
-	jz XAnimCalc_350
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_350
 	cmp ax, 0xff
-	ja XAnimCalc_360
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_360
 	add esi, 0x11
 	mov [ebp-0x1e0], esi
 	mov ebx, [ebp+0xc]
@@ -2129,9 +2129,9 @@ XAnimCalc_40:
 	movzx eax, byte [edx+0x12]
 	movzx esi, al
 	test al, al
-	jnz XAnimCalc_370
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_370
 	mov dword [ebp-0x164], 0x0
-XAnimCalc_830:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_830:
 	mov ebx, [ebp-0x1dc]
 	add ebx, 0x12
 	mov [ebp-0x1d8], ebx
@@ -2140,12 +2140,12 @@ XAnimCalc_830:
 	mov [ebp-0x14c], esi
 	mov eax, [ebp-0x164]
 	cmp esi, eax
-	jbe XAnimCalc_380
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_380
 	mov esi, [ebp-0x178]
 	mov dword [ebp-0x17c], 0x0
 	movss xmm4, dword [_float_0_00003052]
 	mov ebx, esi
-XAnimCalc_460:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_460:
 	mov edx, [ebp-0x17c]
 	mov ecx, [ebp-0x1d4]
 	movzx edx, word [ecx+edx*2]
@@ -2165,42 +2165,42 @@ XAnimCalc_460:
 	shr eax, cl
 	mov ecx, [ebp-0x1b4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_390
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_390
 	cvtsi2ss xmm0, dword [ebp-0x168]
 	mulss xmm0, xmm5
 	cvttss2si ecx, xmm0
 	lea edx, [esi+ecx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_400
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_400
 	xor edi, edi
-XAnimCalc_420:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_420:
 	lea ebx, [ecx-0x1]
 	lea edx, [esi+ebx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_410
-XAnimCalc_440:
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_410
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_440:
 	lea ecx, [edi+ebx]
 	shr ecx, 1
 	lea edx, [esi+ecx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_420
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_420
 	lea edi, [ecx+0x1]
 	movzx eax, byte [esi+edi]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_430
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_430
 	mov ecx, ebx
 	lea ebx, [ecx-0x1]
 	lea edx, [esi+ebx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_440
-XAnimCalc_410:
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_440
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_410:
 	lea edi, [edx+0x1]
 	mov ecx, ebx
-XAnimCalc_840:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_840:
 	movzx edx, byte [edx]
 	movzx eax, dl
 	cvtsi2ss xmm0, eax
@@ -2265,7 +2265,7 @@ XAnimCalc_840:
 	mulss xmm3, [ebp-0xc4]
 	addss xmm2, xmm3
 	movss [eax+0xc], xmm2
-XAnimCalc_390:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_390:
 	mov edx, [ebp-0x1cc]
 	mov eax, [ebp-0x168]
 	lea edx, [edx+eax*4+0x4]
@@ -2274,17 +2274,17 @@ XAnimCalc_390:
 	mov eax, [ebp-0x14c]
 	sub eax, [ebp-0x164]
 	cmp eax, [ebp-0x17c]
-	jz XAnimCalc_450
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_450
 	mov esi, [ebp-0x178]
 	mov ebx, esi
-	jmp XAnimCalc_460
-XAnimCalc_20:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_460
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_20:
 	mov edx, [ebp-0x214]
 	cmp byte [edx+0xa], 0x0
-	jz XAnimCalc_470
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_470
 	mov ebx, [ebp+0x14]
 	xor esi, esi
-XAnimCalc_490:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_490:
 	mov edx, esi
 	shr edx, 0x5
 	mov ecx, esi
@@ -2293,7 +2293,7 @@ XAnimCalc_490:
 	shr eax, cl
 	mov ecx, [ebp+0xc]
 	test [ecx+edx*4+0x6010], eax
-	jnz XAnimCalc_480
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_480
 	xor eax, eax
 	mov [ebx], eax
 	mov [ebx+0x4], eax
@@ -2304,18 +2304,18 @@ XAnimCalc_490:
 	mov [ebx+0x10], eax
 	mov [edx+0x4], eax
 	mov [edx+0x8], eax
-XAnimCalc_480:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_480:
 	add esi, 0x1
 	add ebx, 0x20
 	mov edx, [ebp-0x214]
 	movzx eax, byte [edx+0xa]
 	cmp eax, esi
-	jg XAnimCalc_490
-	jmp XAnimCalc_470
-XAnimCalc_50:
+	jg _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_490
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_470
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_50:
 	mov dword [ebp-0x154], 0x0
 	mov edi, 0x80000000
-XAnimCalc_510:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_510:
 	mov eax, [ebp-0x1fc]
 	mov edx, [ebp-0x154]
 	movzx ebx, byte [eax+edx]
@@ -2327,40 +2327,40 @@ XAnimCalc_510:
 	shr edx, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+eax*4], edx
-	jnz XAnimCalc_500
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_500
 	shl ebx, 0x5
 	mov eax, [ebp+0x14]
 	add eax, ebx
 	movaps xmm0, xmm7
 	addss xmm0, [eax+0xc]
 	movss [eax+0xc], xmm0
-XAnimCalc_500:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_500:
 	add dword [ebp-0x154], 0x1
 	cmp esi, [ebp-0x154]
-	ja XAnimCalc_510
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_510
 	mov ebx, [ebp-0x1dc]
 	movzx eax, byte [ebx+0x13]
 	add esi, eax
 	mov [ebp-0x134], esi
 	mov eax, [ebp-0x154]
 	cmp esi, eax
-	ja XAnimCalc_520
-XAnimCalc_60:
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_520
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_60:
 	mov edx, eax
 	movzx eax, byte [ebx+0x14]
 	add eax, [ebp-0x134]
 	mov [ebp-0x130], eax
 	cmp eax, edx
-	jbe XAnimCalc_530
-XAnimCalc_130:
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_530
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_130:
 	mov dword [ebp-0x190], 0x0
 	movss xmm1, dword [_float_0_00003052]
-	jmp XAnimCalc_540
-XAnimCalc_570:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_540
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_570:
 	mov edx, [ebp-0x158]
 	lea edx, [ebx+edx+0x1]
 	mov [ebp-0x158], edx
-XAnimCalc_640:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_640:
 	mov edx, edi
 	shr edx, 0x5
 	mov ecx, edi
@@ -2369,8 +2369,8 @@ XAnimCalc_640:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jz XAnimCalc_550
-XAnimCalc_590:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_550
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_590:
 	mov eax, [ebp-0x1ec]
 	lea esi, [eax+ebx*8]
 	add esi, 0x8
@@ -2379,8 +2379,8 @@ XAnimCalc_590:
 	mov eax, [ebp-0x130]
 	sub eax, [ebp-0x154]
 	cmp eax, [ebp-0x190]
-	jz XAnimCalc_560
-XAnimCalc_540:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_560
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_540:
 	mov eax, [ebp-0x154]
 	add eax, [ebp-0x190]
 	mov ecx, [ebp-0x1fc]
@@ -2391,9 +2391,9 @@ XAnimCalc_540:
 	mov [ebp-0x1f8], eax
 	mov eax, [ebp-0x1e8]
 	test eax, eax
-	jnz XAnimCalc_570
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_570
 	cmp ebx, 0x3f
-	ja XAnimCalc_580
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_580
 	mov ecx, [ebp-0x1f8]
 	lea ecx, [ecx+ebx*2+0x2]
 	mov [ebp-0x1f8], ecx
@@ -2405,8 +2405,8 @@ XAnimCalc_540:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_590
-XAnimCalc_550:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_590
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_550:
 	mov edx, [ebp-0x1ec]
 	lea esi, [edx+ebx*8]
 	movsx eax, word [esi]
@@ -2462,8 +2462,8 @@ XAnimCalc_550:
 	mov eax, [ebp-0x130]
 	sub eax, [ebp-0x154]
 	cmp eax, [ebp-0x190]
-	jnz XAnimCalc_540
-XAnimCalc_560:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_540
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_560:
 	mov ecx, [ebp-0x190]
 	add [ebp-0x154], ecx
 	mov ebx, [ebp-0x1dc]
@@ -2472,53 +2472,53 @@ XAnimCalc_560:
 	add eax, [ebp-0x130]
 	mov [ebp-0x12c], eax
 	cmp eax, edx
-	ja XAnimCalc_600
-XAnimCalc_140:
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_600
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_140:
 	mov edx, ebx
-	jmp XAnimCalc_610
-XAnimCalc_350:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_610
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_350:
 	mov edx, ebx
 	mov ecx, ebx
-	jmp XAnimCalc_620
-XAnimCalc_110:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_620
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_110:
 	lea eax, [ebx-0x1]
 	shr eax, 0x8
 	mov ecx, [ebp-0x1f8]
 	lea ecx, [ecx+eax*2+0x4]
 	mov [ebp-0x1f8], ecx
-	jmp XAnimCalc_630
-XAnimCalc_580:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_630
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_580:
 	lea eax, [ebx-0x1]
 	shr eax, 0x8
 	mov edx, [ebp-0x1f8]
 	lea edx, [edx+eax*2+0x4]
 	mov [ebp-0x1f8], edx
-	jmp XAnimCalc_640
-XAnimCalc_260:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_640
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_260:
 	lea eax, [esi-0x1]
 	shr eax, 0x8
 	mov edx, [ebp-0x1f8]
 	lea edx, [edx+eax*2+0x4]
 	mov [ebp-0x1f8], edx
-	jmp XAnimCalc_650
-XAnimCalc_220:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_650
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_220:
 	mov ebx, [ebp-0x1dc]
 	movzx eax, byte [ebx+0x19]
 	add eax, [ebp-0x124]
 	mov [ebp-0x120], eax
 	cmp eax, edi
-	ja XAnimCalc_660
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_660
 	mov edx, [ebp-0x158]
-XAnimCalc_720:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_720:
 	mov ecx, [ebp-0x1dc]
 	movzx eax, byte [ecx+0x1a]
 	add eax, [ebp-0x120]
 	cmp eax, edi
-	jbe XAnimCalc_300
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
 	mov esi, edx
 	sub eax, edi
 	lea edi, [edx+eax]
-XAnimCalc_680:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_680:
 	movzx eax, byte [esi]
 	mov edx, [ebp-0x1fc]
 	movzx ebx, byte [edx+eax]
@@ -2530,38 +2530,38 @@ XAnimCalc_680:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_670
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_670
 	shl ebx, 0x5
 	mov eax, [ebp+0x14]
 	add eax, ebx
 	movaps xmm0, xmm7
 	addss xmm0, [eax+0x1c]
 	movss [eax+0x1c], xmm0
-XAnimCalc_670:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_670:
 	add esi, 0x1
 	cmp esi, edi
-	jnz XAnimCalc_680
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_680
 	add esp, 0x27c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-XAnimCalc_660:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_660:
 	movaps xmm1, xmm7
 	mulss xmm1, [_float_0_00000000]
 	mov esi, [ebp-0x158]
 	sub eax, edi
 	add eax, esi
 	mov [ebp-0x240], eax
-	jmp XAnimCalc_690
-XAnimCalc_710:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_690
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_710:
 	add esi, 0x1
 	add dword [ebp-0x1f4], 0xc
 	mov edx, [ebp-0x240]
 	cmp edx, esi
-	jz XAnimCalc_700
-XAnimCalc_690:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_700
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_690:
 	movzx eax, byte [esi]
 	mov edx, [ebp-0x1fc]
 	movzx ebx, byte [edx+eax]
@@ -2573,7 +2573,7 @@ XAnimCalc_690:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_710
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_710
 	shl ebx, 0x5
 	mov ecx, [ebp+0x14]
 	add ecx, ebx
@@ -2624,22 +2624,22 @@ XAnimCalc_690:
 	add dword [ebp-0x1f4], 0xc
 	mov edx, [ebp-0x240]
 	cmp edx, esi
-	jnz XAnimCalc_690
-XAnimCalc_700:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_690
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_700:
 	mov eax, edi
 	sub eax, [ebp-0x158]
 	lea edi, [eax+edx]
-	jmp XAnimCalc_720
-XAnimCalc_210:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_720
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_210:
 	movaps xmm3, xmm7
 	mulss xmm3, [_float_0_00000000]
 	xor edi, edi
-	jmp XAnimCalc_730
-XAnimCalc_760:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_730
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_760:
 	mov eax, [ebp-0x158]
 	lea eax, [eax+esi+0x1]
 	mov [ebp-0x158], eax
-XAnimCalc_800:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_800:
 	mov edx, ebx
 	shr edx, 0x5
 	mov ecx, ebx
@@ -2648,18 +2648,18 @@ XAnimCalc_800:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jz XAnimCalc_740
-XAnimCalc_780:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_740
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_780:
 	lea esi, [esi+esi*2]
-XAnimCalc_790:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_790:
 	add edi, 0x1
 	add dword [ebp-0x1f4], 0x18
 	mov ecx, [ebp-0x1f0]
 	lea esi, [ecx+esi+0x3]
 	mov [ebp-0x1f0], esi
 	cmp edi, [ebp-0x128]
-	jae XAnimCalc_750
-XAnimCalc_730:
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_750
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_730:
 	mov ebx, [ebp-0x158]
 	movzx eax, byte [ebx]
 	mov edx, [ebp-0x1fc]
@@ -2671,9 +2671,9 @@ XAnimCalc_730:
 	mov [ebp-0x1f8], ecx
 	mov eax, [ebp-0x1e8]
 	test eax, eax
-	jnz XAnimCalc_760
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_760
 	cmp esi, 0x3f
-	ja XAnimCalc_770
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_770
 	mov edx, [ebp-0x1f8]
 	lea edx, [edx+esi*2+0x2]
 	mov [ebp-0x1f8], edx
@@ -2685,8 +2685,8 @@ XAnimCalc_730:
 	shr eax, cl
 	mov ecx, [ebp-0x1e4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_780
-XAnimCalc_740:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_780
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_740:
 	shl ebx, 0x5
 	add ebx, [ebp+0x14]
 	lea ecx, [ebx+0x10]
@@ -2762,18 +2762,18 @@ XAnimCalc_740:
 	movaps xmm0, xmm7
 	addss xmm0, [ebx+0x1c]
 	movss [ebx+0x1c], xmm0
-	jmp XAnimCalc_790
-XAnimCalc_770:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_790
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_770:
 	lea eax, [esi-0x1]
 	shr eax, 0x8
 	mov ecx, [ebp-0x1f8]
 	lea ecx, [ecx+eax*2+0x4]
 	mov [ebp-0x1f8], ecx
-	jmp XAnimCalc_800
-XAnimCalc_370:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_800
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_370:
 	mov dword [ebp-0x164], 0x0
 	mov edi, 0x80000000
-XAnimCalc_820:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_820:
 	mov ecx, [ebp-0x1e0]
 	mov eax, [ebp-0x164]
 	movzx ebx, byte [ecx+eax]
@@ -2785,63 +2785,63 @@ XAnimCalc_820:
 	shr edx, cl
 	mov ecx, [ebp-0x1b4]
 	test [ecx+eax*4], edx
-	jnz XAnimCalc_810
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_810
 	shl ebx, 0x5
 	mov eax, [ebp+0x14]
 	add eax, ebx
 	movaps xmm0, xmm7
 	addss xmm0, [eax+0xc]
 	movss [eax+0xc], xmm0
-XAnimCalc_810:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_810:
 	add dword [ebp-0x164], 0x1
 	cmp esi, [ebp-0x164]
-	ja XAnimCalc_820
-	jmp XAnimCalc_830
-XAnimCalc_400:
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_820
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_830
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_400:
 	lea edi, [edx+0x1]
 	movzx eax, byte [edx+0x1]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_840
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_840
 	lea ebx, [ecx+0x1]
 	mov edi, [ebp-0x168]
-XAnimCalc_870:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_870:
 	add ebx, 0x1
 	movzx eax, byte [esi+ebx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_850
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_850
 	lea ecx, [edi+ebx]
 	shr ecx, 1
 	lea edx, [esi+ecx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_860
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_860
 	lea ebx, [ecx+0x1]
 	movzx eax, byte [esi+ebx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_870
-XAnimCalc_430:
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_870
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_430:
 	lea edi, [edx+0x1]
-	jmp XAnimCalc_840
-XAnimCalc_860:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_840
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_860:
 	mov edi, ecx
-	jmp XAnimCalc_870
-XAnimCalc_330:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_870
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_330:
 	cmp word [ebx+0x12], 0x0
-	jnz XAnimCalc_880
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_880
 	test byte [ebx+0x14], 0x10
-	jz XAnimCalc_880
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_880
 	mov eax, 0x1
-XAnimCalc_1540:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1540:
 	test eax, eax
-	jnz XAnimCalc_340
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_340
 	movzx eax, word [ebx+0xa]
 	movzx edx, ax
 	mov [ebp-0x210], edx
 	test ax, ax
-	jnz XAnimCalc_890
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_890
 	mov dword [ebp-0x200], 0x0
 	mov dword [ebp-0x204], 0x0
-XAnimCalc_1680:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1680:
 	mov eax, esi
 	movzx ecx, al
 	mov edx, [ebp+0x14]
@@ -2856,15 +2856,15 @@ XAnimCalc_1680:
 	mov edx, ebx
 	mov eax, [ebp-0x214]
 	movss [ebp-0x268], xmm7
-	call XAnimCalc_900
+	call _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_900
 	movss xmm7, dword [ebp-0x268]
-XAnimCalc_1700:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1700:
 	mov ecx, [ebp-0x210]
 	test ecx, ecx
-	jz XAnimCalc_300
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
 	mov edx, [ebp-0x200]
 	test edx, edx
-	jnz XAnimCalc_910
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_910
 	mov eax, [ebp+0x10]
 	shl eax, 0x5
 	add eax, [ebp+0xc]
@@ -2873,32 +2873,32 @@ XAnimCalc_1700:
 	movzx eax, byte [ecx+0xa]
 	add [ebp+0x10], eax
 	cmp dword [ebp+0x10], 0x300
-	jg XAnimCalc_920
+	jg _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_920
 	mov eax, [ebp-0x204]
 	test eax, eax
-	jz XAnimCalc_300
-XAnimCalc_910:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_910:
 	xor esi, esi
 	mov ebx, [ebp-0x210]
-	jmp XAnimCalc_930
-XAnimCalc_960:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_930
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_960:
 	movzx eax, word [ebx+0xa]
 	movzx ecx, ax
 	mov [ebp-0x210], ecx
 	test ax, ax
-	jz XAnimCalc_940
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_940
 	mov ebx, ecx
-XAnimCalc_930:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_930:
 	mov [esp], ebx
 	movss [ebp-0x268], xmm7
-	call GetAnimInfo
+	call _Z11GetAnimInfoi
 	mov ebx, eax
 	movss xmm0, dword [eax+0x2c]
 	movss xmm7, dword [ebp-0x268]
 	ucomiss xmm0, [_float_0_00000000]
-	jp XAnimCalc_950
-	jz XAnimCalc_960
-XAnimCalc_950:
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_950
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_960
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_950:
 	xor esi, 0x1
 	mov eax, esi
 	movzx ecx, al
@@ -2911,23 +2911,23 @@ XAnimCalc_950:
 	mov dword [esp], 0x1
 	mov edx, ebx
 	mov eax, [ebp-0x214]
-	call XAnimCalc_900
+	call _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_900
 	mov esi, 0x1
 	movss xmm7, dword [ebp-0x268]
-	jmp XAnimCalc_960
-XAnimCalc_380:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_960
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_380:
 	mov edx, ebx
 	mov ecx, eax
-XAnimCalc_1530:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1530:
 	movzx eax, byte [edx+0x2]
 	add eax, [ebp-0x14c]
 	mov [ebp-0x148], eax
 	cmp eax, ecx
-	jbe XAnimCalc_970
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_970
 	mov dword [ebp-0x180], 0x0
 	movss xmm4, dword [_float_0_00003052]
 	mov edx, [ebp-0x178]
-XAnimCalc_1050:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1050:
 	mov ebx, [ebp-0x180]
 	mov eax, [ebp-0x1d4]
 	movzx ebx, word [eax+ebx*2]
@@ -2946,7 +2946,7 @@ XAnimCalc_1050:
 	shr eax, cl
 	mov ebx, [ebp-0x1b4]
 	test [ebx+edx*4], eax
-	jnz XAnimCalc_980
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_980
 	cvtsi2ss xmm0, dword [ebp-0x16c]
 	mulss xmm0, xmm5
 	cvttss2si ecx, xmm0
@@ -2954,39 +2954,39 @@ XAnimCalc_1050:
 	add edx, ecx
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_990
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_990
 	xor esi, esi
-XAnimCalc_1010:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1010:
 	lea ebx, [ecx-0x1]
 	mov edx, [ebp-0x178]
 	add edx, ebx
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_1000
-XAnimCalc_1030:
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1000
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1030:
 	lea ecx, [esi+ebx]
 	shr ecx, 1
 	mov edx, [ebp-0x178]
 	add edx, ecx
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1010
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1010
 	lea esi, [ecx+0x1]
 	mov eax, [ebp-0x178]
 	movzx eax, byte [eax+esi]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1020
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1020
 	mov ecx, ebx
 	lea ebx, [ecx-0x1]
 	mov edx, [ebp-0x178]
 	add edx, ebx
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1030
-XAnimCalc_1000:
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1030
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1000:
 	lea esi, [edx+0x1]
 	mov ecx, ebx
-XAnimCalc_1060:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1060:
 	movzx edx, byte [edx]
 	movzx eax, dl
 	cvtsi2ss xmm0, eax
@@ -3063,7 +3063,7 @@ XAnimCalc_1060:
 	mulss xmm3, [ebp-0xd4]
 	addss xmm2, xmm3
 	movss [eax+0xc], xmm2
-XAnimCalc_980:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_980:
 	mov edx, [ebp-0x1cc]
 	mov eax, [ebp-0x16c]
 	lea edx, [edx+eax*8+0x8]
@@ -3072,50 +3072,50 @@ XAnimCalc_980:
 	mov eax, [ebp-0x148]
 	sub eax, [ebp-0x164]
 	cmp eax, [ebp-0x180]
-	jz XAnimCalc_1040
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1040
 	mov ecx, [ebp-0x174]
 	mov [ebp-0x178], ecx
 	mov edx, ecx
-	jmp XAnimCalc_1050
-XAnimCalc_990:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1050
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_990:
 	lea esi, [edx+0x1]
 	movzx eax, byte [edx+0x1]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1060
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1060
 	lea ebx, [ecx+0x1]
 	mov esi, [ebp-0x16c]
-XAnimCalc_1090:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1090:
 	add ebx, 0x1
 	mov edx, [ebp-0x178]
 	movzx eax, byte [edx+ebx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1070
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1070
 	lea ecx, [esi+ebx]
 	shr ecx, 1
 	add edx, ecx
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1080
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1080
 	lea ebx, [ecx+0x1]
 	mov eax, [ebp-0x178]
 	movzx eax, byte [eax+ebx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_1090
-XAnimCalc_1020:
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1090
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1020:
 	lea esi, [edx+0x1]
-	jmp XAnimCalc_1060
-XAnimCalc_1080:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1060
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1080:
 	mov esi, ecx
-	jmp XAnimCalc_1090
-XAnimCalc_970:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1090
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_970:
 	mov ecx, edx
-XAnimCalc_1350:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1350:
 	movzx eax, byte [ecx+0x3]
 	add eax, [ebp-0x148]
 	mov [ebp-0x144], eax
 	mov ebx, [ebp-0x164]
 	cmp eax, ebx
-	jbe XAnimCalc_1100
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1100
 	mov edx, eax
 	mov dword [ebp-0x184], 0x0
 	movss xmm1, dword [_float_0_00003052]
@@ -3125,7 +3125,7 @@ XAnimCalc_1350:
 	add edi, [ebp-0x1e0]
 	sub edx, ebx
 	mov [ebp-0x224], edx
-XAnimCalc_1120:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1120:
 	movzx esi, byte [edi]
 	mov eax, esi
 	shr eax, 0x5
@@ -3135,7 +3135,7 @@ XAnimCalc_1120:
 	shr edx, cl
 	mov ecx, [ebp-0x1b4]
 	test [ecx+eax*4], edx
-	jnz XAnimCalc_1110
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1110
 	mov dword [ebp-0xe0], 0x0
 	mov dword [ebp-0xdc], 0x0
 	mov ebx, [ebp-0x23c]
@@ -3178,24 +3178,24 @@ XAnimCalc_1120:
 	mulss xmm0, [ebp-0xc4]
 	addss xmm0, [eax+0xc]
 	movss [eax+0xc], xmm0
-XAnimCalc_1110:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1110:
 	add dword [ebp-0x184], 0x1
 	add edi, 0x1
 	add dword [ebp-0x23c], 0x4
 	mov eax, [ebp-0x224]
 	cmp [ebp-0x184], eax
-	jnz XAnimCalc_1120
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1120
 	mov edx, [ebp-0x184]
 	add [ebp-0x164], edx
 	mov ecx, [ebp-0x1d4]
 	lea ecx, [ecx+edx*4]
 	mov [ebp-0x1d4], ecx
 	mov ebx, [ebp-0x1d8]
-XAnimCalc_1340:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1340:
 	movzx eax, byte [ebx+0x4]
 	add eax, [ebp-0x144]
 	cmp eax, [ebp-0x164]
-	jbe XAnimCalc_1130
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1130
 	mov dword [ebp-0x188], 0x0
 	movss xmm1, dword [_float_0_00003052]
 	mov edi, [ebp-0x1d4]
@@ -3205,10 +3205,10 @@ XAnimCalc_1340:
 	sub eax, [ebp-0x164]
 	mov [ebp-0x228], eax
 	mov ecx, edx
-	jmp XAnimCalc_1140
-XAnimCalc_1160:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1140
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1160:
 	mov ecx, [ebp-0x238]
-XAnimCalc_1140:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1140:
 	movzx esi, byte [ecx]
 	mov eax, esi
 	shr eax, 0x5
@@ -3218,7 +3218,7 @@ XAnimCalc_1140:
 	shr edx, cl
 	mov ebx, [ebp-0x1b4]
 	test [ebx+eax*4], edx
-	jnz XAnimCalc_1150
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1150
 	movsx eax, word [edi]
 	cvtsi2ss xmm0, eax
 	mulss xmm0, xmm1
@@ -3266,25 +3266,25 @@ XAnimCalc_1140:
 	mulss xmm0, [ebp-0xd4]
 	addss xmm0, [eax+0xc]
 	movss [eax+0xc], xmm0
-XAnimCalc_1150:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1150:
 	add dword [ebp-0x188], 0x1
 	add dword [ebp-0x238], 0x1
 	add edi, 0x8
 	mov eax, [ebp-0x188]
 	cmp [ebp-0x228], eax
-	jnz XAnimCalc_1160
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1160
 	mov edx, [ebp-0x1d4]
 	lea edx, [edx+eax*8]
 	mov [ebp-0x1d4], edx
 	mov ecx, [ebp-0x1d8]
-XAnimCalc_1520:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1520:
 	movzx eax, byte [ecx+0x5]
 	movzx ebx, al
 	mov [ebp-0x140], ebx
 	test al, al
-	jz XAnimCalc_1170
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1170
 	mov dword [ebp-0x15c], 0x0
-XAnimCalc_1240:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1240:
 	mov edx, [ebp-0x178]
 	movzx eax, byte [edx]
 	mov ecx, [ebp-0x1e0]
@@ -3306,42 +3306,42 @@ XAnimCalc_1240:
 	shr eax, cl
 	mov ecx, [ebp-0x1b4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_1180
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1180
 	cvtsi2ss xmm0, ebx
 	mulss xmm0, xmm5
 	cvttss2si ecx, xmm0
 	lea edx, [esi+ecx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_1190
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1190
 	xor edi, edi
-XAnimCalc_1210:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1210:
 	lea ebx, [ecx-0x1]
 	lea edx, [esi+ebx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_1200
-XAnimCalc_1230:
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1200
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1230:
 	lea ecx, [edi+ebx]
 	shr ecx, 1
 	lea edx, [esi+ecx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1210
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1210
 	lea edi, [ecx+0x1]
 	movzx eax, byte [esi+edi]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1220
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1220
 	mov ecx, ebx
 	lea ebx, [ecx-0x1]
 	lea edx, [esi+ebx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1230
-XAnimCalc_1200:
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1230
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1200:
 	lea edi, [edx+0x1]
 	mov ecx, ebx
-XAnimCalc_1300:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1300:
 	movzx edx, byte [edx]
 	movzx eax, dl
 	cvtsi2ss xmm0, eax
@@ -3441,7 +3441,7 @@ XAnimCalc_1300:
 	addss xmm0, [esi+0x1c]
 	movss [esi+0x1c], xmm0
 	mov ecx, [ebp-0x170]
-XAnimCalc_1290:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1290:
 	add dword [ebp-0x15c], 0x1
 	add dword [ebp-0x1b8], 0x18
 	lea eax, [ecx+ecx*2]
@@ -3450,34 +3450,34 @@ XAnimCalc_1290:
 	mov [ebp-0x1d0], eax
 	mov eax, [ebp-0x15c]
 	cmp [ebp-0x140], eax
-	ja XAnimCalc_1240
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1240
 	mov ecx, eax
-XAnimCalc_1390:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1390:
 	mov edx, [ebp-0x1d8]
 	movzx eax, byte [edx+0x6]
 	add eax, [ebp-0x140]
 	mov [ebp-0x13c], eax
 	cmp eax, ecx
-	ja XAnimCalc_1250
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1250
 	mov edi, ecx
-XAnimCalc_1470:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1470:
 	mov ecx, [ebp-0x1d8]
 	movzx eax, byte [ecx+0x7]
 	add eax, [ebp-0x13c]
 	mov [ebp-0x138], eax
 	cmp eax, edi
-	ja XAnimCalc_1260
+	ja _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1260
 	mov edx, [ebp-0x178]
-XAnimCalc_1380:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1380:
 	mov ecx, [ebp-0x1d8]
 	movzx eax, byte [ecx+0x8]
 	add eax, [ebp-0x138]
 	cmp eax, edi
-	jbe XAnimCalc_300
+	jbe _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
 	mov esi, edx
 	sub eax, edi
 	lea edi, [eax+edx]
-XAnimCalc_1280:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1280:
 	movzx eax, byte [esi]
 	mov edx, [ebp-0x1e0]
 	movzx ebx, byte [edx+eax]
@@ -3489,53 +3489,53 @@ XAnimCalc_1280:
 	shr eax, cl
 	mov ecx, [ebp-0x1b4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_1270
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1270
 	shl ebx, 0x5
 	mov eax, [ebp+0x14]
 	add eax, ebx
 	movaps xmm0, xmm7
 	addss xmm0, [eax+0x1c]
 	movss [eax+0x1c], xmm0
-XAnimCalc_1270:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1270:
 	add esi, 0x1
 	cmp esi, edi
-	jnz XAnimCalc_1280
-	jmp XAnimCalc_300
-XAnimCalc_1180:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1280
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1180:
 	mov ecx, ebx
-	jmp XAnimCalc_1290
-XAnimCalc_1190:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1290
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1190:
 	lea edi, [edx+0x1]
 	movzx eax, byte [edx+0x1]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1300
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1300
 	lea ebx, [ecx+0x1]
 	mov edi, [ebp-0x170]
-XAnimCalc_1330:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1330:
 	add ebx, 0x1
 	movzx eax, byte [esi+ebx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1310
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1310
 	lea ecx, [edi+ebx]
 	shr ecx, 1
 	lea edx, [esi+ecx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1320
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1320
 	lea ebx, [ecx+0x1]
 	movzx eax, byte [esi+ebx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_1330
-XAnimCalc_1220:
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1330
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1220:
 	lea edi, [edx+0x1]
-	jmp XAnimCalc_1300
-XAnimCalc_1320:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1300
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1320:
 	mov edi, ecx
-	jmp XAnimCalc_1330
-XAnimCalc_1100:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1330
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1100:
 	mov ebx, ecx
-	jmp XAnimCalc_1340
-XAnimCalc_1040:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1340
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1040:
 	mov eax, [ebp-0x1d4]
 	mov ebx, [ebp-0x180]
 	lea eax, [eax+ebx*2]
@@ -3544,13 +3544,13 @@ XAnimCalc_1040:
 	mov edx, [ebp-0x174]
 	mov [ebp-0x178], edx
 	mov ecx, [ebp-0x1d8]
-	jmp XAnimCalc_1350
-XAnimCalc_1260:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1350
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1260:
 	mov esi, [ebp-0x178]
 	sub eax, edi
 	add eax, esi
 	mov [ebp-0x230], eax
-XAnimCalc_1370:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1370:
 	movzx eax, byte [esi]
 	mov edx, [ebp-0x1e0]
 	movzx ebx, byte [edx+eax]
@@ -3562,7 +3562,7 @@ XAnimCalc_1370:
 	shr eax, cl
 	mov ecx, [ebp-0x1b4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_1360
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1360
 	shl ebx, 0x5
 	mov edx, [ebp+0x14]
 	add edx, ebx
@@ -3583,24 +3583,24 @@ XAnimCalc_1370:
 	movaps xmm0, xmm7
 	addss xmm0, [edx+0x1c]
 	movss [edx+0x1c], xmm0
-XAnimCalc_1360:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1360:
 	add esi, 0x1
 	add dword [ebp-0x1b8], 0xc
 	mov edx, [ebp-0x230]
 	cmp edx, esi
-	jnz XAnimCalc_1370
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1370
 	mov eax, edi
 	sub eax, [ebp-0x178]
 	lea edi, [eax+edx]
-	jmp XAnimCalc_1380
-XAnimCalc_1170:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1380
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1170:
 	mov dword [ebp-0x15c], 0x0
 	mov ecx, [ebp-0x15c]
-	jmp XAnimCalc_1390
-XAnimCalc_1250:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1390
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1250:
 	mov [ebp-0x160], ecx
 	mov [ebp-0x234], eax
-XAnimCalc_1460:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1460:
 	mov edx, [ebp-0x178]
 	movzx eax, byte [edx]
 	mov ecx, [ebp-0x1e0]
@@ -3622,42 +3622,42 @@ XAnimCalc_1460:
 	shr eax, cl
 	mov ecx, [ebp-0x1b4]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_1400
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1400
 	cvtsi2ss xmm0, ebx
 	mulss xmm0, xmm5
 	cvttss2si ecx, xmm0
 	lea edx, [esi+ecx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_1410
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1410
 	xor edi, edi
-XAnimCalc_1430:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1430:
 	lea ebx, [ecx-0x1]
 	lea edx, [esi+ebx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_1420
-XAnimCalc_1450:
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1420
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1450:
 	lea ecx, [edi+ebx]
 	shr ecx, 1
 	lea edx, [esi+ecx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1430
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1430
 	lea edi, [ecx+0x1]
 	movzx eax, byte [esi+edi]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1440
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1440
 	mov ecx, ebx
 	lea ebx, [ecx-0x1]
 	lea edx, [esi+ebx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1450
-XAnimCalc_1420:
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1450
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1420:
 	lea edi, [edx+0x1]
 	mov ecx, ebx
-XAnimCalc_1480:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1480:
 	movzx edx, byte [edx]
 	movzx eax, dl
 	cvtsi2ss xmm0, eax
@@ -3758,7 +3758,7 @@ XAnimCalc_1480:
 	addss xmm0, [esi+0x1c]
 	movss [esi+0x1c], xmm0
 	mov ebx, [ebp-0x1c8]
-XAnimCalc_1400:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1400:
 	add dword [ebp-0x160], 0x1
 	add dword [ebp-0x1b8], 0x18
 	lea eax, [ebx+ebx*2]
@@ -3767,40 +3767,40 @@ XAnimCalc_1400:
 	mov [ebp-0x1cc], edx
 	mov edi, [ebp-0x234]
 	cmp edi, [ebp-0x160]
-	jnz XAnimCalc_1460
-	jmp XAnimCalc_1470
-XAnimCalc_1410:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1460
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1470
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1410:
 	lea edi, [edx+0x1]
 	movzx eax, byte [edx+0x1]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1480
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1480
 	lea ebx, [ecx+0x1]
 	mov edi, [ebp-0x1c8]
-XAnimCalc_1510:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1510:
 	add ebx, 0x1
 	movzx eax, byte [esi+ebx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1490
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1490
 	lea ecx, [edi+ebx]
 	shr ecx, 1
 	lea edx, [esi+ecx]
 	movzx eax, byte [edx]
 	cmp [ebp-0x19c], eax
-	jb XAnimCalc_1500
+	jb _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1500
 	lea ebx, [ecx+0x1]
 	movzx eax, byte [esi+ebx]
 	cmp [ebp-0x19c], eax
-	jae XAnimCalc_1510
-XAnimCalc_1440:
+	jae _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1510
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1440:
 	lea edi, [edx+0x1]
-	jmp XAnimCalc_1480
-XAnimCalc_1500:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1480
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1500:
 	mov edi, ecx
-	jmp XAnimCalc_1510
-XAnimCalc_1130:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1510
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1130:
 	mov ecx, ebx
-	jmp XAnimCalc_1520
-XAnimCalc_450:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1520
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_450:
 	mov ebx, [ebp-0x1d4]
 	mov ecx, [ebp-0x17c]
 	lea ebx, [ebx+ecx*2]
@@ -3808,8 +3808,8 @@ XAnimCalc_450:
 	add [ebp-0x164], ecx
 	mov edx, [ebp-0x1d8]
 	mov ecx, [ebp-0x164]
-	jmp XAnimCalc_1530
-XAnimCalc_360:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1530
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_360:
 	lea edx, [esi+0x11]
 	mov eax, [ebp+0xc]
 	add eax, 0x6010
@@ -3818,36 +3818,36 @@ XAnimCalc_360:
 	movaps xmm1, xmm7
 	movaps xmm0, xmm5
 	mov eax, [ebp-0x1dc]
-	call XAnimCalcParts
-	jmp XAnimCalc_300
-XAnimCalc_880:
+	call _Z14XAnimCalcPartsItEvPK10XAnimPartsPKhffP11DObjAnimMatPK8bitarrayILj128EE
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_880:
 	xor eax, eax
-	jmp XAnimCalc_1540
-XAnimCalc_1070:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1540
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1070:
 	lea ecx, [ebx-0x1]
 	mov ebx, [ebp-0x178]
 	lea edx, [ecx+ebx]
 	lea esi, [edx+0x1]
-	jmp XAnimCalc_1060
-XAnimCalc_850:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1060
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_850:
 	lea ecx, [ebx-0x1]
 	lea edx, [ecx+esi]
 	lea edi, [edx+0x1]
-	jmp XAnimCalc_840
-XAnimCalc_1490:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_840
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1490:
 	lea ecx, [ebx-0x1]
 	lea edx, [esi+ecx]
 	lea edi, [edx+0x1]
-	jmp XAnimCalc_1480
-XAnimCalc_1310:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1480
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1310:
 	lea ecx, [ebx-0x1]
 	lea edx, [ecx+esi]
 	lea edi, [edx+0x1]
-	jmp XAnimCalc_1300
-XAnimCalc_940:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1300
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_940:
 	mov ebx, esi
 	test bl, bl
-	jz XAnimCalc_300
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
 	mov eax, [ebp-0x214]
 	movzx eax, byte [eax+0xa]
 	mov [ebp-0x1ac], eax
@@ -3855,13 +3855,13 @@ XAnimCalc_940:
 	add edx, 0x6010
 	mov [ebp-0x1a8], edx
 	test eax, eax
-	jle XAnimCalc_300
+	jle _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
 	mov esi, [ebp+0x14]
 	xor edi, edi
 	mov ebx, [ebp-0x204]
 	add ebx, 0x10
-	jmp XAnimCalc_1550
-XAnimCalc_1580:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1550
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1580:
 	lea eax, [esi+0x10]
 	movaps xmm0, xmm7
 	mulss xmm0, [ebx]
@@ -3875,13 +3875,13 @@ XAnimCalc_1580:
 	mulss xmm0, [ebx+0x8]
 	addss xmm0, [eax+0x8]
 	movss [eax+0x8], xmm0
-XAnimCalc_1560:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1560:
 	add edi, 0x1
 	add esi, 0x20
 	add ebx, 0x20
 	cmp [ebp-0x1ac], edi
-	jz XAnimCalc_300
-XAnimCalc_1550:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1550:
 	mov edx, edi
 	shr edx, 0x5
 	mov ecx, edi
@@ -3890,7 +3890,7 @@ XAnimCalc_1550:
 	shr eax, cl
 	mov ecx, [ebp-0x1a8]
 	test [ecx+edx*4], eax
-	jnz XAnimCalc_1560
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1560
 	movss xmm3, dword [ebx-0x10]
 	movss xmm0, dword [ebx-0xc]
 	movss xmm1, dword [ebx-0x8]
@@ -3904,9 +3904,9 @@ XAnimCalc_1550:
 	addss xmm3, xmm2
 	pxor xmm0, xmm0
 	ucomiss xmm3, xmm0
-	jp XAnimCalc_1570
-	jz XAnimCalc_1580
-XAnimCalc_1570:
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1570
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1580
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1570:
 	sqrtss xmm2, xmm3
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm2
@@ -3988,25 +3988,25 @@ XAnimCalc_1570:
 	mulss xmm5, [ebp-0x1a0]
 	subss xmm2, xmm5
 	movss [esi+0xc], xmm2
-	jmp XAnimCalc_1580
-XAnimCalc_890:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1580
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_890:
 	mov byte [ebp-0x205], 0x0
 	mov dword [ebp-0x204], 0x0
 	mov dword [ebp-0x200], 0x0
 	mov ecx, [ebp-0x210]
-	jmp XAnimCalc_1590
-XAnimCalc_1660:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1590
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1660:
 	test byte [edi+0x14], 0x10
-	jz XAnimCalc_1600
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1600
 	mov eax, 0x1
-XAnimCalc_1670:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1670:
 	test eax, eax
-	jnz XAnimCalc_1610
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1610
 	cmp byte [ebp-0x205], 0x0
-	jnz XAnimCalc_1620
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1620
 	mov eax, esi
 	test al, al
-	jnz XAnimCalc_1630
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1630
 	mov eax, [ebp+0x10]
 	shl eax, 0x5
 	add eax, [ebp+0xc]
@@ -4015,13 +4015,13 @@ XAnimCalc_1670:
 	movzx eax, byte [ecx+0xa]
 	add [ebp+0x10], eax
 	cmp dword [ebp+0x10], 0x300
-	jg XAnimCalc_920
+	jg _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_920
 	mov eax, [ebp-0x204]
 	test eax, eax
-	jz XAnimCalc_300
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
 	mov dword [ebp-0x200], 0x1
 	mov eax, [ebp-0x204]
-XAnimCalc_1740:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1740:
 	mov [esp+0xc], eax
 	mov edx, [ebp+0x10]
 	mov [esp+0x8], edx
@@ -4033,10 +4033,10 @@ XAnimCalc_1740:
 	mov edx, ebx
 	mov eax, [ebp-0x214]
 	movss [ebp-0x268], xmm7
-	call XAnimCalc_900
+	call _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_900
 	mov byte [ebp-0x205], 0x1
 	movss xmm7, dword [ebp-0x268]
-XAnimCalc_1620:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1620:
 	mov eax, [ebp-0x204]
 	mov [esp+0xc], eax
 	mov edx, [ebp+0x10]
@@ -4049,46 +4049,46 @@ XAnimCalc_1620:
 	mov edx, edi
 	mov eax, [ebp-0x214]
 	movss [ebp-0x268], xmm7
-	call XAnimCalc_900
+	call _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_900
 	movss xmm7, dword [ebp-0x268]
-XAnimCalc_1650:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1650:
 	movzx eax, word [edi+0xa]
 	movzx edx, ax
 	mov [ebp-0x210], edx
 	test ax, ax
-	jz XAnimCalc_1610
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1610
 	mov ecx, edx
-XAnimCalc_1590:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1590:
 	mov [esp], ecx
 	movss [ebp-0x268], xmm7
-	call GetAnimInfo
+	call _Z11GetAnimInfoi
 	mov edi, eax
 	movss xmm0, dword [eax+0x2c]
 	movss [ebp-0x11c], xmm0
 	movss xmm7, dword [ebp-0x268]
 	ucomiss xmm0, [_float_0_00000000]
-	jp XAnimCalc_1640
-	jz XAnimCalc_1650
-XAnimCalc_1640:
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1640
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1650
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1640:
 	cmp word [edi+0x12], 0x0
-	jz XAnimCalc_1660
-XAnimCalc_1600:
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1660
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1600:
 	xor eax, eax
-	jmp XAnimCalc_1670
-XAnimCalc_1610:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1670
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1610:
 	cmp byte [ebp-0x205], 0x0
-	jz XAnimCalc_1680
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1680
 	cmp byte [ebp-0x215], 0x0
-	jnz XAnimCalc_1690
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1690
 	mov ecx, [ebp-0x214]
 	movzx edi, byte [ecx+0xa]
 	test edi, edi
-	jle XAnimCalc_1700
+	jle _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1700
 	mov ebx, [ebp+0x14]
 	xor esi, esi
 	pxor xmm2, xmm2
 	movss xmm3, dword [_float_1_00000000]
-XAnimCalc_1730:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1730:
 	mov eax, esi
 	shr eax, 0x5
 	mov ecx, esi
@@ -4097,12 +4097,12 @@ XAnimCalc_1730:
 	shr edx, cl
 	mov ecx, [ebp+0xc]
 	test [ecx+eax*4+0x6010], edx
-	jnz XAnimCalc_1710
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1710
 	movss xmm0, dword [ebx+0x1c]
 	ucomiss xmm0, xmm2
-	jp XAnimCalc_1720
-	jz XAnimCalc_1710
-XAnimCalc_1720:
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1720
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1710
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1720:
 	movaps xmm1, xmm3
 	divss xmm1, xmm0
 	movaps xmm0, xmm1
@@ -4126,32 +4126,32 @@ XAnimCalc_1720:
 	movss [eax+0x4], xmm1
 	mulss xmm0, [eax+0x8]
 	movss [eax+0x8], xmm0
-XAnimCalc_1710:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1710:
 	add esi, 0x1
 	add ebx, 0x20
 	cmp edi, esi
-	jnz XAnimCalc_1730
-	jmp XAnimCalc_1700
-XAnimCalc_1630:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1730
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1700
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1630:
 	mov edx, [ebp+0x14]
 	mov [ebp-0x204], edx
 	mov eax, edx
-	jmp XAnimCalc_1740
-XAnimCalc_1690:
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1740
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1690:
 	mov eax, esi
 	test al, al
-	jz XAnimCalc_1750
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1750
 	mov edx, [ebp-0x214]
 	movzx edi, byte [edx+0xa]
 	test edi, edi
-	jle XAnimCalc_1700
+	jle _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1700
 	xor esi, esi
 	pxor xmm5, xmm5
 	movss xmm6, dword [_float_1_50000000]
 	mov ebx, [ebp+0x14]
 	add ebx, 0x10
 	movss xmm4, dword [_float_0_50000000]
-XAnimCalc_1800:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1800:
 	mov eax, esi
 	shr eax, 0x5
 	mov ecx, esi
@@ -4160,7 +4160,7 @@ XAnimCalc_1800:
 	shr edx, cl
 	mov ecx, [ebp+0xc]
 	test [ecx+eax*4+0x6010], edx
-	jnz XAnimCalc_1760
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1760
 	movss xmm3, dword [ebx-0x10]
 	movss xmm0, dword [ebx-0xc]
 	movss xmm1, dword [ebx-0x8]
@@ -4174,9 +4174,9 @@ XAnimCalc_1800:
 	addss xmm3, xmm2
 	movaps xmm2, xmm5
 	ucomiss xmm3, xmm5
-	jp XAnimCalc_1770
-	jz XAnimCalc_1780
-XAnimCalc_1770:
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1770
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1780
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1770:
 	movss [ebp-0x1c], xmm3
 	mov eax, [ebp-0x1c]
 	sar eax, 1
@@ -4204,12 +4204,12 @@ XAnimCalc_1770:
 	movss [ebx-0x8], xmm0
 	mulss xmm1, [ebx-0x4]
 	movss [ebx-0x4], xmm1
-XAnimCalc_1780:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1780:
 	movss xmm0, dword [ebx+0xc]
 	ucomiss xmm0, xmm2
-	jp XAnimCalc_1790
-	jz XAnimCalc_1760
-XAnimCalc_1790:
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1790
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1760
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1790:
 	movaps xmm1, xmm7
 	divss xmm1, xmm0
 	movaps xmm0, xmm1
@@ -4221,23 +4221,23 @@ XAnimCalc_1790:
 	mulss xmm0, [ebx+0x8]
 	movss [ebx+0x8], xmm0
 	movss [ebx+0xc], xmm7
-XAnimCalc_1760:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1760:
 	add esi, 0x1
 	add ebx, 0x20
 	cmp edi, esi
-	jnz XAnimCalc_1800
-	jmp XAnimCalc_1700
-XAnimCalc_920:
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1800
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1700
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_920:
 	mov dword [esp+0x4], _cstring_max_calculation_
 	mov dword [esp], 0x13
-	call Com_PrintWarning
-	jmp XAnimCalc_300
-XAnimCalc_1750:
+	call _Z16Com_PrintWarningiPKcz
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_300
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1750:
 	mov eax, [ebp-0x214]
 	movzx eax, byte [eax+0xa]
 	mov [ebp-0x1b0], eax
 	test eax, eax
-	jle XAnimCalc_1700
+	jle _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1700
 	mov ebx, [ebp+0x14]
 	xor edi, edi
 	pxor xmm4, xmm4
@@ -4245,7 +4245,7 @@ XAnimCalc_1750:
 	movss xmm6, dword [_float_1_50000000]
 	mov esi, [ebp-0x204]
 	add esi, 0x10
-XAnimCalc_1850:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1850:
 	mov edx, edi
 	shr edx, 0x5
 	mov ecx, edi
@@ -4254,7 +4254,7 @@ XAnimCalc_1850:
 	shr eax, cl
 	mov ecx, [ebp+0xc]
 	test [ecx+edx*4+0x6010], eax
-	jnz XAnimCalc_1810
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1810
 	movss xmm3, dword [esi-0x10]
 	movss xmm0, dword [esi-0xc]
 	movss xmm1, dword [esi-0x8]
@@ -4268,9 +4268,9 @@ XAnimCalc_1850:
 	addss xmm3, xmm2
 	movaps xmm2, xmm4
 	ucomiss xmm3, xmm4
-	jp XAnimCalc_1820
-	jz XAnimCalc_1830
-XAnimCalc_1820:
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1820
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1830
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1820:
 	movss [ebp-0x20], xmm3
 	mov edx, [ebp-0x20]
 	sar edx, 1
@@ -4302,12 +4302,12 @@ XAnimCalc_1820:
 	mulss xmm1, [esi-0x4]
 	addss xmm1, [ebx+0xc]
 	movss [ebx+0xc], xmm1
-XAnimCalc_1830:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1830:
 	movss xmm0, dword [esi+0xc]
 	ucomiss xmm0, xmm2
-	jp XAnimCalc_1840
-	jz XAnimCalc_1810
-XAnimCalc_1840:
+	jp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1840
+	jz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1810
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1840:
 	movaps xmm1, xmm7
 	divss xmm1, xmm0
 	lea eax, [ebx+0x10]
@@ -4325,17 +4325,17 @@ XAnimCalc_1840:
 	movaps xmm0, xmm7
 	addss xmm0, [ebx+0x1c]
 	movss [ebx+0x1c], xmm0
-XAnimCalc_1810:
+_Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1810:
 	add edi, 0x1
 	add esi, 0x20
 	add ebx, 0x20
 	cmp [ebp-0x1b0], edi
-	jnz XAnimCalc_1850
-	jmp XAnimCalc_1700
+	jnz _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1850
+	jmp _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat_1700
 
 
 ;DObjCalcAnim(DObj_s const*, int*)
-DObjCalcAnim:
+_Z12DObjCalcAnimPK6DObj_sPi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4347,27 +4347,27 @@ DObjCalcAnim:
 	mov edx, [ebp+0xc]
 	xor ebx, ebx
 	lea ecx, [ebp-0x48]
-DObjCalcAnim_10:
+_Z12DObjCalcAnimPK6DObj_sPi_10:
 	mov eax, [edx]
 	mov [ecx], eax
 	add ebx, 0x1
 	add ecx, 0x4
 	add edx, 0x4
 	cmp ebx, 0x4
-	jnz DObjCalcAnim_10
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_10
 	xor edx, edx
 	lea edi, [ebp-0x6048]
 	lea eax, [ebp-0x48]
-DObjCalcAnim_20:
+_Z12DObjCalcAnimPK6DObj_sPi_20:
 	not dword [eax]
 	add edx, 0x1
 	add eax, 0x4
 	cmp edx, 0x4
-	jnz DObjCalcAnim_20
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_20
 	mov ecx, esi
 	xor ebx, ebx
 	lea edx, [edi+0x6000]
-DObjCalcAnim_30:
+_Z12DObjCalcAnimPK6DObj_sPi_30:
 	mov eax, [edx]
 	or eax, [ecx]
 	mov [edx], eax
@@ -4375,54 +4375,54 @@ DObjCalcAnim_30:
 	add edx, 0x4
 	add ecx, 0x4
 	cmp ebx, 0x4
-	jnz DObjCalcAnim_30
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_30
 	xor edx, edx
 	mov eax, 0x6000
-DObjCalcAnim_50:
+_Z12DObjCalcAnimPK6DObj_sPi_50:
 	cmp dword [eax+ebp-0x6048], 0xffffffff
-	jnz DObjCalcAnim_40
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_40
 	add edx, 0x1
 	add eax, 0x4
 	cmp edx, 0x4
-	jnz DObjCalcAnim_50
-DObjCalcAnim_90:
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_50
+_Z12DObjCalcAnimPK6DObj_sPi_90:
 	add esp, 0x606c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-DObjCalcAnim_40:
+_Z12DObjCalcAnimPK6DObj_sPi_40:
 	mov edx, esi
 	mov ecx, [ebp+0xc]
 	mov ebx, 0x4
-DObjCalcAnim_60:
+_Z12DObjCalcAnimPK6DObj_sPi_60:
 	mov eax, [edx]
 	or eax, [ecx]
 	mov [edx], eax
 	add edx, 0x4
 	add ecx, 0x4
 	sub ebx, 0x1
-	jnz DObjCalcAnim_60
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_60
 	xor ecx, ecx
 	xor edx, edx
-DObjCalcAnim_70:
+_Z12DObjCalcAnimPK6DObj_sPi_70:
 	mov eax, [edx+ebp-0x48]
 	mov [edx+ebp-0x38], eax
 	add ecx, 0x1
 	add edx, 0x4
 	cmp ecx, 0x4
-	jnz DObjCalcAnim_70
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_70
 	mov edx, [ebp+0x8]
 	mov eax, [edx]
 	test eax, eax
-	jz DObjCalcAnim_80
+	jz _Z12DObjCalcAnimPK6DObj_sPi_80
 	cmp word [eax+0x4], 0x0
-	jz DObjCalcAnim_80
+	jz _Z12DObjCalcAnimPK6DObj_sPi_80
 	or dword [ebp-0x2c], 0x1
 	movzx eax, word [eax+0x4]
 	mov [esp], eax
-	call GetAnimInfo
+	call _Z11GetAnimInfoi
 	mov edx, [esi+0x34]
 	mov [esp+0xc], edx
 	mov dword [esp+0x8], 0x0
@@ -4432,38 +4432,38 @@ DObjCalcAnim_70:
 	movss xmm0, dword [_float_1_00000000]
 	mov edx, eax
 	mov eax, [ebp+0x8]
-	call XAnimCalc
-DObjCalcAnim_80:
+	call _Z9XAnimCalcPK6DObj_sP9XAnimInfofhhP17XAnimCalcAnimInfoiP11DObjAnimMat
+_Z12DObjCalcAnimPK6DObj_sPi_80:
 	mov ebx, [esi+0x34]
 	mov eax, [ebp+0x8]
 	mov eax, [eax+0x60]
 	mov [ebp-0x604c], eax
 	mov edx, [ebp+0x8]
 	cmp byte [edx+0x9], 0x0
-	jz DObjCalcAnim_90
+	jz _Z12DObjCalcAnimPK6DObj_sPi_90
 	xor ecx, ecx
 	mov dword [ebp-0x6050], 0x0
 	movss xmm5, dword [_float_0_00003052]
-DObjCalcAnim_140:
+_Z12DObjCalcAnimPK6DObj_sPi_140:
 	mov eax, [ebp-0x6050]
 	mov edx, [ebp-0x604c]
 	mov edi, [edx+eax*4]
 	movzx eax, byte [edi+0x5]
 	movzx edx, al
 	test al, al
-	jnz DObjCalcAnim_100
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_100
 	mov [ebp-0x6054], ecx
-DObjCalcAnim_170:
+_Z12DObjCalcAnimPK6DObj_sPi_170:
 	movzx edx, byte [edi+0x4]
 	movzx eax, byte [edi+0x5]
 	mov ecx, [edi+0x10]
 	sub edx, eax
 	mov [ebp-0x6058], edx
-	jz DObjCalcAnim_110
+	jz _Z12DObjCalcAnimPK6DObj_sPi_110
 	xor edi, edi
 	movaps xmm4, xmm5
 	mov esi, ecx
-DObjCalcAnim_130:
+_Z12DObjCalcAnimPK6DObj_sPi_130:
 	mov eax, [ebp-0x6054]
 	shr eax, 0x5
 	mov ecx, [ebp-0x6054]
@@ -4471,7 +4471,7 @@ DObjCalcAnim_130:
 	mov edx, 0x80000000
 	shr edx, cl
 	test [ebp+eax*4-0x48], edx
-	jnz DObjCalcAnim_120
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_120
 	movsx eax, word [esi]
 	cvtsi2ss xmm0, eax
 	movss [ebp-0x28], xmm0
@@ -4504,26 +4504,26 @@ DObjCalcAnim_130:
 	mov dword [eax+0x4], 0x0
 	mov dword [eax+0x8], 0x0
 	mov dword [ebx+0x1c], 0x0
-DObjCalcAnim_120:
+_Z12DObjCalcAnimPK6DObj_sPi_120:
 	add ebx, 0x20
 	add dword [ebp-0x6054], 0x1
 	add edi, 0x1
 	add esi, 0x8
 	cmp [ebp-0x6058], edi
-	jnz DObjCalcAnim_130
-DObjCalcAnim_110:
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_130
+_Z12DObjCalcAnimPK6DObj_sPi_110:
 	add dword [ebp-0x6050], 0x1
 	mov edx, [ebp+0x8]
 	movzx eax, byte [edx+0x9]
 	cmp [ebp-0x6050], eax
-	jge DObjCalcAnim_90
+	jge _Z12DObjCalcAnimPK6DObj_sPi_90
 	mov ecx, [ebp-0x6054]
-	jmp DObjCalcAnim_140
-DObjCalcAnim_100:
+	jmp _Z12DObjCalcAnimPK6DObj_sPi_140
+_Z12DObjCalcAnimPK6DObj_sPi_100:
 	mov esi, ecx
 	add edx, ecx
 	mov [ebp-0x605c], edx
-DObjCalcAnim_160:
+_Z12DObjCalcAnimPK6DObj_sPi_160:
 	mov eax, esi
 	shr eax, 0x5
 	mov ecx, esi
@@ -4531,7 +4531,7 @@ DObjCalcAnim_160:
 	mov edx, 0x80000000
 	shr edx, cl
 	test [ebp+eax*4-0x48], edx
-	jnz DObjCalcAnim_150
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_150
 	mov dword [ebx], 0x0
 	mov dword [ebx+0x4], 0x0
 	mov dword [ebx+0x8], 0x0
@@ -4541,18 +4541,18 @@ DObjCalcAnim_160:
 	mov dword [eax+0x4], 0x0
 	mov dword [eax+0x8], 0x0
 	mov dword [ebx+0x1c], 0x0
-DObjCalcAnim_150:
+_Z12DObjCalcAnimPK6DObj_sPi_150:
 	add ebx, 0x20
 	add esi, 0x1
 	mov eax, [ebp-0x605c]
 	mov [ebp-0x6054], eax
 	cmp eax, esi
-	jnz DObjCalcAnim_160
-	jmp DObjCalcAnim_170
+	jnz _Z12DObjCalcAnimPK6DObj_sPi_160
+	jmp _Z12DObjCalcAnimPK6DObj_sPi_170
 
 
 ;XAnim_CalcDeltaForTime(XAnimParts const*, float, float*, float4&)
-XAnim_CalcDeltaForTime:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4567,21 +4567,21 @@ XAnim_CalcDeltaForTime:
 	movzx ecx, ax
 	mov [ebp-0x128], ecx
 	ucomiss xmm4, [_float_1_00000000]
-	jp XAnim_CalcDeltaForTime_10
-	jz XAnim_CalcDeltaForTime_20
-XAnim_CalcDeltaForTime_10:
+	jp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_10
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_20
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_10:
 	test ax, ax
-	jz XAnim_CalcDeltaForTime_30
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_30
 	cmp dword [ebp-0x128], 0xff
-	jg XAnim_CalcDeltaForTime_40
+	jg _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_40
 	mov ecx, [ebp-0x124]
 	mov ecx, [ecx+0x4]
 	mov [ebp-0x120], ecx
 	test ecx, ecx
-	jz XAnim_CalcDeltaForTime_50
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_50
 	movzx eax, word [ecx]
 	test ax, ax
-	jnz XAnim_CalcDeltaForTime_60
+	jnz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_60
 	movsx eax, word [ecx+0x4]
 	cvtsi2ss xmm0, eax
 	mov eax, [ebp+0x10]
@@ -4591,15 +4591,15 @@ XAnim_CalcDeltaForTime_10:
 	mov edx, [ebp+0x10]
 	movss [edx+0x4], xmm0
 	pxor xmm7, xmm7
-XAnim_CalcDeltaForTime_360:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_360:
 	mov ecx, [ebp-0x124]
 	mov ecx, [ecx]
 	mov [ebp-0x118], ecx
 	test ecx, ecx
-	jz XAnim_CalcDeltaForTime_70
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_70
 	movzx eax, word [ecx]
 	test ax, ax
-	jz XAnim_CalcDeltaForTime_80
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_80
 	cvtsi2ss xmm3, dword [ebp-0x128]
 	mulss xmm3, xmm4
 	movzx eax, ax
@@ -4613,49 +4613,49 @@ XAnim_CalcDeltaForTime_360:
 	lea edx, [edi+ebx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_90
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_90
 	lea eax, [edx+0x1]
 	mov [ebp-0x108], eax
 	movzx eax, byte [edx+0x1]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_100
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_100
 	lea ecx, [ebx+0x1]
 	mov edx, [ebp-0x114]
 	mov [ebp-0x100], edx
-XAnim_CalcDeltaForTime_130:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_130:
 	add ecx, 0x1
 	movzx eax, byte [edi+ecx]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_110
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_110
 	mov ebx, [ebp-0x100]
 	add ebx, ecx
 	shr ebx, 1
 	lea edx, [edi+ebx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_120
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_120
 	lea ecx, [ebx+0x1]
 	mov [ebp-0x12c], ecx
 	movzx eax, byte [edi+ecx]
 	cmp esi, eax
-	jae XAnim_CalcDeltaForTime_130
-XAnim_CalcDeltaForTime_390:
+	jae _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_130
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_390:
 	lea ecx, [edx+0x1]
 	mov [ebp-0x108], ecx
-	jmp XAnim_CalcDeltaForTime_140
-XAnim_CalcDeltaForTime_30:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_140
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_30:
 	mov edx, [ebp-0x124]
-XAnim_CalcDeltaForTime_20:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_20:
 	mov eax, [edx+0x4]
 	test eax, eax
-	jz XAnim_CalcDeltaForTime_150
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_150
 	movzx edx, word [eax]
 	test dx, dx
-	jz XAnim_CalcDeltaForTime_160
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_160
 	movzx edx, dx
 	mov eax, [eax+0x4]
 	lea edx, [eax+edx*4]
-XAnim_CalcDeltaForTime_180:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_180:
 	movsx eax, word [edx]
 	cvtsi2ss xmm0, eax
 	mov ecx, [ebp+0x10]
@@ -4664,16 +4664,16 @@ XAnim_CalcDeltaForTime_180:
 	cvtsi2ss xmm0, eax
 	movss [ecx+0x4], xmm0
 	pxor xmm7, xmm7
-XAnim_CalcDeltaForTime_260:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_260:
 	mov edx, [ebp-0x124]
 	mov ecx, [edx]
 	test ecx, ecx
-	jz XAnim_CalcDeltaForTime_70
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_70
 	movzx eax, word [ecx]
 	test ax, ax
-	jnz XAnim_CalcDeltaForTime_170
+	jnz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_170
 	lea edx, [ecx+0x4]
-XAnim_CalcDeltaForTime_250:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_250:
 	mov eax, [ecx+0x4]
 	mov ecx, [ebp+0x14]
 	mov [ecx], eax
@@ -4682,19 +4682,19 @@ XAnim_CalcDeltaForTime_250:
 	mov eax, [edx+0x8]
 	mov [ecx+0x8], eax
 	mov dword [ecx+0xc], 0x0
-XAnim_CalcDeltaForTime_340:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_340:
 	add esp, 0x15c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-XAnim_CalcDeltaForTime_160:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_160:
 	lea edx, [eax+0x4]
-	jmp XAnim_CalcDeltaForTime_180
-XAnim_CalcDeltaForTime_170:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_180
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_170:
 	cmp byte [ecx+0x2], 0x0
-	jz XAnim_CalcDeltaForTime_190
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_190
 	movzx eax, ax
 	lea eax, [eax+eax*2]
 	add eax, [ecx+0x1c]
@@ -4708,7 +4708,7 @@ XAnim_CalcDeltaForTime_170:
 	cvtsi2ss xmm0, eax
 	movss [ebp-0x28], xmm0
 	mov dword [ebp-0x24], 0x0
-XAnim_CalcDeltaForTime_200:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_200:
 	lea edx, [ecx+0x4]
 	mov eax, [ecx+0x4]
 	mov [ebp-0xe0], eax
@@ -4745,7 +4745,7 @@ XAnim_CalcDeltaForTime_200:
 	pop edi
 	pop ebp
 	ret
-XAnim_CalcDeltaForTime_190:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_190:
 	movzx eax, ax
 	lea eax, [eax+eax*2]
 	mov edx, [ecx+0x1c]
@@ -4760,14 +4760,14 @@ XAnim_CalcDeltaForTime_190:
 	cvtsi2ss xmm0, eax
 	movss [ebp-0x28], xmm0
 	mov dword [ebp-0x24], 0x0
-	jmp XAnim_CalcDeltaForTime_200
-XAnim_CalcDeltaForTime_40:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_200
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_40:
 	mov ecx, [ebp-0x124]
 	mov esi, [ecx+0x4]
 	test esi, esi
-	jz XAnim_CalcDeltaForTime_210
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_210
 	cmp word [esi], 0x0
-	jnz XAnim_CalcDeltaForTime_220
+	jnz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_220
 	movsx eax, word [esi+0x4]
 	cvtsi2ss xmm0, eax
 	mov eax, [ebp+0x10]
@@ -4776,19 +4776,19 @@ XAnim_CalcDeltaForTime_40:
 	cvtsi2ss xmm0, eax
 	mov edx, [ebp+0x10]
 	movss [edx+0x4], xmm0
-XAnim_CalcDeltaForTime_420:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_420:
 	mov ecx, [ebp-0x124]
 	mov ecx, [ecx]
 	mov [ebp-0x10c], ecx
 	test ecx, ecx
-	jz XAnim_CalcDeltaForTime_230
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_230
 	cmp word [ecx], 0x0
-	jnz XAnim_CalcDeltaForTime_240
-XAnim_CalcDeltaForTime_80:
+	jnz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_240
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_80:
 	mov edx, ecx
 	add edx, 0x4
-	jmp XAnim_CalcDeltaForTime_250
-XAnim_CalcDeltaForTime_70:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_250
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_70:
 	mov edx, [ebp+0x14]
 	mov dword [edx], 0x0
 	mov dword [edx+0x4], 0x0
@@ -4800,13 +4800,13 @@ XAnim_CalcDeltaForTime_70:
 	pop edi
 	pop ebp
 	ret
-XAnim_CalcDeltaForTime_150:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_150:
 	pxor xmm7, xmm7
 	mov eax, [ebp+0x10]
 	movss [eax], xmm7
 	mov dword [eax+0x4], 0x46fffe00
-	jmp XAnim_CalcDeltaForTime_260
-XAnim_CalcDeltaForTime_60:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_260
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_60:
 	cvtsi2ss xmm2, dword [ebp-0x128]
 	mulss xmm2, xmm4
 	movzx ebx, ax
@@ -4819,38 +4819,38 @@ XAnim_CalcDeltaForTime_60:
 	lea edx, [edi+ecx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jae XAnim_CalcDeltaForTime_270
+	jae _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_270
 	mov dword [ebp-0x11c], 0x0
-XAnim_CalcDeltaForTime_290:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_290:
 	lea ebx, [ecx-0x1]
 	lea edx, [edi+ebx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jae XAnim_CalcDeltaForTime_280
-XAnim_CalcDeltaForTime_310:
+	jae _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_280
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_310:
 	mov ecx, [ebp-0x11c]
 	add ecx, ebx
 	shr ecx, 1
 	lea edx, [edi+ecx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_290
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_290
 	lea eax, [ecx+0x1]
 	mov [ebp-0x11c], eax
 	movzx eax, byte [edi+eax]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_300
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_300
 	mov ecx, ebx
 	lea ebx, [ecx-0x1]
 	lea edx, [edi+ebx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_310
-XAnim_CalcDeltaForTime_280:
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_310
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_280:
 	lea ecx, [edx+0x1]
 	mov [ebp-0x104], ecx
-	jmp XAnim_CalcDeltaForTime_320
-XAnim_CalcDeltaForTime_240:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_320
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_240:
 	movss [ebp-0x30], xmm4
 	cvtsi2ss xmm0, dword [ebp-0x128]
 	mulss xmm0, xmm4
@@ -4866,12 +4866,12 @@ XAnim_CalcDeltaForTime_240:
 	mov [esp+0x4], ebx
 	lea ebx, [ebp-0x1c]
 	mov [esp], ebx
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	mov eax, [ebp-0x1c]
 	lea ebx, [eax+0x1]
 	mov edx, [ebp-0x10c]
 	cmp byte [edx+0x2], 0x0
-	jz XAnim_CalcDeltaForTime_330
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_330
 	mov ecx, [edx+0x1c]
 	lea edx, [eax+eax*2]
 	lea edx, [ecx+edx]
@@ -4898,7 +4898,7 @@ XAnim_CalcDeltaForTime_240:
 	cvtsi2ss xmm0, eax
 	movss [ebp-0x48], xmm0
 	movss [ebp-0x44], xmm7
-XAnim_CalcDeltaForTime_440:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_440:
 	movss xmm5, dword [ebp-0x20]
 	mov ecx, [ebp-0x50]
 	mov [ebp-0xb0], ecx
@@ -4989,16 +4989,16 @@ XAnim_CalcDeltaForTime_440:
 	mulss xmm5, xmm7
 	addss xmm5, xmm7
 	movss [eax+0xc], xmm5
-	jmp XAnim_CalcDeltaForTime_340
-XAnim_CalcDeltaForTime_270:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_340
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_270:
 	lea eax, [edx+0x1]
 	mov [ebp-0x104], eax
 	movzx eax, byte [edx+0x1]
 	cmp esi, eax
-	jae XAnim_CalcDeltaForTime_350
+	jae _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_350
 	mov ebx, ecx
 	mov ecx, [ebp-0x104]
-XAnim_CalcDeltaForTime_320:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_320:
 	movzx edx, byte [edx]
 	movzx eax, dl
 	cvtsi2ss xmm0, eax
@@ -5030,43 +5030,43 @@ XAnim_CalcDeltaForTime_320:
 	mov eax, [ebp+0x10]
 	movss [eax+0x4], xmm1
 	pxor xmm7, xmm7
-	jmp XAnim_CalcDeltaForTime_360
-XAnim_CalcDeltaForTime_90:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_360
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_90:
 	mov dword [ebp-0x110], 0x0
-XAnim_CalcDeltaForTime_380:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_380:
 	lea ecx, [ebx-0x1]
 	lea edx, [edi+ecx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jae XAnim_CalcDeltaForTime_370
-XAnim_CalcDeltaForTime_400:
+	jae _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_370
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_400:
 	mov ebx, [ebp-0x110]
 	add ebx, ecx
 	shr ebx, 1
 	lea edx, [edi+ebx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_380
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_380
 	lea eax, [ebx+0x1]
 	mov [ebp-0x12c], eax
 	mov [ebp-0x110], eax
 	movzx eax, byte [edi+eax]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_390
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_390
 	mov ebx, ecx
 	lea ecx, [ebx-0x1]
 	lea edx, [edi+ecx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_400
-XAnim_CalcDeltaForTime_370:
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_400
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_370:
 	lea eax, [edx+0x1]
 	mov [ebp-0x108], eax
 	mov ebx, ecx
 	lea ecx, [ecx+0x1]
 	mov [ebp-0x12c], ecx
 	mov ecx, eax
-XAnim_CalcDeltaForTime_140:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_140:
 	movzx edx, byte [edx]
 	movzx eax, dl
 	cvtsi2ss xmm0, eax
@@ -5079,7 +5079,7 @@ XAnim_CalcDeltaForTime_140:
 	divss xmm6, xmm0
 	mov eax, [ebp-0x118]
 	cmp byte [eax+0x2], 0x0
-	jz XAnim_CalcDeltaForTime_410
+	jz _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_410
 	mov ecx, [eax+0x1c]
 	lea edx, [ebx+ebx*2]
 	lea edx, [ecx+edx]
@@ -5106,7 +5106,7 @@ XAnim_CalcDeltaForTime_140:
 	cvtsi2ss xmm0, eax
 	movss [ebp-0xe8], xmm0
 	mov dword [ebp-0xe4], 0x0
-XAnim_CalcDeltaForTime_430:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_430:
 	mov edx, [ebp-0xf0]
 	mov [ebp-0xd0], edx
 	mov ecx, [ebp-0xec]
@@ -5197,11 +5197,11 @@ XAnim_CalcDeltaForTime_430:
 	mulss xmm3, xmm7
 	addss xmm3, xmm7
 	movss [eax+0xc], xmm3
-	jmp XAnim_CalcDeltaForTime_340
-XAnim_CalcDeltaForTime_120:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_340
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_120:
 	mov [ebp-0x100], ebx
-	jmp XAnim_CalcDeltaForTime_130
-XAnim_CalcDeltaForTime_220:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_130
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_220:
 	movss [ebp-0x30], xmm4
 	cvtsi2ss xmm0, dword [ebp-0x128]
 	mulss xmm0, xmm4
@@ -5216,7 +5216,7 @@ XAnim_CalcDeltaForTime_220:
 	lea ebx, [ebp-0x20]
 	mov [esp], ebx
 	movss [ebp-0x148], xmm4
-	call XAnim_GetTimeIndex
+	call _Z18XAnim_GetTimeIndexItEvPK9XAnimTimePKT_iPiPf
 	movss xmm2, dword [ebp-0x1c]
 	mov edx, [ebp-0x20]
 	shl edx, 0x2
@@ -5240,8 +5240,8 @@ XAnim_CalcDeltaForTime_220:
 	mov eax, [ebp+0x10]
 	movss [eax+0x4], xmm1
 	movss xmm4, dword [ebp-0x148]
-	jmp XAnim_CalcDeltaForTime_420
-XAnim_CalcDeltaForTime_410:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_420
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_410:
 	mov ecx, [eax+0x1c]
 	lea edx, [ebx+ebx*2]
 	lea edx, [ecx+edx*2]
@@ -5268,27 +5268,27 @@ XAnim_CalcDeltaForTime_410:
 	cvtsi2ss xmm0, eax
 	movss [ebp-0xe8], xmm0
 	mov dword [ebp-0xe4], 0x0
-	jmp XAnim_CalcDeltaForTime_430
-XAnim_CalcDeltaForTime_230:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_430
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_230:
 	xor eax, eax
 	mov edx, [ebp+0x14]
 	mov [edx], eax
 	mov [edx+0x4], eax
 	mov [edx+0x8], eax
 	mov [edx+0xc], eax
-	jmp XAnim_CalcDeltaForTime_340
-XAnim_CalcDeltaForTime_50:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_340
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_50:
 	pxor xmm7, xmm7
 	mov edx, [ebp+0x10]
 	movss [edx], xmm7
 	mov dword [edx+0x4], 0x46fffe00
-	jmp XAnim_CalcDeltaForTime_360
-XAnim_CalcDeltaForTime_210:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_360
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_210:
 	mov edx, [ebp+0x10]
 	mov dword [edx], 0x0
 	mov dword [edx+0x4], 0x46fffe00
-	jmp XAnim_CalcDeltaForTime_420
-XAnim_CalcDeltaForTime_330:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_420
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_330:
 	mov ecx, [edx+0x1c]
 	lea edx, [eax+eax*2]
 	lea edx, [ecx+edx*2]
@@ -5315,56 +5315,56 @@ XAnim_CalcDeltaForTime_330:
 	cvtsi2ss xmm0, eax
 	movss [ebp-0x48], xmm0
 	mov dword [ebp-0x44], 0x0
-	jmp XAnim_CalcDeltaForTime_440
-XAnim_CalcDeltaForTime_100:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_440
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_100:
 	lea ecx, [ebx+0x1]
 	mov [ebp-0x12c], ecx
 	mov ecx, [ebp-0x108]
-	jmp XAnim_CalcDeltaForTime_140
-XAnim_CalcDeltaForTime_350:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_140
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_350:
 	add ecx, 0x1
 	mov [ebp-0xfc], ebx
-XAnim_CalcDeltaForTime_470:
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_470:
 	add ecx, 0x1
 	movzx eax, byte [edi+ecx]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_450
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_450
 	mov ebx, [ebp-0xfc]
 	add ebx, ecx
 	shr ebx, 1
 	lea edx, [edi+ebx]
 	movzx eax, byte [edx]
 	cmp esi, eax
-	jb XAnim_CalcDeltaForTime_460
+	jb _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_460
 	lea ecx, [ebx+0x1]
 	movzx eax, byte [edi+ecx]
 	cmp esi, eax
-	jae XAnim_CalcDeltaForTime_470
-	jmp XAnim_CalcDeltaForTime_280
-XAnim_CalcDeltaForTime_460:
+	jae _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_470
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_280
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_460:
 	mov [ebp-0xfc], ebx
-	jmp XAnim_CalcDeltaForTime_470
-XAnim_CalcDeltaForTime_450:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_470
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_450:
 	lea ebx, [ecx-0x1]
 	lea edx, [ebx+edi]
 	lea eax, [edx+0x1]
 	mov [ebp-0x104], eax
 	mov ecx, eax
-	jmp XAnim_CalcDeltaForTime_320
-XAnim_CalcDeltaForTime_110:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_320
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_110:
 	lea ebx, [ecx-0x1]
 	lea edx, [ebx+edi]
 	lea eax, [edx+0x1]
 	mov [ebp-0x108], eax
 	mov [ebp-0x12c], ecx
 	mov ecx, eax
-	jmp XAnim_CalcDeltaForTime_140
-XAnim_CalcDeltaForTime_300:
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_140
+_Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_300:
 	lea eax, [edx+0x1]
 	mov [ebp-0x104], eax
 	mov ebx, ecx
 	mov ecx, eax
-	jmp XAnim_CalcDeltaForTime_320
+	jmp _Z22XAnim_CalcDeltaForTimePK10XAnimPartsfPfR6float4_320
 
 
 ;Initialized global or static variables of xanim_calc:
@@ -5405,7 +5405,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of xanim_calc:
@@ -5442,7 +5442,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

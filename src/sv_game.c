@@ -455,7 +455,6 @@ void __cdecl SV_XModelDebugBoxesInternal(struct gentity_s *ent, const float *col
   struct DObjAnimMat *boneMatrix;
   unsigned int j;
   struct XBoneInfo *boneInfoArray[160];
-  int numBones;
   int boneIndex;
   DObj *obj;
   vec3_t start;
@@ -476,9 +475,7 @@ void __cdecl SV_XModelDebugBoxesInternal(struct gentity_s *ent, const float *col
 
   assert(obj != NULL);
 
-  numBones = DObjNumBones(obj);
-
-  assert(numBones <= DOBJ_MAX_PARTS);
+  assert(DObjNumBones(obj) <= DOBJ_MAX_PARTS);
 
   DObjGetBoneInfo(obj, boneInfoArray);
   boneMatrix = DObjGetRotTransArray(obj);

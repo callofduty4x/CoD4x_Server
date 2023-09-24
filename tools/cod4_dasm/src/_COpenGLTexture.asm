@@ -19,6 +19,8 @@
 	global _ZN14COpenGLTextureD2Ev
 	global _ZN15TextureInfoTypeD0Ev
 	global _ZN15TextureInfoTypeD1Ev
+	global _ZTI14COpenGLTexture
+	global _ZTI15TextureInfoType
 	global _ZTV14COpenGLTexture
 	global _ZTV15TextureInfoType
 
@@ -468,10 +470,15 @@ SECTION .data
 
 ;Initialized constant data of COpenGLTexture:
 SECTION .rdata
+;VTypeInfoTable for COpenGLTexture:
+_ZTI14COpenGLTexture: dd 0x8, _cstring_14copengltexture, 0x0, 0x0, 0x0, 0x0, 0x0
+		db 0x0, 0x0, 0x0
+;VTypeInfoTable for TextureInfoType:
+_ZTI15TextureInfoType: dd 0x8, _cstring_15textureinfotyp, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for COpenGLTexture:
-_ZTV14COpenGLTexture: dd 0x0, 0x3b4fa0, _ZN14COpenGLTextureD1Ev, _ZN14COpenGLTextureD0Ev, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+_ZTV14COpenGLTexture: dd 0x0, _ZTI14COpenGLTexture, _ZN14COpenGLTextureD1Ev, _ZN14COpenGLTextureD0Ev, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for TextureInfoType:
-_ZTV15TextureInfoType: dd 0x0, 0x3b4f80, _ZN15TextureInfoTypeD1Ev, _ZN15TextureInfoTypeD0Ev
+_ZTV15TextureInfoType: dd 0x0, _ZTI15TextureInfoType, _ZN15TextureInfoTypeD1Ev, _ZN15TextureInfoTypeD0Ev
 
 
 ;Zero initialized global or static variables of COpenGLTexture:
@@ -480,6 +487,8 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
+_cstring_14copengltexture:		db "14COpenGLTexture",0
+_cstring_15textureinfotyp:		db "15TextureInfoType",0
 
 
 

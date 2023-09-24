@@ -551,6 +551,7 @@ extern const struct entityHandler_t entityHandlers[ENT_HANDLER_COUNT];
 
 
 extern cvar_t *g_allowConsoleSay;
+extern cvar_t* g_conrichsay;
 extern cvar_t *g_disabledefcmdprefix;
 extern cvar_t *g_votedMapName;
 extern cvar_t *g_votedGametype;

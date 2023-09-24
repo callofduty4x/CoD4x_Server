@@ -62,8 +62,11 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnSpawnServer",
     "OnPreFastRestart",
     "OnPostFastRestart",
+    "OnPreGameRestart",
+    "OnPostGameRestart",
     "OnClientUserinfoChanged",
     "OnClientMoveCommand",
+    "OnPlayerKilled",
     "OnPlayerWantReservedSlot",
     "OnFilesystemStarted",
     "OnPlayerGotAuthInfo",
@@ -71,6 +74,8 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnPlayerGetBanStatus",
     "OnPlayerRemoveBan",
     "OnModuleLoaded",
+    "OnScrUsercallFunction",
+    "OnScrUsercallMethod",
     "OnScreenshotArrived",
     "OnDemoArrived",
     "OnTerminate"
@@ -427,14 +432,17 @@ void PHandler_Event(int eventID,...) // Fire a plugin event, safe for use
     void *arg_3 = va_arg(argptr, void*);
     void *arg_4 = va_arg(argptr, void*);
     void *arg_5 = va_arg(argptr, void*);
+    void *arg_6 = va_arg(argptr, void*);
+    void *arg_7 = va_arg(argptr, void*);
 
     va_end(argptr);
 
     for(i=0;i < pluginFunctions.loadedPlugins; i++){
         if(pluginFunctions.plugins[i].OnEvent[eventID]!= NULL){
             pluginFunctions.hasControl = i;
-            (*pluginFunctions.plugins[i].OnEvent[eventID])(arg_0, arg_1, arg_2, arg_3, arg_4, arg_5);
+            (*pluginFunctions.plugins[i].OnEvent[eventID])(arg_0, arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
     	    pluginFunctions.hasControl = PLUGIN_UNKNOWN;
         }
     }
 }
+

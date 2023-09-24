@@ -1,19 +1,19 @@
 ;Imports of r_draw_xmodel:
-	extern DB_GetIndexBufferAndBase
-	extern DB_GetVertexBufferAndOffset
-	extern R_SetupPassPerPrimArgs
-	extern R_DrawIndexedPrimitive
-	extern R_GetActiveWorldMatrix
-	extern R_DeriveOpenGLMatrices
-	extern R_SetModelLightingCoordsForSource
-	extern R_SetReflectionProbe
+	extern _Z24DB_GetIndexBufferAndBasehPvS_Pi
+	extern _Z27DB_GetVertexBufferAndOffsethPvS_Pi
+	extern _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
+	extern _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
+	extern _Z22R_GetActiveWorldMatrixP20GfxCmdBufSourceState
+	extern _Z22R_DeriveOpenGLMatricesP20GfxCmdBufSourceState
+	extern _Z33R_SetModelLightingCoordsForSourcetP20GfxCmdBufSourceState
+	extern _Z20R_SetReflectionProbe16GfxCmdBufContextj
 
 ;Exports of r_draw_xmodel:
 	global _GLOBAL__I__Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo
-	global R_DrawXModelRigidModelSurf
-	global R_DrawXModelRigidSurf
-	global R_DrawXModelRigidSurfLit
-	global R_DrawXModelRigidSurfCamera
+	global _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface
+	global _Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo
+	global _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo
+	global _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo
 
 
 SECTION .text
@@ -26,21 +26,21 @@ _GLOBAL__I__Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -310,7 +310,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;R_DrawXModelRigidModelSurf(GfxCmdBufContext, XSurface*)
-R_DrawXModelRigidModelSurf:
+_Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -334,18 +334,18 @@ R_DrawXModelRigidModelSurf:
 	mov [esp+0x4], eax
 	movzx eax, byte [ecx+0x6]
 	mov [esp], eax
-	call DB_GetIndexBufferAndBase
+	call _Z24DB_GetIndexBufferAndBasehPvS_Pi
 	mov ecx, [ebp-0x24]
 	lea ebx, [edi+0x90]
 	cmp ecx, [ebx+0x4]
-	jz R_DrawXModelRigidModelSurf_10
+	jz _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_10
 	mov [ebx+0x4], ecx
 	mov eax, [edi+0x90]
 	mov edx, [eax]
 	mov [esp+0x4], ecx
 	mov [esp], eax
 	call dword [edx+0x1a0]
-R_DrawXModelRigidModelSurf_10:
+_Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_10:
 	lea eax, [ebp-0x20]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x1c]
@@ -354,12 +354,12 @@ R_DrawXModelRigidModelSurf_10:
 	mov [esp+0x4], eax
 	movzx eax, byte [esi+0x6]
 	mov [esp], eax
-	call DB_GetVertexBufferAndOffset
+	call _Z27DB_GetVertexBufferAndOffsethPvS_Pi
 	mov esi, [ebp-0x20]
 	mov ecx, [ebp-0x1c]
 	cmp ecx, [ebx+0x10]
-	jz R_DrawXModelRigidModelSurf_20
-R_DrawXModelRigidModelSurf_40:
+	jz _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_20
+_Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_40:
 	mov [ebx+0x10], ecx
 	mov [ebx+0x14], esi
 	mov dword [ebx+0xc], 0x20
@@ -371,11 +371,11 @@ R_DrawXModelRigidModelSurf_40:
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawXModelRigidModelSurf_50:
+_Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_50:
 	mov ecx, [ebx+0x1c]
 	test ecx, ecx
-	jz R_DrawXModelRigidModelSurf_30
-R_DrawXModelRigidModelSurf_60:
+	jz _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_30
+_Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_60:
 	mov dword [ebx+0x1c], 0x0
 	mov dword [ebx+0x20], 0x0
 	mov dword [ebx+0x18], 0x0
@@ -387,7 +387,7 @@ R_DrawXModelRigidModelSurf_60:
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
 	call dword [edx+0x190]
-R_DrawXModelRigidModelSurf_70:
+_Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_70:
 	mov eax, [ebp-0x3c]
 	mov [ebp-0x48], eax
 	mov [ebp-0x44], edi
@@ -395,35 +395,35 @@ R_DrawXModelRigidModelSurf_70:
 	mov edx, [ebp-0x44]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetupPassPerPrimArgs
+	call _Z22R_SetupPassPerPrimArgs16GfxCmdBufContext
 	lea eax, [ebp-0x30]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call R_DrawIndexedPrimitive
+	call _Z22R_DrawIndexedPrimitiveP18GfxCmdBufPrimStatePK15GfxDrawPrimArgs
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_DrawXModelRigidModelSurf_20:
+_Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_20:
 	cmp esi, [ebx+0x14]
-	jnz R_DrawXModelRigidModelSurf_40
+	jnz _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_40
 	cmp dword [ebx+0xc], 0x20
-	jnz R_DrawXModelRigidModelSurf_40
-	jmp R_DrawXModelRigidModelSurf_50
-R_DrawXModelRigidModelSurf_30:
+	jnz _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_40
+	jmp _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_50
+_Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_30:
 	mov edx, [ebx+0x20]
 	test edx, edx
-	jnz R_DrawXModelRigidModelSurf_60
+	jnz _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_60
 	mov eax, [ebx+0x18]
 	test eax, eax
-	jnz R_DrawXModelRigidModelSurf_60
-	jmp R_DrawXModelRigidModelSurf_70
+	jnz _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_60
+	jmp _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface_70
 
 
 ;R_DrawXModelRigidSurf(GfxDrawSurf const*, unsigned int, GfxCmdBufContext, GfxDrawSurfListInfo const*)
-R_DrawXModelRigidSurf:
+_Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -472,11 +472,11 @@ R_DrawXModelRigidSurf:
 	movss [ebp-0xa4], xmm3
 	movss [ebp-0x3c], xmm3
 	mov dword [ebp-0x8c], 0x0
-	jmp R_DrawXModelRigidSurf_10
-R_DrawXModelRigidSurf_30:
+	jmp _Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_10
+_Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_30:
 	pxor xmm2, xmm2
 	movss [ebp-0xd0], xmm2
-R_DrawXModelRigidSurf_10:
+_Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_10:
 	movzx ebx, bx
 	mov eax, [ebp-0xa0]
 	lea ebx, [eax+ebx*4]
@@ -604,7 +604,7 @@ R_DrawXModelRigidSurf_10:
 	subss xmm0, [ebp-0xa4]
 	movss [ebp-0x4c], xmm0
 	mov [esp], edi
-	call R_GetActiveWorldMatrix
+	call _Z22R_GetActiveWorldMatrixP20GfxCmdBufSourceState
 	mov edx, [ebp-0x88]
 	mov [eax], edx
 	mov edx, [ebp-0x84]
@@ -641,18 +641,18 @@ R_DrawXModelRigidSurf_10:
 	mov eax, [ebp-0x4c]
 	mov [ecx+0xc], eax
 	mov [esp], edi
-	call R_DeriveOpenGLMatrices
+	call _Z22R_DeriveOpenGLMatricesP20GfxCmdBufSourceState
 	mov ecx, [ebx+0x4]
 	mov eax, [ebp-0x90]
 	mov [ebp-0xb4], eax
 	mov [ebp-0xb8], edi
 	mov eax, [ebp-0xb8]
 	mov edx, [ebp-0xb4]
-	call R_DrawXModelRigidModelSurf
+	call _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface
 	add dword [ebp-0x8c], 0x1
 	mov edx, [ebp-0x8c]
 	cmp [ebp+0xc], edx
-	jz R_DrawXModelRigidSurf_20
+	jz _Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20
 	mov eax, edx
 	mov edx, [ebp+0x8]
 	mov ebx, [edx+eax*8]
@@ -665,7 +665,7 @@ R_DrawXModelRigidSurf_10:
 	xor ecx, edx
 	xor eax, [ebp-0xb0]
 	or ecx, eax
-	jz R_DrawXModelRigidSurf_30
+	jz _Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_30
 	mov eax, [ebp-0x8c]
 	add esp, 0xec
 	pop ebx
@@ -673,7 +673,7 @@ R_DrawXModelRigidSurf_10:
 	pop edi
 	pop ebp
 	ret
-R_DrawXModelRigidSurf_20:
+_Z21R_DrawXModelRigidSurfPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20:
 	mov eax, edx
 	add esp, 0xec
 	pop ebx
@@ -684,7 +684,7 @@ R_DrawXModelRigidSurf_20:
 
 
 ;R_DrawXModelRigidSurfLit(GfxDrawSurf const*, unsigned int, GfxCmdBufContext, GfxCmdBufContext, GfxDrawSurfListInfo const*)
-R_DrawXModelRigidSurfLit:
+_Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -747,7 +747,7 @@ R_DrawXModelRigidSurfLit:
 	movss xmm0, dword [edx+0xf60]
 	movss [ebp-0xa8], xmm0
 	mov dword [ebp-0xbc], 0x0
-R_DrawXModelRigidSurfLit_30:
+_Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_30:
 	lea edx, [ebx+0x18]
 	mov eax, [ebx+0x18]
 	mov [ebp-0x28], eax
@@ -873,7 +873,7 @@ R_DrawXModelRigidSurfLit_30:
 	movss [ebp-0x4c], xmm0
 	mov eax, [ebp-0x90]
 	mov [esp], eax
-	call R_GetActiveWorldMatrix
+	call _Z22R_GetActiveWorldMatrixP20GfxCmdBufSourceState
 	mov edx, [ebp-0x88]
 	mov [eax], edx
 	mov edx, [ebp-0x84]
@@ -911,12 +911,12 @@ R_DrawXModelRigidSurfLit_30:
 	mov [ecx+0xc], eax
 	mov edx, [ebp-0x90]
 	mov [esp], edx
-	call R_DeriveOpenGLMatrices
+	call _Z22R_DeriveOpenGLMatricesP20GfxCmdBufSourceState
 	mov ecx, [ebp-0x90]
 	mov [esp+0x4], ecx
 	movzx eax, word [ebx+0x10]
 	mov [esp], eax
-	call R_SetModelLightingCoordsForSource
+	call _Z33R_SetModelLightingCoordsForSourcetP20GfxCmdBufSourceState
 	mov ecx, esi
 	shr ecx, 0x10
 	movzx eax, cl
@@ -929,7 +929,7 @@ R_DrawXModelRigidSurfLit_30:
 	mov edx, [ebp-0xcc]
 	mov [esp], eax
 	mov [esp+0x4], edx
-	call R_SetReflectionProbe
+	call _Z20R_SetReflectionProbe16GfxCmdBufContextj
 	mov ecx, [ebx+0x4]
 	mov edx, [ebp-0x8c]
 	mov [ebp-0xc4], edx
@@ -937,11 +937,11 @@ R_DrawXModelRigidSurfLit_30:
 	mov [ebp-0xc8], eax
 	mov eax, [ebp-0xc8]
 	mov edx, [ebp-0xc4]
-	call R_DrawXModelRigidModelSurf
+	call _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface
 	add dword [ebp-0xbc], 0x1
 	mov edx, [ebp-0xbc]
 	cmp [ebp+0xc], edx
-	jz R_DrawXModelRigidSurfLit_10
+	jz _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_10
 	mov eax, [ebp+0x8]
 	mov esi, [eax+edx*8]
 	mov edi, [eax+edx*8+0x4]
@@ -953,28 +953,28 @@ R_DrawXModelRigidSurfLit_30:
 	xor ecx, edx
 	xor eax, [ebp-0xb8]
 	or ecx, eax
-	jnz R_DrawXModelRigidSurfLit_20
+	jnz _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_20
 	movzx eax, si
 	mov edx, [ebp-0x94]
 	lea ebx, [edx+eax*4]
 	movzx eax, word [ebx+0xe]
 	movzx edx, ax
 	cmp [ebp-0xb0], edx
-	jz R_DrawXModelRigidSurfLit_30
+	jz _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_30
 	test ax, ax
-	jz R_DrawXModelRigidSurfLit_40
+	jz _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_40
 	mov ecx, [ebp-0x94]
 	lea edx, [ecx+edx*8+0x118260]
 	mov eax, [edx]
 	and eax, 0x2
 	cmp [ebp-0xac], eax
-	jnz R_DrawXModelRigidSurfLit_20
+	jnz _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_20
 	movss xmm0, dword [ebp-0xa8]
 	ucomiss xmm0, [edx+0x4]
-	jp R_DrawXModelRigidSurfLit_20
-R_DrawXModelRigidSurfLit_50:
-	jz R_DrawXModelRigidSurfLit_30
-R_DrawXModelRigidSurfLit_20:
+	jp _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_20
+_Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_50:
+	jz _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_30
+_Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_20:
 	mov eax, [ebp-0xbc]
 	add esp, 0xfc
 	pop ebx
@@ -982,16 +982,16 @@ R_DrawXModelRigidSurfLit_20:
 	pop edi
 	pop ebp
 	ret
-R_DrawXModelRigidSurfLit_40:
+_Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_40:
 	mov edi, [ebp-0xac]
 	test edi, edi
-	jnz R_DrawXModelRigidSurfLit_20
+	jnz _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_20
 	movss xmm1, dword [ebp-0xa8]
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
-	jnp R_DrawXModelRigidSurfLit_50
-	jmp R_DrawXModelRigidSurfLit_20
-R_DrawXModelRigidSurfLit_10:
+	jnp _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_50
+	jmp _Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_20
+_Z24R_DrawXModelRigidSurfLitPK11GfxDrawSurfj16GfxCmdBufContextS2_PK19GfxDrawSurfListInfo_10:
 	mov eax, edx
 	add esp, 0xfc
 	pop ebx
@@ -1002,7 +1002,7 @@ R_DrawXModelRigidSurfLit_10:
 
 
 ;R_DrawXModelRigidSurfCamera(GfxDrawSurf const*, unsigned int, GfxCmdBufContext, GfxDrawSurfListInfo const*)
-R_DrawXModelRigidSurfCamera:
+_Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1059,7 +1059,7 @@ R_DrawXModelRigidSurfCamera:
 	movss xmm0, dword [edi+0xf60]
 	movss [ebp-0xa4], xmm0
 	mov dword [ebp-0xbc], 0x0
-R_DrawXModelRigidSurfCamera_30:
+_Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_30:
 	lea edx, [ebx+0x18]
 	mov eax, [ebx+0x18]
 	mov [ebp-0x28], eax
@@ -1184,7 +1184,7 @@ R_DrawXModelRigidSurfCamera_30:
 	subss xmm0, [ebp-0xa0]
 	movss [ebp-0x4c], xmm0
 	mov [esp], edi
-	call R_GetActiveWorldMatrix
+	call _Z22R_GetActiveWorldMatrixP20GfxCmdBufSourceState
 	mov edx, [ebp-0x88]
 	mov [eax], edx
 	mov edx, [ebp-0x84]
@@ -1221,18 +1221,18 @@ R_DrawXModelRigidSurfCamera_30:
 	mov eax, [ebp-0x4c]
 	mov [ecx+0xc], eax
 	mov [esp], edi
-	call R_DeriveOpenGLMatrices
+	call _Z22R_DeriveOpenGLMatricesP20GfxCmdBufSourceState
 	mov ecx, [ebx+0x4]
 	mov eax, [ebp-0x8c]
 	mov [ebp-0xc4], eax
 	mov [ebp-0xc8], edi
 	mov eax, [ebp-0xc8]
 	mov edx, [ebp-0xc4]
-	call R_DrawXModelRigidModelSurf
+	call _Z26R_DrawXModelRigidModelSurf16GfxCmdBufContextP8XSurface
 	add dword [ebp-0xbc], 0x1
 	mov edx, [ebp-0xbc]
 	cmp [ebp+0xc], edx
-	jz R_DrawXModelRigidSurfCamera_10
+	jz _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_10
 	mov eax, edx
 	mov edx, [ebp+0x8]
 	mov ebx, [edx+eax*8]
@@ -1245,28 +1245,28 @@ R_DrawXModelRigidSurfCamera_30:
 	xor ecx, edx
 	xor eax, [ebp-0xb8]
 	or ecx, eax
-	jnz R_DrawXModelRigidSurfCamera_20
+	jnz _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20
 	movzx eax, bx
 	mov edx, [ebp-0x90]
 	lea ebx, [edx+eax*4]
 	movzx eax, word [ebx+0xe]
 	movzx edx, ax
 	cmp [ebp-0xac], edx
-	jz R_DrawXModelRigidSurfCamera_30
+	jz _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_30
 	test ax, ax
-	jz R_DrawXModelRigidSurfCamera_40
+	jz _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_40
 	mov eax, [ebp-0x90]
 	lea edx, [eax+edx*8+0x118260]
 	mov eax, [edx]
 	and eax, 0x2
 	cmp [ebp-0xa8], eax
-	jnz R_DrawXModelRigidSurfCamera_20
+	jnz _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20
 	movss xmm0, dword [ebp-0xa4]
 	ucomiss xmm0, [edx+0x4]
-	jp R_DrawXModelRigidSurfCamera_20
-R_DrawXModelRigidSurfCamera_50:
-	jz R_DrawXModelRigidSurfCamera_30
-R_DrawXModelRigidSurfCamera_20:
+	jp _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20
+_Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_50:
+	jz _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_30
+_Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20:
 	mov eax, [ebp-0xbc]
 	add esp, 0xfc
 	pop ebx
@@ -1274,16 +1274,16 @@ R_DrawXModelRigidSurfCamera_20:
 	pop edi
 	pop ebp
 	ret
-R_DrawXModelRigidSurfCamera_40:
+_Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_40:
 	mov esi, [ebp-0xa8]
 	test esi, esi
-	jnz R_DrawXModelRigidSurfCamera_20
+	jnz _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20
 	movss xmm1, dword [ebp-0xa4]
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
-	jnp R_DrawXModelRigidSurfCamera_50
-	jmp R_DrawXModelRigidSurfCamera_20
-R_DrawXModelRigidSurfCamera_10:
+	jnp _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_50
+	jmp _Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_20
+_Z27R_DrawXModelRigidSurfCameraPK11GfxDrawSurfj16GfxCmdBufContextPK19GfxDrawSurfListInfo_10:
 	mov eax, edx
 	add esp, 0xfc
 	pop ebx
@@ -1332,7 +1332,7 @@ g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
 g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
-g_unit: dd 0x0, 0x0, 0x0, 0x3f800000, 0x25a518, 0x25a4fd, 0x25a52b, 0x25a548, 0x25a565, 0x25a582, 0x25a5a2, 0x25a5c2, 0x25a5e2, 0x25a602, 0x25a622, 0x25a642, 0x25a682, 0x25a662, 0x0, 0x0
+g_unit: dd 0x0, 0x0, 0x0, 0x3f800000
 
 
 ;Zero initialized global or static variables of r_draw_xmodel:
@@ -1369,7 +1369,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

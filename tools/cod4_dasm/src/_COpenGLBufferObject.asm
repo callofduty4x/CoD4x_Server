@@ -38,6 +38,7 @@
 	global _ZN19COpenGLBufferObjectD2Ev
 	global _ZNSt10_List_baseI15DirtyMarkerTypeSaIS0_EE8_M_clearEv
 	global _ZNSt4listI15DirtyMarkerTypeSaIS0_EE5eraseESt14_List_iteratorIS0_E
+	global _ZTI19COpenGLBufferObject
 	global _ZTV19COpenGLBufferObject
 
 
@@ -932,8 +933,10 @@ _ZZN19COpenGLBufferObject5FlushEjjE18sVBOFlushTolerance: dd 0x1000, 0x0, 0x0, 0x
 
 ;Initialized constant data of COpenGLBufferObject:
 SECTION .rdata
+;VTypeInfoTable for COpenGLBufferObject:
+_ZTI19COpenGLBufferObject: dd 0x8, _cstring_19copenglbuffero, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for COpenGLBufferObject:
-_ZTV19COpenGLBufferObject: dd 0x0, 0x3b4f60, _ZN19COpenGLBufferObjectD1Ev, _ZN19COpenGLBufferObjectD0Ev, 0x0, 0x0, 0x0, 0x0
+_ZTV19COpenGLBufferObject: dd 0x0, _ZTI19COpenGLBufferObject, _ZN19COpenGLBufferObjectD1Ev, _ZN19COpenGLBufferObjectD0Ev, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of COpenGLBufferObject:
@@ -942,6 +945,7 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
+_cstring_19copenglbuffero:		db "19COpenGLBufferObject",0
 
 
 

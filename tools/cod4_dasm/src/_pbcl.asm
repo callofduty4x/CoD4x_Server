@@ -3,35 +3,33 @@
 	extern memset
 	extern __cxa_atexit
 	extern strncasecmp
-	extern PbMsgToScreen
-	extern Com_Printf
-	extern Cvar_GetVariantString
+	extern _Z13PbMsgToScreenPcS_
+	extern _Z10Com_PrintfiPKcz
+	extern _Z21Dvar_GetVariantStringPKc
 	extern strncpy
-	extern PbDvarValidate
-	extern PbDvarWalk
+	extern _Z14PbDvarValidatePc
+	extern _Z10PbDvarWalkPPcS0_PiS0_
 	extern strcmp
 	extern atoi
-	extern Key_KeynumToString
-	extern Key_GetBinding
-	extern PbMaxKeys
-	extern PB_Q_Serveraddr
-	extern PB_Q_Serverinfo
-	extern Info_ValueForKey
-	extern __toupper
+	extern _Z18Key_KeynumToStringii
+	extern _Z14Key_GetBindingii
+	extern _Z9PbMaxKeysv
+	extern _Z15PB_Q_Serveraddri
+	extern _Z15PB_Q_Serverinfoi
+	extern _Z16Info_ValueForKeyPKcS0_
+	extern toupper
 	extern strstr
 	extern strcpy
 	extern tolower
 	extern strcasecmp
-	extern set_cl_punkbuster
-	extern PBdvar_set
-	extern PBget_cl_cdkey
-	extern CL_SendPbPacket
-	extern Sys_PBSendUdpPacket
+	extern _Z17set_cl_punkbusterPc
+	extern _Z10PBdvar_setPKcS0_
+	extern _Z14PBget_cl_cdkeyPc
+	extern _Z15CL_SendPbPacketiiPc
+	extern _Z19Sys_PBSendUdpPacketPctiS_
 	extern pbsv
-	extern g_XAnimPartsPool
 	extern fopen
 	extern fclose
-	extern g_fileBuf
 	extern chmod
 	extern remove
 	extern rename
@@ -41,21 +39,21 @@
 
 ;Exports of pbcl:
 	global _GLOBAL__I_pbcl
-	global EnablePbCl
-	global DisablePbCl
-	global PbClGameMsg
-	global PbClAddEvent
-	global PbClGameQuery
-	global isPbClEnabled
-	global PbClGameCommand
-	global PbClSendToServer
-	global PbTrapPreExecCmd
-	global PbClSendToAddrPort
-	global PbClientConnecting
-	global PbClientInitialize
-	global PbClientTrapConsole
-	global PbClientProcessEvents
-	global PbClientCompleteCommand
+	global _Z10EnablePbClv
+	global _Z11DisablePbClv
+	global _Z11PbClGameMsgPci
+	global _Z12PbClAddEventiiPc
+	global _Z13PbClGameQueryiPc
+	global _Z13isPbClEnabledv
+	global _Z15PbClGameCommandPcS_
+	global _Z16PbClSendToServeriPc
+	global _Z16PbTrapPreExecCmdPc
+	global _Z18PbClSendToAddrPortPctiS_
+	global _Z18PbClientConnectingiPcPi
+	global _Z18PbClientInitializePv
+	global _Z19PbClientTrapConsolePci
+	global _Z21PbClientProcessEventsv
+	global _Z23PbClientCompleteCommandPci
 	global _ZN6stPbCl10AddPbEventEiiPci
 	global exeInstance
 	global pbcl
@@ -102,18 +100,18 @@ __tcf_0_20:
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	leave
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov dword [esp+0x8], 0x1a8
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], pbcl
@@ -150,7 +148,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;EnablePbCl()
-EnablePbCl:
+_Z10EnablePbClv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -165,7 +163,7 @@ EnablePbCl:
 
 
 ;DisablePbCl()
-DisablePbCl:
+_Z11DisablePbClv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -180,7 +178,7 @@ DisablePbCl:
 
 
 ;PbClGameMsg(char*, int)
-PbClGameMsg:
+_Z11PbClGameMsgPci:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -191,21 +189,21 @@ PbClGameMsg:
 	mov dword [esp], pbcl+0x35
 	call strncasecmp
 	test eax, eax
-	jz PbClGameMsg_10
+	jz _Z11PbClGameMsgPci_10
 	mov [esp+0x4], ebx
 	mov dword [esp], pbcl+0x35
-	call PbMsgToScreen
+	call _Z13PbMsgToScreenPcS_
 	xor eax, eax
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-PbClGameMsg_10:
+_Z11PbClGameMsgPci_10:
 	mov [esp+0xc], ebx
 	mov dword [esp+0x8], pbcl+0x41
 	mov dword [esp+0x4], _cstring_s_s
 	mov dword [esp], 0x10
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	xor eax, eax
 	add esp, 0x14
 	pop ebx
@@ -214,7 +212,7 @@ PbClGameMsg_10:
 
 
 ;PbClAddEvent(int, int, char*)
-PbClAddEvent:
+_Z12PbClAddEventiiPc:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -233,7 +231,7 @@ PbClAddEvent:
 
 
 ;PbClGameQuery(int, char*)
-PbClGameQuery:
+_Z13PbClGameQueryiPc:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -242,91 +240,91 @@ PbClGameQuery:
 	sub esp, 0x8c
 	mov ebx, [ebp+0xc]
 	test ebx, ebx
-	jz PbClGameQuery_10
+	jz _Z13PbClGameQueryiPc_10
 	mov byte [ebx+0xff], 0x0
 	movzx edx, byte [ebx]
 	test dl, dl
-	jz PbClGameQuery_20
+	jz _Z13PbClGameQueryiPc_20
 	cmp dl, 0x20
-	jz PbClGameQuery_30
+	jz _Z13PbClGameQueryiPc_30
 	mov [ebp-0x7c], ebx
-PbClGameQuery_50:
+_Z13PbClGameQueryiPc_50:
 	add dword [ebp-0x7c], 0x1
 	mov ecx, [ebp-0x7c]
 	movzx eax, byte [ecx]
 	test al, al
-	jz PbClGameQuery_40
+	jz _Z13PbClGameQueryiPc_40
 	cmp al, 0x20
-	jnz PbClGameQuery_50
+	jnz _Z13PbClGameQueryiPc_50
 	mov edi, [ebp-0x7c]
 	cmp byte [edi], 0x20
-	jnz PbClGameQuery_60
-PbClGameQuery_70:
+	jnz _Z13PbClGameQueryiPc_60
+_Z13PbClGameQueryiPc_70:
 	add dword [ebp-0x7c], 0x1
 	mov eax, [ebp-0x7c]
 	cmp byte [eax], 0x20
-	jnz PbClGameQuery_60
-PbClGameQuery_90:
+	jnz _Z13PbClGameQueryiPc_60
+_Z13PbClGameQueryiPc_90:
 	add dword [ebp-0x7c], 0x1
 	mov eax, [ebp-0x7c]
 	cmp byte [eax], 0x20
-	jz PbClGameQuery_70
-	jmp PbClGameQuery_60
-PbClGameQuery_540:
+	jz _Z13PbClGameQueryiPc_70
+	jmp _Z13PbClGameQueryiPc_60
+_Z13PbClGameQueryiPc_540:
 	mov [esp], ebx
-	call Cvar_GetVariantString
-PbClGameQuery_230:
+	call _Z21Dvar_GetVariantStringPKc
+_Z13PbClGameQueryiPc_230:
 	mov dword [esp+0x8], 0xff
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call strncpy
-PbClGameQuery_10:
+_Z13PbClGameQueryiPc_10:
 	xor eax, eax
-PbClGameQuery_110:
+_Z13PbClGameQueryiPc_110:
 	add esp, 0x8c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-PbClGameQuery_20:
+_Z13PbClGameQueryiPc_20:
 	mov [ebp-0x7c], ebx
 	mov edi, ebx
-PbClGameQuery_100:
+_Z13PbClGameQueryiPc_100:
 	cmp byte [edi], 0x20
-	jz PbClGameQuery_70
-PbClGameQuery_60:
+	jz _Z13PbClGameQueryiPc_70
+_Z13PbClGameQueryiPc_60:
 	mov eax, [ebp+0x8]
 	sub eax, 0x67
 	cmp eax, 0xc
-	ja PbClGameQuery_80
-	jmp dword [eax*4+PbClGameQuery_jumptab_0]
-PbClGameQuery_80:
+	ja _Z13PbClGameQueryiPc_80
+	jmp dword [eax*4+_Z13PbClGameQueryiPc_jumptab_0]
+_Z13PbClGameQueryiPc_80:
 	mov byte [ebx], 0x0
-	jmp PbClGameQuery_10
-PbClGameQuery_30:
+	jmp _Z13PbClGameQueryiPc_10
+_Z13PbClGameQueryiPc_30:
 	mov [ebp-0x7c], ebx
 	add dword [ebp-0x7c], 0x1
 	mov eax, [ebp-0x7c]
 	cmp byte [eax], 0x20
-	jz PbClGameQuery_90
-	jmp PbClGameQuery_60
-PbClGameQuery_40:
+	jz _Z13PbClGameQueryiPc_90
+	jmp _Z13PbClGameQueryiPc_60
+_Z13PbClGameQueryiPc_40:
 	mov edi, ecx
-	jmp PbClGameQuery_100
-PbClGameQuery_640:
+	jmp _Z13PbClGameQueryiPc_100
+_Z13PbClGameQueryiPc_640:
 	mov [esp], ebx
-	call PbDvarValidate
-	jmp PbClGameQuery_110
-PbClGameQuery_630:
+	call _Z14PbDvarValidatePc
+	jmp _Z13PbClGameQueryiPc_110
+_Z13PbClGameQueryiPc_630:
 	mov dword [esp+0x8], 0xff
 	mov eax, [exeInstance]
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call strncpy
 	xor eax, eax
-	jmp PbClGameQuery_110
-PbClGameQuery_620:
+	jmp _Z13PbClGameQueryiPc_110
+_Z13PbClGameQueryiPc_620:
 	lea eax, [ebp-0x28]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x2c]
@@ -335,31 +333,31 @@ PbClGameQuery_620:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x20]
 	mov [esp], eax
-	call PbDvarWalk
+	call _Z10PbDvarWalkPPcS0_PiS0_
 	test eax, eax
-	jz PbClGameQuery_10
+	jz _Z13PbClGameQueryiPc_10
 	mov ecx, [ebp-0x20]
 	test ecx, ecx
-	jz PbClGameQuery_120
+	jz _Z13PbClGameQueryiPc_120
 	mov edx, [ebp-0x24]
 	test edx, edx
-	jz PbClGameQuery_120
+	jz _Z13PbClGameQueryiPc_120
 	mov eax, [ebp-0x28]
 	test eax, eax
-	jz PbClGameQuery_120
-PbClGameQuery_370:
+	jz _Z13PbClGameQueryiPc_120
+_Z13PbClGameQueryiPc_370:
 	mov esi, [ebp-0x28]
 	mov [esp+0x4], esi
 	mov eax, [ebp-0x24]
 	mov [esp], eax
 	call strcmp
 	test eax, eax
-	jnz PbClGameQuery_130
+	jnz _Z13PbClGameQueryiPc_130
 	mov byte [ebx], 0x0
-PbClGameQuery_140:
+_Z13PbClGameQueryiPc_140:
 	mov eax, [ebp-0x20]
-	jmp PbClGameQuery_110
-PbClGameQuery_610:
+	jmp _Z13PbClGameQueryiPc_110
+_Z13PbClGameQueryiPc_610:
 	lea eax, [ebp-0x28]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x2c]
@@ -368,9 +366,9 @@ PbClGameQuery_610:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x20]
 	mov [esp], eax
-	call PbDvarWalk
+	call _Z10PbDvarWalkPPcS0_PiS0_
 	test eax, eax
-	jz PbClGameQuery_10
+	jz _Z13PbClGameQueryiPc_10
 	mov eax, _cstring_null
 	mov edx, [ebp-0x20]
 	test edx, edx
@@ -380,25 +378,25 @@ PbClGameQuery_610:
 	mov [ebp-0x74], edi
 	mov word [ebx], 0x30
 	cmp edi, 0x0
-	jz PbClGameQuery_140
+	jz _Z13PbClGameQueryiPc_140
 	mov ecx, edi
 	mov byte [ebp-0x2d], 0x0
-	jl PbClGameQuery_150
-PbClGameQuery_420:
+	jl _Z13PbClGameQueryiPc_150
+_Z13PbClGameQueryiPc_420:
 	mov esi, 0x22
 	mov edi, 0xcccccccd
-	jmp PbClGameQuery_160
-PbClGameQuery_180:
+	jmp _Z13PbClGameQueryiPc_160
+_Z13PbClGameQueryiPc_180:
 	add al, 0x30
-PbClGameQuery_190:
+_Z13PbClGameQueryiPc_190:
 	mov [ebp+esi-0x4f], al
 	mov eax, ecx
 	mul edi
 	shr edx, 0x3
 	mov ecx, edx
 	test edx, edx
-	jz PbClGameQuery_170
-PbClGameQuery_160:
+	jz _Z13PbClGameQueryiPc_170
+_Z13PbClGameQueryiPc_160:
 	mov eax, ecx
 	mul edi
 	shr edx, 0x3
@@ -408,13 +406,13 @@ PbClGameQuery_160:
 	sub eax, edx
 	sub esi, 0x1
 	cmp eax, 0x9
-	jbe PbClGameQuery_180
+	jbe _Z13PbClGameQueryiPc_180
 	add al, 0x57
-	jmp PbClGameQuery_190
-PbClGameQuery_600:
+	jmp _Z13PbClGameQueryiPc_190
+_Z13PbClGameQueryiPc_600:
 	test dl, dl
-	jz PbClGameQuery_10
-PbClGameQuery_200:
+	jz _Z13PbClGameQueryiPc_10
+_Z13PbClGameQueryiPc_200:
 	lea ecx, [ebp-0x28]
 	mov [esp+0xc], ecx
 	lea edi, [ebp-0x2c]
@@ -423,70 +421,70 @@ PbClGameQuery_200:
 	mov [esp+0x4], eax
 	lea edx, [ebp-0x20]
 	mov [esp], edx
-	call PbDvarWalk
+	call _Z10PbDvarWalkPPcS0_PiS0_
 	test eax, eax
-	jz PbClGameQuery_80
+	jz _Z13PbClGameQueryiPc_80
 	mov edx, [ebp-0x20]
 	test edx, edx
-	jz PbClGameQuery_200
+	jz _Z13PbClGameQueryiPc_200
 	mov eax, [ebp-0x24]
 	test eax, eax
-	jz PbClGameQuery_200
+	jz _Z13PbClGameQueryiPc_200
 	cmp byte [edx], 0x0
-	jz PbClGameQuery_200
+	jz _Z13PbClGameQueryiPc_200
 	cmp byte [eax], 0x0
-	jz PbClGameQuery_200
+	jz _Z13PbClGameQueryiPc_200
 	mov [ebp-0x68], eax
 	movzx eax, word [_cstring_x]
 	mov [ebp-0x4f], ax
 	movzx eax, word [_cstring_x1]
 	mov [ebp-0x1a], ax
 	test ebx, ebx
-	jz PbClGameQuery_210
+	jz _Z13PbClGameQueryiPc_210
 	movzx esi, byte [ebx]
 	mov ecx, esi
 	test cl, cl
-	jnz PbClGameQuery_220
-PbClGameQuery_210:
+	jnz _Z13PbClGameQueryiPc_220
+_Z13PbClGameQueryiPc_210:
 	mov dword [esp+0x8], 0xff
 	mov [esp+0x4], edx
 	mov [esp], ebx
 	call strncpy
 	xor eax, eax
-	jmp PbClGameQuery_110
-PbClGameQuery_590:
+	jmp _Z13PbClGameQueryiPc_110
+_Z13PbClGameQueryiPc_590:
 	mov [esp], ebx
 	call atoi
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
-	call Key_KeynumToString
+	call _Z18Key_KeynumToStringii
 	mov dword [esp+0x8], 0xff
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call strncpy
 	xor eax, eax
-	jmp PbClGameQuery_110
-PbClGameQuery_580:
+	jmp _Z13PbClGameQueryiPc_110
+_Z13PbClGameQueryiPc_580:
 	mov [esp], ebx
 	call atoi
 	mov [esp+0x4], eax
 	mov dword [esp], 0x0
-	call Key_GetBinding
-	jmp PbClGameQuery_230
-PbClGameQuery_570:
-	call PbMaxKeys
+	call _Z14Key_GetBindingii
+	jmp _Z13PbClGameQueryiPc_230
+_Z13PbClGameQueryiPc_570:
+	call _Z9PbMaxKeysv
 	mov esi, eax
 	mov [esp], ebx
 	call atoi
 	cmp esi, eax
-	jle PbClGameQuery_240
+	jle _Z13PbClGameQueryiPc_240
 	mov [ebp-0x5c], eax
 	mov [ebp-0x78], esi
 	mov edx, eax
-PbClGameQuery_360:
+_Z13PbClGameQueryiPc_360:
 	mov [esp+0x4], edx
 	mov dword [esp], 0x0
-	call Key_GetBinding
+	call _Z14Key_GetBindingii
 	mov [ebp-0x70], eax
 	movzx eax, word [_cstring_x]
 	mov [ebp-0x4f], ax
@@ -494,36 +492,36 @@ PbClGameQuery_360:
 	mov [ebp-0x1a], ax
 	mov eax, [ebp-0x70]
 	test eax, eax
-	jz PbClGameQuery_250
+	jz _Z13PbClGameQueryiPc_250
 	mov eax, [ebp-0x7c]
 	test eax, eax
-	jz PbClGameQuery_260
+	jz _Z13PbClGameQueryiPc_260
 	mov ecx, [ebp-0x7c]
 	movzx edx, byte [ecx]
 	test dl, dl
-	jnz PbClGameQuery_270
-PbClGameQuery_260:
+	jnz _Z13PbClGameQueryiPc_270
+_Z13PbClGameQueryiPc_260:
 	mov word [ebx], 0x30
 	cmp dword [ebp-0x5c], 0x0
-	jz PbClGameQuery_10
+	jz _Z13PbClGameQueryiPc_10
 	mov ecx, [ebp-0x5c]
 	mov byte [ebp-0x2d], 0x0
-	jl PbClGameQuery_280
-PbClGameQuery_470:
+	jl _Z13PbClGameQueryiPc_280
+_Z13PbClGameQueryiPc_470:
 	mov esi, 0x22
 	mov edi, 0xcccccccd
-	jmp PbClGameQuery_290
-PbClGameQuery_310:
+	jmp _Z13PbClGameQueryiPc_290
+_Z13PbClGameQueryiPc_310:
 	add al, 0x30
-PbClGameQuery_320:
+_Z13PbClGameQueryiPc_320:
 	mov [ebp+esi-0x4f], al
 	mov eax, ecx
 	mul edi
 	shr edx, 0x3
 	mov ecx, edx
 	test edx, edx
-	jz PbClGameQuery_300
-PbClGameQuery_290:
+	jz _Z13PbClGameQueryiPc_300
+_Z13PbClGameQueryiPc_290:
 	mov eax, ecx
 	mul edi
 	shr edx, 0x3
@@ -533,33 +531,33 @@ PbClGameQuery_290:
 	sub eax, edx
 	sub esi, 0x1
 	cmp eax, 0x9
-	jbe PbClGameQuery_310
+	jbe _Z13PbClGameQueryiPc_310
 	add al, 0x57
-	jmp PbClGameQuery_320
-PbClGameQuery_560:
+	jmp _Z13PbClGameQueryiPc_320
+_Z13PbClGameQueryiPc_560:
 	mov dword [esp], 0x0
-	call PB_Q_Serveraddr
-	jmp PbClGameQuery_230
-PbClGameQuery_550:
+	call _Z15PB_Q_Serveraddri
+	jmp _Z13PbClGameQueryiPc_230
+_Z13PbClGameQueryiPc_550:
 	mov dword [esp], 0x0
-	call PB_Q_Serverinfo
+	call _Z15PB_Q_Serverinfoi
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call Info_ValueForKey
-	jmp PbClGameQuery_230
-PbClGameQuery_390:
+	call _Z16Info_ValueForKeyPKcS0_
+	jmp _Z13PbClGameQueryiPc_230
+_Z13PbClGameQueryiPc_390:
 	mov dword [ebp-0x60], 0x0
-PbClGameQuery_410:
+_Z13PbClGameQueryiPc_410:
 	mov edx, [ebp-0x7c]
 	movsx eax, byte [edx]
 	mov [esp], eax
-	call __toupper
+	call toupper
 	mov [ebp-0x1a], al
 	cmp [ebp-0x4f], al
-	jz PbClGameQuery_330
+	jz _Z13PbClGameQueryiPc_330
 	mov edi, [ebp-0x70]
-	jmp PbClGameQuery_340
-PbClGameQuery_350:
+	jmp _Z13PbClGameQueryiPc_340
+_Z13PbClGameQueryiPc_350:
 	mov eax, [ebp-0x6c]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x7c]
@@ -567,46 +565,46 @@ PbClGameQuery_350:
 	mov [esp], esi
 	call strncasecmp
 	test eax, eax
-	jz PbClGameQuery_260
+	jz _Z13PbClGameQueryiPc_260
 	add esi, 0x1
 	mov [ebp-0x70], esi
 	mov edi, esi
-PbClGameQuery_340:
+_Z13PbClGameQueryiPc_340:
 	lea ecx, [ebp-0x1a]
 	mov [esp+0x4], ecx
 	mov [esp], edi
 	call strstr
 	mov esi, eax
 	test eax, eax
-	jnz PbClGameQuery_350
-PbClGameQuery_330:
+	jnz _Z13PbClGameQueryiPc_350
+_Z13PbClGameQueryiPc_330:
 	mov esi, [ebp-0x60]
 	test esi, esi
-	jnz PbClGameQuery_260
-PbClGameQuery_250:
+	jnz _Z13PbClGameQueryiPc_260
+_Z13PbClGameQueryiPc_250:
 	add dword [ebp-0x5c], 0x1
 	mov edx, [ebp-0x78]
 	cmp [ebp-0x5c], edx
-	jz PbClGameQuery_240
+	jz _Z13PbClGameQueryiPc_240
 	mov edx, [ebp-0x5c]
-	jmp PbClGameQuery_360
-PbClGameQuery_120:
+	jmp _Z13PbClGameQueryiPc_360
+_Z13PbClGameQueryiPc_120:
 	mov dword [ebp-0x28], _cstring_null
 	mov dword [ebp-0x24], _cstring_null
 	mov dword [ebp-0x20], _cstring_null
-	jmp PbClGameQuery_370
-PbClGameQuery_170:
+	jmp _Z13PbClGameQueryiPc_370
+_Z13PbClGameQueryiPc_170:
 	mov edi, [ebp-0x74]
 	test edi, edi
-	js PbClGameQuery_380
-PbClGameQuery_430:
+	js _Z13PbClGameQueryiPc_380
+_Z13PbClGameQueryiPc_430:
 	lea eax, [ebp+esi-0x4f]
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call strcpy
 	mov eax, [ebp-0x20]
-	jmp PbClGameQuery_110
-PbClGameQuery_270:
+	jmp _Z13PbClGameQueryiPc_110
+_Z13PbClGameQueryiPc_270:
 	mov edi, ecx
 	cld
 	mov ecx, 0xffffffff
@@ -620,14 +618,14 @@ PbClGameQuery_270:
 	call tolower
 	mov [ebp-0x4f], al
 	mov eax, [ebp-0x70]
-PbClGameQuery_400:
+_Z13PbClGameQueryiPc_400:
 	lea edx, [ebp-0x4f]
 	mov [esp+0x4], edx
 	mov [esp], eax
 	call strstr
 	mov esi, eax
 	test eax, eax
-	jz PbClGameQuery_390
+	jz _Z13PbClGameQueryiPc_390
 	mov ecx, [ebp-0x6c]
 	mov [esp+0x8], ecx
 	mov edi, [ebp-0x7c]
@@ -641,9 +639,9 @@ PbClGameQuery_400:
 	lea eax, [esi+0x1]
 	mov edi, [ebp-0x60]
 	test edi, edi
-	jz PbClGameQuery_400
-	jmp PbClGameQuery_410
-PbClGameQuery_130:
+	jz _Z13PbClGameQueryiPc_400
+	jmp _Z13PbClGameQueryiPc_410
+_Z13PbClGameQueryiPc_130:
 	mov dword [esp+0x8], 0xfd
 	mov [esp+0x4], esi
 	lea eax, [ebx+0x1]
@@ -658,8 +656,8 @@ PbClGameQuery_130:
 	not ecx
 	mov word [ecx+ebx-0x1], 0x22
 	mov eax, [ebp-0x20]
-	jmp PbClGameQuery_110
-PbClGameQuery_240:
+	jmp _Z13PbClGameQueryiPc_110
+_Z13PbClGameQueryiPc_240:
 	mov word [ebx], 0x30
 	mov byte [ebp-0x2d], 0x0
 	mov byte [ebp-0x2e], 0x31
@@ -669,16 +667,16 @@ PbClGameQuery_240:
 	mov [esp], ebx
 	call strcpy
 	xor eax, eax
-	jmp PbClGameQuery_110
-PbClGameQuery_150:
+	jmp _Z13PbClGameQueryiPc_110
+_Z13PbClGameQueryiPc_150:
 	neg ecx
-	jnz PbClGameQuery_420
+	jnz _Z13PbClGameQueryiPc_420
 	mov esi, 0x22
-PbClGameQuery_380:
+_Z13PbClGameQueryiPc_380:
 	sub esi, 0x1
 	mov byte [ebp+esi-0x4f], 0x2d
-	jmp PbClGameQuery_430
-PbClGameQuery_220:
+	jmp _Z13PbClGameQueryiPc_430
+_Z13PbClGameQueryiPc_220:
 	cld
 	mov ecx, 0xffffffff
 	xor eax, eax
@@ -693,14 +691,14 @@ PbClGameQuery_220:
 	call tolower
 	mov [ebp-0x4f], al
 	mov eax, [ebp-0x68]
-PbClGameQuery_450:
+_Z13PbClGameQueryiPc_450:
 	lea ecx, [ebp-0x4f]
 	mov [esp+0x4], ecx
 	mov [esp], eax
 	call strstr
 	mov esi, eax
 	test eax, eax
-	jz PbClGameQuery_440
+	jz _Z13PbClGameQueryiPc_440
 	mov edi, [ebp-0x64]
 	mov [esp+0x8], edi
 	mov [esp+0x4], ebx
@@ -711,86 +709,86 @@ PbClGameQuery_450:
 	cmovz edi, esi
 	lea eax, [esi+0x1]
 	test edi, edi
-	jz PbClGameQuery_450
-PbClGameQuery_520:
+	jz _Z13PbClGameQueryiPc_450
+_Z13PbClGameQueryiPc_520:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call __toupper
+	call toupper
 	mov [ebp-0x1a], al
 	cmp [ebp-0x4f], al
-	jnz PbClGameQuery_460
-PbClGameQuery_500:
+	jnz _Z13PbClGameQueryiPc_460
+_Z13PbClGameQueryiPc_500:
 	test edi, edi
-	jz PbClGameQuery_200
+	jz _Z13PbClGameQueryiPc_200
 	mov edx, [ebp-0x20]
-	jmp PbClGameQuery_210
-PbClGameQuery_280:
+	jmp _Z13PbClGameQueryiPc_210
+_Z13PbClGameQueryiPc_280:
 	neg ecx
-	jnz PbClGameQuery_470
+	jnz _Z13PbClGameQueryiPc_470
 	mov esi, 0x22
-PbClGameQuery_300:
+_Z13PbClGameQueryiPc_300:
 	mov ecx, [ebp-0x5c]
 	test ecx, ecx
-	js PbClGameQuery_480
-PbClGameQuery_530:
+	js _Z13PbClGameQueryiPc_480
+_Z13PbClGameQueryiPc_530:
 	lea eax, [ebp+esi-0x4f]
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call strcpy
 	xor eax, eax
-	jmp PbClGameQuery_110
-PbClGameQuery_460:
+	jmp _Z13PbClGameQueryiPc_110
+_Z13PbClGameQueryiPc_460:
 	mov edx, [ebp-0x68]
-	jmp PbClGameQuery_490
-PbClGameQuery_510:
+	jmp _Z13PbClGameQueryiPc_490
+_Z13PbClGameQueryiPc_510:
 	add esi, 0x1
 	mov [ebp-0x68], esi
 	mov edx, esi
-PbClGameQuery_490:
+_Z13PbClGameQueryiPc_490:
 	lea eax, [ebp-0x1a]
 	mov [esp+0x4], eax
 	mov [esp], edx
 	call strstr
 	mov esi, eax
 	test eax, eax
-	jz PbClGameQuery_500
+	jz _Z13PbClGameQueryiPc_500
 	mov ecx, [ebp-0x64]
 	mov [esp+0x8], ecx
 	mov [esp+0x4], ebx
 	mov [esp], eax
 	call strncasecmp
 	test eax, eax
-	jnz PbClGameQuery_510
+	jnz _Z13PbClGameQueryiPc_510
 	mov edx, [ebp-0x20]
-	jmp PbClGameQuery_210
-PbClGameQuery_440:
+	jmp _Z13PbClGameQueryiPc_210
+_Z13PbClGameQueryiPc_440:
 	xor edi, edi
-	jmp PbClGameQuery_520
-PbClGameQuery_480:
+	jmp _Z13PbClGameQueryiPc_520
+_Z13PbClGameQueryiPc_480:
 	sub esi, 0x1
 	mov byte [ebp+esi-0x4f], 0x2d
-	jmp PbClGameQuery_530
+	jmp _Z13PbClGameQueryiPc_530
 	nop
 	
 	
-PbClGameQuery_jumptab_0:
-	dd PbClGameQuery_540
-	dd PbClGameQuery_550
-	dd PbClGameQuery_560
-	dd PbClGameQuery_570
-	dd PbClGameQuery_580
-	dd PbClGameQuery_590
-	dd PbClGameQuery_600
-	dd PbClGameQuery_610
-	dd PbClGameQuery_620
-	dd PbClGameQuery_630
-	dd PbClGameQuery_80
-	dd PbClGameQuery_80
-	dd PbClGameQuery_640
+_Z13PbClGameQueryiPc_jumptab_0:
+	dd _Z13PbClGameQueryiPc_540
+	dd _Z13PbClGameQueryiPc_550
+	dd _Z13PbClGameQueryiPc_560
+	dd _Z13PbClGameQueryiPc_570
+	dd _Z13PbClGameQueryiPc_580
+	dd _Z13PbClGameQueryiPc_590
+	dd _Z13PbClGameQueryiPc_600
+	dd _Z13PbClGameQueryiPc_610
+	dd _Z13PbClGameQueryiPc_620
+	dd _Z13PbClGameQueryiPc_630
+	dd _Z13PbClGameQueryiPc_80
+	dd _Z13PbClGameQueryiPc_80
+	dd _Z13PbClGameQueryiPc_640
 
 
 ;isPbClEnabled()
-isPbClEnabled:
+_Z13isPbClEnabledv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -805,7 +803,7 @@ isPbClEnabled:
 
 
 ;PbClGameCommand(char*, char*)
-PbClGameCommand:
+_Z15PbClGameCommandPcS_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -815,33 +813,33 @@ PbClGameCommand:
 	mov edi, [ebp+0x8]
 	mov esi, [ebp+0xc]
 	cmp byte [esi], 0x20
-	jz PbClGameCommand_10
+	jz _Z15PbClGameCommandPcS__10
 	mov ebx, esi
-PbClGameCommand_110:
+_Z15PbClGameCommandPcS__110:
 	movzx eax, byte [ebx]
 	test al, al
-	jz PbClGameCommand_20
+	jz _Z15PbClGameCommandPcS__20
 	cmp al, 0x20
-	jz PbClGameCommand_30
-PbClGameCommand_40:
+	jz _Z15PbClGameCommandPcS__30
+_Z15PbClGameCommandPcS__40:
 	add ebx, 0x1
 	movzx eax, byte [ebx]
 	test al, al
-	jz PbClGameCommand_20
+	jz _Z15PbClGameCommandPcS__20
 	cmp al, 0x20
-	jnz PbClGameCommand_40
-PbClGameCommand_20:
+	jnz _Z15PbClGameCommandPcS__40
+_Z15PbClGameCommandPcS__20:
 	cmp byte [ebx], 0x20
-	jz PbClGameCommand_30
-PbClGameCommand_60:
+	jz _Z15PbClGameCommandPcS__30
+_Z15PbClGameCommandPcS__60:
 	mov dword [esp+0x4], _cstring_set_cl_punkbuste
 	mov [esp], edi
 	call strcasecmp
 	test eax, eax
-	jnz PbClGameCommand_50
+	jnz _Z15PbClGameCommandPcS__50
 	mov [esp], esi
-	call set_cl_punkbuster
-PbClGameCommand_90:
+	call _Z17set_cl_punkbusterPc
+_Z15PbClGameCommandPcS__90:
 	xor eax, eax
 	add esp, 0x1c
 	pop ebx
@@ -849,24 +847,24 @@ PbClGameCommand_90:
 	pop edi
 	pop ebp
 	ret
-PbClGameCommand_30:
+_Z15PbClGameCommandPcS__30:
 	add ebx, 0x1
 	cmp byte [ebx], 0x20
-	jnz PbClGameCommand_60
+	jnz _Z15PbClGameCommandPcS__60
 	add ebx, 0x1
 	cmp byte [ebx], 0x20
-	jz PbClGameCommand_30
-	jmp PbClGameCommand_60
-PbClGameCommand_50:
+	jz _Z15PbClGameCommandPcS__30
+	jmp _Z15PbClGameCommandPcS__60
+_Z15PbClGameCommandPcS__50:
 	mov dword [esp+0x4], _cstring_cvar_set
 	mov [esp], edi
 	call strcasecmp
 	test eax, eax
-	jnz PbClGameCommand_70
-PbClGameCommand_80:
+	jnz _Z15PbClGameCommandPcS__70
+_Z15PbClGameCommandPcS__80:
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call PBdvar_set
+	call _Z10PBdvar_setPKcS0_
 	xor eax, eax
 	add esp, 0x1c
 	pop ebx
@@ -874,32 +872,32 @@ PbClGameCommand_80:
 	pop edi
 	pop ebp
 	ret
-PbClGameCommand_70:
+_Z15PbClGameCommandPcS__70:
 	mov dword [esp+0x4], _cstring_dvar_set
 	mov [esp], edi
 	call strcasecmp
 	test eax, eax
-	jz PbClGameCommand_80
+	jz _Z15PbClGameCommandPcS__80
 	mov dword [esp+0x4], _cstring_get_pb_cdkey
 	mov [esp], edi
 	call strcasecmp
 	test eax, eax
-	jnz PbClGameCommand_90
+	jnz _Z15PbClGameCommandPcS__90
 	mov [esp], esi
-	call PBget_cl_cdkey
-	jmp PbClGameCommand_90
-PbClGameCommand_10:
+	call _Z14PBget_cl_cdkeyPc
+	jmp _Z15PbClGameCommandPcS__90
+_Z15PbClGameCommandPcS__10:
 	mov ebx, esi
-PbClGameCommand_100:
+_Z15PbClGameCommandPcS__100:
 	add ebx, 0x1
 	cmp byte [ebx], 0x20
-	jz PbClGameCommand_100
-	jmp PbClGameCommand_110
+	jz _Z15PbClGameCommandPcS__100
+	jmp _Z15PbClGameCommandPcS__110
 	nop
 
 
 ;PbClSendToServer(int, char*)
-PbClSendToServer:
+_Z16PbClSendToServeriPc:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -908,32 +906,32 @@ PbClSendToServer:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x0
-	call CL_SendPbPacket
+	call _Z15CL_SendPbPacketiiPc
 	xor eax, eax
 	leave
 	ret
 
 
 ;PbTrapPreExecCmd(char*)
-PbTrapPreExecCmd:
+_Z16PbTrapPreExecCmdPc:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov eax, [pbcl+0x19c]
 	test eax, eax
-	jz PbTrapPreExecCmd_10
+	jz _Z16PbTrapPreExecCmdPc_10
 	mov edx, [ebp+0x8]
 	mov [esp+0x4], edx
 	mov dword [esp], pbcl
 	call eax
-PbTrapPreExecCmd_10:
+_Z16PbTrapPreExecCmdPc_10:
 	leave
 	ret
 	nop
 
 
 ;PbClSendToAddrPort(char*, unsigned short, int, char*)
-PbClSendToAddrPort:
+_Z18PbClSendToAddrPortPctiS_:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -945,7 +943,7 @@ PbClSendToAddrPort:
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Sys_PBSendUdpPacket
+	call _Z19Sys_PBSendUdpPacketPctiS_
 	xor eax, eax
 	leave
 	ret
@@ -953,13 +951,13 @@ PbClSendToAddrPort:
 
 
 ;PbClientConnecting(int, char*, int*)
-PbClientConnecting:
+_Z18PbClientConnectingiPcPi:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov eax, [pbcl+0x198]
 	test eax, eax
-	jz PbClientConnecting_10
+	jz _Z18PbClientConnectingiPcPi_10
 	mov edx, [ebp+0x10]
 	mov [esp+0xc], edx
 	mov edx, [ebp+0xc]
@@ -968,7 +966,7 @@ PbClientConnecting:
 	mov [esp+0x4], edx
 	mov dword [esp], pbcl
 	call eax
-PbClientConnecting_10:
+_Z18PbClientConnectingiPcPi_10:
 	leave
 	ret
 	nop
@@ -976,7 +974,7 @@ PbClientConnecting_10:
 
 
 ;PbClientInitialize(void*)
-PbClientInitialize:
+_Z18PbClientInitializePv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -998,51 +996,51 @@ PbClientInitialize:
 	call _ZN6stPbCl10AddPbEventEiiPci
 	mov eax, [pbcl+0x8]
 	test eax, eax
-	jz PbClientInitialize_10
+	jz _Z18PbClientInitializePv_10
 	mov eax, 0x1
 	leave
 	ret
-PbClientInitialize_10:
+_Z18PbClientInitializePv_10:
 	mov dword [esp], _cstring_0
-	call set_cl_punkbuster
+	call _Z17set_cl_punkbusterPc
 	xor eax, eax
 	leave
 	ret
 
 
 ;PbClientTrapConsole(char*, int)
-PbClientTrapConsole:
+_Z19PbClientTrapConsolePci:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov eax, [pbcl+0x1a0]
 	test eax, eax
-	jz PbClientTrapConsole_10
+	jz _Z19PbClientTrapConsolePci_10
 	mov edx, [ebp+0xc]
 	mov [esp+0x8], edx
 	mov edx, [ebp+0x8]
 	mov [esp+0x4], edx
 	mov dword [esp], pbcl
 	call eax
-PbClientTrapConsole_10:
+_Z19PbClientTrapConsolePci_10:
 	leave
 	ret
 
 
 ;PbClientProcessEvents()
-PbClientProcessEvents:
+_Z21PbClientProcessEventsv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
 	mov eax, [pbcl+0x178]
 	test eax, eax
-	jz PbClientProcessEvents_10
+	jz _Z21PbClientProcessEventsv_10
 	mov eax, [pbcl+0x8]
 	test eax, eax
-	jz PbClientProcessEvents_20
+	jz _Z21PbClientProcessEventsv_20
 	mov edx, [pbcl+0x10]
 	test edx, edx
-	jz PbClientProcessEvents_30
+	jz _Z21PbClientProcessEventsv_30
 	mov dword [pbcl+0x18c], 0x0
 	mov dword [pbcl+0x188], 0x0
 	mov dword [pbcl+0x198], 0x0
@@ -1050,23 +1048,23 @@ PbClientProcessEvents:
 	mov dword [pbcl+0x1a0], 0x0
 	mov eax, [pbcl+0x8]
 	test eax, eax
-	jz PbClientProcessEvents_10
+	jz _Z21PbClientProcessEventsv_10
 	mov [esp], eax
 	call dlclose
 	mov dword [pbcl+0x8], 0x0
-PbClientProcessEvents_10:
+_Z21PbClientProcessEventsv_10:
 	leave
 	ret
-PbClientProcessEvents_30:
+_Z21PbClientProcessEventsv_30:
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], pbcl
 	call dword [pbcl+0x18c]
 	leave
 	ret
-PbClientProcessEvents_20:
+_Z21PbClientProcessEventsv_20:
 	mov ecx, [pbcl+0x10]
 	test ecx, ecx
-	jz PbClientProcessEvents_10
+	jz _Z21PbClientProcessEventsv_10
 	mov dword [esp+0x10], 0x0
 	mov dword [esp+0xc], _cstring_null
 	mov dword [esp+0x8], 0x0
@@ -1079,7 +1077,7 @@ PbClientProcessEvents_20:
 
 
 ;PbClientCompleteCommand(char*, int)
-PbClientCompleteCommand:
+_Z23PbClientCompleteCommandPci:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -1145,7 +1143,7 @@ _ZN6stPbCl10AddPbEventEiiPci_390:
 	lea ecx, [ecx+ebp-0x218]
 	mov dword [ecx], 0x6c636270
 	mov dword [ecx+0x4], 0x2e77656e
-	mov dword [ecx+0x8], g_XAnimPartsPool+0x1720d
+	mov dword [ecx+0x8], 0x63616d
 	mov dword [esp+0x4], _cstring_rb
 	lea eax, [ebp-0x217]
 	mov [esp], eax
@@ -1161,7 +1159,7 @@ _ZN6stPbCl10AddPbEventEiiPci_390:
 	jz _ZN6stPbCl10AddPbEventEiiPci_70
 	mov dword [esi+0x55], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1188,7 +1186,7 @@ _ZN6stPbCl10AddPbEventEiiPci_90:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 _ZN6stPbCl10AddPbEventEiiPci_70:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x217]
@@ -1203,7 +1201,7 @@ _ZN6stPbCl10AddPbEventEiiPci_70:
 	lea ecx, [ecx+ebp-0x218]
 	mov dword [ecx], 0x6c636270
 	mov dword [ecx+0x4], 0x2e646c6f
-	mov dword [ecx+0x8], g_XAnimPartsPool+0x1720d
+	mov dword [ecx+0x8], 0x63616d
 	mov dword [esp+0x4], 0x1ff
 	lea eax, [ebp-0x217]
 	mov [esp], eax
@@ -1215,7 +1213,7 @@ _ZN6stPbCl10AddPbEventEiiPci_70:
 	jz _ZN6stPbCl10AddPbEventEiiPci_100
 	mov dword [ebx], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1242,7 +1240,7 @@ _ZN6stPbCl10AddPbEventEiiPci_120:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 _ZN6stPbCl10AddPbEventEiiPci_100:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x217]
@@ -1257,7 +1255,7 @@ _ZN6stPbCl10AddPbEventEiiPci_100:
 	lea ecx, [ecx+ebp-0x218]
 	mov dword [ecx], 0x6c636270
 	mov dword [ecx+0x4], 0x2e646c6f
-	mov dword [ecx+0x8], g_XAnimPartsPool+0x1720d
+	mov dword [ecx+0x8], 0x63616d
 	lea eax, [ebp-0x217]
 	mov [esp], eax
 	call remove
@@ -1268,7 +1266,7 @@ _ZN6stPbCl10AddPbEventEiiPci_100:
 	jz _ZN6stPbCl10AddPbEventEiiPci_130
 	mov dword [ebx], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1295,7 +1293,7 @@ _ZN6stPbCl10AddPbEventEiiPci_150:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 _ZN6stPbCl10AddPbEventEiiPci_130:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x416]
@@ -1310,7 +1308,7 @@ _ZN6stPbCl10AddPbEventEiiPci_130:
 	lea ecx, [ecx+ebp-0x417]
 	mov dword [ecx], 0x6c636270
 	mov dword [ecx+0x4], 0x2e646c6f
-	mov dword [ecx+0x8], g_XAnimPartsPool+0x1720d
+	mov dword [ecx+0x8], 0x63616d
 	cmp byte [esi+0x55], 0x0
 	jnz _ZN6stPbCl10AddPbEventEiiPci_160
 	mov eax, [esi+0x17c]
@@ -1318,7 +1316,7 @@ _ZN6stPbCl10AddPbEventEiiPci_130:
 	jz _ZN6stPbCl10AddPbEventEiiPci_160
 	mov dword [ebx], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1345,7 +1343,7 @@ _ZN6stPbCl10AddPbEventEiiPci_180:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 _ZN6stPbCl10AddPbEventEiiPci_160:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x217]
@@ -1373,7 +1371,7 @@ _ZN6stPbCl10AddPbEventEiiPci_160:
 	jz _ZN6stPbCl10AddPbEventEiiPci_190
 	mov dword [ebx], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1400,7 +1398,7 @@ _ZN6stPbCl10AddPbEventEiiPci_210:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 _ZN6stPbCl10AddPbEventEiiPci_190:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x217]
@@ -1427,7 +1425,7 @@ _ZN6stPbCl10AddPbEventEiiPci_190:
 	jz _ZN6stPbCl10AddPbEventEiiPci_220
 	mov dword [ebx], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1454,7 +1452,7 @@ _ZN6stPbCl10AddPbEventEiiPci_240:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 _ZN6stPbCl10AddPbEventEiiPci_220:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x217]
@@ -1480,7 +1478,7 @@ _ZN6stPbCl10AddPbEventEiiPci_220:
 	jz _ZN6stPbCl10AddPbEventEiiPci_250
 	mov dword [ebx], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1507,7 +1505,7 @@ _ZN6stPbCl10AddPbEventEiiPci_270:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 _ZN6stPbCl10AddPbEventEiiPci_250:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x416]
@@ -1539,7 +1537,7 @@ _ZN6stPbCl10AddPbEventEiiPci_400:
 	lea ecx, [ecx+ebp-0x218]
 	mov dword [ecx], 0x6c636270
 	mov dword [ecx+0x4], 0x2e77656e
-	mov dword [ecx+0x8], g_XAnimPartsPool+0x1720d
+	mov dword [ecx+0x8], 0x63616d
 	lea eax, [ebp-0x416]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x217]
@@ -1633,7 +1631,7 @@ _ZN6stPbCl10AddPbEventEiiPci_290:
 	jz _ZN6stPbCl10AddPbEventEiiPci_350
 	mov dword [ebx], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1651,7 +1649,7 @@ _ZN6stPbCl10AddPbEventEiiPci_440:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 	jmp _ZN6stPbCl10AddPbEventEiiPci_350
 _ZN6stPbCl10AddPbEventEiiPci_50:
 	mov eax, [esi+0x17c]
@@ -1660,7 +1658,7 @@ _ZN6stPbCl10AddPbEventEiiPci_50:
 	lea ebx, [esi+0x55]
 	mov dword [esi+0x55], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1678,7 +1676,7 @@ _ZN6stPbCl10AddPbEventEiiPci_450:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 	jmp _ZN6stPbCl10AddPbEventEiiPci_390
 _ZN6stPbCl10AddPbEventEiiPci_280:
 	mov eax, [esi+0x17c]
@@ -1686,7 +1684,7 @@ _ZN6stPbCl10AddPbEventEiiPci_280:
 	jz _ZN6stPbCl10AddPbEventEiiPci_400
 	mov dword [ebx], 0x685f7366
 	mov dword [ebx+0x4], 0x70656d6f
-	mov dword [ebx+0x8], g_fileBuf+0xf461
+	mov dword [ebx+0x8], 0x687461
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x67
 	call eax
@@ -1713,7 +1711,7 @@ _ZN6stPbCl10AddPbEventEiiPci_420:
 	mov edi, ebx
 	repne scasb
 	not ecx
-	mov dword [ecx+ebx-0x1], _cstring_ose
+	mov dword [ecx+ebx-0x1], 0x2f6270
 	jmp _ZN6stPbCl10AddPbEventEiiPci_400
 _ZN6stPbCl10AddPbEventEiiPci_310:
 	mov dword [esi+0x18c], 0x0
@@ -1867,7 +1865,6 @@ _cstring_dvar_set:		db "Dvar_Set",0
 _cstring_get_pb_cdkey:		db "get_pb_cdkey",0
 _cstring_0:		db "0",0
 _cstring_rb:		db "rb",0
-_cstring_ose:		db "OSE",0
 _cstring_ca:		db "ca",0
 _cstring_cb:		db "cb",0
 _cstring_pb_error_client_:		db "PB Error: Client DLL Get Procedure Failure",0

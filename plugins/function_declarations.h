@@ -245,6 +245,7 @@
     __cdecl short Plugin_Scr_GetConstString( unsigned int );
     __cdecl unsigned int Plugin_Scr_GetType( unsigned int );
     __cdecl void Plugin_Scr_GetVector( unsigned int, vec3_t* );
+    __cdecl int Plugin_Scr_GetFunc( unsigned int paramnum );
     __cdecl void Plugin_Scr_Error( const char *string);
     __cdecl void Plugin_Scr_ParamError( int, const char *string);
     __cdecl void Plugin_Scr_ObjectError( const char *string);
@@ -308,13 +309,15 @@
     __cdecl const char* Plugin_FormatBanMessage(int timeleftsecs, char *outbuffer, int outbufferlen, const char* reasonfmt, ...); //function to merge the banreason and add this text "You have been banned from this server with the following reason:" includeing appealurl if available
     __cdecl const char* Plugin_WriteBanTimelimit(int timeleftsecs, char *outbuffer, int outbufferlen); //Function to turn the remaining ban time into a text
 
-    __cdecl ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte* requestpayload, int payloadlen, const char* additionalheaderlines);
+    /* blocking HTTP */
+    __cdecl ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte* requestpayload, int payloadlen, const char* additionalheaderlines); /* blocking */
     __cdecl ftRequest_t* Plugin_HTTP_GET(const char* url); /* blocking */
-    __cdecl void Plugin_HTTP_FreeObj(ftRequest_t* request);
 
+    /* non blocking HTTP */
     __cdecl ftRequest_t* Plugin_HTTP_MakeHttpRequest(const char* url, const char* method, byte* requestpayload, int payloadlen, const char* additionalheaderlines);
     __cdecl int Plugin_HTTP_SendReceiveData(ftRequest_t* request);
-    
+
+    __cdecl void Plugin_HTTP_FreeObj(ftRequest_t* request);
 
     __cdecl void Plugin_HTTP_CreateString_x_www_form_urlencoded(char* outencodedstring, int len, const char* key, const char *value);
     __cdecl void Plugin_HTTP_ParseFormDataBody(const char* body, httpPostVals_t* values);
@@ -365,3 +368,5 @@
     __cdecl int Plugin_GetStat(int clientNum, signed int index);
 
     __cdecl const char* Plugin_GetCommonVersionString(); //return cod4x version
+    __cdecl level_locals_t* Plugin_GetLevelBase( );
+    __cdecl void Plugin_UpdatePlayername(unsigned int clientnumber, const char* newname);

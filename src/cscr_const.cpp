@@ -195,6 +195,7 @@ extern "C" void __cdecl GScr_LoadConsts()
   scr_const.back_left = GScr_AllocString("back_left");
   scr_const.back_right = GScr_AllocString("back_right");
   scr_const.tag_gunner_pov = GScr_AllocString("tag_gunner_pov");
+  scr_const.missile_fire = GScr_AllocString("missile_fire");
 }
 
 

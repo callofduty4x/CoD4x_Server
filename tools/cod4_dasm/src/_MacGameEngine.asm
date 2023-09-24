@@ -68,7 +68,7 @@
 	extern CGContextDrawImage
 	extern CGContextFlush
 	extern QDEndCGContext
-	extern GetMacGameEngine
+	extern _Z16GetMacGameEnginev
 	extern QuitApplicationEventLoop
 	extern ReceiveNextEvent
 	extern HIDGetEvent:F(0,18)
@@ -135,6 +135,7 @@
 	global _ZN14CMacGameEngineD1Ev
 	global _ZN14CMacGameEngineD2Ev
 	global _ZNK14CMacGameEngine10IsQuittingEv
+	global _ZTI14CMacGameEngine
 	global main
 	global _ZTV14CMacGameEngine
 
@@ -1334,7 +1335,7 @@ _ZN14CMacGameEngine16HandleAppleEventEPK6AEDescPS0_l:
 	push ebx
 	sub esp, 0x10
 	mov esi, [ebp+0x10]
-	call GetMacGameEngine
+	call _Z16GetMacGameEnginev
 	mov ebx, eax
 	test eax, eax
 	jz _ZN14CMacGameEngine16HandleAppleEventEPK6AEDescPS0_l_10
@@ -1400,7 +1401,7 @@ _ZN14CMacGameEngine16ProcessAllEventsEv:
 	push esi
 	push ebx
 	sub esp, 0x30
-	call GetMacGameEngine
+	call _Z16GetMacGameEnginev
 	mov ebx, eax
 	mov byte [eax+0x1e], 0x0
 	lea esi, [ebp-0xc]
@@ -1735,13 +1736,13 @@ _ZN14CMacGameEngine4QuitEv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
-	call GetMacGameEngine
+	call _Z16GetMacGameEnginev
 	cmp byte [eax+0x1d], 0x0
 	jnz _ZN14CMacGameEngine4QuitEv_10
 	leave
 	ret
 _ZN14CMacGameEngine4QuitEv_10:
-	call GetMacGameEngine
+	call _Z16GetMacGameEnginev
 	mov edx, [eax]
 	mov [esp], eax
 	call dword [edx+0x40]
@@ -1983,7 +1984,7 @@ main:
 	mov dword [esp], 0x4
 	call _ZN8MacTools11SetCursorIDEs
 	call NSApplicationLoad
-	call GetMacGameEngine
+	call _Z16GetMacGameEnginev
 	mov edx, [ebp+0xc]
 	mov [esp+0x8], edx
 	mov edx, [ebp+0x8]
@@ -2030,9 +2031,11 @@ kProductTag: dd _cstring_0c65b5a5399d11dc, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 SECTION .rdata
 _ZZN14CMacGameEngine20InstallEventHandlersEvE5C.158: dd 0x6170706c, 0x1, 0x6170706c, 0x2, 0x6d6f7573, 0x1, 0x6d6f7573, 0x2, 0x6d6f7573, 0x5, 0x6d6f7573, 0x6, 0x6d6f7573, 0xa, 0x6b657962, 0x1, 0x6b657962, 0x2, 0x6b657962, 0x3, 0x6b657962, 0x4, 0x74657874, 0x2, 0x636d6473, 0x1, 0x50726976, 0x50726976, 0x50726976, 0x54687264, 0x0, 0x0
 _ZZN14CMacGameEngine20InstallEventHandlersEvE5C.157: dd 0x6d6f7573, 0x1, 0x6d6f7573, 0x2, 0x6b657962, 0x1, 0x6b657962, 0x2, 0x6b657962, 0x3, 0x6b657962, 0x4, 0x74657874, 0x2, 0x77696e64, 0x5b, 0x77696e64, 0x5c, 0x77696e64, 0x48, 0x0, 0x0, 0x0, 0x0
-_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156: dd 0x6d6f7573, 0x5, 0x6d6f7573, 0x6, 0x6d6f7573, 0xa, 0x6170706c, 0x1, 0x6170706c, 0x2, 0x6d656e75, 0x1, 0x6d656e75, 0x2, 0x636d6473, 0x1, 0x636d6473, 0x2, 0x50726976, 0x50726976, 0x50726976, 0x54687264, 0x1a0c2, 0x1a335, 0x1a472, 0x1a0c2, 0x1a0c2, 0x1a595, 0x1a595, 0x1a0c2, 0x1a0c2, 0x1a0c2, 0x1a674, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x41e00000, 0x0, 0x0, 0xffe00000, 0x41efffff, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
+_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156: dd 0x6d6f7573, 0x5, 0x6d6f7573, 0x6, 0x6d6f7573, 0xa, 0x6170706c, 0x1, 0x6170706c, 0x2, 0x6d656e75, 0x1, 0x6d656e75, 0x2, 0x636d6473, 0x1, 0x636d6473, 0x2, 0x50726976, 0x50726976, 0x50726976, 0x54687264
+;VTypeInfoTable for CMacGameEngine:
+_ZTI14CMacGameEngine: dd 0x8, _cstring_14cmacgameengine, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CMacGameEngine:
-_ZTV14CMacGameEngine: dd 0x0, 0x3b4c20, _ZN14CMacGameEngineD1Ev, _ZN14CMacGameEngineD0Ev, _ZN14CMacGameEngine10InitializeEv, _ZN14CMacGameEngine7MacMainEv, 0x0, _ZN14CMacGameEngine11HandleEventEP14OpaqueEventRef, _ZN14CMacGameEngine11DoMouseDownEt5Pointmm, _ZN14CMacGameEngine9DoMouseUpEt5Pointmm, _ZN14CMacGameEngine12DoMouseMovedE5PointS0_m, _ZN14CMacGameEngine12DoMouseWheelEl5Pointm, _ZN14CMacGameEngine9DoKeyDownEhm, _ZN14CMacGameEngine7DoKeyUpEhm, _ZN14CMacGameEngine11DoTextInputEt, _ZN14CMacGameEngine10DoActivateEv, _ZN14CMacGameEngine12DoDeactivateEv, _ZN14CMacGameEngine15IsQuitAvailableEv, _ZN14CMacGameEngine6DoQuitEv, 0x0, 0x0, 0x0, 0x0, 0x0
+_ZTV14CMacGameEngine: dd 0x0, _ZTI14CMacGameEngine, _ZN14CMacGameEngineD1Ev, _ZN14CMacGameEngineD0Ev, _ZN14CMacGameEngine10InitializeEv, _ZN14CMacGameEngine7MacMainEv, 0x0, _ZN14CMacGameEngine11HandleEventEP14OpaqueEventRef, _ZN14CMacGameEngine11DoMouseDownEt5Pointmm, _ZN14CMacGameEngine9DoMouseUpEt5Pointmm, _ZN14CMacGameEngine12DoMouseMovedE5PointS0_m, _ZN14CMacGameEngine12DoMouseWheelEl5Pointm, _ZN14CMacGameEngine9DoKeyDownEhm, _ZN14CMacGameEngine7DoKeyUpEhm, _ZN14CMacGameEngine11DoTextInputEt, _ZN14CMacGameEngine10DoActivateEv, _ZN14CMacGameEngine12DoDeactivateEv, _ZN14CMacGameEngine15IsQuitAvailableEv, _ZN14CMacGameEngine6DoQuitEv, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of MacGameEngine:
@@ -2045,6 +2048,7 @@ SECTION .rdata
 _cstring_not_authorized:		db "Not authorized",0
 _cstring_i5works091508:		db "i5works-09/15/08",0
 _cstring_0c65b5a5399d11dc:		db "0C65B5A5399D11DCA265000A95675086",0
+_cstring_14cmacgameengine:		db "14CMacGameEngine",0
 
 
 

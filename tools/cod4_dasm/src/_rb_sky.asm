@@ -3,38 +3,38 @@
 	extern gfxCmdBufSourceState
 	extern rgp
 	extern r_drawSun
-	extern RB_SetIdentity
+	extern _Z14RB_SetIdentityv
 	extern r_glob
-	extern RB_SetTessTechnique
+	extern _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	extern WinSleep
 	extern dx_ctx
 	extern pixelCostMode
-	extern RB_EndTessSurface
+	extern _Z17RB_EndTessSurfacev
 	extern vidConfig
 	extern floorf
 	extern vec3_origin
-	extern CM_BoxSightTrace
-	extern R_ConvertColorToBytes
-	extern RB_DrawFullScreenColoredQuad
+	extern _Z16CM_BoxSightTraceiPKfS0_S0_S0_ji
+	extern _Z21R_ConvertColorToBytesPKfPh
+	extern _Z28RB_DrawFullScreenColoredQuadPK8Materialffffm
 	extern colorWhite
 	extern gfxCmdBufState
-	extern R_ClearScreenInternal
-	extern R_Set2D
-	extern RB_DrawStretchPic
+	extern _Z21R_ClearScreenInternalP16IDirect3DDevice9hPKffhPK11GfxViewport
+	extern _Z7R_Set2DP20GfxCmdBufSourceState
+	extern _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
 	extern alwaysfails
 	extern gfxCfg
-	extern R_ErrorDescription
-	extern Com_Printf
+	extern _Z18R_ErrorDescriptionl
+	extern _Z10Com_PrintfiPKcz
 
 ;Exports of rb_sky:
 	global _GLOBAL__I_sunFlareArray
-	global RB_SetTessQuad
-	global RB_TessSunBillboard
-	global RB_DrawSun
-	global RB_DrawSunPostEffects
-	global RB_CalcSunSpriteSamples
-	global RB_FreeSunSpriteQueries
-	global RB_AllocSunSpriteQueries
+	global _Z14RB_SetTessQuad8GfxColor
+	global _Z19RB_TessSunBillboardff8GfxColor
+	global _Z10RB_DrawSuni
+	global _Z21RB_DrawSunPostEffectsi
+	global _Z23RB_CalcSunSpriteSamplesv
+	global _Z23RB_FreeSunSpriteQueriesv
+	global _Z24RB_AllocSunSpriteQueriesv
 	global sunFlareArray
 
 
@@ -48,21 +48,21 @@ _GLOBAL__I_sunFlareArray:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -332,7 +332,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;RB_SetTessQuad(GfxColor)
-RB_SetTessQuad:
+_Z14RB_SetTessQuad8GfxColor:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -385,7 +385,7 @@ RB_SetTessQuad:
 
 
 ;RB_TessSunBillboard(float, float, GfxColor)
-RB_TessSunBillboard:
+_Z19RB_TessSunBillboardff8GfxColor:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -437,7 +437,7 @@ RB_TessSunBillboard:
 	movss [ebp-0x38], xmm2
 	movss [ebp-0x48], xmm3
 	movss [ebp-0x58], xmm6
-	call RB_SetTessQuad
+	call _Z14RB_SetTessQuad8GfxColor
 	movss xmm1, dword [ebp-0x28]
 	movaps xmm5, xmm1
 	mulss xmm5, [_float__0_00050000]
@@ -510,7 +510,7 @@ RB_TessSunBillboard:
 
 
 ;RB_DrawSun(int)
-RB_DrawSun:
+_Z10RB_DrawSuni:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -520,39 +520,39 @@ RB_DrawSun:
 	mov eax, r_drawSun
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz RB_DrawSun_10
+	jz _Z10RB_DrawSuni_10
 	mov ebx, rgp
 	mov eax, [ebx+0x20a0]
 	cmp byte [eax+0x17c], 0x0
-	jnz RB_DrawSun_20
-RB_DrawSun_10:
+	jnz _Z10RB_DrawSuni_20
+_Z10RB_DrawSuni_10:
 	add esp, 0xdc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawSun_20:
+_Z10RB_DrawSuni_20:
 	mov edx, [ebp+0x8]
 	lea eax, [edx+edx*4]
 	lea eax, [eax*8+sunFlareArray]
 	mov [ebp-0x5c], eax
-	call RB_SetIdentity
+	call _Z14RB_SetIdentityv
 	mov eax, r_glob
 	mov esi, [eax]
 	and esi, 0x80000001
-	js RB_DrawSun_30
-RB_DrawSun_240:
+	js _Z10RB_DrawSuni_30
+_Z10RB_DrawSuni_240:
 	mov eax, [ebp-0x5c]
 	mov edi, [eax+esi*4+0x1c]
 	test edi, edi
-	jz RB_DrawSun_40
+	jz _Z10RB_DrawSuni_40
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebx+0x2038]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov dword [ebp-0x1c], 0xff000000
-	call RB_SetIdentity
+	call _Z14RB_SetIdentityv
 	mov eax, [ebp-0x1c]
 	mov edx, gfxCmdBufSourceState
 	cvtsi2ss xmm1, dword [edx+0xf6c]
@@ -562,18 +562,18 @@ RB_DrawSun_240:
 	divss xmm3, xmm1
 	movaps xmm1, xmm3
 	divss xmm0, xmm2
-	call RB_TessSunBillboard
+	call _Z19RB_TessSunBillboardff8GfxColor
 	mov eax, [ebp-0x5c]
 	pxor xmm3, xmm3
 	cmp byte [esi+eax+0x19], 0x0
-	jz RB_DrawSun_50
+	jz _Z10RB_DrawSuni_50
 	mov ebx, [eax+esi*4+0x1c]
 	lea edi, [ebp-0x20]
-	jmp RB_DrawSun_60
-RB_DrawSun_70:
+	jmp _Z10RB_DrawSuni_60
+_Z10RB_DrawSuni_70:
 	mov dword [esp], 0x0
 	call WinSleep
-RB_DrawSun_60:
+_Z10RB_DrawSuni_60:
 	mov eax, [ebx]
 	mov dword [esp+0xc], 0x1
 	mov dword [esp+0x8], 0x4
@@ -581,27 +581,27 @@ RB_DrawSun_60:
 	mov [esp], ebx
 	call dword [eax+0x1c]
 	cmp eax, 0x1
-	jz RB_DrawSun_70
+	jz _Z10RB_DrawSuni_70
 	test eax, eax
-	js RB_DrawSun_80
+	js _Z10RB_DrawSuni_80
 	mov ecx, [ebp-0x20]
 	cmp ecx, 0xffffffff
-	jz RB_DrawSun_80
+	jz _Z10RB_DrawSuni_80
 	test ecx, ecx
-	js RB_DrawSun_90
+	js _Z10RB_DrawSuni_90
 	cvtsi2ss xmm0, ecx
-RB_DrawSun_280:
+_Z10RB_DrawSuni_280:
 	mov eax, dx_ctx
 	mov edx, [eax+0x2c64]
 	cmp ecx, edx
-	jbe RB_DrawSun_100
+	jbe _Z10RB_DrawSuni_100
 	mov eax, [ebp-0x5c]
 	mov byte [eax+0x18], 0x1
-RB_DrawSun_100:
+_Z10RB_DrawSuni_100:
 	test edx, edx
-	js RB_DrawSun_110
+	js _Z10RB_DrawSuni_110
 	cvtsi2ss xmm1, edx
-RB_DrawSun_290:
+_Z10RB_DrawSuni_290:
 	movaps xmm3, xmm0
 	divss xmm3, xmm1
 	movss xmm2, dword [_float_1_00000000]
@@ -614,10 +614,10 @@ RB_DrawSun_290:
 	movaps xmm3, xmm0
 	andnps xmm3, xmm2
 	orps xmm3, xmm1
-RB_DrawSun_50:
+_Z10RB_DrawSuni_50:
 	mov edx, [ebp-0x5c]
 	cmp byte [edx+0x18], 0x0
-	jnz RB_DrawSun_120
+	jnz _Z10RB_DrawSuni_120
 	movss [edx+0x10], xmm3
 	mov eax, [ebp-0x5c]
 	mov byte [eax+0x18], 0x0
@@ -625,12 +625,12 @@ RB_DrawSun_50:
 	mov eax, [eax]
 	sub eax, 0x1
 	cmp eax, 0x1
-	ja RB_DrawSun_130
-RB_DrawSun_170:
-	call RB_EndTessSurface
+	ja _Z10RB_DrawSuni_130
+_Z10RB_DrawSuni_170:
+	call _Z17RB_EndTessSurfacev
 	pxor xmm0, xmm0
 	movss [ebp-0x6c], xmm0
-RB_DrawSun_180:
+_Z10RB_DrawSuni_180:
 	mov eax, gfxCmdBufSourceState
 	mov edx, [eax+0xf0c]
 	lea ebx, [edx+0x110]
@@ -649,15 +649,15 @@ RB_DrawSun_180:
 	movss [edx+0x14], xmm1
 	movss xmm0, dword [ebp-0x6c]
 	ucomiss xmm0, xmm1
-	jae RB_DrawSun_140
+	jae _Z10RB_DrawSuni_140
 	mov ebx, [esi+0x20a0]
 	lea edi, [ebx+0x1d0]
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebx+0x180]
 	mov [esp], eax
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	mov eax, 0xffffffff
-	call RB_SetTessQuad
+	call _Z14RB_SetTessQuad8GfxColor
 	mov edx, eax
 	mov eax, [esi+0x20a0]
 	movss xmm3, dword [_float_0_00131109]
@@ -669,14 +669,14 @@ RB_DrawSun_180:
 	movss [ebp-0x4c], xmm0
 	mulss xmm0, xmm0
 	ucomiss xmm0, [_float_0_99000001]
-	jbe RB_DrawSun_150
+	jbe _Z10RB_DrawSuni_150
 	movss xmm1, dword [ebp-0x6c]
 	movss xmm2, dword [_float_1_00000000]
 	movss xmm3, dword [g_fltMin__uint4+0x10]
 	movss xmm0, dword [edi+0x4]
 	movss [ebp-0x68], xmm0
 	movaps xmm4, xmm0
-RB_DrawSun_230:
+_Z10RB_DrawSuni_230:
 	lea ecx, [edi+0x4]
 	pxor xmm0, xmm0
 	movss [ebp-0x6c], xmm0
@@ -706,9 +706,9 @@ RB_DrawSun_230:
 	movaps xmm0, xmm1
 	xorps xmm0, xmm3
 	ucomiss xmm0, [ebp-0x6c]
-	jb RB_DrawSun_160
+	jb _Z10RB_DrawSuni_160
 	movss xmm0, dword [_float_1_00000000]
-RB_DrawSun_270:
+_Z10RB_DrawSuni_270:
 	mulss xmm4, xmm0
 	mulss xmm5, xmm0
 	mulss xmm6, xmm0
@@ -784,35 +784,35 @@ RB_DrawSun_270:
 	subss xmm0, xmm6
 	movss [eax+0x8], xmm0
 	mov dword [eax+0xc], 0x0
-	call RB_EndTessSurface
-RB_DrawSun_140:
+	call _Z17RB_EndTessSurfacev
+_Z10RB_DrawSuni_140:
 	mov eax, tess
 	mov ebx, [eax+0x22a948]
 	test ebx, ebx
-	jz RB_DrawSun_10
-	call RB_EndTessSurface
+	jz _Z10RB_DrawSuni_10
+	call _Z17RB_EndTessSurfacev
 	add esp, 0xdc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawSun_120:
+_Z10RB_DrawSuni_120:
 	mov eax, edx
 	mov byte [eax+0x18], 0x0
 	mov eax, pixelCostMode
 	mov eax, [eax]
 	sub eax, 0x1
 	cmp eax, 0x1
-	jbe RB_DrawSun_170
-RB_DrawSun_130:
+	jbe _Z10RB_DrawSuni_170
+_Z10RB_DrawSuni_130:
 	mov edx, [ebp-0x5c]
 	mov eax, [edx+esi*4+0x1c]
 	mov edx, [eax]
 	mov dword [esp+0x4], 0x2
 	mov [esp], eax
 	call dword [edx+0x18]
-	call RB_EndTessSurface
+	call _Z17RB_EndTessSurfacev
 	mov edx, [ebp-0x5c]
 	mov eax, [edx+esi*4+0x1c]
 	mov edx, [eax]
@@ -823,8 +823,8 @@ RB_DrawSun_130:
 	mov byte [esi+eax+0x19], 0x1
 	pxor xmm0, xmm0
 	movss [ebp-0x6c], xmm0
-	jmp RB_DrawSun_180
-RB_DrawSun_40:
+	jmp _Z10RB_DrawSuni_180
+_Z10RB_DrawSuni_40:
 	mov edx, gfxCmdBufSourceState
 	mov ecx, [edx+0xf0c]
 	lea eax, [ecx+0x80]
@@ -849,7 +849,7 @@ RB_DrawSun_40:
 	pxor xmm0, xmm0
 	movss [ebp-0x6c], xmm0
 	ucomiss xmm0, xmm3
-	jae RB_DrawSun_190
+	jae _Z10RB_DrawSuni_190
 	mov eax, vidConfig
 	mov esi, [eax+0x8]
 	mov eax, [eax+0xc]
@@ -915,16 +915,16 @@ RB_DrawSun_40:
 	cmovl ecx, [ebp-0x54]
 	mov [ebp-0x54], ecx
 	cmp edi, esi
-	jl RB_DrawSun_200
-RB_DrawSun_250:
+	jl _Z10RB_DrawSuni_200
+_Z10RB_DrawSuni_250:
 	movss xmm1, dword [ebp-0x6c]
-RB_DrawSun_260:
+_Z10RB_DrawSuni_260:
 	mov eax, [ebp-0x5c]
 	movss [eax+0x10], xmm1
 	ucomiss xmm1, [ebp-0x6c]
-	jp RB_DrawSun_210
-	jz RB_DrawSun_180
-RB_DrawSun_210:
+	jp _Z10RB_DrawSuni_210
+	jz _Z10RB_DrawSuni_180
+_Z10RB_DrawSuni_210:
 	mov eax, gfxCmdBufSourceState
 	mov edx, [eax+0xf0c]
 	lea ebx, [edx+0x100]
@@ -957,16 +957,16 @@ RB_DrawSun_210:
 	mov edx, [ebp-0x5c]
 	mov eax, [edx+0x24]
 	mov [esp], eax
-	call CM_BoxSightTrace
+	call _Z16CM_BoxSightTraceiPKfS0_S0_S0_ji
 	mov edx, [ebp-0x5c]
 	mov [edx+0x24], eax
 	test eax, eax
-	jz RB_DrawSun_220
+	jz _Z10RB_DrawSuni_220
 	mov dword [edx+0x10], 0x0
 	pxor xmm0, xmm0
 	movss [ebp-0x6c], xmm0
-	jmp RB_DrawSun_180
-RB_DrawSun_150:
+	jmp _Z10RB_DrawSuni_180
+_Z10RB_DrawSuni_150:
 	movss xmm3, dword [g_fltMin__uint4+0x10]
 	movss xmm1, dword [ebx+0x1d0]
 	xorps xmm1, xmm3
@@ -974,47 +974,47 @@ RB_DrawSun_150:
 	movss [ebp-0x68], xmm0
 	movaps xmm2, xmm0
 	movaps xmm4, xmm0
-	jmp RB_DrawSun_230
-RB_DrawSun_30:
+	jmp _Z10RB_DrawSuni_230
+_Z10RB_DrawSuni_30:
 	sub esi, 0x1
 	or esi, 0xfffffffe
 	add esi, 0x1
-	jmp RB_DrawSun_240
-RB_DrawSun_200:
+	jmp _Z10RB_DrawSuni_240
+_Z10RB_DrawSuni_200:
 	cmp ebx, ecx
-	jge RB_DrawSun_250
+	jge _Z10RB_DrawSuni_250
 	sub esi, edi
 	sub [ebp-0x54], ebx
 	imul esi, [ebp-0x54]
 	cvtsi2ss xmm1, esi
 	mulss xmm1, [_float_0_00390625]
-	jmp RB_DrawSun_260
-RB_DrawSun_190:
+	jmp _Z10RB_DrawSuni_260
+_Z10RB_DrawSuni_190:
 	movaps xmm1, xmm0
-	jmp RB_DrawSun_260
-RB_DrawSun_160:
+	jmp _Z10RB_DrawSuni_260
+_Z10RB_DrawSuni_160:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm1
-	jmp RB_DrawSun_270
-RB_DrawSun_80:
+	jmp _Z10RB_DrawSuni_270
+_Z10RB_DrawSuni_80:
 	mov eax, [ebp-0x5c]
 	mov byte [eax+0x18], 0x1
 	mov ecx, 0xffffffff
-	movss xmm0, dword [_float_4294967296_000000_float_]
-	jmp RB_DrawSun_280
-RB_DrawSun_110:
+	movss xmm0, dword [_float_4294967296_00000000]
+	jmp _Z10RB_DrawSuni_280
+_Z10RB_DrawSuni_110:
 	mov eax, edx
 	shr eax, 1
 	and edx, 0x1
 	or eax, edx
 	cvtsi2ss xmm1, eax
 	addss xmm1, xmm1
-	jmp RB_DrawSun_290
-RB_DrawSun_220:
+	jmp _Z10RB_DrawSuni_290
+_Z10RB_DrawSuni_220:
 	pxor xmm3, xmm3
 	movss [ebp-0x6c], xmm3
-	jmp RB_DrawSun_180
-RB_DrawSun_90:
+	jmp _Z10RB_DrawSuni_180
+_Z10RB_DrawSuni_90:
 	mov eax, ecx
 	shr eax, 1
 	mov edx, ecx
@@ -1022,11 +1022,11 @@ RB_DrawSun_90:
 	or eax, edx
 	cvtsi2ss xmm0, eax
 	addss xmm0, xmm0
-	jmp RB_DrawSun_280
+	jmp _Z10RB_DrawSuni_280
 
 
 ;RB_DrawSunPostEffects(int)
-RB_DrawSunPostEffects:
+_Z21RB_DrawSunPostEffectsi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1038,36 +1038,36 @@ RB_DrawSunPostEffects:
 	lea esi, [eax*8+sunFlareArray]
 	mov eax, [esi+0xc]
 	test eax, eax
-	jz RB_DrawSunPostEffects_10
+	jz _Z21RB_DrawSunPostEffectsi_10
 	mov ecx, gfxCmdBufSourceState
 	mov edx, [ecx+0xf3c]
 	cmp eax, edx
-	jle RB_DrawSunPostEffects_20
-RB_DrawSunPostEffects_170:
+	jle _Z21RB_DrawSunPostEffectsi_20
+_Z21RB_DrawSunPostEffectsi_170:
 	mov edi, 0xa
-RB_DrawSunPostEffects_180:
+_Z21RB_DrawSunPostEffectsi_180:
 	mov eax, [ecx+0xf3c]
 	mov [esi+0xc], eax
 	mov eax, r_drawSun
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz RB_DrawSunPostEffects_30
+	jz _Z21RB_DrawSunPostEffectsi_30
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	cmp byte [eax+0x17c], 0x0
-	jz RB_DrawSunPostEffects_30
+	jz _Z21RB_DrawSunPostEffectsi_30
 	mov ebx, [eax+0x184]
 	test ebx, ebx
-	jz RB_DrawSunPostEffects_40
+	jz _Z21RB_DrawSunPostEffectsi_40
 	movss xmm0, dword [esi+0x14]
 	movss xmm2, dword [eax+0x190]
 	ucomiss xmm2, xmm0
-	jae RB_DrawSunPostEffects_40
+	jae _Z21RB_DrawSunPostEffectsi_40
 	movss xmm3, dword [eax+0x198]
 	ucomiss xmm0, xmm3
-	jb RB_DrawSunPostEffects_50
+	jb _Z21RB_DrawSunPostEffectsi_50
 	movss xmm0, dword [_float_1_00000000]
-RB_DrawSunPostEffects_270:
+_Z21RB_DrawSunPostEffectsi_270:
 	movaps xmm1, xmm0
 	mulss xmm1, [eax+0x19c]
 	movss [ebp-0x40], xmm1
@@ -1080,22 +1080,22 @@ RB_DrawSunPostEffects_270:
 	movss xmm2, dword [esi+0x10]
 	movss xmm3, dword [esi]
 	ucomiss xmm2, xmm3
-	jbe RB_DrawSunPostEffects_60
+	jbe _Z21RB_DrawSunPostEffectsi_60
 	test edx, edx
-	jle RB_DrawSunPostEffects_70
+	jle _Z21RB_DrawSunPostEffectsi_70
 	cvtsi2ss xmm1, edi
 	cvtsi2ss xmm0, edx
 	divss xmm1, xmm0
 	addss xmm1, xmm3
 	ucomiss xmm1, xmm2
-	jbe RB_DrawSunPostEffects_80
-RB_DrawSunPostEffects_70:
+	jbe _Z21RB_DrawSunPostEffectsi_80
+_Z21RB_DrawSunPostEffectsi_70:
 	movss [esi], xmm2
 	mov dword [esp+0x4], 0x4
 	mov eax, [eax+0x184]
 	mov [esp], eax
 	movss [ebp-0x58], xmm2
-	call RB_SetTessTechnique
+	call _Z19RB_SetTessTechniquePK8Material21MaterialTechniqueType
 	movss xmm2, dword [ebp-0x58]
 	mulss xmm2, [ebp-0x40]
 	mulss xmm2, [_float_255_00000000]
@@ -1113,16 +1113,16 @@ RB_DrawSunPostEffects_70:
 	or eax, edx
 	or eax, 0xff000000
 	mov [ebp-0x1c], eax
-	call RB_SetIdentity
+	call _Z14RB_SetIdentityv
 	mov eax, [ebp-0x1c]
 	movss xmm1, dword [ebp-0x3c]
 	divss xmm1, dword [_float_480_00000000]
 	movss xmm0, dword [ebp-0x3c]
 	divss xmm0, dword [_float_640_00000000]
-	call RB_TessSunBillboard
+	call _Z19RB_TessSunBillboardff8GfxColor
 	mov ecx, gfxCmdBufSourceState
 	mov edx, rgp
-RB_DrawSunPostEffects_40:
+_Z21RB_DrawSunPostEffectsi_40:
 	mov eax, [ecx+0xf0c]
 	lea ecx, [eax+0x110]
 	mov ebx, [edx+0x20a0]
@@ -1137,60 +1137,60 @@ RB_DrawSunPostEffects_40:
 	addss xmm4, xmm0
 	pxor xmm5, xmm5
 	ucomiss xmm5, [ebx+0x1b0]
-	jae RB_DrawSunPostEffects_90
+	jae _Z21RB_DrawSunPostEffectsi_90
 	movss xmm0, dword [ebx+0x1a8]
 	ucomiss xmm0, xmm4
-	jb RB_DrawSunPostEffects_100
+	jb _Z21RB_DrawSunPostEffectsi_100
 	movaps xmm2, xmm5
-RB_DrawSunPostEffects_200:
+_Z21RB_DrawSunPostEffectsi_200:
 	mulss xmm2, [esi+0x10]
 	mov edx, [ebx+0x1b8]
 	mov eax, [ebx+0x1b4]
 	movss xmm3, dword [esi+0x4]
 	ucomiss xmm2, xmm3
-	jbe RB_DrawSunPostEffects_110
+	jbe _Z21RB_DrawSunPostEffectsi_110
 	test eax, eax
-	jle RB_DrawSunPostEffects_120
+	jle _Z21RB_DrawSunPostEffectsi_120
 	cvtsi2ss xmm1, edi
 	cvtsi2ss xmm0, eax
 	divss xmm1, xmm0
 	addss xmm1, xmm3
 	ucomiss xmm1, xmm2
-	ja RB_DrawSunPostEffects_120
+	ja _Z21RB_DrawSunPostEffectsi_120
 	movaps xmm2, xmm1
-RB_DrawSunPostEffects_120:
+_Z21RB_DrawSunPostEffectsi_120:
 	movss [esi+0x4], xmm2
 	movaps xmm6, xmm2
 	mulss xmm6, [ebx+0x1b0]
-RB_DrawSunPostEffects_250:
+_Z21RB_DrawSunPostEffectsi_250:
 	movaps xmm0, xmm5
 	ucomiss xmm5, [ebx+0x1c4]
-	jae RB_DrawSunPostEffects_130
+	jae _Z21RB_DrawSunPostEffectsi_130
 	movss xmm0, dword [ebx+0x1bc]
 	ucomiss xmm0, xmm4
-	jb RB_DrawSunPostEffects_140
+	jb _Z21RB_DrawSunPostEffectsi_140
 	movaps xmm2, xmm5
-RB_DrawSunPostEffects_230:
+_Z21RB_DrawSunPostEffectsi_230:
 	mulss xmm2, [esi+0x10]
 	mov edx, [ebx+0x1cc]
 	mov eax, [ebx+0x1c8]
 	movss xmm3, dword [esi+0x8]
 	ucomiss xmm2, xmm3
-	jbe RB_DrawSunPostEffects_150
+	jbe _Z21RB_DrawSunPostEffectsi_150
 	test eax, eax
-	jle RB_DrawSunPostEffects_160
+	jle _Z21RB_DrawSunPostEffectsi_160
 	cvtsi2ss xmm1, edi
 	cvtsi2ss xmm0, eax
 	divss xmm1, xmm0
 	addss xmm1, xmm3
 	ucomiss xmm1, xmm2
-	ja RB_DrawSunPostEffects_160
+	ja _Z21RB_DrawSunPostEffectsi_160
 	movaps xmm2, xmm1
-RB_DrawSunPostEffects_160:
+_Z21RB_DrawSunPostEffectsi_160:
 	movss [esi+0x8], xmm2
 	movaps xmm0, xmm2
 	mulss xmm0, [ebx+0x1c4]
-RB_DrawSunPostEffects_130:
+_Z21RB_DrawSunPostEffectsi_130:
 	movss [ebp-0x2c], xmm0
 	movss [ebp-0x28], xmm0
 	movss [ebp-0x24], xmm0
@@ -1199,7 +1199,7 @@ RB_DrawSunPostEffects_130:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x2c]
 	mov [esp], eax
-	call R_ConvertColorToBytes
+	call _Z21R_ConvertColorToBytesPKfPh
 	mov eax, [ebp-0x1c]
 	mov [esp+0x14], eax
 	mov eax, 0x3f800000
@@ -1211,102 +1211,102 @@ RB_DrawSunPostEffects_130:
 	mov eax, rgp
 	mov eax, [eax+0x2064]
 	mov [esp], eax
-	call RB_DrawFullScreenColoredQuad
-RB_DrawSunPostEffects_30:
+	call _Z28RB_DrawFullScreenColoredQuadPK8Materialffffm
+_Z21RB_DrawSunPostEffectsi_30:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-RB_DrawSunPostEffects_10:
+_Z21RB_DrawSunPostEffectsi_10:
 	mov ecx, gfxCmdBufSourceState
-	jmp RB_DrawSunPostEffects_170
-RB_DrawSunPostEffects_20:
+	jmp _Z21RB_DrawSunPostEffectsi_170
+_Z21RB_DrawSunPostEffectsi_20:
 	mov edi, edx
 	sub edi, eax
-	jmp RB_DrawSunPostEffects_180
-RB_DrawSunPostEffects_100:
+	jmp _Z21RB_DrawSunPostEffectsi_180
+_Z21RB_DrawSunPostEffectsi_100:
 	movss xmm1, dword [ebx+0x1ac]
 	ucomiss xmm4, xmm1
-	jb RB_DrawSunPostEffects_190
+	jb _Z21RB_DrawSunPostEffectsi_190
 	movss xmm2, dword [_float_1_00000000]
-	jmp RB_DrawSunPostEffects_200
-RB_DrawSunPostEffects_150:
+	jmp _Z21RB_DrawSunPostEffectsi_200
+_Z21RB_DrawSunPostEffectsi_150:
 	ucomiss xmm3, xmm2
-	ja RB_DrawSunPostEffects_210
+	ja _Z21RB_DrawSunPostEffectsi_210
 	movaps xmm2, xmm3
-	jmp RB_DrawSunPostEffects_160
-RB_DrawSunPostEffects_140:
+	jmp _Z21RB_DrawSunPostEffectsi_160
+_Z21RB_DrawSunPostEffectsi_140:
 	movss xmm1, dword [ebx+0x1c0]
 	ucomiss xmm4, xmm1
-	jb RB_DrawSunPostEffects_220
+	jb _Z21RB_DrawSunPostEffectsi_220
 	movss xmm2, dword [_float_1_00000000]
-	jmp RB_DrawSunPostEffects_230
-RB_DrawSunPostEffects_110:
+	jmp _Z21RB_DrawSunPostEffectsi_230
+_Z21RB_DrawSunPostEffectsi_110:
 	ucomiss xmm3, xmm2
-	ja RB_DrawSunPostEffects_240
+	ja _Z21RB_DrawSunPostEffectsi_240
 	movaps xmm2, xmm3
-	jmp RB_DrawSunPostEffects_120
-RB_DrawSunPostEffects_90:
+	jmp _Z21RB_DrawSunPostEffectsi_120
+_Z21RB_DrawSunPostEffectsi_90:
 	movaps xmm6, xmm5
-	jmp RB_DrawSunPostEffects_250
-RB_DrawSunPostEffects_60:
+	jmp _Z21RB_DrawSunPostEffectsi_250
+_Z21RB_DrawSunPostEffectsi_60:
 	ucomiss xmm3, xmm2
-	jbe RB_DrawSunPostEffects_260
+	jbe _Z21RB_DrawSunPostEffectsi_260
 	test ecx, ecx
-	jle RB_DrawSunPostEffects_70
+	jle _Z21RB_DrawSunPostEffectsi_70
 	cvtsi2ss xmm0, edi
 	cvtsi2ss xmm1, ecx
 	divss xmm0, xmm1
 	subss xmm3, xmm0
 	maxss xmm2, xmm3
-	jmp RB_DrawSunPostEffects_70
-RB_DrawSunPostEffects_50:
+	jmp _Z21RB_DrawSunPostEffectsi_70
+_Z21RB_DrawSunPostEffectsi_50:
 	subss xmm0, xmm2
 	subss xmm3, xmm2
 	divss xmm0, xmm3
-	jmp RB_DrawSunPostEffects_270
-RB_DrawSunPostEffects_210:
+	jmp _Z21RB_DrawSunPostEffectsi_270
+_Z21RB_DrawSunPostEffectsi_210:
 	test edx, edx
-	jle RB_DrawSunPostEffects_160
+	jle _Z21RB_DrawSunPostEffectsi_160
 	cvtsi2ss xmm0, edi
 	cvtsi2ss xmm1, edx
 	divss xmm0, xmm1
 	subss xmm3, xmm0
 	maxss xmm2, xmm3
-	jmp RB_DrawSunPostEffects_160
-RB_DrawSunPostEffects_240:
+	jmp _Z21RB_DrawSunPostEffectsi_160
+_Z21RB_DrawSunPostEffectsi_240:
 	test edx, edx
-	jle RB_DrawSunPostEffects_120
+	jle _Z21RB_DrawSunPostEffectsi_120
 	cvtsi2ss xmm0, edi
 	cvtsi2ss xmm1, edx
 	divss xmm0, xmm1
 	subss xmm3, xmm0
 	maxss xmm2, xmm3
-	jmp RB_DrawSunPostEffects_120
-RB_DrawSunPostEffects_190:
+	jmp _Z21RB_DrawSunPostEffectsi_120
+_Z21RB_DrawSunPostEffectsi_190:
 	movaps xmm2, xmm4
 	subss xmm2, xmm0
 	subss xmm1, xmm0
 	divss xmm2, xmm1
-	jmp RB_DrawSunPostEffects_200
-RB_DrawSunPostEffects_220:
+	jmp _Z21RB_DrawSunPostEffectsi_200
+_Z21RB_DrawSunPostEffectsi_220:
 	movaps xmm2, xmm4
 	subss xmm2, xmm0
 	subss xmm1, xmm0
 	divss xmm2, xmm1
-	jmp RB_DrawSunPostEffects_230
-RB_DrawSunPostEffects_260:
+	jmp _Z21RB_DrawSunPostEffectsi_230
+_Z21RB_DrawSunPostEffectsi_260:
 	movaps xmm2, xmm3
-	jmp RB_DrawSunPostEffects_70
-RB_DrawSunPostEffects_80:
+	jmp _Z21RB_DrawSunPostEffectsi_70
+_Z21RB_DrawSunPostEffectsi_80:
 	movaps xmm2, xmm1
-	jmp RB_DrawSunPostEffects_70
+	jmp _Z21RB_DrawSunPostEffectsi_70
 
 
 ;RB_CalcSunSpriteSamples()
-RB_CalcSunSpriteSamples:
+_Z23RB_CalcSunSpriteSamplesv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1315,12 +1315,12 @@ RB_CalcSunSpriteSamples:
 	sub esp, 0x4c
 	mov edi, [sunFlareArray+0x1c]
 	test edi, edi
-	jz RB_CalcSunSpriteSamples_10
+	jz _Z23RB_CalcSunSpriteSamplesv_10
 	mov eax, tess
 	mov eax, [eax+0x22a948]
 	test eax, eax
-	jnz RB_CalcSunSpriteSamples_20
-RB_CalcSunSpriteSamples_50:
+	jnz _Z23RB_CalcSunSpriteSamplesv_20
+_Z23RB_CalcSunSpriteSamplesv_50:
 	mov edx, dx_ctx
 	mov eax, [edx+0x8]
 	mov edx, [eax]
@@ -1335,7 +1335,7 @@ RB_CalcSunSpriteSamples_50:
 	mov eax, gfxCmdBufState
 	mov eax, [eax+0x90]
 	mov [esp], eax
-	call R_ClearScreenInternal
+	call _Z21R_ClearScreenInternalP16IDirect3DDevice9hPKffhPK11GfxViewport
 	mov ebx, gfxCmdBufSourceState
 	mov eax, [esi]
 	mov [ebx+0xb00], eax
@@ -1351,7 +1351,7 @@ RB_CalcSunSpriteSamples_50:
 	mov [esp], edi
 	call dword [eax+0x18]
 	mov [esp], ebx
-	call R_Set2D
+	call _Z7R_Set2DP20GfxCmdBufSourceState
 	mov dword [esp+0x28], 0x9
 	mov dword [esp+0x24], 0xffffffff
 	mov dword [esp+0x20], 0x3f800000
@@ -1367,8 +1367,8 @@ RB_CalcSunSpriteSamples_50:
 	mov eax, rgp
 	mov eax, [eax+0x2038]
 	mov [esp], eax
-	call RB_DrawStretchPic
-	call RB_EndTessSurface
+	call _Z17RB_DrawStretchPicPK8Materialffffffffm18GfxPrimStatsTarget
+	call _Z17RB_EndTessSurfacev
 	mov eax, [edi]
 	mov dword [esp+0x4], 0x1
 	mov [esp], edi
@@ -1379,11 +1379,11 @@ RB_CalcSunSpriteSamples_50:
 	mov [esp], eax
 	call dword [edx+0xa8]
 	lea ebx, [ebp-0x1c]
-	jmp RB_CalcSunSpriteSamples_30
-RB_CalcSunSpriteSamples_40:
+	jmp _Z23RB_CalcSunSpriteSamplesv_30
+_Z23RB_CalcSunSpriteSamplesv_40:
 	mov dword [esp], 0x0
 	call WinSleep
-RB_CalcSunSpriteSamples_30:
+_Z23RB_CalcSunSpriteSamplesv_30:
 	mov eax, [edi]
 	mov dword [esp+0xc], 0x1
 	mov dword [esp+0x8], 0x4
@@ -1392,7 +1392,7 @@ RB_CalcSunSpriteSamples_30:
 	call dword [eax+0x1c]
 	mov edx, eax
 	cmp eax, 0x1
-	jz RB_CalcSunSpriteSamples_40
+	jz _Z23RB_CalcSunSpriteSamplesv_40
 	mov eax, 0x100
 	test edx, edx
 	cmovz eax, [ebp-0x1c]
@@ -1403,10 +1403,10 @@ RB_CalcSunSpriteSamples_30:
 	pop edi
 	pop ebp
 	ret
-RB_CalcSunSpriteSamples_20:
-	call RB_EndTessSurface
-	jmp RB_CalcSunSpriteSamples_50
-RB_CalcSunSpriteSamples_10:
+_Z23RB_CalcSunSpriteSamplesv_20:
+	call _Z17RB_EndTessSurfacev
+	jmp _Z23RB_CalcSunSpriteSamplesv_50
+_Z23RB_CalcSunSpriteSamplesv_10:
 	xor eax, eax
 	add esp, 0x4c
 	pop ebx
@@ -1418,7 +1418,7 @@ RB_CalcSunSpriteSamples_10:
 
 
 ;RB_FreeSunSpriteQueries()
-RB_FreeSunSpriteQueries:
+_Z23RB_FreeSunSpriteQueriesv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1427,16 +1427,16 @@ RB_FreeSunSpriteQueries:
 	sub esp, 0x2c
 	mov dword [ebp-0x1c], 0x0
 	mov dword [ebp-0x20], 0x0
-RB_FreeSunSpriteQueries_40:
+_Z23RB_FreeSunSpriteQueriesv_40:
 	mov esi, [ebp-0x20]
 	add esi, sunFlareArray
 	mov edi, 0x2
-RB_FreeSunSpriteQueries_30:
+_Z23RB_FreeSunSpriteQueriesv_30:
 	lea ebx, [esi+0x1c]
 	mov ecx, [esi+0x1c]
 	test ecx, ecx
-	jz RB_FreeSunSpriteQueries_10
-RB_FreeSunSpriteQueries_20:
+	jz _Z23RB_FreeSunSpriteQueriesv_10
+_Z23RB_FreeSunSpriteQueriesv_20:
 	mov eax, [ebx]
 	mov edx, [eax]
 	mov [esp], eax
@@ -1445,15 +1445,15 @@ RB_FreeSunSpriteQueries_20:
 	mov eax, alwaysfails
 	mov edx, [eax]
 	test edx, edx
-	jnz RB_FreeSunSpriteQueries_20
-RB_FreeSunSpriteQueries_10:
+	jnz _Z23RB_FreeSunSpriteQueriesv_20
+_Z23RB_FreeSunSpriteQueriesv_10:
 	add esi, 0x4
 	sub edi, 0x1
-	jnz RB_FreeSunSpriteQueries_30
+	jnz _Z23RB_FreeSunSpriteQueriesv_30
 	add dword [ebp-0x1c], 0x1
 	add dword [ebp-0x20], 0x28
 	cmp dword [ebp-0x1c], 0x4
-	jnz RB_FreeSunSpriteQueries_40
+	jnz _Z23RB_FreeSunSpriteQueriesv_40
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -1463,7 +1463,7 @@ RB_FreeSunSpriteQueries_10:
 
 
 ;RB_AllocSunSpriteQueries()
-RB_AllocSunSpriteQueries:
+_Z24RB_AllocSunSpriteQueriesv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1473,32 +1473,32 @@ RB_AllocSunSpriteQueries:
 	mov eax, gfxCfg
 	mov eax, [eax]
 	test eax, eax
-	jz RB_AllocSunSpriteQueries_10
+	jz _Z24RB_AllocSunSpriteQueriesv_10
 	mov dword [ebp-0x30], 0x0
 	mov dword [ebp-0x34], 0x0
-	jmp RB_AllocSunSpriteQueries_20
-RB_AllocSunSpriteQueries_40:
+	jmp _Z24RB_AllocSunSpriteQueriesv_20
+_Z24RB_AllocSunSpriteQueriesv_40:
 	mov eax, [ebp-0x1c]
-RB_AllocSunSpriteQueries_50:
+_Z24RB_AllocSunSpriteQueriesv_50:
 	mov [esi+0x1c], eax
 	mov byte [edi+0x19], 0x0
 	add dword [ebp-0x2c], 0x1
 	add esi, 0x4
 	add edi, 0x1
 	cmp dword [ebp-0x2c], 0x2
-	jnz RB_AllocSunSpriteQueries_30
+	jnz _Z24RB_AllocSunSpriteQueriesv_30
 	add dword [ebp-0x30], 0x1
 	add dword [ebp-0x34], 0x28
 	mov eax, gfxCfg
 	mov edx, [ebp-0x30]
 	cmp edx, [eax]
-	jae RB_AllocSunSpriteQueries_10
-RB_AllocSunSpriteQueries_20:
+	jae _Z24RB_AllocSunSpriteQueriesv_10
+_Z24RB_AllocSunSpriteQueriesv_20:
 	mov esi, [ebp-0x34]
 	add esi, sunFlareArray
 	mov edi, esi
 	mov dword [ebp-0x2c], 0x0
-RB_AllocSunSpriteQueries_30:
+_Z24RB_AllocSunSpriteQueriesv_30:
 	mov edx, dx_ctx
 	mov eax, [edx+0x8]
 	mov edx, [eax]
@@ -1509,17 +1509,17 @@ RB_AllocSunSpriteQueries_30:
 	call dword [edx+0x1d8]
 	mov ebx, eax
 	test eax, eax
-	jns RB_AllocSunSpriteQueries_40
+	jns _Z24RB_AllocSunSpriteQueriesv_40
 	mov [esp], eax
-	call R_ErrorDescription
+	call _Z18R_ErrorDescriptionl
 	mov [esp+0xc], ebx
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_occlusion_query_
 	mov dword [esp], 0x8
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	xor eax, eax
-	jmp RB_AllocSunSpriteQueries_50
-RB_AllocSunSpriteQueries_10:
+	jmp _Z24RB_AllocSunSpriteQueriesv_50
+_Z24RB_AllocSunSpriteQueriesv_10:
 	add esp, 0x3c
 	pop ebx
 	pop esi
@@ -1566,7 +1566,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x80000000, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of rb_sky:
@@ -1603,7 +1603,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 sunFlareArray: resb 0x100
 
 
@@ -1623,7 +1623,7 @@ _float_0_99000001:		dd 0x3f7d70a4	; 0.99
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_262144_00000000:		dd 0x48800000	; 262144
 _float_0_00390625:		dd 0x3b800000	; 0.00390625
-_float_4294967296_000000_float_:		dd 0x4f800000	; 4.29497e+09
+_float_4294967296_00000000:		dd 0x4f800000	; 4.29497e+09
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_480_00000000:		dd 0x43f00000	; 480
 _float_640_00000000:		dd 0x44200000	; 640

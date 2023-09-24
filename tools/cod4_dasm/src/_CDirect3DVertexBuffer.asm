@@ -7,6 +7,8 @@
 	extern _ZN19COpenGLBufferObjectD2Ev
 	extern _ZdlPv
 	extern _Unwind_Resume
+	extern _ZTI19COpenGLBufferObject
+	extern _ZTI18IDirect3DResource9
 
 ;Exports of CDirect3DVertexBuffer:
 	global _ZN21CDirect3DVertexBuffer11GetPriorityEv
@@ -26,7 +28,11 @@
 	global _ZN21CDirect3DVertexBufferC1Ejm8_D3DPOOL
 	global _ZN21CDirect3DVertexBufferD0Ev
 	global _ZN21CDirect3DVertexBufferD1Ev
+	global _ZTI21CDirect3DVertexBuffer
+	global _ZTI22IDirect3DVertexBuffer9
 	global _ZTV21CDirect3DVertexBuffer
+	global _ZThn4_N21CDirect3DVertexBufferD0Ev
+	global _ZThn4_N21CDirect3DVertexBufferD1Ev
 	global g_OptimizeVBTransfers
 
 
@@ -210,10 +216,6 @@ _ZN21CDirect3DVertexBuffer7GetTypeEv:
 	mov eax, 0x6
 	pop ebp
 	ret
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN21CDirect3DVertexBufferD1Ev
-	add dword [esp+0x4], 0xfffffffc
-	jmp _ZN21CDirect3DVertexBufferD0Ev
 
 
 ;CDirect3DVertexBuffer::PreLoad()
@@ -355,6 +357,18 @@ _ZN21CDirect3DVertexBufferD1Ev:
 	nop
 
 
+;non-virtual thunk to CDirect3DVertexBuffer::~CDirect3DVertexBuffer()
+_ZThn4_N21CDirect3DVertexBufferD0Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN21CDirect3DVertexBufferD0Ev
+
+
+;non-virtual thunk to CDirect3DVertexBuffer::~CDirect3DVertexBuffer()
+_ZThn4_N21CDirect3DVertexBufferD1Ev:
+	add dword [esp+0x4], 0xfffffffc
+	jmp _ZN21CDirect3DVertexBufferD1Ev
+
+
 ;Initialized global or static variables of CDirect3DVertexBuffer:
 SECTION .data
 g_OptimizeVBTransfers: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -362,8 +376,12 @@ g_OptimizeVBTransfers: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of CDirect3DVertexBuffer:
 SECTION .rdata
+;VTypeInfoTable for CDirect3DVertexBuffer:
+_ZTI21CDirect3DVertexBuffer: dd 0x8, _cstring_21cdirect3dverte, 0x0, 0x2, _ZTI22IDirect3DVertexBuffer9, 0x2, _ZTI19COpenGLBufferObject, 0x402
+;VTypeInfoTable for IDirect3DVertexBuffer9:
+_ZTI22IDirect3DVertexBuffer9: dd 0x8, _cstring_22idirect3dverte, _ZTI18IDirect3DResource9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, _ZTI22IDirect3DVertexBuffer9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CDirect3DVertexBuffer:
-_ZTV21CDirect3DVertexBuffer: dd 0x0, 0x3b4aa0, _ZN21CDirect3DVertexBuffer14QueryInterfaceERK5_GUIDPPv, _ZN21CDirect3DVertexBuffer6AddRefEv, _ZN21CDirect3DVertexBuffer7ReleaseEv, _ZN21CDirect3DVertexBuffer9GetDeviceEPP16IDirect3DDevice9, _ZN21CDirect3DVertexBuffer14SetPrivateDataERK5_GUIDPKvmm, _ZN21CDirect3DVertexBuffer14GetPrivateDataERK5_GUIDPvPm, _ZN21CDirect3DVertexBuffer15FreePrivateDataERK5_GUID, _ZN21CDirect3DVertexBuffer11SetPriorityEm, _ZN21CDirect3DVertexBuffer11GetPriorityEv, _ZN21CDirect3DVertexBuffer7PreLoadEv, _ZN21CDirect3DVertexBuffer7GetTypeEv, _ZN21CDirect3DVertexBuffer4LockEjjPPvm, _ZN21CDirect3DVertexBuffer6UnlockEv, _ZN21CDirect3DVertexBuffer7GetDescEP21_D3DVERTEXBUFFER_DESC, _ZN21CDirect3DVertexBufferD1Ev, _ZN21CDirect3DVertexBufferD0Ev, 0xfffffffc, 0x3b4aa0, 0x33102a, 0x331034, 0x0, 0x0
+_ZTV21CDirect3DVertexBuffer: dd 0x0, _ZTI21CDirect3DVertexBuffer, _ZN21CDirect3DVertexBuffer14QueryInterfaceERK5_GUIDPPv, _ZN21CDirect3DVertexBuffer6AddRefEv, _ZN21CDirect3DVertexBuffer7ReleaseEv, _ZN21CDirect3DVertexBuffer9GetDeviceEPP16IDirect3DDevice9, _ZN21CDirect3DVertexBuffer14SetPrivateDataERK5_GUIDPKvmm, _ZN21CDirect3DVertexBuffer14GetPrivateDataERK5_GUIDPvPm, _ZN21CDirect3DVertexBuffer15FreePrivateDataERK5_GUID, _ZN21CDirect3DVertexBuffer11SetPriorityEm, _ZN21CDirect3DVertexBuffer11GetPriorityEv, _ZN21CDirect3DVertexBuffer7PreLoadEv, _ZN21CDirect3DVertexBuffer7GetTypeEv, _ZN21CDirect3DVertexBuffer4LockEjjPPvm, _ZN21CDirect3DVertexBuffer6UnlockEv, _ZN21CDirect3DVertexBuffer7GetDescEP21_D3DVERTEXBUFFER_DESC, _ZN21CDirect3DVertexBufferD1Ev, _ZN21CDirect3DVertexBufferD0Ev, 0xfffffffc, _ZTI21CDirect3DVertexBuffer, _ZThn4_N21CDirect3DVertexBufferD1Ev, _ZThn4_N21CDirect3DVertexBufferD0Ev, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of CDirect3DVertexBuffer:
@@ -372,6 +390,8 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
+_cstring_21cdirect3dverte:		db "21CDirect3DVertexBuffer",0
+_cstring_22idirect3dverte:		db "22IDirect3DVertexBuffer9",0
 
 
 

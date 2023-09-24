@@ -445,12 +445,13 @@ void __cdecl SL_RemoveRefToStringOfSize(unsigned int stringValue, unsigned int l
 void __cdecl SL_AddRefToString(unsigned int stringValue)
 {
   RefString *refStr;
-  volatile int refC;
 
   if ( gScrStringDebugGlob )
   {
     assertx(gScrStringDebugGlob->refCount[stringValue], "%d '%s'", stringValue, SL_DebugConvertToString(stringValue));
-    assertx(gScrStringDebugGlob->refCount[stringValue] < DEBUG_REFCOUNT_SIZE, "SL_DebugConvertToString( stringValue ) = %s", SL_DebugConvertToString(stringValue));
+    assertx(gScrStringDebugGlob->refCount[stringValue] < DEBUG_REFCOUNT_SIZE,
+            "SL_DebugConvertToString( stringValue ) = %s",
+            SL_DebugConvertToString(stringValue));
 
     InterlockedIncrement((volatile DWORD*)&gScrStringDebugGlob->totalRefCount);
     InterlockedIncrement((volatile DWORD*)&gScrStringDebugGlob->refCount[stringValue]);
@@ -459,18 +460,10 @@ void __cdecl SL_AddRefToString(unsigned int stringValue)
 
   InterlockedIncrement((volatile DWORD*)&refStr->data);
 
-  if ( !refStr->refCount )
-  {
-    if ( gScrStringDebugGlob )
-    {
-      refC = gScrStringDebugGlob->refCount[stringValue];
-    }
-    else
-    {
-      refC = 0;
-    }
-    assertx(refStr->refCount, "string: '%s', refCount: %d", SL_DebugConvertToString(stringValue), refC);
-  }
+  assertx(refStr->refCount,
+          "string: '%s', refCount: %d",
+          SL_DebugConvertToString(stringValue),
+          gScrStringDebugGlob ? gScrStringDebugGlob->refCount[stringValue] : 0);
 }
 
 void __cdecl SL_RemoveRefToString(unsigned int stringValue)

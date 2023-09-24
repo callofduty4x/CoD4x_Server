@@ -3,36 +3,35 @@
 	extern rg
 	extern g_OptimizeVBTransfers
 	extern gfxBuf
-	extern R_AllocDynamicVertexBuffer
+	extern _Z26R_AllocDynamicVertexBufferPP22IDirect3DVertexBuffer9iPKc
 	extern dx_ctx
 	extern frontEndDataOut
-	extern R_AddWorkerCmd
-	extern XModelGetSurfaces
-	extern XModelGetSurfCount
-	extern R_SyncRenderThread
-	extern Com_Printf
-	extern XModelGetNumLods
-	extern XModelGetLodInfo
-	extern XSurfaceGetNumVerts
+	extern _Z14R_AddWorkerCmd13WorkerCmdTypePv
+	extern _Z17XModelGetSurfacesPK6XModelPP8XSurfacei
+	extern _Z18XModelGetSurfCountPK6XModeli
+	extern _Z18R_SyncRenderThreadv
+	extern _Z10Com_PrintfiPKcz
+	extern _Z16XModelGetNumLodsPK6XModel
+	extern _Z16XModelGetLodInfoPK6XModeli
+	extern _Z19XSurfaceGetNumVertsPK8XSurface
 	extern alwaysfails
-	extern R_GetPackedStaticModelLightingCoords
-	extern bg_itemlist
+	extern _Z36R_GetPackedStaticModelLightingCoordsjP20PackedLightingCoords
 
 ;Exports of r_staticmodelcache:
 	global _GLOBAL__I__Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd
 	global s_cache
-	global SMC_FreeCachedSurface_r
-	global SMC_GetFreeBlockOfSize
-	global R_UncacheStaticModel
-	global R_GetCachedSModelSurf
-	global R_InitStaticModelCache
-	global R_FlushStaticModelCache
-	global R_CacheStaticModelSurface
-	global R_StaticModelCacheFlush_f
-	global R_StaticModelCacheStats_f
-	global R_ShutdownStaticModelCache
-	global R_SkinCachedStaticModelCmd
-	global R_ClearAllStaticModelCacheRefs
+	global _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii
+	global _Z22SMC_GetFreeBlockOfSizejj
+	global _Z20R_UncacheStaticModelj
+	global _Z21R_GetCachedSModelSurfj
+	global _Z22R_InitStaticModelCachev
+	global _Z23R_FlushStaticModelCachev
+	global _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo
+	global _Z25R_StaticModelCacheFlush_fv
+	global _Z25R_StaticModelCacheStats_fv
+	global _Z26R_ShutdownStaticModelCachev
+	global _Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd
+	global _Z30R_ClearAllStaticModelCacheRefsv
 
 
 SECTION .text
@@ -45,21 +44,21 @@ _GLOBAL__I__Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -329,8 +328,8 @@ __static_initialization_and_destruction_0_10:
 
 
 ;SMC_FreeCachedSurface_r(static_model_tree_t*, static_model_leaf_t*, int, int)
-SMC_FreeCachedSurface_r:
-SMC_FreeCachedSurface_r_90:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_90:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -341,29 +340,29 @@ SMC_FreeCachedSurface_r_90:
 	mov [ebp-0x40], edx
 	mov ebx, ecx
 	cmp word [eax+ecx*4+0xc], 0x0
-	jnz SMC_FreeCachedSurface_r_10
-SMC_FreeCachedSurface_r_330:
+	jnz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_10
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_330:
 	lea eax, [ebx+0x1]
 	movzx ecx, byte [ebp+0x8]
 	shl eax, cl
-SMC_FreeCachedSurface_r_290:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_290:
 	lea eax, [edx+eax*8-0x100]
 	mov ecx, [eax+0x4]
 	mov edx, [eax]
 	mov [ecx], edx
 	mov eax, [eax]
 	mov [eax+0x4], ecx
-SMC_FreeCachedSurface_r_310:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_310:
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-SMC_FreeCachedSurface_r_10:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_10:
 	mov word [eax+ecx*4+0xc], 0x0
 	cmp byte [eax+ecx*4+0xe], 0x0
-	jnz SMC_FreeCachedSurface_r_20
+	jnz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_20
 	mov edx, [ebp+0x8]
 	sub edx, 0x3
 	mov [ebp-0x20], edx
@@ -371,8 +370,8 @@ SMC_FreeCachedSurface_r_10:
 	sub ecx, 0x2
 	mov [ebp-0x1c], ecx
 	mov ecx, edx
-	jmp SMC_FreeCachedSurface_r_30
-SMC_FreeCachedSurface_r_130:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_30
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_130:
 	mov esi, [ebp-0x3c]
 	add esi, 0x2
 	mov eax, esi
@@ -384,18 +383,18 @@ SMC_FreeCachedSurface_r_130:
 	mov [ecx], edx
 	mov eax, [eax]
 	mov [eax+0x4], ecx
-SMC_FreeCachedSurface_r_160:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_160:
 	cmp word [edi+esi*4+0xc], 0x0
-	jz SMC_FreeCachedSurface_r_40
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_40
 	mov word [edi+esi*4+0xc], 0x0
 	cmp byte [edi+esi*4+0xe], 0x0
-	jnz SMC_FreeCachedSurface_r_50
+	jnz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_50
 	add esi, esi
 	mov [ebp-0x28], esi
 	mov ebx, esi
 	add ebx, 0x1
 	cmp word [edi+ebx*4+0xc], 0x0
-	jnz SMC_FreeCachedSurface_r_60
+	jnz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_60
 	add esi, 0x2
 	mov eax, esi
 	movzx ecx, byte [ebp-0x1c]
@@ -407,25 +406,25 @@ SMC_FreeCachedSurface_r_160:
 	mov [ecx], edx
 	mov eax, [eax]
 	mov [eax+0x4], ecx
-SMC_FreeCachedSurface_r_200:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_200:
 	cmp word [edi+esi*4+0xc], 0x0
-	jz SMC_FreeCachedSurface_r_70
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_70
 	mov word [edi+esi*4+0xc], 0x0
 	cmp byte [edi+esi*4+0xe], 0x0
-	jnz SMC_FreeCachedSurface_r_80
+	jnz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_80
 	lea ebx, [esi+esi]
 	lea ecx, [ebx+0x1]
 	mov eax, [ebp-0x20]
 	mov [esp], eax
 	mov edx, [ebp-0x40]
 	mov eax, edi
-	call SMC_FreeCachedSurface_r_90
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_90
 	lea esi, [ebx+0x2]
 	cmp word [edi+esi*4+0xc], 0x0
-	jz SMC_FreeCachedSurface_r_100
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_100
 	mov word [edi+esi*4+0xc], 0x0
 	cmp byte [edi+esi*4+0xe], 0x0
-	jnz SMC_FreeCachedSurface_r_110
+	jnz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_110
 	mov ecx, [ebp-0x20]
 	sub ecx, 0x1
 	mov [ebp+0x8], ecx
@@ -435,27 +434,27 @@ SMC_FreeCachedSurface_r_200:
 	mov [esp], eax
 	mov edx, [ebp-0x40]
 	mov eax, edi
-	call SMC_FreeCachedSurface_r_90
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_90
 	add ebx, 0x2
 	cmp word [edi+ebx*4+0xc], 0x0
-	jz SMC_FreeCachedSurface_r_120
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_120
 	mov word [edi+ebx*4+0xc], 0x0
 	sub dword [ebp-0x20], 0x4
 	sub dword [ebp-0x1c], 0x4
 	cmp byte [edi+ebx*4+0xe], 0x0
-	jnz SMC_FreeCachedSurface_r_20
+	jnz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_20
 	mov ecx, [ebp-0x20]
-SMC_FreeCachedSurface_r_30:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_30:
 	add ecx, 0x2
 	mov [ebp-0x38], ecx
 	add ebx, ebx
 	mov [ebp-0x3c], ebx
 	add ebx, 0x1
 	cmp word [edi+ebx*4+0xc], 0x0
-	jz SMC_FreeCachedSurface_r_130
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_130
 	mov word [edi+ebx*4+0xc], 0x0
 	cmp byte [edi+ebx*4+0xe], 0x0
-	jz SMC_FreeCachedSurface_r_140
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_140
 	mov esi, [ebp-0x3c]
 	add esi, 0x2
 	mov eax, esi
@@ -466,7 +465,7 @@ SMC_FreeCachedSurface_r_30:
 	mov [ebp-0x30], eax
 	movzx edx, word [eax+0x6]
 	cmp dx, 0xffff
-	jz SMC_FreeCachedSurface_r_150
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_150
 	mov eax, rgp
 	mov ecx, [eax+0x20a0]
 	movzx eax, dx
@@ -481,10 +480,10 @@ SMC_FreeCachedSurface_r_30:
 	mov word [edx+0x3c], 0x0
 	mov edx, [ebp-0x30]
 	mov word [edx+0x6], 0xffff
-SMC_FreeCachedSurface_r_150:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_150:
 	mov byte [edi+ebx*4+0xe], 0x0
-	jmp SMC_FreeCachedSurface_r_160
-SMC_FreeCachedSurface_r_20:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_160
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_20:
 	lea eax, [ebx+0x1]
 	movzx ecx, byte [ebp+0x8]
 	shl eax, cl
@@ -492,7 +491,7 @@ SMC_FreeCachedSurface_r_20:
 	lea esi, [edx+eax*8-0x100]
 	movzx edx, word [esi+0x6]
 	cmp dx, 0xffff
-	jz SMC_FreeCachedSurface_r_170
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_170
 	mov eax, rgp
 	mov ecx, [eax+0x20a0]
 	movzx eax, dx
@@ -504,7 +503,7 @@ SMC_FreeCachedSurface_r_20:
 	add edx, [ecx+0x29c]
 	mov word [edx+0x3c], 0x0
 	mov word [esi+0x6], 0xffff
-SMC_FreeCachedSurface_r_170:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_170:
 	mov byte [edi+ebx*4+0xe], 0x0
 	add esp, 0x5c
 	pop ebx
@@ -512,10 +511,10 @@ SMC_FreeCachedSurface_r_170:
 	pop edi
 	pop ebp
 	ret
-SMC_FreeCachedSurface_r_60:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_60:
 	mov word [edi+ebx*4+0xc], 0x0
 	cmp byte [edi+ebx*4+0xe], 0x0
-	jz SMC_FreeCachedSurface_r_180
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_180
 	mov esi, [ebp-0x28]
 	add esi, 0x2
 	mov eax, esi
@@ -526,7 +525,7 @@ SMC_FreeCachedSurface_r_60:
 	mov [ebp-0x24], eax
 	movzx edx, word [eax+0x6]
 	cmp dx, 0xffff
-	jz SMC_FreeCachedSurface_r_190
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_190
 	mov eax, rgp
 	mov ecx, [eax+0x20a0]
 	movzx eax, dx
@@ -541,19 +540,19 @@ SMC_FreeCachedSurface_r_60:
 	mov word [edx+0x3c], 0x0
 	mov edx, [ebp-0x24]
 	mov word [edx+0x6], 0xffff
-SMC_FreeCachedSurface_r_190:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_190:
 	mov byte [edi+ebx*4+0xe], 0x0
-	jmp SMC_FreeCachedSurface_r_200
-SMC_FreeCachedSurface_r_140:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_200
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_140:
 	add ebx, ebx
 	mov [ebp-0x34], ebx
 	mov esi, ebx
 	add esi, 0x1
 	cmp word [edi+esi*4+0xc], 0x0
-	jz SMC_FreeCachedSurface_r_210
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_210
 	mov word [edi+esi*4+0xc], 0x0
 	cmp byte [edi+esi*4+0xe], 0x0
-	jz SMC_FreeCachedSurface_r_220
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_220
 	mov ebx, [ebp-0x34]
 	add ebx, 0x2
 	mov eax, ebx
@@ -564,7 +563,7 @@ SMC_FreeCachedSurface_r_140:
 	mov [ebp-0x2c], eax
 	movzx edx, word [eax+0x6]
 	cmp dx, 0xffff
-	jz SMC_FreeCachedSurface_r_230
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_230
 	mov eax, rgp
 	mov ecx, [eax+0x20a0]
 	movzx eax, dx
@@ -579,14 +578,14 @@ SMC_FreeCachedSurface_r_140:
 	mov word [edx+0x3c], 0x0
 	mov edx, [ebp-0x2c]
 	mov word [edx+0x6], 0xffff
-SMC_FreeCachedSurface_r_230:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_230:
 	mov byte [edi+esi*4+0xe], 0x0
 	cmp word [edi+ebx*4+0xc], 0x0
-	jz SMC_FreeCachedSurface_r_240
-SMC_FreeCachedSurface_r_270:
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_240
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_270:
 	mov word [edi+ebx*4+0xc], 0x0
 	cmp byte [edi+ebx*4+0xe], 0x0
-	jz SMC_FreeCachedSurface_r_250
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_250
 	mov eax, [ebp-0x34]
 	add eax, 0x3
 	movzx ecx, byte [ebp-0x1c]
@@ -595,7 +594,7 @@ SMC_FreeCachedSurface_r_270:
 	lea esi, [edx+eax*8-0x100]
 	movzx edx, word [esi+0x6]
 	cmp dx, 0xffff
-	jz SMC_FreeCachedSurface_r_260
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_260
 	mov eax, rgp
 	mov ecx, [eax+0x20a0]
 	movzx eax, dx
@@ -607,12 +606,12 @@ SMC_FreeCachedSurface_r_270:
 	add edx, [ecx+0x29c]
 	mov word [edx+0x3c], 0x0
 	mov word [esi+0x6], 0xffff
-SMC_FreeCachedSurface_r_260:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_260:
 	mov byte [edi+ebx*4+0xe], 0x0
 	mov esi, [ebp-0x3c]
 	add esi, 0x2
-	jmp SMC_FreeCachedSurface_r_160
-SMC_FreeCachedSurface_r_210:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_160
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_210:
 	add ebx, 0x2
 	mov eax, ebx
 	movzx ecx, byte [ebp-0x1c]
@@ -624,10 +623,10 @@ SMC_FreeCachedSurface_r_210:
 	mov [ecx], edx
 	mov eax, [eax]
 	mov [eax+0x4], ecx
-SMC_FreeCachedSurface_r_280:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_280:
 	cmp word [edi+ebx*4+0xc], 0x0
-	jnz SMC_FreeCachedSurface_r_270
-SMC_FreeCachedSurface_r_240:
+	jnz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_270
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_240:
 	mov eax, [ebp-0x34]
 	add eax, 0x3
 	movzx ecx, byte [ebp-0x1c]
@@ -641,76 +640,76 @@ SMC_FreeCachedSurface_r_240:
 	mov [eax+0x4], ecx
 	mov esi, [ebp-0x3c]
 	add esi, 0x2
-	jmp SMC_FreeCachedSurface_r_160
-SMC_FreeCachedSurface_r_180:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_160
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_180:
 	add ebx, ebx
 	lea ecx, [ebx+0x1]
 	mov eax, [ebp-0x20]
 	mov [esp], eax
 	mov edx, [ebp-0x40]
 	mov eax, edi
-	call SMC_FreeCachedSurface_r_90
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_90
 	lea ecx, [ebx+0x2]
 	mov edx, [ebp-0x20]
 	mov [esp], edx
 	mov edx, [ebp-0x40]
 	mov eax, edi
-	call SMC_FreeCachedSurface_r_90
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_90
 	mov esi, [ebp-0x28]
 	add esi, 0x2
-	jmp SMC_FreeCachedSurface_r_200
-SMC_FreeCachedSurface_r_250:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_200
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_250:
 	add ebx, ebx
 	lea ecx, [ebx+0x1]
 	mov eax, [ebp-0x20]
 	mov [esp], eax
 	mov edx, [ebp-0x40]
 	mov eax, edi
-	call SMC_FreeCachedSurface_r_90
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_90
 	lea ecx, [ebx+0x2]
 	mov edx, [ebp-0x20]
 	mov [esp], edx
 	mov edx, [ebp-0x40]
 	mov eax, edi
-	call SMC_FreeCachedSurface_r_90
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_90
 	mov esi, [ebp-0x3c]
 	add esi, 0x2
-	jmp SMC_FreeCachedSurface_r_160
-SMC_FreeCachedSurface_r_220:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_160
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_220:
 	lea ebx, [esi+esi]
 	lea ecx, [ebx+0x1]
 	mov eax, [ebp-0x20]
 	mov [esp], eax
 	mov edx, [ebp-0x40]
 	mov eax, edi
-	call SMC_FreeCachedSurface_r_90
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_90
 	lea ecx, [ebx+0x2]
 	mov edx, [ebp-0x20]
 	mov [esp], edx
 	mov edx, [ebp-0x40]
 	mov eax, edi
-	call SMC_FreeCachedSurface_r_90
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_90
 	mov ebx, [ebp-0x34]
 	add ebx, 0x2
-	jmp SMC_FreeCachedSurface_r_280
-SMC_FreeCachedSurface_r_40:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_280
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_40:
 	mov eax, [ebp-0x3c]
 	add eax, 0x3
 	movzx ecx, byte [ebp-0x38]
 	shl eax, cl
 	mov edx, [ebp-0x40]
-	jmp SMC_FreeCachedSurface_r_290
-SMC_FreeCachedSurface_r_50:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_290
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_50:
 	mov eax, [ebp-0x3c]
 	add eax, 0x3
 	movzx ecx, byte [ebp-0x38]
-SMC_FreeCachedSurface_r_320:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_320:
 	shl eax, cl
 	mov edx, [ebp-0x40]
 	lea ebx, [edx+eax*8-0x100]
 	movzx edx, word [ebx+0x6]
 	cmp dx, 0xffff
-	jz SMC_FreeCachedSurface_r_300
+	jz _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_300
 	mov eax, rgp
 	mov ecx, [eax+0x20a0]
 	movzx eax, dx
@@ -722,39 +721,39 @@ SMC_FreeCachedSurface_r_320:
 	add edx, [ecx+0x29c]
 	mov word [edx+0x3c], 0x0
 	mov word [ebx+0x6], 0xffff
-SMC_FreeCachedSurface_r_300:
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_300:
 	mov byte [edi+esi*4+0xe], 0x0
-	jmp SMC_FreeCachedSurface_r_310
-SMC_FreeCachedSurface_r_70:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_310
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_70:
 	mov eax, [ebp-0x28]
 	add eax, 0x3
 	movzx ecx, byte [ebp-0x1c]
 	shl eax, cl
 	mov edx, [ebp-0x40]
-	jmp SMC_FreeCachedSurface_r_290
-SMC_FreeCachedSurface_r_80:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_290
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_80:
 	mov eax, [ebp-0x28]
 	add eax, 0x3
 	movzx ecx, byte [ebp-0x1c]
-	jmp SMC_FreeCachedSurface_r_320
-SMC_FreeCachedSurface_r_100:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_320
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_100:
 	lea eax, [ebx+0x3]
 	movzx ecx, byte [ebp-0x20]
 	shl eax, cl
 	mov edx, [ebp-0x40]
-	jmp SMC_FreeCachedSurface_r_290
-SMC_FreeCachedSurface_r_110:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_290
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_110:
 	lea eax, [ebx+0x3]
 	movzx ecx, byte [ebp-0x20]
-	jmp SMC_FreeCachedSurface_r_320
-SMC_FreeCachedSurface_r_120:
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_320
+_Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_120:
 	mov edx, [ebp-0x40]
-	jmp SMC_FreeCachedSurface_r_330
+	jmp _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii_330
 
 
 ;SMC_GetFreeBlockOfSize(unsigned int, unsigned int)
-SMC_GetFreeBlockOfSize:
-SMC_GetFreeBlockOfSize_150:
+_Z22SMC_GetFreeBlockOfSizejj:
+_Z22SMC_GetFreeBlockOfSizejj_150:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -764,13 +763,13 @@ SMC_GetFreeBlockOfSize_150:
 	mov esi, eax
 	mov [ebp-0x1c], edx
 	test edx, edx
-	jnz SMC_GetFreeBlockOfSize_10
+	jnz _Z22SMC_GetFreeBlockOfSizejj_10
 	mov ebx, [eax*8+s_cache+0x410c0]
 	mov eax, rg
 	mov eax, [eax+0x15c]
 	sub eax, [ebx+0x8]
 	cmp eax, 0x3
-	jbe SMC_GetFreeBlockOfSize_20
+	jbe _Z22SMC_GetFreeBlockOfSizejj_20
 	mov ecx, ebx
 	sub ecx, s_cache
 	sar ecx, 0x3
@@ -789,13 +788,13 @@ SMC_GetFreeBlockOfSize_150:
 	lea ecx, [eax+0x21000]
 	lea edi, [ecx+s_cache]
 	cmp word [ebx+0xc], 0x0
-	jz SMC_GetFreeBlockOfSize_30
+	jz _Z22SMC_GetFreeBlockOfSizejj_30
 	mov word [ebx+0xc], 0x0
 	cmp byte [ebx+0xe], 0x0
-	jz SMC_GetFreeBlockOfSize_40
+	jz _Z22SMC_GetFreeBlockOfSizejj_40
 	movzx edx, word [edi+0x6]
 	cmp dx, 0xffff
-	jz SMC_GetFreeBlockOfSize_50
+	jz _Z22SMC_GetFreeBlockOfSizejj_50
 	mov eax, rgp
 	mov ecx, [eax+0x20a0]
 	movzx eax, dx
@@ -807,17 +806,17 @@ SMC_GetFreeBlockOfSize_150:
 	add edx, [ecx+0x29c]
 	mov word [edx+0x3c], 0x0
 	mov word [edi+0x6], 0xffff
-SMC_GetFreeBlockOfSize_50:
+_Z22SMC_GetFreeBlockOfSizejj_50:
 	mov byte [ebx+0xe], 0x0
-	jmp SMC_GetFreeBlockOfSize_60
-SMC_GetFreeBlockOfSize_10:
+	jmp _Z22SMC_GetFreeBlockOfSizejj_60
+_Z22SMC_GetFreeBlockOfSizejj_10:
 	sub edx, 0x1
 	lea eax, [eax+eax*2]
 	lea eax, [edx+eax*2]
 	lea ebx, [eax*8+s_cache+0x41000]
 	cmp ebx, [ebx+0x4]
-	jz SMC_GetFreeBlockOfSize_70
-SMC_GetFreeBlockOfSize_160:
+	jz _Z22SMC_GetFreeBlockOfSizejj_70
+_Z22SMC_GetFreeBlockOfSizejj_160:
 	mov ebx, [ebx+0x4]
 	mov eax, [ebx+0x4]
 	mov edx, [ebx]
@@ -826,16 +825,16 @@ SMC_GetFreeBlockOfSize_160:
 	mov [edx+0x4], eax
 	mov eax, ebx
 	sub eax, s_cache+0x21000
-	js SMC_GetFreeBlockOfSize_80
-SMC_GetFreeBlockOfSize_130:
+	js _Z22SMC_GetFreeBlockOfSizejj_80
+_Z22SMC_GetFreeBlockOfSizejj_130:
 	sar eax, 0x8
 	mov edi, eax
 	shl edi, 0x8
 	lea edx, [edi+eax*8]
 	lea ecx, [edx+s_cache]
 	cmp dword [ebp-0x1c], 0x1
-	jz SMC_GetFreeBlockOfSize_90
-SMC_GetFreeBlockOfSize_120:
+	jz _Z22SMC_GetFreeBlockOfSizejj_90
+_Z22SMC_GetFreeBlockOfSizejj_120:
 	add edi, s_cache+0x21000
 	lea eax, [esi+esi*2]
 	mov edx, [ebp-0x1c]
@@ -849,8 +848,8 @@ SMC_GetFreeBlockOfSize_120:
 	mov [eax], ebx
 	mov edx, ebx
 	sub edx, edi
-	js SMC_GetFreeBlockOfSize_100
-SMC_GetFreeBlockOfSize_140:
+	js _Z22SMC_GetFreeBlockOfSizejj_100
+_Z22SMC_GetFreeBlockOfSizejj_140:
 	sar edx, 0x3
 	mov ecx, 0x5
 	sub ecx, [ebp-0x1c]
@@ -864,30 +863,30 @@ SMC_GetFreeBlockOfSize_140:
 	mov edx, [eax+0x4]
 	mov [edx], eax
 	mov eax, 0x1
-SMC_GetFreeBlockOfSize_170:
+_Z22SMC_GetFreeBlockOfSizejj_170:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-SMC_GetFreeBlockOfSize_20:
+_Z22SMC_GetFreeBlockOfSizejj_20:
 	xor eax, eax
 	movzx eax, al
-SMC_GetFreeBlockOfSize_110:
+_Z22SMC_GetFreeBlockOfSizejj_110:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-SMC_GetFreeBlockOfSize_30:
+_Z22SMC_GetFreeBlockOfSizejj_30:
 	mov eax, [edi+0x4]
 	mov edx, [ecx+s_cache]
 	mov [eax], edx
 	mov edx, [ecx+s_cache]
 	mov [edx+0x4], eax
-SMC_GetFreeBlockOfSize_60:
+_Z22SMC_GetFreeBlockOfSizejj_60:
 	mov edx, [ebx+0x4]
 	mov eax, [ebx]
 	mov [edx], eax
@@ -904,8 +903,8 @@ SMC_GetFreeBlockOfSize_60:
 	mov [eax], edi
 	mov eax, 0x1
 	movzx eax, al
-	jmp SMC_GetFreeBlockOfSize_110
-SMC_GetFreeBlockOfSize_90:
+	jmp _Z22SMC_GetFreeBlockOfSizejj_110
+_Z22SMC_GetFreeBlockOfSizejj_90:
 	lea eax, [esi*8+s_cache+0x410c0]
 	mov [edx+s_cache], eax
 	mov edx, [eax+0x4]
@@ -913,36 +912,36 @@ SMC_GetFreeBlockOfSize_90:
 	mov [eax+0x4], ecx
 	mov eax, [ecx+0x4]
 	mov [eax], ecx
-	jmp SMC_GetFreeBlockOfSize_120
-SMC_GetFreeBlockOfSize_80:
+	jmp _Z22SMC_GetFreeBlockOfSizejj_120
+_Z22SMC_GetFreeBlockOfSizejj_80:
 	add eax, 0xff
-	jmp SMC_GetFreeBlockOfSize_130
-SMC_GetFreeBlockOfSize_100:
+	jmp _Z22SMC_GetFreeBlockOfSizejj_130
+_Z22SMC_GetFreeBlockOfSizejj_100:
 	add edx, 0x7
-	jmp SMC_GetFreeBlockOfSize_140
-SMC_GetFreeBlockOfSize_70:
+	jmp _Z22SMC_GetFreeBlockOfSizejj_140
+_Z22SMC_GetFreeBlockOfSizejj_70:
 	mov eax, esi
-	call SMC_GetFreeBlockOfSize_150
+	call _Z22SMC_GetFreeBlockOfSizejj_150
 	test al, al
-	jnz SMC_GetFreeBlockOfSize_160
+	jnz _Z22SMC_GetFreeBlockOfSizejj_160
 	xor eax, eax
-	jmp SMC_GetFreeBlockOfSize_170
-SMC_GetFreeBlockOfSize_40:
+	jmp _Z22SMC_GetFreeBlockOfSizejj_170
+_Z22SMC_GetFreeBlockOfSizejj_40:
 	mov dword [esp], 0x4
 	mov ecx, 0x1
 	mov edx, edi
 	mov eax, ebx
-	call SMC_FreeCachedSurface_r
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii
 	mov dword [esp], 0x4
 	mov ecx, 0x2
 	mov edx, edi
 	mov eax, ebx
-	call SMC_FreeCachedSurface_r
-	jmp SMC_GetFreeBlockOfSize_60
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii
+	jmp _Z22SMC_GetFreeBlockOfSizejj_60
 
 
 ;R_UncacheStaticModel(unsigned int)
-R_UncacheStaticModel:
+_Z20R_UncacheStaticModelj:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -954,17 +953,17 @@ R_UncacheStaticModel:
 	mov edx, [ecx+0x29c]
 	lea edx, [edx+eax*4]
 	mov ebx, 0x4
-R_UncacheStaticModel_20:
+_Z20R_UncacheStaticModelj_20:
 	movzx eax, word [edx+0x3c]
 	movzx ecx, ax
 	test ax, ax
-	jz R_UncacheStaticModel_10
+	jz _Z20R_UncacheStaticModelj_10
 	mov word [ecx*8+s_cache+0x20ffe], 0xffff
 	mov word [edx+0x3c], 0x0
-R_UncacheStaticModel_10:
+_Z20R_UncacheStaticModelj_10:
 	add edx, 0x2
 	sub ebx, 0x1
-	jnz R_UncacheStaticModel_20
+	jnz _Z20R_UncacheStaticModelj_20
 	pop ebx
 	pop ebp
 	ret
@@ -972,7 +971,7 @@ R_UncacheStaticModel_10:
 
 
 ;R_GetCachedSModelSurf(unsigned int)
-R_GetCachedSModelSurf:
+_Z21R_GetCachedSModelSurfj:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -983,7 +982,7 @@ R_GetCachedSModelSurf:
 
 
 ;R_InitStaticModelCache()
-R_InitStaticModelCache:
+_Z22R_InitStaticModelCachev:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -997,29 +996,29 @@ R_InitStaticModelCache:
 	mov eax, gfxBuf
 	add eax, 0xc
 	mov [esp], eax
-	call R_AllocDynamicVertexBuffer
+	call _Z26R_AllocDynamicVertexBufferPP22IDirect3DVertexBuffer9iPKc
 	mov byte [ebx], 0x0
 	xor ebx, ebx
 	mov ecx, 0x21000
-R_InitStaticModelCache_20:
+_Z22R_InitStaticModelCachev_20:
 	lea eax, [ecx+s_cache]
 	mov edx, 0x20
-R_InitStaticModelCache_10:
+_Z22R_InitStaticModelCachev_10:
 	mov word [eax+0x6], 0xffff
 	add eax, 0x8
 	sub edx, 0x1
-	jnz R_InitStaticModelCache_10
+	jnz _Z22R_InitStaticModelCachev_10
 	add ebx, 0x1
 	add ecx, 0x100
 	cmp ebx, 0x200
-	jnz R_InitStaticModelCache_20
+	jnz _Z22R_InitStaticModelCachev_20
 	mov dword [ebp-0x1c], 0x0
 	mov edi, s_cache
 	mov esi, s_cache+0x41000
 	mov dword [ebp-0x20], 0x41000
 	mov dword [ebp-0x24], s_cache+0x410c0
 	mov dword [ebp-0x28], 0x0
-R_InitStaticModelCache_60:
+_Z22R_InitStaticModelCachev_60:
 	mov eax, [ebp-0x24]
 	mov [edi+0x410c0], eax
 	mov [edi+0x410c4], eax
@@ -1028,23 +1027,23 @@ R_InitStaticModelCache_60:
 	xor ecx, ecx
 	mov eax, [ebp-0x28]
 	add eax, s_cache+0x41000
-R_InitStaticModelCache_30:
+_Z22R_InitStaticModelCachev_30:
 	mov [edx], eax
 	mov [edx+0x4], eax
 	add ecx, 0x1
 	add eax, 0x8
 	add edx, 0x8
 	cmp ecx, 0x6
-	jnz R_InitStaticModelCache_30
+	jnz _Z22R_InitStaticModelCachev_30
 	xor ebx, ebx
 	mov eax, [ebp-0x1c]
 	shl eax, 0xf
 	lea ecx, [eax+0x21000]
 	mov edx, [esi+0x4]
-	jmp R_InitStaticModelCache_40
-R_InitStaticModelCache_50:
+	jmp _Z22R_InitStaticModelCachev_40
+_Z22R_InitStaticModelCachev_50:
 	mov edx, eax
-R_InitStaticModelCache_40:
+_Z22R_InitStaticModelCachev_40:
 	lea eax, [ecx+s_cache]
 	mov [ecx+s_cache], esi
 	mov [ecx+s_cache+0x4], edx
@@ -1054,7 +1053,7 @@ R_InitStaticModelCache_40:
 	add ebx, 0x1
 	add ecx, 0x100
 	cmp ebx, 0x80
-	jnz R_InitStaticModelCache_50
+	jnz _Z22R_InitStaticModelCachev_50
 	add dword [ebp-0x1c], 0x1
 	add dword [ebp-0x28], 0x30
 	add dword [ebp-0x24], 0x8
@@ -1062,7 +1061,7 @@ R_InitStaticModelCache_40:
 	add esi, 0x30
 	add edi, 0x8
 	cmp dword [ebp-0x1c], 0x4
-	jnz R_InitStaticModelCache_60
+	jnz _Z22R_InitStaticModelCachev_60
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -1072,7 +1071,7 @@ R_InitStaticModelCache_40:
 
 
 ;R_FlushStaticModelCache()
-R_FlushStaticModelCache:
+_Z23R_FlushStaticModelCachev:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1081,16 +1080,16 @@ R_FlushStaticModelCache:
 	sub esp, 0x2c
 	mov eax, [s_cache+0x410c4]
 	test eax, eax
-	jz R_FlushStaticModelCache_10
+	jz _Z23R_FlushStaticModelCachev_10
 	xor edi, edi
-	jmp R_FlushStaticModelCache_20
-R_FlushStaticModelCache_40:
+	jmp _Z23R_FlushStaticModelCachev_20
+_Z23R_FlushStaticModelCachev_40:
 	mov eax, [ebx+0x4]
 	mov edx, [ecx+s_cache]
 	mov [eax], edx
 	mov edx, [ecx+s_cache]
 	mov [edx+0x4], eax
-R_FlushStaticModelCache_70:
+_Z23R_FlushStaticModelCachev_70:
 	mov eax, [edi*8+s_cache+0x410c4]
 	mov ecx, [eax+0x4]
 	mov edx, [eax]
@@ -1106,11 +1105,11 @@ R_FlushStaticModelCache_70:
 	mov [eax+0x4], ebx
 	mov eax, [ebx+0x4]
 	mov [eax], ebx
-R_FlushStaticModelCache_20:
+_Z23R_FlushStaticModelCachev_20:
 	mov esi, [edi*8+s_cache+0x410c4]
 	lea eax, [edi*8+s_cache+0x410c0]
 	cmp esi, eax
-	jz R_FlushStaticModelCache_30
+	jz _Z23R_FlushStaticModelCachev_30
 	mov ecx, esi
 	sub ecx, s_cache
 	sar ecx, 0x3
@@ -1129,13 +1128,13 @@ R_FlushStaticModelCache_20:
 	lea ecx, [eax+0x21000]
 	lea ebx, [ecx+s_cache]
 	cmp word [esi+0xc], 0x0
-	jz R_FlushStaticModelCache_40
+	jz _Z23R_FlushStaticModelCachev_40
 	mov word [esi+0xc], 0x0
 	cmp byte [esi+0xe], 0x0
-	jz R_FlushStaticModelCache_50
+	jz _Z23R_FlushStaticModelCachev_50
 	movzx edx, word [ebx+0x6]
 	cmp dx, 0xffff
-	jz R_FlushStaticModelCache_60
+	jz _Z23R_FlushStaticModelCachev_60
 	mov eax, rgp
 	mov ecx, [eax+0x20a0]
 	movzx eax, dx
@@ -1147,34 +1146,34 @@ R_FlushStaticModelCache_20:
 	add edx, [ecx+0x29c]
 	mov word [edx+0x3c], 0x0
 	mov word [ebx+0x6], 0xffff
-R_FlushStaticModelCache_60:
+_Z23R_FlushStaticModelCachev_60:
 	mov byte [esi+0xe], 0x0
-	jmp R_FlushStaticModelCache_70
-R_FlushStaticModelCache_30:
+	jmp _Z23R_FlushStaticModelCachev_70
+_Z23R_FlushStaticModelCachev_30:
 	add edi, 0x1
 	cmp edi, 0x3
-	jbe R_FlushStaticModelCache_20
+	jbe _Z23R_FlushStaticModelCachev_20
 	xor ebx, ebx
 	mov ecx, 0x21000
-R_FlushStaticModelCache_90:
+_Z23R_FlushStaticModelCachev_90:
 	lea eax, [ecx+s_cache]
 	mov edx, 0x20
-R_FlushStaticModelCache_80:
+_Z23R_FlushStaticModelCachev_80:
 	mov word [eax+0x6], 0xffff
 	add eax, 0x8
 	sub edx, 0x1
-	jnz R_FlushStaticModelCache_80
+	jnz _Z23R_FlushStaticModelCachev_80
 	add ebx, 0x1
 	add ecx, 0x100
 	cmp ebx, 0x200
-	jnz R_FlushStaticModelCache_90
+	jnz _Z23R_FlushStaticModelCachev_90
 	mov dword [ebp-0x1c], 0x0
 	mov edi, s_cache
 	mov esi, s_cache+0x41000
 	mov dword [ebp-0x20], 0x41000
 	mov dword [ebp-0x24], s_cache+0x410c0
 	mov dword [ebp-0x28], 0x0
-R_FlushStaticModelCache_130:
+_Z23R_FlushStaticModelCachev_130:
 	mov eax, [ebp-0x24]
 	mov [edi+0x410c0], eax
 	mov [edi+0x410c4], eax
@@ -1183,23 +1182,23 @@ R_FlushStaticModelCache_130:
 	xor ecx, ecx
 	mov eax, [ebp-0x28]
 	add eax, s_cache+0x41000
-R_FlushStaticModelCache_100:
+_Z23R_FlushStaticModelCachev_100:
 	mov [edx], eax
 	mov [edx+0x4], eax
 	add ecx, 0x1
 	add eax, 0x8
 	add edx, 0x8
 	cmp ecx, 0x6
-	jnz R_FlushStaticModelCache_100
+	jnz _Z23R_FlushStaticModelCachev_100
 	xor ebx, ebx
 	mov eax, [ebp-0x1c]
 	shl eax, 0xf
 	lea ecx, [eax+0x21000]
 	mov edx, [esi+0x4]
-	jmp R_FlushStaticModelCache_110
-R_FlushStaticModelCache_120:
+	jmp _Z23R_FlushStaticModelCachev_110
+_Z23R_FlushStaticModelCachev_120:
 	mov edx, eax
-R_FlushStaticModelCache_110:
+_Z23R_FlushStaticModelCachev_110:
 	lea eax, [ecx+s_cache]
 	mov [ecx+s_cache], esi
 	mov [ecx+s_cache+0x4], edx
@@ -1209,7 +1208,7 @@ R_FlushStaticModelCache_110:
 	add ebx, 0x1
 	add ecx, 0x100
 	cmp ebx, 0x80
-	jnz R_FlushStaticModelCache_120
+	jnz _Z23R_FlushStaticModelCachev_120
 	add dword [ebp-0x1c], 0x1
 	add dword [ebp-0x28], 0x30
 	add dword [ebp-0x24], 0x8
@@ -1217,31 +1216,31 @@ R_FlushStaticModelCache_110:
 	add esi, 0x30
 	add edi, 0x8
 	cmp dword [ebp-0x1c], 0x4
-	jnz R_FlushStaticModelCache_130
-R_FlushStaticModelCache_10:
+	jnz _Z23R_FlushStaticModelCachev_130
+_Z23R_FlushStaticModelCachev_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_FlushStaticModelCache_50:
+_Z23R_FlushStaticModelCachev_50:
 	mov dword [esp], 0x4
 	mov ecx, 0x1
 	mov edx, ebx
 	mov eax, esi
-	call SMC_FreeCachedSurface_r
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii
 	mov dword [esp], 0x4
 	mov ecx, 0x2
 	mov edx, ebx
 	mov eax, esi
-	call SMC_FreeCachedSurface_r
-	jmp R_FlushStaticModelCache_70
+	call _Z23SMC_FreeCachedSurface_rP19static_model_tree_tP19static_model_leaf_tii
+	jmp _Z23R_FlushStaticModelCachev_70
 	nop
 
 
 ;R_CacheStaticModelSurface(unsigned int, unsigned int, XModelLodInfo const*)
-R_CacheStaticModelSurface:
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1250,7 +1249,7 @@ R_CacheStaticModelSurface:
 	sub esp, 0x7c
 	mov eax, dx_ctx
 	cmp byte [eax+0x2c6c], 0x0
-	jnz R_CacheStaticModelSurface_10
+	jnz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_10
 	mov edx, [ebp+0xc]
 	lea eax, [edx+edx*8]
 	lea eax, [edx+eax*2]
@@ -1265,7 +1264,7 @@ R_CacheStaticModelSurface:
 	mov ebx, [ebp-0x50]
 	movzx eax, word [eax+ebx+0x3c]
 	test ax, ax
-	jnz R_CacheStaticModelSurface_20
+	jnz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_20
 	movzx eax, byte [ecx+0x1a]
 	mov [ebp-0x54], eax
 	mov dword [ebp-0x48], 0x1
@@ -1274,11 +1273,11 @@ R_CacheStaticModelSurface:
 	mov eax, frontEndDataOut
 	mov eax, [eax]
 	cmp dword [eax+0xf0220], 0x100
-	jz R_CacheStaticModelSurface_10
+	jz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_10
 	mov eax, [eax+0xf0224]
 	add eax, [ebp-0x48]
 	cmp eax, 0x2000
-	ja R_CacheStaticModelSurface_10
+	ja _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_10
 	mov dword [ebp-0x44], 0x9
 	mov ebx, [ebp-0x54]
 	sub [ebp-0x44], ebx
@@ -1288,8 +1287,8 @@ R_CacheStaticModelSurface:
 	lea eax, [edx+eax*2]
 	lea ebx, [eax*8+s_cache+0x41000]
 	cmp ebx, [ebx+0x4]
-	jz R_CacheStaticModelSurface_30
-R_CacheStaticModelSurface_140:
+	jz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_30
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_140:
 	mov ecx, [ebx+0x4]
 	mov eax, [ecx+0x4]
 	mov edx, [ecx]
@@ -1298,8 +1297,8 @@ R_CacheStaticModelSurface_140:
 	mov [edx+0x4], eax
 	mov eax, ecx
 	sub eax, s_cache+0x21000
-	js R_CacheStaticModelSurface_40
-R_CacheStaticModelSurface_170:
+	js _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_40
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_170:
 	sar eax, 0x8
 	mov [ebp-0x58], eax
 	mov esi, eax
@@ -1308,7 +1307,7 @@ R_CacheStaticModelSurface_170:
 	lea ebx, [edx+s_cache]
 	mov eax, [ebp-0x44]
 	test eax, eax
-	jnz R_CacheStaticModelSurface_50
+	jnz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_50
 	mov edi, [ebp+0x8]
 	lea eax, [edi*8+s_cache+0x410c0]
 	mov [edx+s_cache], eax
@@ -1317,12 +1316,12 @@ R_CacheStaticModelSurface_170:
 	mov [eax+0x4], ebx
 	mov eax, [ebx+0x4]
 	mov [eax], ebx
-R_CacheStaticModelSurface_50:
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_50:
 	lea edi, [esi+s_cache+0x21000]
 	mov eax, ecx
 	sub eax, edi
-	js R_CacheStaticModelSurface_60
-R_CacheStaticModelSurface_160:
+	js _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_60
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_160:
 	mov esi, eax
 	sar esi, 0x3
 	lea eax, [esi+0x20]
@@ -1336,14 +1335,14 @@ R_CacheStaticModelSurface_160:
 	shl eax, cl
 	add [ebx+edx*4+0xc], ax
 	test edx, edx
-	jz R_CacheStaticModelSurface_70
-R_CacheStaticModelSurface_80:
+	jz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_70
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_80:
 	sub edx, 0x1
 	shr edx, 1
 	add [ebx+edx*4+0xc], ax
 	test edx, edx
-	jnz R_CacheStaticModelSurface_80
-R_CacheStaticModelSurface_70:
+	jnz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_80
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_70:
 	mov edx, [ebp-0x58]
 	shl edx, 0x5
 	lea eax, [esi+edx]
@@ -1352,7 +1351,7 @@ R_CacheStaticModelSurface_70:
 	lea edx, [edx+esi+0x1]
 	movzx edi, dx
 	test di, di
-	jz R_CacheStaticModelSurface_10
+	jz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_10
 	mov ecx, frontEndDataOut
 	mov edx, [ecx]
 	mov eax, [edx+0xf0220]
@@ -1391,7 +1390,7 @@ R_CacheStaticModelSurface_70:
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	mov dword [esp], 0xf
-	call R_AddWorkerCmd
+	call _Z14R_AddWorkerCmd13WorkerCmdTypePv
 	mov esi, [esi+s_cache]
 	mov [ebp-0x3c], esi
 	mov ebx, rgp
@@ -1407,19 +1406,19 @@ R_CacheStaticModelSurface_70:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call XModelGetSurfaces
+	call _Z17XModelGetSurfacesPK6XModelPP8XSurfacei
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call XModelGetSurfCount
+	call _Z18XModelGetSurfCountPK6XModeli
 	mov [ebp-0x38], eax
 	test eax, eax
-	jz R_CacheStaticModelSurface_90
+	jz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_90
 	mov eax, [ebp-0x3c]
 	shl eax, 0x2
 	mov [ebp-0x30], eax
 	mov dword [ebp-0x34], 0x0
 	mov dword [ebp-0x2c], 0x0
-R_CacheStaticModelSurface_110:
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_110:
 	mov ecx, [ebp-0x2c]
 	add ecx, [ebp-0x20]
 	movzx eax, word [ebp-0x3c]
@@ -1439,7 +1438,7 @@ R_CacheStaticModelSurface_110:
 	shr ax, 1
 	movzx edi, ax
 	xor ecx, ecx
-R_CacheStaticModelSurface_100:
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_100:
 	mov eax, esi
 	add eax, [ebx]
 	mov [edx], eax
@@ -1453,17 +1452,17 @@ R_CacheStaticModelSurface_100:
 	add ebx, 0xc
 	add ecx, 0x1
 	cmp edi, ecx
-	jnz R_CacheStaticModelSurface_100
+	jnz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_100
 	add dword [ebp-0x34], 0x1
 	add dword [ebp-0x2c], 0x38
 	mov eax, [ebp-0x34]
 	cmp [ebp-0x38], eax
-	jnz R_CacheStaticModelSurface_110
-R_CacheStaticModelSurface_90:
+	jnz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_110
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_90:
 	mov eax, [ebp-0x4c]
 	sub eax, s_cache+0x21000
-	js R_CacheStaticModelSurface_120
-R_CacheStaticModelSurface_180:
+	js _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_120
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_180:
 	mov edx, eax
 	sar edx, 0x8
 	mov eax, edx
@@ -1487,23 +1486,23 @@ R_CacheStaticModelSurface_180:
 	mov eax, [ecx+0x4]
 	mov [eax], ecx
 	mov eax, [ebp-0x40]
-	jmp R_CacheStaticModelSurface_130
-R_CacheStaticModelSurface_30:
+	jmp _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_130
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_30:
 	mov eax, edi
-	call SMC_GetFreeBlockOfSize
+	call _Z22SMC_GetFreeBlockOfSizejj
 	test al, al
-	jnz R_CacheStaticModelSurface_140
-R_CacheStaticModelSurface_10:
+	jnz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_140
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_10:
 	mov dword [ebp-0x40], 0x0
 	mov eax, [ebp-0x40]
-R_CacheStaticModelSurface_130:
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_130:
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_CacheStaticModelSurface_20:
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_20:
 	movzx esi, ax
 	lea edx, [esi*8-0x8]
 	lea eax, [edx+0xff]
@@ -1517,7 +1516,7 @@ R_CacheStaticModelSurface_20:
 	mov eax, rg
 	mov eax, [eax+0x15c]
 	cmp [ecx+0x8], eax
-	jz R_CacheStaticModelSurface_150
+	jz _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_150
 	mov [ecx+0x8], eax
 	mov edx, [ecx+0x4]
 	mov eax, [ebx+s_cache]
@@ -1532,7 +1531,7 @@ R_CacheStaticModelSurface_20:
 	mov [eax+0x4], ecx
 	mov eax, [ecx+0x4]
 	mov [eax], ecx
-R_CacheStaticModelSurface_150:
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_150:
 	mov [ebp-0x40], esi
 	mov eax, esi
 	add esp, 0x7c
@@ -1541,58 +1540,58 @@ R_CacheStaticModelSurface_150:
 	pop edi
 	pop ebp
 	ret
-R_CacheStaticModelSurface_60:
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_60:
 	add eax, 0x7
-	jmp R_CacheStaticModelSurface_160
-R_CacheStaticModelSurface_40:
+	jmp _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_160
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_40:
 	add eax, 0xff
-	jmp R_CacheStaticModelSurface_170
-R_CacheStaticModelSurface_120:
+	jmp _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_170
+_Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_120:
 	add eax, 0xff
-	jmp R_CacheStaticModelSurface_180
+	jmp _Z25R_CacheStaticModelSurfacejjPK13XModelLodInfo_180
 
 
 ;R_StaticModelCacheFlush_f()
-R_StaticModelCacheFlush_f:
+_Z25R_StaticModelCacheFlush_fv:
 	push ebp
 	mov ebp, esp
 	push edi
 	push esi
 	push ebx
 	sub esp, 0x1c
-	call R_SyncRenderThread
+	call _Z18R_SyncRenderThreadv
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	test eax, eax
-	jz R_StaticModelCacheFlush_f_10
+	jz _Z25R_StaticModelCacheFlush_fv_10
 	mov eax, [eax+0x244]
 	mov [ebp-0x1c], eax
 	test eax, eax
-	jz R_StaticModelCacheFlush_f_10
+	jz _Z25R_StaticModelCacheFlush_fv_10
 	xor edi, edi
 	xor esi, esi
-R_StaticModelCacheFlush_f_40:
+_Z25R_StaticModelCacheFlush_fv_40:
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	mov edx, esi
 	add edx, [eax+0x29c]
 	mov ebx, 0x4
-R_StaticModelCacheFlush_f_30:
+_Z25R_StaticModelCacheFlush_fv_30:
 	movzx eax, word [edx+0x3c]
 	movzx ecx, ax
 	test ax, ax
-	jz R_StaticModelCacheFlush_f_20
+	jz _Z25R_StaticModelCacheFlush_fv_20
 	mov word [ecx*8+s_cache+0x20ffe], 0xffff
 	mov word [edx+0x3c], 0x0
-R_StaticModelCacheFlush_f_20:
+_Z25R_StaticModelCacheFlush_fv_20:
 	add edx, 0x2
 	sub ebx, 0x1
-	jnz R_StaticModelCacheFlush_f_30
+	jnz _Z25R_StaticModelCacheFlush_fv_30
 	add edi, 0x1
 	add esi, 0x4c
 	cmp [ebp-0x1c], edi
-	jnz R_StaticModelCacheFlush_f_40
-R_StaticModelCacheFlush_f_10:
+	jnz _Z25R_StaticModelCacheFlush_fv_40
+_Z25R_StaticModelCacheFlush_fv_10:
 	add esp, 0x1c
 	pop ebx
 	pop esi
@@ -1603,7 +1602,7 @@ R_StaticModelCacheFlush_f_10:
 
 
 ;R_StaticModelCacheStats_f()
-R_StaticModelCacheStats_f:
+_Z25R_StaticModelCacheStats_fv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1613,14 +1612,14 @@ R_StaticModelCacheStats_f:
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	test eax, eax
-	jz R_StaticModelCacheStats_f_10
+	jz _Z25R_StaticModelCacheStats_fv_10
 	mov esi, [eax+0x244]
 	test esi, esi
-	jnz R_StaticModelCacheStats_f_20
+	jnz _Z25R_StaticModelCacheStats_fv_20
 	mov dword [ebp-0x44], 0x0
 	mov dword [ebp-0x40], 0x0
 	pxor xmm1, xmm1
-R_StaticModelCacheStats_f_110:
+_Z25R_StaticModelCacheStats_fv_110:
 	movaps xmm0, xmm1
 	mulss xmm0, [_float_100_00000000]
 	mulss xmm0, [_float_0_00000381]
@@ -1629,70 +1628,70 @@ R_StaticModelCacheStats_f_110:
 	mov dword [esp+0x4], _cstring_2f_of_cache_is_c
 	mov dword [esp], 0x8
 	movss [ebp-0x58], xmm1
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov edx, [ebp-0x44]
 	test edx, edx
 	movss xmm1, dword [ebp-0x58]
-	jnz R_StaticModelCacheStats_f_30
-R_StaticModelCacheStats_f_10:
+	jnz _Z25R_StaticModelCacheStats_fv_30
+_Z25R_StaticModelCacheStats_fv_10:
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_StaticModelCacheStats_f_30:
+_Z25R_StaticModelCacheStats_fv_30:
 	mov eax, [ebp-0x40]
 	test eax, eax
-	js R_StaticModelCacheStats_f_40
+	js _Z25R_StaticModelCacheStats_fv_40
 	cvtsi2ss xmm0, dword [ebp-0x40]
-R_StaticModelCacheStats_f_120:
+_Z25R_StaticModelCacheStats_fv_120:
 	mulss xmm0, [_float_100_00000000]
 	divss xmm0, xmm1
 	cvtss2sd xmm0, xmm0
 	movsd [esp+0x8], xmm0
 	mov dword [esp+0x4], _cstring_2f_allocated_cac
 	mov dword [esp], 0x8
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_StaticModelCacheStats_f_20:
+_Z25R_StaticModelCacheStats_fv_20:
 	mov dword [ebp-0x48], 0x0
 	mov dword [ebp-0x44], 0x0
 	mov dword [ebp-0x40], 0x0
 	mov dword [ebp-0x30], 0x0
-R_StaticModelCacheStats_f_90:
+_Z25R_StaticModelCacheStats_fv_90:
 	mov edx, [ebp-0x30]
 	add edx, [eax+0x29c]
 	mov [ebp-0x2c], edx
 	mov eax, [edx+0x38]
 	mov [esp], eax
-	call XModelGetNumLods
+	call _Z16XModelGetNumLodsPK6XModel
 	mov [ebp-0x38], eax
 	test eax, eax
-	jz R_StaticModelCacheStats_f_50
+	jz _Z25R_StaticModelCacheStats_fv_50
 	mov edi, [ebp-0x2c]
 	mov dword [ebp-0x3c], 0x0
-	jmp R_StaticModelCacheStats_f_60
-R_StaticModelCacheStats_f_70:
+	jmp _Z25R_StaticModelCacheStats_fv_60
+_Z25R_StaticModelCacheStats_fv_70:
 	add dword [ebp-0x3c], 0x1
 	add edi, 0x2
 	mov eax, [ebp-0x3c]
 	cmp [ebp-0x38], eax
-	jbe R_StaticModelCacheStats_f_50
-R_StaticModelCacheStats_f_60:
+	jbe _Z25R_StaticModelCacheStats_fv_50
+_Z25R_StaticModelCacheStats_fv_60:
 	cmp word [edi+0x3c], 0x0
-	jz R_StaticModelCacheStats_f_70
+	jz _Z25R_StaticModelCacheStats_fv_70
 	mov eax, [ebp-0x3c]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x2c]
 	mov eax, [edx+0x38]
 	mov [esp], eax
-	call XModelGetLodInfo
+	call _Z16XModelGetLodInfoPK6XModeli
 	movzx ecx, byte [eax+0x1a]
 	mov eax, 0x1
 	shl eax, cl
@@ -1702,7 +1701,7 @@ R_StaticModelCacheStats_f_60:
 	mov edx, [ebp-0x2c]
 	mov eax, [edx+0x38]
 	mov [esp], eax
-	call XModelGetSurfCount
+	call _Z18XModelGetSurfCountPK6XModeli
 	mov [ebp-0x34], eax
 	mov eax, [ebp-0x3c]
 	mov [esp+0x8], eax
@@ -1711,49 +1710,49 @@ R_StaticModelCacheStats_f_60:
 	mov edx, [ebp-0x2c]
 	mov eax, [edx+0x38]
 	mov [esp], eax
-	call XModelGetSurfaces
+	call _Z17XModelGetSurfacesPK6XModelPP8XSurfacei
 	mov ebx, [ebp-0x34]
 	test ebx, ebx
-	jz R_StaticModelCacheStats_f_70
+	jz _Z25R_StaticModelCacheStats_fv_70
 	xor esi, esi
 	xor ebx, ebx
-R_StaticModelCacheStats_f_80:
+_Z25R_StaticModelCacheStats_fv_80:
 	mov eax, ebx
 	add eax, [ebp-0x1c]
 	mov [esp], eax
-	call XSurfaceGetNumVerts
+	call _Z19XSurfaceGetNumVertsPK8XSurface
 	add [ebp-0x40], eax
 	add esi, 0x1
 	add ebx, 0x38
 	cmp [ebp-0x34], esi
-	jnz R_StaticModelCacheStats_f_80
+	jnz _Z25R_StaticModelCacheStats_fv_80
 	add dword [ebp-0x3c], 0x1
 	add edi, 0x2
 	mov eax, [ebp-0x3c]
 	cmp [ebp-0x38], eax
-	ja R_StaticModelCacheStats_f_60
-R_StaticModelCacheStats_f_50:
+	ja _Z25R_StaticModelCacheStats_fv_60
+_Z25R_StaticModelCacheStats_fv_50:
 	add dword [ebp-0x48], 0x1
 	mov eax, rgp
 	mov eax, [eax+0x20a0]
 	add dword [ebp-0x30], 0x4c
 	mov edx, [ebp-0x48]
 	cmp edx, [eax+0x244]
-	jb R_StaticModelCacheStats_f_90
+	jb _Z25R_StaticModelCacheStats_fv_90
 	mov ecx, [ebp-0x44]
 	test ecx, ecx
-	js R_StaticModelCacheStats_f_100
+	js _Z25R_StaticModelCacheStats_fv_100
 	cvtsi2ss xmm1, dword [ebp-0x44]
-	jmp R_StaticModelCacheStats_f_110
-R_StaticModelCacheStats_f_40:
+	jmp _Z25R_StaticModelCacheStats_fv_110
+_Z25R_StaticModelCacheStats_fv_40:
 	mov eax, [ebp-0x40]
 	shr eax, 1
 	and dword [ebp-0x40], 0x1
 	or eax, [ebp-0x40]
 	cvtsi2ss xmm0, eax
 	addss xmm0, xmm0
-	jmp R_StaticModelCacheStats_f_120
-R_StaticModelCacheStats_f_100:
+	jmp _Z25R_StaticModelCacheStats_fv_120
+_Z25R_StaticModelCacheStats_fv_100:
 	mov eax, [ebp-0x44]
 	shr eax, 1
 	mov edx, [ebp-0x44]
@@ -1761,28 +1760,28 @@ R_StaticModelCacheStats_f_100:
 	or eax, edx
 	cvtsi2ss xmm1, eax
 	addss xmm1, xmm1
-	jmp R_StaticModelCacheStats_f_110
+	jmp _Z25R_StaticModelCacheStats_fv_110
 
 
 ;R_ShutdownStaticModelCache()
-R_ShutdownStaticModelCache:
+_Z26R_ShutdownStaticModelCachev:
 	push ebp
 	mov ebp, esp
 	push edi
 	push esi
 	push ebx
 	sub esp, 0x1c
-	call R_FlushStaticModelCache
+	call _Z23R_FlushStaticModelCachev
 	mov ebx, gfxBuf
 	mov eax, [ebx+0xc]
 	test eax, eax
-	jz R_ShutdownStaticModelCache_10
+	jz _Z26R_ShutdownStaticModelCachev_10
 	mov edi, alwaysfails
 	mov esi, ebx
-	jmp R_ShutdownStaticModelCache_20
-R_ShutdownStaticModelCache_30:
+	jmp _Z26R_ShutdownStaticModelCachev_20
+_Z26R_ShutdownStaticModelCachev_30:
 	mov ebx, esi
-R_ShutdownStaticModelCache_20:
+_Z26R_ShutdownStaticModelCachev_20:
 	mov eax, [ebx+0xc]
 	mov edx, [eax]
 	mov [esp], eax
@@ -1790,8 +1789,8 @@ R_ShutdownStaticModelCache_20:
 	mov dword [ebx+0xc], 0x0
 	mov eax, [edi]
 	test eax, eax
-	jnz R_ShutdownStaticModelCache_30
-R_ShutdownStaticModelCache_10:
+	jnz _Z26R_ShutdownStaticModelCachev_30
+_Z26R_ShutdownStaticModelCachev_10:
 	add esp, 0x1c
 	pop ebx
 	pop esi
@@ -1801,7 +1800,7 @@ R_ShutdownStaticModelCache_10:
 
 
 ;R_SkinCachedStaticModelCmd(SkinCachedStaticModelCmd*)
-R_SkinCachedStaticModelCmd:
+_Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1974,7 +1973,7 @@ R_SkinCachedStaticModelCmd:
 	mov [esp+0x4], eax
 	mov eax, [ebx+0x38]
 	mov [esp], eax
-	call XModelGetSurfCount
+	call _Z18XModelGetSurfCountPK6XModeli
 	mov [ebp-0x128], eax
 	mov ecx, [ebp-0x12c]
 	movzx eax, word [ecx+0x4]
@@ -1983,17 +1982,17 @@ R_SkinCachedStaticModelCmd:
 	mov [esp+0x4], eax
 	mov eax, [ebx+0x38]
 	mov [esp], eax
-	call XModelGetSurfaces
+	call _Z17XModelGetSurfacesPK6XModelPP8XSurfacei
 	mov edi, [ebp-0x128]
 	test edi, edi
-	jnz R_SkinCachedStaticModelCmd_10
+	jnz _Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_10
 	add esp, 0x14c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-R_SkinCachedStaticModelCmd_10:
+_Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_10:
 	movss xmm0, dword [ebp-0xac]
 	movss [ebp-0x114], xmm0
 	movss xmm0, dword [ebp-0x9c]
@@ -2020,7 +2019,7 @@ R_SkinCachedStaticModelCmd_10:
 	movss [ebp-0xe8], xmm0
 	mov dword [ebp-0x124], 0x0
 	mov dword [ebp-0xbc], 0x0
-R_SkinCachedStaticModelCmd_50:
+_Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_50:
 	mov edx, [ebp-0xbc]
 	add edx, [ebp-0x20]
 	movzx eax, word [edx+0xa]
@@ -2036,17 +2035,17 @@ R_SkinCachedStaticModelCmd_50:
 	mov ecx, [ebp-0x12c]
 	movzx eax, word [ecx+0x6]
 	mov [esp], eax
-	call R_GetPackedStaticModelLightingCoords
+	call _Z36R_GetPackedStaticModelLightingCoordsjP20PackedLightingCoords
 	test bx, bx
-	jz R_SkinCachedStaticModelCmd_20
+	jz _Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_20
 	mov [ebp-0xc0], edi
 	mov edi, esi
 	mov dword [ebp-0x118], 0x0
 	mov eax, [ebp-0xc0]
-	jmp R_SkinCachedStaticModelCmd_30
-R_SkinCachedStaticModelCmd_40:
+	jmp _Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_30
+_Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_40:
 	mov eax, edx
-R_SkinCachedStaticModelCmd_30:
+_Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_30:
 	movss xmm0, dword [ebp-0x114]
 	mulss xmm0, [edi]
 	movss xmm1, dword [ebp-0x110]
@@ -2118,7 +2117,7 @@ R_SkinCachedStaticModelCmd_30:
 	imul esi, [ebp-0xe4]
 	lea edx, [edx+esi+0x3fc00000]
 	shr edx, 0x7
-	and edx, bg_itemlist+0x1c60
+	and edx, 0xff0000
 	and ecx, 0xff00ffff
 	or ecx, edx
 	and ecx, 0xffffff
@@ -2172,7 +2171,7 @@ R_SkinCachedStaticModelCmd_30:
 	imul esi, [ebp-0xe4]
 	lea edx, [edx+esi+0x3fc00000]
 	shr edx, 0x7
-	and edx, bg_itemlist+0x1c60
+	and edx, 0xff0000
 	and ecx, 0xff00ffff
 	or ecx, edx
 	and ecx, 0xffffff
@@ -2194,13 +2193,13 @@ R_SkinCachedStaticModelCmd_30:
 	add edi, 0x20
 	mov ecx, [ebp-0x118]
 	cmp [ebp-0x11c], ecx
-	ja R_SkinCachedStaticModelCmd_40
-R_SkinCachedStaticModelCmd_20:
+	ja _Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_40
+_Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_20:
 	add dword [ebp-0x124], 0x1
 	add dword [ebp-0xbc], 0x38
 	mov eax, [ebp-0x124]
 	cmp [ebp-0x128], eax
-	jnz R_SkinCachedStaticModelCmd_50
+	jnz _Z26R_SkinCachedStaticModelCmdP24SkinCachedStaticModelCmd_50
 	add esp, 0x14c
 	pop ebx
 	pop esi
@@ -2211,7 +2210,7 @@ R_SkinCachedStaticModelCmd_20:
 
 
 ;R_ClearAllStaticModelCacheRefs()
-R_ClearAllStaticModelCacheRefs:
+_Z30R_ClearAllStaticModelCacheRefsv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2221,35 +2220,35 @@ R_ClearAllStaticModelCacheRefs:
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	test eax, eax
-	jz R_ClearAllStaticModelCacheRefs_10
+	jz _Z30R_ClearAllStaticModelCacheRefsv_10
 	mov eax, [eax+0x244]
 	mov [ebp-0x10], eax
 	test eax, eax
-	jz R_ClearAllStaticModelCacheRefs_10
+	jz _Z30R_ClearAllStaticModelCacheRefsv_10
 	xor edi, edi
 	xor esi, esi
-R_ClearAllStaticModelCacheRefs_40:
+_Z30R_ClearAllStaticModelCacheRefsv_40:
 	mov edx, rgp
 	mov eax, [edx+0x20a0]
 	mov edx, esi
 	add edx, [eax+0x29c]
 	mov ebx, 0x4
-R_ClearAllStaticModelCacheRefs_30:
+_Z30R_ClearAllStaticModelCacheRefsv_30:
 	movzx eax, word [edx+0x3c]
 	movzx ecx, ax
 	test ax, ax
-	jz R_ClearAllStaticModelCacheRefs_20
+	jz _Z30R_ClearAllStaticModelCacheRefsv_20
 	mov word [ecx*8+s_cache+0x20ffe], 0xffff
 	mov word [edx+0x3c], 0x0
-R_ClearAllStaticModelCacheRefs_20:
+_Z30R_ClearAllStaticModelCacheRefsv_20:
 	add edx, 0x2
 	sub ebx, 0x1
-	jnz R_ClearAllStaticModelCacheRefs_30
+	jnz _Z30R_ClearAllStaticModelCacheRefsv_30
 	add edi, 0x1
 	add esi, 0x4c
 	cmp [ebp-0x10], edi
-	jnz R_ClearAllStaticModelCacheRefs_40
-R_ClearAllStaticModelCacheRefs_10:
+	jnz _Z30R_ClearAllStaticModelCacheRefsv_40
+_Z30R_ClearAllStaticModelCacheRefsv_10:
 	add esp, 0x4
 	pop ebx
 	pop esi
@@ -2296,7 +2295,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of r_staticmodelcache:
@@ -2333,7 +2332,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x20
+g_fltMin: resb 0x10
 s_cache: resb 0x410e0
 
 

@@ -1,66 +1,66 @@
 ;Imports of fx_draw:
 	extern fx_cull_elem_draw
-	extern FX_CullSphere
-	extern FX_GetVelocityAtTime
+	extern _Z13FX_CullSpherePK8FxCamerajPKff
+	extern _Z20FX_GetVelocityAtTimePK9FxElemDefiffPK13orientation_tPKfPf
 	extern fx_drawClouds
 	extern fx_randomTable
-	extern InterlockedIncrement
-	extern R_AddParticleCloudToScene
-	extern FX_GetElemAxis
-	extern AxisToQuat
-	extern R_FilterXModelIntoScene
-	extern Sys_EnterCriticalSection
-	extern Phys_ObjGetInterpolatedState
-	extern Sys_LeaveCriticalSection
-	extern R_AddOmniLightToScene
-	extern R_AddSpotLightToScene
+	extern iInterlockedIncrement
+	extern _Z25R_AddParticleCloudToSceneP8Material
+	extern _Z14FX_GetElemAxisPK9FxElemDefiPK13orientation_tfPA3_f
+	extern _Z10AxisToQuatPA3_KfPf
+	extern _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt
+	extern _Z24Sys_EnterCriticalSection15CriticalSection
+	extern _Z28Phys_ObjGetInterpolatedState9PhysWorldiPfS0_
+	extern _Z24Sys_LeaveCriticalSection15CriticalSection
+	extern _Z21R_AddOmniLightToScenePKfffff
+	extern _Z21R_AddSpotLightToScenePKfS0_ffff
 	extern sinf
 	extern cosf
-	extern R_ReserveCodeMeshVerts
-	extern R_ReserveCodeMeshIndices
-	extern R_GetCodeMeshVerts
-	extern R_AddCodeMeshDrawSurf
-	extern FX_RunGarbageCollection
-	extern FX_GetOrientation
-	extern FX_OrientationPosToWorldPos
+	extern _Z22R_ReserveCodeMeshVertsiPt
+	extern _Z24R_ReserveCodeMeshIndicesiPP16r_double_index_t
+	extern _Z18R_GetCodeMeshVertst
+	extern _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
+	extern _Z23FX_RunGarbageCollectionP8FxSystem
+	extern _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t
+	extern _Z27FX_OrientationPosToWorldPosPK13orientation_tPKfPf
 	extern floorf
-	extern FX_AddVisBlocker
-	extern R_BeginCodeMeshVerts
-	extern FX_SpriteGenerateVerts
-	extern FX_Beam_GenerateVerts
-	extern FX_PostLight_GenerateVerts
+	extern _Z16FX_AddVisBlockerP8FxSystemPKfff
+	extern _Z20R_BeginCodeMeshVertsv
+	extern _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd
+	extern _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd
+	extern _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem
 	extern fx_enable
-	extern R_EndCodeMeshVerts
-	extern FX_ToggleVisBlockerFrame
+	extern _Z18R_EndCodeMeshVertsv
+	extern _Z24FX_ToggleVisBlockerFrameP8FxSystemS0_
 	extern fx_draw
-	extern FX_GetSystem
-	extern FX_Beam_GetInfo
-	extern FX_PostLight_GetInfo
-	extern FX_SpriteGetInfo
-	extern R_GetLocalClientNum
+	extern _Z12FX_GetSystemi
+	extern _Z15FX_Beam_GetInfov
+	extern _Z20FX_PostLight_GetInfov
+	extern _Z16FX_SpriteGetInfov
+	extern _Z19R_GetLocalClientNumv
 	extern cgArray
-	extern AxisCopy
+	extern _Z8AxisCopyPA3_KfPA3_f
 
 ;Exports of fx_draw:
 	global _GLOBAL__I__Z19FX_EvaluateVisAlphaP20FxElemPreVisualStateP17FxElemVisualState
 	global s_drawElemHandler
-	global FX_DrawElem_BillboardSprite
-	global FX_DrawElem_OrientedSprite
-	global FX_DrawElem_Tail
-	global FX_DrawElem_Cloud
-	global FX_DrawElem_Model
-	global FX_DrawElem_Light
-	global FX_DrawElem_SpotLight
+	global _Z27FX_DrawElem_BillboardSpriteP11FxDrawState
+	global _Z26FX_DrawElem_OrientedSpriteP11FxDrawState
+	global _Z16FX_DrawElem_TailP11FxDrawState
+	global _Z17FX_DrawElem_CloudP11FxDrawState
+	global _Z17FX_DrawElem_ModelP11FxDrawState
+	global _Z17FX_DrawElem_LightP11FxDrawState
+	global _Z21FX_DrawElem_SpotLightP11FxDrawState
 	global _ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping
-	global FX_GenTrail_VertsForSegment
-	global FX_GenSpriteVerts
-	global FX_DrawSpotLight
-	global FX_GenerateVerts
-	global FX_DrawSpriteElems
-	global FX_SetupVisualState
-	global FX_DrawNonSpriteElems
-	global FX_EvaluateVisualState
-	global FX_FillGenerateVertsCmd
+	global _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex
+	global _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2_
+	global _Z16FX_DrawSpotLightP8FxSystem
+	global _Z16FX_GenerateVertsP18FxGenerateVertsCmd
+	global _Z18FX_DrawSpriteElemsP8FxSystemi
+	global _Z19FX_SetupVisualStatePK9FxElemDefPK8FxEffectifP20FxElemPreVisualState
+	global _Z21FX_DrawNonSpriteElemsP8FxSystem
+	global _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState
+	global _Z23FX_FillGenerateVertsCmdiP18FxGenerateVertsCmd
 
 
 SECTION .text
@@ -73,11 +73,11 @@ _GLOBAL__I__Z19FX_EvaluateVisAlphaP20FxElemPreVisualStateP17FxElemVisualState:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;FX_DrawElem_BillboardSprite(FxDrawState*)
-FX_DrawElem_BillboardSprite:
+_Z27FX_DrawElem_BillboardSpriteP11FxDrawState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -86,13 +86,13 @@ FX_DrawElem_BillboardSprite:
 	mov eax, fx_cull_elem_draw
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_DrawElem_BillboardSprite_10
+	jz _Z27FX_DrawElem_BillboardSpriteP11FxDrawState_10
 	mov eax, [ebx+0xc]
 	test byte [eax+0x1], 0x4
-	jz FX_DrawElem_BillboardSprite_20
+	jz _Z27FX_DrawElem_BillboardSpriteP11FxDrawState_20
 	mov ecx, 0x5
 	mov edx, [ebx+0x40]
-FX_DrawElem_BillboardSprite_40:
+_Z27FX_DrawElem_BillboardSpriteP11FxDrawState_40:
 	movss xmm1, dword [ebx+0x7c]
 	movss xmm3, dword [ebx+0x78]
 	movaps xmm2, xmm3
@@ -107,10 +107,10 @@ FX_DrawElem_BillboardSprite_40:
 	mov [esp+0x8], eax
 	mov [esp+0x4], ecx
 	mov [esp], edx
-	call FX_CullSphere
+	call _Z13FX_CullSpherePK8FxCamerajPKff
 	test al, al
-	jnz FX_DrawElem_BillboardSprite_30
-FX_DrawElem_BillboardSprite_10:
+	jnz _Z27FX_DrawElem_BillboardSpriteP11FxDrawState_30
+_Z27FX_DrawElem_BillboardSpriteP11FxDrawState_10:
 	mov eax, [ebx+0x40]
 	lea edx, [eax+0x70]
 	movss xmm1, dword [_data16_80000000]
@@ -145,21 +145,21 @@ FX_DrawElem_BillboardSprite_10:
 	lea eax, [ebp-0x20]
 	mov [esp], eax
 	mov eax, ebx
-	call FX_GenSpriteVerts
-FX_DrawElem_BillboardSprite_30:
+	call _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2_
+_Z27FX_DrawElem_BillboardSpriteP11FxDrawState_30:
 	add esp, 0x44
 	pop ebx
 	pop ebp
 	ret
-FX_DrawElem_BillboardSprite_20:
+_Z27FX_DrawElem_BillboardSpriteP11FxDrawState_20:
 	mov edx, [ebx+0x40]
 	mov ecx, [edx+0x94]
-	jmp FX_DrawElem_BillboardSprite_40
+	jmp _Z27FX_DrawElem_BillboardSpriteP11FxDrawState_40
 	nop
 
 
 ;FX_DrawElem_OrientedSprite(FxDrawState*)
-FX_DrawElem_OrientedSprite:
+_Z26FX_DrawElem_OrientedSpriteP11FxDrawState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -168,13 +168,13 @@ FX_DrawElem_OrientedSprite:
 	mov eax, fx_cull_elem_draw
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_DrawElem_OrientedSprite_10
+	jz _Z26FX_DrawElem_OrientedSpriteP11FxDrawState_10
 	mov eax, [ebx+0xc]
 	test byte [eax+0x1], 0x4
-	jz FX_DrawElem_OrientedSprite_20
+	jz _Z26FX_DrawElem_OrientedSpriteP11FxDrawState_20
 	mov ecx, 0x5
 	mov edx, [ebx+0x40]
-FX_DrawElem_OrientedSprite_30:
+_Z26FX_DrawElem_OrientedSpriteP11FxDrawState_30:
 	movss xmm1, dword [ebx+0x7c]
 	movss xmm3, dword [ebx+0x78]
 	movaps xmm2, xmm3
@@ -189,14 +189,14 @@ FX_DrawElem_OrientedSprite_30:
 	mov [esp+0x8], eax
 	mov [esp+0x4], ecx
 	mov [esp], edx
-	call FX_CullSphere
+	call _Z13FX_CullSpherePK8FxCamerajPKff
 	test al, al
-	jz FX_DrawElem_OrientedSprite_10
+	jz _Z26FX_DrawElem_OrientedSpriteP11FxDrawState_10
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-FX_DrawElem_OrientedSprite_10:
+_Z26FX_DrawElem_OrientedSpriteP11FxDrawState_10:
 	lea ecx, [ebx+0x34]
 	lea edx, [ebx+0x28]
 	lea eax, [ebx+0x1c]
@@ -205,16 +205,16 @@ FX_DrawElem_OrientedSprite_10:
 	add esp, 0x14
 	pop ebx
 	pop ebp
-	jmp FX_GenSpriteVerts
-FX_DrawElem_OrientedSprite_20:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2_
+_Z26FX_DrawElem_OrientedSpriteP11FxDrawState_20:
 	mov edx, [ebx+0x40]
 	mov ecx, [edx+0x94]
-	jmp FX_DrawElem_OrientedSprite_30
+	jmp _Z26FX_DrawElem_OrientedSpriteP11FxDrawState_30
 	nop
 
 
 ;FX_DrawElem_Tail(FxDrawState*)
-FX_DrawElem_Tail:
+_Z16FX_DrawElem_TailP11FxDrawState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -237,7 +237,7 @@ FX_DrawElem_Tail:
 	mov [esp+0x4], eax
 	mov eax, [ebx+0xc]
 	mov [esp], eax
-	call FX_GetVelocityAtTime
+	call _Z20FX_GetVelocityAtTimePK9FxElemDefiffPK13orientation_tPKfPf
 	movss xmm3, dword [ebx+0x60]
 	lea edx, [ebx+0x64]
 	movss xmm1, dword [ebx+0x64]
@@ -255,9 +255,9 @@ FX_DrawElem_Tail:
 	xorps xmm0, xmm7
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jb FX_DrawElem_Tail_10
+	jb _Z16FX_DrawElem_TailP11FxDrawState_10
 	movss xmm1, dword [_float_1_00000000]
-FX_DrawElem_Tail_90:
+_Z16FX_DrawElem_TailP11FxDrawState_90:
 	mulss xmm3, xmm1
 	movss [esi], xmm3
 	movaps xmm0, xmm1
@@ -268,13 +268,13 @@ FX_DrawElem_Tail_90:
 	mov eax, fx_cull_elem_draw
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_DrawElem_Tail_20
+	jz _Z16FX_DrawElem_TailP11FxDrawState_20
 	mov eax, [ebx+0xc]
 	test byte [eax+0x1], 0x4
-	jz FX_DrawElem_Tail_30
+	jz _Z16FX_DrawElem_TailP11FxDrawState_30
 	mov edi, 0x5
 	mov edx, [ebx+0x40]
-FX_DrawElem_Tail_80:
+_Z16FX_DrawElem_TailP11FxDrawState_80:
 	movss xmm0, dword [_float__2_00000000]
 	mulss xmm0, [ebx+0x7c]
 	lea eax, [ebx+0x54]
@@ -297,12 +297,12 @@ FX_DrawElem_Tail_80:
 	addss xmm4, xmm1
 	movss xmm0, dword [ebx+0x78]
 	test edi, edi
-	jz FX_DrawElem_Tail_20
+	jz _Z16FX_DrawElem_TailP11FxDrawState_20
 	xorps xmm0, xmm7
 	movss [ebp-0x3c], xmm0
 	xor ecx, ecx
 	lea eax, [edx+0x10]
-FX_DrawElem_Tail_60:
+_Z16FX_DrawElem_TailP11FxDrawState_60:
 	movss xmm2, dword [eax]
 	movss xmm3, dword [eax+0x4]
 	movss xmm5, dword [eax+0x8]
@@ -317,7 +317,7 @@ FX_DrawElem_Tail_60:
 	addss xmm0, xmm1
 	subss xmm0, xmm6
 	ucomiss xmm0, [ebp-0x3c]
-	ja FX_DrawElem_Tail_40
+	ja _Z16FX_DrawElem_TailP11FxDrawState_40
 	mulss xmm2, [ebp-0x40]
 	mulss xmm3, [ebp-0x44]
 	addss xmm2, xmm3
@@ -325,14 +325,14 @@ FX_DrawElem_Tail_60:
 	addss xmm2, xmm5
 	subss xmm2, xmm6
 	ucomiss xmm2, [ebp-0x3c]
-	jbe FX_DrawElem_Tail_50
-FX_DrawElem_Tail_40:
+	jbe _Z16FX_DrawElem_TailP11FxDrawState_50
+_Z16FX_DrawElem_TailP11FxDrawState_40:
 	add ecx, 0x1
 	add eax, 0x10
 	add edx, 0x10
 	cmp edi, ecx
-	jnz FX_DrawElem_Tail_60
-FX_DrawElem_Tail_20:
+	jnz _Z16FX_DrawElem_TailP11FxDrawState_60
+_Z16FX_DrawElem_TailP11FxDrawState_20:
 	movss xmm1, dword [ebx+0x7c]
 	xorps xmm1, xmm7
 	lea eax, [ebx+0x54]
@@ -382,9 +382,9 @@ FX_DrawElem_Tail_20:
 	xorps xmm0, xmm7
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jb FX_DrawElem_Tail_70
+	jb _Z16FX_DrawElem_TailP11FxDrawState_70
 	movss xmm0, dword [_float_1_00000000]
-FX_DrawElem_Tail_100:
+_Z16FX_DrawElem_TailP11FxDrawState_100:
 	movaps xmm3, xmm0
 	mulss xmm3, xmm5
 	movss [ebp-0x24], xmm3
@@ -413,31 +413,31 @@ FX_DrawElem_Tail_100:
 	mov [esp], eax
 	mov ecx, esi
 	mov eax, ebx
-	call FX_GenSpriteVerts
-FX_DrawElem_Tail_50:
+	call _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2_
+_Z16FX_DrawElem_TailP11FxDrawState_50:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_DrawElem_Tail_30:
+_Z16FX_DrawElem_TailP11FxDrawState_30:
 	mov edx, [ebx+0x40]
 	mov edi, [edx+0x94]
-	jmp FX_DrawElem_Tail_80
-FX_DrawElem_Tail_10:
+	jmp _Z16FX_DrawElem_TailP11FxDrawState_80
+_Z16FX_DrawElem_TailP11FxDrawState_10:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm1
 	movaps xmm1, xmm0
-	jmp FX_DrawElem_Tail_90
-FX_DrawElem_Tail_70:
+	jmp _Z16FX_DrawElem_TailP11FxDrawState_90
+_Z16FX_DrawElem_TailP11FxDrawState_70:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm1
-	jmp FX_DrawElem_Tail_100
+	jmp _Z16FX_DrawElem_TailP11FxDrawState_100
 
 
 ;FX_DrawElem_Cloud(FxDrawState*)
-FX_DrawElem_Cloud:
+_Z17FX_DrawElem_CloudP11FxDrawState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -448,15 +448,15 @@ FX_DrawElem_Cloud:
 	mov eax, fx_drawClouds
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz FX_DrawElem_Cloud_10
-FX_DrawElem_Cloud_40:
+	jnz _Z17FX_DrawElem_CloudP11FxDrawState_10
+_Z17FX_DrawElem_CloudP11FxDrawState_40:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_DrawElem_Cloud_10:
+_Z17FX_DrawElem_CloudP11FxDrawState_10:
 	lea eax, [edi+0x60]
 	mov [ebp-0x4c], eax
 	mov edx, [edi+0x8]
@@ -475,7 +475,7 @@ FX_DrawElem_Cloud_10:
 	mov [esp+0x8], ecx
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call FX_GetVelocityAtTime
+	call _Z20FX_GetVelocityAtTimePK9FxElemDefiffPK13orientation_tPKfPf
 	movss xmm0, dword [edi+0x60]
 	lea edx, [edi+0x64]
 	movss xmm1, dword [edi+0x64]
@@ -491,9 +491,9 @@ FX_DrawElem_Cloud_10:
 	xorps xmm0, [_data16_80000000]
 	pxor xmm4, xmm4
 	ucomiss xmm0, xmm4
-	jb FX_DrawElem_Cloud_20
+	jb _Z17FX_DrawElem_CloudP11FxDrawState_20
 	movss xmm1, dword [_float_1_00000000]
-FX_DrawElem_Cloud_120:
+_Z17FX_DrawElem_CloudP11FxDrawState_120:
 	mov ecx, [ebp-0x4c]
 	movss xmm0, dword [ecx]
 	mulss xmm0, xmm1
@@ -517,19 +517,19 @@ FX_DrawElem_Cloud_120:
 	addss xmm1, xmm0
 	movss [edi+0x80], xmm1
 	ucomiss xmm1, xmm4
-	jp FX_DrawElem_Cloud_30
-	jz FX_DrawElem_Cloud_40
-FX_DrawElem_Cloud_30:
+	jp _Z17FX_DrawElem_CloudP11FxDrawState_30
+	jz _Z17FX_DrawElem_CloudP11FxDrawState_40
+_Z17FX_DrawElem_CloudP11FxDrawState_30:
 	mov eax, fx_cull_elem_draw
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_DrawElem_Cloud_50
+	jz _Z17FX_DrawElem_CloudP11FxDrawState_50
 	mov eax, [edi+0xc]
 	test byte [eax+0x1], 0x4
-	jz FX_DrawElem_Cloud_60
+	jz _Z17FX_DrawElem_CloudP11FxDrawState_60
 	mov ecx, 0x5
 	mov edx, [edi+0x40]
-FX_DrawElem_Cloud_130:
+_Z17FX_DrawElem_CloudP11FxDrawState_130:
 	movss xmm1, dword [edi+0x7c]
 	movss xmm3, dword [edi+0x78]
 	movaps xmm2, xmm3
@@ -545,19 +545,19 @@ FX_DrawElem_Cloud_130:
 	mov [esp+0x8], eax
 	mov [esp+0x4], ecx
 	mov [esp], edx
-	call FX_CullSphere
+	call _Z13FX_CullSpherePK8FxCamerajPKff
 	test al, al
-	jnz FX_DrawElem_Cloud_40
-FX_DrawElem_Cloud_50:
+	jnz _Z17FX_DrawElem_CloudP11FxDrawState_40
+_Z17FX_DrawElem_CloudP11FxDrawState_50:
 	mov eax, [edi]
 	add eax, 0x1a0
 	mov [esp], eax
-	call InterlockedIncrement
+	call iInterlockedIncrement
 	mov eax, [edi+0x44]
 	mov ecx, [edi+0xc]
 	movzx edx, byte [ecx+0xb1]
 	cmp dl, 0x1
-	jz FX_DrawElem_Cloud_70
+	jz _Z17FX_DrawElem_CloudP11FxDrawState_70
 	lea eax, [eax*4+0x54]
 	add eax, fx_randomTable
 	movzx edx, dl
@@ -567,19 +567,19 @@ FX_DrawElem_Cloud_50:
 	shl edx, 0x2
 	add edx, [ecx+0xbc]
 	mov eax, [edx]
-FX_DrawElem_Cloud_110:
+_Z17FX_DrawElem_CloudP11FxDrawState_110:
 	mov [esp], eax
-	call R_AddParticleCloudToScene
+	call _Z25R_AddParticleCloudToSceneP8Material
 	mov esi, eax
 	test eax, eax
-	jz FX_DrawElem_Cloud_40
+	jz _Z17FX_DrawElem_CloudP11FxDrawState_40
 	lea eax, [edi+0x6c]
 	mov edx, [edi+0x48]
 	lea ecx, [edi+0x84]
 	mov [esp+0x8], eax
 	mov [esp+0x4], edx
 	mov [esp], ecx
-	call FX_EvaluateVisualState
+	call _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState
 	mov eax, [edi+0x8]
 	movss xmm2, dword [edi+0x4c]
 	movzx eax, byte [eax+0x2]
@@ -589,14 +589,14 @@ FX_DrawElem_Cloud_110:
 	movaps xmm0, xmm2
 	subss xmm0, xmm1
 	ucomiss xmm0, [_float_0_00000000]
-	jp FX_DrawElem_Cloud_80
-	jbe FX_DrawElem_Cloud_90
-FX_DrawElem_Cloud_80:
+	jp _Z17FX_DrawElem_CloudP11FxDrawState_80
+	jbe _Z17FX_DrawElem_CloudP11FxDrawState_90
+_Z17FX_DrawElem_CloudP11FxDrawState_80:
 	ucomiss xmm0, [_float_300_00000000]
-	jb FX_DrawElem_Cloud_100
+	jb _Z17FX_DrawElem_CloudP11FxDrawState_100
 	movaps xmm2, xmm1
 	addss xmm2, [_float_150_00000000]
-FX_DrawElem_Cloud_90:
+_Z17FX_DrawElem_CloudP11FxDrawState_90:
 	mov eax, [edi+0x44]
 	mov edx, [edi+0xc]
 	lea ebx, [ebp-0x3c]
@@ -606,10 +606,10 @@ FX_DrawElem_Cloud_90:
 	mov [esp+0x8], ecx
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call FX_GetElemAxis
+	call _Z14FX_GetElemAxisPK9FxElemDefiPK13orientation_tfPA3_f
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call AxisToQuat
+	call _Z10AxisToQuatPA3_KfPf
 	mov eax, [edi+0x54]
 	mov [esi+0x10], eax
 	mov eax, [edi+0x58]
@@ -639,26 +639,26 @@ FX_DrawElem_Cloud_90:
 	pop edi
 	pop ebp
 	ret
-FX_DrawElem_Cloud_70:
+_Z17FX_DrawElem_CloudP11FxDrawState_70:
 	mov eax, [ecx+0xbc]
-	jmp FX_DrawElem_Cloud_110
-FX_DrawElem_Cloud_20:
+	jmp _Z17FX_DrawElem_CloudP11FxDrawState_110
+_Z17FX_DrawElem_CloudP11FxDrawState_20:
 	movss xmm1, dword [_float_1_00000000]
 	divss xmm1, xmm2
-	jmp FX_DrawElem_Cloud_120
-FX_DrawElem_Cloud_60:
+	jmp _Z17FX_DrawElem_CloudP11FxDrawState_120
+_Z17FX_DrawElem_CloudP11FxDrawState_60:
 	mov edx, [edi+0x40]
 	mov ecx, [edx+0x94]
-	jmp FX_DrawElem_Cloud_130
-FX_DrawElem_Cloud_100:
+	jmp _Z17FX_DrawElem_CloudP11FxDrawState_130
+_Z17FX_DrawElem_CloudP11FxDrawState_100:
 	mulss xmm0, xmm0
 	mulss xmm0, [_float__0_00166667]
 	addss xmm2, xmm0
-	jmp FX_DrawElem_Cloud_90
+	jmp _Z17FX_DrawElem_CloudP11FxDrawState_90
 
 
 ;FX_DrawElem_Model(FxDrawState*)
-FX_DrawElem_Model:
+_Z17FX_DrawElem_ModelP11FxDrawState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -681,9 +681,9 @@ FX_DrawElem_Model:
 	movss [esi+0x80], xmm1
 	pxor xmm3, xmm3
 	ucomiss xmm1, xmm3
-	jp FX_DrawElem_Model_10
-	jz FX_DrawElem_Model_20
-FX_DrawElem_Model_10:
+	jp _Z17FX_DrawElem_ModelP11FxDrawState_10
+	jz _Z17FX_DrawElem_ModelP11FxDrawState_20
+_Z17FX_DrawElem_ModelP11FxDrawState_10:
 	movss xmm2, dword [esi+0x4c]
 	mov eax, [esi+0x8]
 	movzx eax, byte [eax+0x2]
@@ -693,13 +693,13 @@ FX_DrawElem_Model_10:
 	movaps xmm0, xmm2
 	subss xmm0, xmm1
 	ucomiss xmm3, xmm0
-	jae FX_DrawElem_Model_30
+	jae _Z17FX_DrawElem_ModelP11FxDrawState_30
 	ucomiss xmm0, [_float_300_00000000]
-	jae FX_DrawElem_Model_40
+	jae _Z17FX_DrawElem_ModelP11FxDrawState_40
 	mulss xmm0, xmm0
 	mulss xmm0, [_float__0_00166667]
 	addss xmm2, xmm0
-FX_DrawElem_Model_30:
+_Z17FX_DrawElem_ModelP11FxDrawState_30:
 	lea ebx, [ebp-0x5c]
 	mov [esp+0x10], ebx
 	movss [esp+0xc], xmm2
@@ -709,11 +709,11 @@ FX_DrawElem_Model_30:
 	mov [esp+0x4], eax
 	mov eax, [esi+0xc]
 	mov [esp], eax
-	call FX_GetElemAxis
+	call _Z14FX_GetElemAxisPK9FxElemDefiPK13orientation_tfPA3_f
 	lea edi, [ebp-0x38]
 	mov [esp+0x4], edi
 	mov [esp], ebx
-	call AxisToQuat
+	call _Z10AxisToQuatPA3_KfPf
 	lea edx, [esi+0x54]
 	mov eax, [esi+0x54]
 	mov [ebp-0x28], eax
@@ -725,12 +725,12 @@ FX_DrawElem_Model_30:
 	mov [ebp-0x1c], eax
 	mov ecx, [esi+0xc]
 	test byte [ecx+0x3], 0x8
-	jnz FX_DrawElem_Model_50
+	jnz _Z17FX_DrawElem_ModelP11FxDrawState_50
 	mov ebx, [esi+0x44]
 	movzx eax, byte [ecx+0xb1]
 	cmp al, 0x1
-	jz FX_DrawElem_Model_60
-FX_DrawElem_Model_70:
+	jz _Z17FX_DrawElem_ModelP11FxDrawState_60
+_Z17FX_DrawElem_ModelP11FxDrawState_70:
 	movzx eax, al
 	mov edx, fx_randomTable
 	movzx edx, word [edx+ebx*4+0x54]
@@ -738,28 +738,28 @@ FX_DrawElem_Model_70:
 	sar eax, 0x10
 	mov edx, [ecx+0xbc]
 	mov edx, [edx+eax*4]
-FX_DrawElem_Model_80:
+_Z17FX_DrawElem_ModelP11FxDrawState_80:
 	mov eax, [esi+0x8]
 	add eax, 0x24
 	mov [esp+0xc], eax
 	mov dword [esp+0x8], 0x0
 	mov [esp+0x4], edi
 	mov [esp], edx
-	call R_FilterXModelIntoScene
-FX_DrawElem_Model_20:
+	call _Z23R_FilterXModelIntoScenePK6XModelPK18GfxScaledPlacementtPt
+_Z17FX_DrawElem_ModelP11FxDrawState_20:
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_DrawElem_Model_40:
+_Z17FX_DrawElem_ModelP11FxDrawState_40:
 	movaps xmm2, xmm1
 	addss xmm2, [_float_150_00000000]
-	jmp FX_DrawElem_Model_30
-FX_DrawElem_Model_50:
+	jmp _Z17FX_DrawElem_ModelP11FxDrawState_30
+_Z17FX_DrawElem_ModelP11FxDrawState_50:
 	mov dword [esp], 0xb
-	call Sys_EnterCriticalSection
+	call _Z24Sys_EnterCriticalSection15CriticalSection
 	mov [esp+0xc], edi
 	lea eax, [ebp-0x28]
 	mov [esp+0x8], eax
@@ -767,23 +767,23 @@ FX_DrawElem_Model_50:
 	mov eax, [eax+0x18]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1
-	call Phys_ObjGetInterpolatedState
+	call _Z28Phys_ObjGetInterpolatedState9PhysWorldiPfS0_
 	mov dword [esp], 0xb
-	call Sys_LeaveCriticalSection
+	call _Z24Sys_LeaveCriticalSection15CriticalSection
 	mov ecx, [esi+0xc]
 	mov ebx, [esi+0x44]
 	movzx eax, byte [ecx+0xb1]
 	cmp al, 0x1
-	jnz FX_DrawElem_Model_70
-FX_DrawElem_Model_60:
+	jnz _Z17FX_DrawElem_ModelP11FxDrawState_70
+_Z17FX_DrawElem_ModelP11FxDrawState_60:
 	mov edx, [ecx+0xbc]
-	jmp FX_DrawElem_Model_80
+	jmp _Z17FX_DrawElem_ModelP11FxDrawState_80
 	nop
 	add [eax], al
 
 
 ;FX_DrawElem_Light(FxDrawState*)
-FX_DrawElem_Light:
+_Z17FX_DrawElem_LightP11FxDrawState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -792,30 +792,30 @@ FX_DrawElem_Light:
 	mov eax, fx_cull_elem_draw
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_DrawElem_Light_10
+	jz _Z17FX_DrawElem_LightP11FxDrawState_10
 	mov eax, [ebx+0xc]
 	test byte [eax+0x1], 0x4
-	jz FX_DrawElem_Light_20
+	jz _Z17FX_DrawElem_LightP11FxDrawState_20
 	mov ecx, 0x5
 	mov edx, [ebx+0x40]
-FX_DrawElem_Light_40:
+_Z17FX_DrawElem_LightP11FxDrawState_40:
 	mov eax, [ebx+0x78]
 	mov [esp+0xc], eax
 	lea eax, [ebx+0x54]
 	mov [esp+0x8], eax
 	mov [esp+0x4], ecx
 	mov [esp], edx
-	call FX_CullSphere
+	call _Z13FX_CullSpherePK8FxCamerajPKff
 	test al, al
-	jnz FX_DrawElem_Light_30
-FX_DrawElem_Light_10:
+	jnz _Z17FX_DrawElem_LightP11FxDrawState_30
+_Z17FX_DrawElem_LightP11FxDrawState_10:
 	lea eax, [ebx+0x6c]
 	mov [esp+0x8], eax
 	mov eax, [ebx+0x48]
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x84]
 	mov [esp], eax
-	call FX_EvaluateVisualState
+	call _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState
 	movzx eax, byte [ebx+0x6c]
 	cvtsi2ss xmm0, eax
 	movss xmm1, dword [_float_0_00392157]
@@ -833,20 +833,20 @@ FX_DrawElem_Light_10:
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x54]
 	mov [esp], eax
-	call R_AddOmniLightToScene
-FX_DrawElem_Light_30:
+	call _Z21R_AddOmniLightToScenePKfffff
+_Z17FX_DrawElem_LightP11FxDrawState_30:
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-FX_DrawElem_Light_20:
+_Z17FX_DrawElem_LightP11FxDrawState_20:
 	mov edx, [ebx+0x40]
 	mov ecx, [edx+0x94]
-	jmp FX_DrawElem_Light_40
+	jmp _Z17FX_DrawElem_LightP11FxDrawState_40
 
 
 ;FX_DrawElem_SpotLight(FxDrawState*)
-FX_DrawElem_SpotLight:
+_Z21FX_DrawElem_SpotLightP11FxDrawState:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -855,30 +855,30 @@ FX_DrawElem_SpotLight:
 	mov eax, fx_cull_elem_draw
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_DrawElem_SpotLight_10
+	jz _Z21FX_DrawElem_SpotLightP11FxDrawState_10
 	mov eax, [ebx+0xc]
 	test byte [eax+0x1], 0x4
-	jz FX_DrawElem_SpotLight_20
+	jz _Z21FX_DrawElem_SpotLightP11FxDrawState_20
 	mov ecx, 0x5
 	mov edx, [ebx+0x40]
-FX_DrawElem_SpotLight_40:
+_Z21FX_DrawElem_SpotLightP11FxDrawState_40:
 	mov eax, [ebx+0x78]
 	mov [esp+0xc], eax
 	lea eax, [ebx+0x54]
 	mov [esp+0x8], eax
 	mov [esp+0x4], ecx
 	mov [esp], edx
-	call FX_CullSphere
+	call _Z13FX_CullSpherePK8FxCamerajPKff
 	test al, al
-	jnz FX_DrawElem_SpotLight_30
-FX_DrawElem_SpotLight_10:
+	jnz _Z21FX_DrawElem_SpotLightP11FxDrawState_30
+_Z21FX_DrawElem_SpotLightP11FxDrawState_10:
 	lea eax, [ebx+0x6c]
 	mov [esp+0x8], eax
 	mov eax, [ebx+0x48]
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x84]
 	mov [esp], eax
-	call FX_EvaluateVisualState
+	call _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState
 	movzx eax, byte [ebx+0x6c]
 	cvtsi2ss xmm0, eax
 	movss xmm1, dword [_float_0_00392157]
@@ -898,31 +898,31 @@ FX_DrawElem_SpotLight_10:
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x54]
 	mov [esp], eax
-	call R_AddSpotLightToScene
-FX_DrawElem_SpotLight_30:
+	call _Z21R_AddSpotLightToScenePKfS0_ffff
+_Z21FX_DrawElem_SpotLightP11FxDrawState_30:
 	add esp, 0x24
 	pop ebx
 	pop ebp
 	ret
-FX_DrawElem_SpotLight_20:
+_Z21FX_DrawElem_SpotLightP11FxDrawState_20:
 	mov edx, [ebx+0x40]
 	mov ecx, [edx+0x94]
-	jmp FX_DrawElem_SpotLight_40
+	jmp _Z21FX_DrawElem_SpotLightP11FxDrawState_40
 	nop
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -1192,7 +1192,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;FX_GenTrail_VertsForSegment(FxTrailSegmentDrawState const*, GfxPackedVertex*)
-FX_GenTrail_VertsForSegment:
+_Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1278,17 +1278,17 @@ FX_GenTrail_VertsForSegment:
 	mov eax, [eax+0xc]
 	mov [ebp-0x84], eax
 	test eax, eax
-	jz FX_GenTrail_VertsForSegment_10
+	jz _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_10
 	mov edx, edi
 	mov dword [ebp-0x80], 0x0
 	mov dword [ebp-0x6c], 0x0
 	add ecx, 0x4
 	mov [ebp-0x94], ecx
 	movss xmm6, dword [_float_127_50000000]
-	jmp FX_GenTrail_VertsForSegment_20
-FX_GenTrail_VertsForSegment_40:
+	jmp _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_20
+_Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_40:
 	mov eax, 0x3fff
-FX_GenTrail_VertsForSegment_60:
+_Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_60:
 	mov ebx, ecx
 	or ebx, eax
 	mov [ebp-0x1c], edi
@@ -1299,9 +1299,9 @@ FX_GenTrail_VertsForSegment_60:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenTrail_VertsForSegment_30
+	jle _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_30
 	mov eax, 0x3fff
-FX_GenTrail_VertsForSegment_80:
+_Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_80:
 	or ecx, eax
 	shl ebx, 0x10
 	lea eax, [ecx+ebx]
@@ -1366,8 +1366,8 @@ FX_GenTrail_VertsForSegment_80:
 	add dword [ebp-0x6c], 0x14
 	mov eax, [ebp-0x80]
 	cmp [ebp-0x84], eax
-	jz FX_GenTrail_VertsForSegment_10
-FX_GenTrail_VertsForSegment_20:
+	jz _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_10
+_Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_20:
 	mov eax, [ebp-0x6c]
 	mov ecx, [ebp-0x8c]
 	add eax, [ecx+0x10]
@@ -1411,35 +1411,35 @@ FX_GenTrail_VertsForSegment_20:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jg FX_GenTrail_VertsForSegment_40
+	jg _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_40
 	cmp eax, 0xffffc000
-	jg FX_GenTrail_VertsForSegment_50
+	jg _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_50
 	xor eax, eax
-	jmp FX_GenTrail_VertsForSegment_60
-FX_GenTrail_VertsForSegment_30:
+	jmp _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_60
+_Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_30:
 	cmp eax, 0xffffc000
-	jg FX_GenTrail_VertsForSegment_70
+	jg _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_70
 	xor eax, eax
-	jmp FX_GenTrail_VertsForSegment_80
-FX_GenTrail_VertsForSegment_10:
+	jmp _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_80
+_Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_10:
 	add esp, 0xcc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenTrail_VertsForSegment_50:
+_Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_50:
 	and eax, 0x3fff
-	jmp FX_GenTrail_VertsForSegment_60
-FX_GenTrail_VertsForSegment_70:
+	jmp _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_60
+_Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_70:
 	and eax, 0x3fff
-	jmp FX_GenTrail_VertsForSegment_80
+	jmp _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex_80
 	nop
 	add [eax], al
 
 
 ;FX_GenSpriteVerts(FxDrawState*, float const*, float const*, float const*)
-FX_GenSpriteVerts:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1457,7 +1457,7 @@ FX_GenSpriteVerts:
 	mov ecx, [eax+0xc]
 	movzx eax, byte [ecx+0xb1]
 	cmp al, 0x1
-	jz FX_GenSpriteVerts_10
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__10
 	movzx eax, al
 	mov edx, fx_randomTable
 	movzx edx, word [edx+esi*4+0x54]
@@ -1465,36 +1465,36 @@ FX_GenSpriteVerts:
 	sar eax, 0x10
 	mov edx, [ecx+0xbc]
 	mov esi, [edx+eax*4]
-FX_GenSpriteVerts_200:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__200:
 	mov ecx, [ebx+0x8]
 	cmp ecx, esi
-	jz FX_GenSpriteVerts_20
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__20
 	mov edx, [ebx+0x4]
 	test edx, edx
-	jnz FX_GenSpriteVerts_30
-FX_GenSpriteVerts_20:
+	jnz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__30
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__20:
 	lea eax, [ebp-0x1a]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x4
-	call R_ReserveCodeMeshVerts
+	call _Z22R_ReserveCodeMeshVertsiPt
 	test al, al
-	jnz FX_GenSpriteVerts_40
-FX_GenSpriteVerts_50:
+	jnz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__40
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__50:
 	add esp, 0x10c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenSpriteVerts_40:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__40:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x6
-	call R_ReserveCodeMeshIndices
+	call _Z24R_ReserveCodeMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_GenSpriteVerts_50
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__50
 	cmp esi, [ebx+0x8]
-	jz FX_GenSpriteVerts_60
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__60
 	mov eax, [edi+0x4]
 	mov eax, [eax]
 	mov eax, [eax]
@@ -1502,7 +1502,7 @@ FX_GenSpriteVerts_40:
 	mov [ebx+0x8], esi
 	mov eax, [ebp-0x20]
 	mov [ebx], eax
-FX_GenSpriteVerts_60:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__60:
 	add dword [ebx+0x4], 0x6
 	lea eax, [edi+0x6c]
 	mov [ebp-0x90], eax
@@ -1511,7 +1511,7 @@ FX_GenSpriteVerts_60:
 	mov [esp+0x4], eax
 	lea eax, [edi+0x84]
 	mov [esp], eax
-	call FX_EvaluateVisualState
+	call _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState
 	mov ebx, [edi+0x74]
 	mov [esp], ebx
 	call sinf
@@ -1599,37 +1599,37 @@ FX_GenSpriteVerts_60:
 	movzx eax, word [eax+0xae]
 	movsx esi, ax
 	sub ax, 0x1
-	jz FX_GenSpriteVerts_70
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__70
 	mov eax, [ebp-0x70]
 	movzx ebx, byte [eax+0xa8]
 	mov eax, ebx
 	and eax, 0x3
-	jz FX_GenSpriteVerts_80
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__80
 	sub eax, 0x1
-	jz FX_GenSpriteVerts_90
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__90
 	lea edx, [esi-0x1]
 	mov [ebp-0x3c], edx
 	mov eax, [edi+0x8]
 	movzx ecx, byte [eax+0x1]
 	and ecx, edx
-FX_GenSpriteVerts_400:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__400:
 	movzx ebx, bl
 	test bl, 0x4
-	jz FX_GenSpriteVerts_100
-FX_GenSpriteVerts_210:
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__100
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__210:
 	cvtsi2ss xmm0, esi
 	mulss xmm0, [edi+0x50]
 	cvttss2si eax, xmm0
 	add ecx, eax
-FX_GenSpriteVerts_220:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__220:
 	and bl, 0x8
-	jz FX_GenSpriteVerts_110
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__110
 	mov edx, [ebp-0x70]
 	movzx eax, byte [edx+0xab]
 	imul esi, eax
 	cmp ecx, esi
 	cmovge ecx, [ebp-0x3c]
-FX_GenSpriteVerts_110:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__110:
 	mov ebx, [ebp-0x3c]
 	and ebx, ecx
 	mov ecx, [ebp-0x70]
@@ -1661,7 +1661,7 @@ FX_GenSpriteVerts_110:
 	movss [ebp-0x44], xmm0
 	addss xmm2, [ebp-0x7c]
 	movss [ebp-0x40], xmm2
-FX_GenSpriteVerts_390:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__390:
 	movss xmm2, dword [_float_127_00000000]
 	mov eax, [ebp+0x8]
 	movss xmm0, dword [eax]
@@ -1738,7 +1738,7 @@ FX_GenSpriteVerts_390:
 	movss [ebp-0xc8], xmm5
 	movss [ebp-0xd8], xmm6
 	movss [ebp-0xe8], xmm7
-	call R_GetCodeMeshVerts
+	call _Z18R_GetCodeMeshVertst
 	mov esi, eax
 	movss xmm3, dword [ebp-0xa8]
 	movss xmm0, dword [ebp-0x54]
@@ -1768,9 +1768,9 @@ FX_GenSpriteVerts_390:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenSpriteVerts_120
+	jle _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__120
 	mov eax, 0x3fff
-FX_GenSpriteVerts_380:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__380:
 	mov ecx, edx
 	or ecx, eax
 	movss xmm1, dword [ebp-0x44]
@@ -1782,9 +1782,9 @@ FX_GenSpriteVerts_380:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenSpriteVerts_130
+	jle _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__130
 	mov eax, 0x3fff
-FX_GenSpriteVerts_360:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__360:
 	or edx, eax
 	shl ecx, 0x10
 	lea eax, [edx+ecx]
@@ -1813,9 +1813,9 @@ FX_GenSpriteVerts_360:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenSpriteVerts_140
+	jle _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__140
 	mov eax, 0x3fff
-FX_GenSpriteVerts_340:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__340:
 	mov ebx, edx
 	or ebx, eax
 	movss xmm1, dword [ebp-0x78]
@@ -1827,9 +1827,9 @@ FX_GenSpriteVerts_340:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenSpriteVerts_150
+	jle _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__150
 	mov eax, 0x3fff
-FX_GenSpriteVerts_320:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__320:
 	or edx, eax
 	shl ebx, 0x10
 	lea eax, [edx+ebx]
@@ -1861,9 +1861,9 @@ FX_GenSpriteVerts_320:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenSpriteVerts_160
+	jle _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__160
 	mov eax, 0x3fff
-FX_GenSpriteVerts_300:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__300:
 	mov ebx, edx
 	or ebx, eax
 	movss xmm1, dword [ebp-0x78]
@@ -1875,9 +1875,9 @@ FX_GenSpriteVerts_300:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenSpriteVerts_170
+	jle _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__170
 	mov eax, 0x3fff
-FX_GenSpriteVerts_280:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__280:
 	or edx, eax
 	shl ebx, 0x10
 	lea eax, [edx+ebx]
@@ -1907,9 +1907,9 @@ FX_GenSpriteVerts_280:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenSpriteVerts_180
+	jle _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__180
 	mov eax, 0x3fff
-FX_GenSpriteVerts_260:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__260:
 	mov ebx, edx
 	or ebx, eax
 	movss xmm1, dword [ebp-0x44]
@@ -1921,9 +1921,9 @@ FX_GenSpriteVerts_260:
 	lea eax, [eax+eax-0x80000000]
 	sar eax, 0xe
 	cmp eax, 0x3ffe
-	jle FX_GenSpriteVerts_190
+	jle _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__190
 	mov eax, 0x3fff
-FX_GenSpriteVerts_240:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__240:
 	or edx, eax
 	shl ebx, 0x10
 	lea eax, [edx+ebx]
@@ -1936,10 +1936,10 @@ FX_GenSpriteVerts_240:
 	pop edi
 	pop ebp
 	ret
-FX_GenSpriteVerts_10:
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__10:
 	mov esi, [ecx+0xbc]
-	jmp FX_GenSpriteVerts_200
-FX_GenSpriteVerts_30:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__200
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__30:
 	mov eax, [ebx+0xc]
 	mov [esp+0x14], eax
 	mov dword [esp+0x10], 0x0
@@ -1948,22 +1948,22 @@ FX_GenSpriteVerts_30:
 	mov eax, [ebx]
 	mov [esp+0x4], eax
 	mov [esp], ecx
-	call R_AddCodeMeshDrawSurf
+	call _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
 	mov dword [ebx+0x4], 0x0
-	jmp FX_GenSpriteVerts_20
-FX_GenSpriteVerts_80:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__20
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__80:
 	mov eax, [ebp-0x70]
 	movzx ecx, byte [eax+0xa9]
 	lea edx, [esi-0x1]
 	mov [ebp-0x3c], edx
 	movzx ebx, bl
 	test bl, 0x4
-	jnz FX_GenSpriteVerts_210
-FX_GenSpriteVerts_100:
+	jnz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__210
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__100:
 	mov eax, [ebp-0x70]
 	movzx edx, byte [eax+0xaa]
 	test dl, dl
-	jz FX_GenSpriteVerts_220
+	jz _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__220
 	cvttss2si eax, [edi+0x4c]
 	movzx edx, dl
 	imul edx, eax
@@ -1976,56 +1976,56 @@ FX_GenSpriteVerts_100:
 	sar eax, 0x1f
 	sub edx, eax
 	add ecx, edx
-	jmp FX_GenSpriteVerts_220
-FX_GenSpriteVerts_190:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__220
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__190:
 	cmp eax, 0xffffc000
-	jg FX_GenSpriteVerts_230
+	jg _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__230
 	xor eax, eax
-	jmp FX_GenSpriteVerts_240
-FX_GenSpriteVerts_180:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__240
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__180:
 	cmp eax, 0xffffc000
-	jg FX_GenSpriteVerts_250
+	jg _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__250
 	xor eax, eax
-	jmp FX_GenSpriteVerts_260
-FX_GenSpriteVerts_170:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__260
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__170:
 	cmp eax, 0xffffc000
-	jg FX_GenSpriteVerts_270
+	jg _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__270
 	xor eax, eax
-	jmp FX_GenSpriteVerts_280
-FX_GenSpriteVerts_160:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__280
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__160:
 	cmp eax, 0xffffc000
-	jg FX_GenSpriteVerts_290
+	jg _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__290
 	xor eax, eax
-	jmp FX_GenSpriteVerts_300
-FX_GenSpriteVerts_150:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__300
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__150:
 	cmp eax, 0xffffc000
-	jg FX_GenSpriteVerts_310
+	jg _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__310
 	xor eax, eax
-	jmp FX_GenSpriteVerts_320
-FX_GenSpriteVerts_140:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__320
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__140:
 	cmp eax, 0xffffc000
-	jg FX_GenSpriteVerts_330
+	jg _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__330
 	xor eax, eax
-	jmp FX_GenSpriteVerts_340
-FX_GenSpriteVerts_130:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__340
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__130:
 	cmp eax, 0xffffc000
-	jg FX_GenSpriteVerts_350
+	jg _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__350
 	xor eax, eax
-	jmp FX_GenSpriteVerts_360
-FX_GenSpriteVerts_120:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__360
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__120:
 	cmp eax, 0xffffc000
-	jg FX_GenSpriteVerts_370
+	jg _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__370
 	xor eax, eax
-	jmp FX_GenSpriteVerts_380
-FX_GenSpriteVerts_70:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__380
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__70:
 	pxor xmm0, xmm0
 	movss [ebp-0x78], xmm0
 	movss [ebp-0x7c], xmm0
 	movss xmm1, dword [_float_1_00000000]
 	movss [ebp-0x44], xmm1
 	movss [ebp-0x40], xmm1
-	jmp FX_GenSpriteVerts_390
-FX_GenSpriteVerts_90:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__390
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__90:
 	mov eax, [edi+0x44]
 	add eax, 0x16
 	mov edx, fx_randomTable
@@ -2035,35 +2035,35 @@ FX_GenSpriteVerts_90:
 	sar ecx, 0x10
 	lea eax, [esi-0x1]
 	mov [ebp-0x3c], eax
-	jmp FX_GenSpriteVerts_400
-FX_GenSpriteVerts_370:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__400
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__370:
 	and eax, 0x3fff
-	jmp FX_GenSpriteVerts_380
-FX_GenSpriteVerts_350:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__380
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__350:
 	and eax, 0x3fff
-	jmp FX_GenSpriteVerts_360
-FX_GenSpriteVerts_330:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__360
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__330:
 	and eax, 0x3fff
-	jmp FX_GenSpriteVerts_340
-FX_GenSpriteVerts_310:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__340
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__310:
 	and eax, 0x3fff
-	jmp FX_GenSpriteVerts_320
-FX_GenSpriteVerts_290:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__320
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__290:
 	and eax, 0x3fff
-	jmp FX_GenSpriteVerts_300
-FX_GenSpriteVerts_270:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__300
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__270:
 	and eax, 0x3fff
-	jmp FX_GenSpriteVerts_280
-FX_GenSpriteVerts_250:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__280
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__250:
 	and eax, 0x3fff
-	jmp FX_GenSpriteVerts_260
-FX_GenSpriteVerts_230:
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__260
+_Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__230:
 	and eax, 0x3fff
-	jmp FX_GenSpriteVerts_240
+	jmp _Z17FX_GenSpriteVertsP11FxDrawStatePKfS2_S2__240
 
 
 ;FX_DrawSpotLight(FxSystem*)
-FX_DrawSpotLight:
+_Z16FX_DrawSpotLightP8FxSystem:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2073,7 +2073,7 @@ FX_DrawSpotLight:
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x9c0]
 	test eax, eax
-	jle FX_DrawSpotLight_10
+	jle _Z16FX_DrawSpotLightP8FxSystem_10
 	mov esi, [edx+0x9d4]
 	mov ecx, edx
 	movzx edx, word [edx+0x9c4]
@@ -2095,24 +2095,24 @@ FX_DrawSpotLight:
 	add eax, edx
 	mov [ebp-0xd4], eax
 	cmp byte [eax+0xb1], 0x0
-	jnz FX_DrawSpotLight_20
-FX_DrawSpotLight_40:
+	jnz _Z16FX_DrawSpotLightP8FxSystem_20
+_Z16FX_DrawSpotLightP8FxSystem_40:
 	mov eax, [ebp+0x8]
-FX_DrawSpotLight_130:
+_Z16FX_DrawSpotLightP8FxSystem_130:
 	cmp byte [eax+0x9dd], 0x0
-	jz FX_DrawSpotLight_30
+	jz _Z16FX_DrawSpotLightP8FxSystem_30
 	mov [esp], eax
-	call FX_RunGarbageCollection
-FX_DrawSpotLight_30:
+	call _Z23FX_RunGarbageCollectionP8FxSystem
+_Z16FX_DrawSpotLightP8FxSystem_30:
 	add esp, 0x12c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_DrawSpotLight_20:
+_Z16FX_DrawSpotLightP8FxSystem_20:
 	cmp esi, [ebx+0x8]
-	jl FX_DrawSpotLight_40
+	jl _Z16FX_DrawSpotLightP8FxSystem_40
 	mov [ebp-0xb8], ebx
 	mov [ebp-0xb4], eax
 	lea ecx, [ebx+0x18]
@@ -2160,10 +2160,10 @@ FX_DrawSpotLight_20:
 	divss xmm2, xmm0
 	cvttss2si eax, xmm0
 	cmp edx, eax
-	jl FX_DrawSpotLight_50
+	jl _Z16FX_DrawSpotLightP8FxSystem_50
 	movss [ebp-0x74], xmm0
 	mov dword [ebp-0x70], 0x3f800000
-FX_DrawSpotLight_140:
+_Z16FX_DrawSpotLightP8FxSystem_140:
 	mov edx, [ebp-0xbc]
 	lea ebx, [ebp-0xb0]
 	mov [esp+0x10], ebx
@@ -2175,13 +2175,13 @@ FX_DrawSpotLight_140:
 	mov [esp+0x4], edx
 	mov eax, [ebp-0xb4]
 	mov [esp], eax
-	call FX_GetOrientation
+	call _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t
 	lea edi, [ebp-0x6c]
 	mov [esp+0x8], edi
 	mov eax, [ebp-0xd0]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call FX_OrientationPosToWorldPos
+	call _Z27FX_OrientationPosToWorldPosPK13orientation_tPKfPf
 	mov esi, [ebp-0x7c]
 	mov ebx, [ebp-0xb4]
 	movzx eax, byte [ebx+0xb3]
@@ -2222,7 +2222,7 @@ FX_DrawSpotLight_140:
 	addss xmm1, xmm0
 	movss [ebp-0x48], xmm1
 	test byte [ebx+0x3], 0x10
-	jz FX_DrawSpotLight_60
+	jz _Z16FX_DrawSpotLightP8FxSystem_60
 	movss xmm0, dword [ecx+esi*4+0x6c]
 	movaps xmm1, xmm0
 	mulss xmm1, [eax+0x28]
@@ -2232,22 +2232,22 @@ FX_DrawSpotLight_140:
 	addss xmm0, [edx+0x10]
 	mulss xmm0, [ebp-0x3c]
 	addss xmm1, xmm0
-FX_DrawSpotLight_60:
+_Z16FX_DrawSpotLightP8FxSystem_60:
 	movss [ebp-0x44], xmm1
 	test byte [ebx+0x1], 0x10
-	jnz FX_DrawSpotLight_70
-FX_DrawSpotLight_210:
+	jnz _Z16FX_DrawSpotLightP8FxSystem_70
+_Z16FX_DrawSpotLightP8FxSystem_210:
 	mov eax, [ebp-0xc0]
 	mov [ebp-0x80], eax
 	movss xmm4, dword [ebx+0x18]
 	pxor xmm3, xmm3
 	ucomiss xmm4, xmm3
-	jnz FX_DrawSpotLight_80
-	jp FX_DrawSpotLight_80
+	jnz _Z16FX_DrawSpotLightP8FxSystem_80
+	jp _Z16FX_DrawSpotLightP8FxSystem_80
 	ucomiss xmm3, [ebx+0x20]
-	jp FX_DrawSpotLight_80
-	jz FX_DrawSpotLight_90
-FX_DrawSpotLight_80:
+	jp _Z16FX_DrawSpotLightP8FxSystem_80
+	jz _Z16FX_DrawSpotLightP8FxSystem_90
+_Z16FX_DrawSpotLightP8FxSystem_80:
 	movss xmm0, dword [ebp-0x6c]
 	subss xmm0, [eax]
 	movss xmm1, dword [ebp-0x68]
@@ -2261,17 +2261,17 @@ FX_DrawSpotLight_80:
 	addss xmm0, xmm2
 	sqrtss xmm0, xmm0
 	ucomiss xmm4, xmm3
-	jnz FX_DrawSpotLight_100
-	jp FX_DrawSpotLight_100
-FX_DrawSpotLight_150:
+	jnz _Z16FX_DrawSpotLightP8FxSystem_100
+	jp _Z16FX_DrawSpotLightP8FxSystem_100
+_Z16FX_DrawSpotLightP8FxSystem_150:
 	movaps xmm4, xmm5
-FX_DrawSpotLight_170:
+_Z16FX_DrawSpotLightP8FxSystem_170:
 	ucomiss xmm3, [ebx+0x20]
-	jnz FX_DrawSpotLight_110
-	jp FX_DrawSpotLight_110
-FX_DrawSpotLight_190:
+	jnz _Z16FX_DrawSpotLightP8FxSystem_110
+	jp _Z16FX_DrawSpotLightP8FxSystem_110
+_Z16FX_DrawSpotLightP8FxSystem_190:
 	movaps xmm2, xmm5
-FX_DrawSpotLight_200:
+_Z16FX_DrawSpotLightP8FxSystem_200:
 	movaps xmm0, xmm2
 	subss xmm0, xmm4
 	movaps xmm1, xmm3
@@ -2298,52 +2298,52 @@ FX_DrawSpotLight_200:
 	movdqa [ebp-0xf8], xmm0
 	mov eax, [ebp-0xf8]
 	mov [ebp-0x24], eax
-FX_DrawSpotLight_90:
+_Z16FX_DrawSpotLightP8FxSystem_90:
 	test byte [ebx+0x1], 0x10
-	jnz FX_DrawSpotLight_120
-FX_DrawSpotLight_230:
+	jnz _Z16FX_DrawSpotLightP8FxSystem_120
+_Z16FX_DrawSpotLightP8FxSystem_230:
 	mov ecx, [ebp-0xd4]
 	movzx edx, byte [ecx+0xb0]
 	lea eax, [ebp-0xc0]
 	mov [esp], eax
 	call dword [edx*4+s_drawElemHandler]
 	mov eax, [ebp+0x8]
-	jmp FX_DrawSpotLight_130
-FX_DrawSpotLight_10:
+	jmp _Z16FX_DrawSpotLightP8FxSystem_130
+_Z16FX_DrawSpotLightP8FxSystem_10:
 	mov eax, edx
-	jmp FX_DrawSpotLight_130
-FX_DrawSpotLight_50:
+	jmp _Z16FX_DrawSpotLightP8FxSystem_130
+_Z16FX_DrawSpotLightP8FxSystem_50:
 	movss [ebp-0x74], xmm1
 	movss [ebp-0x70], xmm2
-	jmp FX_DrawSpotLight_140
-FX_DrawSpotLight_100:
+	jmp _Z16FX_DrawSpotLightP8FxSystem_140
+_Z16FX_DrawSpotLightP8FxSystem_100:
 	lea eax, [ebx+0x14]
 	movaps xmm1, xmm0
 	subss xmm1, [ebx+0x14]
 	ucomiss xmm3, xmm1
-	ja FX_DrawSpotLight_150
+	ja _Z16FX_DrawSpotLightP8FxSystem_150
 	movss xmm2, dword [eax+0x4]
 	ucomiss xmm2, xmm1
-	jbe FX_DrawSpotLight_160
+	jbe _Z16FX_DrawSpotLightP8FxSystem_160
 	divss xmm1, xmm2
 	movaps xmm4, xmm5
 	subss xmm4, xmm1
-	jmp FX_DrawSpotLight_170
-FX_DrawSpotLight_110:
+	jmp _Z16FX_DrawSpotLightP8FxSystem_170
+_Z16FX_DrawSpotLightP8FxSystem_110:
 	lea eax, [ebx+0x1c]
 	subss xmm0, [ebx+0x1c]
 	ucomiss xmm3, xmm0
-	ja FX_DrawSpotLight_180
+	ja _Z16FX_DrawSpotLightP8FxSystem_180
 	movss xmm1, dword [eax+0x4]
 	ucomiss xmm1, xmm0
-	jbe FX_DrawSpotLight_190
+	jbe _Z16FX_DrawSpotLightP8FxSystem_190
 	divss xmm0, xmm1
 	movaps xmm1, xmm5
 	subss xmm1, xmm0
 	movaps xmm2, xmm5
 	subss xmm2, xmm1
-	jmp FX_DrawSpotLight_200
-FX_DrawSpotLight_70:
+	jmp _Z16FX_DrawSpotLightP8FxSystem_200
+_Z16FX_DrawSpotLightP8FxSystem_70:
 	mov eax, [ebp-0x28]
 	movss xmm3, dword [ecx+eax*4+0x5c]
 	movaps xmm2, xmm5
@@ -2375,15 +2375,15 @@ FX_DrawSpotLight_70:
 	cvttss2si eax, [ebp-0xdc]
 	mov [ebp-0x51], al
 	movss xmm5, dword [ebp-0x118]
-	jmp FX_DrawSpotLight_210
-FX_DrawSpotLight_120:
+	jmp _Z16FX_DrawSpotLightP8FxSystem_210
+_Z16FX_DrawSpotLightP8FxSystem_120:
 	movzx eax, byte [ebp-0x51]
 	imul eax, [ebp-0x24]
 	mov edx, eax
 	shr edx, 0x8
-	js FX_DrawSpotLight_220
+	js _Z16FX_DrawSpotLightP8FxSystem_220
 	cvtsi2ss xmm0, edx
-FX_DrawSpotLight_240:
+_Z16FX_DrawSpotLightP8FxSystem_240:
 	mulss xmm0, [_float_0_00392157]
 	movss [esp+0xc], xmm0
 	mov eax, [ebp-0x48]
@@ -2391,26 +2391,26 @@ FX_DrawSpotLight_240:
 	mov [esp+0x4], edi
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call FX_AddVisBlocker
-	jmp FX_DrawSpotLight_230
-FX_DrawSpotLight_160:
+	call _Z16FX_AddVisBlockerP8FxSystemPKfff
+	jmp _Z16FX_DrawSpotLightP8FxSystem_230
+_Z16FX_DrawSpotLightP8FxSystem_160:
 	movaps xmm4, xmm3
-	jmp FX_DrawSpotLight_170
-FX_DrawSpotLight_220:
+	jmp _Z16FX_DrawSpotLightP8FxSystem_170
+_Z16FX_DrawSpotLightP8FxSystem_220:
 	shr eax, 0x9
 	and edx, 0x1
 	or eax, edx
 	cvtsi2ss xmm0, eax
 	addss xmm0, xmm0
-	jmp FX_DrawSpotLight_240
-FX_DrawSpotLight_180:
+	jmp _Z16FX_DrawSpotLightP8FxSystem_240
+_Z16FX_DrawSpotLightP8FxSystem_180:
 	movaps xmm2, xmm3
-	jmp FX_DrawSpotLight_200
+	jmp _Z16FX_DrawSpotLightP8FxSystem_200
 	nop
 
 
 ;FX_GenerateVerts(FxGenerateVertsCmd*)
-FX_GenerateVerts:
+_Z16FX_GenerateVertsP18FxGenerateVertsCmd:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2419,64 +2419,64 @@ FX_GenerateVerts:
 	sub esp, 0x1c
 	mov ebx, [ebp+0x8]
 	mov esi, [ebx]
-	call R_BeginCodeMeshVerts
+	call _Z20R_BeginCodeMeshVertsv
 	mov edi, [esi+0x9d4]
 	test edi, edi
-	js FX_GenerateVerts_10
+	js _Z16FX_GenerateVertsP18FxGenerateVertsCmd_10
 	mov [esp], ebx
-	call FX_SpriteGenerateVerts
+	call _Z22FX_SpriteGenerateVertsP18FxGenerateVertsCmd
 	mov [esp], ebx
-	call FX_Beam_GenerateVerts
+	call _Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd
 	mov [esp+0x4], esi
 	mov eax, [ebx+0x8]
 	mov [esp], eax
-	call FX_PostLight_GenerateVerts
+	call _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem
 	mov eax, fx_enable
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz FX_GenerateVerts_20
-FX_GenerateVerts_30:
-	call R_EndCodeMeshVerts
+	jnz _Z16FX_GenerateVertsP18FxGenerateVertsCmd_20
+_Z16FX_GenerateVertsP18FxGenerateVertsCmd_30:
+	call _Z18R_EndCodeMeshVertsv
 	mov eax, [ebx]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call FX_ToggleVisBlockerFrame
+	call _Z24FX_ToggleVisBlockerFrameP8FxSystemS0_
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenerateVerts_20:
+_Z16FX_GenerateVertsP18FxGenerateVertsCmd_20:
 	mov eax, fx_draw
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz FX_GenerateVerts_30
+	jz _Z16FX_GenerateVertsP18FxGenerateVertsCmd_30
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call FX_DrawSpriteElems
-	call R_EndCodeMeshVerts
+	call _Z18FX_DrawSpriteElemsP8FxSystemi
+	call _Z18R_EndCodeMeshVertsv
 	mov eax, [ebx]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call FX_ToggleVisBlockerFrame
+	call _Z24FX_ToggleVisBlockerFrameP8FxSystemS0_
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_GenerateVerts_10:
+_Z16FX_GenerateVertsP18FxGenerateVertsCmd_10:
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
-	jmp R_EndCodeMeshVerts
+	jmp _Z18R_EndCodeMeshVertsv
 
 
 ;FX_DrawSpriteElems(FxSystem*, int)
-FX_DrawSpriteElems:
+_Z18FX_DrawSpriteElemsP8FxSystemi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2496,12 +2496,12 @@ FX_DrawSpriteElems:
 	mov [ebp-0xa84], ecx
 	mov eax, [edx+0x1b4]
 	cmp eax, ecx
-	jz FX_DrawSpriteElems_10
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_10
 	mov dword [ebp-0xa7c], 0x0
 	mov ebx, fx_randomTable
 	mov [ebp-0xb18], ebx
 	mov edx, [ebp+0x8]
-FX_DrawSpriteElems_290:
+_Z18FX_DrawSpriteElemsP8FxSystemi_290:
 	mov eax, [ebp-0xa84]
 	and eax, 0x3ff
 	movzx eax, word [edx+eax*2+0x1bc]
@@ -2517,12 +2517,12 @@ FX_DrawSpriteElems_290:
 	mov [ebp-0xb4], ebx
 	movzx edx, word [edx+0x8]
 	cmp dx, 0xffff
-	jz FX_DrawSpriteElems_20
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_20
 	mov [ebp-0x158], ecx
 	mov eax, [edi]
 	mov eax, [eax+0x1c]
 	mov [ebp-0xa70], eax
-FX_DrawSpriteElems_130:
+_Z18FX_DrawSpriteElemsP8FxSystemi_130:
 	movzx edx, dx
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x174]
@@ -2535,11 +2535,11 @@ FX_DrawSpriteElems_130:
 	add eax, [ebp-0xa70]
 	mov [ebp-0xa6c], eax
 	cmp byte [eax+0xb1], 0x0
-	jz FX_DrawSpriteElems_30
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_30
 	mov ebx, [ebp-0xa74]
 	mov eax, [ebx+0x8]
 	cmp eax, [ebp-0xb4]
-	jg FX_DrawSpriteElems_40
+	jg _Z18FX_DrawSpriteElemsP8FxSystemi_40
 	mov edx, ebx
 	mov ecx, ebx
 	mov [ebp-0x150], ebx
@@ -2591,10 +2591,10 @@ FX_DrawSpriteElems_130:
 	divss xmm2, xmm0
 	cvttss2si edx, xmm0
 	cmp eax, edx
-	jl FX_DrawSpriteElems_50
+	jl _Z18FX_DrawSpriteElemsP8FxSystemi_50
 	movss [ebp-0x10c], xmm0
 	mov dword [ebp-0x108], 0x3f800000
-FX_DrawSpriteElems_450:
+_Z18FX_DrawSpriteElemsP8FxSystemi_450:
 	lea ebx, [ebp-0x148]
 	mov [esp+0x10], ebx
 	mov eax, [ebp-0x114]
@@ -2605,13 +2605,13 @@ FX_DrawSpriteElems_450:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x14c]
 	mov [esp], eax
-	call FX_GetOrientation
+	call _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t
 	lea eax, [ebp-0x104]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0xa68]
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call FX_OrientationPosToWorldPos
+	call _Z27FX_OrientationPosToWorldPosPK13orientation_tPKfPf
 	mov ebx, [ebp-0x114]
 	mov eax, [ebp-0x14c]
 	mov [ebp-0xb04], eax
@@ -2656,7 +2656,7 @@ FX_DrawSpriteElems_450:
 	movss [ebp-0xe0], xmm1
 	mov ecx, [ebp-0xb04]
 	test byte [ecx+0x3], 0x10
-	jz FX_DrawSpriteElems_60
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_60
 	mov ecx, fx_randomTable
 	movss xmm0, dword [ecx+ebx*4+0x6c]
 	movaps xmm1, xmm0
@@ -2667,24 +2667,24 @@ FX_DrawSpriteElems_450:
 	addss xmm0, [edx+0x10]
 	mulss xmm0, [ebp-0xd4]
 	addss xmm1, xmm0
-FX_DrawSpriteElems_60:
+_Z18FX_DrawSpriteElemsP8FxSystemi_60:
 	movss [ebp-0xdc], xmm1
 	mov ebx, [ebp-0xb04]
 	test byte [ebx+0x1], 0x10
-	jnz FX_DrawSpriteElems_70
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_70
 	mov ecx, ebx
-FX_DrawSpriteElems_920:
+_Z18FX_DrawSpriteElemsP8FxSystemi_920:
 	mov eax, [ebp-0x158]
 	mov [ebp-0x118], eax
 	movss xmm3, dword [ecx+0x18]
 	pxor xmm4, xmm4
 	ucomiss xmm3, xmm4
-	jnz FX_DrawSpriteElems_80
-	jp FX_DrawSpriteElems_80
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_80
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_80
 	ucomiss xmm4, [ecx+0x20]
-	jp FX_DrawSpriteElems_80
-	jz FX_DrawSpriteElems_90
-FX_DrawSpriteElems_80:
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_80
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_90
+_Z18FX_DrawSpriteElemsP8FxSystemi_80:
 	movss xmm0, dword [ebp-0x104]
 	subss xmm0, [eax]
 	movss xmm1, dword [ebp-0x100]
@@ -2698,18 +2698,18 @@ FX_DrawSpriteElems_80:
 	addss xmm0, xmm2
 	sqrtss xmm0, xmm0
 	ucomiss xmm3, xmm4
-	jnz FX_DrawSpriteElems_100
-	jp FX_DrawSpriteElems_100
-FX_DrawSpriteElems_570:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_100
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_100
+_Z18FX_DrawSpriteElemsP8FxSystemi_570:
 	movaps xmm3, xmm5
-FX_DrawSpriteElems_590:
+_Z18FX_DrawSpriteElemsP8FxSystemi_590:
 	mov eax, [ebp-0xb04]
 	ucomiss xmm4, [eax+0x20]
-	jnz FX_DrawSpriteElems_110
-	jp FX_DrawSpriteElems_110
-FX_DrawSpriteElems_550:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_110
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_110
+_Z18FX_DrawSpriteElemsP8FxSystemi_550:
 	movaps xmm2, xmm5
-FX_DrawSpriteElems_560:
+_Z18FX_DrawSpriteElemsP8FxSystemi_560:
 	movaps xmm0, xmm2
 	subss xmm0, xmm3
 	cmpss xmm4, xmm0, 0x6
@@ -2735,22 +2735,22 @@ FX_DrawSpriteElems_560:
 	movdqa [ebp-0xaa8], xmm0
 	mov eax, [ebp-0xaa8]
 	mov [ebp-0xbc], eax
-FX_DrawSpriteElems_90:
+_Z18FX_DrawSpriteElemsP8FxSystemi_90:
 	mov edx, [ebp-0xb04]
 	test byte [edx+0x1], 0x10
-	jnz FX_DrawSpriteElems_120
-FX_DrawSpriteElems_910:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_120
+_Z18FX_DrawSpriteElemsP8FxSystemi_910:
 	mov eax, [ebp-0xa6c]
 	movzx edx, byte [eax+0xb0]
 	lea eax, [ebp-0x158]
 	mov [esp], eax
 	call dword [edx*4+s_drawElemHandler]
-FX_DrawSpriteElems_30:
+_Z18FX_DrawSpriteElemsP8FxSystemi_30:
 	mov ecx, [ebp-0xa74]
-FX_DrawSpriteElems_430:
+_Z18FX_DrawSpriteElemsP8FxSystemi_430:
 	movzx edx, word [ecx+0x4]
 	cmp dx, 0xffff
-	jnz FX_DrawSpriteElems_130
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_130
 	mov eax, [ebp+0xc]
 	mov ebx, [ebp-0xa18]
 	mov [ebp-0xb08], ebx
@@ -2758,15 +2758,15 @@ FX_DrawSpriteElems_430:
 	mov [ebp-0x15c], eax
 	movzx edx, word [ebx+0xc]
 	cmp dx, 0xffff
-	jz FX_DrawSpriteElems_140
-FX_DrawSpriteElems_1010:
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_140
+_Z18FX_DrawSpriteElemsP8FxSystemi_1010:
 	mov ecx, [ebp+0x8]
 	mov [ebp-0x200], ecx
 	mov eax, [ebx]
 	mov eax, [eax+0x1c]
 	mov [ebp-0xa60], eax
 	mov ebx, ecx
-FX_DrawSpriteElems_260:
+_Z18FX_DrawSpriteElemsP8FxSystemi_260:
 	movzx edx, dx
 	mov eax, [ebx+0x174]
 	lea edx, [eax+edx*4]
@@ -2778,11 +2778,11 @@ FX_DrawSpriteElems_260:
 	add eax, [ebp-0xa60]
 	mov [ebp-0xa5c], eax
 	cmp byte [eax+0xb1], 0x0
-	jz FX_DrawSpriteElems_150
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_150
 	mov edx, [ebp-0xa64]
 	mov eax, [edx+0x8]
 	cmp eax, [ebp-0x15c]
-	jg FX_DrawSpriteElems_160
+	jg _Z18FX_DrawSpriteElemsP8FxSystemi_160
 	mov ecx, edx
 	mov [ebp-0x1f8], edx
 	mov edi, [ebp-0xa5c]
@@ -2831,10 +2831,10 @@ FX_DrawSpriteElems_260:
 	divss xmm2, xmm0
 	cvttss2si edx, xmm0
 	cmp eax, edx
-	jl FX_DrawSpriteElems_170
+	jl _Z18FX_DrawSpriteElemsP8FxSystemi_170
 	movss [ebp-0x1b4], xmm0
 	mov dword [ebp-0x1b0], 0x3f800000
-FX_DrawSpriteElems_440:
+_Z18FX_DrawSpriteElemsP8FxSystemi_440:
 	lea edx, [ebp-0x1f0]
 	mov [esp+0x10], edx
 	mov eax, [ebp-0x1bc]
@@ -2847,14 +2847,14 @@ FX_DrawSpriteElems_440:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1f4]
 	mov [esp], eax
-	call FX_GetOrientation
+	call _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t
 	lea ecx, [ebp-0x1ac]
 	mov [esp+0x8], ecx
 	mov ebx, [ebp-0xa58]
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x1f0]
 	mov [esp], eax
-	call FX_OrientationPosToWorldPos
+	call _Z27FX_OrientationPosToWorldPosPK13orientation_tPKfPf
 	mov ebx, [ebp-0x1bc]
 	mov edi, [ebp-0x1f4]
 	movzx eax, byte [edi+0xb3]
@@ -2895,7 +2895,7 @@ FX_DrawSpriteElems_440:
 	addss xmm1, xmm0
 	movss [ebp-0x188], xmm1
 	test byte [edi+0x3], 0x10
-	jz FX_DrawSpriteElems_180
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_180
 	mov ecx, [ebp-0xb18]
 	movss xmm0, dword [ecx+ebx*4+0x6c]
 	movaps xmm1, xmm0
@@ -2906,22 +2906,22 @@ FX_DrawSpriteElems_440:
 	addss xmm0, [edx+0x10]
 	mulss xmm0, [ebp-0x17c]
 	addss xmm1, xmm0
-FX_DrawSpriteElems_180:
+_Z18FX_DrawSpriteElemsP8FxSystemi_180:
 	movss [ebp-0x184], xmm1
 	test byte [edi+0x1], 0x10
-	jnz FX_DrawSpriteElems_190
-FX_DrawSpriteElems_890:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_190
+_Z18FX_DrawSpriteElemsP8FxSystemi_890:
 	mov eax, [ebp-0x200]
 	mov [ebp-0x1c0], eax
 	movss xmm3, dword [edi+0x18]
 	pxor xmm4, xmm4
 	ucomiss xmm3, xmm4
-	jnz FX_DrawSpriteElems_200
-	jp FX_DrawSpriteElems_200
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_200
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_200
 	ucomiss xmm4, [edi+0x20]
-	jp FX_DrawSpriteElems_200
-	jz FX_DrawSpriteElems_210
-FX_DrawSpriteElems_200:
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_200
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_210
+_Z18FX_DrawSpriteElemsP8FxSystemi_200:
 	movss xmm0, dword [ebp-0x1ac]
 	subss xmm0, [eax]
 	movss xmm1, dword [ebp-0x1a8]
@@ -2935,17 +2935,17 @@ FX_DrawSpriteElems_200:
 	addss xmm0, xmm2
 	sqrtss xmm0, xmm0
 	ucomiss xmm3, xmm4
-	jnz FX_DrawSpriteElems_220
-	jp FX_DrawSpriteElems_220
-FX_DrawSpriteElems_510:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_220
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_220
+_Z18FX_DrawSpriteElemsP8FxSystemi_510:
 	movaps xmm3, xmm5
-FX_DrawSpriteElems_530:
+_Z18FX_DrawSpriteElemsP8FxSystemi_530:
 	ucomiss xmm4, [edi+0x20]
-	jnz FX_DrawSpriteElems_230
-	jp FX_DrawSpriteElems_230
-FX_DrawSpriteElems_490:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_230
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_230
+_Z18FX_DrawSpriteElemsP8FxSystemi_490:
 	movaps xmm2, xmm5
-FX_DrawSpriteElems_500:
+_Z18FX_DrawSpriteElemsP8FxSystemi_500:
 	movaps xmm0, xmm2
 	subss xmm0, xmm3
 	cmpss xmm4, xmm0, 0x6
@@ -2971,50 +2971,50 @@ FX_DrawSpriteElems_500:
 	movdqa [ebp-0xac8], xmm0
 	mov eax, [ebp-0xac8]
 	mov [ebp-0x164], eax
-FX_DrawSpriteElems_210:
+_Z18FX_DrawSpriteElemsP8FxSystemi_210:
 	test byte [edi+0x1], 0x10
-	jnz FX_DrawSpriteElems_240
-FX_DrawSpriteElems_940:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_240
+_Z18FX_DrawSpriteElemsP8FxSystemi_940:
 	mov ebx, [ebp-0xa5c]
 	movzx edx, byte [ebx+0xb0]
 	lea eax, [ebp-0x200]
 	mov [esp], eax
 	call dword [edx*4+s_drawElemHandler]
 	mov eax, [ebp-0xa64]
-FX_DrawSpriteElems_420:
+_Z18FX_DrawSpriteElemsP8FxSystemi_420:
 	movzx edx, word [eax+0x4]
 	cmp dx, 0xffff
-	jz FX_DrawSpriteElems_250
-FX_DrawSpriteElems_270:
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_250
+_Z18FX_DrawSpriteElemsP8FxSystemi_270:
 	mov ebx, [ebp+0x8]
-	jmp FX_DrawSpriteElems_260
-FX_DrawSpriteElems_150:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_260
+_Z18FX_DrawSpriteElemsP8FxSystemi_150:
 	mov eax, [ebp-0xa64]
 	movzx edx, word [eax+0x4]
 	cmp dx, 0xffff
-	jnz FX_DrawSpriteElems_270
-FX_DrawSpriteElems_250:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_270
+_Z18FX_DrawSpriteElemsP8FxSystemi_250:
 	mov edx, [ebp-0xa18]
-FX_DrawSpriteElems_1020:
+_Z18FX_DrawSpriteElemsP8FxSystemi_1020:
 	cmp word [edx+0x10], 0xffff
-	jz FX_DrawSpriteElems_280
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_280
 	movzx ebx, word [ebp-0xa12]
 	mov ecx, [ebp-0xa7c]
 	mov [ebp+ecx*2-0xa00], bx
 	add ecx, 0x1
 	mov [ebp-0xa7c], ecx
-FX_DrawSpriteElems_280:
+_Z18FX_DrawSpriteElemsP8FxSystemi_280:
 	add dword [ebp-0xa84], 0x1
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x1b4]
 	cmp eax, [ebp-0xa84]
-	jnz FX_DrawSpriteElems_290
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_290
 	mov eax, [ebp-0xa7c]
 	test eax, eax
-	jle FX_DrawSpriteElems_10
+	jle _Z18FX_DrawSpriteElemsP8FxSystemi_10
 	mov dword [ebp-0xa78], 0x0
 	mov ecx, [ebp-0xa78]
-FX_DrawSpriteElems_390:
+_Z18FX_DrawSpriteElemsP8FxSystemi_390:
 	movzx edx, word [ebp+ecx*2-0xa00]
 	mov ebx, [ebp+0x8]
 	mov eax, [ebx+0x170]
@@ -3027,8 +3027,8 @@ FX_DrawSpriteElems_390:
 	mov edx, [ebp-0xb08]
 	movzx eax, word [edx+0x10]
 	cmp ax, 0xffff
-	jz FX_DrawSpriteElems_300
-FX_DrawSpriteElems_380:
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_300
+_Z18FX_DrawSpriteElemsP8FxSystemi_380:
 	movzx edx, ax
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x178]
@@ -3044,11 +3044,11 @@ FX_DrawSpriteElems_380:
 	add edi, [ecx+0x1c]
 	mov [ebp-0x1f4], edi
 	cmp byte [edi+0xb1], 0x0
-	jz FX_DrawSpriteElems_310
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_310
 	mov ebx, [ebp-0xa54]
 	movzx eax, word [ebx+0x2]
 	cmp ax, 0xffff
-	jz FX_DrawSpriteElems_320
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_320
 	mov edx, [ebp+0x8]
 	mov edx, [edx+0x17c]
 	mov [ebp-0xa34], edx
@@ -3063,8 +3063,8 @@ FX_DrawSpriteElems_380:
 	xor dword [ebp-0xa30], 0x80000000
 	mov ecx, [edi]
 	cmp ecx, 0x0
-	jz FX_DrawSpriteElems_330
-	jle FX_DrawSpriteElems_340
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_330
+	jle _Z18FX_DrawSpriteElemsP8FxSystemi_340
 	mov ebx, [ebp-0x15c]
 	mov eax, ebx
 	cdq
@@ -3075,12 +3075,12 @@ FX_DrawSpriteElems_380:
 	divss xmm0, xmm1
 	addss xmm0, [ebp-0xa30]
 	movss [ebp-0xa30], xmm0
-FX_DrawSpriteElems_470:
+_Z18FX_DrawSpriteElemsP8FxSystemi_470:
 	xor ecx, ecx
-	jmp FX_DrawSpriteElems_350
-FX_DrawSpriteElems_360:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_350
+_Z18FX_DrawSpriteElemsP8FxSystemi_360:
 	movzx esi, ax
-FX_DrawSpriteElems_350:
+_Z18FX_DrawSpriteElemsP8FxSystemi_350:
 	mov eax, [ebp-0xa34]
 	lea edx, [eax+esi*4]
 	lea eax, [ecx+0x1]
@@ -3088,7 +3088,7 @@ FX_DrawSpriteElems_350:
 	cmovle ecx, eax
 	movzx eax, word [edx+0x14]
 	cmp ax, 0xffff
-	jnz FX_DrawSpriteElems_360
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_360
 	mov ebx, [edi+0xc]
 	mov edi, [edi+0x14]
 	mov [ebp-0xa48], edi
@@ -3097,29 +3097,29 @@ FX_DrawSpriteElems_350:
 	mov eax, ebx
 	imul eax, ecx
 	mov [esp], eax
-	call R_ReserveCodeMeshVerts
+	call _Z22R_ReserveCodeMeshVertsiPt
 	test al, al
-	jnz FX_DrawSpriteElems_370
-FX_DrawSpriteElems_310:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_370
+_Z18FX_DrawSpriteElemsP8FxSystemi_310:
 	mov edx, [ebp-0xa54]
-FX_DrawSpriteElems_460:
+_Z18FX_DrawSpriteElemsP8FxSystemi_460:
 	movzx eax, word [edx]
 	cmp ax, 0xffff
-	jnz FX_DrawSpriteElems_380
-FX_DrawSpriteElems_300:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_380
+_Z18FX_DrawSpriteElemsP8FxSystemi_300:
 	add dword [ebp-0xa78], 0x1
 	mov ecx, [ebp-0xa78]
 	cmp [ebp-0xa7c], ecx
-	jnz FX_DrawSpriteElems_390
-FX_DrawSpriteElems_10:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_390
+_Z18FX_DrawSpriteElemsP8FxSystemi_10:
 	mov ebx, [ebp+0x8]
 	cmp byte [ebx+0x9dd], 0x0
-	jnz FX_DrawSpriteElems_400
-FX_DrawSpriteElems_1090:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_400
+_Z18FX_DrawSpriteElemsP8FxSystemi_1090:
 	mov eax, [ebp-0xa80]
 	mov edx, [eax+0x4]
 	test edx, edx
-	jz FX_DrawSpriteElems_410
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_410
 	mov ecx, eax
 	mov eax, [eax+0xc]
 	mov [esp+0x14], eax
@@ -3130,94 +3130,94 @@ FX_DrawSpriteElems_1090:
 	mov [esp+0x4], eax
 	mov eax, [ecx+0x8]
 	mov [esp], eax
-	call R_AddCodeMeshDrawSurf
+	call _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
 	mov ebx, [ebp-0xa80]
 	mov dword [ebx+0x4], 0x0
 	mov dword [ebx], 0x0
-FX_DrawSpriteElems_410:
+_Z18FX_DrawSpriteElemsP8FxSystemi_410:
 	add esp, 0xb7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_DrawSpriteElems_160:
+_Z18FX_DrawSpriteElemsP8FxSystemi_160:
 	mov eax, edx
-	jmp FX_DrawSpriteElems_420
-FX_DrawSpriteElems_40:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_420
+_Z18FX_DrawSpriteElemsP8FxSystemi_40:
 	mov ecx, ebx
-	jmp FX_DrawSpriteElems_430
-FX_DrawSpriteElems_170:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_430
+_Z18FX_DrawSpriteElemsP8FxSystemi_170:
 	movss [ebp-0x1b4], xmm1
 	movss [ebp-0x1b0], xmm2
-	jmp FX_DrawSpriteElems_440
-FX_DrawSpriteElems_50:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_440
+_Z18FX_DrawSpriteElemsP8FxSystemi_50:
 	movss [ebp-0x10c], xmm1
 	movss [ebp-0x108], xmm2
-	jmp FX_DrawSpriteElems_450
-FX_DrawSpriteElems_320:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_450
+_Z18FX_DrawSpriteElemsP8FxSystemi_320:
 	mov edx, ebx
-	jmp FX_DrawSpriteElems_460
-FX_DrawSpriteElems_330:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_460
+_Z18FX_DrawSpriteElemsP8FxSystemi_330:
 	mov ebx, [ebp-0x15c]
-	jmp FX_DrawSpriteElems_470
-FX_DrawSpriteElems_230:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_470
+_Z18FX_DrawSpriteElemsP8FxSystemi_230:
 	lea eax, [edi+0x1c]
 	subss xmm0, [edi+0x1c]
 	ucomiss xmm4, xmm0
-	ja FX_DrawSpriteElems_480
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_480
 	movss xmm1, dword [eax+0x4]
 	ucomiss xmm1, xmm0
-	jbe FX_DrawSpriteElems_490
+	jbe _Z18FX_DrawSpriteElemsP8FxSystemi_490
 	divss xmm0, xmm1
 	movaps xmm1, xmm5
 	subss xmm1, xmm0
 	movaps xmm2, xmm5
 	subss xmm2, xmm1
-	jmp FX_DrawSpriteElems_500
-FX_DrawSpriteElems_220:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_500
+_Z18FX_DrawSpriteElemsP8FxSystemi_220:
 	lea eax, [edi+0x14]
 	movaps xmm1, xmm0
 	subss xmm1, [edi+0x14]
 	ucomiss xmm4, xmm1
-	ja FX_DrawSpriteElems_510
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_510
 	movss xmm2, dword [eax+0x4]
 	ucomiss xmm2, xmm1
-	ja FX_DrawSpriteElems_520
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_520
 	movaps xmm3, xmm4
-	jmp FX_DrawSpriteElems_530
-FX_DrawSpriteElems_110:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_530
+_Z18FX_DrawSpriteElemsP8FxSystemi_110:
 	add eax, 0x1c
 	mov edx, [ebp-0xb04]
 	subss xmm0, [edx+0x1c]
 	ucomiss xmm4, xmm0
-	ja FX_DrawSpriteElems_540
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_540
 	movss xmm1, dword [eax+0x4]
 	ucomiss xmm1, xmm0
-	jbe FX_DrawSpriteElems_550
+	jbe _Z18FX_DrawSpriteElemsP8FxSystemi_550
 	divss xmm0, xmm1
 	movaps xmm1, xmm5
 	subss xmm1, xmm0
 	movaps xmm2, xmm5
 	subss xmm2, xmm1
-	jmp FX_DrawSpriteElems_560
-FX_DrawSpriteElems_100:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_560
+_Z18FX_DrawSpriteElemsP8FxSystemi_100:
 	mov eax, [ebp-0xb04]
 	add eax, 0x14
 	movaps xmm1, xmm0
 	mov ebx, [ebp-0xb04]
 	subss xmm1, [ebx+0x14]
 	ucomiss xmm4, xmm1
-	ja FX_DrawSpriteElems_570
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_570
 	movss xmm2, dword [eax+0x4]
 	ucomiss xmm2, xmm1
-	ja FX_DrawSpriteElems_580
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_580
 	movaps xmm3, xmm4
-	jmp FX_DrawSpriteElems_590
-FX_DrawSpriteElems_370:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_590
+_Z18FX_DrawSpriteElemsP8FxSystemi_370:
 	movzx eax, word [ebp-0x1a]
 	mov [esp], eax
-	call R_GetCodeMeshVerts
+	call _Z18R_GetCodeMeshVertst
 	mov edx, eax
 	lea edi, [ebp-0x158]
 	cld
@@ -3228,7 +3228,7 @@ FX_DrawSpriteElems_370:
 	movzx ecx, word [ecx+0x2]
 	mov [ebp-0xa4a], cx
 	add cx, 0x1
-	jz FX_DrawSpriteElems_310
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_310
 	movss xmm0, dword [_float_1_00000000]
 	movss [ebp-0xa38], xmm0
 	mov dword [ebp-0xa44], 0x0
@@ -3236,7 +3236,7 @@ FX_DrawSpriteElems_370:
 	mov [ebp-0xb10], edx
 	shl ebx, 0x5
 	mov [ebp-0xb14], ebx
-FX_DrawSpriteElems_720:
+_Z18FX_DrawSpriteElemsP8FxSystemi_720:
 	movzx edx, word [ebp-0xa4a]
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x17c]
@@ -3244,7 +3244,7 @@ FX_DrawSpriteElems_720:
 	mov [ebp-0xa10], edx
 	mov esi, [edx+0x10]
 	cmp esi, [ebp-0x15c]
-	jg FX_DrawSpriteElems_600
+	jg _Z18FX_DrawSpriteElemsP8FxSystemi_600
 	mov ecx, edx
 	mov ebx, [ebp-0x1fc]
 	mov [ebp-0xb08], ebx
@@ -3289,10 +3289,10 @@ FX_DrawSpriteElems_720:
 	movss [ebp-0xa0c], xmm2
 	cvttss2si edx, xmm0
 	cmp eax, edx
-	jl FX_DrawSpriteElems_610
+	jl _Z18FX_DrawSpriteElemsP8FxSystemi_610
 	movss [ebp-0x1b4], xmm0
 	mov dword [ebp-0x1b0], 0x3f800000
-FX_DrawSpriteElems_820:
+_Z18FX_DrawSpriteElemsP8FxSystemi_820:
 	lea ebx, [ebp-0x1f0]
 	mov [esp+0x10], ebx
 	mov eax, [ebp-0x1bc]
@@ -3304,13 +3304,13 @@ FX_DrawSpriteElems_820:
 	add eax, 0x28
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call FX_GetOrientation
+	call _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t
 	lea eax, [ebp-0x1ac]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0xa10]
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call FX_OrientationPosToWorldPos
+	call _Z27FX_OrientationPosToWorldPosPK13orientation_tPKfPf
 	mov ebx, [ebp-0x1bc]
 	mov edi, [ebp-0x1f4]
 	movzx eax, byte [edi+0xb3]
@@ -3351,7 +3351,7 @@ FX_DrawSpriteElems_820:
 	addss xmm1, xmm0
 	movss [ebp-0x188], xmm1
 	test byte [edi+0x3], 0x10
-	jz FX_DrawSpriteElems_620
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_620
 	mov ecx, fx_randomTable
 	movss xmm0, dword [ecx+ebx*4+0x6c]
 	movaps xmm1, xmm0
@@ -3362,22 +3362,22 @@ FX_DrawSpriteElems_820:
 	addss xmm0, [edx+0x10]
 	mulss xmm0, [ebp-0x17c]
 	addss xmm1, xmm0
-FX_DrawSpriteElems_620:
+_Z18FX_DrawSpriteElemsP8FxSystemi_620:
 	movss [ebp-0x184], xmm1
 	test byte [edi+0x1], 0x10
-	jnz FX_DrawSpriteElems_630
-FX_DrawSpriteElems_970:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_630
+_Z18FX_DrawSpriteElemsP8FxSystemi_970:
 	mov eax, [ebp-0x200]
 	mov [ebp-0x1c0], eax
 	movss xmm3, dword [edi+0x18]
 	pxor xmm4, xmm4
 	ucomiss xmm3, xmm4
-	jnz FX_DrawSpriteElems_640
-	jp FX_DrawSpriteElems_640
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_640
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_640
 	ucomiss xmm4, [edi+0x20]
-	jp FX_DrawSpriteElems_640
-	jz FX_DrawSpriteElems_650
-FX_DrawSpriteElems_640:
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_640
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_650
+_Z18FX_DrawSpriteElemsP8FxSystemi_640:
 	movss xmm0, dword [ebp-0x1ac]
 	subss xmm0, [eax]
 	movss xmm1, dword [ebp-0x1a8]
@@ -3391,18 +3391,18 @@ FX_DrawSpriteElems_640:
 	addss xmm0, xmm2
 	sqrtss xmm0, xmm0
 	ucomiss xmm3, xmm4
-	jnz FX_DrawSpriteElems_660
-	jp FX_DrawSpriteElems_660
-FX_DrawSpriteElems_830:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_660
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_660
+_Z18FX_DrawSpriteElemsP8FxSystemi_830:
 	movaps xmm3, xmm5
-FX_DrawSpriteElems_1030:
+_Z18FX_DrawSpriteElemsP8FxSystemi_1030:
 	ucomiss xmm4, [edi+0x20]
-	jnz FX_DrawSpriteElems_670
-FX_DrawSpriteElems_850:
-	jp FX_DrawSpriteElems_670
-FX_DrawSpriteElems_870:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_670
+_Z18FX_DrawSpriteElemsP8FxSystemi_850:
+	jp _Z18FX_DrawSpriteElemsP8FxSystemi_670
+_Z18FX_DrawSpriteElemsP8FxSystemi_870:
 	movaps xmm2, xmm5
-FX_DrawSpriteElems_880:
+_Z18FX_DrawSpriteElemsP8FxSystemi_880:
 	movaps xmm0, xmm2
 	subss xmm0, xmm3
 	cmpss xmm4, xmm0, 0x6
@@ -3428,19 +3428,19 @@ FX_DrawSpriteElems_880:
 	movdqa [ebp-0xae8], xmm0
 	mov eax, [ebp-0xae8]
 	mov [ebp-0x164], eax
-FX_DrawSpriteElems_650:
+_Z18FX_DrawSpriteElemsP8FxSystemi_650:
 	test byte [edi+0x1], 0x10
-	jnz FX_DrawSpriteElems_680
-FX_DrawSpriteElems_960:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_680
+_Z18FX_DrawSpriteElemsP8FxSystemi_960:
 	mov eax, [ebp-0xa10]
 	add eax, 0x18
 	lea esi, [ebp-0x38]
 	movss xmm1, dword [_float_0_00787402]
-FX_DrawSpriteElems_710:
+_Z18FX_DrawSpriteElemsP8FxSystemi_710:
 	mov edx, eax
 	mov ecx, esi
 	lea ebx, [eax+0x3]
-FX_DrawSpriteElems_690:
+_Z18FX_DrawSpriteElemsP8FxSystemi_690:
 	movsx eax, byte [edx]
 	cvtsi2ss xmm0, eax
 	mulss xmm0, xmm1
@@ -3448,22 +3448,22 @@ FX_DrawSpriteElems_690:
 	add edx, 0x1
 	add ecx, 0x4
 	cmp ebx, edx
-	jnz FX_DrawSpriteElems_690
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_690
 	add esi, 0xc
 	lea eax, [ebp-0x20]
 	cmp eax, esi
-	jz FX_DrawSpriteElems_700
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_700
 	mov eax, ebx
-	jmp FX_DrawSpriteElems_710
-FX_DrawSpriteElems_600:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_710
+_Z18FX_DrawSpriteElemsP8FxSystemi_600:
 	mov eax, edx
-FX_DrawSpriteElems_810:
+_Z18FX_DrawSpriteElemsP8FxSystemi_810:
 	movzx eax, word [eax+0x14]
 	mov [ebp-0xa4a], ax
 	add ax, 0x1
-	jnz FX_DrawSpriteElems_720
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_720
 	cmp dword [ebp-0xa44], 0x1
-	jle FX_DrawSpriteElems_310
+	jle _Z18FX_DrawSpriteElemsP8FxSystemi_310
 	mov edx, [ebp-0xa48]
 	lea edx, [edx+edx*2]
 	mov [ebp-0xafc], edx
@@ -3474,7 +3474,7 @@ FX_DrawSpriteElems_810:
 	mov ebx, [ebp-0x1bc]
 	movzx eax, byte [ecx+0xb1]
 	cmp al, 0x1
-	jz FX_DrawSpriteElems_730
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_730
 	movzx eax, al
 	mov edx, fx_randomTable
 	movzx edx, word [edx+ebx*4+0x54]
@@ -3483,33 +3483,33 @@ FX_DrawSpriteElems_810:
 	mov edx, [ecx+0xbc]
 	mov eax, [edx+eax*4]
 	mov [ebp-0xa2c], eax
-FX_DrawSpriteElems_1060:
+_Z18FX_DrawSpriteElemsP8FxSystemi_1060:
 	mov ebx, [ebp-0xa80]
 	mov ecx, [ebx+0x8]
 	cmp ecx, [ebp-0xa2c]
-	jz FX_DrawSpriteElems_740
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_740
 	mov edx, [ebx+0x4]
 	test edx, edx
-	jnz FX_DrawSpriteElems_750
-FX_DrawSpriteElems_740:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_750
+_Z18FX_DrawSpriteElemsP8FxSystemi_740:
 	mov eax, [ebp-0xa44]
 	sub eax, 0x1
 	mov [ebp-0xa50], eax
 	test eax, eax
-	jle FX_DrawSpriteElems_310
+	jle _Z18FX_DrawSpriteElemsP8FxSystemi_310
 	mov dword [ebp-0xa40], 0x0
-FX_DrawSpriteElems_790:
+_Z18FX_DrawSpriteElemsP8FxSystemi_790:
 	lea edx, [ebp-0x20]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0xafc]
 	mov [esp], ecx
-	call R_ReserveCodeMeshIndices
+	call _Z24R_ReserveCodeMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_DrawSpriteElems_310
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_310
 	mov eax, [ebp-0xa2c]
 	mov ebx, [ebp-0xa80]
 	cmp eax, [ebx+0x8]
-	jz FX_DrawSpriteElems_760
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_760
 	mov eax, [ebp-0x1fc]
 	mov eax, [eax]
 	mov eax, [eax]
@@ -3518,7 +3518,7 @@ FX_DrawSpriteElems_790:
 	mov [ebx+0x8], edx
 	mov eax, [ebp-0x20]
 	mov [ebx], eax
-FX_DrawSpriteElems_1040:
+_Z18FX_DrawSpriteElemsP8FxSystemi_1040:
 	mov ebx, [ebp-0xafc]
 	mov ecx, [ebp-0xa80]
 	add [ecx+0x4], ebx
@@ -3537,7 +3537,7 @@ FX_DrawSpriteElems_1040:
 	mov [ebp-0xa22], cx
 	sar eax, 1
 	mov [ebp-0xb00], eax
-	jz FX_DrawSpriteElems_770
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_770
 	mov eax, [ebp-0xa28]
 	add eax, 0x6
 	mov [ebp-0xa1c], eax
@@ -3545,7 +3545,7 @@ FX_DrawSpriteElems_1040:
 	add edi, 0xa
 	mov dword [ebp-0xa20], 0x0
 	mov esi, ebx
-FX_DrawSpriteElems_780:
+_Z18FX_DrawSpriteElemsP8FxSystemi_780:
 	movzx edx, word [esi]
 	mov [ebp-0xb3a], dx
 	movzx ecx, word [esi+0x2]
@@ -3573,23 +3573,23 @@ FX_DrawSpriteElems_780:
 	add edi, 0xc
 	mov edx, [ebp-0xa20]
 	cmp [ebp-0xb00], edx
-	jnz FX_DrawSpriteElems_780
-FX_DrawSpriteElems_770:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_780
+_Z18FX_DrawSpriteElemsP8FxSystemi_770:
 	add dword [ebp-0xa40], 0x1
 	movzx ecx, word [ebp-0xa3a]
 	add [ebp-0x1a], cx
 	mov ebx, [ebp-0xa50]
 	cmp [ebp-0xa40], ebx
-	jnz FX_DrawSpriteElems_790
-	jmp FX_DrawSpriteElems_310
-FX_DrawSpriteElems_700:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_790
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_310
+_Z18FX_DrawSpriteElemsP8FxSystemi_700:
 	lea eax, [ebp-0x194]
 	mov [esp+0x8], eax
 	mov eax, [ebp-0x1b8]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x17c]
 	mov [esp], eax
-	call FX_EvaluateVisualState
+	call _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState
 	mov edx, [ebp-0xa10]
 	movss xmm2, dword [edx+0xc]
 	mov edx, [ebp-0x1f4]
@@ -3632,8 +3632,8 @@ FX_DrawSpriteElems_700:
 	movss [ebp-0x7c], xmm2
 	movss xmm0, dword [_float_1_00000000]
 	ucomiss xmm0, [ebp-0xa0c]
-	ja FX_DrawSpriteElems_800
-FX_DrawSpriteElems_1000:
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_800
+_Z18FX_DrawSpriteElemsP8FxSystemi_1000:
 	mov eax, [ebp-0xb0]
 	mov [ebp-0x158], eax
 	mov eax, [ebp-0xac]
@@ -3667,38 +3667,38 @@ FX_DrawSpriteElems_1000:
 	movss xmm0, dword [ebp-0xa0c]
 	movss [ebp-0xa38], xmm0
 	mov eax, [ebp-0xa10]
-	jmp FX_DrawSpriteElems_810
-FX_DrawSpriteElems_610:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_810
+_Z18FX_DrawSpriteElemsP8FxSystemi_610:
 	movss [ebp-0x1b4], xmm1
 	movss [ebp-0x1b0], xmm2
-	jmp FX_DrawSpriteElems_820
-FX_DrawSpriteElems_660:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_820
+_Z18FX_DrawSpriteElemsP8FxSystemi_660:
 	lea eax, [edi+0x14]
 	movaps xmm1, xmm0
 	subss xmm1, [edi+0x14]
 	ucomiss xmm4, xmm1
-	ja FX_DrawSpriteElems_830
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_830
 	movss xmm2, dword [eax+0x4]
 	ucomiss xmm2, xmm1
-	ja FX_DrawSpriteElems_840
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_840
 	movaps xmm3, xmm4
 	ucomiss xmm4, [edi+0x20]
-	jz FX_DrawSpriteElems_850
-FX_DrawSpriteElems_670:
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_850
+_Z18FX_DrawSpriteElemsP8FxSystemi_670:
 	lea eax, [edi+0x1c]
 	subss xmm0, [edi+0x1c]
 	ucomiss xmm4, xmm0
-	ja FX_DrawSpriteElems_860
+	ja _Z18FX_DrawSpriteElemsP8FxSystemi_860
 	movss xmm1, dword [eax+0x4]
 	ucomiss xmm1, xmm0
-	jbe FX_DrawSpriteElems_870
+	jbe _Z18FX_DrawSpriteElemsP8FxSystemi_870
 	divss xmm0, xmm1
 	movaps xmm1, xmm5
 	subss xmm1, xmm0
 	movaps xmm2, xmm5
 	subss xmm2, xmm1
-	jmp FX_DrawSpriteElems_880
-FX_DrawSpriteElems_190:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_880
+_Z18FX_DrawSpriteElemsP8FxSystemi_190:
 	mov eax, [ebp-0x168]
 	mov ebx, [ebp-0xb18]
 	movss xmm3, dword [ebx+eax*4+0x5c]
@@ -3731,15 +3731,15 @@ FX_DrawSpriteElems_190:
 	cvttss2si eax, [ebp-0xab0]
 	mov [ebp-0x191], al
 	movss xmm5, dword [ebp-0xb38]
-	jmp FX_DrawSpriteElems_890
-FX_DrawSpriteElems_120:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_890
+_Z18FX_DrawSpriteElemsP8FxSystemi_120:
 	movzx eax, byte [ebp-0xe9]
 	imul eax, [ebp-0xbc]
 	mov edx, eax
 	shr edx, 0x8
-	js FX_DrawSpriteElems_900
+	js _Z18FX_DrawSpriteElemsP8FxSystemi_900
 	cvtsi2ss xmm0, edx
-FX_DrawSpriteElems_1050:
+_Z18FX_DrawSpriteElemsP8FxSystemi_1050:
 	mulss xmm0, [_float_0_00392157]
 	movss [esp+0xc], xmm0
 	mov eax, [ebp-0xe0]
@@ -3748,9 +3748,9 @@ FX_DrawSpriteElems_1050:
 	mov [esp+0x4], ecx
 	mov ebx, [ebp+0x8]
 	mov [esp], ebx
-	call FX_AddVisBlocker
-	jmp FX_DrawSpriteElems_910
-FX_DrawSpriteElems_70:
+	call _Z16FX_AddVisBlockerP8FxSystemPKfff
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_910
+_Z18FX_DrawSpriteElemsP8FxSystemi_70:
 	mov eax, [ebp-0xc0]
 	mov edx, fx_randomTable
 	movss xmm3, dword [edx+eax*4+0x5c]
@@ -3784,15 +3784,15 @@ FX_DrawSpriteElems_70:
 	mov [ebp-0xe9], al
 	movss xmm5, dword [ebp-0xb38]
 	mov ecx, [ebp-0xb04]
-	jmp FX_DrawSpriteElems_920
-FX_DrawSpriteElems_240:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_920
+_Z18FX_DrawSpriteElemsP8FxSystemi_240:
 	movzx eax, byte [ebp-0x191]
 	imul eax, [ebp-0x164]
 	mov edx, eax
 	shr edx, 0x8
-	js FX_DrawSpriteElems_930
+	js _Z18FX_DrawSpriteElemsP8FxSystemi_930
 	cvtsi2ss xmm0, edx
-FX_DrawSpriteElems_1070:
+_Z18FX_DrawSpriteElemsP8FxSystemi_1070:
 	mulss xmm0, [_float_0_00392157]
 	movss [esp+0xc], xmm0
 	mov eax, [ebp-0x188]
@@ -3801,16 +3801,16 @@ FX_DrawSpriteElems_1070:
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_AddVisBlocker
-	jmp FX_DrawSpriteElems_940
-FX_DrawSpriteElems_680:
+	call _Z16FX_AddVisBlockerP8FxSystemPKfff
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_940
+_Z18FX_DrawSpriteElemsP8FxSystemi_680:
 	movzx eax, byte [ebp-0x191]
 	imul eax, [ebp-0x164]
 	mov edx, eax
 	shr edx, 0x8
-	js FX_DrawSpriteElems_950
+	js _Z18FX_DrawSpriteElemsP8FxSystemi_950
 	cvtsi2ss xmm0, edx
-FX_DrawSpriteElems_1080:
+_Z18FX_DrawSpriteElemsP8FxSystemi_1080:
 	mulss xmm0, [_float_0_00392157]
 	movss [esp+0xc], xmm0
 	mov eax, [ebp-0x188]
@@ -3819,9 +3819,9 @@ FX_DrawSpriteElems_1080:
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_AddVisBlocker
-	jmp FX_DrawSpriteElems_960
-FX_DrawSpriteElems_630:
+	call _Z16FX_AddVisBlockerP8FxSystemPKfff
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_960
+_Z18FX_DrawSpriteElemsP8FxSystemi_630:
 	mov eax, [ebp-0x168]
 	mov ebx, fx_randomTable
 	movss xmm3, dword [ebx+eax*4+0x5c]
@@ -3854,15 +3854,15 @@ FX_DrawSpriteElems_630:
 	cvttss2si eax, [ebp-0xad0]
 	mov [ebp-0x191], al
 	movss xmm5, dword [ebp-0xb38]
-	jmp FX_DrawSpriteElems_970
-FX_DrawSpriteElems_800:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_970
+_Z18FX_DrawSpriteElemsP8FxSystemi_800:
 	movzx edx, word [ebp-0xa4a]
 	mov eax, [ebp-0xa54]
 	cmp dx, [eax+0x2]
-	jz FX_DrawSpriteElems_980
+	jz _Z18FX_DrawSpriteElemsP8FxSystemi_980
 	movss xmm1, dword [ebp-0xa38]
 	ucomiss xmm1, xmm0
-	jb FX_DrawSpriteElems_990
+	jb _Z18FX_DrawSpriteElemsP8FxSystemi_990
 	mov eax, [ebp-0x158]
 	mov [ebp-0x74], eax
 	mov eax, [ebp-0x130]
@@ -3937,21 +3937,21 @@ FX_DrawSpriteElems_800:
 	movss [ebp-0x50], xmm0
 	mov edx, [ebp-0xb10]
 	lea eax, [ebp-0x74]
-	call FX_GenTrail_VertsForSegment
+	call _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex
 	add dword [ebp-0xa44], 0x1
 	mov eax, [ebp-0xb14]
 	add [ebp-0xb10], eax
 	add [ebp-0xb0c], eax
-FX_DrawSpriteElems_990:
+_Z18FX_DrawSpriteElemsP8FxSystemi_990:
 	mov edx, [ebp-0xb0c]
 	lea eax, [ebp-0xb0]
-	call FX_GenTrail_VertsForSegment
+	call _Z27FX_GenTrail_VertsForSegmentPK23FxTrailSegmentDrawStateP15GfxPackedVertex
 	add dword [ebp-0xa44], 0x1
 	mov ecx, [ebp-0xb14]
 	add [ebp-0xb10], ecx
 	add [ebp-0xb0c], ecx
-	jmp FX_DrawSpriteElems_1000
-FX_DrawSpriteElems_20:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_1000
+_Z18FX_DrawSpriteElemsP8FxSystemi_20:
 	mov eax, ebx
 	mov ebx, [ebp-0xa18]
 	mov [ebp-0xb08], ebx
@@ -3959,26 +3959,26 @@ FX_DrawSpriteElems_20:
 	mov [ebp-0x15c], eax
 	movzx edx, word [ebx+0xc]
 	cmp dx, 0xffff
-	jnz FX_DrawSpriteElems_1010
-FX_DrawSpriteElems_140:
+	jnz _Z18FX_DrawSpriteElemsP8FxSystemi_1010
+_Z18FX_DrawSpriteElemsP8FxSystemi_140:
 	mov edx, ebx
-	jmp FX_DrawSpriteElems_1020
-FX_DrawSpriteElems_580:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_1020
+_Z18FX_DrawSpriteElemsP8FxSystemi_580:
 	divss xmm1, xmm2
 	movaps xmm3, xmm5
 	subss xmm3, xmm1
-	jmp FX_DrawSpriteElems_590
-FX_DrawSpriteElems_520:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_590
+_Z18FX_DrawSpriteElemsP8FxSystemi_520:
 	divss xmm1, xmm2
 	movaps xmm3, xmm5
 	subss xmm3, xmm1
-	jmp FX_DrawSpriteElems_530
-FX_DrawSpriteElems_840:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_530
+_Z18FX_DrawSpriteElemsP8FxSystemi_840:
 	divss xmm1, xmm2
 	movaps xmm3, xmm5
 	subss xmm3, xmm1
-	jmp FX_DrawSpriteElems_1030
-FX_DrawSpriteElems_340:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_1030
+_Z18FX_DrawSpriteElemsP8FxSystemi_340:
 	mov ebx, [ebp-0x15c]
 	mov eax, ebx
 	cdq
@@ -3990,53 +3990,53 @@ FX_DrawSpriteElems_340:
 	subss xmm0, xmm1
 	addss xmm0, [ebp-0xa30]
 	movss [ebp-0xa30], xmm0
-	jmp FX_DrawSpriteElems_470
-FX_DrawSpriteElems_760:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_470
+_Z18FX_DrawSpriteElemsP8FxSystemi_760:
 	mov eax, [ebp-0x20]
-	jmp FX_DrawSpriteElems_1040
-FX_DrawSpriteElems_480:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_1040
+_Z18FX_DrawSpriteElemsP8FxSystemi_480:
 	movaps xmm2, xmm4
-	jmp FX_DrawSpriteElems_500
-FX_DrawSpriteElems_860:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_500
+_Z18FX_DrawSpriteElemsP8FxSystemi_860:
 	movaps xmm2, xmm4
-	jmp FX_DrawSpriteElems_880
-FX_DrawSpriteElems_540:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_880
+_Z18FX_DrawSpriteElemsP8FxSystemi_540:
 	movaps xmm2, xmm4
-	jmp FX_DrawSpriteElems_560
-FX_DrawSpriteElems_900:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_560
+_Z18FX_DrawSpriteElemsP8FxSystemi_900:
 	shr eax, 0x9
 	and edx, 0x1
 	or eax, edx
 	cvtsi2ss xmm0, eax
 	addss xmm0, xmm0
-	jmp FX_DrawSpriteElems_1050
-FX_DrawSpriteElems_730:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_1050
+_Z18FX_DrawSpriteElemsP8FxSystemi_730:
 	mov ecx, [ecx+0xbc]
 	mov [ebp-0xa2c], ecx
-	jmp FX_DrawSpriteElems_1060
-FX_DrawSpriteElems_930:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_1060
+_Z18FX_DrawSpriteElemsP8FxSystemi_930:
 	shr eax, 0x9
 	and edx, 0x1
 	or eax, edx
 	cvtsi2ss xmm0, eax
 	addss xmm0, xmm0
-	jmp FX_DrawSpriteElems_1070
-FX_DrawSpriteElems_950:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_1070
+_Z18FX_DrawSpriteElemsP8FxSystemi_950:
 	shr eax, 0x9
 	and edx, 0x1
 	or eax, edx
 	cvtsi2ss xmm0, eax
 	addss xmm0, xmm0
-	jmp FX_DrawSpriteElems_1080
-FX_DrawSpriteElems_980:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_1080
+_Z18FX_DrawSpriteElemsP8FxSystemi_980:
 	xor eax, eax
 	mov edx, [ebp-0xa10]
 	cmp byte [edx+0x1e], 0x0
 	movzx edx, byte [ebp-0x75]
 	cmovnz eax, edx
 	mov [ebp-0x75], al
-	jmp FX_DrawSpriteElems_990
-FX_DrawSpriteElems_750:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_990
+_Z18FX_DrawSpriteElemsP8FxSystemi_750:
 	mov eax, [ebx+0xc]
 	mov [esp+0x14], eax
 	mov dword [esp+0x10], 0x0
@@ -4045,17 +4045,17 @@ FX_DrawSpriteElems_750:
 	mov eax, [ebx]
 	mov [esp+0x4], eax
 	mov [esp], ecx
-	call R_AddCodeMeshDrawSurf
+	call _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
 	mov dword [ebx+0x4], 0x0
-	jmp FX_DrawSpriteElems_740
-FX_DrawSpriteElems_400:
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_740
+_Z18FX_DrawSpriteElemsP8FxSystemi_400:
 	mov [esp], ebx
-	call FX_RunGarbageCollection
-	jmp FX_DrawSpriteElems_1090
+	call _Z23FX_RunGarbageCollectionP8FxSystem
+	jmp _Z18FX_DrawSpriteElemsP8FxSystemi_1090
 
 
 ;FX_SetupVisualState(FxElemDef const*, FxEffect const*, int, float, FxElemPreVisualState*)
-FX_SetupVisualState:
+_Z19FX_SetupVisualStatePK9FxElemDefPK8FxEffectifP20FxElemPreVisualState:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4097,7 +4097,7 @@ FX_SetupVisualState:
 
 
 ;FX_DrawNonSpriteElems(FxSystem*)
-FX_DrawNonSpriteElems:
+_Z21FX_DrawNonSpriteElemsP8FxSystem:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4110,9 +4110,9 @@ FX_DrawNonSpriteElems:
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x1b4]
 	cmp [ebp-0xdc], eax
-	jz FX_DrawNonSpriteElems_10
+	jz _Z21FX_DrawNonSpriteElemsP8FxSystem_10
 	mov ebx, [ebp+0x8]
-FX_DrawNonSpriteElems_140:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_140:
 	mov ecx, [ebx+0x9d4]
 	mov eax, [ebp-0xdc]
 	and eax, 0x3ff
@@ -4123,12 +4123,12 @@ FX_DrawNonSpriteElems_140:
 	mov [ebp-0x1c], ecx
 	movzx edx, word [edi+0xa]
 	cmp dx, 0xffff
-	jz FX_DrawNonSpriteElems_20
+	jz _Z21FX_DrawNonSpriteElemsP8FxSystem_20
 	mov [ebp-0xc0], ebx
 	mov eax, [edi]
 	mov eax, [eax+0x1c]
 	mov [ebp-0xd4], eax
-FX_DrawNonSpriteElems_130:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_130:
 	movzx edx, dx
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x174]
@@ -4141,11 +4141,11 @@ FX_DrawNonSpriteElems_130:
 	add eax, [ebp-0xd4]
 	mov [ebp-0xd0], eax
 	cmp byte [eax+0xb1], 0x0
-	jz FX_DrawNonSpriteElems_30
+	jz _Z21FX_DrawNonSpriteElemsP8FxSystem_30
 	mov ebx, [ebp-0xd8]
 	mov eax, [ebx+0x8]
 	cmp eax, [ebp-0x1c]
-	jg FX_DrawNonSpriteElems_40
+	jg _Z21FX_DrawNonSpriteElemsP8FxSystem_40
 	mov edx, ebx
 	mov ecx, ebx
 	mov [ebp-0xb8], ebx
@@ -4196,10 +4196,10 @@ FX_DrawNonSpriteElems_130:
 	divss xmm2, xmm0
 	cvttss2si edx, xmm0
 	cmp eax, edx
-	jl FX_DrawNonSpriteElems_50
+	jl _Z21FX_DrawNonSpriteElemsP8FxSystem_50
 	movss [ebp-0x74], xmm0
 	mov dword [ebp-0x70], 0x3f800000
-FX_DrawNonSpriteElems_180:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_180:
 	lea ebx, [ebp-0xb0]
 	mov [esp+0x10], ebx
 	mov eax, [ebp-0x7c]
@@ -4210,13 +4210,13 @@ FX_DrawNonSpriteElems_180:
 	mov [esp+0x4], eax
 	mov eax, [ebp-0xb4]
 	mov [esp], eax
-	call FX_GetOrientation
+	call _Z17FX_GetOrientationPK9FxElemDefPK14FxSpatialFrameS4_iP13orientation_t
 	lea eax, [ebp-0x6c]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0xcc]
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call FX_OrientationPosToWorldPos
+	call _Z27FX_OrientationPosToWorldPosPK13orientation_tPKfPf
 	mov esi, [ebp-0x7c]
 	mov ebx, [ebp-0xb4]
 	movzx eax, byte [ebx+0xb3]
@@ -4257,7 +4257,7 @@ FX_DrawNonSpriteElems_180:
 	addss xmm1, xmm0
 	movss [ebp-0x48], xmm1
 	test byte [ebx+0x3], 0x10
-	jz FX_DrawNonSpriteElems_60
+	jz _Z21FX_DrawNonSpriteElemsP8FxSystem_60
 	mov ecx, fx_randomTable
 	movss xmm0, dword [ecx+esi*4+0x6c]
 	movaps xmm1, xmm0
@@ -4268,22 +4268,22 @@ FX_DrawNonSpriteElems_180:
 	addss xmm0, [edx+0x10]
 	mulss xmm0, [ebp-0x3c]
 	addss xmm1, xmm0
-FX_DrawNonSpriteElems_60:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_60:
 	movss [ebp-0x44], xmm1
 	test byte [ebx+0x1], 0x10
-	jnz FX_DrawNonSpriteElems_70
-FX_DrawNonSpriteElems_270:
+	jnz _Z21FX_DrawNonSpriteElemsP8FxSystem_70
+_Z21FX_DrawNonSpriteElemsP8FxSystem_270:
 	mov eax, [ebp-0xc0]
 	mov [ebp-0x80], eax
 	movss xmm4, dword [ebx+0x18]
 	pxor xmm3, xmm3
 	ucomiss xmm4, xmm3
-	jnz FX_DrawNonSpriteElems_80
-	jp FX_DrawNonSpriteElems_80
+	jnz _Z21FX_DrawNonSpriteElemsP8FxSystem_80
+	jp _Z21FX_DrawNonSpriteElemsP8FxSystem_80
 	ucomiss xmm3, [ebx+0x20]
-	jp FX_DrawNonSpriteElems_80
-	jz FX_DrawNonSpriteElems_90
-FX_DrawNonSpriteElems_80:
+	jp _Z21FX_DrawNonSpriteElemsP8FxSystem_80
+	jz _Z21FX_DrawNonSpriteElemsP8FxSystem_90
+_Z21FX_DrawNonSpriteElemsP8FxSystem_80:
 	movss xmm0, dword [ebp-0x6c]
 	subss xmm0, [eax]
 	movss xmm1, dword [ebp-0x68]
@@ -4297,17 +4297,17 @@ FX_DrawNonSpriteElems_80:
 	addss xmm0, xmm2
 	sqrtss xmm0, xmm0
 	ucomiss xmm4, xmm3
-	jnz FX_DrawNonSpriteElems_100
-	jp FX_DrawNonSpriteElems_100
-FX_DrawNonSpriteElems_220:
+	jnz _Z21FX_DrawNonSpriteElemsP8FxSystem_100
+	jp _Z21FX_DrawNonSpriteElemsP8FxSystem_100
+_Z21FX_DrawNonSpriteElemsP8FxSystem_220:
 	movaps xmm4, xmm5
-FX_DrawNonSpriteElems_240:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_240:
 	ucomiss xmm3, [ebx+0x20]
-	jnz FX_DrawNonSpriteElems_110
-	jp FX_DrawNonSpriteElems_110
-FX_DrawNonSpriteElems_200:
+	jnz _Z21FX_DrawNonSpriteElemsP8FxSystem_110
+	jp _Z21FX_DrawNonSpriteElemsP8FxSystem_110
+_Z21FX_DrawNonSpriteElemsP8FxSystem_200:
 	movaps xmm2, xmm5
-FX_DrawNonSpriteElems_210:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_210:
 	movaps xmm0, xmm2
 	subss xmm0, xmm4
 	movaps xmm1, xmm3
@@ -4334,87 +4334,87 @@ FX_DrawNonSpriteElems_210:
 	movdqa [ebp-0xf8], xmm0
 	mov eax, [ebp-0xf8]
 	mov [ebp-0x24], eax
-FX_DrawNonSpriteElems_90:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_90:
 	test byte [ebx+0x1], 0x10
-	jnz FX_DrawNonSpriteElems_120
-FX_DrawNonSpriteElems_260:
+	jnz _Z21FX_DrawNonSpriteElemsP8FxSystem_120
+_Z21FX_DrawNonSpriteElemsP8FxSystem_260:
 	mov ebx, [ebp-0xd0]
 	movzx edx, byte [ebx+0xb0]
 	lea eax, [ebp-0xc0]
 	mov [esp], eax
 	call dword [edx*4+s_drawElemHandler]
-FX_DrawNonSpriteElems_30:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_30:
 	mov eax, [ebp-0xd8]
-FX_DrawNonSpriteElems_170:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_170:
 	movzx edx, word [eax+0x4]
 	cmp dx, 0xffff
-	jnz FX_DrawNonSpriteElems_130
+	jnz _Z21FX_DrawNonSpriteElemsP8FxSystem_130
 	mov edx, [ebp+0x8]
 	add dword [ebp-0xdc], 0x1
 	mov eax, [edx+0x1b4]
 	cmp [ebp-0xdc], eax
-	jz FX_DrawNonSpriteElems_10
-FX_DrawNonSpriteElems_150:
+	jz _Z21FX_DrawNonSpriteElemsP8FxSystem_10
+_Z21FX_DrawNonSpriteElemsP8FxSystem_150:
 	mov ebx, edx
-	jmp FX_DrawNonSpriteElems_140
-FX_DrawNonSpriteElems_20:
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_140
+_Z21FX_DrawNonSpriteElemsP8FxSystem_20:
 	mov edx, ebx
 	add dword [ebp-0xdc], 0x1
 	mov eax, [edx+0x1b4]
 	cmp [ebp-0xdc], eax
-	jnz FX_DrawNonSpriteElems_150
-FX_DrawNonSpriteElems_10:
+	jnz _Z21FX_DrawNonSpriteElemsP8FxSystem_150
+_Z21FX_DrawNonSpriteElemsP8FxSystem_10:
 	cmp byte [edx+0x9dd], 0x0
-	jz FX_DrawNonSpriteElems_160
+	jz _Z21FX_DrawNonSpriteElemsP8FxSystem_160
 	mov [esp], edx
-	call FX_RunGarbageCollection
-FX_DrawNonSpriteElems_160:
+	call _Z23FX_RunGarbageCollectionP8FxSystem
+_Z21FX_DrawNonSpriteElemsP8FxSystem_160:
 	add esp, 0x12c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FX_DrawNonSpriteElems_40:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_40:
 	mov eax, ebx
-	jmp FX_DrawNonSpriteElems_170
-FX_DrawNonSpriteElems_50:
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_170
+_Z21FX_DrawNonSpriteElemsP8FxSystem_50:
 	movss [ebp-0x74], xmm1
 	movss [ebp-0x70], xmm2
-	jmp FX_DrawNonSpriteElems_180
-FX_DrawNonSpriteElems_110:
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_180
+_Z21FX_DrawNonSpriteElemsP8FxSystem_110:
 	lea eax, [ebx+0x1c]
 	subss xmm0, [ebx+0x1c]
 	ucomiss xmm3, xmm0
-	ja FX_DrawNonSpriteElems_190
+	ja _Z21FX_DrawNonSpriteElemsP8FxSystem_190
 	movss xmm1, dword [eax+0x4]
 	ucomiss xmm1, xmm0
-	jbe FX_DrawNonSpriteElems_200
+	jbe _Z21FX_DrawNonSpriteElemsP8FxSystem_200
 	divss xmm0, xmm1
 	movaps xmm1, xmm5
 	subss xmm1, xmm0
 	movaps xmm2, xmm5
 	subss xmm2, xmm1
-	jmp FX_DrawNonSpriteElems_210
-FX_DrawNonSpriteElems_100:
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_210
+_Z21FX_DrawNonSpriteElemsP8FxSystem_100:
 	lea eax, [ebx+0x14]
 	movaps xmm1, xmm0
 	subss xmm1, [ebx+0x14]
 	ucomiss xmm3, xmm1
-	ja FX_DrawNonSpriteElems_220
+	ja _Z21FX_DrawNonSpriteElemsP8FxSystem_220
 	movss xmm2, dword [eax+0x4]
 	ucomiss xmm2, xmm1
-	ja FX_DrawNonSpriteElems_230
+	ja _Z21FX_DrawNonSpriteElemsP8FxSystem_230
 	movaps xmm4, xmm3
-	jmp FX_DrawNonSpriteElems_240
-FX_DrawNonSpriteElems_120:
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_240
+_Z21FX_DrawNonSpriteElemsP8FxSystem_120:
 	movzx eax, byte [ebp-0x51]
 	imul eax, [ebp-0x24]
 	mov edx, eax
 	shr edx, 0x8
-	js FX_DrawNonSpriteElems_250
+	js _Z21FX_DrawNonSpriteElemsP8FxSystem_250
 	cvtsi2ss xmm0, edx
-FX_DrawNonSpriteElems_280:
+_Z21FX_DrawNonSpriteElemsP8FxSystem_280:
 	mulss xmm0, [_float_0_00392157]
 	movss [esp+0xc], xmm0
 	mov eax, [ebp-0x48]
@@ -4423,9 +4423,9 @@ FX_DrawNonSpriteElems_280:
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_AddVisBlocker
-	jmp FX_DrawNonSpriteElems_260
-FX_DrawNonSpriteElems_70:
+	call _Z16FX_AddVisBlockerP8FxSystemPKfff
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_260
+_Z21FX_DrawNonSpriteElemsP8FxSystem_70:
 	mov eax, [ebp-0x28]
 	mov edx, fx_randomTable
 	movss xmm3, dword [edx+eax*4+0x5c]
@@ -4458,27 +4458,27 @@ FX_DrawNonSpriteElems_70:
 	cvttss2si eax, [ebp-0xe4]
 	mov [ebp-0x51], al
 	movss xmm5, dword [ebp-0x118]
-	jmp FX_DrawNonSpriteElems_270
-FX_DrawNonSpriteElems_230:
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_270
+_Z21FX_DrawNonSpriteElemsP8FxSystem_230:
 	divss xmm1, xmm2
 	movaps xmm4, xmm5
 	subss xmm4, xmm1
-	jmp FX_DrawNonSpriteElems_240
-FX_DrawNonSpriteElems_190:
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_240
+_Z21FX_DrawNonSpriteElemsP8FxSystem_190:
 	movaps xmm2, xmm3
-	jmp FX_DrawNonSpriteElems_210
-FX_DrawNonSpriteElems_250:
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_210
+_Z21FX_DrawNonSpriteElemsP8FxSystem_250:
 	shr eax, 0x9
 	and edx, 0x1
 	or eax, edx
 	cvtsi2ss xmm0, eax
 	addss xmm0, xmm0
-	jmp FX_DrawNonSpriteElems_280
+	jmp _Z21FX_DrawNonSpriteElemsP8FxSystem_280
 	nop
 
 
 ;FX_EvaluateVisualState(FxElemPreVisualState*, float, FxElemVisualState*)
-FX_EvaluateVisualState:
+_Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4612,7 +4612,7 @@ FX_EvaluateVisualState:
 	mov [edx+0x3], al
 	mov ecx, [ebp-0x44]
 	cmp byte [ecx+0xf9], 0x0
-	jz FX_EvaluateVisualState_10
+	jz _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState_10
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0xc]
 	movzx edx, word [eax+0x16]
@@ -4636,7 +4636,7 @@ FX_EvaluateVisualState:
 	mov [ebp-0x19], dl
 	xor esi, esi
 	mov dword [ebp-0x2c], _ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping
-FX_EvaluateVisualState_30:
+_Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState_30:
 	mov ecx, [ebp-0x2c]
 	mov edi, [ecx]
 	mov eax, [ebp-0x44]
@@ -4665,17 +4665,17 @@ FX_EvaluateVisualState_30:
 	cdq
 	sub ecx, edx
 	cmp ecx, 0xfe
-	jle FX_EvaluateVisualState_20
+	jle _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState_20
 	mov edx, 0xffffffff
-FX_EvaluateVisualState_40:
+_Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState_40:
 	mov ecx, [ebp+0x10]
 	mov [ecx+edi], dl
 	add esi, 0x1
 	add dword [ebp-0x2c], 0x4
 	cmp esi, 0x3
-	jnz FX_EvaluateVisualState_30
+	jnz _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState_30
 	mov ecx, [ebp-0x44]
-FX_EvaluateVisualState_10:
+_Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState_10:
 	mov eax, [ebp-0x34]
 	mov edx, fx_randomTable
 	movss xmm3, dword [edx+eax*4+0x60]
@@ -4720,15 +4720,15 @@ FX_EvaluateVisualState_10:
 	pop edi
 	pop ebp
 	ret
-FX_EvaluateVisualState_20:
+_Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState_20:
 	xor edx, edx
 	test ecx, ecx
 	cmovg edx, ecx
-	jmp FX_EvaluateVisualState_40
+	jmp _Z22FX_EvaluateVisualStateP20FxElemPreVisualStatefP17FxElemVisualState_40
 
 
 ;FX_FillGenerateVertsCmd(int, FxGenerateVertsCmd*)
-FX_FillGenerateVertsCmd:
+_Z23FX_FillGenerateVertsCmdiP18FxGenerateVertsCmd:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4738,17 +4738,17 @@ FX_FillGenerateVertsCmd:
 	mov ebx, [ebp+0x8]
 	mov esi, [ebp+0xc]
 	mov [esp], ebx
-	call FX_GetSystem
+	call _Z12FX_GetSystemi
 	mov [esi], eax
-	call FX_Beam_GetInfo
+	call _Z15FX_Beam_GetInfov
 	mov [esi+0x4], eax
-	call FX_PostLight_GetInfo
+	call _Z20FX_PostLight_GetInfov
 	mov [esi+0x8], eax
-	call FX_SpriteGetInfo
+	call _Z16FX_SpriteGetInfov
 	mov [esi+0xc], eax
 	mov [esi+0x10], ebx
 	lea edi, [esi+0x14]
-	call R_GetLocalClientNum
+	call _Z19R_GetLocalClientNumv
 	mov ebx, cgArray
 	mov eax, [ebx+0x492e0]
 	mov [esi+0x14], eax
@@ -4756,7 +4756,7 @@ FX_FillGenerateVertsCmd:
 	mov [edi+0x4], eax
 	mov eax, [ebx+0x492e8]
 	mov [edi+0x8], eax
-	call R_GetLocalClientNum
+	call _Z19R_GetLocalClientNumv
 	add esi, 0x20
 	mov [ebp+0xc], esi
 	add ebx, 0x492ec
@@ -4766,7 +4766,7 @@ FX_FillGenerateVertsCmd:
 	pop esi
 	pop edi
 	pop ebp
-	jmp AxisCopy
+	jmp _Z8AxisCopyPA3_KfPA3_f
 	nop
 	add [eax], al
 
@@ -4810,7 +4810,7 @@ g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
 g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
-s_drawElemHandler: dd FX_DrawElem_BillboardSprite, FX_DrawElem_OrientedSprite, FX_DrawElem_Tail, 0x0, FX_DrawElem_Cloud, FX_DrawElem_Model, FX_DrawElem_Light, FX_DrawElem_SpotLight
+s_drawElemHandler: dd _Z27FX_DrawElem_BillboardSpriteP11FxDrawState, _Z26FX_DrawElem_OrientedSpriteP11FxDrawState, _Z16FX_DrawElem_TailP11FxDrawState, 0x0, _Z17FX_DrawElem_CloudP11FxDrawState, _Z17FX_DrawElem_ModelP11FxDrawState, _Z17FX_DrawElem_LightP11FxDrawState, _Z21FX_DrawElem_SpotLightP11FxDrawState
 _ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping: dd 0x2, 0x1, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
@@ -4848,7 +4848,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:

@@ -29,8 +29,9 @@ const BotAction_t BotActions[] =
     { "sprint",     KEY_MASK_SPRINT     },
     { "leanleft",   KEY_MASK_LEANLEFT   },
     { "leanright",  KEY_MASK_LEANRIGHT  },
-    { "ads",        KEY_MASK_ADS_MODE   },
-    { "holdbreath", KEY_MASK_HOLDBREATH }
+    { "ads",        KEY_MASK_ADS_MODE | KEY_MASK_ADS },
+    { "holdbreath", KEY_MASK_HOLDBREATH },
+    { "activate",   KEY_MASK_USE }
 };
 /*
 ==================
@@ -191,7 +192,7 @@ static void scr_botweapon(scr_entref_t ent_num)
     int argc;
     gentity_t *bot;
     char* weapon;
-    byte weapInt;
+    ::byte weapInt;
     mvabuf;
 
     bot = VM_GetGEntityForEntRef(ent_num);
@@ -213,7 +214,7 @@ static void scr_botweapon(scr_entref_t ent_num)
         return;
     }
 
-    weapInt = (byte)G_GetWeaponIndexForName(weapon);
+    weapInt = static_cast<::byte>(G_GetWeaponIndexForName(weapon));
     g_botai[ent_num.entnum].weapon = weapInt;
 }
 /*

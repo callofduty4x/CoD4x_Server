@@ -977,6 +977,28 @@ typedef struct {
     int longdata[1547];
 } statData_t;
 
+typedef enum hitLocation_t {
+  HITLOC_NONE = 0x0,
+  HITLOC_HELMET = 0x1,
+  HITLOC_HEAD = 0x2,
+  HITLOC_NECK = 0x3,
+  HITLOC_TORSO_UPR = 0x4,
+  HITLOC_TORSO_LWR = 0x5,
+  HITLOC_R_ARM_UPR = 0x6,
+  HITLOC_L_ARM_UPR = 0x7,
+  HITLOC_R_ARM_LWR = 0x8,
+  HITLOC_L_ARM_LWR = 0x9,
+  HITLOC_R_HAND = 0xA,
+  HITLOC_L_HAND = 0xB,
+  HITLOC_R_LEG_UPR = 0xC,
+  HITLOC_L_LEG_UPR = 0xD,
+  HITLOC_R_LEG_LWR = 0xE,
+  HITLOC_L_LEG_LWR = 0xF,
+  HITLOC_R_FOOT = 0x10,
+  HITLOC_L_FOOT = 0x11,
+  HITLOC_GUN = 0x12,
+  HITLOC_NUM = 0x13,
+}hitLocation_t;
 
 #define MAX_ZPATH 256
 
@@ -1397,6 +1419,170 @@ struct gclient_s {
 
 	pmoveExt_t pmext;*/
 };
+
+
+#define MAX_SPAWN_VARS 64
+#define MAX_SPAWN_VARS_CHARS 2048
+#define SAY_ALL 0
+#define SAY_TEAM 1
+#define SAY_TELL 2
+#define MAX_STATUS_ICONS 8
+#define STATUS_ICON_CS 2259
+#define HEAD_ICON_CS 2267
+#define MAX_HEAD_ICONS 15
+
+
+typedef struct
+{
+    const char *key;
+    const char *value;
+} keyValueStr_t;
+
+typedef struct
+{
+    byte spawnVarsValid;
+    byte pad[3];
+    int numSpawnVars;
+    keyValueStr_t spawnVars[64];
+    int numSpawnVarChars;
+    char spawnVarChars[2048];
+} SpawnVar;
+
+typedef struct
+{
+    int time;
+    int entnum;
+    uint16_t name;
+    uint16_t pad;
+    float tagMat[4][3];
+} cached_tag_mat_t;
+
+/* 7571 */
+typedef struct
+{
+    uint16_t entnum;
+    uint16_t otherEntnum;
+    int useCount;
+    int otherUseCount;
+} trigger_info_t;
+
+/* 7383 */
+typedef struct
+{
+    int lines;
+    const char *text;
+    int ungetToken;
+    int backup_lines;
+    const char *backup_text;
+} com_parse_mark_t;
+
+typedef struct
+{                              //0x8370440
+    struct gclient_s *clients; // [maxclients]
+
+    struct gentity_s *gentities;
+
+    int gentitySize;
+
+    int num_entities; // current number, <= MAX_GENTITIES
+
+    struct gentity_s *firstFreeEnt;
+    struct gentity_s *lastFreeEnt;
+
+    fileHandle_t logFile;
+
+    int initializing;
+    int clientIsSpawning;
+    objective_t objectives[16];
+
+    // store latched cvars here that we want to get at often
+    int maxclients; //0x1e4
+    int framenum;
+    int time;         // in msec		0x1ec
+    int previousTime; // 0x1f0 so movers can back up when blocked
+    int frameTime;    // Gordon: time the frame started, for antilag stuff
+
+    int startTime; // level.time the map was started
+
+    int teamScores[TEAM_NUM_TEAMS]; //0x1fc
+    int lastTeammateHealthTime;     // last time of client team location update
+
+    qboolean bUpdateScoresForIntermission; //???? Not known 0x210
+    byte teamHasRadar[TEAM_NUM_TEAMS];
+    int manualNameChange;           //0x218 Manual Change mode
+    int numConnectedClients;        // connected, non-spectators
+    int sortedClients[MAX_CLIENTS]; //sorted by rank or score ? 0x220
+
+    // voting state
+    char voteString[MAX_STRING_CHARS];        //0x320
+    char voteDisplayString[MAX_STRING_CHARS]; //0x720
+    int voteTime;                             // level.time vote was called	0xb20
+    int voteExecuteTime;                      // time the vote is executed
+    int voteYes;                              //0xb28
+    int voteNo;                               //0xb2c
+    int numVotingClients;                     // set by CalculateRanks
+
+    SpawnVar spawnVars;
+    int savePersist;
+
+    struct gentity_s *droppedWeaponCue[32];
+    float fFogOpaqueDist;
+    float fFogOpaqueDistSqrd;
+    int remapCount;
+    int currentPlayerClone;
+    trigger_info_t pendingTriggerList[256];
+    trigger_info_t currentTriggerList[256];
+    int pendingTriggerListSize;
+    int currentTriggerListSize;
+    int finished;
+    int bPlayerIgnoreRadiusDamage;
+    int bPlayerIgnoreRadiusDamageLatched;
+    int registerWeapons;
+    int bRegisterItems;
+    int currentEntityThink;
+    void *openScriptIOFileHandles[1];
+    char *openScriptIOFileBuffers[1];
+    com_parse_mark_t currentScriptIOLineMark[1];
+    cached_tag_mat_t cachedTagMat;
+    int scriptPrintChannel;
+    float compassMapUpperLeft[2];
+    float compassMapWorldSize[2];
+    float compassNorth[2];
+    struct scr_vehicle_s *vehicles;
+    int framerate;
+} level_locals_t;
+
+extern level_locals_t level;
+
+
+#define CS_VOTE_TIME 13
+#define CS_VOTE_STRING 14
+#define CS_VOTE_YES 15
+#define CS_VOTE_NO 16
+
+#define POF_PLAYER 4
+
+// TTimo - voting config flags
+#define VOTEFLAGS_RESTART (1 << 0)
+#define VOTEFLAGS_GAMETYPE (1 << 1)
+#define VOTEFLAGS_STARTMATCH (1 << 2)
+#define VOTEFLAGS_NEXTMAP (1 << 3)
+#define VOTEFLAGS_SWAP (1 << 4)
+#define VOTEFLAGS_TYPE (1 << 5)
+#define VOTEFLAGS_KICK (1 << 6)
+#define VOTEFLAGS_MAP (1 << 7)
+#define VOTEFLAGS_ANYMAP (1 << 8)
+
+#define EF_VOTED 0x00100000     // already cast a vote
+#define EF_TALK 0x00200000      // draw a talk balloon
+#define EF_TAUNT 0x00400000     // player saying taunt
+#define EF_FIRING 0x00000020    // for lightning gun
+#define EF_MANTLE 0x00008000    // for mantle move over something
+#define EF_CROUCHING 0x00000004 // player is crouching
+#define EF_PRONE 0x00000008     // player is prone
+#define EF_DEAD 0x00020000      // don't draw a foe marker over players with EF_DEAD
+#define EF_USETURRET 0x00000200 // use a turret? Not sure about it but using it sets this flag
+#define EF_AIMDOWNSIGHT 0x00040000
 
 
 #pragma pack(push, 1)

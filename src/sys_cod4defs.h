@@ -34,7 +34,7 @@
 
 #define PORT_MASTER 20810
 #define MASTER_SERVER_NAME "cod4master.activision.com"
-#define MASTER_SERVER_NAME2 "cod4master.cod4x.me"
+
 #define HEARTBEAT_GAME "COD-4"
 #define HEARTBEAT_DEAD "flatline"
 

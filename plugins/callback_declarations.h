@@ -36,6 +36,8 @@
 	PCL void OnPreFastRestart();
 	PCL void OnExitLevel();
 	PCL void OnPostFastRestart();
+	PCL void OnPreGameRestart(int savepersist);
+	PCL void OnPostGameRestart(int savepersist);
 	PCL void OnSpawnServer();
 	PCL void OnFrame();
 	PCL void OnOneSecond();
@@ -48,10 +50,14 @@
 	PCL void OnClientEnterWorld(client_t* client);
 	PCL void OnClientUserinfoChanged(client_t* client);
 	PCL void OnClientMoveCommand(client_t* client, usercmd_t* ucmd);
+	PCL void OnPlayerKilled(gentity_t* self, gentity_t* inflictor, gentity_t* attacker, int damage, int meansOfDeath, int iWeapon, hitLocation_t hitLocation);
 	PCL void OnPlayerWantReservedSlot(netadr_t* from, char* pbguid, char* userinfo, int authstate, qboolean *isallowed);
 	PCL void OnModuleLoaded(client_t* client, char* fullpath, long checksum);
 	PCL void OnScreenshotArrived(client_t* client, const char* path);
 	PCL void OnDemoArrived(client_t* client, const char *demoname);
+	PCL void OnScrUsercallFunction(const char* function_name);
+	PCL void OnScrUsercallMethod(const char* method_name, int clientnum);
+	
 	//Following function gets called when the player has basic authentication completed. Here we got a pbguid, the uid which is a short steamid, rejectmsg can be written a text to but never exceed 1023 characters, returnNow will keep the client idle when set to true, client_t*
 	PCL void OnPlayerGotAuthInfo(netadr_t* from, uint64_t* playerid, uint64_t *steamid, char *rejectmsg /*never exceed a limit of 1023 chars*/, qboolean *returnNow, client_t* cl); //an unverified playerid, SteamID "steamIdPending" and "clanIdPending" is not getting verified yet at all - you can get this info from client_t* structure
   PCL void OnPlayerAddBan(baninfo_t* baninfo);

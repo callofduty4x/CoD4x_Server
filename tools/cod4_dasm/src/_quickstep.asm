@@ -5,16 +5,16 @@
 	extern dRfromQ
 	extern dDQfromW
 	extern sinf
-	extern jointGetInfo1
+	extern _Z13jointGetInfo1PK7dxJointPNS_5Info1E
 	extern dSetZero
 	extern dSetValue
 	extern memset
-	extern jointGetInfo2
+	extern _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E
 
 ;Exports of quickstep:
 	global _GLOBAL__I__Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif
 	global g_holdrand
-	global dxQuickStepper
+	global _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif
 
 
 SECTION .text
@@ -27,21 +27,21 @@ _GLOBAL__I__Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -311,7 +311,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;dxQuickStepper(dxWorld*, dxBody* const*, int, dxJoint* const*, int, float)
-dxQuickStepper:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -332,12 +332,12 @@ dxQuickStepper:
 	mov [ebp-0x2194], edx
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jle dxQuickStepper_10
+	jle _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_10
 	xor edi, edi
 	lea ecx, [ebp-0x940]
 	lea ebx, [ebp-0xbe0]
 	mov esi, [ebp+0xc]
-dxQuickStepper_20:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_20:
 	mov eax, [esi]
 	lea edx, [eax+0x34]
 	movss xmm3, dword [eax+0x34]
@@ -754,13 +754,13 @@ dxQuickStepper_20:
 	add ecx, 0x30
 	add ebx, 0x30
 	cmp [ebp+0x10], edi
-	jnz dxQuickStepper_20
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_20
 	xor ecx, ecx
 	mov edx, [ebp+0xc]
-dxQuickStepper_40:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_40:
 	mov eax, [edx]
 	test byte [eax+0x18], 0x8
-	jnz dxQuickStepper_30
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_30
 	movss xmm0, dword [eax+0x20]
 	mov ebx, [ebp-0x218c]
 	mulss xmm0, [ebx]
@@ -776,48 +776,48 @@ dxQuickStepper_40:
 	mulss xmm0, [ebx+0x8]
 	addss xmm0, [eax+0xa0]
 	movss [eax+0xa0], xmm0
-dxQuickStepper_30:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_30:
 	add ecx, 0x1
 	add edx, 0x4
 	cmp [ebp+0x10], ecx
-	jnz dxQuickStepper_40
-dxQuickStepper_10:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_40
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_10:
 	mov eax, [ebp+0x18]
 	test eax, eax
-	jg dxQuickStepper_50
-dxQuickStepper_320:
+	jg _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_50
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_320:
 	mov edx, [ebp+0x10]
 	test edx, edx
-	jle dxQuickStepper_60
-dxQuickStepper_650:
+	jle _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_60
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_650:
 	xor esi, esi
 	lea edx, [ebp-0xbe0]
 	mov ebx, [ebp+0xc]
-dxQuickStepper_100:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_100:
 	mov eax, [ebx]
 	movss xmm1, dword [ebp+0x1c]
 	mulss xmm1, [eax+0x94]
 	xor ecx, ecx
-dxQuickStepper_80:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_80:
 	movaps xmm0, xmm1
 	mulss xmm0, [eax+ecx*4+0x98]
 	addss xmm0, [eax+ecx*4+0x130]
 	movss [eax+ecx*4+0x130], xmm0
 	add ecx, 0x1
 	cmp ecx, 0x3
-	jz dxQuickStepper_70
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_70
 	mov eax, [ebx]
-	jmp dxQuickStepper_80
-dxQuickStepper_70:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_80
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_70:
 	and ecx, 0xffffff00
-dxQuickStepper_90:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_90:
 	mov eax, [ebx]
 	movss xmm0, dword [ebp+0x1c]
 	mulss xmm0, [eax+ecx*4+0xa8]
 	movss [eax+ecx*4+0xa8], xmm0
 	add ecx, 0x1
 	cmp ecx, 0x3
-	jnz dxQuickStepper_90
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_90
 	mov eax, [ebx]
 	movss xmm1, dword [edx]
 	mulss xmm1, [eax+0xa8]
@@ -853,15 +853,15 @@ dxQuickStepper_90:
 	add ebx, 0x4
 	add edx, 0x30
 	cmp [ebp+0x10], esi
-	jnz dxQuickStepper_100
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_100
 	xor ebx, ebx
 	movss xmm5, dword [_float_39_00000000]
 	movss xmm6, dword [_float_999900_00000000]
 	movss xmm4, dword [_float_1600_00000000]
-	movss xmm3, dword [_float_999999995904_0000_float_]
+	movss xmm3, dword [_float_999999995904_00000000]
 	mov edx, [ebp+0xc]
-	jmp dxQuickStepper_110
-dxQuickStepper_140:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_110
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_140:
 	lea ecx, [eax+0x130]
 	movss xmm2, dword [eax+0x130]
 	movss xmm0, dword [eax+0x134]
@@ -872,12 +872,12 @@ dxQuickStepper_140:
 	mulss xmm1, xmm1
 	addss xmm2, xmm1
 	ucomiss xmm2, xmm3
-	ja dxQuickStepper_120
+	ja _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_120
 	add ebx, 0x1
 	add edx, 0x4
 	cmp [ebp+0x10], ebx
-	jz dxQuickStepper_130
-dxQuickStepper_110:
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_130
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_110:
 	mov eax, [edx]
 	lea ecx, [eax+0x140]
 	movss xmm2, dword [eax+0x140]
@@ -889,7 +889,7 @@ dxQuickStepper_110:
 	mulss xmm1, xmm1
 	addss xmm2, xmm1
 	ucomiss xmm2, xmm4
-	jbe dxQuickStepper_140
+	jbe _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_140
 	sqrtss xmm0, xmm2
 	movaps xmm1, xmm5
 	divss xmm1, xmm0
@@ -902,8 +902,8 @@ dxQuickStepper_110:
 	mulss xmm0, [eax+0x148]
 	movss [ecx+0x8], xmm0
 	mov eax, [edx]
-	jmp dxQuickStepper_140
-dxQuickStepper_120:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_140
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_120:
 	sqrtss xmm0, xmm2
 	movaps xmm2, xmm6
 	divss xmm2, xmm0
@@ -919,18 +919,18 @@ dxQuickStepper_120:
 	add ebx, 0x1
 	add edx, 0x4
 	cmp [ebp+0x10], ebx
-	jnz dxQuickStepper_110
-dxQuickStepper_130:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_110
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_130:
 	movss xmm0, dword [ebp+0x1c]
 	mulss xmm0, [_float_0_50000000]
 	movss [ebp-0x2110], xmm0
 	mov dword [ebp-0x20bc], 0x0
 	mov edi, [ebp+0xc]
-dxQuickStepper_210:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_210:
 	mov ebx, [edi]
 	mov eax, ebx
 	xor edx, edx
-dxQuickStepper_150:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_150:
 	movss xmm0, dword [ebp+0x1c]
 	mulss xmm0, [eax+0x130]
 	addss xmm0, [eax+0xe0]
@@ -938,12 +938,12 @@ dxQuickStepper_150:
 	add edx, 0x1
 	add eax, 0x4
 	cmp edx, 0x3
-	jnz dxQuickStepper_150
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_150
 	mov eax, [ebx+0x18]
 	test al, 0x1
-	jz dxQuickStepper_160
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_160
 	test al, 0x2
-	jz dxQuickStepper_170
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_170
 	lea eax, [ebx+0xb8]
 	lea edx, [ebx+0x140]
 	movss xmm1, dword [ebx+0xb8]
@@ -981,13 +981,13 @@ dxQuickStepper_150:
 	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	ucomisd xmm0, [_double_0_00010000]
-	jae dxQuickStepper_180
-	jp dxQuickStepper_180
+	jae _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_180
+	jp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_180
 	movss xmm0, dword [ebp-0x210c]
 	mulss xmm0, xmm0
 	mulss xmm0, [_float__0_16666667]
 	addss xmm0, [_float_1_00000000]
-dxQuickStepper_290:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_290:
 	mulss xmm0, [ebp-0x2110]
 	movss xmm1, dword [ebp-0x20ec]
 	mulss xmm1, xmm0
@@ -997,7 +997,7 @@ dxQuickStepper_290:
 	movss [ebp-0x30], xmm2
 	mulss xmm0, [ebp-0x20f4]
 	movss [ebp-0x2c], xmm0
-dxQuickStepper_250:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_250:
 	lea esi, [ebx+0xf0]
 	mov [esp+0x8], esi
 	lea eax, [ebp-0x38]
@@ -1007,16 +1007,16 @@ dxQuickStepper_250:
 	call dQMultiply0
 	mov edx, ebx
 	mov ecx, 0x1
-dxQuickStepper_190:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_190:
 	mov eax, [ebp+ecx*4-0x5c]
 	mov [edx+0xf0], eax
 	add ecx, 0x1
 	add edx, 0x4
 	cmp ecx, 0x5
-	jnz dxQuickStepper_190
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_190
 	test byte [ebx+0x18], 0x2
-	jnz dxQuickStepper_200
-dxQuickStepper_270:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_200
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_270:
 	mov [esp], esi
 	call dNormalize4
 	mov [esp+0x4], esi
@@ -1029,28 +1029,28 @@ dxQuickStepper_270:
 	add edi, 0x4
 	mov edx, [ebp-0x20bc]
 	cmp [ebp+0x10], edx
-	jnz dxQuickStepper_210
-dxQuickStepper_60:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_210
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_60:
 	mov eax, [ebp+0x18]
 	test eax, eax
-	jle dxQuickStepper_220
-dxQuickStepper_630:
+	jle _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_220
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_630:
 	xor edx, edx
-dxQuickStepper_230:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_230:
 	mov ecx, [ebp+0x14]
 	mov eax, [ecx+edx*4]
 	mov dword [eax+0x10], 0x1
 	add edx, 0x1
 	cmp [ebp+0x18], edx
-	jnz dxQuickStepper_230
-dxQuickStepper_220:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_230
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_220:
 	add esp, 0x21fc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-dxQuickStepper_170:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_170:
 	movss xmm0, dword [ebx+0x140]
 	movss xmm1, dword [ebx+0x144]
 	movss xmm2, dword [ebx+0x148]
@@ -1070,13 +1070,13 @@ dxQuickStepper_170:
 	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	ucomisd xmm0, [_double_0_00010000]
-	jae dxQuickStepper_240
-	jp dxQuickStepper_240
+	jae _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_240
+	jp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_240
 	movaps xmm0, xmm1
 	mulss xmm0, xmm1
 	mulss xmm0, [_float__0_16666667]
 	addss xmm0, [_float_1_00000000]
-dxQuickStepper_300:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_300:
 	mulss xmm0, [ebp-0x2110]
 	movaps xmm1, xmm0
 	mulss xmm1, [ebx+0x140]
@@ -1086,8 +1086,8 @@ dxQuickStepper_300:
 	movss [ebp-0x30], xmm1
 	mulss xmm0, [ebx+0x148]
 	movss [ebp-0x2c], xmm0
-	jmp dxQuickStepper_250
-dxQuickStepper_160:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_250
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_160:
 	lea esi, [ebx+0xf0]
 	mov [esp+0x8], esi
 	lea eax, [ebx+0x140]
@@ -1097,7 +1097,7 @@ dxQuickStepper_160:
 	call dDQfromW
 	mov eax, ebx
 	mov edx, 0x1
-dxQuickStepper_260:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_260:
 	movss xmm0, dword [ebp+0x1c]
 	mulss xmm0, [ebp+edx*4-0x3c]
 	addss xmm0, [eax+0xf0]
@@ -1105,9 +1105,9 @@ dxQuickStepper_260:
 	add edx, 0x1
 	add eax, 0x4
 	cmp edx, 0x5
-	jnz dxQuickStepper_260
-	jmp dxQuickStepper_270
-dxQuickStepper_200:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_260
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_270
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_200:
 	mov [esp+0x8], esi
 	lea eax, [ebp-0x28]
 	mov [esp+0x4], eax
@@ -1116,7 +1116,7 @@ dxQuickStepper_200:
 	call dDQfromW
 	mov eax, ebx
 	mov edx, 0x1
-dxQuickStepper_280:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_280:
 	movss xmm0, dword [ebp-0x2110]
 	mulss xmm0, [ebp+edx*4-0x4c]
 	addss xmm0, [eax+0xf0]
@@ -1124,17 +1124,17 @@ dxQuickStepper_280:
 	add edx, 0x1
 	add eax, 0x4
 	cmp edx, 0x5
-	jnz dxQuickStepper_280
-	jmp dxQuickStepper_270
-dxQuickStepper_180:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_280
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_270
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_180:
 	movss xmm0, dword [ebp-0x210c]
 	movss [esp], xmm0
 	call sinf
 	fstp dword [ebp-0x21dc]
 	movss xmm0, dword [ebp-0x21dc]
 	divss xmm0, dword [ebp-0x210c]
-	jmp dxQuickStepper_290
-dxQuickStepper_240:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_290
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_240:
 	movss [esp], xmm1
 	movss [ebp-0x21d8], xmm1
 	call sinf
@@ -1142,17 +1142,17 @@ dxQuickStepper_240:
 	movss xmm0, dword [ebp-0x21dc]
 	movss xmm1, dword [ebp-0x21d8]
 	divss xmm0, xmm1
-	jmp dxQuickStepper_300
-dxQuickStepper_50:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_300
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_50:
 	xor esi, esi
 	mov dword [ebp-0x2188], 0x0
 	lea ebx, [ebp-0x6a0]
-dxQuickStepper_310:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_310:
 	mov [esp+0x4], ebx
 	mov edi, [ebp+0x14]
 	mov eax, [edi+esi*4]
 	mov [esp], eax
-	call jointGetInfo1
+	call _Z13jointGetInfo1PK7dxJointPNS_5Info1E
 	mov eax, [ebp-0x2188]
 	mov [ebp+esi*4-0x1b0], eax
 	mov edx, [ebx]
@@ -1161,9 +1161,9 @@ dxQuickStepper_310:
 	add esi, 0x1
 	add ebx, 0x8
 	cmp [ebp+0x18], esi
-	jnz dxQuickStepper_310
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_310
 	test eax, eax
-	jle dxQuickStepper_320
+	jle _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_320
 	mov [esp+0x4], eax
 	lea ecx, [ebp-0x20b0]
 	mov [esp], ecx
@@ -1185,14 +1185,14 @@ dxQuickStepper_310:
 	call memset
 	mov eax, [ebp-0x2198]
 	xor edx, edx
-dxQuickStepper_330:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_330:
 	mov dword [eax+0x80], 0xff7fffff
 	mov dword [eax+0x84], 0x7f7fffff
 	mov dword [ebp+edx*4-0x12d0], 0xffffffff
 	add edx, 0x1
 	add eax, 0x90
 	cmp edx, [ebp-0x2188]
-	jnz dxQuickStepper_330
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_330
 	mov dword [ebp-0x70], 0x24
 	movss xmm0, dword [ebp-0x2190]
 	movss [ebp-0x88], xmm0
@@ -1200,15 +1200,15 @@ dxQuickStepper_330:
 	mov eax, [edx+0x10]
 	mov [ebp-0x84], eax
 	xor edi, edi
-	jmp dxQuickStepper_340
-dxQuickStepper_360:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_340
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_360:
 	add edi, 0x1
 	cmp [ebp+0x18], edi
-	jz dxQuickStepper_350
-dxQuickStepper_340:
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_350
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_340:
 	mov ebx, [ebp+edi*8-0x6a0]
 	test ebx, ebx
-	jz dxQuickStepper_360
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_360
 	mov esi, [ebp+edi*4-0x1b0]
 	lea eax, [esi+esi*8]
 	shl eax, 0x4
@@ -1242,63 +1242,63 @@ dxQuickStepper_340:
 	mov ecx, [ebp+0x14]
 	mov eax, [ecx+edi*4]
 	mov [esp], eax
-	call jointGetInfo2
+	call _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E
 	test ebx, ebx
-	jle dxQuickStepper_360
+	jle _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_360
 	mov edx, [ebp-0x219c]
 	xor ecx, ecx
-dxQuickStepper_380:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_380:
 	mov eax, [edx]
 	test eax, eax
-	js dxQuickStepper_370
+	js _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_370
 	lea eax, [esi+eax]
 	mov [edx], eax
-dxQuickStepper_370:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_370:
 	add ecx, 0x1
 	add edx, 0x4
 	cmp ebx, ecx
-	jnz dxQuickStepper_380
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_380
 	add edi, 0x1
 	cmp [ebp+0x18], edi
-	jnz dxQuickStepper_340
-dxQuickStepper_350:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_340
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_350:
 	mov edx, [ebp-0x2198]
 	mov dword [ebp-0x20c4], 0x0
 	lea edi, [ebp-0x6a0]
 	mov ebx, [ebp-0x20c4]
-dxQuickStepper_420:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_420:
 	mov esi, [ebp+0x14]
 	mov eax, [esi+ebx*4]
 	mov esi, [eax+0x24]
 	mov ebx, [eax+0x34]
 	mov eax, [edi]
 	test eax, eax
-	jle dxQuickStepper_390
+	jle _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_390
 	xor eax, eax
 	mov ecx, [edi]
-dxQuickStepper_400:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_400:
 	mov [edx+0x1c], esi
 	mov [edx+0x2c], ebx
 	add edx, 0x90
 	add eax, 0x1
 	cmp ecx, eax
-	jg dxQuickStepper_400
-dxQuickStepper_390:
+	jg _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_400
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_390:
 	add dword [ebp-0x20c4], 0x1
 	add edi, 0x8
 	mov eax, [ebp-0x20c4]
 	cmp [ebp+0x18], eax
-	jz dxQuickStepper_410
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_410
 	mov ebx, eax
-	jmp dxQuickStepper_420
-dxQuickStepper_410:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_420
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_410:
 	mov edi, [ebp+0x10]
 	test edi, edi
-	jg dxQuickStepper_430
-dxQuickStepper_690:
+	jg _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_430
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_690:
 	mov ebx, [ebp-0x2198]
 	xor edi, edi
-dxQuickStepper_450:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_450:
 	mov esi, [ebx+0x2c]
 	mov eax, [ebx+0x1c]
 	lea eax, [eax+eax*2]
@@ -1325,7 +1325,7 @@ dxQuickStepper_450:
 	addss xmm1, xmm0
 	addss xmm2, xmm1
 	test esi, esi
-	js dxQuickStepper_440
+	js _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_440
 	lea eax, [esi+esi*2]
 	lea eax, [ebp+eax*8-0x300]
 	lea edx, [ebx+0x20]
@@ -1349,15 +1349,15 @@ dxQuickStepper_450:
 	mulss xmm0, [ecx+0x8]
 	addss xmm1, xmm0
 	addss xmm2, xmm1
-dxQuickStepper_440:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_440:
 	movss [ebx+0x88], xmm2
 	add ebx, 0x90
 	add edi, 0x1
 	cmp edi, [ebp-0x2188]
-	jnz dxQuickStepper_450
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_450
 	mov edx, [ebp-0x2198]
 	xor ecx, ecx
-dxQuickStepper_460:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_460:
 	lea eax, [ecx*4]
 	movss xmm0, dword [ebp-0x2190]
 	mulss xmm0, [ebp+eax-0x20b0]
@@ -1371,7 +1371,7 @@ dxQuickStepper_460:
 	add ecx, 0x1
 	add edx, 0x90
 	cmp ecx, [ebp-0x2188]
-	jnz dxQuickStepper_460
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_460
 	mov esi, [ebp-0x218c]
 	add esi, 0x18
 	mov [ebp-0x21ec], esi
@@ -1379,7 +1379,7 @@ dxQuickStepper_460:
 	movss [ebp-0x2154], xmm0
 	mov ecx, [ebp-0x2198]
 	xor esi, esi
-dxQuickStepper_480:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_480:
 	mov edx, [ecx+0x1c]
 	mov ebx, [ecx+0x2c]
 	mov edi, [ebp+0xc]
@@ -1427,7 +1427,7 @@ dxQuickStepper_480:
 	addss xmm1, xmm0
 	movss [eax+0x8], xmm1
 	test ebx, ebx
-	js dxQuickStepper_470
+	js _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_470
 	mov eax, [edi+ebx*4]
 	movss xmm1, dword [eax+0x94]
 	lea edx, [ecx+0x60]
@@ -1472,11 +1472,11 @@ dxQuickStepper_480:
 	mulss xmm0, [ecx+0x38]
 	addss xmm1, xmm0
 	movss [edx+0x8], xmm1
-dxQuickStepper_470:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_470:
 	add ecx, 0x90
 	add esi, 0x1
 	cmp esi, [ebp-0x2188]
-	jnz dxQuickStepper_480
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_480
 	mov ecx, [ebp+0x10]
 	lea eax, [ecx+ecx*2]
 	shl eax, 0x3
@@ -1487,7 +1487,7 @@ dxQuickStepper_470:
 	call memset
 	mov ecx, [ebp-0x2198]
 	xor ebx, ebx
-dxQuickStepper_500:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_500:
 	lea eax, [ecx+0x40]
 	movss xmm2, dword [ecx]
 	mulss xmm2, [ecx+0x40]
@@ -1512,7 +1512,7 @@ dxQuickStepper_500:
 	addss xmm2, xmm1
 	mov esi, [ecx+0x2c]
 	test esi, esi
-	js dxQuickStepper_490
+	js _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_490
 	lea eax, [ecx+0x20]
 	lea edx, [ecx+0x60]
 	movss xmm1, dword [ecx+0x20]
@@ -1535,7 +1535,7 @@ dxQuickStepper_500:
 	mulss xmm0, [edx+0x8]
 	addss xmm1, xmm0
 	addss xmm2, xmm1
-dxQuickStepper_490:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_490:
 	addss xmm2, [ebp+ebx*4-0x19c0]
 	movss xmm0, dword [ebp-0x2154]
 	divss xmm0, xmm2
@@ -1543,10 +1543,10 @@ dxQuickStepper_490:
 	add ecx, 0x90
 	add ebx, 0x1
 	cmp ebx, [ebp-0x2188]
-	jnz dxQuickStepper_500
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_500
 	mov edx, [ebp-0x2198]
 	xor ecx, ecx
-dxQuickStepper_510:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_510:
 	movss xmm0, dword [edx+0x8c]
 	movaps xmm1, xmm0
 	mulss xmm1, [edx]
@@ -1595,29 +1595,29 @@ dxQuickStepper_510:
 	add edx, 0x90
 	add ecx, 0x1
 	cmp ecx, [ebp-0x2188]
-	jnz dxQuickStepper_510
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_510
 	xor edx, edx
 	xor ecx, ecx
 	mov ebx, [ebp-0x2188]
 	mov esi, [ebp-0x2194]
 	lea eax, [esi+ebx*4-0x4]
-dxQuickStepper_530:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_530:
 	mov ebx, [ebp+edx*4-0x12d0]
 	test ebx, ebx
-	js dxQuickStepper_520
+	js _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_520
 	mov [eax], edx
 	sub eax, 0x4
 	add edx, 0x1
 	cmp edx, [ebp-0x2188]
-	jnz dxQuickStepper_530
-dxQuickStepper_660:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_530
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_660:
 	cmp dword [ebp+0x10], 0x1
-	jz dxQuickStepper_540
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_540
 	mov edx, [ebp-0x21ec]
 	mov edx, [edx]
 	mov [ebp-0x2138], edx
 	test edx, edx
-	jz dxQuickStepper_550
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_550
 	mov ecx, [g_holdrand]
 	mov [ebp-0x212c], ecx
 	mov dword [ebp-0x2134], 0x0
@@ -1629,14 +1629,14 @@ dxQuickStepper_660:
 	mov eax, [ebp-0x2134]
 	and eax, 0x7
 	cmp eax, 0x7
-	jz dxQuickStepper_560
-dxQuickStepper_720:
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_560
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_720:
 	mov edi, [ebp-0x2194]
 	mov [ebp-0x20e8], edi
 	mov dword [ebp-0x20c8], 0x0
 	mov edx, edi
-	jmp dxQuickStepper_570
-dxQuickStepper_610:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_570
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_610:
 	lea eax, [edx+edx*8]
 	shl eax, 0x4
 	movss xmm3, dword [edi+0x84]
@@ -1645,7 +1645,7 @@ dxQuickStepper_610:
 	andps xmm3, [_data16_7fffffff]
 	movaps xmm6, xmm3
 	xorps xmm6, xmm7
-dxQuickStepper_620:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_620:
 	mov ebx, [edi+0x2c]
 	mov [ebp-0x2124], ebx
 	mov eax, [edi+0x1c]
@@ -1687,7 +1687,7 @@ dxQuickStepper_620:
 	subss xmm4, xmm2
 	mov eax, [ebp-0x2124]
 	test eax, eax
-	js dxQuickStepper_580
+	js _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_580
 	mov ecx, [ebp-0x2124]
 	lea eax, [ecx+ecx*2]
 	lea ebx, [ebp+eax*8-0x450]
@@ -1712,7 +1712,7 @@ dxQuickStepper_620:
 	addss xmm1, xmm0
 	addss xmm2, xmm1
 	subss xmm4, xmm2
-dxQuickStepper_710:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_710:
 	movaps xmm1, xmm4
 	addss xmm1, xmm5
 	movaps xmm0, xmm1
@@ -1768,7 +1768,7 @@ dxQuickStepper_710:
 	movss [esi+0x8], xmm0
 	mov esi, [ebp-0x2124]
 	test esi, esi
-	js dxQuickStepper_590
+	js _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_590
 	lea eax, [edi+0x60]
 	movaps xmm0, xmm1
 	mulss xmm0, [edi+0x60]
@@ -1795,14 +1795,14 @@ dxQuickStepper_710:
 	mulss xmm1, [edx+0x8]
 	addss xmm1, [eax+0x8]
 	movss [eax+0x8], xmm1
-dxQuickStepper_590:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_590:
 	add dword [ebp-0x20c8], 0x1
 	add dword [ebp-0x20e8], 0x4
 	mov ebx, [ebp-0x20c8]
 	cmp [ebp-0x2188], ebx
-	jbe dxQuickStepper_600
+	jbe _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_600
 	mov edx, [ebp-0x20e8]
-dxQuickStepper_570:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_570:
 	mov eax, [edx]
 	mov edx, [ebp+eax*4-0x12d0]
 	lea eax, [eax+eax*8]
@@ -1810,19 +1810,19 @@ dxQuickStepper_570:
 	mov edi, [ebp-0x2198]
 	add edi, eax
 	test edx, edx
-	jns dxQuickStepper_610
+	jns _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_610
 	movss xmm3, dword [edi+0x84]
 	movss xmm6, dword [edi+0x80]
-	jmp dxQuickStepper_620
-dxQuickStepper_550:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_620
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_550:
 	mov ecx, [ebp+0x10]
 	test ecx, ecx
-	jle dxQuickStepper_630
-dxQuickStepper_740:
+	jle _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_630
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_740:
 	xor esi, esi
 	lea ecx, [ebp-0x450]
 	mov ebx, [ebp+0xc]
-dxQuickStepper_640:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_640:
 	mov eax, [ebx]
 	lea edx, [eax+0x130]
 	movss xmm0, dword [ebp+0x1c]
@@ -1855,17 +1855,17 @@ dxQuickStepper_640:
 	add ebx, 0x4
 	add ecx, 0x18
 	cmp [ebp+0x10], esi
-	jnz dxQuickStepper_640
-	jmp dxQuickStepper_650
-dxQuickStepper_520:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_640
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_650
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_520:
 	mov edi, [ebp-0x2194]
 	mov [edi+ecx*4], edx
 	add ecx, 0x1
 	add edx, 0x1
 	cmp edx, [ebp-0x2188]
-	jnz dxQuickStepper_530
-	jmp dxQuickStepper_660
-dxQuickStepper_430:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_530
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_660
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_430:
 	mov dword [ebp-0x20c0], 0x0
 	mov dword [ebp-0x20e4], 0x0
 	mov dword [ebp-0x20e0], 0x3
@@ -1876,13 +1876,13 @@ dxQuickStepper_430:
 	mov ecx, [ebp+0xc]
 	mov [ebp-0x21c8], ecx
 	mov ebx, ecx
-dxQuickStepper_700:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_700:
 	mov ecx, [ebx]
 	movss xmm2, dword [ecx+0x94]
 	mov edx, [ebp-0x20e4]
 	lea eax, [ebp+edx*4-0x300]
 	xor edx, edx
-dxQuickStepper_670:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_670:
 	movaps xmm0, xmm2
 	mulss xmm0, [ecx+edx*4+0x98]
 	movss xmm1, dword [ebp-0x2190]
@@ -1892,7 +1892,7 @@ dxQuickStepper_670:
 	add edx, 0x1
 	add eax, 0x4
 	cmp edx, 0x3
-	jnz dxQuickStepper_670
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_670
 	mov ebx, [ebp-0x20e0]
 	movss xmm1, dword [ebp+ebx*8-0xbf8]
 	mulss xmm1, [ecx+0xa8]
@@ -1925,7 +1925,7 @@ dxQuickStepper_670:
 	and edx, 0xffffff00
 	mov ebx, [ebp-0x21c4]
 	sub ebx, edi
-dxQuickStepper_680:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_680:
 	movss xmm0, dword [ebp-0x2190]
 	mulss xmm0, [ecx+edx*4+0x140]
 	addss xmm0, [ebx+eax]
@@ -1933,7 +1933,7 @@ dxQuickStepper_680:
 	add edx, 0x1
 	add eax, 0x4
 	cmp edx, 0x3
-	jnz dxQuickStepper_680
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_680
 	add dword [ebp-0x20c0], 0x1
 	add dword [ebp-0x21c8], 0x4
 	add dword [ebp-0x20e4], 0x6
@@ -1943,24 +1943,24 @@ dxQuickStepper_680:
 	add dword [ebp-0x21c4], 0x18
 	mov eax, [ebp-0x20c0]
 	cmp [ebp+0x10], eax
-	jz dxQuickStepper_690
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_690
 	mov ebx, [ebp-0x21c8]
-	jmp dxQuickStepper_700
-dxQuickStepper_580:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_700
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_580:
 	xor ebx, ebx
-	jmp dxQuickStepper_710
-dxQuickStepper_600:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_710
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_600:
 	add dword [ebp-0x2134], 0x1
 	mov esi, [ebp-0x2134]
 	cmp [ebp-0x2138], esi
-	jbe dxQuickStepper_550
+	jbe _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_550
 	mov eax, esi
 	and eax, 0x7
 	cmp eax, 0x7
-	jnz dxQuickStepper_720
-dxQuickStepper_560:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_720
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_560:
 	mov dword [ebp-0x2130], 0x0
-dxQuickStepper_730:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_730:
 	mov edx, [ebp-0x212c]
 	mov eax, [edx]
 	lea esi, [eax+eax*2]
@@ -2010,9 +2010,9 @@ dxQuickStepper_730:
 	add dword [ebp-0x2130], 0x1
 	mov esi, [ebp-0x2130]
 	cmp [ebp-0x2188], esi
-	ja dxQuickStepper_730
-	jmp dxQuickStepper_720
-dxQuickStepper_540:
+	ja _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_730
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_720
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_540:
 	mov eax, [ebp-0x21ec]
 	mov eax, [eax]
 	mov [ebp-0x2150], eax
@@ -2025,7 +2025,7 @@ dxQuickStepper_540:
 	mov [ebp-0x213c], eax
 	mov eax, [ebp-0x2150]
 	test eax, eax
-	jz dxQuickStepper_740
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_740
 	mov ecx, [g_holdrand]
 	mov [ebp-0x2140], ecx
 	mov dword [ebp-0x214c], 0x0
@@ -2049,12 +2049,12 @@ dxQuickStepper_540:
 	mov eax, [ebp-0x214c]
 	and eax, 0x7
 	cmp eax, 0x7
-	jz dxQuickStepper_750
-dxQuickStepper_800:
+	jz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_750
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_800:
 	mov ebx, [ebp-0x2194]
 	xor esi, esi
-	jmp dxQuickStepper_760
-dxQuickStepper_780:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_760
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_780:
 	lea eax, [edx+edx*8]
 	shl eax, 0x4
 	movss xmm5, dword [ecx+0x84]
@@ -2063,7 +2063,7 @@ dxQuickStepper_780:
 	andps xmm5, xmm7
 	movaps xmm6, xmm5
 	xorps xmm6, [_data16_80000000]
-dxQuickStepper_790:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_790:
 	movss xmm4, dword [ecx+0xc]
 	movaps xmm0, xmm4
 	mulss xmm0, [ecx+0x8c]
@@ -2148,8 +2148,8 @@ dxQuickStepper_790:
 	add esi, 0x1
 	add ebx, 0x4
 	cmp [ebp-0x2188], esi
-	jbe dxQuickStepper_770
-dxQuickStepper_760:
+	jbe _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_770
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_760:
 	mov eax, [ebx]
 	mov edx, [ebp+eax*4-0x12d0]
 	lea eax, [eax+eax*8]
@@ -2157,22 +2157,22 @@ dxQuickStepper_760:
 	mov ecx, [ebp-0x2198]
 	add ecx, eax
 	test edx, edx
-	jns dxQuickStepper_780
+	jns _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_780
 	movss xmm5, dword [ecx+0x84]
 	movss xmm6, dword [ecx+0x80]
-	jmp dxQuickStepper_790
-dxQuickStepper_770:
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_790
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_770:
 	add dword [ebp-0x214c], 0x1
 	mov eax, [ebp-0x214c]
 	cmp [ebp-0x2150], eax
-	jbe dxQuickStepper_740
+	jbe _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_740
 	mov eax, [ebp-0x214c]
 	and eax, 0x7
 	cmp eax, 0x7
-	jnz dxQuickStepper_800
-dxQuickStepper_750:
+	jnz _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_800
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_750:
 	mov dword [ebp-0x2148], 0x0
-dxQuickStepper_810:
+_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_810:
 	mov edx, [ebp-0x2140]
 	mov eax, [edx]
 	lea esi, [eax+eax*2]
@@ -2222,8 +2222,8 @@ dxQuickStepper_810:
 	add dword [ebp-0x2148], 0x1
 	mov esi, [ebp-0x2148]
 	cmp [ebp-0x2188], esi
-	ja dxQuickStepper_810
-	jmp dxQuickStepper_800
+	ja _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_810
+	jmp _Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif_800
 
 
 ;Initialized global or static variables of quickstep:
@@ -2264,7 +2264,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of quickstep:
@@ -2316,7 +2316,7 @@ _float_1_00000000:		dd 0x3f800000	; 1
 _float_39_00000000:		dd 0x421c0000	; 39
 _float_999900_00000000:		dd 0x49741dc0	; 999900
 _float_1600_00000000:		dd 0x44c80000	; 1600
-_float_999999995904_0000_float_:		dd 0x5368d4a5	; 1e+12
+_float_999999995904_00000000:		dd 0x5368d4a5	; 1e+12
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _double_0_00010000:		dq 0x3f1a36e2eb1c432d	; 0.0001

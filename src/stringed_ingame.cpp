@@ -988,32 +988,25 @@ void SE_ShutDown(void)
 //
 // Any errors that result from this should probably be treated as game-fatal, since an asset file is fuxored.
 //
-LPCSTR SE_LoadLanguage( LPCSTR psLanguage, SE_BOOL forceEnglish /* = SE_TRUE */ )
+LPCSTR SE_LoadLanguage( SE_BOOL forceEnglish /* = SE_TRUE */ )
 {
 	LPCSTR psErrorMessage = NULL;
 
-	if (psLanguage && psLanguage[0])
-	{
-		SE_NewLanguage();
+	SE_NewLanguage();
 
-		string strResults;
-		/*int iFilesFound = */SE_BuildFileList( 
+	string strResults;
+	/*int iFilesFound = */SE_BuildFileList( 
 #ifdef _STRINGED
-		va("C:\\Source\\Tools\\StringEd\\test_data\\%s",sSE_STRINGS_DIR)
+	va("C:\\Source\\Tools\\StringEd\\test_data\\%s",sSE_STRINGS_DIR)
 #else
-		sSE_STRINGS_DIR
+	sSE_STRINGS_DIR
 #endif
-		, strResults);
+	, strResults);
 
-		LPCSTR p;
-		while ( (p=SE_GetFoundFile (strResults)) != NULL && !psErrorMessage )
-		{
-			psErrorMessage = SE_Load( p, forceEnglish );
-		}
-	}
-	else
+	LPCSTR p;
+	while ( (p=SE_GetFoundFile (strResults)) != NULL && !psErrorMessage )
 	{
-		__ASSERT( 0 && "SE_LoadLanguage(): Bad language name!" );
+		psErrorMessage = SE_Load( p, forceEnglish );
 	}
 
 	return psErrorMessage;

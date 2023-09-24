@@ -1,28 +1,27 @@
 ;Imports of joint:
 	extern atan2f
-	extern circleCoords.131667
 	extern dNormalize3
 	extern dRFrom2Axes
 	extern dQfromR
 	extern dQMultiply1
 	extern dQMultiply2
 	extern dQMultiply3
-	extern Com_Printf
+	extern _Z10Com_PrintfiPKcz
 	extern dPlaneSpace
-	extern va
+	extern _Z2vaPKcz
 	extern dSetZero
 
 ;Exports of joint:
-	global getHingeAngleFromRelativeQuat
-	global setAxes
-	global getUniversalAngle1
-	global getUniversalAngle2
-	global amotorSetEulerReferenceVectors
-	global amotorComputeGlobalAxes
-	global setFixedOrientation
-	global jointGetInfo1
-	global jointGetInfo2
-	global jointInit
+	global _Z29getHingeAngleFromRelativeQuatPKfS0_
+	global _Z7setAxesP7dxJointfffPfS1_
+	global _Z18getUniversalAngle1PK16dxJointUniversal
+	global _Z18getUniversalAngle2PK16dxJointUniversal
+	global _Z30amotorSetEulerReferenceVectorsP13dxJointAMotor
+	global _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f
+	global _Z19setFixedOrientationP7dxJointPNS_5Info2EPfi
+	global _Z13jointGetInfo1PK7dxJointPNS_5Info1E
+	global _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E
+	global _Z9jointInitP7dxJoint
 	global _ZN17dxJointLimitMotor3getEi
 	global _ZN17dxJointLimitMotor3setEif
 	global _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi
@@ -46,7 +45,7 @@ SECTION .text
 
 
 ;getHingeAngleFromRelativeQuat(float const*, float const*)
-getHingeAngleFromRelativeQuat:
+_Z29getHingeAngleFromRelativeQuatPKfS0_:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
@@ -69,37 +68,37 @@ getHingeAngleFromRelativeQuat:
 	mulss xmm4, [edx+0x8]
 	addss xmm1, xmm4
 	ucomiss xmm1, [_float_0_00000000]
-	jb getHingeAngleFromRelativeQuat_10
+	jb _Z29getHingeAngleFromRelativeQuatPKfS0__10
 	movss [esp+0x4], xmm5
 	movss [esp], xmm0
 	call atan2f
 	fstp dword [ebp-0xc]
 	movss xmm0, dword [ebp-0xc]
 	addss xmm0, xmm0
-getHingeAngleFromRelativeQuat_30:
+_Z29getHingeAngleFromRelativeQuatPKfS0__30:
 	cvtss2sd xmm1, xmm0
 	ucomisd xmm1, [_double_3_14159265]
-	jbe getHingeAngleFromRelativeQuat_20
+	jbe _Z29getHingeAngleFromRelativeQuatPKfS0__20
 	subsd xmm1, [_double_6_28318531]
 	cvtsd2ss xmm0, xmm1
-getHingeAngleFromRelativeQuat_20:
-	xorps xmm0, [circleCoords.131667+0x450]
+_Z29getHingeAngleFromRelativeQuatPKfS0__20:
+	xorps xmm0, [_data16_80000000]
 	leave
 	ret
-getHingeAngleFromRelativeQuat_10:
-	xorps xmm5, [circleCoords.131667+0x450]
+_Z29getHingeAngleFromRelativeQuatPKfS0__10:
+	xorps xmm5, [_data16_80000000]
 	movss [esp+0x4], xmm5
 	movss [esp], xmm0
 	call atan2f
 	fstp dword [ebp-0xc]
 	movss xmm0, dword [ebp-0xc]
 	addss xmm0, xmm0
-	jmp getHingeAngleFromRelativeQuat_30
+	jmp _Z29getHingeAngleFromRelativeQuatPKfS0__30
 	nop
 
 
 ;setAxes(dxJoint*, float, float, float, float*, float*)
-setAxes:
+_Z7setAxesP7dxJointfffPfS1_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -114,7 +113,7 @@ setAxes:
 	mov esi, ecx
 	mov eax, [eax+0x20]
 	test eax, eax
-	jz setAxes_10
+	jz _Z7setAxesP7dxJointfffPfS1__10
 	movss [ebp-0x28], xmm0
 	movss [ebp-0x24], xmm1
 	movss [ebp-0x20], xmm2
@@ -123,7 +122,7 @@ setAxes:
 	mov [esp], eax
 	call dNormalize3
 	test ebx, ebx
-	jz setAxes_20
+	jz _Z7setAxesP7dxJointfffPfS1__20
 	mov eax, [edi+0x20]
 	lea edx, [eax+0x100]
 	movss xmm1, dword [eax+0x100]
@@ -154,12 +153,12 @@ setAxes:
 	addss xmm1, xmm0
 	movss [ebx+0x8], xmm1
 	mov dword [ebx+0xc], 0x0
-setAxes_20:
+_Z7setAxesP7dxJointfffPfS1__20:
 	test esi, esi
-	jz setAxes_10
+	jz _Z7setAxesP7dxJointfffPfS1__10
 	mov edx, [edi+0x30]
 	test edx, edx
-	jz setAxes_30
+	jz _Z7setAxesP7dxJointfffPfS1__30
 	lea eax, [edx+0x100]
 	movss xmm1, dword [edx+0x100]
 	mulss xmm1, [ebp-0x28]
@@ -188,29 +187,29 @@ setAxes_20:
 	mulss xmm0, [ebp-0x20]
 	addss xmm1, xmm0
 	movss [esi+0x8], xmm1
-setAxes_40:
+_Z7setAxesP7dxJointfffPfS1__40:
 	mov dword [esi+0xc], 0x0
-setAxes_10:
+_Z7setAxesP7dxJointfffPfS1__10:
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-setAxes_30:
+_Z7setAxesP7dxJointfffPfS1__30:
 	movss xmm0, dword [ebp-0x2c]
 	movss [esi], xmm0
 	movss xmm0, dword [ebp-0x30]
 	movss [esi+0x4], xmm0
 	movss xmm0, dword [ebp-0x34]
 	movss [esi+0x8], xmm0
-	jmp setAxes_40
+	jmp _Z7setAxesP7dxJointfffPfS1__40
 	nop
 	add [eax], al
 
 
 ;getUniversalAngle1(dxJointUniversal const*)
-getUniversalAngle1:
+_Z18getUniversalAngle1PK16dxJointUniversal:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -221,7 +220,7 @@ getUniversalAngle1:
 	mov edx, [eax+0x20]
 	pxor xmm0, xmm0
 	test edx, edx
-	jz getUniversalAngle1_10
+	jz _Z18getUniversalAngle1PK16dxJointUniversal_10
 	lea edi, [eax+0x60]
 	lea eax, [edx+0x100]
 	movss xmm3, dword [esi+0x60]
@@ -254,7 +253,7 @@ getUniversalAngle1:
 	addss xmm6, xmm2
 	mov ecx, [esi+0x30]
 	test ecx, ecx
-	jz getUniversalAngle1_20
+	jz _Z18getUniversalAngle1PK16dxJointUniversal_20
 	lea edx, [esi+0x70]
 	lea eax, [ecx+0x100]
 	movss xmm3, dword [esi+0x70]
@@ -281,7 +280,7 @@ getUniversalAngle1:
 	addss xmm3, xmm1
 	mulss xmm2, [eax+0x28]
 	addss xmm3, xmm2
-getUniversalAngle1_30:
+_Z18getUniversalAngle1PK16dxJointUniversal_30:
 	movss [esp+0x18], xmm3
 	movss [esp+0x14], xmm4
 	movss [esp+0x10], xmm5
@@ -311,24 +310,24 @@ getUniversalAngle1_30:
 	call dQMultiply2
 	mov edx, edi
 	mov eax, ebx
-	call getHingeAngleFromRelativeQuat
-getUniversalAngle1_10:
+	call _Z29getHingeAngleFromRelativeQuatPKfS0_
+_Z18getUniversalAngle1PK16dxJointUniversal_10:
 	add esp, 0x9c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-getUniversalAngle1_20:
+_Z18getUniversalAngle1PK16dxJointUniversal_20:
 	movss xmm5, dword [esi+0x70]
 	movss xmm4, dword [esi+0x74]
 	movss xmm3, dword [esi+0x78]
-	jmp getUniversalAngle1_30
+	jmp _Z18getUniversalAngle1PK16dxJointUniversal_30
 	nop
 
 
 ;getUniversalAngle2(dxJointUniversal const*)
-getUniversalAngle2:
+_Z18getUniversalAngle2PK16dxJointUniversal:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -339,7 +338,7 @@ getUniversalAngle2:
 	mov ecx, [eax+0x20]
 	pxor xmm0, xmm0
 	test ecx, ecx
-	jz getUniversalAngle2_10
+	jz _Z18getUniversalAngle2PK16dxJointUniversal_10
 	lea edx, [eax+0x60]
 	lea eax, [ecx+0x100]
 	movss xmm3, dword [esi+0x60]
@@ -372,7 +371,7 @@ getUniversalAngle2:
 	addss xmm6, xmm2
 	mov edx, [esi+0x30]
 	test edx, edx
-	jz getUniversalAngle2_20
+	jz _Z18getUniversalAngle2PK16dxJointUniversal_20
 	lea edi, [esi+0x70]
 	lea eax, [edx+0x100]
 	movss xmm3, dword [esi+0x70]
@@ -399,7 +398,7 @@ getUniversalAngle2:
 	addss xmm3, xmm1
 	mulss xmm2, [eax+0x28]
 	addss xmm3, xmm2
-getUniversalAngle2_40:
+_Z18getUniversalAngle2PK16dxJointUniversal_40:
 	movss [esp+0x18], xmm6
 	movss [esp+0x14], xmm7
 	movss xmm0, dword [ebp-0x7c]
@@ -416,14 +415,14 @@ getUniversalAngle2_40:
 	call dQfromR
 	mov eax, [esi+0x30]
 	test eax, eax
-	jz getUniversalAngle2_30
+	jz _Z18getUniversalAngle2PK16dxJointUniversal_30
 	mov [esp+0x8], ebx
 	add eax, 0xf0
 	mov [esp+0x4], eax
 	lea ebx, [ebp-0x38]
 	mov [esp], ebx
 	call dQMultiply1
-getUniversalAngle2_30:
+_Z18getUniversalAngle2PK16dxJointUniversal_30:
 	lea eax, [esi+0x90]
 	mov [esp+0x8], eax
 	mov [esp+0x4], ebx
@@ -432,26 +431,26 @@ getUniversalAngle2_30:
 	call dQMultiply2
 	mov edx, edi
 	mov eax, ebx
-	call getHingeAngleFromRelativeQuat
+	call _Z29getHingeAngleFromRelativeQuatPKfS0_
 	xorps xmm0, [_data16_80000000]
-getUniversalAngle2_10:
+_Z18getUniversalAngle2PK16dxJointUniversal_10:
 	add esp, 0x9c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-getUniversalAngle2_20:
+_Z18getUniversalAngle2PK16dxJointUniversal_20:
 	movss xmm5, dword [esi+0x70]
 	movss xmm4, dword [esi+0x74]
 	movss xmm3, dword [esi+0x78]
 	lea edi, [esi+0x70]
-	jmp getUniversalAngle2_40
+	jmp _Z18getUniversalAngle2PK16dxJointUniversal_40
 	nop
 
 
 ;amotorSetEulerReferenceVectors(dxJointAMotor*)
-amotorSetEulerReferenceVectors:
+_Z30amotorSetEulerReferenceVectorsP13dxJointAMotor:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -459,10 +458,10 @@ amotorSetEulerReferenceVectors:
 	mov ebx, eax
 	mov esi, [eax+0x20]
 	test esi, esi
-	jz amotorSetEulerReferenceVectors_10
+	jz _Z30amotorSetEulerReferenceVectorsP13dxJointAMotor_10
 	mov ecx, [eax+0x30]
 	test ecx, ecx
-	jz amotorSetEulerReferenceVectors_20
+	jz _Z30amotorSetEulerReferenceVectorsP13dxJointAMotor_20
 	lea eax, [ecx+0x100]
 	lea edx, [ebx+0x74]
 	movss xmm3, dword [ebx+0x74]
@@ -569,12 +568,12 @@ amotorSetEulerReferenceVectors:
 	mulss xmm3, [eax+0x28]
 	addss xmm2, xmm3
 	movss [ecx+0x8], xmm2
-amotorSetEulerReferenceVectors_10:
+_Z30amotorSetEulerReferenceVectorsP13dxJointAMotor_10:
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-amotorSetEulerReferenceVectors_20:
+_Z30amotorSetEulerReferenceVectorsP13dxJointAMotor_20:
 	lea edx, [eax+0x108]
 	lea eax, [esi+0x100]
 	movss xmm1, dword [esi+0x100]
@@ -641,7 +640,7 @@ amotorSetEulerReferenceVectors_20:
 
 
 ;amotorComputeGlobalAxes(dxJointAMotor const*, float (*) [4])
-amotorComputeGlobalAxes:
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -651,19 +650,19 @@ amotorComputeGlobalAxes:
 	mov esi, eax
 	mov ecx, edx
 	cmp dword [eax+0x44], 0x1
-	jz amotorComputeGlobalAxes_10
+	jz _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_10
 	mov eax, [eax+0x40]
 	test eax, eax
-	jle amotorComputeGlobalAxes_20
+	jle _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_20
 	mov [ebp-0x20], esi
 	mov ebx, edx
 	mov [ebp-0x1c], esi
 	xor edi, edi
 	mov edx, esi
-	jmp amotorComputeGlobalAxes_30
-amotorComputeGlobalAxes_50:
+	jmp _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_30
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_50:
 	cmp eax, 0x2
-	jz amotorComputeGlobalAxes_40
+	jz _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_40
 	mov edx, [ebp-0x1c]
 	mov eax, [edx+0x54]
 	mov [ebx], eax
@@ -676,18 +675,18 @@ amotorComputeGlobalAxes_50:
 	add ebx, 0x10
 	add dword [ebp-0x1c], 0x10
 	cmp edi, [esi+0x40]
-	jge amotorComputeGlobalAxes_20
-amotorComputeGlobalAxes_60:
+	jge _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_20
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_60:
 	mov edx, [ebp-0x20]
-amotorComputeGlobalAxes_30:
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_30:
 	mov eax, [edx+0x48]
 	cmp eax, 0x1
-	jnz amotorComputeGlobalAxes_50
+	jnz _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_50
 	mov edx, edi
 	shl edx, 0x4
 	lea edx, [edx+esi+0x50]
 	mov eax, [esi+0x20]
-amotorComputeGlobalAxes_70:
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_70:
 	lea ecx, [eax+0x100]
 	movss xmm1, dword [eax+0x100]
 	mulss xmm1, [edx+0x4]
@@ -721,21 +720,21 @@ amotorComputeGlobalAxes_70:
 	add ebx, 0x10
 	add dword [ebp-0x1c], 0x10
 	cmp edi, [esi+0x40]
-	jl amotorComputeGlobalAxes_60
-amotorComputeGlobalAxes_20:
+	jl _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_60
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_20:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-amotorComputeGlobalAxes_40:
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_40:
 	mov edx, edi
 	shl edx, 0x4
 	lea edx, [edx+esi+0x50]
 	mov eax, [esi+0x30]
-	jmp amotorComputeGlobalAxes_70
-amotorComputeGlobalAxes_10:
+	jmp _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_70
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_10:
 	mov eax, [eax+0x20]
 	lea edx, [eax+0x100]
 	movss xmm1, dword [eax+0x100]
@@ -767,7 +766,7 @@ amotorComputeGlobalAxes_10:
 	movss [ecx+0x8], xmm1
 	mov edx, [esi+0x30]
 	test edx, edx
-	jz amotorComputeGlobalAxes_80
+	jz _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_80
 	lea ebx, [ecx+0x20]
 	lea eax, [edx+0x100]
 	movss xmm1, dword [edx+0x100]
@@ -798,7 +797,7 @@ amotorComputeGlobalAxes_10:
 	addss xmm1, xmm0
 	movss [ebx+0x8], xmm1
 	movaps xmm0, xmm1
-amotorComputeGlobalAxes_90:
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_90:
 	lea eax, [ecx+0x10]
 	movss xmm1, dword [ebx+0x4]
 	mulss xmm1, [ecx+0x8]
@@ -825,7 +824,7 @@ amotorComputeGlobalAxes_90:
 	pop edi
 	pop ebp
 	ret
-amotorComputeGlobalAxes_80:
+_Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_80:
 	lea ebx, [ecx+0x20]
 	mov eax, [esi+0x74]
 	mov [ecx+0x20], eax
@@ -834,11 +833,11 @@ amotorComputeGlobalAxes_80:
 	mov eax, [esi+0x7c]
 	mov [ebx+0x8], eax
 	movss xmm0, dword [ebx+0x8]
-	jmp amotorComputeGlobalAxes_90
+	jmp _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f_90
 
 
 ;setFixedOrientation(dxJoint*, dxJoint::Info2*, float*, int)
-setFixedOrientation:
+_Z19setFixedOrientationP7dxJointPNS_5Info2EPfi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -868,7 +867,7 @@ setFixedOrientation:
 	mov eax, [ebp-0x40]
 	mov edx, [eax+0x30]
 	test edx, edx
-	jz setFixedOrientation_10
+	jz _Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_10
 	mov eax, [esi+0x14]
 	mov edx, 0xbf800000
 	mov ebx, [ebp-0x3c]
@@ -880,7 +879,7 @@ setFixedOrientation:
 	mov edi, [ebp-0x40]
 	mov eax, [edi+0x30]
 	test eax, eax
-	jz setFixedOrientation_20
+	jz _Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_20
 	add eax, 0xf0
 	mov [esp+0x8], eax
 	mov eax, [edi+0x20]
@@ -895,14 +894,14 @@ setFixedOrientation:
 	lea eax, [ebp-0x28]
 	mov [esp], eax
 	call dQMultiply2
-setFixedOrientation_50:
+_Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_50:
 	pxor xmm0, xmm0
 	ucomiss xmm0, [ebp-0x28]
-	ja setFixedOrientation_30
+	ja _Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_30
 	movss xmm3, dword [ebp-0x24]
 	movss xmm5, dword [ebp-0x20]
 	movss xmm4, dword [ebp-0x1c]
-setFixedOrientation_40:
+_Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_40:
 	mov edi, [ebp-0x40]
 	mov ebx, [edi+0x20]
 	lea eax, [ebx+0x100]
@@ -947,7 +946,7 @@ setFixedOrientation_40:
 	pop edi
 	pop ebp
 	ret
-setFixedOrientation_30:
+_Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_30:
 	movss xmm0, dword [_data16_80000000]
 	movss xmm3, dword [ebp-0x24]
 	xorps xmm3, xmm0
@@ -958,10 +957,10 @@ setFixedOrientation_30:
 	movss xmm4, dword [ebp-0x1c]
 	xorps xmm4, xmm0
 	movss [ebp-0x1c], xmm4
-	jmp setFixedOrientation_40
-setFixedOrientation_20:
+	jmp _Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_40
+_Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_20:
 	mov ebx, edi
-setFixedOrientation_60:
+_Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_60:
 	mov edx, [ebp-0x44]
 	mov [esp+0x8], edx
 	mov eax, [ebx+0x20]
@@ -970,15 +969,15 @@ setFixedOrientation_60:
 	lea eax, [ebp-0x28]
 	mov [esp], eax
 	call dQMultiply3
-	jmp setFixedOrientation_50
-setFixedOrientation_10:
+	jmp _Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_50
+_Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_10:
 	mov ebx, eax
-	jmp setFixedOrientation_60
+	jmp _Z19setFixedOrientationP7dxJointPNS_5Info2EPfi_60
 	nop
 
 
 ;jointGetInfo1(dxJoint const*, dxJoint::Info1*)
-jointGetInfo1:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -988,66 +987,66 @@ jointGetInfo1:
 	mov esi, [ebp+0x8]
 	mov edi, [ebp+0xc]
 	cmp dword [esi+0x14], 0x7
-	ja jointGetInfo1_10
+	ja _Z13jointGetInfo1PK7dxJointPNS_5Info1E_10
 	mov eax, [esi+0x14]
-	jmp dword [eax*4+jointGetInfo1_jumptab_0]
-jointGetInfo1_10:
+	jmp dword [eax*4+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_jumptab_0]
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_10:
 	mov dword [edi], 0x0
 	mov dword [edi+0x4], 0x0
 	cmp dword [esi+0x44], 0x1
-	jz jointGetInfo1_20
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_20
 	xor eax, eax
 	mov [ebp-0x28], eax
 	mov [ebp-0x24], eax
 	mov [ebp-0x20], eax
-jointGetInfo1_100:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_100:
 	mov eax, [esi+0x40]
 	test eax, eax
-	jle jointGetInfo1_30
+	jle _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
 	mov edx, esi
 	xor ecx, ecx
 	pxor xmm2, xmm2
 	lea eax, [esi+0x84]
-jointGetInfo1_50:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_50:
 	movss xmm1, dword [ebp+ecx*4-0x28]
 	movss xmm0, dword [eax+0x8]
 	ucomiss xmm0, xmm1
-	jb jointGetInfo1_40
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_40
 	mov dword [eax+0x24], 0x1
 	subss xmm1, xmm0
 	movss [eax+0x28], xmm1
-jointGetInfo1_70:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_70:
 	add dword [edi], 0x1
-jointGetInfo1_80:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_80:
 	add ecx, 0x1
 	add eax, 0x2c
 	add edx, 0x2c
 	cmp ecx, [esi+0x40]
-	jl jointGetInfo1_50
-jointGetInfo1_30:
+	jl _Z13jointGetInfo1PK7dxJointPNS_5Info1E_50
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_30:
 	add esp, 0xfc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-jointGetInfo1_40:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_40:
 	ucomiss xmm1, [eax+0xc]
-	jb jointGetInfo1_60
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_60
 	mov dword [eax+0x24], 0x2
 	subss xmm1, [eax+0xc]
 	movss [eax+0x28], xmm1
-	jmp jointGetInfo1_70
-jointGetInfo1_60:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_70
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_60:
 	mov dword [eax+0x24], 0x0
 	movss xmm0, dword [edx+0x88]
 	ucomiss xmm0, xmm2
-	ja jointGetInfo1_70
-	jmp jointGetInfo1_80
-jointGetInfo1_20:
+	ja _Z13jointGetInfo1PK7dxJointPNS_5Info1E_70
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_80
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_20:
 	lea edx, [ebp-0x58]
 	mov eax, esi
-	call amotorComputeGlobalAxes
+	call _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f
 	lea edx, [esi+0x108]
 	mov ecx, [esi+0x20]
 	lea eax, [ecx+0x100]
@@ -1081,7 +1080,7 @@ jointGetInfo1_20:
 	addss xmm7, xmm2
 	mov ecx, [esi+0x30]
 	test ecx, ecx
-	jz jointGetInfo1_90
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_90
 	lea edx, [esi+0x118]
 	lea eax, [ecx+0x100]
 	movss xmm3, dword [esi+0x118]
@@ -1117,7 +1116,7 @@ jointGetInfo1_20:
 	mulss xmm2, [eax+0x28]
 	addss xmm2, xmm1
 	movss [ebp-0x64], xmm2
-jointGetInfo1_390:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_390:
 	movss xmm0, dword [ebp-0x54]
 	movss [ebp-0x74], xmm0
 	movss xmm5, dword [ebp-0x50]
@@ -1240,49 +1239,49 @@ jointGetInfo1_390:
 	movss xmm0, dword [ebp-0xdc]
 	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x20], xmm0
-	jmp jointGetInfo1_100
-jointGetInfo1_490:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_100
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_490:
 	pxor xmm1, xmm1
 	ucomiss xmm1, [esi+0x48]
-	ja jointGetInfo1_110
-jointGetInfo1_360:
+	ja _Z13jointGetInfo1PK7dxJointPNS_5Info1E_110
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_360:
 	test byte [esi+0x44], 0x1
-	jz jointGetInfo1_120
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_120
 	movss xmm2, dword [esi+0x48]
 	xor ecx, ecx
 	ucomiss xmm2, xmm1
 	seta cl
 	add ecx, 0x1
 	ucomiss xmm1, [esi+0x4c]
-	ja jointGetInfo1_130
+	ja _Z13jointGetInfo1PK7dxJointPNS_5Info1E_130
 	movss xmm0, dword [esi+0x4c]
-jointGetInfo1_420:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_420:
 	lea eax, [ecx+0x1]
 	ucomiss xmm0, xmm1
 	cmova ecx, eax
-	ucomiss xmm2, [_float_34028234663852885_float_3]
+	ucomiss xmm2, [_float_3402823466385288598117041]
 	setz al
 	setnp dl
 	and al, dl
 	movzx eax, al
-	ucomiss xmm0, [_float_34028234663852885_float_3]
-	jnz jointGetInfo1_140
-	jp jointGetInfo1_140
+	ucomiss xmm0, [_float_3402823466385288598117041]
+	jnz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_140
+	jp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_140
 	add eax, 0x1
-jointGetInfo1_140:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_140:
 	mov [esi+0x40], ecx
 	mov [edi], ecx
 	mov [edi+0x4], eax
 	cmp byte [esi+0x3c], 0x0
-	jz jointGetInfo1_30
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
 	mov [esp+0x10], eax
 	mov [esp+0xc], ecx
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_0xp_info1_m_d__n
 	mov dword [esp], 0x14
-	call Com_Printf
-	jmp jointGetInfo1_30
-jointGetInfo1_480:
+	call _Z10Com_PrintfiPKcz
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_480:
 	mov dword [edi+0x4], 0x5
 	movss xmm0, dword [esi+0x74]
 	xor eax, eax
@@ -1293,16 +1292,16 @@ jointGetInfo1_480:
 	mov dword [esi+0x94], 0x0
 	movss xmm0, dword [esi+0x78]
 	movss [ebp-0x7c], xmm0
-	ucomiss xmm0, [_float__3402823466385288_float__]
-	ja jointGetInfo1_150
+	ucomiss xmm0, [_float__340282346638528859811704]
+	ja _Z13jointGetInfo1PK7dxJointPNS_5Info1E_150
 	movss xmm0, dword [esi+0x7c]
 	movss [ebp-0x88], xmm0
-	ucomiss xmm0, [_float_34028234663852885_float_3]
-	jp jointGetInfo1_30
-	jae jointGetInfo1_30
-jointGetInfo1_330:
+	ucomiss xmm0, [_float_3402823466385288598117041]
+	jp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+	jae _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_330:
 	ucomiss xmm0, [ebp-0x7c]
-	jb jointGetInfo1_30
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
 	lea edx, [esi+0x40]
 	mov ebx, [esi+0x20]
 	lea eax, [ebx+0x100]
@@ -1333,7 +1332,7 @@ jointGetInfo1_330:
 	addss xmm5, xmm2
 	mov ecx, [esi+0x30]
 	test ecx, ecx
-	jz jointGetInfo1_160
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_160
 	lea edx, [esi+0x60]
 	lea eax, [ecx+0x100]
 	movss xmm2, dword [esi+0x60]
@@ -1367,7 +1366,7 @@ jointGetInfo1_330:
 	mov eax, ecx
 	mov ebx, 0x1
 	lea ecx, [ebp-0x54]
-jointGetInfo1_170:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_170:
 	movss xmm0, dword [edx+0xe0]
 	subss xmm0, [ecx-0x4]
 	subss xmm0, [eax+0xe0]
@@ -1377,8 +1376,8 @@ jointGetInfo1_170:
 	add edx, 0x4
 	add eax, 0x4
 	cmp ebx, 0x4
-	jnz jointGetInfo1_170
-jointGetInfo1_440:
+	jnz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_170
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_440:
 	movaps xmm3, xmm7
 	mulss xmm3, [ebp-0x58]
 	mulss xmm6, [ebp-0x54]
@@ -1387,12 +1386,12 @@ jointGetInfo1_440:
 	addss xmm3, xmm5
 	movss xmm0, dword [ebp-0x7c]
 	ucomiss xmm0, xmm3
-	jb jointGetInfo1_180
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_180
 	mov dword [esi+0x94], 0x1
 	subss xmm3, [esi+0x78]
 	movss [esi+0x98], xmm3
-	jmp jointGetInfo1_190
-jointGetInfo1_470:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_190
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_470:
 	mov dword [edi+0x4], 0x5
 	movss xmm0, dword [esi+0x94]
 	xor eax, eax
@@ -1403,15 +1402,15 @@ jointGetInfo1_470:
 	movss xmm1, dword [esi+0x98]
 	cvtss2sd xmm0, xmm1
 	ucomisd xmm0, [_double__3_14159265]
-	jae jointGetInfo1_200
+	jae _Z13jointGetInfo1PK7dxJointPNS_5Info1E_200
 	cvtss2sd xmm0, [esi+0x9c]
 	ucomisd xmm0, [_double_3_14159265]
-	ja jointGetInfo1_30
-	jp jointGetInfo1_30
-jointGetInfo1_200:
+	ja _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+	jp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_200:
 	movss xmm0, dword [esi+0x9c]
 	ucomiss xmm0, xmm1
-	jb jointGetInfo1_30
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
 	lea eax, [esi+0x80]
 	mov [ebp-0x84], eax
 	lea eax, [esi+0x60]
@@ -1419,7 +1418,7 @@ jointGetInfo1_200:
 	mov edx, [esi+0x20]
 	mov eax, [esi+0x30]
 	test eax, eax
-	jz jointGetInfo1_210
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_210
 	add eax, 0xf0
 	mov [esp+0x8], eax
 	lea eax, [edx+0xf0]
@@ -1433,27 +1432,27 @@ jointGetInfo1_200:
 	lea ebx, [ebp-0x28]
 	mov [esp], ebx
 	call dQMultiply2
-jointGetInfo1_450:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_450:
 	mov edx, [ebp-0x80]
 	mov eax, ebx
-	call getHingeAngleFromRelativeQuat
+	call _Z29getHingeAngleFromRelativeQuatPKfS0_
 	movaps xmm1, xmm0
 	lea eax, [esi+0x90]
 	movss xmm0, dword [eax+0x8]
 	ucomiss xmm0, xmm1
-	jb jointGetInfo1_220
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_220
 	mov dword [eax+0x24], 0x1
 	movaps xmm0, xmm1
 	subss xmm0, [eax+0x8]
 	movss [eax+0x28], xmm0
-jointGetInfo1_190:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_190:
 	mov dword [edi], 0x6
-	jmp jointGetInfo1_30
-jointGetInfo1_460:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_460:
 	mov dword [edi], 0x3
 	mov dword [edi+0x4], 0x3
-	jmp jointGetInfo1_30
-jointGetInfo1_500:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_500:
 	mov dword [edi+0x4], 0x4
 	mov dword [edi], 0x4
 	pxor xmm1, xmm1
@@ -1467,160 +1466,160 @@ jointGetInfo1_500:
 	cvtss2sd xmm0, xmm1
 	movsd xmm2, qword [_double__3_14159265]
 	ucomisd xmm0, xmm2
-	jb jointGetInfo1_230
-jointGetInfo1_340:
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_230
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_340:
 	movss xmm0, dword [esi+0xac]
 	ucomiss xmm0, xmm1
-	jb jointGetInfo1_240
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_240
 	mov ebx, 0x1
-jointGetInfo1_350:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_350:
 	movss xmm1, dword [esi+0xd4]
 	cvtss2sd xmm0, xmm1
 	ucomisd xmm0, xmm2
-	jae jointGetInfo1_250
+	jae _Z13jointGetInfo1PK7dxJointPNS_5Info1E_250
 	cvtss2sd xmm0, [esi+0xd8]
 	ucomisd xmm0, [_double_3_14159265]
-	ja jointGetInfo1_260
-	jp jointGetInfo1_260
-jointGetInfo1_250:
+	ja _Z13jointGetInfo1PK7dxJointPNS_5Info1E_260
+	jp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_260
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_250:
 	movss xmm0, dword [esi+0xd8]
 	ucomiss xmm0, xmm1
-	jb jointGetInfo1_260
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_260
 	mov byte [ebp-0x77], 0x1
-jointGetInfo1_370:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_370:
 	test bl, bl
-	jnz jointGetInfo1_270
+	jnz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_270
 	cmp byte [ebp-0x77], 0x0
-	jz jointGetInfo1_280
-jointGetInfo1_270:
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_280
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_270:
 	mov eax, esi
-	call getUniversalAngle1
+	call _Z18getUniversalAngle1PK16dxJointUniversal
 	mov eax, esi
 	movss [ebp-0x98], xmm0
-	call getUniversalAngle2
+	call _Z18getUniversalAngle2PK16dxJointUniversal
 	movaps xmm2, xmm0
 	test bl, bl
 	movss xmm1, dword [ebp-0x98]
-	jz jointGetInfo1_290
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_290
 	lea eax, [esi+0xa0]
 	movss xmm0, dword [eax+0x8]
 	ucomiss xmm0, xmm1
-	jb jointGetInfo1_300
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_300
 	mov dword [eax+0x24], 0x1
 	subss xmm1, xmm0
 	movss [eax+0x28], xmm1
 	mov byte [ebp-0x76], 0x1
-jointGetInfo1_290:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_290:
 	cmp byte [ebp-0x77], 0x0
-	jz jointGetInfo1_280
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_280
 	lea eax, [esi+0xcc]
 	movss xmm0, dword [eax+0x8]
 	ucomiss xmm0, xmm2
-	jb jointGetInfo1_310
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_310
 	mov dword [eax+0x24], 0x1
 	subss xmm2, xmm0
 	movss [eax+0x28], xmm2
 	mov byte [ebp-0x75], 0x1
-jointGetInfo1_280:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_280:
 	cmp byte [ebp-0x76], 0x0
-	jz jointGetInfo1_320
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_320
 	add dword [edi], 0x1
-jointGetInfo1_320:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_320:
 	cmp byte [ebp-0x75], 0x0
-	jz jointGetInfo1_30
+	jz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
 	add dword [edi], 0x1
-	jmp jointGetInfo1_30
-jointGetInfo1_520:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_520:
 	mov dword [edi], 0x0
 	mov dword [edi+0x4], 0x0
-	jmp jointGetInfo1_30
-jointGetInfo1_510:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_510:
 	mov dword [edi], 0x6
 	mov dword [edi+0x4], 0x6
-	jmp jointGetInfo1_30
-jointGetInfo1_150:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_150:
 	movss xmm0, dword [esi+0x7c]
 	movss [ebp-0x88], xmm0
-	jmp jointGetInfo1_330
-jointGetInfo1_120:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_330
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_120:
 	movss xmm0, dword [esi+0x48]
 	xor ecx, ecx
 	ucomiss xmm0, xmm1
 	seta cl
 	lea ecx, [ecx+ecx+0x1]
-	ucomiss xmm0, [_float_34028234663852885_float_3]
+	ucomiss xmm0, [_float_3402823466385288598117041]
 	setz al
 	setnp dl
 	and al, dl
 	movzx eax, al
 	add eax, eax
-	jmp jointGetInfo1_140
-jointGetInfo1_230:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_140
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_230:
 	cvtss2sd xmm0, [esi+0xac]
 	ucomisd xmm0, [_double_3_14159265]
-	ja jointGetInfo1_240
-	jnp jointGetInfo1_340
-jointGetInfo1_240:
+	ja _Z13jointGetInfo1PK7dxJointPNS_5Info1E_240
+	jnp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_340
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_240:
 	xor ebx, ebx
-	jmp jointGetInfo1_350
-jointGetInfo1_110:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_350
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_110:
 	movss [esi+0x48], xmm1
-	jmp jointGetInfo1_360
-jointGetInfo1_260:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_360
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_260:
 	mov byte [ebp-0x77], 0x0
-	jmp jointGetInfo1_370
-jointGetInfo1_220:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_370
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_220:
 	ucomiss xmm1, [eax+0xc]
-	jb jointGetInfo1_380
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_380
 	mov dword [eax+0x24], 0x2
 	movaps xmm0, xmm1
 	subss xmm0, [eax+0xc]
 	movss [eax+0x28], xmm0
-	jmp jointGetInfo1_190
-jointGetInfo1_180:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_190
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_180:
 	ucomiss xmm3, [ebp-0x88]
-	jb jointGetInfo1_30
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
 	mov dword [esi+0x94], 0x2
 	subss xmm3, [esi+0x7c]
 	movss [esi+0x98], xmm3
-	jmp jointGetInfo1_190
-jointGetInfo1_90:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_190
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_90:
 	movss xmm0, dword [esi+0x118]
 	movss [ebp-0x5c], xmm0
 	movss xmm0, dword [esi+0x11c]
 	movss [ebp-0x60], xmm0
 	movss xmm0, dword [esi+0x120]
 	movss [ebp-0x64], xmm0
-	jmp jointGetInfo1_390
-jointGetInfo1_300:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_390
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_300:
 	ucomiss xmm1, [eax+0xc]
-	jb jointGetInfo1_400
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_400
 	mov dword [eax+0x24], 0x2
 	subss xmm1, [eax+0xc]
 	movss [eax+0x28], xmm1
 	mov byte [ebp-0x76], 0x1
-	jmp jointGetInfo1_290
-jointGetInfo1_310:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_290
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_310:
 	ucomiss xmm2, [eax+0xc]
-	jb jointGetInfo1_410
+	jb _Z13jointGetInfo1PK7dxJointPNS_5Info1E_410
 	mov dword [eax+0x24], 0x2
 	subss xmm2, [eax+0xc]
 	movss [eax+0x28], xmm2
 	mov byte [ebp-0x75], 0x1
-	jmp jointGetInfo1_280
-jointGetInfo1_380:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_280
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_380:
 	mov dword [eax+0x24], 0x0
-	jmp jointGetInfo1_30
-jointGetInfo1_130:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_30
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_130:
 	movss [esi+0x4c], xmm1
 	movaps xmm0, xmm1
-	jmp jointGetInfo1_420
-jointGetInfo1_160:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_420
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_160:
 	mov eax, ebx
 	mov edx, esi
 	mov ecx, 0x1
 	lea ebx, [ebp-0x58]
-jointGetInfo1_430:
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_430:
 	movss xmm0, dword [eax+0xe0]
 	subss xmm0, [edx+0x60]
 	movss [ebx+ecx*4-0x4], xmm0
@@ -1628,9 +1627,9 @@ jointGetInfo1_430:
 	add eax, 0x4
 	add edx, 0x4
 	cmp ecx, 0x4
-	jnz jointGetInfo1_430
-	jmp jointGetInfo1_440
-jointGetInfo1_210:
+	jnz _Z13jointGetInfo1PK7dxJointPNS_5Info1E_430
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_440
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_210:
 	mov eax, [ebp-0x84]
 	mov [esp+0x8], eax
 	lea eax, [edx+0xf0]
@@ -1638,29 +1637,29 @@ jointGetInfo1_210:
 	lea ebx, [ebp-0x28]
 	mov [esp], ebx
 	call dQMultiply3
-	jmp jointGetInfo1_450
-jointGetInfo1_400:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_450
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_400:
 	mov dword [eax+0x24], 0x0
-	jmp jointGetInfo1_290
-jointGetInfo1_410:
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_290
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_410:
 	mov dword [eax+0x24], 0x0
-	jmp jointGetInfo1_280
+	jmp _Z13jointGetInfo1PK7dxJointPNS_5Info1E_280
 	nop
 	
 	
-jointGetInfo1_jumptab_0:
-	dd jointGetInfo1_10
-	dd jointGetInfo1_460
-	dd jointGetInfo1_470
-	dd jointGetInfo1_480
-	dd jointGetInfo1_490
-	dd jointGetInfo1_500
-	dd jointGetInfo1_510
-	dd jointGetInfo1_520
+_Z13jointGetInfo1PK7dxJointPNS_5Info1E_jumptab_0:
+	dd _Z13jointGetInfo1PK7dxJointPNS_5Info1E_10
+	dd _Z13jointGetInfo1PK7dxJointPNS_5Info1E_460
+	dd _Z13jointGetInfo1PK7dxJointPNS_5Info1E_470
+	dd _Z13jointGetInfo1PK7dxJointPNS_5Info1E_480
+	dd _Z13jointGetInfo1PK7dxJointPNS_5Info1E_490
+	dd _Z13jointGetInfo1PK7dxJointPNS_5Info1E_500
+	dd _Z13jointGetInfo1PK7dxJointPNS_5Info1E_510
+	dd _Z13jointGetInfo1PK7dxJointPNS_5Info1E_520
 
 
 ;jointGetInfo2(dxJoint*, dxWorldStepInfo*, dxJoint::Info2*)
-jointGetInfo2:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1669,10 +1668,10 @@ jointGetInfo2:
 	sub esp, 0x11c
 	mov eax, [ebp+0x8]
 	cmp dword [eax+0x14], 0x7
-	ja jointGetInfo2_10
+	ja _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_10
 	mov eax, [eax+0x14]
-	jmp dword [eax*4+jointGetInfo2_jumptab_0]
-jointGetInfo2_910:
+	jmp dword [eax*4+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_jumptab_0]
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_910:
 	mov edi, [ebp+0x8]
 	add edi, 0x50
 	mov edx, [ebp+0x10]
@@ -1728,7 +1727,7 @@ jointGetInfo2_910:
 	movss [eax+0x4], xmm2
 	movss xmm1, dword [ebp-0x44]
 	mov eax, [ecx+0xc]
-	movss xmm5, dword [circleCoords.131667+0x6f0]
+	movss xmm5, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm5
 	movss [eax+0x8], xmm0
@@ -1746,7 +1745,7 @@ jointGetInfo2_910:
 	mov eax, [ebp+0x8]
 	mov edx, [eax+0x30]
 	test edx, edx
-	jz jointGetInfo2_20
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_20
 	mov eax, [ecx+0x10]
 	mov edx, 0xbf800000
 	mov [eax], edx
@@ -1805,15 +1804,15 @@ jointGetInfo2_910:
 	mov eax, [edx+0x14]
 	movss [esi+eax+0x4], xmm2
 	mov ebx, [ebp+0x8]
-jointGetInfo2_760:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_760:
 	mov ecx, [ebp+0x10]
 	movss xmm1, dword [ecx]
 	mulss xmm1, [ecx+0x4]
 	mov eax, [ebx+0x30]
 	test eax, eax
-	jz jointGetInfo2_30
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_30
 	xor ebx, ebx
-jointGetInfo2_40:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_40:
 	mov esi, [ebp+0x10]
 	mov ecx, [esi+0x1c]
 	lea edx, [ebx*4]
@@ -1828,8 +1827,8 @@ jointGetInfo2_40:
 	movss [ecx+ebx*4], xmm0
 	add ebx, 0x1
 	cmp ebx, 0x3
-	jnz jointGetInfo2_40
-jointGetInfo2_750:
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_40
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_750:
 	mov edi, [ebp+0x8]
 	mov eax, [edi+0x20]
 	lea edx, [eax+0x100]
@@ -1862,7 +1861,7 @@ jointGetInfo2_750:
 	movss [ebp-0x20], xmm1
 	mov edx, [edi+0x30]
 	test edx, edx
-	jz jointGetInfo2_50
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_50
 	lea eax, [edx+0x100]
 	movss xmm1, dword [edx+0x100]
 	mulss xmm1, [edi+0x70]
@@ -1891,7 +1890,7 @@ jointGetInfo2_750:
 	mulss xmm0, [edi+0x78]
 	addss xmm1, xmm0
 	movss [ebp-0x80], xmm1
-jointGetInfo2_710:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_710:
 	movss xmm0, dword [ebp-0x28]
 	mulss xmm0, [ebp-0x88]
 	movss xmm3, dword [ebp-0x24]
@@ -1946,20 +1945,20 @@ jointGetInfo2_710:
 	mov esi, [ebp+0x8]
 	mov eax, [esi+0x30]
 	test eax, eax
-	jz jointGetInfo2_60
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_60
 	mov eax, [ebx+0x14]
 	movss xmm0, dword [ebp-0x58]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax], xmm0
 	mov eax, [ebx+0x14]
 	movss xmm0, dword [ebp-0x54]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax+0x4], xmm0
 	mov eax, [ebx+0x14]
 	movss xmm0, dword [ebp-0x50]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax+0x8], xmm0
-jointGetInfo2_60:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_60:
 	mov edi, [ebp+0x10]
 	mov eax, [edi+0x1c]
 	movss xmm2, dword [edi]
@@ -1972,7 +1971,7 @@ jointGetInfo2_60:
 	movss xmm0, dword [ebp-0x20]
 	mulss xmm0, [ebp-0x80]
 	addss xmm1, xmm0
-	xorps xmm1, [circleCoords.131667+0x6f0]
+	xorps xmm1, [_data16_80000000]
 	mulss xmm2, xmm1
 	movss [eax+0xc], xmm2
 	mov dword [esp+0x14], 0x1
@@ -1997,19 +1996,19 @@ jointGetInfo2_60:
 	add eax, 0xcc
 	mov [esp], eax
 	call _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi
-jointGetInfo2_80:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80:
 	add esp, 0x11c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-jointGetInfo2_860:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_860:
 	mov eax, [ebp+0x8]
-jointGetInfo2_10:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_10:
 	lea ebx, [ebp-0x88]
 	mov edx, ebx
-	call amotorComputeGlobalAxes
+	call _Z23amotorComputeGlobalAxesPK13dxJointAMotorPA4_f
 	mov [ebp-0x38], ebx
 	lea eax, [ebp-0x78]
 	mov [ebp-0x34], eax
@@ -2017,21 +2016,21 @@ jointGetInfo2_10:
 	mov [ebp-0x30], eax
 	mov esi, [ebp+0x8]
 	cmp dword [esi+0x44], 0x1
-	jz jointGetInfo2_70
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_70
 	mov edi, esi
-jointGetInfo2_110:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_110:
 	mov ecx, [edi+0x40]
 	test ecx, ecx
-	jle jointGetInfo2_80
+	jle _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
 	mov ebx, edi
 	xor edi, edi
 	xor esi, esi
 	add ebx, 0x84
 	mov edx, [ebp+0x8]
-	jmp jointGetInfo2_90
-jointGetInfo2_100:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_90
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_100:
 	mov edx, ecx
-jointGetInfo2_90:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_90:
 	mov dword [esp+0x14], 0x1
 	mov eax, [ebp+esi*4-0x38]
 	mov [esp+0x10], eax
@@ -2046,14 +2045,14 @@ jointGetInfo2_90:
 	add ebx, 0x2c
 	mov ecx, [ebp+0x8]
 	cmp esi, [ecx+0x40]
-	jl jointGetInfo2_100
+	jl _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_100
 	add esp, 0x11c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-jointGetInfo2_70:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_70:
 	movss xmm3, dword [ebp-0x84]
 	movaps xmm0, xmm3
 	mulss xmm0, [ebp-0x70]
@@ -2095,8 +2094,8 @@ jointGetInfo2_70:
 	lea eax, [ebp-0x48]
 	mov [ebp-0x38], eax
 	mov edi, [ebp+0x8]
-	jmp jointGetInfo2_110
-jointGetInfo2_890:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_110
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_890:
 	mov ebx, [ebp+0x10]
 	mov eax, [ebx+0x18]
 	lea esi, [eax+eax*2]
@@ -2110,13 +2109,13 @@ jointGetInfo2_890:
 	lea ebx, [eax+0x100]
 	mov eax, [edi+0x30]
 	test eax, eax
-	jz jointGetInfo2_120
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_120
 	lea ecx, [eax+0xe0]
 	add eax, 0x100
 	mov [ebp-0x90], eax
 	mov edx, 0x1
 	lea esi, [ebp-0x28]
-jointGetInfo2_130:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_130:
 	lea eax, [edx*4]
 	movss xmm0, dword [eax+ecx-0x4]
 	mov edi, [ebp-0x94]
@@ -2124,14 +2123,14 @@ jointGetInfo2_130:
 	movss [esi+eax-0x4], xmm0
 	add edx, 0x1
 	cmp edx, 0x4
-	jnz jointGetInfo2_130
-jointGetInfo2_820:
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_130
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_820:
 	mov ecx, [ebp+0x8]
 	add ecx, 0x50
 	mov dword [esp], 0x0
 	mov edx, [ebp+0x10]
 	mov eax, [ebp+0x8]
-	call setFixedOrientation
+	call _Z19setFixedOrientationP7dxJointPNS_5Info2EPfi
 	movss xmm1, dword [ebx]
 	mov eax, [ebp+0x8]
 	mulss xmm1, [eax+0x40]
@@ -2170,7 +2169,7 @@ jointGetInfo2_820:
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x30]
 	test eax, eax
-	jz jointGetInfo2_140
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_140
 	movss xmm6, dword [ebp-0x24]
 	movss xmm3, dword [ebp-0x50]
 	movss xmm5, dword [ebp-0x20]
@@ -2200,7 +2199,7 @@ jointGetInfo2_820:
 	shl edi, 0x2
 	mov ecx, edi
 	xor ebx, ebx
-jointGetInfo2_150:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_150:
 	mov esi, [ebp+0x10]
 	mov edx, [esi+0x14]
 	mov eax, [ebp+ebx*4-0x38]
@@ -2208,10 +2207,10 @@ jointGetInfo2_150:
 	add ebx, 0x1
 	add ecx, 0x4
 	cmp ebx, 0x3
-	jnz jointGetInfo2_150
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_150
 	mov ecx, edi
 	and ebx, 0xffffff00
-jointGetInfo2_160:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_160:
 	mov eax, [ebp+0x10]
 	mov edx, [eax+0x14]
 	mov eax, [ebp+ebx*4-0x38]
@@ -2219,7 +2218,7 @@ jointGetInfo2_160:
 	add ebx, 0x1
 	add ecx, 0x4
 	cmp ebx, 0x3
-	jnz jointGetInfo2_160
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_160
 	movss xmm2, dword [ebp-0x40]
 	movss xmm3, dword [ebp-0x44]
 	movaps xmm0, xmm6
@@ -2244,7 +2243,7 @@ jointGetInfo2_160:
 	shl esi, 0x2
 	mov ecx, esi
 	and ebx, 0xffffff00
-jointGetInfo2_170:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_170:
 	mov eax, [ebp+0x10]
 	mov edx, [eax+0x14]
 	mov eax, [ebp+ebx*4-0x38]
@@ -2252,10 +2251,10 @@ jointGetInfo2_170:
 	add ebx, 0x1
 	add ecx, 0x4
 	cmp ebx, 0x3
-	jnz jointGetInfo2_170
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_170
 	mov ecx, esi
 	and ebx, 0xffffff00
-jointGetInfo2_180:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_180:
 	mov eax, [ebp+0x10]
 	mov edx, [eax+0x14]
 	mov eax, [ebp+ebx*4-0x38]
@@ -2263,36 +2262,36 @@ jointGetInfo2_180:
 	add ebx, 0x1
 	add ecx, 0x4
 	cmp ebx, 0x3
-	jnz jointGetInfo2_180
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_180
 	mov edx, edi
 	xor ecx, ecx
-jointGetInfo2_190:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_190:
 	mov ebx, [ebp+0x10]
 	mov eax, [ebx+0x10]
 	movss xmm0, dword [ebp+ecx*4-0x58]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [edx+eax], xmm0
 	add ecx, 0x1
 	add edx, 0x4
 	cmp ecx, 0x3
-	jnz jointGetInfo2_190
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_190
 	mov edx, esi
 	and ecx, 0xffffff00
-jointGetInfo2_200:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_200:
 	mov esi, [ebp+0x10]
 	mov eax, [esi+0x10]
 	movss xmm0, dword [ebp+ecx*4-0x48]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [edx+eax], xmm0
 	add ecx, 0x1
 	add edx, 0x4
 	cmp ecx, 0x3
-	jnz jointGetInfo2_200
-jointGetInfo2_140:
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_200
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_140:
 	mov ecx, [ebp-0x9c]
 	shl ecx, 0x2
 	xor ebx, ebx
-jointGetInfo2_210:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_210:
 	mov edi, [ebp+0x10]
 	mov edx, [edi+0x8]
 	mov eax, [ebp+ebx*4-0x58]
@@ -2300,11 +2299,11 @@ jointGetInfo2_210:
 	add ebx, 0x1
 	add ecx, 0x4
 	cmp ebx, 0x3
-	jnz jointGetInfo2_210
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_210
 	mov ecx, [ebp-0x98]
 	shl ecx, 0x2
 	and ebx, 0xffffff00
-jointGetInfo2_220:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_220:
 	mov eax, [ebp+0x10]
 	mov edx, [eax+0x8]
 	mov eax, [ebp+ebx*4-0x48]
@@ -2312,14 +2311,14 @@ jointGetInfo2_220:
 	add ebx, 0x1
 	add ecx, 0x4
 	cmp ebx, 0x3
-	jnz jointGetInfo2_220
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_220
 	mov edx, [ebp+0x10]
 	movss xmm5, dword [edx]
 	mulss xmm5, [edx+0x4]
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x30]
 	test eax, eax
-	jz jointGetInfo2_230
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_230
 	mov eax, ecx
 	add eax, 0x60
 	movss xmm2, dword [ecx+0x60]
@@ -2353,7 +2352,7 @@ jointGetInfo2_220:
 	mov ecx, 0x1
 	lea edi, [ebp-0x38]
 	lea esi, [ebp-0x28]
-jointGetInfo2_240:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_240:
 	lea eax, [ecx*4]
 	lea edx, [esi+eax]
 	movss xmm0, dword [edx-0x4]
@@ -2361,7 +2360,7 @@ jointGetInfo2_240:
 	movss [edx-0x4], xmm0
 	add ecx, 0x1
 	cmp ecx, 0x4
-	jnz jointGetInfo2_240
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_240
 	movss xmm2, dword [ebp-0x28]
 	movss xmm3, dword [ebp-0x24]
 	movss xmm4, dword [ebp-0x20]
@@ -2378,7 +2377,7 @@ jointGetInfo2_240:
 	mulss xmm0, xmm5
 	movss [eax+0xc], xmm0
 	mov eax, [esi+0x1c]
-jointGetInfo2_840:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_840:
 	mulss xmm2, [ebp-0x48]
 	mulss xmm3, [ebp-0x44]
 	addss xmm2, xmm3
@@ -2397,8 +2396,8 @@ jointGetInfo2_840:
 	add eax, 0x70
 	mov [esp], eax
 	call _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi
-	jmp jointGetInfo2_80
-jointGetInfo2_880:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_880:
 	mov edi, [ebp+0x8]
 	add edi, 0x50
 	mov eax, [ebp+0x10]
@@ -2454,7 +2453,7 @@ jointGetInfo2_880:
 	movss [eax+0x4], xmm2
 	movss xmm1, dword [ebp-0x84]
 	mov eax, [ecx+0xc]
-	movss xmm5, dword [circleCoords.131667+0x6f0]
+	movss xmm5, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm5
 	movss [eax+0x8], xmm0
@@ -2472,7 +2471,7 @@ jointGetInfo2_880:
 	mov eax, [ebp+0x8]
 	mov edx, [eax+0x30]
 	test edx, edx
-	jz jointGetInfo2_250
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_250
 	mov eax, [ecx+0x10]
 	mov edx, 0xbf800000
 	mov [eax], edx
@@ -2531,15 +2530,15 @@ jointGetInfo2_880:
 	mov eax, [edx+0x14]
 	movss [esi+eax+0x4], xmm2
 	mov ebx, [ebp+0x8]
-jointGetInfo2_810:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_810:
 	mov ecx, [ebp+0x10]
 	movss xmm1, dword [ecx]
 	mulss xmm1, [ecx+0x4]
 	mov ecx, [ebx+0x30]
 	test ecx, ecx
-	jz jointGetInfo2_260
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_260
 	xor ebx, ebx
-jointGetInfo2_270:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_270:
 	mov esi, [ebp+0x10]
 	mov ecx, [esi+0x1c]
 	lea edx, [ebx*4]
@@ -2554,8 +2553,8 @@ jointGetInfo2_270:
 	movss [ecx+ebx*4], xmm0
 	add ebx, 0x1
 	cmp ebx, 0x3
-	jnz jointGetInfo2_270
-jointGetInfo2_800:
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_270
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_800:
 	mov edi, [ebp+0x8]
 	mov eax, [edi+0x20]
 	lea edx, [eax+0x100]
@@ -2620,9 +2619,9 @@ jointGetInfo2_800:
 	mov eax, [ebp+0x8]
 	mov edx, [eax+0x30]
 	test edx, edx
-	jz jointGetInfo2_280
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_280
 	mov eax, [esi+0x14]
-	movss xmm1, dword [circleCoords.131667+0x6f0]
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [ebp-0x48]
 	xorps xmm0, xmm1
 	movss [ebx+eax], xmm0
@@ -2649,7 +2648,7 @@ jointGetInfo2_800:
 	mov edx, [ebp+0x8]
 	mov ecx, [edx+0x30]
 	test ecx, ecx
-	jz jointGetInfo2_290
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_290
 	mov ebx, edx
 	lea eax, [ecx+0x100]
 	add edx, 0x70
@@ -2678,7 +2677,7 @@ jointGetInfo2_800:
 	addss xmm6, xmm1
 	mulss xmm2, [eax+0x28]
 	addss xmm6, xmm2
-jointGetInfo2_600:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_600:
 	movss xmm3, dword [ebp-0x34]
 	movss xmm1, dword [ebp-0x30]
 	movaps xmm2, xmm6
@@ -2727,8 +2726,8 @@ jointGetInfo2_600:
 	add eax, 0x90
 	mov [esp], eax
 	call _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi
-	jmp jointGetInfo2_80
-jointGetInfo2_870:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_870:
 	mov edi, [ebp+0x8]
 	add edi, 0x50
 	mov ebx, [ebp+0x10]
@@ -2784,7 +2783,7 @@ jointGetInfo2_870:
 	movss [eax+0x4], xmm2
 	movss xmm1, dword [ebp-0x44]
 	mov eax, [ecx+0xc]
-	movss xmm5, dword [circleCoords.131667+0x6f0]
+	movss xmm5, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm5
 	movss [eax+0x8], xmm0
@@ -2802,7 +2801,7 @@ jointGetInfo2_870:
 	mov eax, [ebp+0x8]
 	mov edx, [eax+0x30]
 	test edx, edx
-	jz jointGetInfo2_300
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_300
 	mov eax, [ecx+0x10]
 	mov edx, 0xbf800000
 	mov [eax], edx
@@ -2861,15 +2860,15 @@ jointGetInfo2_870:
 	mov eax, [edx+0x14]
 	movss [esi+eax+0x4], xmm2
 	mov ebx, [ebp+0x8]
-jointGetInfo2_780:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_780:
 	mov ecx, [ebp+0x10]
 	movss xmm1, dword [ecx]
 	mulss xmm1, [ecx+0x4]
 	mov ecx, [ebx+0x30]
 	test ecx, ecx
-	jz jointGetInfo2_310
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_310
 	xor ebx, ebx
-jointGetInfo2_320:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_320:
 	mov esi, [ebp+0x10]
 	mov ecx, [esi+0x1c]
 	lea edx, [ebx*4]
@@ -2884,33 +2883,33 @@ jointGetInfo2_320:
 	movss [ecx+ebx*4], xmm0
 	add ebx, 0x1
 	cmp ebx, 0x3
-	jnz jointGetInfo2_320
-	jmp jointGetInfo2_80
-jointGetInfo2_900:
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_320
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_900:
 	mov edx, [ebp+0x10]
 	mov edi, [edx+0x18]
 	lea ecx, [edi+edi]
 	mov [ebp-0x8c], ecx
 	mov ebx, [ebp+0x8]
 	test byte [ebx+0x18], 0x2
-	jz jointGetInfo2_330
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_330
 	movss xmm0, dword [ebx+0x80]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x38], xmm0
 	movss xmm0, dword [ebx+0x84]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x34], xmm0
 	movss xmm0, dword [ebx+0x88]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x30], xmm0
 	mov edx, [ebp+0x8]
-jointGetInfo2_590:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_590:
 	pxor xmm7, xmm7
 	movss [ebp-0x2c], xmm7
 	mov eax, [edx+0x20]
 	mov ecx, 0x1
 	lea ebx, [ebp-0x48]
-jointGetInfo2_340:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_340:
 	movss xmm0, dword [edx+0x70]
 	subss xmm0, [eax+0xe0]
 	movss [ebx+ecx*4-0x4], xmm0
@@ -2918,7 +2917,7 @@ jointGetInfo2_340:
 	add edx, 0x4
 	add eax, 0x4
 	cmp ecx, 0x4
-	jnz jointGetInfo2_340
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_340
 	mov ebx, [ebp+0x10]
 	mov edx, [ebx+0x8]
 	mov eax, [ebp-0x38]
@@ -2956,11 +2955,11 @@ jointGetInfo2_340:
 	mov esi, [ebp+0x8]
 	mov eax, [esi+0x30]
 	test eax, eax
-	jz jointGetInfo2_350
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_350
 	mov edx, esi
 	mov cl, 0x1
 	lea ebx, [ebp-0x58]
-jointGetInfo2_360:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_360:
 	movss xmm0, dword [edx+0x70]
 	subss xmm0, [eax+0xe0]
 	movss [ebx+ecx*4-0x4], xmm0
@@ -2968,19 +2967,19 @@ jointGetInfo2_360:
 	add edx, 0x4
 	add eax, 0x4
 	cmp ecx, 0x4
-	jnz jointGetInfo2_360
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_360
 	mov edx, [ebp+0x10]
 	mov eax, [edx+0x10]
 	movss xmm0, dword [ebp-0x38]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [eax], xmm0
 	mov eax, [edx+0x10]
 	movss xmm0, dword [ebp-0x34]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [eax+0x4], xmm0
 	mov eax, [edx+0x10]
 	movss xmm0, dword [ebp-0x30]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [eax+0x8], xmm0
 	movss xmm3, dword [ebp-0x54]
 	movss xmm1, dword [ebp-0x50]
@@ -2990,7 +2989,7 @@ jointGetInfo2_360:
 	movaps xmm2, xmm1
 	mulss xmm2, [ebp-0x34]
 	subss xmm0, xmm2
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [eax], xmm0
 	movss xmm0, dword [ebp-0x58]
 	mov eax, [edx+0x14]
@@ -2998,24 +2997,24 @@ jointGetInfo2_360:
 	movaps xmm2, xmm0
 	mulss xmm2, [ebp-0x30]
 	subss xmm1, xmm2
-	xorps xmm1, [circleCoords.131667+0x6f0]
+	xorps xmm1, [_data16_80000000]
 	movss [eax+0x4], xmm1
 	mov eax, [edx+0x14]
 	mulss xmm0, [ebp-0x34]
 	mulss xmm3, [ebp-0x38]
 	subss xmm0, xmm3
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [eax+0x8], xmm0
 	mov ebx, [ebp+0x8]
-jointGetInfo2_690:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_690:
 	mov ecx, [ebp+0x10]
 	movss xmm1, dword [ecx+0x4]
 	test byte [ebx+0x44], 0x8
-	jz jointGetInfo2_370
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_370
 	movss xmm1, dword [ebx+0x58]
 	mov esi, [ebp+0x10]
 	mov eax, [ebp+0x8]
-jointGetInfo2_630:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_630:
 	mulss xmm1, [esi]
 	movss xmm0, dword [eax+0x90]
 	mov edx, [ebp+0xc]
@@ -3026,22 +3025,22 @@ jointGetInfo2_630:
 	movss xmm2, dword [edx+0x24]
 	mulss xmm0, xmm1
 	ucomiss xmm0, xmm2
-	jbe jointGetInfo2_380
+	jbe _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_380
 	mov eax, [esi+0x1c]
 	movss [eax], xmm2
-jointGetInfo2_640:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_640:
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x44]
 	test al, 0x10
-	jz jointGetInfo2_390
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_390
 	mov ebx, [ebp+0x10]
 	mov edx, [ebx+0x20]
 	mov eax, [ecx+0x5c]
 	mov [edx], eax
 	mov eax, [ecx+0x44]
-jointGetInfo2_390:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_390:
 	test al, 0x4
-	jz jointGetInfo2_400
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_400
 	mov esi, [ebp+0x8]
 	mov edx, [esi+0x20]
 	mov ecx, [ebp+0x10]
@@ -3069,7 +3068,7 @@ jointGetInfo2_390:
 	mov eax, [ebp+0x8]
 	mov esi, [eax+0x30]
 	test esi, esi
-	jz jointGetInfo2_410
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_410
 	mov edx, [ebp+0x10]
 	mov eax, [edx+0x10]
 	lea ecx, [esi+0x130]
@@ -3094,33 +3093,33 @@ jointGetInfo2_390:
 	addss xmm2, xmm1
 	addss xmm3, xmm2
 	mov esi, [ebp+0x8]
-jointGetInfo2_850:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_850:
 	movss xmm1, dword [esi+0x54]
 	ucomiss xmm1, xmm7
-	jb jointGetInfo2_400
+	jb _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_400
 	movaps xmm0, xmm3
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm1
-	jbe jointGetInfo2_400
+	jbe _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_400
 	movss xmm0, dword [esi+0x50]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm0, xmm3
 	mov edx, [ebp+0x10]
 	mov eax, [edx+0x1c]
 	ucomiss xmm0, [eax]
-	jbe jointGetInfo2_420
+	jbe _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_420
 	movss [eax], xmm0
 	mov ecx, [ebp+0x10]
-jointGetInfo2_610:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_610:
 	mov eax, [ecx+0x24]
 	mov dword [eax], 0x0
 	mov eax, [ecx+0x28]
 	mov dword [eax], 0x7f7fffff
 	mov ebx, [ebp+0x8]
 	cmp dword [ebx+0x40], 0x1
-	jle jointGetInfo2_430
+	jle _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_430
 	test byte [ebx+0x44], 0x2
-	jz jointGetInfo2_440
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_440
 	mov eax, [ebx+0x9c]
 	mov [ebp-0x88], eax
 	mov eax, [ebx+0xa0]
@@ -3144,7 +3143,7 @@ jointGetInfo2_610:
 	mulss xmm0, [ebp-0x88]
 	subss xmm1, xmm0
 	movss [ebp-0x20], xmm1
-jointGetInfo2_680:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_680:
 	lea ecx, [edi*4]
 	mov esi, [ebp+0x10]
 	mov edx, [esi+0x8]
@@ -3180,18 +3179,18 @@ jointGetInfo2_680:
 	mov edi, [ebp+0x8]
 	mov edi, [edi+0x30]
 	test edi, edi
-	jz jointGetInfo2_450
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_450
 	mov eax, [esi+0x10]
 	movss xmm0, dword [ebp-0x88]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax], xmm0
 	mov eax, [esi+0x10]
 	movss xmm0, dword [ebp-0x84]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax+0x4], xmm0
 	mov eax, [esi+0x10]
 	movss xmm0, dword [ebp-0x80]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax+0x8], xmm0
 	movss xmm3, dword [ebp-0x54]
 	movss xmm1, dword [ebp-0x50]
@@ -3201,7 +3200,7 @@ jointGetInfo2_680:
 	movaps xmm2, xmm1
 	mulss xmm2, [ebp-0x84]
 	subss xmm0, xmm2
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax], xmm0
 	movss xmm0, dword [ebp-0x58]
 	mov eax, [esi+0x14]
@@ -3209,28 +3208,28 @@ jointGetInfo2_680:
 	movaps xmm2, xmm0
 	mulss xmm2, [ebp-0x80]
 	subss xmm1, xmm2
-	xorps xmm1, [circleCoords.131667+0x6f0]
+	xorps xmm1, [_data16_80000000]
 	movss [ecx+eax+0x4], xmm1
 	mov eax, [esi+0x14]
 	mulss xmm0, [ebp-0x84]
 	mulss xmm3, [ebp-0x88]
 	subss xmm0, xmm3
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax+0x8], xmm0
-jointGetInfo2_450:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_450:
 	mov eax, [ebp+0x8]
 	test byte [eax+0x44], 0x20
-	jz jointGetInfo2_460
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_460
 	mov ebx, [ebp+0x10]
 	mov edx, [ebx+0x1c]
 	mov eax, [eax+0x60]
 	mov [edx+0x4], eax
 	mov edx, [ebp+0x8]
-jointGetInfo2_660:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_660:
 	mov edi, [ebp+0x10]
 	mov eax, [edi+0x24]
 	movss xmm0, dword [edx+0x48]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax], xmm0
 	mov edx, [edi+0x28]
 	mov ebx, [ebp+0x8]
@@ -3238,22 +3237,22 @@ jointGetInfo2_660:
 	mov [ecx+edx], eax
 	mov eax, [ebx+0x44]
 	test ah, 0x10
-	jz jointGetInfo2_470
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_470
 	mov eax, [edi+0x2c]
 	mov dword [eax+0x4], 0x0
 	mov eax, [ebx+0x44]
-jointGetInfo2_470:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_470:
 	test al, al
-	jns jointGetInfo2_480
+	jns _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_480
 	mov esi, [ebp+0x10]
 	mov edx, [esi+0x20]
 	mov edi, [ebp+0x8]
 	mov eax, [edi+0x68]
 	mov [edx+0x4], eax
 	mov eax, [ebp+0x8]
-jointGetInfo2_650:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_650:
 	cmp dword [eax+0x40], 0x2
-	jle jointGetInfo2_490
+	jle _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_490
 	mov ecx, [ebp-0x8c]
 	shl ecx, 0x2
 	mov ebx, [ebp+0x10]
@@ -3287,18 +3286,18 @@ jointGetInfo2_650:
 	mov esi, [ebp+0x8]
 	mov esi, [esi+0x30]
 	test esi, esi
-	jz jointGetInfo2_500
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_500
 	mov eax, [ebx+0x10]
 	movss xmm0, dword [ebp-0x28]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax], xmm0
 	mov eax, [ebx+0x10]
 	movss xmm0, dword [ebp-0x24]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax+0x4], xmm0
 	mov eax, [ebx+0x10]
 	movss xmm0, dword [ebp-0x20]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax+0x8], xmm0
 	movss xmm3, dword [ebp-0x54]
 	movss xmm1, dword [ebp-0x50]
@@ -3308,7 +3307,7 @@ jointGetInfo2_650:
 	movaps xmm2, xmm1
 	mulss xmm2, [ebp-0x24]
 	subss xmm0, xmm2
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax], xmm0
 	movss xmm0, dword [ebp-0x58]
 	mov eax, [ebx+0x14]
@@ -3316,58 +3315,58 @@ jointGetInfo2_650:
 	movaps xmm2, xmm0
 	mulss xmm2, [ebp-0x20]
 	subss xmm1, xmm2
-	xorps xmm1, [circleCoords.131667+0x6f0]
+	xorps xmm1, [_data16_80000000]
 	movss [ecx+eax+0x4], xmm1
 	mov eax, [ebx+0x14]
 	mulss xmm0, [ebp-0x24]
 	mulss xmm3, [ebp-0x28]
 	subss xmm0, xmm3
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax+0x8], xmm0
-jointGetInfo2_500:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_500:
 	mov edi, [ebp+0x8]
 	mov eax, [edi+0x44]
 	test al, 0x40
-	jz jointGetInfo2_510
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_510
 	mov eax, [ebp+0x10]
 	mov edx, [eax+0x1c]
 	mov eax, [edi+0x64]
 	mov [edx+0x8], eax
 	mov eax, [edi+0x44]
-jointGetInfo2_510:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_510:
 	test al, 0x1
-	jz jointGetInfo2_520
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_520
 	mov edx, [ebp+0x10]
 	mov eax, [edx+0x24]
 	mov ebx, [ebp+0x8]
 	movss xmm0, dword [ebx+0x4c]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax], xmm0
 	mov esi, [ebp+0x10]
 	mov edx, [esi+0x28]
 	mov eax, [ebx+0x4c]
 	mov [ecx+edx], eax
-jointGetInfo2_670:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_670:
 	mov esi, [ebp+0x8]
 	mov eax, [esi+0x44]
 	test ah, 0x20
-	jz jointGetInfo2_530
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_530
 	mov edi, [ebp+0x10]
 	mov eax, [edi+0x2c]
 	mov dword [eax+0x8], 0x0
 	mov eax, [esi+0x44]
-jointGetInfo2_530:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_530:
 	test ah, 0x1
-	jz jointGetInfo2_540
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_540
 	mov eax, [ebp+0x10]
 	mov edx, [eax+0x20]
 	mov ecx, [ebp+0x8]
 	mov eax, [ecx+0x6c]
 	mov [edx+0x8], eax
 	mov ebx, [ebp+0x8]
-jointGetInfo2_620:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_620:
 	cmp byte [ebx+0x3c], 0x0
-	jz jointGetInfo2_80
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
 	mov esi, [ebp+0x10]
 	cvtss2sd xmm0, [esi+0x4]
 	movsd [esp+0x18], xmm0
@@ -3379,17 +3378,17 @@ jointGetInfo2_620:
 	mov [esp+0x8], eax
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_0xp_2_m_d_skip_d
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov dword [esp], 0x14
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov ecx, [ebx+0x40]
 	test ecx, ecx
-	jle jointGetInfo2_80
+	jle _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
 	xor esi, esi
 	xor edi, edi
 	xor ebx, ebx
-jointGetInfo2_550:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_550:
 	lea edx, [edi*4]
 	mov ecx, [ebp+0x10]
 	mov eax, [ecx+0xc]
@@ -3409,10 +3408,10 @@ jointGetInfo2_550:
 	movsd [esp+0x8], xmm0
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring___d_j__f_f_f_f_f
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov dword [esp], 0x14
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	mov edx, [ebp+0x10]
 	mov eax, [edx+0x2c]
 	mov eax, [ebx+eax]
@@ -3430,19 +3429,19 @@ jointGetInfo2_550:
 	cvtss2sd xmm0, [ebx+eax]
 	movsd [esp+0x4], xmm0
 	mov dword [esp], _cstring_c__f__cfm__f__lo
-	call va
+	call _Z2vaPKcz
 	mov [esp+0x4], eax
 	mov dword [esp], 0x14
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	add esi, 0x1
 	mov ecx, [ebp+0x10]
 	add edi, [ecx+0x18]
 	add ebx, 0x4
 	mov eax, [ebp+0x8]
 	cmp [eax+0x40], esi
-	jg jointGetInfo2_550
-	jmp jointGetInfo2_80
-jointGetInfo2_920:
+	jg _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_550
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_920:
 	mov ecx, [ebp+0x10]
 	mov ebx, [ecx+0x18]
 	mov ecx, [ebp+0x8]
@@ -3450,7 +3449,7 @@ jointGetInfo2_920:
 	mov dword [esp], 0x3
 	mov edx, [ebp+0x10]
 	mov eax, [ebp+0x8]
-	call setFixedOrientation
+	call _Z19setFixedOrientationP7dxJointPNS_5Info2EPfi
 	mov esi, [ebp+0x10]
 	mov eax, [esi+0x8]
 	mov edx, 0x3f800000
@@ -3496,10 +3495,10 @@ jointGetInfo2_920:
 	movss [ebp-0x30], xmm4
 	mov eax, [ebx+0x30]
 	test eax, eax
-	jz jointGetInfo2_560
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_560
 	mov esi, [ebp+0x10]
 	mov eax, [esi+0xc]
-	movss xmm3, dword [circleCoords.131667+0x6f0]
+	movss xmm3, dword [_data16_80000000]
 	movaps xmm0, xmm4
 	xorps xmm0, xmm3
 	movss [eax+0x4], xmm0
@@ -3527,16 +3526,16 @@ jointGetInfo2_920:
 	mov [ecx+eax+0x8], edx
 	mov esi, [ebx+0x20]
 	mov eax, [ebp+0x8]
-jointGetInfo2_730:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_730:
 	mov edi, [ebp+0x10]
 	movss xmm1, dword [edi]
 	mulss xmm1, [edi+0x4]
 	mov ebx, [eax+0x30]
 	test ebx, ebx
-	jz jointGetInfo2_570
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_570
 	xor ecx, ecx
 	mov edi, [ebp+0x8]
-jointGetInfo2_580:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_580:
 	mov ebx, [ebp+0x10]
 	mov edx, [ebx+0x1c]
 	mov eax, [edi+0x30]
@@ -3547,12 +3546,12 @@ jointGetInfo2_580:
 	movss [edx+ecx*4], xmm0
 	add ecx, 0x1
 	cmp ecx, 0x3
-	jz jointGetInfo2_80
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
 	mov edx, [ebp+0x8]
 	mov esi, [edx+0x20]
 	mov edi, edx
-	jmp jointGetInfo2_580
-jointGetInfo2_330:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_580
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_330:
 	mov eax, [ebx+0x80]
 	mov [ebp-0x38], eax
 	mov eax, [ebx+0x84]
@@ -3560,50 +3559,50 @@ jointGetInfo2_330:
 	mov eax, [ebx+0x88]
 	mov [ebp-0x30], eax
 	mov edx, ebx
-	jmp jointGetInfo2_590
-jointGetInfo2_290:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_590
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_290:
 	mov esi, edx
-jointGetInfo2_700:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_700:
 	movss xmm7, dword [esi+0x70]
 	movss xmm4, dword [esi+0x74]
 	movss xmm6, dword [esi+0x78]
-	jmp jointGetInfo2_600
-jointGetInfo2_400:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_600
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_400:
 	mov ecx, [ebp+0x10]
-	jmp jointGetInfo2_610
-jointGetInfo2_490:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_610
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_490:
 	mov ebx, eax
-	jmp jointGetInfo2_620
-jointGetInfo2_370:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_620
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_370:
 	mov esi, ecx
 	mov eax, ebx
-	jmp jointGetInfo2_630
-jointGetInfo2_380:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_630
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_380:
 	mov eax, [esi+0x1c]
 	movss [eax], xmm0
-	jmp jointGetInfo2_640
-jointGetInfo2_480:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_640
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_480:
 	mov eax, [ebp+0x8]
-	jmp jointGetInfo2_650
-jointGetInfo2_460:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_650
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_460:
 	mov edx, eax
-	jmp jointGetInfo2_660
-jointGetInfo2_540:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_660
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_540:
 	mov ebx, [ebp+0x8]
-	jmp jointGetInfo2_620
-jointGetInfo2_520:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_620
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_520:
 	mov edi, [ebp+0x10]
 	mov eax, [edi+0x24]
 	mov edx, [ebp+0x8]
 	movss xmm0, dword [edx+0x48]
-	xorps xmm0, [circleCoords.131667+0x6f0]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+eax], xmm0
 	mov edx, [edi+0x28]
 	mov ebx, [ebp+0x8]
 	mov eax, [ebx+0x48]
 	mov [ecx+edx], eax
-	jmp jointGetInfo2_670
-jointGetInfo2_440:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_670
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_440:
 	lea eax, [ebp-0x28]
 	mov [esp+0x8], eax
 	lea eax, [ebp-0x88]
@@ -3617,28 +3616,28 @@ jointGetInfo2_440:
 	movss xmm6, dword [ebp-0xd8]
 	movss xmm5, dword [ebp-0xc8]
 	movss xmm4, dword [ebp-0xb8]
-	jmp jointGetInfo2_680
-jointGetInfo2_430:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_680
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_430:
 	mov eax, ebx
-	jmp jointGetInfo2_650
-jointGetInfo2_350:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_650
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_350:
 	mov ebx, esi
-	jmp jointGetInfo2_690
-jointGetInfo2_280:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_690
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_280:
 	mov esi, eax
-	jmp jointGetInfo2_700
-jointGetInfo2_50:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_700
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_50:
 	mov eax, [edi+0x70]
 	mov [ebp-0x88], eax
 	mov eax, [edi+0x74]
 	mov [ebp-0x84], eax
 	mov eax, [edi+0x78]
 	mov [ebp-0x80], eax
-	jmp jointGetInfo2_710
-jointGetInfo2_570:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_710
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_570:
 	mov edx, eax
 	xor ecx, ecx
-jointGetInfo2_720:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_720:
 	mov ebx, [ebp+0x10]
 	mov eax, [ebx+0x1c]
 	movss xmm0, dword [edx+0x50]
@@ -3648,16 +3647,16 @@ jointGetInfo2_720:
 	add ecx, 0x1
 	add edx, 0x4
 	cmp ecx, 0x3
-	jz jointGetInfo2_80
+	jz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
 	mov eax, [ebp+0x8]
 	mov esi, [eax+0x20]
-	jmp jointGetInfo2_720
-jointGetInfo2_560:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_720
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_560:
 	mov eax, ebx
-	jmp jointGetInfo2_730
-jointGetInfo2_30:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_730
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_30:
 	xor ebx, ebx
-jointGetInfo2_740:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_740:
 	lea edx, [ebx*4]
 	mov eax, [ebp+0x10]
 	mov ecx, [eax+0x1c]
@@ -3670,14 +3669,14 @@ jointGetInfo2_740:
 	movss [ecx+edx], xmm0
 	add ebx, 0x1
 	cmp ebx, 0x3
-	jnz jointGetInfo2_740
-	jmp jointGetInfo2_750
-jointGetInfo2_20:
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_740
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_750
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_20:
 	mov ebx, eax
-	jmp jointGetInfo2_760
-jointGetInfo2_310:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_760
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_310:
 	xor ebx, ebx
-jointGetInfo2_770:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_770:
 	lea edx, [ebx*4]
 	mov eax, [ebp+0x10]
 	mov ecx, [eax+0x1c]
@@ -3690,14 +3689,14 @@ jointGetInfo2_770:
 	movss [edx+ecx], xmm0
 	add ebx, 0x1
 	cmp ebx, 0x3
-	jnz jointGetInfo2_770
-	jmp jointGetInfo2_80
-jointGetInfo2_300:
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_770
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_300:
 	mov ebx, eax
-	jmp jointGetInfo2_780
-jointGetInfo2_260:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_780
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_260:
 	xor ebx, ebx
-jointGetInfo2_790:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_790:
 	lea edx, [ebx*4]
 	mov eax, [ebp+0x10]
 	mov ecx, [eax+0x1c]
@@ -3710,19 +3709,19 @@ jointGetInfo2_790:
 	movss [ecx+edx], xmm0
 	add ebx, 0x1
 	cmp ebx, 0x3
-	jnz jointGetInfo2_790
-	jmp jointGetInfo2_800
-jointGetInfo2_250:
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_790
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_800
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_250:
 	mov ebx, eax
-	jmp jointGetInfo2_810
-jointGetInfo2_120:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_810
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_120:
 	mov dword [ebp-0x90], 0x0
-	jmp jointGetInfo2_820
-jointGetInfo2_230:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_820
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_230:
 	mov eax, ecx
 	mov edx, 0x1
 	lea edi, [ebp-0x38]
-jointGetInfo2_830:
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_830:
 	movss xmm0, dword [eax+0x60]
 	mov ecx, [ebp-0x94]
 	subss xmm0, [ecx+edx*4-0x4]
@@ -3730,7 +3729,7 @@ jointGetInfo2_830:
 	add edx, 0x1
 	add eax, 0x4
 	cmp edx, 0x4
-	jnz jointGetInfo2_830
+	jnz _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_830
 	movss xmm2, dword [ebp-0x38]
 	movss xmm3, dword [ebp-0x34]
 	movss xmm4, dword [ebp-0x30]
@@ -3747,29 +3746,29 @@ jointGetInfo2_830:
 	mulss xmm0, xmm5
 	movss [eax+0xc], xmm0
 	mov eax, [ebx+0x1c]
-	jmp jointGetInfo2_840
-jointGetInfo2_420:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_840
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_420:
 	mov ecx, edx
-	jmp jointGetInfo2_610
-jointGetInfo2_410:
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_610
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_410:
 	mov esi, eax
-	jmp jointGetInfo2_850
+	jmp _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_850
 	add [eax], al
 	
 	
-jointGetInfo2_jumptab_0:
-	dd jointGetInfo2_860
-	dd jointGetInfo2_870
-	dd jointGetInfo2_880
-	dd jointGetInfo2_890
-	dd jointGetInfo2_900
-	dd jointGetInfo2_910
-	dd jointGetInfo2_920
-	dd jointGetInfo2_80
+_Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_jumptab_0:
+	dd _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_860
+	dd _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_870
+	dd _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_880
+	dd _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_890
+	dd _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_900
+	dd _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_910
+	dd _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_920
+	dd _Z13jointGetInfo2P7dxJointP15dxWorldStepInfoPNS_5Info2E_80
 
 
 ;jointInit(dxJoint*)
-jointInit:
+_Z9jointInitP7dxJoint:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3778,10 +3777,10 @@ jointInit:
 	sub esp, 0x2c
 	mov eax, [ebp+0x8]
 	cmp dword [eax+0x14], 0x7
-	ja jointInit_10
+	ja _Z9jointInitP7dxJoint_10
 	mov eax, [eax+0x14]
-	jmp dword [eax*4+jointInit_jumptab_0]
-jointInit_110:
+	jmp dword [eax*4+_Z9jointInitP7dxJoint_jumptab_0]
+_Z9jointInitP7dxJoint_110:
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebp+0x8]
 	add eax, 0x40
@@ -3845,7 +3844,7 @@ jointInit_110:
 	mov [eax+0x4], ecx
 	mov dword [eax+0x8], 0xff7fffff
 	mov [eax+0xc], edi
-jointInit_40:
+_Z9jointInitP7dxJoint_40:
 	mov [eax+0x10], esi
 	mov edx, [ebx+0x24]
 	mov [eax+0x14], edx
@@ -3856,16 +3855,16 @@ jointInit_40:
 	mov [eax+0x20], ecx
 	mov dword [eax+0x24], 0x0
 	mov [eax+0x28], ecx
-jointInit_30:
+_Z9jointInitP7dxJoint_30:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-jointInit_60:
+_Z9jointInitP7dxJoint_60:
 	mov eax, [ebp+0x8]
-jointInit_10:
+_Z9jointInitP7dxJoint_10:
 	mov dword [eax+0x40], 0x0
 	mov dword [eax+0x44], 0x0
 	mov edi, eax
@@ -3874,7 +3873,7 @@ jointInit_10:
 	sub ebx, 0xffffff80
 	mov esi, eax
 	add esi, 0x54
-jointInit_20:
+_Z9jointInitP7dxJoint_20:
 	mov dword [edi+0x48], 0x0
 	mov dword [esp+0x4], 0x4
 	mov [esp], esi
@@ -3900,7 +3899,7 @@ jointInit_20:
 	add ebx, 0x2c
 	add edi, 0x4
 	cmp dword [ebp-0x1c], 0x3
-	jnz jointInit_20
+	jnz _Z9jointInitP7dxJoint_20
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebp+0x8]
 	add eax, 0x108
@@ -3917,7 +3916,7 @@ jointInit_20:
 	pop edi
 	pop ebp
 	ret
-jointInit_120:
+_Z9jointInitP7dxJoint_120:
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebp+0x8]
 	add eax, 0x50
@@ -3928,12 +3927,12 @@ jointInit_120:
 	add eax, 0x40
 	mov [esp], eax
 	call dSetZero
-	jmp jointInit_30
-jointInit_100:
+	jmp _Z9jointInitP7dxJoint_30
+_Z9jointInitP7dxJoint_100:
 	mov eax, [ebp+0x8]
 	mov byte [eax+0x3c], 0x0
-	jmp jointInit_30
-jointInit_90:
+	jmp _Z9jointInitP7dxJoint_30
+_Z9jointInitP7dxJoint_90:
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebp+0x8]
 	add eax, 0x40
@@ -3958,12 +3957,12 @@ jointInit_90:
 	add eax, 0x70
 	xor ecx, ecx
 	mov [edx+0x70], ecx
-jointInit_50:
+_Z9jointInitP7dxJoint_50:
 	mov [eax+0x4], ecx
 	mov dword [eax+0x8], 0xff7fffff
 	mov dword [eax+0xc], 0x7f7fffff
-	jmp jointInit_40
-jointInit_80:
+	jmp _Z9jointInitP7dxJoint_40
+_Z9jointInitP7dxJoint_80:
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebp+0x8]
 	add eax, 0x40
@@ -4000,8 +3999,8 @@ jointInit_80:
 	xor ecx, ecx
 	mov edx, [ebp+0x8]
 	mov [edx+0x90], ecx
-	jmp jointInit_50
-jointInit_70:
+	jmp _Z9jointInitP7dxJoint_50
+_Z9jointInitP7dxJoint_70:
 	mov dword [esp+0x4], 0x4
 	mov eax, [ebp+0x8]
 	add eax, 0x40
@@ -4012,18 +4011,18 @@ jointInit_70:
 	add eax, 0x50
 	mov [esp], eax
 	call dSetZero
-	jmp jointInit_30
+	jmp _Z9jointInitP7dxJoint_30
 	
 	
-jointInit_jumptab_0:
-	dd jointInit_60
-	dd jointInit_70
-	dd jointInit_80
-	dd jointInit_90
-	dd jointInit_100
-	dd jointInit_110
-	dd jointInit_120
-	dd jointInit_30
+_Z9jointInitP7dxJoint_jumptab_0:
+	dd _Z9jointInitP7dxJoint_60
+	dd _Z9jointInitP7dxJoint_70
+	dd _Z9jointInitP7dxJoint_80
+	dd _Z9jointInitP7dxJoint_90
+	dd _Z9jointInitP7dxJoint_100
+	dd _Z9jointInitP7dxJoint_110
+	dd _Z9jointInitP7dxJoint_120
+	dd _Z9jointInitP7dxJoint_30
 
 
 ;dxJointLimitMotor::get(int)
@@ -5040,7 +5039,7 @@ dJointSetAMotorAxis_50:
 	pop esi
 	pop edi
 	pop ebp
-	jmp amotorSetEulerReferenceVectors
+	jmp _Z30amotorSetEulerReferenceVectorsP13dxJointAMotor
 dJointSetAMotorAxis_40:
 	mov ecx, esi
 	shl ecx, 0x4
@@ -5084,7 +5083,7 @@ dJointSetAMotorMode_10:
 	mov dword [edx+0x40], 0x3
 	mov eax, edx
 	pop ebp
-	jmp amotorSetEulerReferenceVectors
+	jmp _Z30amotorSetEulerReferenceVectorsP13dxJointAMotor
 
 
 ;dJointSetAMotorNumAxes
@@ -5457,7 +5456,7 @@ dJointSetHingeAxis:
 	movss xmm1, dword [ebp+0x10]
 	movss xmm0, dword [ebp+0xc]
 	mov eax, ebx
-	call setAxes
+	call _Z7setAxesP7dxJointfffPfS1_
 	mov edx, [ebx+0x20]
 	test edx, edx
 	jz dJointSetHingeAxis_10
@@ -5837,8 +5836,8 @@ _float_0_00000000:		dd 0x0	; 0
 _double_3_14159265:		dq 0x400921fb54442d18	; 3.14159
 _double_6_28318531:		dq 0x401921fb54442d18	; 6.28319
 _data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
-_float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
-_float__3402823466385288_float__:		dd 0xff7fffff	; -3.40282e+38
+_float_3402823466385288598117041:		dd 0x7f7fffff	; 3.40282e+38
+_float__340282346638528859811704:		dd 0xff7fffff	; -3.40282e+38
 _double__3_14159265:		dq 0xc00921fb54442d18	; -3.14159
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_00000000:		dd 0x3f800000	; 1

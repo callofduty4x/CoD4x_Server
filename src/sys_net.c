@@ -106,8 +106,9 @@
 
 	#ifndef IPV6_V6ONLY
 		#define IPV6_V6ONLY           27 // Treat wildcard bind as AF_INET6-only.
-	#endif 
+	#endif
 
+	#ifndef InetPtonA
 	int inet_pton(int af, const char *src, void *dst)
 	{
 		struct sockaddr_storage sin;
@@ -115,7 +116,7 @@
 		char address[256];
 		strncpy(address, src, sizeof(address));
 
-		int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize ); 
+		int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize );
 		if(rc != 0)
 		{
 			return -1;
@@ -132,6 +133,7 @@
 		}
 		return 0;
 	}
+	#endif
 
 #else
 

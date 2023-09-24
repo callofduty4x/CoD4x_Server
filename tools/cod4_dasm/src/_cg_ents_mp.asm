@@ -1,126 +1,126 @@
 ;Imports of cg_ents_mp:
-	extern MT_Alloc
+	extern _Z8MT_Allocii
 	extern vec3_origin
-	extern BG_EvaluateTrajectory
+	extern _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	extern floorf
 	extern cg_entitiesArray
 	extern cgArray
-	extern FX_ThroughWithEffect
-	extern CL_DObjCreateSkelForBone
-	extern DObjGetHierarchyBits
-	extern CG_DoControllers
-	extern DObjCalcSkel
-	extern CL_GetConfigString
-	extern CG_PlaySoundAliasByName
-	extern CG_IsRagdollTrajectory
-	extern BG_GetNumWeapons
-	extern BG_GetWeaponDef
-	extern CG_PlaySoundAlias
-	extern R_AddDObjToScene
-	extern CG_AddHudGrenade
-	extern Com_Error
-	extern R_GetBrushModel
-	extern CG_CompassUpdateVehicleInfo
+	extern _Z20FX_ThroughWithEffectiP8FxEffect
+	extern _Z24CL_DObjCreateSkelForBoneP6DObj_si
+	extern _Z20DObjGetHierarchyBitsPK6DObj_siPi
+	extern _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi
+	extern _Z12DObjCalcSkelPK6DObj_sPi
+	extern _Z18CL_GetConfigStringii
+	extern _Z23CG_PlaySoundAliasByNameiiPKfPKc
+	extern _Z22CG_IsRagdollTrajectoryPK12trajectory_t
+	extern _Z16BG_GetNumWeaponsv
+	extern _Z15BG_GetWeaponDefj
+	extern _Z17CG_PlaySoundAliasiiPKfP16snd_alias_list_t
+	extern _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
+	extern _Z16CG_AddHudGrenadePK4cg_sPK9centity_s
+	extern _Z9Com_Error11errorParm_tPKcz
+	extern _Z15R_GetBrushModelj
+	extern _Z27CG_CompassUpdateVehicleInfoii
 	extern cgsArray
-	extern AnglesToAxis
-	extern FX_SpawnOrientedEffect
-	extern CG_VehProcessEntity
+	extern _Z12AnglesToAxisPKfPA3_f
+	extern _Z22FX_SpawnOrientedEffectiPK11FxEffectDefiPKfPA3_S2_j
+	extern _Z19CG_VehProcessEntityiP9centity_s
 	extern comWorld
-	extern CG_PlayerUsingScopedTurret
-	extern CG_ShouldPlaySoundOnLocalClient
-	extern CL_PickSoundAlias
-	extern SND_PlayBlendedSoundAliases
-	extern FX_RetriggerEffect
-	extern CG_Player
-	extern CG_Corpse
-	extern R_AddBrushModelToSceneFromAngles
-	extern AngleVectors
-	extern AimTarget_ProcessEntity
+	extern _Z26CG_PlayerUsingScopedTurreti
+	extern _Z31CG_ShouldPlaySoundOnLocalClientiiPKfPKc
+	extern _Z17CL_PickSoundAliasPKc
+	extern _Z27SND_PlayBlendedSoundAliasesPK11snd_alias_tS1_ff12SndEntHandlePKfi18snd_alias_system_t
+	extern _Z18FX_RetriggerEffectiP8FxEffecti
+	extern _Z9CG_PlayeriP9centity_s
+	extern _Z9CG_CorpseiP9centity_s
+	extern _Z32R_AddBrushModelToSceneFromAnglesPK13GfxBrushModelPKfS3_j
+	extern _Z12AngleVectorsPKfPfS1_S1_
+	extern _Z23AimTarget_ProcessEntityiPK9centity_s
 	extern scr_const
-	extern CG_PlayBoltedEffect
-	extern DObjUpdateClientInfo
+	extern _Z19CG_PlayBoltedEffectiPK11FxEffectDefij
+	extern _Z20DObjUpdateClientInfoP6DObj_sfh
 	extern cg_entityOriginArray
-	extern CG_IsEntityLinked
-	extern Com_GetClientDObj
-	extern DObjGetHidePartBits
-	extern DObjSetHidePartBits
-	extern FX_MarkEntUpdateHidePartBits
-	extern CG_EntityNeedsLinked
-	extern CG_LinkEntity
-	extern CG_UnlinkEntity
-	extern DObjGetRadius
-	extern R_LinkDObjEntity
-	extern CG_VehEntityUsingVehicle
-	extern CG_VehSeatTransformForPlayer
-	extern CG_VehPlayerVehicleSlot
-	extern PIXBeginNamedEvent
-	extern CG_AddClientSideSounds
-	extern DObjGetBoneIndex
-	extern DObjGetRotTransArray
-	extern CG_CheckDObjInfoMatches
-	extern Phys_ObjDestroy
-	extern FX_MarkEntDetachAll
-	extern CG_SafeDObjFree
-	extern Com_ClientDObjCreate
-	extern CG_SetDObjInfo
-	extern XAnimSetCompleteGoalWeight
-	extern Hunk_AllocXAnimClient
-	extern XAnimCreateAnims
-	extern XAnimBlend
-	extern BG_CreateXAnim
-	extern XAnimCreateTree
-	extern DObjGetTree
-	extern XAnimSetGoalWeightKnobAll
-	extern BG_Player_DoControllersSetup
+	extern _Z17CG_IsEntityLinkedii
+	extern _Z17Com_GetClientDObjii
+	extern _Z19DObjGetHidePartBitsPK6DObj_sPj
+	extern _Z19DObjSetHidePartBitsP6DObj_sPKj
+	extern _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii
+	extern _Z20CG_EntityNeedsLinkedii
+	extern _Z13CG_LinkEntityii
+	extern _Z15CG_UnlinkEntityii
+	extern _Z13DObjGetRadiusPK6DObj_s
+	extern _Z16R_LinkDObjEntityjjPff
+	extern _Z24CG_VehEntityUsingVehicleii
+	extern _Z28CG_VehSeatTransformForPlayeriiPfS_
+	extern _Z23CG_VehPlayerVehicleSlotii
+	extern _Z18PIXBeginNamedEventiPKcz
+	extern _Z22CG_AddClientSideSoundsi
+	extern _Z16DObjGetBoneIndexPK6DObj_sjPh
+	extern _Z20DObjGetRotTransArrayPK6DObj_s
+	extern _Z23CG_CheckDObjInfoMatchesiiiP6XModel
+	extern _Z15Phys_ObjDestroy9PhysWorldi
+	extern _Z19FX_MarkEntDetachAllii
+	extern _Z15CG_SafeDObjFreeii
+	extern _Z20Com_ClientDObjCreateP11DObjModel_stP11XAnimTree_sii
+	extern _Z14CG_SetDObjInfoiiiP6XModel
+	extern _Z26XAnimSetCompleteGoalWeightP6DObj_sjfffjji
+	extern _Z21Hunk_AllocXAnimClienti
+	extern _Z16XAnimCreateAnimsPKciPFPviE
+	extern _Z10XAnimBlendP7XAnim_sjPKcjjj
+	extern _Z14BG_CreateXAnimP7XAnim_sjPKc
+	extern _Z15XAnimCreateTreeP7XAnim_sPFPviE
+	extern _Z11DObjGetTreePK6DObj_s
+	extern _Z25XAnimSetGoalWeightKnobAllP6DObj_sjjfffji
+	extern _Z28BG_Player_DoControllersSetupPK13entityState_sP12clientInfo_ti
 	extern controller_names
-	extern R_SkinGfxEntityDelayed
-	extern R_UpdateXModelBoundsDelayed
-	extern Ragdoll_CreateRagdollForDObj
-	extern Ragdoll_GetRootOrigin
-	extern Sys_EnterCriticalSection
-	extern Phys_ObjGetInterpolatedState
-	extern Sys_LeaveCriticalSection
-	extern UnitQuatToAngles
-	extern AnglesToQuat
-	extern DObjGetPhysPreset
-	extern Phys_ObjCreate
-	extern DObjGetName
-	extern Com_PrintWarning
-	extern DObjPhysicsSetCollisionFromXModel
-	extern Phys_ObjBulletImpact
-	extern DObjGetClientNotifyList
-	extern Q_stricmp
-	extern R_LinkBModelEntity
+	extern _Z22R_SkinGfxEntityDelayedP14GfxSceneEntity
+	extern _Z27R_UpdateXModelBoundsDelayedP14GfxSceneEntity
+	extern _Z28Ragdoll_CreateRagdollForDObjiiihh
+	extern _Z21Ragdoll_GetRootOriginiPf
+	extern _Z24Sys_EnterCriticalSection15CriticalSection
+	extern _Z28Phys_ObjGetInterpolatedState9PhysWorldiPfS0_
+	extern _Z24Sys_LeaveCriticalSection15CriticalSection
+	extern _Z16UnitQuatToAnglesPKfPf
+	extern _Z12AnglesToQuatPKfPf
+	extern _Z17DObjGetPhysPresetPK6DObj_s
+	extern _Z14Phys_ObjCreate9PhysWorldPKfS1_S1_PK10PhysPreset
+	extern _Z11DObjGetNamePK6DObj_s
+	extern _Z16Com_PrintWarningiPKcz
+	extern _Z33DObjPhysicsSetCollisionFromXModelPK6DObj_s9PhysWorldi
+	extern _Z20Phys_ObjBulletImpact9PhysWorldiPKfS1_ff
+	extern _Z23DObjGetClientNotifyListPP13XAnimNotify_s
+	extern _Z9I_stricmpPKcS0_
+	extern _Z18R_LinkBModelEntityjjP13GfxBrushModel
 
 ;Exports of cg_ents_mp:
 	global _GLOBAL__I__Z24CG_Player_PreControllersP6DObj_sP9centity_s
 	global g_entMoveTolVec
-	global CG_AllocAnimTree
-	global CG_LockLightingOrigin
-	global CG_InterpolateEntityPosition
-	global CG_GetPose
-	global CG_ClearUnion
-	global CG_DObjCalcBone
-	global CG_GetPoseAngles
-	global CG_GetPoseOrigin
-	global CG_ProcessEntity
-	global CG_DObjUpdateInfo
-	global CG_AddPacketEntity
-	global CG_AddPacketEntities
-	global CG_GetSkinCacheEntry
-	global CG_DObjGetWorldTagPos
-	global CG_PreProcess_GetDObj
-	global CG_mg42_PreControllers
-	global CG_DObjGetWorldTagMatrix
-	global CG_GetPoseLightingHandle
-	global CG_Player_PreControllers
-	global CG_PredictiveSkinCEntity
-	global CG_SetFrameInterpolation
-	global CG_AdjustPositionForMover
-	global CG_DObjGetWorldBoneMatrix
-	global CG_CalcEntityLerpPositions
-	global CG_ProcessClientNoteTracks
-	global CG_UpdateBModelWorldBounds
+	global _Z16CG_AllocAnimTreei
+	global _Z21CG_LockLightingOriginP9centity_sPf
+	global _Z28CG_InterpolateEntityPositionP4cg_sP9centity_s
+	global _Z10CG_GetPoseii
+	global _Z13CG_ClearUnioniP9centity_s
+	global _Z15CG_DObjCalcBonePK7cpose_tP6DObj_si
+	global _Z16CG_GetPoseAnglesPK7cpose_tPf
+	global _Z16CG_GetPoseOriginPK7cpose_tPf
+	global _Z16CG_ProcessEntityiP9centity_s
+	global _Z17CG_DObjUpdateInfoPK4cg_sP6DObj_sh
+	global _Z18CG_AddPacketEntityii
+	global _Z20CG_AddPacketEntitiesi
+	global _Z20CG_GetSkinCacheEntryPK7cpose_t
+	global _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf
+	global _Z21CG_PreProcess_GetDObjiiiP6XModel
+	global _Z22CG_mg42_PreControllersP6DObj_sP9centity_s
+	global _Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf
+	global _Z24CG_GetPoseLightingHandlePK7cpose_t
+	global _Z24CG_Player_PreControllersP6DObj_sP9centity_s
+	global _Z24CG_PredictiveSkinCEntityP14GfxSceneEntity
+	global _Z24CG_SetFrameInterpolationi
+	global _Z25CG_AdjustPositionForMoveriPKfiiiPfS1_
+	global _Z25CG_DObjGetWorldBoneMatrixPK7cpose_tP6DObj_siPA3_fPf
+	global _Z26CG_CalcEntityLerpPositionsiP9centity_s
+	global _Z26CG_ProcessClientNoteTracksP4cg_si
+	global _Z26CG_UpdateBModelWorldBoundsiP9centity_si
 
 
 SECTION .text
@@ -133,35 +133,35 @@ _GLOBAL__I__Z24CG_Player_PreControllersP6DObj_sP9centity_s:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;CG_AllocAnimTree(int)
-CG_AllocAnimTree:
+_Z16CG_AllocAnimTreei:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov dword [esp+0x4], 0x5
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call MT_Alloc
+	call _Z8MT_Allocii
 	leave
 	ret
 	nop
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -431,7 +431,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;CG_LockLightingOrigin(centity_s*, float*)
-CG_LockLightingOrigin:
+_Z21CG_LockLightingOriginP9centity_sPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -440,19 +440,19 @@ CG_LockLightingOrigin:
 	sub esp, 0x8
 	mov ecx, eax
 	test byte [eax+0xd5], 0x4
-	jz CG_LockLightingOrigin_10
+	jz _Z21CG_LockLightingOriginP9centity_sPf_10
 	lea ebx, [eax+0x1cc]
 	mov eax, vec3_origin
 	movss xmm0, dword [ecx+0x1cc]
 	ucomiss xmm0, [eax]
-	jp CG_LockLightingOrigin_20
-	jz CG_LockLightingOrigin_30
-CG_LockLightingOrigin_20:
+	jp _Z21CG_LockLightingOriginP9centity_sPf_20
+	jz _Z21CG_LockLightingOriginP9centity_sPf_30
+_Z21CG_LockLightingOriginP9centity_sPf_20:
 	lea edi, [ecx+0x1d0]
 	lea esi, [ecx+0x1d4]
 	mov [ebp-0x10], esi
 	lea esi, [ecx+0x1c]
-CG_LockLightingOrigin_60:
+_Z21CG_LockLightingOriginP9centity_sPf_60:
 	mov eax, [ebx]
 	mov [edx], eax
 	lea eax, [edx+0x4]
@@ -463,7 +463,7 @@ CG_LockLightingOrigin_60:
 	mov eax, [ebp-0x10]
 	movss xmm0, dword [eax]
 	movss [edx+0x8], xmm0
-CG_LockLightingOrigin_70:
+_Z21CG_LockLightingOriginP9centity_sPf_70:
 	xor eax, eax
 	mov [ecx+0x1cc], eax
 	mov [ebx+0x4], eax
@@ -482,18 +482,18 @@ CG_LockLightingOrigin_70:
 	pop edi
 	pop ebp
 	ret
-CG_LockLightingOrigin_30:
+_Z21CG_LockLightingOriginP9centity_sPf_30:
 	lea edi, [ebx+0x4]
 	movss xmm0, dword [ebx+0x4]
 	ucomiss xmm0, [eax+0x4]
-	jp CG_LockLightingOrigin_40
-	jnz CG_LockLightingOrigin_40
+	jp _Z21CG_LockLightingOriginP9centity_sPf_40
+	jnz _Z21CG_LockLightingOriginP9centity_sPf_40
 	lea esi, [ebx+0x8]
 	mov [ebp-0x10], esi
 	movss xmm0, dword [ebx+0x8]
 	ucomiss xmm0, [eax+0x8]
-	jnz CG_LockLightingOrigin_50
-	jp CG_LockLightingOrigin_50
+	jnz _Z21CG_LockLightingOriginP9centity_sPf_50
+	jp _Z21CG_LockLightingOriginP9centity_sPf_50
 	lea esi, [ecx+0x1c]
 	mov eax, [ecx+0x1c]
 	mov [ebx], eax
@@ -501,27 +501,27 @@ CG_LockLightingOrigin_30:
 	mov [ebx+0x4], eax
 	mov eax, [esi+0x8]
 	mov [ebx+0x8], eax
-	jmp CG_LockLightingOrigin_60
-CG_LockLightingOrigin_10:
+	jmp _Z21CG_LockLightingOriginP9centity_sPf_60
+_Z21CG_LockLightingOriginP9centity_sPf_10:
 	lea eax, [edx+0x4]
 	mov [ebp-0x14], eax
 	lea edi, [edx+0x8]
 	lea ebx, [ecx+0x1cc]
 	lea esi, [ecx+0x1c]
-	jmp CG_LockLightingOrigin_70
-CG_LockLightingOrigin_40:
+	jmp _Z21CG_LockLightingOriginP9centity_sPf_70
+_Z21CG_LockLightingOriginP9centity_sPf_40:
 	lea eax, [ebx+0x8]
 	mov [ebp-0x10], eax
 	lea esi, [ecx+0x1c]
-	jmp CG_LockLightingOrigin_60
-CG_LockLightingOrigin_50:
+	jmp _Z21CG_LockLightingOriginP9centity_sPf_60
+_Z21CG_LockLightingOriginP9centity_sPf_50:
 	lea esi, [ecx+0x1c]
-	jmp CG_LockLightingOrigin_60
+	jmp _Z21CG_LockLightingOriginP9centity_sPf_60
 	nop
 
 
 ;CG_InterpolateEntityPosition(cg_s*, centity_s*)
-CG_InterpolateEntityPosition:
+_Z28CG_InterpolateEntityPositionP4cg_sP9centity_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -539,7 +539,7 @@ CG_InterpolateEntityPosition:
 	mov [esp+0x4], eax
 	lea eax, [edx+0x68]
 	mov [esp], eax
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	lea ebx, [ebp-0x30]
 	mov [esp+0x8], ebx
 	mov eax, [esi+0x24]
@@ -547,7 +547,7 @@ CG_InterpolateEntityPosition:
 	mov [esp+0x4], eax
 	lea eax, [edi+0xd8]
 	mov [esp], eax
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	lea eax, [edi+0x1c]
 	movss xmm1, dword [ebp-0x24]
 	movss xmm0, dword [ebp-0x30]
@@ -574,14 +574,14 @@ CG_InterpolateEntityPosition:
 	mov [esp+0x4], eax
 	lea eax, [edi+0x8c]
 	mov [esp], eax
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	mov [esp+0x8], ebx
 	mov eax, [esi+0x24]
 	mov eax, [eax+0x8]
 	mov [esp+0x4], eax
 	lea eax, [edi+0xfc]
 	mov [esp], eax
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	movss xmm2, dword [ebp-0x24]
 	movss xmm0, dword [ebp-0x30]
 	subss xmm0, xmm2
@@ -637,14 +637,14 @@ CG_InterpolateEntityPosition:
 	addss xmm2, xmm0
 	movss [edi+0x30], xmm2
 	cmp dword [edi+0xd0], 0x1
-	jz CG_InterpolateEntityPosition_10
+	jz _Z28CG_InterpolateEntityPositionP4cg_sP9centity_s_10
 	add esp, 0x8c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_InterpolateEntityPosition_10:
+_Z28CG_InterpolateEntityPositionP4cg_sP9centity_s_10:
 	mov eax, [edi+0x158]
 	lea ebx, [eax+eax*8]
 	mov edx, ebx
@@ -713,12 +713,12 @@ CG_InterpolateEntityPosition_10:
 
 
 ;CG_GetPose(int, int)
-CG_GetPose:
+_Z10CG_GetPoseii:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0xc]
 	cmp edx, 0x3ff
-	jg CG_GetPose_10
+	jg _Z10CG_GetPoseii_10
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
@@ -728,7 +728,7 @@ CG_GetPose:
 	add eax, cg_entitiesArray
 	pop ebp
 	ret
-CG_GetPose_10:
+_Z10CG_GetPoseii_10:
 	mov eax, cgArray
 	add eax, 0xfd234
 	pop ebp
@@ -736,7 +736,7 @@ CG_GetPose_10:
 
 
 ;CG_ClearUnion(int, centity_s*)
-CG_ClearUnion:
+_Z13CG_ClearUnioniP9centity_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -745,27 +745,27 @@ CG_ClearUnion:
 	mov ebx, [ebp+0xc]
 	movzx eax, byte [ebx+0x3]
 	cmp eax, 0xe
-	ja CG_ClearUnion_10
-	jmp dword [eax*4+CG_ClearUnion_jumptab_0]
-CG_ClearUnion_40:
+	ja _Z13CG_ClearUnioniP9centity_s_10
+	jmp dword [eax*4+_Z13CG_ClearUnioniP9centity_s_jumptab_0]
+_Z13CG_ClearUnioniP9centity_s_40:
 	mov eax, [ebx+0x44]
 	test eax, eax
-	jz CG_ClearUnion_20
+	jz _Z13CG_ClearUnioniP9centity_s_20
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call FX_ThroughWithEffect
-CG_ClearUnion_20:
+	call _Z20FX_ThroughWithEffectiP8FxEffect
+_Z13CG_ClearUnioniP9centity_s_20:
 	mov dword [ebx+0x40], 0x0
 	mov dword [ebx+0x44], 0x0
-CG_ClearUnion_10:
+_Z13CG_ClearUnioniP9centity_s_10:
 	mov byte [ebx+0x3], 0x0
 	add esp, 0x10
 	pop ebx
 	pop edi
 	pop ebp
 	ret
-CG_ClearUnion_30:
+_Z13CG_ClearUnioniP9centity_s_30:
 	lea eax, [ebx+0x40]
 	mov dword [ebx+0x40], 0x0
 	mov dword [eax+0x4], 0x0
@@ -776,7 +776,7 @@ CG_ClearUnion_30:
 	pop edi
 	pop ebp
 	ret
-CG_ClearUnion_60:
+_Z13CG_ClearUnioniP9centity_s_60:
 	lea edi, [ebx+0x40]
 	cld
 	mov ecx, 0x9
@@ -788,7 +788,7 @@ CG_ClearUnion_60:
 	pop edi
 	pop ebp
 	ret
-CG_ClearUnion_50:
+_Z13CG_ClearUnioniP9centity_s_50:
 	lea eax, [ebx+0x40]
 	mov dword [ebx+0x40], 0x0
 	mov dword [eax+0x4], 0x0
@@ -804,26 +804,26 @@ CG_ClearUnion_50:
 	add [eax], al
 	
 	
-CG_ClearUnion_jumptab_0:
-	dd CG_ClearUnion_10
-	dd CG_ClearUnion_30
-	dd CG_ClearUnion_10
-	dd CG_ClearUnion_10
-	dd CG_ClearUnion_10
-	dd CG_ClearUnion_10
-	dd CG_ClearUnion_10
-	dd CG_ClearUnion_10
-	dd CG_ClearUnion_40
-	dd CG_ClearUnion_40
-	dd CG_ClearUnion_10
-	dd CG_ClearUnion_50
-	dd CG_ClearUnion_60
-	dd CG_ClearUnion_10
-	dd CG_ClearUnion_60
+_Z13CG_ClearUnioniP9centity_s_jumptab_0:
+	dd _Z13CG_ClearUnioniP9centity_s_10
+	dd _Z13CG_ClearUnioniP9centity_s_30
+	dd _Z13CG_ClearUnioniP9centity_s_10
+	dd _Z13CG_ClearUnioniP9centity_s_10
+	dd _Z13CG_ClearUnioniP9centity_s_10
+	dd _Z13CG_ClearUnioniP9centity_s_10
+	dd _Z13CG_ClearUnioniP9centity_s_10
+	dd _Z13CG_ClearUnioniP9centity_s_10
+	dd _Z13CG_ClearUnioniP9centity_s_40
+	dd _Z13CG_ClearUnioniP9centity_s_40
+	dd _Z13CG_ClearUnioniP9centity_s_10
+	dd _Z13CG_ClearUnioniP9centity_s_50
+	dd _Z13CG_ClearUnioniP9centity_s_60
+	dd _Z13CG_ClearUnioniP9centity_s_10
+	dd _Z13CG_ClearUnioniP9centity_s_60
 
 
 ;CG_DObjCalcBone(cpose_t const*, DObj_s*, int)
-CG_DObjCalcBone:
+_Z15CG_DObjCalcBonePK7cpose_tP6DObj_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -834,23 +834,23 @@ CG_DObjCalcBone:
 	mov edi, [ebp+0x10]
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call CL_DObjCreateSkelForBone
+	call _Z24CL_DObjCreateSkelForBoneP6DObj_si
 	test eax, eax
-	jnz CG_DObjCalcBone_10
+	jnz _Z15CG_DObjCalcBonePK7cpose_tP6DObj_si_10
 	lea ebx, [ebp-0x28]
 	mov [esp+0x8], ebx
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call DObjGetHierarchyBits
+	call _Z20DObjGetHierarchyBitsPK6DObj_siPi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_DoControllers
+	call _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call DObjCalcSkel
-CG_DObjCalcBone_10:
+	call _Z12DObjCalcSkelPK6DObj_sPi
+_Z15CG_DObjCalcBonePK7cpose_tP6DObj_si_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -861,7 +861,7 @@ CG_DObjCalcBone_10:
 
 
 ;CG_GetPoseAngles(cpose_t const*, float*)
-CG_GetPoseAngles:
+_Z16CG_GetPoseAnglesPK7cpose_tPf:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -879,7 +879,7 @@ CG_GetPoseAngles:
 
 
 ;CG_GetPoseOrigin(cpose_t const*, float*)
-CG_GetPoseOrigin:
+_Z16CG_GetPoseOriginPK7cpose_tPf:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -897,7 +897,7 @@ CG_GetPoseOrigin:
 
 
 ;CG_ProcessEntity(int, centity_s*)
-CG_ProcessEntity:
+_Z16CG_ProcessEntityiP9centity_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -907,15 +907,15 @@ CG_ProcessEntity:
 	mov edi, [ebp+0xc]
 	mov ecx, [edi+0x14c]
 	test ecx, ecx
-	jz CG_ProcessEntity_10
+	jz _Z16CG_ProcessEntityiP9centity_s_10
 	cmp dword [edi+0x164], 0xffffff
-	jz CG_ProcessEntity_20
+	jz _Z16CG_ProcessEntityiP9centity_s_20
 	mov eax, [edi+0x14c]
 	add eax, 0x53e
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CL_GetConfigString
+	call _Z18CL_GetConfigStringii
 	mov [esp+0xc], eax
 	lea eax, [edi+0x1c]
 	mov [esp+0x8], eax
@@ -923,51 +923,51 @@ CG_ProcessEntity:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PlaySoundAliasByName
-CG_ProcessEntity_10:
+	call _Z23CG_PlaySoundAliasByNameiiPKfPKc
+_Z16CG_ProcessEntityiP9centity_s_10:
 	lea eax, [edi+0x68]
 	mov [esp], eax
-	call CG_IsRagdollTrajectory
+	call _Z22CG_IsRagdollTrajectoryPK12trajectory_t
 	test al, al
-	jnz CG_ProcessEntity_30
-CG_ProcessEntity_130:
+	jnz _Z16CG_ProcessEntityiP9centity_s_30
+_Z16CG_ProcessEntityiP9centity_s_130:
 	movzx ecx, byte [edi+0x3]
 	cmp [edi+0xd0], ecx
-	jz CG_ProcessEntity_40
+	jz _Z16CG_ProcessEntityiP9centity_s_40
 	mov [esp+0x4], edi
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_ClearUnion
+	call _Z13CG_ClearUnioniP9centity_s
 	mov ecx, [edi+0xd0]
 	cmp ecx, 0xe
-	jbe CG_ProcessEntity_50
-CG_ProcessEntity_120:
+	jbe _Z16CG_ProcessEntityiP9centity_s_50
+_Z16CG_ProcessEntityiP9centity_s_120:
 	mov byte [edi+0x3], 0x0
-CG_ProcessEntity_40:
+_Z16CG_ProcessEntityiP9centity_s_40:
 	cmp ecx, 0xe
-	ja CG_ProcessEntity_60
-	jmp dword [ecx*4+CG_ProcessEntity_jumptab_0]
-CG_ProcessEntity_410:
+	ja _Z16CG_ProcessEntityiP9centity_s_60
+	jmp dword [ecx*4+_Z16CG_ProcessEntityiP9centity_s_jumptab_0]
+_Z16CG_ProcessEntityiP9centity_s_410:
 	lea esi, [edi+0xcc]
 	test byte [esi+0x8], 0x20
-	jnz CG_ProcessEntity_70
+	jnz _Z16CG_ProcessEntityiP9centity_s_70
 	mov eax, cgArray
 	mov eax, [eax+0x46128]
 	cmp eax, [esi+0x54]
-	jl CG_ProcessEntity_70
+	jl _Z16CG_ProcessEntityiP9centity_s_70
 	mov ebx, [esi+0xc4]
-	call BG_GetNumWeapons
+	call _Z16BG_GetNumWeaponsv
 	cmp ebx, eax
-	jb CG_ProcessEntity_80
+	jb _Z16CG_ProcessEntityiP9centity_s_80
 	mov dword [esi+0xc4], 0x0
-CG_ProcessEntity_80:
+_Z16CG_ProcessEntityiP9centity_s_80:
 	mov eax, [esi+0xc4]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ebx, eax
 	mov eax, [eax+0x164]
 	test eax, eax
-	jz CG_ProcessEntity_90
+	jz _Z16CG_ProcessEntityiP9centity_s_90
 	mov [esp+0xc], eax
 	lea eax, [edi+0x1c]
 	mov [esp+0x8], eax
@@ -975,8 +975,8 @@ CG_ProcessEntity_80:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PlaySoundAlias
-CG_ProcessEntity_90:
+	call _Z17CG_PlaySoundAliasiiPKfP16snd_alias_list_t
+_Z16CG_ProcessEntityiP9centity_s_90:
 	mov eax, [ebx+0x584]
 	mov [esp+0xc], eax
 	mov eax, [esi+0x4]
@@ -985,16 +985,16 @@ CG_ProcessEntity_90:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_PreProcess_GetDObj
+	call _Z21CG_PreProcess_GetDObjiiiP6XModel
 	mov [ebp-0x64], eax
 	test eax, eax
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	mov ecx, [ebx+0x6a8]
 	test ecx, ecx
-	jz CG_ProcessEntity_100
+	jz _Z16CG_ProcessEntityiP9centity_s_100
 	cmp byte [edi+0x1c2], 0x0
-	jz CG_ProcessEntity_110
-CG_ProcessEntity_100:
+	jz _Z16CG_ProcessEntityiP9centity_s_110
+_Z16CG_ProcessEntityiP9centity_s_100:
 	lea edx, [edi+0x1c]
 	mov eax, [edi+0x1c]
 	mov [ebp-0x3c], eax
@@ -1012,46 +1012,46 @@ CG_ProcessEntity_100:
 	mov [esp+0x4], edi
 	mov eax, [ebp-0x64]
 	mov [esp], eax
-	call R_AddDObjToScene
+	call _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
 	mov [esp+0x4], edi
 	mov eax, cgArray
 	mov [esp], eax
-	call CG_AddHudGrenade
-CG_ProcessEntity_70:
+	call _Z16CG_AddHudGrenadePK4cg_sPK9centity_s
+_Z16CG_ProcessEntityiP9centity_s_70:
 	add esp, 0x9c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_ProcessEntity_60:
+_Z16CG_ProcessEntityiP9centity_s_60:
 	mov [esp+0x8], ecx
 	mov dword [esp+0x4], _cstring_bad_entity_type_
 	mov dword [esp], 0x2
-	call Com_Error
+	call _Z9Com_Error11errorParm_tPKcz
 	add esp, 0x9c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_ProcessEntity_50:
+_Z16CG_ProcessEntityiP9centity_s_50:
 	mov eax, 0x1
 	shl eax, cl
 	test eax, 0x5b02
-	jz CG_ProcessEntity_120
+	jz _Z16CG_ProcessEntityiP9centity_s_120
 	mov [edi+0x3], cl
-	jmp CG_ProcessEntity_40
-CG_ProcessEntity_30:
+	jmp _Z16CG_ProcessEntityiP9centity_s_40
+_Z16CG_ProcessEntityiP9centity_s_30:
 	mov [esp+0x4], edi
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_CalcEntityLerpPositions
-	jmp CG_ProcessEntity_130
-CG_ProcessEntity_20:
+	call _Z26CG_CalcEntityLerpPositionsiP9centity_s
+	jmp _Z16CG_ProcessEntityiP9centity_s_130
+_Z16CG_ProcessEntityiP9centity_s_20:
 	mov eax, [edi+0x154]
 	mov [esp], eax
-	call R_GetBrushModel
+	call _Z15R_GetBrushModelj
 	lea edx, [eax+0x18]
 	lea ecx, [eax+0x24]
 	movss xmm2, dword [edx+0x4]
@@ -1076,7 +1076,7 @@ CG_ProcessEntity_20:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_GetConfigString
+	call _Z18CL_GetConfigStringii
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x3c]
 	mov [esp+0x8], eax
@@ -1084,40 +1084,40 @@ CG_ProcessEntity_20:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_PlaySoundAliasByName
-	jmp CG_ProcessEntity_10
-CG_ProcessEntity_490:
+	call _Z23CG_PlaySoundAliasByNameiiPKfPKc
+	jmp _Z16CG_ProcessEntityiP9centity_s_10
+_Z16CG_ProcessEntityiP9centity_s_490:
 	mov eax, [edi+0xcc]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_CompassUpdateVehicleInfo
-CG_ProcessEntity_420:
+	call _Z27CG_CompassUpdateVehicleInfoii
+_Z16CG_ProcessEntityiP9centity_s_420:
 	lea esi, [edi+0xcc]
 	mov eax, [esi+0x8]
 	test al, 0x20
-	jnz CG_ProcessEntity_70
+	jnz _Z16CG_ProcessEntityiP9centity_s_70
 	cmp dword [esi+0x98], 0xffffff
-	jz CG_ProcessEntity_140
+	jz _Z16CG_ProcessEntityiP9centity_s_140
 	mov edx, [esi+0x88]
 	mov eax, cgsArray
 	mov eax, [eax+edx*4+0x294]
 	mov [esp+0xc], eax
 	mov eax, [esi+0x4]
-CG_ProcessEntity_150:
+_Z16CG_ProcessEntityiP9centity_s_150:
 	mov [esp+0x8], eax
 	mov eax, [edi+0xcc]
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_PreProcess_GetDObj
+	call _Z21CG_PreProcess_GetDObjiiiP6XModel
 	mov esi, eax
 	test eax, eax
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	lea ebx, [ebp-0x3c]
 	mov edx, ebx
 	mov eax, edi
-	call CG_LockLightingOrigin
+	call _Z21CG_LockLightingOriginP9centity_sPf
 	mov dword [esp+0x14], 0x0
 	mov [esp+0x10], ebx
 	mov dword [esp+0xc], 0x0
@@ -1125,30 +1125,30 @@ CG_ProcessEntity_150:
 	mov [esp+0x8], eax
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call R_AddDObjToScene
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_370:
+	call _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_370:
 	lea ecx, [edi+0xcc]
 	test byte [ecx+0x8], 0x20
-	jnz CG_ProcessEntity_70
+	jnz _Z16CG_ProcessEntityiP9centity_s_70
 	mov edx, [ecx+0x88]
 	mov eax, cgsArray
 	mov eax, [eax+edx*4+0x294]
 	mov [esp+0xc], eax
 	mov eax, [ecx+0x4]
-	jmp CG_ProcessEntity_150
-CG_ProcessEntity_440:
+	jmp _Z16CG_ProcessEntityiP9centity_s_150
+_Z16CG_ProcessEntityiP9centity_s_440:
 	mov eax, [edi+0x40]
 	cmp eax, [edi+0x13c]
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	mov eax, [edi+0x44]
 	test eax, eax
-	jz CG_ProcessEntity_160
+	jz _Z16CG_ProcessEntityiP9centity_s_160
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call FX_ThroughWithEffect
-CG_ProcessEntity_160:
+	call _Z20FX_ThroughWithEffectiP8FxEffect
+_Z16CG_ProcessEntityiP9centity_s_160:
 	mov dword [edi+0x40], 0x0
 	mov dword [edi+0x44], 0x0
 	mov esi, [edi+0x13c]
@@ -1156,7 +1156,7 @@ CG_ProcessEntity_160:
 	mov [esp+0x4], ebx
 	lea eax, [edi+0x108]
 	mov [esp], eax
-	call AnglesToAxis
+	call _Z12AnglesToAxisPKfPA3_f
 	mov dword [esp+0x14], 0x3ff
 	mov [esp+0x10], ebx
 	lea eax, [edi+0x1c]
@@ -1168,25 +1168,25 @@ CG_ProcessEntity_160:
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_SpawnOrientedEffect
+	call _Z22FX_SpawnOrientedEffectiPK11FxEffectDefiPKfPA3_S2_j
 	mov [edi+0x44], eax
 	test eax, eax
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	mov eax, [edi+0x13c]
 	mov [edi+0x40], eax
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_480:
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_480:
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_VehProcessEntity
+	call _Z19CG_VehProcessEntityiP9centity_s
 	mov eax, [edi+0xcc]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_CompassUpdateVehicleInfo
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_460:
+	call _Z27CG_CompassUpdateVehicleInfoii
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_460:
 	lea eax, [edi+0x64]
 	mov [ebp-0x54], eax
 	lea edx, [edi+0xd4]
@@ -1253,11 +1253,11 @@ CG_ProcessEntity_460:
 	movss [eax+0x8], xmm6
 	movss xmm0, dword [_float_1_00000000]
 	ucomiss xmm0, [esi+0x38]
-	ja CG_ProcessEntity_170
-CG_ProcessEntity_330:
+	ja _Z16CG_ProcessEntityiP9centity_s_170
+_Z16CG_ProcessEntityiP9centity_s_330:
 	movss xmm0, dword [esi+0x3c]
 	ucomiss xmm0, [_float_0_00000000]
-	jbe CG_ProcessEntity_180
+	jbe _Z16CG_ProcessEntityiP9centity_s_180
 	mov ebx, [ebp-0x4c]
 	add ebx, 0x1c
 	mov [esp+0x8], ebx
@@ -1267,7 +1267,7 @@ CG_ProcessEntity_330:
 	mov eax, [ebp-0x50]
 	add eax, 0x4
 	mov [esp], eax
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	movss xmm6, dword [esi+0x1c]
 	mov ecx, [ebp-0x4c]
 	movss xmm3, dword [ecx+0x1c]
@@ -1288,10 +1288,10 @@ CG_ProcessEntity_330:
 	movaps xmm0, xmm1
 	mulss xmm0, xmm1
 	ucomiss xmm0, xmm2
-	jbe CG_ProcessEntity_190
+	jbe _Z16CG_ProcessEntityiP9centity_s_190
 	mov edx, cgArray
 	mov [ebp-0x7c], edx
-CG_ProcessEntity_310:
+_Z16CG_ProcessEntityiP9centity_s_310:
 	mov ecx, [ebp-0x54]
 	movss xmm1, dword [ecx+0x54]
 	mov eax, [ebp-0x50]
@@ -1333,11 +1333,11 @@ CG_ProcessEntity_310:
 	add edx, eax
 	mov ecx, [ebp-0x4c]
 	mov [ecx+0x34], edx
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_470:
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_470:
 	lea ebx, [edi+0xcc]
 	test byte [ebx+0x8], 0x20
-	jnz CG_ProcessEntity_70
+	jnz _Z16CG_ProcessEntityiP9centity_s_70
 	mov edx, [ebx+0x88]
 	mov eax, cgsArray
 	mov eax, [eax+edx*4+0x294]
@@ -1348,26 +1348,26 @@ CG_ProcessEntity_470:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PreProcess_GetDObj
+	call _Z21CG_PreProcess_GetDObjiiiP6XModel
 	mov esi, eax
 	test eax, eax
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	mov [esp+0x4], edi
 	mov [esp], eax
-	call CG_mg42_PreControllers
+	call _Z22CG_mg42_PreControllersP6DObj_sP9centity_s
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_PlayerUsingScopedTurret
+	call _Z26CG_PlayerUsingScopedTurreti
 	test al, al
-	jz CG_ProcessEntity_200
+	jz _Z16CG_ProcessEntityiP9centity_s_200
 	mov eax, cgArray
 	mov edx, [eax+0x46138]
 	test edx, edx
-	jnz CG_ProcessEntity_200
+	jnz _Z16CG_ProcessEntityiP9centity_s_200
 	mov eax, [eax+0x466d8]
 	cmp eax, [edi+0xcc]
-	jz CG_ProcessEntity_70
-CG_ProcessEntity_200:
+	jz _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_200:
 	lea edx, [edi+0x1c]
 	mov eax, [edi+0x1c]
 	mov [ebp-0x3c], eax
@@ -1384,22 +1384,22 @@ CG_ProcessEntity_200:
 	mov [esp+0x8], eax
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call R_AddDObjToScene
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_430:
+	call _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_430:
 	lea esi, [edi+0x64]
 	lea ebx, [edi+0xcc]
 	mov eax, [ebx+0xb4]
 	test eax, eax
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	mov edx, [ebx+0xb8]
 	test edx, edx
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	add eax, 0x53e
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CL_GetConfigString
+	call _Z18CL_GetConfigStringii
 	lea ecx, [edi+0x1c]
 	mov [ebp-0x60], ecx
 	mov [esp+0xc], eax
@@ -1408,32 +1408,32 @@ CG_ProcessEntity_430:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_ShouldPlaySoundOnLocalClient
+	call _Z31CG_ShouldPlaySoundOnLocalClientiiPKfPKc
 	test al, al
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	mov eax, [ebx+0xb4]
 	add eax, 0x53e
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CL_GetConfigString
+	call _Z18CL_GetConfigStringii
 	mov [esp], eax
-	call CL_PickSoundAlias
+	call _Z17CL_PickSoundAliasPKc
 	mov [ebp-0x5c], eax
 	mov eax, [ebx+0xb8]
 	add eax, 0x53e
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CL_GetConfigString
+	call _Z18CL_GetConfigStringii
 	mov [esp], eax
-	call CL_PickSoundAlias
+	call _Z17CL_PickSoundAliasPKc
 	mov edx, eax
 	mov eax, [ebp-0x5c]
 	test eax, eax
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	test edx, edx
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	movss xmm1, dword [esi+0x4c]
 	movss xmm0, dword [ebx+0x54]
 	subss xmm0, xmm1
@@ -1451,14 +1451,14 @@ CG_ProcessEntity_430:
 	mov [esp+0x4], edx
 	mov eax, [ebp-0x5c]
 	mov [esp], eax
-	call SND_PlayBlendedSoundAliases
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_450:
+	call _Z27SND_PlayBlendedSoundAliasesPK11snd_alias_tS1_ff12SndEntHandlePKfi18snd_alias_system_t
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_450:
 	movss xmm3, dword [edi+0x120]
 	ucomiss xmm3, [_float_0_00000000]
-	jp CG_ProcessEntity_210
-	jz CG_ProcessEntity_220
-CG_ProcessEntity_210:
+	jp _Z16CG_ProcessEntityiP9centity_s_210
+	jz _Z16CG_ProcessEntityiP9centity_s_220
+_Z16CG_ProcessEntityiP9centity_s_210:
 	lea eax, [edi+0x1c]
 	mov edx, cgArray
 	mov [ebp-0x7c], edx
@@ -1475,61 +1475,61 @@ CG_ProcessEntity_210:
 	addss xmm0, xmm2
 	mulss xmm3, xmm3
 	ucomiss xmm0, xmm3
-	jae CG_ProcessEntity_70
-CG_ProcessEntity_300:
+	jae _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_300:
 	mov eax, [edi+0x124]
 	mov [ebp-0x58], eax
 	mov eax, [edi+0x44]
 	test eax, eax
-	jz CG_ProcessEntity_230
+	jz _Z16CG_ProcessEntityiP9centity_s_230
 	mov edx, [ebp-0x7c]
-CG_ProcessEntity_350:
+_Z16CG_ProcessEntityiP9centity_s_350:
 	mov eax, [edi+0x40]
 	cmp eax, [edx+0x46128]
-	jg CG_ProcessEntity_70
+	jg _Z16CG_ProcessEntityiP9centity_s_70
 	mov ebx, cgArray
-CG_ProcessEntity_240:
+_Z16CG_ProcessEntityiP9centity_s_240:
 	mov [esp+0x8], eax
 	mov eax, [edi+0x44]
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_RetriggerEffect
+	call _Z18FX_RetriggerEffectiP8FxEffecti
 	mov eax, [ebp-0x58]
 	add eax, [edi+0x40]
 	mov [edi+0x40], eax
 	cmp [ebx+0x46128], eax
-	jge CG_ProcessEntity_240
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_380:
+	jge _Z16CG_ProcessEntityiP9centity_s_240
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_380:
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_Player
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_390:
+	call _Z9CG_PlayeriP9centity_s
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_390:
 	mov [esp+0x4], edi
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_Corpse
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_400:
+	call _Z9CG_CorpseiP9centity_s
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_400:
 	lea esi, [edi+0xcc]
 	mov eax, [esi+0x88]
 	cmp eax, 0x7ff
-	jg CG_ProcessEntity_250
-CG_ProcessEntity_320:
+	jg _Z16CG_ProcessEntityiP9centity_s_250
+_Z16CG_ProcessEntityiP9centity_s_320:
 	test byte [esi+0x8], 0x20
-	jnz CG_ProcessEntity_70
+	jnz _Z16CG_ProcessEntityiP9centity_s_70
 	mov ebx, [esi+0x88]
 	mov ecx, ebx
 	and ecx, 0x8000007f
 	mov [ebp-0x6c], ecx
-	js CG_ProcessEntity_260
+	js _Z16CG_ProcessEntityiP9centity_s_260
 	mov eax, ecx
-CG_ProcessEntity_340:
+_Z16CG_ProcessEntityiP9centity_s_340:
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov [ebp-0x68], eax
 	mov eax, ebx
 	lea edx, [ebx+0x7f]
@@ -1540,8 +1540,8 @@ CG_ProcessEntity_340:
 	mov edx, [ebp-0x68]
 	mov eax, [edx+ebx*4+0x2bc]
 	test eax, eax
-	jz CG_ProcessEntity_270
-CG_ProcessEntity_360:
+	jz _Z16CG_ProcessEntityiP9centity_s_270
+_Z16CG_ProcessEntityiP9centity_s_360:
 	mov eax, [edx+ebx*4+0x2bc]
 	mov [esp+0xc], eax
 	mov eax, [esi+0x4]
@@ -1550,10 +1550,10 @@ CG_ProcessEntity_360:
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_PreProcess_GetDObj
+	call _Z21CG_PreProcess_GetDObjiiiP6XModel
 	mov ecx, eax
 	test eax, eax
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	lea edx, [edi+0x1c]
 	mov eax, [edi+0x1c]
 	mov [ebp-0x3c], eax
@@ -1570,40 +1570,40 @@ CG_ProcessEntity_360:
 	mov [esp+0x8], eax
 	mov [esp+0x4], edi
 	mov [esp], ecx
-	call R_AddDObjToScene
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_140:
+	call _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_140:
 	cmp byte [edi+0x1c0], 0x0
-	jz CG_ProcessEntity_280
+	jz _Z16CG_ProcessEntityiP9centity_s_280
 	test ah, 0x8
-	jnz CG_ProcessEntity_290
-CG_ProcessEntity_280:
+	jnz _Z16CG_ProcessEntityiP9centity_s_290
+_Z16CG_ProcessEntityiP9centity_s_280:
 	mov ebx, [esi]
 	mov eax, [esi+0x88]
 	mov [esp], eax
-	call R_GetBrushModel
+	call _Z15R_GetBrushModelj
 	mov [esp+0xc], ebx
 	lea edx, [edi+0x28]
 	mov [esp+0x8], edx
 	lea edx, [edi+0x1c]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call R_AddBrushModelToSceneFromAngles
-	jmp CG_ProcessEntity_70
-CG_ProcessEntity_220:
+	call _Z32R_AddBrushModelToSceneFromAnglesPK13GfxBrushModelPKfS3_j
+	jmp _Z16CG_ProcessEntityiP9centity_s_70
+_Z16CG_ProcessEntityiP9centity_s_220:
 	mov ecx, cgArray
 	mov [ebp-0x7c], ecx
-	jmp CG_ProcessEntity_300
-CG_ProcessEntity_180:
+	jmp _Z16CG_ProcessEntityiP9centity_s_300
+_Z16CG_ProcessEntityiP9centity_s_180:
 	mov edx, [ebp-0x7c]
-	jmp CG_ProcessEntity_310
-CG_ProcessEntity_250:
+	jmp _Z16CG_ProcessEntityiP9centity_s_310
+_Z16CG_ProcessEntityiP9centity_s_250:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_bad_item_index_i
 	mov dword [esp], 0x2
-	call Com_Error
-	jmp CG_ProcessEntity_320
-CG_ProcessEntity_190:
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z16CG_ProcessEntityiP9centity_s_320
+_Z16CG_ProcessEntityiP9centity_s_190:
 	sqrtss xmm0, xmm2
 	divss xmm1, xmm0
 	mulss xmm3, xmm1
@@ -1618,23 +1618,23 @@ CG_ProcessEntity_190:
 	mov eax, cgArray
 	mov [ebp-0x7c], eax
 	mov edx, eax
-	jmp CG_ProcessEntity_310
-CG_ProcessEntity_170:
+	jmp _Z16CG_ProcessEntityiP9centity_s_310
+_Z16CG_ProcessEntityiP9centity_s_170:
 	lea ebx, [ebp-0x3c]
 	mov [esp+0x8], ebx
 	mov eax, [ecx+0x46128]
 	mov [esp+0x4], eax
 	lea eax, [edi+0xfc]
 	mov [esp], eax
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	mov eax, [ebp-0x70]
 	add eax, 0x18
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x0
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call AngleVectors
-	movss xmm1, dword [g_zero+0x60]
+	call _Z12AngleVectorsPKfPfS1_S1_
+	movss xmm1, dword [_data16_80000000]
 	mov eax, [ebp-0x70]
 	movss xmm0, dword [eax+0x18]
 	xorps xmm0, xmm1
@@ -1651,7 +1651,7 @@ CG_ProcessEntity_170:
 	movss [eax+0x20], xmm0
 	movss xmm5, dword [esi+0x38]
 	ucomiss xmm5, [_float__1_00000000]
-	jbe CG_ProcessEntity_330
+	jbe _Z16CG_ProcessEntityiP9centity_s_330
 	movss xmm4, dword [esi+0x10]
 	movss xmm6, dword [esi+0x14]
 	movss xmm7, dword [esi+0x18]
@@ -1664,7 +1664,7 @@ CG_ProcessEntity_170:
 	mulss xmm0, xmm7
 	addss xmm3, xmm0
 	ucomiss xmm3, xmm5
-	jae CG_ProcessEntity_330
+	jae _Z16CG_ProcessEntityiP9centity_s_330
 	movaps xmm2, xmm3
 	xorps xmm2, xmm1
 	movaps xmm0, xmm5
@@ -1696,28 +1696,28 @@ CG_ProcessEntity_170:
 	mulss xmm7, xmm1
 	addss xmm5, xmm7
 	movss [eax+0x20], xmm5
-	jmp CG_ProcessEntity_330
-CG_ProcessEntity_290:
+	jmp _Z16CG_ProcessEntityiP9centity_s_330
+_Z16CG_ProcessEntityiP9centity_s_290:
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call AimTarget_ProcessEntity
-	jmp CG_ProcessEntity_280
-CG_ProcessEntity_260:
+	call _Z23AimTarget_ProcessEntityiPK9centity_s
+	jmp _Z16CG_ProcessEntityiP9centity_s_280
+_Z16CG_ProcessEntityiP9centity_s_260:
 	sub ecx, 0x1
 	or ecx, 0xffffff80
 	add ecx, 0x1
 	mov [ebp-0x6c], ecx
 	mov eax, ecx
-	jmp CG_ProcessEntity_340
-CG_ProcessEntity_230:
+	jmp _Z16CG_ProcessEntityiP9centity_s_340
+_Z16CG_ProcessEntityiP9centity_s_230:
 	mov edx, [ebp-0x7c]
 	mov esi, [edx+0x46128]
 	lea ebx, [ebp-0x3c]
 	mov [esp+0x4], ebx
 	lea eax, [edi+0x108]
 	mov [esp], eax
-	call AnglesToAxis
+	call _Z12AnglesToAxisPKfPA3_f
 	mov dword [esp+0x14], 0x3ff
 	mov [esp+0x10], ebx
 	lea eax, [edi+0x1c]
@@ -1729,10 +1729,10 @@ CG_ProcessEntity_230:
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_SpawnOrientedEffect
+	call _Z22FX_SpawnOrientedEffectiPK11FxEffectDefiPKfPA3_S2_j
 	mov [edi+0x44], eax
 	test eax, eax
-	jz CG_ProcessEntity_70
+	jz _Z16CG_ProcessEntityiP9centity_s_70
 	mov eax, [ebp-0x58]
 	mov edx, [ebp-0x7c]
 	add eax, [edx+0x46128]
@@ -1740,8 +1740,8 @@ CG_ProcessEntity_230:
 	mov ecx, cgArray
 	mov [ebp-0x7c], ecx
 	mov edx, ecx
-	jmp CG_ProcessEntity_350
-CG_ProcessEntity_110:
+	jmp _Z16CG_ProcessEntityiP9centity_s_350
+_Z16CG_ProcessEntityiP9centity_s_110:
 	mov byte [edi+0x1c2], 0x1
 	mov eax, scr_const
 	movzx eax, word [eax+0x9a]
@@ -1752,9 +1752,9 @@ CG_ProcessEntity_110:
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_PlayBoltedEffect
-	jmp CG_ProcessEntity_100
-CG_ProcessEntity_270:
+	call _Z19CG_PlayBoltedEffectiPK11FxEffectDefij
+	jmp _Z16CG_ProcessEntityiP9centity_s_100
+_Z16CG_ProcessEntityiP9centity_s_270:
 	mov eax, [edx+0x4]
 	mov [esp+0x14], eax
 	mov [esp+0x10], ebx
@@ -1764,32 +1764,32 @@ CG_ProcessEntity_270:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_no_xmodel_loaded
 	mov dword [esp], 0x2
-	call Com_Error
+	call _Z9Com_Error11errorParm_tPKcz
 	mov edx, [ebp-0x68]
-	jmp CG_ProcessEntity_360
+	jmp _Z16CG_ProcessEntityiP9centity_s_360
 	nop
 	
 	
-CG_ProcessEntity_jumptab_0:
-	dd CG_ProcessEntity_370
-	dd CG_ProcessEntity_380
-	dd CG_ProcessEntity_390
-	dd CG_ProcessEntity_400
-	dd CG_ProcessEntity_410
-	dd CG_ProcessEntity_70
-	dd CG_ProcessEntity_420
-	dd CG_ProcessEntity_430
-	dd CG_ProcessEntity_440
-	dd CG_ProcessEntity_450
-	dd CG_ProcessEntity_460
-	dd CG_ProcessEntity_470
-	dd CG_ProcessEntity_480
-	dd CG_ProcessEntity_490
-	dd CG_ProcessEntity_480
+_Z16CG_ProcessEntityiP9centity_s_jumptab_0:
+	dd _Z16CG_ProcessEntityiP9centity_s_370
+	dd _Z16CG_ProcessEntityiP9centity_s_380
+	dd _Z16CG_ProcessEntityiP9centity_s_390
+	dd _Z16CG_ProcessEntityiP9centity_s_400
+	dd _Z16CG_ProcessEntityiP9centity_s_410
+	dd _Z16CG_ProcessEntityiP9centity_s_70
+	dd _Z16CG_ProcessEntityiP9centity_s_420
+	dd _Z16CG_ProcessEntityiP9centity_s_430
+	dd _Z16CG_ProcessEntityiP9centity_s_440
+	dd _Z16CG_ProcessEntityiP9centity_s_450
+	dd _Z16CG_ProcessEntityiP9centity_s_460
+	dd _Z16CG_ProcessEntityiP9centity_s_470
+	dd _Z16CG_ProcessEntityiP9centity_s_480
+	dd _Z16CG_ProcessEntityiP9centity_s_490
+	dd _Z16CG_ProcessEntityiP9centity_s_480
 
 
 ;CG_DObjUpdateInfo(cg_s const*, DObj_s*, unsigned char)
-CG_DObjUpdateInfo:
+_Z17CG_DObjUpdateInfoPK4cg_sP6DObj_sh:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0xc]
@@ -1801,11 +1801,11 @@ CG_DObjUpdateInfo:
 	movss [ebp+0xc], xmm0
 	mov [ebp+0x8], edx
 	pop ebp
-	jmp DObjUpdateClientInfo
+	jmp _Z20DObjUpdateClientInfoP6DObj_sfh
 
 
 ;CG_AddPacketEntity(int, int)
-CG_AddPacketEntity:
+_Z18CG_AddPacketEntityii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1845,24 +1845,24 @@ CG_AddPacketEntity:
 	movss xmm0, dword [edi+0x30]
 	movss [ebp-0x34], xmm0
 	cmp eax, 0x6
-	jz CG_AddPacketEntity_10
+	jz _Z18CG_AddPacketEntityii_10
 	cmp eax, 0xd
-	jz CG_AddPacketEntity_10
-CG_AddPacketEntity_120:
+	jz _Z18CG_AddPacketEntityii_10
+_Z18CG_AddPacketEntityii_120:
 	sub eax, 0x1
-	jz CG_AddPacketEntity_20
-CG_AddPacketEntity_160:
+	jz _Z18CG_AddPacketEntityii_20
+_Z18CG_AddPacketEntityii_160:
 	mov [esp+0x4], edi
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_CalcEntityLerpPositions
-CG_AddPacketEntity_170:
+	call _Z26CG_CalcEntityLerpPositionsiP9centity_s
+_Z18CG_AddPacketEntityii_170:
 	movss xmm0, dword [ebp-0x38]
 	ucomiss xmm0, [ebx]
-	jz CG_AddPacketEntity_30
-CG_AddPacketEntity_90:
+	jz _Z18CG_AddPacketEntityii_30
+_Z18CG_AddPacketEntityii_90:
 	mov byte [ebp-0x4d], 0x1
-CG_AddPacketEntity_100:
+_Z18CG_AddPacketEntityii_100:
 	mov eax, [ebp+0xc]
 	lea edx, [eax+eax*2]
 	mov ecx, [ebp+0x8]
@@ -1883,36 +1883,36 @@ CG_AddPacketEntity_100:
 	mulss xmm2, xmm2
 	addss xmm0, xmm2
 	ucomiss xmm0, [_float_256_00000000]
-	ja CG_AddPacketEntity_40
-CG_AddPacketEntity_140:
+	ja _Z18CG_AddPacketEntityii_40
+_Z18CG_AddPacketEntityii_140:
 	cmp dword [edi+0x18], 0xffffffff
-	jz CG_AddPacketEntity_50
+	jz _Z18CG_AddPacketEntityii_50
 	mov ecx, [ebp+0xc]
 	mov [esp+0x4], ecx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_IsEntityLinked
+	call _Z17CG_IsEntityLinkedii
 	test al, al
-	jz CG_AddPacketEntity_60
+	jz _Z18CG_AddPacketEntityii_60
 	cmp byte [ebp-0x4d], 0x0
-	jnz CG_AddPacketEntity_70
-CG_AddPacketEntity_110:
+	jnz _Z18CG_AddPacketEntityii_70
+_Z18CG_AddPacketEntityii_110:
 	mov edx, [ebp+0x8]
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0xc]
 	mov [esp], ecx
-	call Com_GetClientDObj
+	call _Z17Com_GetClientDObjii
 	mov esi, eax
 	test eax, eax
-	jz CG_AddPacketEntity_80
+	jz _Z18CG_AddPacketEntityii_80
 	lea eax, [ebp-0x28]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call DObjGetHidePartBits
+	call _Z19DObjGetHidePartBitsPK6DObj_sPj
 	lea ebx, [edi+0x1b0]
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call DObjSetHidePartBits
+	call _Z19DObjSetHidePartBitsP6DObj_sPKj
 	mov edx, [ebp+0xc]
 	mov [esp+0xc], edx
 	mov ecx, [ebp+0x8]
@@ -1920,114 +1920,114 @@ CG_AddPacketEntity_110:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x28]
 	mov [esp], eax
-	call FX_MarkEntUpdateHidePartBits
-CG_AddPacketEntity_80:
+	call _Z28FX_MarkEntUpdateHidePartBitsPKjS0_ii
+_Z18CG_AddPacketEntityii_80:
 	mov [esp+0x4], edi
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_ProcessEntity
-CG_AddPacketEntity_150:
+	call _Z16CG_ProcessEntityiP9centity_s
+_Z18CG_AddPacketEntityii_150:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_AddPacketEntity_30:
-	jp CG_AddPacketEntity_90
+_Z18CG_AddPacketEntityii_30:
+	jp _Z18CG_AddPacketEntityii_90
 	movss xmm0, dword [ebp-0x3c]
 	ucomiss xmm0, [esi]
-	jnz CG_AddPacketEntity_90
-	jp CG_AddPacketEntity_90
+	jnz _Z18CG_AddPacketEntityii_90
+	jp _Z18CG_AddPacketEntityii_90
 	movss xmm0, dword [ebp-0x40]
 	mov eax, [ebp-0x4c]
 	ucomiss xmm0, [eax]
-	jnz CG_AddPacketEntity_90
-	jp CG_AddPacketEntity_90
+	jnz _Z18CG_AddPacketEntityii_90
+	jp _Z18CG_AddPacketEntityii_90
 	movss xmm0, dword [ebp-0x2c]
 	mov eax, [ebp-0x54]
 	ucomiss xmm0, [eax]
-	jnz CG_AddPacketEntity_90
-	jp CG_AddPacketEntity_90
+	jnz _Z18CG_AddPacketEntityii_90
+	jp _Z18CG_AddPacketEntityii_90
 	movss xmm0, dword [ebp-0x30]
 	mov eax, [ebp-0x48]
 	ucomiss xmm0, [eax]
-	jnz CG_AddPacketEntity_90
-	jp CG_AddPacketEntity_90
+	jnz _Z18CG_AddPacketEntityii_90
+	jp _Z18CG_AddPacketEntityii_90
 	movss xmm0, dword [ebp-0x34]
 	mov eax, [ebp-0x44]
 	ucomiss xmm0, [eax]
-	jnz CG_AddPacketEntity_90
-	jp CG_AddPacketEntity_90
+	jnz _Z18CG_AddPacketEntityii_90
+	jp _Z18CG_AddPacketEntityii_90
 	mov byte [ebp-0x4d], 0x0
-	jmp CG_AddPacketEntity_100
-CG_AddPacketEntity_60:
+	jmp _Z18CG_AddPacketEntityii_100
+_Z18CG_AddPacketEntityii_60:
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_EntityNeedsLinked
+	call _Z20CG_EntityNeedsLinkedii
 	test al, al
-	jz CG_AddPacketEntity_110
+	jz _Z18CG_AddPacketEntityii_110
 	mov ecx, [ebp+0xc]
 	mov [esp+0x4], ecx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_LinkEntity
-	jmp CG_AddPacketEntity_110
-CG_AddPacketEntity_10:
+	call _Z13CG_LinkEntityii
+	jmp _Z18CG_AddPacketEntityii_110
+_Z18CG_AddPacketEntityii_10:
 	cmp dword [edi+0x164], 0xffffff
-	jnz CG_AddPacketEntity_120
+	jnz _Z18CG_AddPacketEntityii_120
 	mov [esp+0x4], edi
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_CalcEntityLerpPositions
+	call _Z26CG_CalcEntityLerpPositionsiP9centity_s
 	movss xmm0, dword [ebp-0x38]
 	ucomiss xmm0, [edi+0x1c]
-	jnz CG_AddPacketEntity_130
-	jp CG_AddPacketEntity_130
+	jnz _Z18CG_AddPacketEntityii_130
+	jp _Z18CG_AddPacketEntityii_130
 	movss xmm0, dword [ebp-0x3c]
 	ucomiss xmm0, [edi+0x20]
-	jnz CG_AddPacketEntity_130
-	jp CG_AddPacketEntity_130
+	jnz _Z18CG_AddPacketEntityii_130
+	jp _Z18CG_AddPacketEntityii_130
 	movss xmm0, dword [ebp-0x40]
 	ucomiss xmm0, [edi+0x24]
-	jnz CG_AddPacketEntity_130
-	jp CG_AddPacketEntity_130
+	jnz _Z18CG_AddPacketEntityii_130
+	jp _Z18CG_AddPacketEntityii_130
 	movss xmm0, dword [ebp-0x2c]
 	ucomiss xmm0, [edi+0x28]
-	jnz CG_AddPacketEntity_130
-	jp CG_AddPacketEntity_130
+	jnz _Z18CG_AddPacketEntityii_130
+	jp _Z18CG_AddPacketEntityii_130
 	movss xmm0, dword [ebp-0x30]
 	ucomiss xmm0, [edi+0x2c]
-	jnz CG_AddPacketEntity_130
-	jp CG_AddPacketEntity_130
+	jnz _Z18CG_AddPacketEntityii_130
+	jp _Z18CG_AddPacketEntityii_130
 	movss xmm0, dword [ebp-0x34]
 	ucomiss xmm0, [edi+0x30]
-	jnz CG_AddPacketEntity_130
-	jp CG_AddPacketEntity_130
+	jnz _Z18CG_AddPacketEntityii_130
+	jp _Z18CG_AddPacketEntityii_130
 	mov byte [ebp-0x4d], 0x0
-	jmp CG_AddPacketEntity_140
-CG_AddPacketEntity_50:
+	jmp _Z18CG_AddPacketEntityii_140
+_Z18CG_AddPacketEntityii_50:
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_IsEntityLinked
+	call _Z17CG_IsEntityLinkedii
 	test al, al
-	jz CG_AddPacketEntity_150
+	jz _Z18CG_AddPacketEntityii_150
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_UnlinkEntity
+	call _Z15CG_UnlinkEntityii
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_AddPacketEntity_40:
+_Z18CG_AddPacketEntityii_40:
 	mov eax, [ebx]
 	mov [edx], eax
 	mov eax, [esi]
@@ -2039,11 +2039,11 @@ CG_AddPacketEntity_40:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call Com_GetClientDObj
+	call _Z17Com_GetClientDObjii
 	test eax, eax
-	jz CG_AddPacketEntity_140
+	jz _Z18CG_AddPacketEntityii_140
 	mov [esp], eax
-	call DObjGetRadius
+	call _Z13DObjGetRadiusPK6DObj_s
 	fstp dword [ebp-0x5c]
 	movss xmm0, dword [ebp-0x5c]
 	addss xmm0, [_float_16_00000000]
@@ -2053,16 +2053,16 @@ CG_AddPacketEntity_40:
 	mov [esp+0x4], ecx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call R_LinkDObjEntity
-	jmp CG_AddPacketEntity_140
-CG_AddPacketEntity_20:
+	call _Z16R_LinkDObjEntityjjPff
+	jmp _Z18CG_AddPacketEntityii_140
+_Z18CG_AddPacketEntityii_20:
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_VehEntityUsingVehicle
+	call _Z24CG_VehEntityUsingVehicleii
 	test al, al
-	jz CG_AddPacketEntity_160
+	jz _Z18CG_AddPacketEntityii_160
 	lea eax, [ebp-0x28]
 	mov [esp+0xc], eax
 	mov [esp+0x8], ebx
@@ -2070,14 +2070,14 @@ CG_AddPacketEntity_20:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_VehSeatTransformForPlayer
+	call _Z28CG_VehSeatTransformForPlayeriiPfS_
 	mov ecx, [ebp+0xc]
 	mov [esp+0x4], ecx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_VehPlayerVehicleSlot
+	call _Z23CG_VehPlayerVehicleSlotii
 	sub eax, 0x1
-	jz CG_AddPacketEntity_170
+	jz _Z18CG_AddPacketEntityii_170
 	mov eax, [ebp-0x28]
 	mov edx, [ebp-0x54]
 	mov [edx], eax
@@ -2085,26 +2085,26 @@ CG_AddPacketEntity_20:
 	mov [edx+0x4], eax
 	mov eax, [ebp-0x20]
 	mov [edx+0x8], eax
-	jmp CG_AddPacketEntity_170
-CG_AddPacketEntity_130:
+	jmp _Z18CG_AddPacketEntityii_170
+_Z18CG_AddPacketEntityii_130:
 	mov byte [ebp-0x4d], 0x1
 	mov dword [esp+0x8], 0x0
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_UpdateBModelWorldBounds
-	jmp CG_AddPacketEntity_140
-CG_AddPacketEntity_70:
+	call _Z26CG_UpdateBModelWorldBoundsiP9centity_si
+	jmp _Z18CG_AddPacketEntityii_140
+_Z18CG_AddPacketEntityii_70:
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_LinkEntity
-	jmp CG_AddPacketEntity_110
+	call _Z13CG_LinkEntityii
+	jmp _Z18CG_AddPacketEntityii_110
 
 
 ;CG_AddPacketEntities(int)
-CG_AddPacketEntities:
+_Z20CG_AddPacketEntitiesi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2113,23 +2113,23 @@ CG_AddPacketEntities:
 	sub esp, 0x12c
 	mov dword [esp+0x4], _cstring_add_packet_ents
 	mov dword [esp], 0xffffffff
-	call PIXBeginNamedEvent
+	call _Z18PIXBeginNamedEventiPKcz
 	mov eax, cgArray
 	mov dword [eax+0x50490], 0x0
 	test dword [eax+0x461ec], 0x300
-	jnz CG_AddPacketEntities_10
+	jnz _Z20CG_AddPacketEntitiesi_10
 	mov dword [ebp-0x124], 0x3ff
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_AddClientSideSounds
+	call _Z22CG_AddClientSideSoundsi
 	mov ecx, cgArray
 	mov eax, [ecx+0x24]
 	mov esi, [eax+0x2f70]
 	test esi, esi
-	jg CG_AddPacketEntities_20
-CG_AddPacketEntities_30:
+	jg _Z20CG_AddPacketEntitiesi_20
+_Z20CG_AddPacketEntitiesi_30:
 	mov dword [ebp-0x120], 0x0
-CG_AddPacketEntities_90:
+_Z20CG_AddPacketEntitiesi_90:
 	mov eax, [ebp-0x120]
 	add esp, 0x12c
 	pop ebx
@@ -2137,36 +2137,36 @@ CG_AddPacketEntities_90:
 	pop edi
 	pop ebp
 	ret
-CG_AddPacketEntities_10:
+_Z20CG_AddPacketEntitiesi_10:
 	mov eax, [eax+0x466d8]
 	mov [ebp-0x124], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_AddClientSideSounds
+	call _Z22CG_AddClientSideSoundsi
 	mov ecx, cgArray
 	mov eax, [ecx+0x24]
 	mov esi, [eax+0x2f70]
 	test esi, esi
-	jle CG_AddPacketEntities_30
-CG_AddPacketEntities_20:
+	jle _Z20CG_AddPacketEntitiesi_30
+_Z20CG_AddPacketEntitiesi_20:
 	xor edi, edi
 	mov dword [ebp-0x120], 0x0
 	mov dword [ebp-0x11c], 0x0
 	xor esi, esi
-	jmp CG_AddPacketEntities_40
-CG_AddPacketEntities_80:
+	jmp _Z20CG_AddPacketEntitiesi_40
+_Z20CG_AddPacketEntitiesi_80:
 	mov [esp+0x4], ebx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_AddPacketEntity
+	call _Z18CG_AddPacketEntityii
 	mov ecx, cgArray
-CG_AddPacketEntities_60:
+_Z20CG_AddPacketEntitiesi_60:
 	add edi, 0x1
 	add esi, 0xf4
 	mov eax, [ecx+0x24]
 	cmp [eax+0x2f70], edi
-	jle CG_AddPacketEntities_50
-CG_AddPacketEntities_40:
+	jle _Z20CG_AddPacketEntitiesi_50
+_Z20CG_AddPacketEntitiesi_40:
 	mov ebx, [esi+eax+0x2f78]
 	lea eax, [ebx*4]
 	mov edx, ebx
@@ -2178,17 +2178,17 @@ CG_AddPacketEntities_40:
 	add eax, cg_entitiesArray
 	mov edx, [eax+0xd0]
 	cmp edx, 0x10
-	ja CG_AddPacketEntities_60
+	ja _Z20CG_AddPacketEntitiesi_60
 	cmp [ebp-0x124], ebx
-	jz CG_AddPacketEntities_70
+	jz _Z20CG_AddPacketEntitiesi_70
 	sub edx, 0x1
-	jnz CG_AddPacketEntities_80
+	jnz _Z20CG_AddPacketEntitiesi_80
 	mov [esp+0x4], ebx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_VehEntityUsingVehicle
+	call _Z24CG_VehEntityUsingVehicleii
 	test al, al
-	jz CG_AddPacketEntities_80
+	jz _Z20CG_AddPacketEntitiesi_80
 	mov eax, [ebp-0x11c]
 	mov [ebp+eax*4-0x118], ebx
 	add eax, 0x1
@@ -2198,21 +2198,21 @@ CG_AddPacketEntities_40:
 	add esi, 0xf4
 	mov eax, [ecx+0x24]
 	cmp [eax+0x2f70], edi
-	jg CG_AddPacketEntities_40
-CG_AddPacketEntities_50:
+	jg _Z20CG_AddPacketEntitiesi_40
+_Z20CG_AddPacketEntitiesi_50:
 	mov ebx, [ebp-0x11c]
 	test ebx, ebx
-	jle CG_AddPacketEntities_90
+	jle _Z20CG_AddPacketEntitiesi_90
 	xor ebx, ebx
-CG_AddPacketEntities_100:
+_Z20CG_AddPacketEntitiesi_100:
 	mov eax, [ebp+ebx*4-0x118]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_AddPacketEntity
+	call _Z18CG_AddPacketEntityii
 	add ebx, 0x1
 	cmp ebx, [ebp-0x11c]
-	jnz CG_AddPacketEntities_100
+	jnz _Z20CG_AddPacketEntitiesi_100
 	mov eax, [ebp-0x120]
 	add esp, 0x12c
 	pop ebx
@@ -2220,19 +2220,19 @@ CG_AddPacketEntities_100:
 	pop edi
 	pop ebp
 	ret
-CG_AddPacketEntities_70:
+_Z20CG_AddPacketEntitiesi_70:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_CalcEntityLerpPositions
+	call _Z26CG_CalcEntityLerpPositionsiP9centity_s
 	mov dword [ebp-0x120], 0x1
 	mov ecx, cgArray
-	jmp CG_AddPacketEntities_60
+	jmp _Z20CG_AddPacketEntitiesi_60
 	nop
 
 
 ;CG_GetSkinCacheEntry(cpose_t const*)
-CG_GetSkinCacheEntry:
+_Z20CG_GetSkinCacheEntryPK7cpose_t:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -2243,7 +2243,7 @@ CG_GetSkinCacheEntry:
 
 
 ;CG_DObjGetWorldTagPos(cpose_t const*, DObj_s*, unsigned int, float*)
-CG_DObjGetWorldTagPos:
+_Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2257,10 +2257,10 @@ CG_DObjGetWorldTagPos:
 	mov eax, [ebp+0x10]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	test eax, eax
-	jnz CG_DObjGetWorldTagPos_10
-CG_DObjGetWorldTagPos_30:
+	jnz _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf_10
+_Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf_30:
 	xor eax, eax
 	add esp, 0x3c
 	pop ebx
@@ -2268,22 +2268,22 @@ CG_DObjGetWorldTagPos_30:
 	pop edi
 	pop ebp
 	ret
-CG_DObjGetWorldTagPos_10:
+_Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf_10:
 	movzx esi, byte [ebp-0x19]
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call CL_DObjCreateSkelForBone
+	call _Z24CL_DObjCreateSkelForBoneP6DObj_si
 	test eax, eax
-	jz CG_DObjGetWorldTagPos_20
-CG_DObjGetWorldTagPos_40:
+	jz _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf_20
+_Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf_40:
 	mov [esp], edi
-	call DObjGetRotTransArray
+	call _Z20DObjGetRotTransArrayPK6DObj_s
 	test eax, eax
-	jz CG_DObjGetWorldTagPos_30
+	jz _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf_30
 	shl esi, 0x5
 	mov ecx, eax
 	add ecx, esi
-	jz CG_DObjGetWorldTagPos_30
+	jz _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf_30
 	lea edx, [ecx+0x10]
 	mov eax, cgArray
 	movss xmm0, dword [ecx+0x10]
@@ -2303,25 +2303,25 @@ CG_DObjGetWorldTagPos_40:
 	pop edi
 	pop ebp
 	ret
-CG_DObjGetWorldTagPos_20:
+_Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf_20:
 	lea ebx, [ebp-0x2c]
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call DObjGetHierarchyBits
+	call _Z20DObjGetHierarchyBitsPK6DObj_siPi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_DoControllers
+	call _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call DObjCalcSkel
-	jmp CG_DObjGetWorldTagPos_40
+	call _Z12DObjCalcSkelPK6DObj_sPi
+	jmp _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf_40
 
 
 ;CG_PreProcess_GetDObj(int, int, int, XModel*)
-CG_PreProcess_GetDObj:
+_Z21CG_PreProcess_GetDObjiiiP6XModel:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2332,7 +2332,7 @@ CG_PreProcess_GetDObj:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call Com_GetClientDObj
+	call _Z17Com_GetClientDObjii
 	mov ebx, eax
 	mov eax, [ebp+0xc]
 	shl eax, 0x2
@@ -2344,10 +2344,10 @@ CG_PreProcess_GetDObj:
 	lea esi, [edx+eax]
 	add esi, cg_entitiesArray
 	test ebx, ebx
-	jz CG_PreProcess_GetDObj_10
+	jz _Z21CG_PreProcess_GetDObjiiiP6XModel_10
 	mov ecx, [ebp+0x14]
 	test ecx, ecx
-	jz CG_PreProcess_GetDObj_20
+	jz _Z21CG_PreProcess_GetDObjiiiP6XModel_20
 	mov ecx, [ebp+0x14]
 	mov [esp+0xc], ecx
 	mov eax, [ebp+0x10]
@@ -2356,10 +2356,10 @@ CG_PreProcess_GetDObj:
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_CheckDObjInfoMatches
+	call _Z23CG_CheckDObjInfoMatchesiiiP6XModel
 	test eax, eax
-	jz CG_PreProcess_GetDObj_20
-CG_PreProcess_GetDObj_80:
+	jz _Z21CG_PreProcess_GetDObjiiiP6XModel_20
+_Z21CG_PreProcess_GetDObjiiiP6XModel_80:
 	mov eax, ebx
 	add esp, 0x3c
 	pop ebx
@@ -2367,46 +2367,46 @@ CG_PreProcess_GetDObj_80:
 	pop edi
 	pop ebp
 	ret
-CG_PreProcess_GetDObj_20:
+_Z21CG_PreProcess_GetDObjiiiP6XModel_20:
 	mov eax, [esi+0x18]
 	add eax, 0x1
 	cmp eax, 0x1
-	jbe CG_PreProcess_GetDObj_30
+	jbe _Z21CG_PreProcess_GetDObjiiiP6XModel_30
 	mov eax, [esi+0xcc]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_IsEntityLinked
+	call _Z17CG_IsEntityLinkedii
 	test al, al
-	jnz CG_PreProcess_GetDObj_40
-CG_PreProcess_GetDObj_120:
+	jnz _Z21CG_PreProcess_GetDObjiiiP6XModel_40
+_Z21CG_PreProcess_GetDObjiiiP6XModel_120:
 	mov eax, [esi+0x18]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1
-	call Phys_ObjDestroy
+	call _Z15Phys_ObjDestroy9PhysWorldi
 	mov dword [esi+0x18], 0x0
-CG_PreProcess_GetDObj_30:
+_Z21CG_PreProcess_GetDObjiiiP6XModel_30:
 	mov ecx, [ebp+0xc]
 	mov [esp+0x4], ecx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call FX_MarkEntDetachAll
+	call _Z19FX_MarkEntDetachAllii
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_SafeDObjFree
-CG_PreProcess_GetDObj_10:
+	call _Z15CG_SafeDObjFreeii
+_Z21CG_PreProcess_GetDObjiiiP6XModel_10:
 	mov edx, [ebp+0x14]
 	test edx, edx
-	jz CG_PreProcess_GetDObj_50
+	jz _Z21CG_PreProcess_GetDObjiiiP6XModel_50
 	cmp dword [ebp+0x10], 0xb
-	jz CG_PreProcess_GetDObj_60
+	jz _Z21CG_PreProcess_GetDObjiiiP6XModel_60
 	cmp dword [ebp+0x10], 0xc
-	jz CG_PreProcess_GetDObj_70
-CG_PreProcess_GetDObj_90:
+	jz _Z21CG_PreProcess_GetDObjiiiP6XModel_70
+_Z21CG_PreProcess_GetDObjiiiP6XModel_90:
 	xor eax, eax
-CG_PreProcess_GetDObj_100:
+_Z21CG_PreProcess_GetDObjiiiP6XModel_100:
 	mov [esi+0x1d8], eax
 	mov edx, [ebp+0x14]
 	mov [ebp-0x20], edx
@@ -2420,7 +2420,7 @@ CG_PreProcess_GetDObj_100:
 	mov dword [esp+0x4], 0x1
 	lea eax, [ebp-0x20]
 	mov [esp], eax
-	call Com_ClientDObjCreate
+	call _Z20Com_ClientDObjCreateP11DObjModel_stP11XAnimTree_sii
 	mov ebx, eax
 	mov ecx, [ebp+0x14]
 	mov [esp+0xc], ecx
@@ -2430,7 +2430,7 @@ CG_PreProcess_GetDObj_100:
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_SetDObjInfo
+	call _Z14CG_SetDObjInfoiiiP6XModel
 	mov edx, [esi+0xcc]
 	lea edx, [edx+edx*2]
 	mov ecx, [ebp+0x8]
@@ -2443,7 +2443,7 @@ CG_PreProcess_GetDObj_100:
 	mov [edx+0x4], eax
 	mov [edx+0x8], eax
 	cmp dword [ebp+0x10], 0xc
-	jnz CG_PreProcess_GetDObj_80
+	jnz _Z21CG_PreProcess_GetDObjiiiP6XModel_80
 	mov dword [esp+0x1c], 0x1
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x0
@@ -2452,7 +2452,7 @@ CG_PreProcess_GetDObj_100:
 	mov dword [esp+0x8], 0x3f800000
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call XAnimSetCompleteGoalWeight
+	call _Z26XAnimSetCompleteGoalWeightP6DObj_sjfffjji
 	mov eax, ebx
 	add esp, 0x3c
 	pop ebx
@@ -2460,16 +2460,16 @@ CG_PreProcess_GetDObj_100:
 	pop edi
 	pop ebp
 	ret
-CG_PreProcess_GetDObj_60:
+_Z21CG_PreProcess_GetDObjiiiP6XModel_60:
 	mov eax, [esi+0x190]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ebx, eax
-	mov eax, Hunk_AllocXAnimClient
+	mov eax, _Z21Hunk_AllocXAnimClienti
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x3
 	mov dword [esp], _cstring_mg42
-	call XAnimCreateAnims
+	call _Z16XAnimCreateAnimsPKciPFPviE
 	mov edi, eax
 	mov dword [esp+0x14], 0x0
 	mov dword [esp+0x10], 0x2
@@ -2477,33 +2477,33 @@ CG_PreProcess_GetDObj_60:
 	mov dword [esp+0x8], _cstring_root
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call XAnimBlend
+	call _Z10XAnimBlendP7XAnim_sjPKcjjj
 	mov eax, [ebx+0x54]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x1
 	mov [esp], edi
-	call BG_CreateXAnim
+	call _Z14BG_CreateXAnimP7XAnim_sjPKc
 	mov eax, [ebx+0x5c]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x2
 	mov [esp], edi
-	call BG_CreateXAnim
-CG_PreProcess_GetDObj_110:
+	call _Z14BG_CreateXAnimP7XAnim_sjPKc
+_Z21CG_PreProcess_GetDObjiiiP6XModel_110:
 	test edi, edi
-	jz CG_PreProcess_GetDObj_90
-	mov dword [esp+0x4], CG_AllocAnimTree
+	jz _Z21CG_PreProcess_GetDObjiiiP6XModel_90
+	mov dword [esp+0x4], _Z16CG_AllocAnimTreei
 	mov [esp], edi
-	call XAnimCreateTree
-	jmp CG_PreProcess_GetDObj_100
-CG_PreProcess_GetDObj_70:
+	call _Z15XAnimCreateTreeP7XAnim_sPFPviE
+	jmp _Z21CG_PreProcess_GetDObjiiiP6XModel_100
+_Z21CG_PreProcess_GetDObjiiiP6XModel_70:
 	mov eax, [esi+0x190]
 	mov [esp], eax
-	call BG_GetWeaponDef
-	mov eax, Hunk_AllocXAnimClient
+	call _Z15BG_GetWeaponDefj
+	mov eax, _Z21Hunk_AllocXAnimClienti
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x2
 	mov dword [esp], _cstring_helicopter
-	call XAnimCreateAnims
+	call _Z16XAnimCreateAnimsPKciPFPviE
 	mov edi, eax
 	mov dword [esp+0x14], 0x0
 	mov dword [esp+0x10], 0x1
@@ -2511,27 +2511,27 @@ CG_PreProcess_GetDObj_70:
 	mov dword [esp+0x8], _cstring_root
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call XAnimBlend
+	call _Z10XAnimBlendP7XAnim_sjPKcjjj
 	mov dword [esp+0x8], _cstring_bh_rotors
 	mov dword [esp+0x4], 0x1
 	mov [esp], edi
-	call BG_CreateXAnim
-	jmp CG_PreProcess_GetDObj_110
-CG_PreProcess_GetDObj_40:
+	call _Z14BG_CreateXAnimP7XAnim_sjPKc
+	jmp _Z21CG_PreProcess_GetDObjiiiP6XModel_110
+_Z21CG_PreProcess_GetDObjiiiP6XModel_40:
 	mov eax, [esi+0xcc]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_UnlinkEntity
-	jmp CG_PreProcess_GetDObj_120
-CG_PreProcess_GetDObj_50:
+	call _Z15CG_UnlinkEntityii
+	jmp _Z21CG_PreProcess_GetDObjiiiP6XModel_120
+_Z21CG_PreProcess_GetDObjiiiP6XModel_50:
 	xor ebx, ebx
-	jmp CG_PreProcess_GetDObj_80
+	jmp _Z21CG_PreProcess_GetDObjiiiP6XModel_80
 	nop
 
 
 ;CG_mg42_PreControllers(DObj_s*, centity_s*)
-CG_mg42_PreControllers:
+_Z22CG_mg42_PreControllersP6DObj_sP9centity_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2544,24 +2544,24 @@ CG_mg42_PreControllers:
 	lea ebx, [esi+0xcc]
 	mov edi, cgArray
 	test dword [edi+0x461ec], 0x300
-	jz CG_mg42_PreControllers_10
+	jz _Z22CG_mg42_PreControllersP6DObj_sP9centity_s_10
 	mov eax, [edi+0x466d8]
 	cmp eax, [esi+0xcc]
-	jz CG_mg42_PreControllers_20
-CG_mg42_PreControllers_10:
+	jz _Z22CG_mg42_PreControllersP6DObj_sP9centity_s_20
+_Z22CG_mg42_PreControllersP6DObj_sP9centity_s_10:
 	xor edx, edx
 	xor eax, eax
-CG_mg42_PreControllers_80:
+_Z22CG_mg42_PreControllersP6DObj_sP9centity_s_80:
 	mov [esi+0x4c], al
 	test dl, dl
-	jz CG_mg42_PreControllers_30
+	jz _Z22CG_mg42_PreControllersP6DObj_sP9centity_s_30
 	lea eax, [edi+0x4d360]
 	mov [esi+0x40], eax
 	mov dword [esi+0x8], 0x0
 	movss xmm0, dword [_float_0_50000000]
 	movss [ebp-0x2c], xmm0
 	movaps xmm2, xmm0
-CG_mg42_PreControllers_70:
+_Z22CG_mg42_PreControllersP6DObj_sP9centity_s_70:
 	mov eax, [ebp-0x1c]
 	movss xmm1, dword [eax+0x54]
 	movss xmm0, dword [ebx+0x5c]
@@ -2587,34 +2587,34 @@ CG_mg42_PreControllers_70:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	lea eax, [esi+0x4e]
 	mov [esp+0x8], eax
 	movzx eax, word [ebx+0x88]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	lea eax, [esi+0x4f]
 	mov [esp+0x8], eax
 	movzx eax, word [ebx+0x90]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call DObjGetTree
+	call _Z11DObjGetTreePK6DObj_s
 	test dword [edi+0x461ec], 0x300
-	jz CG_mg42_PreControllers_40
+	jz _Z22CG_mg42_PreControllersP6DObj_sP9centity_s_40
 	mov eax, [edi+0x466d8]
 	cmp eax, [esi+0xcc]
-	jz CG_mg42_PreControllers_50
-CG_mg42_PreControllers_40:
+	jz _Z22CG_mg42_PreControllersP6DObj_sP9centity_s_50
+_Z22CG_mg42_PreControllersP6DObj_sP9centity_s_40:
 	test byte [esi+0xd4], 0x40
-	jz CG_mg42_PreControllers_50
+	jz _Z22CG_mg42_PreControllersP6DObj_sP9centity_s_50
 	mov edx, 0x2
-CG_mg42_PreControllers_60:
+_Z22CG_mg42_PreControllersP6DObj_sP9centity_s_60:
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x0
 	mov eax, 0x3f800000
@@ -2625,17 +2625,17 @@ CG_mg42_PreControllers_60:
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call XAnimSetGoalWeightKnobAll
+	call _Z25XAnimSetGoalWeightKnobAllP6DObj_sjjfffji
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_mg42_PreControllers_50:
+_Z22CG_mg42_PreControllersP6DObj_sP9centity_s_50:
 	mov edx, 0x1
-	jmp CG_mg42_PreControllers_60
-CG_mg42_PreControllers_30:
+	jmp _Z22CG_mg42_PreControllersP6DObj_sP9centity_s_60
+_Z22CG_mg42_PreControllersP6DObj_sP9centity_s_30:
 	mov eax, [ebp-0x1c]
 	movss xmm2, dword [eax+0x4c]
 	movss xmm0, dword [ebx+0x54]
@@ -2676,16 +2676,16 @@ CG_mg42_PreControllers_30:
 	addss xmm2, xmm0
 	movss [esi+0x44], xmm2
 	movss xmm2, dword [ebp-0x2c]
-	jmp CG_mg42_PreControllers_70
-CG_mg42_PreControllers_20:
+	jmp _Z22CG_mg42_PreControllersP6DObj_sP9centity_s_70
+_Z22CG_mg42_PreControllersP6DObj_sP9centity_s_20:
 	mov edx, 0x1
 	mov eax, 0x1
-	jmp CG_mg42_PreControllers_80
+	jmp _Z22CG_mg42_PreControllersP6DObj_sP9centity_s_80
 	nop
 
 
 ;CG_DObjGetWorldTagMatrix(cpose_t const*, DObj_s*, unsigned int, float (*) [3], float*)
-CG_DObjGetWorldTagMatrix:
+_Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2699,10 +2699,10 @@ CG_DObjGetWorldTagMatrix:
 	mov eax, [ebp+0x10]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	test eax, eax
-	jnz CG_DObjGetWorldTagMatrix_10
-CG_DObjGetWorldTagMatrix_30:
+	jnz _Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf_10
+_Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf_30:
 	xor eax, eax
 	add esp, 0x5c
 	pop ebx
@@ -2710,22 +2710,22 @@ CG_DObjGetWorldTagMatrix_30:
 	pop edi
 	pop ebp
 	ret
-CG_DObjGetWorldTagMatrix_10:
+_Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf_10:
 	movzx esi, byte [ebp-0x19]
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call CL_DObjCreateSkelForBone
+	call _Z24CL_DObjCreateSkelForBoneP6DObj_si
 	test eax, eax
-	jz CG_DObjGetWorldTagMatrix_20
-CG_DObjGetWorldTagMatrix_40:
+	jz _Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf_20
+_Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf_40:
 	mov [esp], edi
-	call DObjGetRotTransArray
+	call _Z20DObjGetRotTransArrayPK6DObj_s
 	test eax, eax
-	jz CG_DObjGetWorldTagMatrix_30
+	jz _Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf_30
 	shl esi, 0x5
 	mov ecx, eax
 	add ecx, esi
-	jz CG_DObjGetWorldTagMatrix_30
+	jz _Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf_30
 	movss xmm1, dword [ecx+0x1c]
 	movaps xmm4, xmm1
 	mulss xmm4, [ecx]
@@ -2807,25 +2807,25 @@ CG_DObjGetWorldTagMatrix_40:
 	pop edi
 	pop ebp
 	ret
-CG_DObjGetWorldTagMatrix_20:
+_Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf_20:
 	lea ebx, [ebp-0x2c]
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call DObjGetHierarchyBits
+	call _Z20DObjGetHierarchyBitsPK6DObj_siPi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_DoControllers
+	call _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call DObjCalcSkel
-	jmp CG_DObjGetWorldTagMatrix_40
+	call _Z12DObjCalcSkelPK6DObj_sPi
+	jmp _Z24CG_DObjGetWorldTagMatrixPK7cpose_tP6DObj_sjPA3_fPf_40
 
 
 ;CG_GetPoseLightingHandle(cpose_t const*)
-CG_GetPoseLightingHandle:
+_Z24CG_GetPoseLightingHandlePK7cpose_t:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -2834,7 +2834,7 @@ CG_GetPoseLightingHandle:
 
 
 ;CG_Player_PreControllers(DObj_s*, centity_s*)
-CG_Player_PreControllers:
+_Z24CG_Player_PreControllersP6DObj_sP9centity_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2858,7 +2858,7 @@ CG_Player_PreControllers:
 	mov [ebp-0x1c], ecx
 	mov eax, [eax+0x4]
 	test eax, eax
-	jnz CG_Player_PreControllers_10
+	jnz _Z24CG_Player_PreControllersP6DObj_sP9centity_s_10
 	mov eax, [ebp+0xc]
 	mov dword [eax+0x40], 0x0
 	add esp, 0x2c
@@ -2867,30 +2867,30 @@ CG_Player_PreControllers:
 	pop edi
 	pop ebp
 	ret
-CG_Player_PreControllers_10:
+_Z24CG_Player_PreControllersP6DObj_sP9centity_s_10:
 	mov eax, [edx+0x46124]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x1c]
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call BG_Player_DoControllersSetup
+	call _Z28BG_Player_DoControllersSetupPK13entityState_sP12clientInfo_ti
 	xor edi, edi
 	mov esi, controller_names
 	mov ebx, [ebp+0xc]
 	add ebx, 0x44
-CG_Player_PreControllers_20:
+_Z24CG_Player_PreControllersP6DObj_sP9centity_s_20:
 	mov [esp+0x8], ebx
 	mov eax, [esi]
 	movzx eax, word [eax]
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	add edi, 0x1
 	add ebx, 0x1
 	add esi, 0x4
 	cmp edi, 0x6
-	jnz CG_Player_PreControllers_20
+	jnz _Z24CG_Player_PreControllersP6DObj_sP9centity_s_20
 	mov eax, [ebp-0x1c]
 	add eax, 0x3f8
 	mov edx, [ebp+0xc]
@@ -2904,32 +2904,32 @@ CG_Player_PreControllers_20:
 
 
 ;CG_PredictiveSkinCEntity(GfxSceneEntity*)
-CG_PredictiveSkinCEntity:
+_Z24CG_PredictiveSkinCEntityP14GfxSceneEntity:
 	push ebp
 	mov ebp, esp
 	mov ecx, [ebp+0x8]
 	mov edx, [ecx+0x74]
 	mov eax, [edx+0x8]
 	cmp eax, 0x1
-	jz CG_PredictiveSkinCEntity_10
+	jz _Z24CG_PredictiveSkinCEntityP14GfxSceneEntity_10
 	cmp eax, 0x2
-	jz CG_PredictiveSkinCEntity_20
+	jz _Z24CG_PredictiveSkinCEntityP14GfxSceneEntity_20
 	pop ebp
 	ret
-CG_PredictiveSkinCEntity_20:
+_Z24CG_PredictiveSkinCEntityP14GfxSceneEntity_20:
 	mov dword [edx+0x8], 0x0
 	mov [ebp+0x8], ecx
 	pop ebp
-	jmp R_SkinGfxEntityDelayed
-CG_PredictiveSkinCEntity_10:
+	jmp _Z22R_SkinGfxEntityDelayedP14GfxSceneEntity
+_Z24CG_PredictiveSkinCEntityP14GfxSceneEntity_10:
 	mov dword [edx+0x8], 0x0
 	mov [ebp+0x8], ecx
 	pop ebp
-	jmp R_UpdateXModelBoundsDelayed
+	jmp _Z27R_UpdateXModelBoundsDelayedP14GfxSceneEntity
 
 
 ;CG_SetFrameInterpolation(int)
-CG_SetFrameInterpolation:
+_Z24CG_SetFrameInterpolationi:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -2940,13 +2940,13 @@ CG_SetFrameInterpolation:
 	mov eax, [eax+0x8]
 	mov ebx, eax
 	sub ebx, edx
-	jnz CG_SetFrameInterpolation_10
+	jnz _Z24CG_SetFrameInterpolationi_10
 	mov dword [ecx+0x46120], 0x0
-CG_SetFrameInterpolation_20:
+_Z24CG_SetFrameInterpolationi_20:
 	pop ebx
 	pop ebp
 	ret
-CG_SetFrameInterpolation_10:
+_Z24CG_SetFrameInterpolationi_10:
 	mov eax, [ecx+0x46128]
 	sub eax, edx
 	cvtsi2ss xmm0, eax
@@ -2954,8 +2954,8 @@ CG_SetFrameInterpolation_10:
 	divss xmm0, xmm1
 	movss [ecx+0x46120], xmm0
 	ucomiss xmm0, [_float_0_00000000]
-	jae CG_SetFrameInterpolation_20
-	jp CG_SetFrameInterpolation_20
+	jae _Z24CG_SetFrameInterpolationi_20
+	jp _Z24CG_SetFrameInterpolationi_20
 	xor eax, eax
 	mov [ecx+0x46120], eax
 	pop ebx
@@ -2965,7 +2965,7 @@ CG_SetFrameInterpolation_10:
 
 
 ;CG_AdjustPositionForMover(int, float const*, int, int, int, float*, float*)
-CG_AdjustPositionForMover:
+_Z25CG_AdjustPositionForMoveriPKfiiiPfS1_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2975,15 +2975,15 @@ CG_AdjustPositionForMover:
 	mov edx, [ebp+0x10]
 	mov edi, [ebp+0x20]
 	test edi, edi
-	jz CG_AdjustPositionForMover_10
+	jz _Z25CG_AdjustPositionForMoveriPKfiiiPfS1__10
 	xor eax, eax
 	mov [edi], eax
 	mov [edi+0x4], eax
 	mov [edi+0x8], eax
-CG_AdjustPositionForMover_10:
+_Z25CG_AdjustPositionForMoveriPKfiiiPfS1__10:
 	lea eax, [edx-0x1]
 	cmp eax, 0x3fc
-	ja CG_AdjustPositionForMover_20
+	ja _Z25CG_AdjustPositionForMoveriPKfiiiPfS1__20
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
@@ -2993,10 +2993,10 @@ CG_AdjustPositionForMover_10:
 	add ebx, cg_entitiesArray
 	mov eax, [ebx+0xd0]
 	cmp eax, 0x6
-	jz CG_AdjustPositionForMover_30
+	jz _Z25CG_AdjustPositionForMoveriPKfiiiPfS1__30
 	cmp eax, 0xd
-	jz CG_AdjustPositionForMover_30
-CG_AdjustPositionForMover_20:
+	jz _Z25CG_AdjustPositionForMoveriPKfiiiPfS1__30
+_Z25CG_AdjustPositionForMoveriPKfiiiPfS1__20:
 	mov edx, [ebp+0xc]
 	mov eax, [edx]
 	mov edx, [ebp+0x1c]
@@ -3009,40 +3009,40 @@ CG_AdjustPositionForMover_20:
 	mov eax, [edx+0x8]
 	mov edx, [ebp+0x1c]
 	mov [edx+0x8], eax
-CG_AdjustPositionForMover_40:
+_Z25CG_AdjustPositionForMoveriPKfiiiPfS1__40:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_AdjustPositionForMover_30:
+_Z25CG_AdjustPositionForMoveriPKfiiiPfS1__30:
 	lea esi, [ebx+0x68]
 	lea eax, [ebp-0x24]
 	mov [esp+0x8], eax
 	mov eax, [ebp+0x14]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	add ebx, 0x8c
 	lea eax, [ebp-0x3c]
 	mov [esp+0x8], eax
 	mov edx, [ebp+0x14]
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	lea eax, [ebp-0x30]
 	mov [esp+0x8], eax
 	mov eax, [ebp+0x18]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	lea eax, [ebp-0x48]
 	mov [esp+0x8], eax
 	mov edx, [ebp+0x18]
 	mov [esp+0x4], edx
 	mov [esp], ebx
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	movss xmm1, dword [ebp-0x2c]
 	subss xmm1, [ebp-0x20]
 	movss xmm2, dword [ebp-0x28]
@@ -3064,7 +3064,7 @@ CG_AdjustPositionForMover_30:
 	addss xmm2, [eax+0x8]
 	movss [edx+0x8], xmm2
 	test edi, edi
-	jz CG_AdjustPositionForMover_40
+	jz _Z25CG_AdjustPositionForMoveriPKfiiiPfS1__40
 	movss [edi], xmm5
 	movss [edi+0x4], xmm4
 	movss [edi+0x8], xmm3
@@ -3077,7 +3077,7 @@ CG_AdjustPositionForMover_30:
 
 
 ;CG_DObjGetWorldBoneMatrix(cpose_t const*, DObj_s*, int, float (*) [3], float*)
-CG_DObjGetWorldBoneMatrix:
+_Z25CG_DObjGetWorldBoneMatrixPK7cpose_tP6DObj_siPA3_fPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3088,18 +3088,18 @@ CG_DObjGetWorldBoneMatrix:
 	mov esi, [ebp+0x10]
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call CL_DObjCreateSkelForBone
+	call _Z24CL_DObjCreateSkelForBoneP6DObj_si
 	test eax, eax
-	jz CG_DObjGetWorldBoneMatrix_10
+	jz _Z25CG_DObjGetWorldBoneMatrixPK7cpose_tP6DObj_siPA3_fPf_10
 	mov [esp], edi
-	call DObjGetRotTransArray
+	call _Z20DObjGetRotTransArrayPK6DObj_s
 	test eax, eax
-	jz CG_DObjGetWorldBoneMatrix_20
-CG_DObjGetWorldBoneMatrix_30:
+	jz _Z25CG_DObjGetWorldBoneMatrixPK7cpose_tP6DObj_siPA3_fPf_20
+_Z25CG_DObjGetWorldBoneMatrixPK7cpose_tP6DObj_siPA3_fPf_30:
 	shl esi, 0x5
 	mov ecx, eax
 	add ecx, esi
-	jz CG_DObjGetWorldBoneMatrix_20
+	jz _Z25CG_DObjGetWorldBoneMatrixPK7cpose_tP6DObj_siPA3_fPf_20
 	movss xmm1, dword [ecx+0x1c]
 	movaps xmm4, xmm1
 	mulss xmm4, [ecx]
@@ -3181,25 +3181,25 @@ CG_DObjGetWorldBoneMatrix_30:
 	pop edi
 	pop ebp
 	ret
-CG_DObjGetWorldBoneMatrix_10:
+_Z25CG_DObjGetWorldBoneMatrixPK7cpose_tP6DObj_siPA3_fPf_10:
 	lea ebx, [ebp-0x28]
 	mov [esp+0x8], ebx
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call DObjGetHierarchyBits
+	call _Z20DObjGetHierarchyBitsPK6DObj_siPi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], edi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_DoControllers
+	call _Z16CG_DoControllersPK7cpose_tPK6DObj_sPi
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call DObjCalcSkel
+	call _Z12DObjCalcSkelPK6DObj_sPi
 	mov [esp], edi
-	call DObjGetRotTransArray
+	call _Z20DObjGetRotTransArrayPK6DObj_s
 	test eax, eax
-	jnz CG_DObjGetWorldBoneMatrix_30
-CG_DObjGetWorldBoneMatrix_20:
+	jnz _Z25CG_DObjGetWorldBoneMatrixPK7cpose_tP6DObj_siPA3_fPf_30
+_Z25CG_DObjGetWorldBoneMatrixPK7cpose_tP6DObj_siPA3_fPf_20:
 	xor eax, eax
 	add esp, 0x4c
 	pop ebx
@@ -3210,7 +3210,7 @@ CG_DObjGetWorldBoneMatrix_20:
 
 
 ;CG_CalcEntityLerpPositions(int, centity_s*)
-CG_CalcEntityLerpPositions:
+_Z26CG_CalcEntityLerpPositionsiP9centity_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3220,14 +3220,14 @@ CG_CalcEntityLerpPositions:
 	mov esi, [ebp+0xc]
 	mov eax, [esi+0x68]
 	cmp eax, 0x8
-	jz CG_CalcEntityLerpPositions_10
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_10
 	cmp eax, 0x1
-	jz CG_CalcEntityLerpPositions_20
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_20
 	cmp eax, 0x3
-	jnz CG_CalcEntityLerpPositions_30
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_30
 	cmp dword [esi+0xcc], 0x3f
-	jle CG_CalcEntityLerpPositions_40
-CG_CalcEntityLerpPositions_30:
+	jle _Z26CG_CalcEntityLerpPositionsiP9centity_s_40
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_30:
 	lea eax, [esi+0x1c]
 	mov [ebp-0x64], eax
 	lea edx, [esi+0x68]
@@ -3237,24 +3237,24 @@ CG_CalcEntityLerpPositions_30:
 	mov eax, [ebx+0x46128]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	lea edi, [esi+0x28]
 	mov [esp+0x8], edi
 	mov eax, [ebx+0x46128]
 	mov [esp+0x4], eax
 	lea eax, [esi+0x8c]
 	mov [esp], eax
-	call BG_EvaluateTrajectory
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
 	mov eax, [esi+0xd0]
 	cmp eax, 0x1
-	jz CG_CalcEntityLerpPositions_50
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_50
 	cmp eax, 0x2
-	jz CG_CalcEntityLerpPositions_60
-CG_CalcEntityLerpPositions_160:
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_60
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_160:
 	mov ebx, cgArray
 	lea eax, [ebx+0x490a0]
 	cmp esi, eax
-	jz CG_CalcEntityLerpPositions_70
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_70
 	mov dword [esp+0x18], 0x0
 	mov eax, [ebp-0x64]
 	mov [esp+0x14], eax
@@ -3269,29 +3269,29 @@ CG_CalcEntityLerpPositions_160:
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_AdjustPositionForMover
-CG_CalcEntityLerpPositions_70:
+	call _Z25CG_AdjustPositionForMoveriPKfiiiPfS1_
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_70:
 	mov edx, [ebp-0x60]
 	mov [esp], edx
-	call CG_IsRagdollTrajectory
+	call _Z22CG_IsRagdollTrajectoryPK12trajectory_t
 	test al, al
-	jz CG_CalcEntityLerpPositions_80
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_80
 	mov edx, [esi+0x10]
 	test edx, edx
-	jnz CG_CalcEntityLerpPositions_90
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_90
 	mov eax, [esi+0x14]
 	test eax, eax
-	jnz CG_CalcEntityLerpPositions_100
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_100
 	mov ecx, [ebx+0x5052c]
 	test ecx, ecx
-	jz CG_CalcEntityLerpPositions_110
-CG_CalcEntityLerpPositions_210:
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_110
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_210:
 	cmp dword [esi+0xd0], 0x2
-	jz CG_CalcEntityLerpPositions_120
-CG_CalcEntityLerpPositions_250:
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_120
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_250:
 	mov ebx, 0x1
 	mov eax, 0x1
-CG_CalcEntityLerpPositions_260:
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_260:
 	mov [esp+0x10], eax
 	mov [esp+0xc], edx
 	mov eax, [esi+0xcc]
@@ -3299,51 +3299,51 @@ CG_CalcEntityLerpPositions_260:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Ragdoll_CreateRagdollForDObj
+	call _Z28Ragdoll_CreateRagdollForDObjiiihh
 	test bl, bl
-	jnz CG_CalcEntityLerpPositions_130
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_130
 	mov [esi+0x14], eax
 	mov edx, [esi+0x10]
-CG_CalcEntityLerpPositions_200:
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_200:
 	mov byte [esi+0xc], 0x1
 	test edx, edx
-	jz CG_CalcEntityLerpPositions_100
-CG_CalcEntityLerpPositions_90:
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_100
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_90:
 	mov eax, [esi+0x14]
 	test eax, eax
-	jnz CG_CalcEntityLerpPositions_140
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_140
 	mov eax, [ebp-0x64]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call Ragdoll_GetRootOrigin
+	call _Z21Ragdoll_GetRootOriginiPf
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_CalcEntityLerpPositions_20:
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_20:
 	cmp dword [esi+0xd8], 0x8
-	jz CG_CalcEntityLerpPositions_30
-CG_CalcEntityLerpPositions_40:
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_30
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_40:
 	mov eax, cgArray
 	mov edx, esi
-	call CG_InterpolateEntityPosition
-CG_CalcEntityLerpPositions_80:
+	call _Z28CG_InterpolateEntityPositionP4cg_sP9centity_s
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_80:
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_CalcEntityLerpPositions_10:
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_10:
 	lea ecx, [esi+0xcc]
 	cmp byte [esi+0x1c0], 0x0
-	jz CG_CalcEntityLerpPositions_80
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_80
 	test byte [ecx+0x8], 0x20
-	jnz CG_CalcEntityLerpPositions_80
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_80
 	cmp dword [ecx+0x98], 0xffffff
-	jz CG_CalcEntityLerpPositions_80
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_80
 	mov edx, [ecx+0x88]
 	mov eax, cgsArray
 	mov eax, [eax+edx*4+0x294]
@@ -3354,31 +3354,31 @@ CG_CalcEntityLerpPositions_10:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PreProcess_GetDObj
+	call _Z21CG_PreProcess_GetDObjiiiP6XModel
 	test eax, eax
-	jz CG_CalcEntityLerpPositions_80
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_80
 	mov eax, [esi+0x18]
 	test eax, eax
-	jnz CG_CalcEntityLerpPositions_150
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_150
 	mov edx, [esi+0xdc]
 	add edx, 0x3e8
 	mov eax, cgArray
 	cmp [eax+0x46128], edx
-	jle CG_CalcEntityLerpPositions_150
+	jle _Z26CG_CalcEntityLerpPositionsiP9centity_s_150
 	mov dword [esi+0x18], 0xffffffff
-	jmp CG_CalcEntityLerpPositions_80
-CG_CalcEntityLerpPositions_140:
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_80
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_140:
 	mov edx, [ebp-0x64]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call Ragdoll_GetRootOrigin
+	call _Z21Ragdoll_GetRootOriginiPf
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_CalcEntityLerpPositions_50:
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_50:
 	mov edx, [esi+0x158]
 	lea eax, [edx+edx*8]
 	mov ecx, eax
@@ -3386,7 +3386,7 @@ CG_CalcEntityLerpPositions_50:
 	add eax, ecx
 	lea eax, [edx+eax*2]
 	lea eax, [ebx+eax*4+0xe9f30]
-CG_CalcEntityLerpPositions_190:
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_190:
 	lea ebx, [eax+0x4]
 	cvtsi2ss xmm0, dword [esi+0x124]
 	movss [ebx+0x3dc], xmm0
@@ -3402,16 +3402,16 @@ CG_CalcEntityLerpPositions_190:
 	mov [esi+0x30], eax
 	mov eax, [esi+0x120]
 	mov [ebx+0x3e0], eax
-	jmp CG_CalcEntityLerpPositions_160
-CG_CalcEntityLerpPositions_150:
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_160
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_150:
 	mov eax, [esi+0x18]
 	test eax, eax
-	jz CG_CalcEntityLerpPositions_170
-CG_CalcEntityLerpPositions_240:
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_170
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_240:
 	cmp dword [esi+0x18], 0xffffffff
-	jz CG_CalcEntityLerpPositions_180
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_180
 	mov dword [esp], 0xb
-	call Sys_EnterCriticalSection
+	call _Z24Sys_EnterCriticalSection15CriticalSection
 	lea ebx, [ebp-0x4c]
 	mov [esp+0xc], ebx
 	lea eax, [esi+0x1c]
@@ -3419,20 +3419,20 @@ CG_CalcEntityLerpPositions_240:
 	mov eax, [esi+0x18]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1
-	call Phys_ObjGetInterpolatedState
+	call _Z28Phys_ObjGetInterpolatedState9PhysWorldiPfS0_
 	mov dword [esp], 0xb
-	call Sys_LeaveCriticalSection
+	call _Z24Sys_LeaveCriticalSection15CriticalSection
 	lea eax, [esi+0x28]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call UnitQuatToAngles
-	jmp CG_CalcEntityLerpPositions_80
-CG_CalcEntityLerpPositions_100:
+	call _Z16UnitQuatToAnglesPKfPf
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_80
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_100:
 	mov edi, [esi+0x14]
 	test edi, edi
-	jnz CG_CalcEntityLerpPositions_90
-	jmp CG_CalcEntityLerpPositions_80
-CG_CalcEntityLerpPositions_60:
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_90
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_80
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_60:
 	mov edx, [esi+0xcc]
 	lea eax, [edx+edx*8]
 	mov ecx, eax
@@ -3441,17 +3441,17 @@ CG_CalcEntityLerpPositions_60:
 	lea eax, [edx+eax*2]
 	mov edx, cgsArray
 	lea eax, [edx+eax*4-0x11f40]
-	jmp CG_CalcEntityLerpPositions_190
-CG_CalcEntityLerpPositions_130:
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_190
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_130:
 	mov [esi+0x10], eax
 	mov edx, eax
-	jmp CG_CalcEntityLerpPositions_200
-CG_CalcEntityLerpPositions_110:
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_200
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_110:
 	mov edx, [esi+0xd4]
 	shr edx, 0x13
 	and edx, 0x1
-	jmp CG_CalcEntityLerpPositions_210
-CG_CalcEntityLerpPositions_180:
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_210
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_180:
 	lea ecx, [esi+0x1c]
 	lea edx, [esi+0x74]
 	mov eax, [esi+0x74]
@@ -3468,8 +3468,8 @@ CG_CalcEntityLerpPositions_180:
 	mov [ecx+0x4], eax
 	mov eax, [edx+0x8]
 	mov [ecx+0x8], eax
-	jmp CG_CalcEntityLerpPositions_80
-CG_CalcEntityLerpPositions_170:
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_80
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_170:
 	mov dword [ebp-0x30], 0x0
 	mov dword [ebp-0x2c], 0x0
 	mov dword [ebp-0x28], 0x0
@@ -3484,20 +3484,20 @@ CG_CalcEntityLerpPositions_170:
 	mov [esp+0x4], edx
 	lea eax, [esi+0x98]
 	mov [esp], eax
-	call AnglesToQuat
+	call _Z12AnglesToQuatPKfPf
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov eax, [esi+0xcc]
 	mov [esp], eax
-	call Com_GetClientDObj
+	call _Z17Com_GetClientDObjii
 	mov ebx, eax
 	mov [esp], eax
-	call DObjGetPhysPreset
+	call _Z17DObjGetPhysPresetPK6DObj_s
 	mov edi, eax
 	test eax, eax
-	jz CG_CalcEntityLerpPositions_220
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_220
 	mov dword [esp], 0xb
-	call Sys_EnterCriticalSection
+	call _Z24Sys_EnterCriticalSection15CriticalSection
 	mov [esp+0x10], edi
 	lea eax, [ebp-0x30]
 	mov [esp+0xc], eax
@@ -3506,34 +3506,34 @@ CG_CalcEntityLerpPositions_170:
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1
-	call Phys_ObjCreate
+	call _Z14Phys_ObjCreate9PhysWorldPKfS1_S1_PK10PhysPreset
 	mov [ebp-0x5c], eax
 	test eax, eax
-	jnz CG_CalcEntityLerpPositions_230
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_230
 	mov [esp], ebx
-	call DObjGetName
+	call _Z11DObjGetNamePK6DObj_s
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_failed_to_create
 	mov dword [esp], 0x1
-	call Com_PrintWarning
+	call _Z16Com_PrintWarningiPKcz
 	mov dword [esi+0x18], 0xffffffff
 	mov dword [esp], 0xb
-	call Sys_LeaveCriticalSection
-	jmp CG_CalcEntityLerpPositions_240
-CG_CalcEntityLerpPositions_120:
+	call _Z24Sys_LeaveCriticalSection15CriticalSection
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_240
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_120:
 	mov eax, [esi+0x158]
 	cmp eax, [ebx]
-	jnz CG_CalcEntityLerpPositions_250
+	jnz _Z26CG_CalcEntityLerpPositionsiP9centity_s_250
 	test ecx, ecx
-	jz CG_CalcEntityLerpPositions_250
+	jz _Z26CG_CalcEntityLerpPositionsiP9centity_s_250
 	xor ebx, ebx
 	xor eax, eax
-	jmp CG_CalcEntityLerpPositions_260
-CG_CalcEntityLerpPositions_230:
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_260
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_230:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call DObjPhysicsSetCollisionFromXModel
+	call _Z33DObjPhysicsSetCollisionFromXModelPK6DObj_s9PhysWorldi
 	lea eax, [esi+0xa4]
 	movss xmm3, dword [esi+0xa4]
 	movss [ebp-0x3c], xmm3
@@ -3549,12 +3549,12 @@ CG_CalcEntityLerpPositions_230:
 	addss xmm0, xmm2
 	sqrtss xmm2, xmm0
 	movaps xmm0, xmm2
-	xorps xmm0, [g_zero+0x50]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jb CG_CalcEntityLerpPositions_270
+	jb _Z26CG_CalcEntityLerpPositionsiP9centity_s_270
 	movss xmm1, dword [_float_1_00000000]
-CG_CalcEntityLerpPositions_280:
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_280:
 	mulss xmm3, xmm1
 	movss [ebp-0x3c], xmm3
 	movaps xmm0, xmm1
@@ -3572,30 +3572,30 @@ CG_CalcEntityLerpPositions_280:
 	mov eax, [ebp-0x5c]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1
-	call Phys_ObjBulletImpact
+	call _Z20Phys_ObjBulletImpact9PhysWorldiPKfS1_ff
 	mov dword [esp], 0xb
-	call Sys_LeaveCriticalSection
+	call _Z24Sys_LeaveCriticalSection15CriticalSection
 	mov edx, [ebp-0x5c]
 	mov [esi+0x18], edx
-	jmp CG_CalcEntityLerpPositions_240
-CG_CalcEntityLerpPositions_220:
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_240
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_220:
 	mov dword [esi+0x18], 0xffffffff
 	mov [esp], ebx
-	call DObjGetName
+	call _Z11DObjGetNamePK6DObj_s
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_failed_to_create1
 	mov dword [esp], 0x1
-	call Com_PrintWarning
-	jmp CG_CalcEntityLerpPositions_240
-CG_CalcEntityLerpPositions_270:
+	call _Z16Com_PrintWarningiPKcz
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_240
+_Z26CG_CalcEntityLerpPositionsiP9centity_s_270:
 	movss xmm1, dword [_float_1_00000000]
 	divss xmm1, xmm2
-	jmp CG_CalcEntityLerpPositions_280
+	jmp _Z26CG_CalcEntityLerpPositionsiP9centity_s_280
 	add [eax], al
 
 
 ;CG_ProcessClientNoteTracks(cg_s*, int)
-CG_ProcessClientNoteTracks:
+_Z26CG_ProcessClientNoteTracksP4cg_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3604,21 +3604,21 @@ CG_ProcessClientNoteTracks:
 	sub esp, 0x3c
 	mov edi, [ebp+0xc]
 	cmp edi, 0x3f
-	jbe CG_ProcessClientNoteTracks_10
-CG_ProcessClientNoteTracks_20:
+	jbe _Z26CG_ProcessClientNoteTracksP4cg_si_10
+_Z26CG_ProcessClientNoteTracksP4cg_si_20:
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_ProcessClientNoteTracks_10:
+_Z26CG_ProcessClientNoteTracksP4cg_si_10:
 	lea eax, [ebp-0x1c]
 	mov [esp], eax
-	call DObjGetClientNotifyList
+	call _Z23DObjGetClientNotifyListPP13XAnimNotify_s
 	mov [ebp-0x2c], eax
 	test eax, eax
-	jle CG_ProcessClientNoteTracks_20
+	jle _Z26CG_ProcessClientNoteTracksP4cg_si_20
 	xor esi, esi
 	xor ebx, ebx
 	lea eax, [edi+edi*8]
@@ -3628,41 +3628,41 @@ CG_ProcessClientNoteTracks_10:
 	lea eax, [edi+eax*2]
 	mov edx, [ebp+0x8]
 	lea edi, [edx+eax*4]
-	jmp CG_ProcessClientNoteTracks_30
-CG_ProcessClientNoteTracks_40:
+	jmp _Z26CG_ProcessClientNoteTracksP4cg_si_30
+_Z26CG_ProcessClientNoteTracksP4cg_si_40:
 	add esi, 0x1
 	add ebx, 0xc
 	cmp [ebp-0x2c], esi
-	jz CG_ProcessClientNoteTracks_20
-CG_ProcessClientNoteTracks_30:
+	jz _Z26CG_ProcessClientNoteTracksP4cg_si_20
+_Z26CG_ProcessClientNoteTracksP4cg_si_30:
 	mov eax, ebx
 	add eax, [ebp-0x1c]
 	cmp dword [eax+0x4], 0x1
-	jnz CG_ProcessClientNoteTracks_40
+	jnz _Z26CG_ProcessClientNoteTracksP4cg_si_40
 	mov dword [esp+0x4], _cstring_anim_gunhand__le
 	mov eax, [eax]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz CG_ProcessClientNoteTracks_50
+	jnz _Z26CG_ProcessClientNoteTracksP4cg_si_50
 	mov dword [edi+0xea324], 0x1
 	mov dword [edi+0xea328], 0x1
-	jmp CG_ProcessClientNoteTracks_40
-CG_ProcessClientNoteTracks_50:
+	jmp _Z26CG_ProcessClientNoteTracksP4cg_si_40
+_Z26CG_ProcessClientNoteTracksP4cg_si_50:
 	mov dword [esp+0x4], _cstring_anim_gunhand__ri
 	mov eax, [ebp-0x1c]
 	mov eax, [ebx+eax]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz CG_ProcessClientNoteTracks_40
+	jnz _Z26CG_ProcessClientNoteTracksP4cg_si_40
 	mov dword [edi+0xea324], 0x0
 	mov dword [edi+0xea328], 0x1
-	jmp CG_ProcessClientNoteTracks_40
+	jmp _Z26CG_ProcessClientNoteTracksP4cg_si_40
 
 
 ;CG_UpdateBModelWorldBounds(int, centity_s*, int)
-CG_UpdateBModelWorldBounds:
+_Z26CG_UpdateBModelWorldBoundsiP9centity_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3672,7 +3672,7 @@ CG_UpdateBModelWorldBounds:
 	mov edx, [ebp+0xc]
 	mov eax, [edx+0x154]
 	mov [esp], eax
-	call R_GetBrushModel
+	call _Z15R_GetBrushModelj
 	mov [ebp-0x1b0], eax
 	mov edx, eax
 	add edx, 0x18
@@ -3699,7 +3699,7 @@ CG_UpdateBModelWorldBounds:
 	mov eax, [ebp+0xc]
 	add eax, 0x28
 	mov [esp], eax
-	call AnglesToAxis
+	call _Z12AnglesToAxisPKfPA3_f
 	mov eax, [ebp+0xc]
 	add eax, 0x1c
 	movss xmm0, dword [ebp-0x18c]
@@ -4115,7 +4115,7 @@ CG_UpdateBModelWorldBounds:
 	mov [ebp-0x6c], eax
 	mov ebx, [ebp+0x10]
 	test ebx, ebx
-	jnz CG_UpdateBModelWorldBounds_10
+	jnz _Z26CG_UpdateBModelWorldBoundsiP9centity_si_10
 	mov eax, [ebp-0x1b0]
 	movss xmm3, dword [eax+0x8]
 	subss xmm3, [ebp-0x60]
@@ -4143,7 +4143,7 @@ CG_UpdateBModelWorldBounds:
 	orps xmm0, xmm3
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm0
-	jb CG_UpdateBModelWorldBounds_20
+	jb _Z26CG_UpdateBModelWorldBoundsiP9centity_si_20
 	mov edx, eax
 	add edx, 0xc
 	movss xmm7, dword [ebp-0x70]
@@ -4175,8 +4175,8 @@ CG_UpdateBModelWorldBounds:
 	orps xmm0, xmm4
 	pxor xmm1, xmm1
 	ucomiss xmm1, xmm0
-	jae CG_UpdateBModelWorldBounds_30
-CG_UpdateBModelWorldBounds_40:
+	jae _Z26CG_UpdateBModelWorldBoundsiP9centity_si_30
+_Z26CG_UpdateBModelWorldBoundsiP9centity_si_40:
 	movss xmm0, dword [ebp-0x19c]
 	subss xmm0, [g_entMoveTolVec]
 	movss [ebp-0x68], xmm0
@@ -4193,7 +4193,7 @@ CG_UpdateBModelWorldBounds_40:
 	addss xmm7, [g_entMoveTolVec+0x8]
 	movss [ebp-0x70], xmm7
 	mov ecx, [ebp-0x1b0]
-CG_UpdateBModelWorldBounds_50:
+_Z26CG_UpdateBModelWorldBoundsiP9centity_si_50:
 	mov eax, [ebp-0x68]
 	mov [ecx], eax
 	mov eax, [ebp-0x64]
@@ -4212,25 +4212,25 @@ CG_UpdateBModelWorldBounds_50:
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call R_LinkBModelEntity
-CG_UpdateBModelWorldBounds_30:
+	call _Z18R_LinkBModelEntityjjP13GfxBrushModel
+_Z26CG_UpdateBModelWorldBoundsiP9centity_si_30:
 	add esp, 0x1fc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_UpdateBModelWorldBounds_20:
+_Z26CG_UpdateBModelWorldBoundsiP9centity_si_20:
 	lea edx, [eax+0xc]
 	movss xmm7, dword [ebp-0x70]
 	movss xmm6, dword [ebp-0x74]
 	movss xmm5, dword [ebp-0x78]
-	jmp CG_UpdateBModelWorldBounds_40
-CG_UpdateBModelWorldBounds_10:
+	jmp _Z26CG_UpdateBModelWorldBoundsiP9centity_si_40
+_Z26CG_UpdateBModelWorldBoundsiP9centity_si_10:
 	mov eax, [ebp-0x1b0]
 	lea edx, [eax+0xc]
 	mov ecx, eax
-	jmp CG_UpdateBModelWorldBounds_50
+	jmp _Z26CG_UpdateBModelWorldBoundsiP9centity_si_50
 	nop
 
 
@@ -4274,7 +4274,7 @@ g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
 g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
-g_zero: dd 0x0, 0x0, 0x0, 0x0, 0x6b051, 0x6b05c, 0x6b051, 0x6b051, 0x6b051, 0x6b051, 0x6b051, 0x6b051, 0x6b02d, 0x6b02d, 0x6b051, 0x6b097, 0x6b07f, 0x6b051, 0x6b07f, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x6d216, 0x6d82e, 0x6d842, 0x6d856, 0x6cf4e, 0x6d067, 0x6d17e, 0x6d649, 0x6d244, 0x6d76b, 0x6d30c, 0x6d572, 0x6d2e3, 0x6d169, 0x6d2e3, 0x0
+g_zero: dd 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of cg_ents_mp:
@@ -4311,7 +4311,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 
 
 ;All cstrings:
@@ -4341,6 +4341,7 @@ _float_0_00392157:		dd 0x3b808081	; 0.00392157
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00000000:		dd 0x0	; 0
 _float_32_00000000:		dd 0x42000000	; 32
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float__1_00000000:		dd 0xbf800000	; -1
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_256_00000000:		dd 0x43800000	; 256

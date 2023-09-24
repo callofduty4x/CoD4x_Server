@@ -1,98 +1,97 @@
 ;Imports of cl_keys:
 	extern con_ignoreMatchPrefixOnly
 	extern con_matchPrefixOnly
-	extern I_stristr
-	extern Com_Printf
-	extern Q_stricmpn
-	extern Q_stricmp
-	extern I_isdigit
-	extern Con_IsAutoCompleteMatch
+	extern _Z9I_stristrPKcS0_
+	extern _Z10Com_PrintfiPKcz
+	extern _Z10I_strnicmpPKcS0_i
+	extern _Z9I_stricmpPKcS0_
+	extern _Z9I_isdigiti
+	extern _Z23Con_IsAutoCompleteMatchPKcS0_i
 	extern tolower
-	extern Q_strncpyz
-	extern Sys_GetClipboardData
-	extern Sys_FreeClipboardData
+	extern _Z10I_strncpyzPcPKci
+	extern _Z20Sys_GetClipboardDatav
+	extern _Z21Sys_FreeClipboardDataPc
 	extern memmove
 	extern GetCurrentEventKeyModifiers
-	extern Field_Clear
+	extern _Z11Field_ClearP7field_t
 	extern cls
 	extern __maskrune
 	extern scrPlaceView
 	extern clientUIActives
-	extern Com_sprintf
-	extern CL_AddReliableCommand
+	extern _Z11Com_sprintfPciPKcz
+	extern _Z21CL_AddReliableCommandiPKc
 	extern cmd_args
-	extern Q_strncat
+	extern _Z9I_strncatPciPKc
 	extern ReplaceStringInternal
 	extern dvar_modifiedFlags
 	extern strchr
 	extern con_restricted
 	extern _ZN11MacFeatures19GetKeyboardLanguageEv
-	extern Con_IsActive
-	extern Con_ToggleConsoleOutput
-	extern Cbuf_AddText
-	extern UI_KeyEvent
+	extern _Z12Con_IsActivei
+	extern _Z23Con_ToggleConsoleOutputv
+	extern _Z12Cbuf_AddTextiPKc
+	extern _Z11UI_KeyEventiii
 	extern com_sv_running
 	extern sv_disableClientConsole
 	extern clientConnections
 	extern nextdemo
-	extern Cvar_SetString
-	extern Con_ToggleConsole
-	extern CG_IsScoreboardDisplayed
-	extern Scoreboard_HandleInput
-	extern UI_GetActiveMenu
+	extern _Z14Dvar_SetStringPK6dvar_sPKc
+	extern _Z17Con_ToggleConsolev
+	extern _Z24CG_IsScoreboardDisplayedi
+	extern _Z22Scoreboard_HandleInputii
+	extern _Z16UI_GetActiveMenui
 	extern cl_bypassMouseInput
-	extern UI_SetActiveMenu
-	extern CL_StopLogoOrCinematic
+	extern _Z16UI_SetActiveMenuii
+	extern _Z22CL_StopLogoOrCinematici
 	extern cl_waitingOnServerToLoadMap
-	extern Con_CancelAutoComplete
-	extern UI_CheckExecKey
+	extern _Z22Con_CancelAutoCompletev
+	extern _Z15UI_CheckExecKeyii
 	extern memcpy
 	extern scrPlaceFull
-	extern Con_AllowAutoCompleteCycling
-	extern Con_CommitToAutoComplete
+	extern _Z28Con_AllowAutoCompleteCyclingh
+	extern _Z24Con_CommitToAutoCompletev
 	extern g_console_field_width
 	extern g_console_char_height
-	extern CL_AllLocalClientsDisconnected
-	extern SCR_UpdateScreen
-	extern Con_CycleAutoComplete
+	extern _Z30CL_AllLocalClientsDisconnectedv
+	extern _Z16SCR_UpdateScreenv
+	extern _Z21Con_CycleAutoCompletei
 	extern strncasecmp
 	extern strncpy
-	extern PbServerCompleteCommand
-	extern Q_strncmp
-	extern Con_Top
-	extern Con_TokenizeInput
-	extern Con_IsDvarCommand
-	extern Cvar_ForEachName
+	extern _Z23PbServerCompleteCommandPci
+	extern _Z9I_strncmpPKcS0_i
+	extern _Z7Con_Topv
+	extern _Z17Con_TokenizeInputv
+	extern _Z17Con_IsDvarCommandPKc
+	extern _Z16Dvar_ForEachNamePFvPKcE
 	extern strstr
-	extern Cmd_EndTokenizedString
-	extern Con_PageUp
-	extern Con_PageDown
-	extern PbClientCompleteCommand
-	extern Con_Bottom
+	extern _Z22Cmd_EndTokenizedStringv
+	extern _Z10Con_PageUpv
+	extern _Z12Con_PageDownv
+	extern _Z23PbClientCompleteCommandPci
+	extern _Z10Con_Bottomv
 	extern con_inputMaxMatchesShown
-	extern Cmd_ForEach
-	extern Con_HasTooManyMatchesToShow
-	extern Con_AnySpaceAfterCommand
-	extern Cvar_FindVar
-	extern Con_AutoCompleteFromList
-	extern Cmd_GetAutoCompleteFileList
+	extern _Z11Cmd_ForEachPFvPKcE
+	extern _Z27Con_HasTooManyMatchesToShowv
+	extern _Z24Con_AnySpaceAfterCommandv
+	extern _Z12Dvar_FindVarPKc
+	extern _Z24Con_AutoCompleteFromListPPKcjS0_Pcj
+	extern _Z27Cmd_GetAutoCompleteFileListPKcPii
 	extern FS_FreeFileList
-	extern Com_StripExtension
+	extern _Z18Com_StripExtensionPKcPc
 	extern FreeStringInternal
-	extern Key_KeynumToStringBuf
-	extern g_assetEntryPool
-	extern FS_Printf
-	extern Cmd_AddCommand
-	extern R_NormalizedTextScale
-	extern R_TextWidth
-	extern SEH_PrintStrlen
-	extern UI_GetFontHandle
-	extern __toupper
-	extern SEH_GetCurrentLanguage
+	extern _Z21Key_KeynumToStringBufiPci
+	extern _Z9FS_PrintfiPKcz
+	extern _Z22Cmd_AddCommandInternalPKcPFvvEP14cmd_function_s
+	extern _Z21R_NormalizedTextScaleP6Font_sf
+	extern _Z11R_TextWidthPKciP6Font_s
+	extern _Z15SEH_PrintStrlenPKc
+	extern _Z16UI_GetFontHandlePK15ScreenPlacementif
+	extern toupper
+	extern _Z22SEH_GetCurrentLanguagev
 	extern snd_drawInfoStrings
-	extern R_TextHeight
+	extern _Z12R_TextHeightP6Font_s
 	extern colorWhite
-	extern CL_DrawTextWithCursor
+	extern _Z21CL_DrawTextWithCursorPK15ScreenPlacementPKciP6Font_sffiiffPKfiic
 
 ;Exports of cl_keys:
 	global sPasting
@@ -102,44 +101,44 @@
 	global s_prefixMatchCount
 	global s_matchCount
 	global s_completionString
-	global PrintMatches
-	global Key_StringToKeynum
+	global _Z12PrintMatchesPKc
+	global _Z18Key_StringToKeynumPKc
 	global _ZZ18Key_KeynumToStringiiE7tinystr
 	global _ZZ18CL_InitKeyCommandsvE18Key_Bindlist_f_VAR
 	global _ZZ18CL_InitKeyCommandsvE19Key_Unbindall_f_VAR
 	global _ZZ18CL_InitKeyCommandsvE16Key_Unbind_f_VAR
 	global _ZZ18CL_InitKeyCommandsvE14Key_Bind_f_VAR
-	global FindMatches
-	global Field_CharEvent
-	global Field_KeyDownEvent
-	global Message_Key
-	global Field_Draw
-	global Key_Bind_f
-	global CL_KeyEvent
-	global Console_Key
-	global CL_CharEvent
-	global Key_Shutdown
-	global Key_Unbind_f
-	global Key_AddCatcher
-	global Key_Bindlist_f
-	global Key_GetBinding
-	global Key_SetBinding
-	global Key_SetCatcher
-	global Key_ClearStates
-	global Key_Unbindall_f
-	global CL_GetKeyBinding
-	global Key_RemoveCatcher
-	global Key_WriteBindings
-	global CL_InitKeyCommands
-	global Field_AdjustScroll
-	global Key_IsCommandBound
-	global Key_KeynumToString
-	global Key_IsCatcherActive
-	global Key_GetOverstrikeMode
-	global Key_SetOverstrikeMode
-	global Field_DrawTextOverride
-	global Key_GetCommandAssignment
-	global PbMaxKeys
+	global _Z11FindMatchesPKc
+	global _Z15Field_CharEventiPK15ScreenPlacementP7field_ti
+	global _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti
+	global _Z11Message_Keyii
+	global _Z10Field_DrawiP7field_tiiii
+	global _Z10Key_Bind_fv
+	global _Z11CL_KeyEventiiij
+	global _Z11Console_Keyii
+	global _Z12CL_CharEventii
+	global _Z12Key_Shutdownv
+	global _Z12Key_Unbind_fv
+	global _Z14Key_AddCatcherii
+	global _Z14Key_Bindlist_fv
+	global _Z14Key_GetBindingii
+	global _Z14Key_SetBindingiiPKc
+	global _Z14Key_SetCatcherii
+	global _Z15Key_ClearStatesi
+	global _Z15Key_Unbindall_fv
+	global _Z16CL_GetKeyBindingiPKcPA128_c
+	global _Z17Key_RemoveCatcherii
+	global _Z17Key_WriteBindingsii
+	global _Z18CL_InitKeyCommandsv
+	global _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t
+	global _Z18Key_IsCommandBoundiPKc
+	global _Z18Key_KeynumToStringii
+	global _Z19Key_IsCatcherActiveii
+	global _Z21Key_GetOverstrikeModei
+	global _Z21Key_SetOverstrikeModeii
+	global _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii
+	global _Z24Key_GetCommandAssignmentiPKcPi
+	global _Z9PbMaxKeysv
 	global g_consoleField
 	global historyEditLines
 	global playerKeys
@@ -154,7 +153,7 @@ SECTION .text
 
 
 ;PrintMatches(char const*)
-PrintMatches:
+_Z12PrintMatchesPKc:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -163,28 +162,28 @@ PrintMatches:
 	mov ebx, [ebp+0x8]
 	mov eax, con_ignoreMatchPrefixOnly
 	cmp byte [eax], 0x0
-	jz PrintMatches_10
+	jz _Z12PrintMatchesPKc_10
 	mov eax, con_matchPrefixOnly
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz PrintMatches_10
-PrintMatches_30:
+	jz _Z12PrintMatchesPKc_10
+_Z12PrintMatchesPKc_30:
 	mov dword [esp+0x4], s_shortestMatch
 	mov [esp], ebx
-	call I_stristr
+	call _Z9I_stristrPKcS0_
 	test eax, eax
-	jz PrintMatches_20
+	jz _Z12PrintMatchesPKc_20
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_____s
 	mov dword [esp], 0x0
-	call Com_Printf
-PrintMatches_20:
+	call _Z10Com_PrintfiPKcz
+_Z12PrintMatchesPKc_20:
 	add esp, 0x10
 	pop ebx
 	pop edi
 	pop ebp
 	ret
-PrintMatches_10:
+_Z12PrintMatchesPKc_10:
 	mov edi, s_shortestMatch
 	cld
 	mov ecx, 0xffffffff
@@ -195,9 +194,9 @@ PrintMatches_10:
 	mov [esp+0x8], ecx
 	mov dword [esp+0x4], s_shortestMatch
 	mov [esp], ebx
-	call Q_stricmpn
+	call _Z10I_strnicmpPKcS0_i
 	test eax, eax
-	jz PrintMatches_30
+	jz _Z12PrintMatchesPKc_30
 	add esp, 0x10
 	pop ebx
 	pop edi
@@ -207,7 +206,7 @@ PrintMatches_10:
 
 
 ;Key_StringToKeynum(char const*)
-Key_StringToKeynum:
+_Z18Key_StringToKeynumPKc:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -215,98 +214,98 @@ Key_StringToKeynum:
 	sub esp, 0x10
 	mov ebx, eax
 	test eax, eax
-	jnz Key_StringToKeynum_10
-Key_StringToKeynum_20:
+	jnz _Z18Key_StringToKeynumPKc_10
+_Z18Key_StringToKeynumPKc_20:
 	mov eax, 0xffffffff
-Key_StringToKeynum_40:
+_Z18Key_StringToKeynumPKc_40:
 	add esp, 0x10
 	pop ebx
 	pop edi
 	pop ebp
 	ret
-Key_StringToKeynum_10:
+_Z18Key_StringToKeynumPKc_10:
 	movzx eax, byte [eax]
 	test al, al
-	jz Key_StringToKeynum_20
+	jz _Z18Key_StringToKeynumPKc_20
 	movzx edx, byte [ebx+0x1]
 	test dl, dl
-	jnz Key_StringToKeynum_30
+	jnz _Z18Key_StringToKeynumPKc_30
 	movsx eax, al
-	jmp Key_StringToKeynum_40
-Key_StringToKeynum_30:
+	jmp _Z18Key_StringToKeynumPKc_40
+_Z18Key_StringToKeynumPKc_30:
 	cmp al, 0x30
-	jnz Key_StringToKeynum_50
+	jnz _Z18Key_StringToKeynumPKc_50
 	cmp dl, 0x78
-	jz Key_StringToKeynum_60
-Key_StringToKeynum_50:
+	jz _Z18Key_StringToKeynumPKc_60
+_Z18Key_StringToKeynumPKc_50:
 	mov eax, [keynames]
 	test eax, eax
-	jz Key_StringToKeynum_20
+	jz _Z18Key_StringToKeynumPKc_20
 	mov edi, keynames
-Key_StringToKeynum_80:
+_Z18Key_StringToKeynumPKc_80:
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz Key_StringToKeynum_70
+	jz _Z18Key_StringToKeynumPKc_70
 	add edi, 0x8
 	mov eax, [edi]
 	test eax, eax
-	jnz Key_StringToKeynum_80
-	jmp Key_StringToKeynum_20
-Key_StringToKeynum_70:
+	jnz _Z18Key_StringToKeynumPKc_80
+	jmp _Z18Key_StringToKeynumPKc_20
+_Z18Key_StringToKeynumPKc_70:
 	mov eax, [edi+0x4]
-	jmp Key_StringToKeynum_40
-Key_StringToKeynum_60:
+	jmp _Z18Key_StringToKeynumPKc_40
+_Z18Key_StringToKeynumPKc_60:
 	cld
 	mov ecx, 0xffffffff
 	xor eax, eax
 	mov edi, ebx
 	repne scasb
 	cmp ecx, 0xfffffffa
-	jnz Key_StringToKeynum_50
+	jnz _Z18Key_StringToKeynumPKc_50
 	movsx edi, byte [ebx+0x2]
 	mov [esp], edi
-	call I_isdigit
+	call _Z9I_isdigiti
 	test al, al
-	jz Key_StringToKeynum_90
+	jz _Z18Key_StringToKeynumPKc_90
 	sub edi, 0x30
 	shl edi, 0x4
-Key_StringToKeynum_130:
+_Z18Key_StringToKeynumPKc_130:
 	movsx ebx, byte [ebx+0x3]
 	mov [esp], ebx
-	call I_isdigit
+	call _Z9I_isdigiti
 	test al, al
-	jz Key_StringToKeynum_100
+	jz _Z18Key_StringToKeynumPKc_100
 	lea eax, [ebx-0x30]
 	add eax, edi
-	jmp Key_StringToKeynum_40
-Key_StringToKeynum_100:
+	jmp _Z18Key_StringToKeynumPKc_40
+_Z18Key_StringToKeynumPKc_100:
 	lea eax, [ebx-0x61]
 	cmp eax, 0x5
-	jbe Key_StringToKeynum_110
+	jbe _Z18Key_StringToKeynumPKc_110
 	xor eax, eax
 	add eax, edi
-	jmp Key_StringToKeynum_40
-Key_StringToKeynum_90:
+	jmp _Z18Key_StringToKeynumPKc_40
+_Z18Key_StringToKeynumPKc_90:
 	lea eax, [edi-0x61]
 	cmp eax, 0x5
-	jbe Key_StringToKeynum_120
+	jbe _Z18Key_StringToKeynumPKc_120
 	xor edi, edi
-	jmp Key_StringToKeynum_130
-Key_StringToKeynum_110:
+	jmp _Z18Key_StringToKeynumPKc_130
+_Z18Key_StringToKeynumPKc_110:
 	lea eax, [ebx-0x57]
 	add eax, edi
-	jmp Key_StringToKeynum_40
-Key_StringToKeynum_120:
+	jmp _Z18Key_StringToKeynumPKc_40
+_Z18Key_StringToKeynumPKc_120:
 	sub edi, 0x57
 	shl edi, 0x4
-	jmp Key_StringToKeynum_130
+	jmp _Z18Key_StringToKeynumPKc_130
 	nop
 
 
 ;FindMatches(char const*)
-FindMatches:
+_Z11FindMatchesPKc:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -325,66 +324,66 @@ FindMatches:
 	mov [esp+0x4], esi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Con_IsAutoCompleteMatch
+	call _Z23Con_IsAutoCompleteMatchPKcS0_i
 	test al, al
-	jz FindMatches_10
+	jz _Z11FindMatchesPKc_10
 	mov eax, con_ignoreMatchPrefixOnly
 	cmp byte [eax], 0x0
-	jnz FindMatches_20
+	jnz _Z11FindMatchesPKc_20
 	mov eax, con_matchPrefixOnly
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz FindMatches_30
-FindMatches_20:
+	jnz _Z11FindMatchesPKc_30
+_Z11FindMatchesPKc_20:
 	mov [esp+0x8], ebx
 	mov eax, [s_completionString]
 	mov [esp+0x4], eax
 	mov edi, [ebp+0x8]
 	mov [esp], edi
-	call Q_stricmpn
+	call _Z10I_strnicmpPKcS0_i
 	test eax, eax
-	jz FindMatches_30
+	jz _Z11FindMatchesPKc_30
 	xor edx, edx
-FindMatches_80:
+_Z11FindMatchesPKc_80:
 	mov eax, [s_matchCount]
 	add eax, 0x1
 	mov [s_matchCount], eax
 	sub eax, 0x1
-	jz FindMatches_40
+	jz _Z11FindMatchesPKc_40
 	test dl, dl
-	jz FindMatches_50
+	jz _Z11FindMatchesPKc_50
 	cmp dword [s_prefixMatchCount], 0x1
-	jz FindMatches_40
-FindMatches_50:
+	jz _Z11FindMatchesPKc_40
+_Z11FindMatchesPKc_50:
 	mov eax, [s_prefixMatchCount]
 	test eax, eax
-	jz FindMatches_60
+	jz _Z11FindMatchesPKc_60
 	test dl, dl
-	jz FindMatches_10
+	jz _Z11FindMatchesPKc_10
 	mov edi, [ebp+0x8]
 	cmp byte [edi], 0x0
-	jnz FindMatches_70
+	jnz _Z11FindMatchesPKc_70
 	xor edi, edi
-FindMatches_110:
+_Z11FindMatchesPKc_110:
 	mov eax, 0x1
-FindMatches_130:
+_Z11FindMatchesPKc_130:
 	mov [s_hasExactMatch], al
 	mov byte [edi+s_shortestMatch], 0x0
-FindMatches_10:
+_Z11FindMatchesPKc_10:
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FindMatches_30:
+_Z11FindMatchesPKc_30:
 	add dword [s_prefixMatchCount], 0x1
 	mov edx, 0x1
-	jmp FindMatches_80
-FindMatches_70:
+	jmp _Z11FindMatchesPKc_80
+_Z11FindMatchesPKc_70:
 	mov esi, [ebp+0x8]
 	xor edi, edi
-FindMatches_100:
+_Z11FindMatchesPKc_100:
 	movsx eax, byte [edi+s_shortestMatch]
 	mov [esp], eax
 	call tolower
@@ -393,19 +392,19 @@ FindMatches_100:
 	mov [esp], eax
 	call tolower
 	cmp ebx, eax
-	jnz FindMatches_90
+	jnz _Z11FindMatchesPKc_90
 	add edi, 0x1
 	mov esi, [ebp+0x8]
 	add esi, edi
 	cmp byte [esi], 0x0
-	jnz FindMatches_100
-	jmp FindMatches_110
-FindMatches_40:
+	jnz _Z11FindMatchesPKc_100
+	jmp _Z11FindMatchesPKc_110
+_Z11FindMatchesPKc_40:
 	mov dword [esp+0x8], 0x400
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], s_shortestMatch
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov byte [s_hasExactMatch], 0x1
 	add esp, 0x1c
 	pop ebx
@@ -413,36 +412,36 @@ FindMatches_40:
 	pop edi
 	pop ebp
 	ret
-FindMatches_60:
+_Z11FindMatchesPKc_60:
 	mov dword [esp+0x8], 0x400
 	mov eax, [s_completionString]
 	mov [esp+0x4], eax
 	mov dword [esp], s_shortestMatch
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-FindMatches_90:
+_Z11FindMatchesPKc_90:
 	cmp byte [esi], 0x0
-	jz FindMatches_110
+	jz _Z11FindMatchesPKc_110
 	cmp byte [s_hasExactMatch], 0x0
-	jnz FindMatches_120
+	jnz _Z11FindMatchesPKc_120
 	xor eax, eax
-	jmp FindMatches_130
-FindMatches_120:
+	jmp _Z11FindMatchesPKc_130
+_Z11FindMatchesPKc_120:
 	cmp byte [edi+s_shortestMatch], 0x0
-	jz FindMatches_110
+	jz _Z11FindMatchesPKc_110
 	xor eax, eax
-	jmp FindMatches_130
+	jmp _Z11FindMatchesPKc_130
 	nop
 
 
 ;Field_CharEvent(int, ScreenPlacement const*, field_t*, int)
-Field_CharEvent:
-Field_CharEvent_200:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_200:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -463,20 +462,20 @@ Field_CharEvent_200:
 	not ecx
 	lea edi, [ecx-0x1]
 	cmp ebx, 0x16
-	jz Field_CharEvent_10
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_10
 	cmp ebx, 0x76
-	jz Field_CharEvent_20
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_20
 	cmp ebx, 0x3
-	jz Field_CharEvent_30
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_30
 	cmp ebx, 0x8
-	jz Field_CharEvent_40
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_40
 	cmp ebx, 0x1
-	jz Field_CharEvent_50
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_50
 	cmp ebx, 0x5
-	jz Field_CharEvent_60
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_60
 	cmp ebx, 0x1f
-	jle Field_CharEvent_70
-Field_CharEvent_160:
+	jle _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_70
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_160:
 	mov edx, [ebp-0x28]
 	lea eax, [edx+edx*2]
 	lea eax, [edx+eax*4]
@@ -484,24 +483,24 @@ Field_CharEvent_160:
 	lea eax, [edx+eax*4]
 	mov eax, [eax*8+playerKeys+0x11c]
 	test eax, eax
-	jz Field_CharEvent_80
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_80
 	mov eax, [esi]
 	cmp eax, 0xff
-	jz Field_CharEvent_70
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_70
 	mov [eax+esi+0x18], bl
 	lea edx, [eax+0x1]
 	mov [esi], edx
-Field_CharEvent_150:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_150:
 	lea eax, [edi+0x1]
 	cmp edx, eax
-	jz Field_CharEvent_90
-Field_CharEvent_190:
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_90
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_190:
 	mov edi, 0x1
-Field_CharEvent_120:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_120:
 	mov [esp+0x4], esi
 	mov eax, [ebp-0x2c]
 	mov [esp], eax
-	call Field_AdjustScroll
+	call _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t
 	mov eax, edi
 	add esp, 0x3c
 	pop ebx
@@ -509,10 +508,10 @@ Field_CharEvent_120:
 	pop edi
 	pop ebp
 	ret
-Field_CharEvent_10:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_10:
 	cmp byte [sPasting], 0x0
-	jz Field_CharEvent_100
-Field_CharEvent_70:
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_100
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_70:
 	xor edi, edi
 	mov eax, edi
 	add esp, 0x3c
@@ -521,19 +520,19 @@ Field_CharEvent_70:
 	pop edi
 	pop ebp
 	ret
-Field_CharEvent_40:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_40:
 	mov eax, [esi]
 	test eax, eax
 	setg bl
 	test bl, bl
-	jnz Field_CharEvent_110
+	jnz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_110
 	xor edi, edi
-	jmp Field_CharEvent_120
-Field_CharEvent_100:
-	call Sys_GetClipboardData
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_120
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_100:
+	call _Z20Sys_GetClipboardDatav
 	mov [ebp-0x20], eax
 	test eax, eax
-	jz Field_CharEvent_130
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_130
 	mov edi, eax
 	mov byte [sPasting], 0x1
 	cld
@@ -543,23 +542,23 @@ Field_CharEvent_100:
 	not ecx
 	lea edi, [ecx-0x1]
 	test edi, edi
-	jg Field_CharEvent_140
-Field_CharEvent_220:
+	jg _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_140
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_220:
 	mov byte [sPasting], 0x0
 	mov ecx, [ebp-0x20]
 	mov [esp], ecx
-	call Sys_FreeClipboardData
+	call _Z21Sys_FreeClipboardDataPc
 	mov eax, 0x1
-Field_CharEvent_130:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_130:
 	movzx edi, al
-	jmp Field_CharEvent_120
-Field_CharEvent_60:
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_120
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_60:
 	mov [esi], edi
 	xor edi, edi
-	jmp Field_CharEvent_120
-Field_CharEvent_80:
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_120
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_80:
 	cmp edi, 0xff
-	jz Field_CharEvent_70
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_70
 	mov eax, [esi]
 	mov edx, [ebp-0x24]
 	add edx, eax
@@ -576,8 +575,8 @@ Field_CharEvent_80:
 	mov [edx+esi+0x18], bl
 	add edx, 0x1
 	mov [esi], edx
-	jmp Field_CharEvent_150
-Field_CharEvent_50:
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_150
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_50:
 	mov dword [esi], 0x0
 	mov dword [esi+0x4], 0x0
 	xor edi, edi
@@ -588,16 +587,16 @@ Field_CharEvent_50:
 	pop edi
 	pop ebp
 	ret
-Field_CharEvent_20:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_20:
 	call GetCurrentEventKeyModifiers
 	test ah, 0x1
-	jz Field_CharEvent_160
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_160
 	cmp byte [sPasting], 0x0
-	jnz Field_CharEvent_160
-	call Sys_GetClipboardData
+	jnz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_160
+	call _Z20Sys_GetClipboardDatav
 	mov [ebp-0x1c], eax
 	test eax, eax
-	jz Field_CharEvent_170
+	jz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_170
 	mov edi, eax
 	mov byte [sPasting], 0x1
 	cld
@@ -607,24 +606,24 @@ Field_CharEvent_20:
 	not ecx
 	lea edi, [ecx-0x1]
 	test edi, edi
-	jg Field_CharEvent_180
-Field_CharEvent_240:
+	jg _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_180
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_240:
 	mov byte [sPasting], 0x0
 	mov ecx, [ebp-0x1c]
 	mov [esp], ecx
-	call Sys_FreeClipboardData
+	call _Z21Sys_FreeClipboardDataPc
 	mov eax, 0x1
 	movzx edi, al
-	jmp Field_CharEvent_120
-Field_CharEvent_30:
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_120
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_30:
 	mov [esp], esi
-	call Field_Clear
+	call _Z11Field_ClearP7field_t
 	mov edi, 0x1
-	jmp Field_CharEvent_120
-Field_CharEvent_90:
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_120
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_90:
 	mov byte [edx+esi+0x18], 0x0
-	jmp Field_CharEvent_190
-Field_CharEvent_110:
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_190
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_110:
 	mov edx, [ebp-0x24]
 	add edx, eax
 	sub edi, eax
@@ -636,44 +635,44 @@ Field_CharEvent_110:
 	call memmove
 	sub dword [esi], 0x1
 	movzx edi, bl
-	jmp Field_CharEvent_120
-Field_CharEvent_140:
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_120
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_140:
 	xor ebx, ebx
-Field_CharEvent_210:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_210:
 	mov edx, [ebp-0x20]
 	movsx eax, byte [ebx+edx]
 	mov [esp], eax
 	mov ecx, esi
 	mov edx, [ebp-0x2c]
 	mov eax, [ebp-0x28]
-	call Field_CharEvent_200
+	call _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_200
 	add ebx, 0x1
 	cmp edi, ebx
-	jnz Field_CharEvent_210
-	jmp Field_CharEvent_220
-Field_CharEvent_170:
+	jnz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_210
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_220
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_170:
 	xor eax, eax
 	movzx edi, al
-	jmp Field_CharEvent_120
-Field_CharEvent_180:
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_120
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_180:
 	xor ebx, ebx
-Field_CharEvent_230:
+_Z15Field_CharEventiPK15ScreenPlacementP7field_ti_230:
 	mov edx, [ebp-0x1c]
 	movsx eax, byte [edx+ebx]
 	mov [esp], eax
 	mov ecx, esi
 	mov edx, [ebp-0x2c]
 	mov eax, [ebp-0x28]
-	call Field_CharEvent_200
+	call _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_200
 	add ebx, 0x1
 	cmp edi, ebx
-	jnz Field_CharEvent_230
-	jmp Field_CharEvent_240
+	jnz _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_230
+	jmp _Z15Field_CharEventiPK15ScreenPlacementP7field_ti_240
 	nop
 
 
 ;Field_KeyDownEvent(int, ScreenPlacement const*, field_t*, int)
-Field_KeyDownEvent:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -703,52 +702,52 @@ Field_KeyDownEvent:
 	not ecx
 	lea edi, [ecx-0x1]
 	cmp esi, 0xa1
-	jz Field_KeyDownEvent_10
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_10
 	cmp esi, 0xa2
-	jz Field_KeyDownEvent_20
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_20
 	cmp esi, 0x9d
-	jz Field_KeyDownEvent_30
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_30
 	cmp esi, 0x9c
-	jz Field_KeyDownEvent_40
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_40
 	cmp esi, 0xa5
-	jz Field_KeyDownEvent_50
-Field_KeyDownEvent_130:
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_50
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_130:
 	mov [esp], esi
 	call tolower
 	cmp eax, 0x61
-	jz Field_KeyDownEvent_60
-Field_KeyDownEvent_220:
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_60
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_220:
 	cmp esi, 0xa6
-	jz Field_KeyDownEvent_70
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_70
 	mov [esp], esi
 	call tolower
 	cmp eax, 0x65
-	jz Field_KeyDownEvent_80
-Field_KeyDownEvent_110:
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_80
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_110:
 	cmp esi, 0xa1
-	jz Field_KeyDownEvent_90
-Field_KeyDownEvent_160:
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_90
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_160:
 	xor edi, edi
-	jmp Field_KeyDownEvent_100
-Field_KeyDownEvent_80:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_100
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_80:
 	mov eax, [ebp-0x20]
 	test eax, eax
-	jz Field_KeyDownEvent_110
-Field_KeyDownEvent_70:
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_110
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_70:
 	mov ecx, [ebp-0x2c]
 	mov [ecx], edi
 	xor edi, edi
-Field_KeyDownEvent_100:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_100:
 	mov eax, cls
 	mov ebx, [eax+0x110]
 	test ebx, ebx
-	jz Field_KeyDownEvent_120
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_120
 	mov ebx, [ebp-0x2c]
 	mov [esp+0x4], ebx
 	mov eax, [ebp-0x28]
 	mov [esp], eax
-	call Field_AdjustScroll
-Field_KeyDownEvent_120:
+	call _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_120:
 	mov eax, edi
 	add esp, 0x3c
 	pop ebx
@@ -756,16 +755,16 @@ Field_KeyDownEvent_120:
 	pop edi
 	pop ebp
 	ret
-Field_KeyDownEvent_10:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_10:
 	mov eax, [ebp-0x24]
 	test eax, eax
-	jz Field_KeyDownEvent_130
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_130
 	cmp byte [sPasting], 0x0
-	jnz Field_KeyDownEvent_130
-	call Sys_GetClipboardData
+	jnz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_130
+	call _Z20Sys_GetClipboardDatav
 	mov [ebp-0x1c], eax
 	test eax, eax
-	jz Field_KeyDownEvent_140
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_140
 	mov edi, eax
 	mov byte [sPasting], 0x1
 	cld
@@ -775,21 +774,21 @@ Field_KeyDownEvent_10:
 	not ecx
 	lea edi, [ecx-0x1]
 	test edi, edi
-	jg Field_KeyDownEvent_150
-Field_KeyDownEvent_320:
+	jg _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_150
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_320:
 	mov byte [sPasting], 0x0
 	mov ecx, [ebp-0x1c]
 	mov [esp], ecx
-	call Sys_FreeClipboardData
+	call _Z21Sys_FreeClipboardDataPc
 	mov eax, 0x1
-Field_KeyDownEvent_140:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_140:
 	movzx edi, al
-	jmp Field_KeyDownEvent_100
-Field_KeyDownEvent_20:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_100
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_20:
 	mov ebx, [ebp-0x2c]
 	mov eax, [ebx]
 	cmp edi, eax
-	jle Field_KeyDownEvent_160
+	jle _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_160
 	add edx, eax
 	sub edi, eax
 	mov [esp+0x8], edi
@@ -798,45 +797,45 @@ Field_KeyDownEvent_20:
 	mov [esp], edx
 	call memmove
 	xor edi, edi
-	jmp Field_KeyDownEvent_100
-Field_KeyDownEvent_30:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_100
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_30:
 	mov edx, [ebp-0x2c]
 	mov eax, [edx]
 	cmp edi, eax
-	jle Field_KeyDownEvent_170
+	jle _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_170
 	mov ecx, edx
 	lea edx, [eax+0x1]
 	mov [ecx], edx
-Field_KeyDownEvent_170:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_170:
 	mov esi, [ebp-0x20]
 	test esi, esi
-	jz Field_KeyDownEvent_160
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_160
 	mov ecx, [ebp-0x2c]
 	mov edx, [ecx]
 	mov eax, edx
 	cmp edi, edx
-	jg Field_KeyDownEvent_180
+	jg _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_180
 	xor edi, edi
-	jmp Field_KeyDownEvent_100
-Field_KeyDownEvent_200:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_100
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_200:
 	mov eax, [0xd5cc084]
 	test dword [eax+ecx*4+0x34], 0x500
 	setnz al
 	movzx eax, al
-Field_KeyDownEvent_210:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_210:
 	test eax, eax
-	jz Field_KeyDownEvent_190
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_190
 	lea eax, [edx+0x1]
 	mov edx, eax
 	mov ecx, [ebp-0x2c]
 	mov [ecx], eax
 	cmp edi, eax
-	jle Field_KeyDownEvent_190
-Field_KeyDownEvent_180:
+	jle _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_190
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_180:
 	mov ebx, [ebp-0x2c]
 	movsx ecx, byte [eax+ebx+0x18]
 	test ecx, 0xffffff80
-	jz Field_KeyDownEvent_200
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_200
 	mov dword [esp+0x4], 0x500
 	mov [esp], ecx
 	call __maskrune
@@ -845,56 +844,56 @@ Field_KeyDownEvent_180:
 	movzx eax, al
 	mov ecx, [ebp-0x2c]
 	mov edx, [ecx]
-	jmp Field_KeyDownEvent_210
-Field_KeyDownEvent_60:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_210
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_60:
 	mov edx, [ebp-0x20]
 	test edx, edx
-	jz Field_KeyDownEvent_220
-Field_KeyDownEvent_50:
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_220
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_50:
 	mov edx, [ebp-0x2c]
 	mov dword [edx], 0x0
 	xor edi, edi
-	jmp Field_KeyDownEvent_100
-Field_KeyDownEvent_40:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_100
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_40:
 	mov eax, [ebp-0x2c]
 	mov edx, [eax]
 	test edx, edx
-	jle Field_KeyDownEvent_230
+	jle _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_230
 	sub edx, 0x1
 	mov [eax], edx
-Field_KeyDownEvent_230:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_230:
 	mov ecx, [ebp-0x20]
 	test ecx, ecx
-	jz Field_KeyDownEvent_240
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_240
 	mov eax, edx
 	test edx, edx
-	jg Field_KeyDownEvent_250
-Field_KeyDownEvent_240:
+	jg _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_250
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_240:
 	mov eax, [ebp-0x2c]
 	cmp edx, [eax+0x4]
-	jge Field_KeyDownEvent_160
+	jge _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_160
 	mov [eax+0x4], edx
 	xor edi, edi
-	jmp Field_KeyDownEvent_100
-Field_KeyDownEvent_260:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_100
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_260:
 	mov eax, [0xd5cc084]
 	test dword [eax+ecx*4+0x34], 0x500
 	setnz al
 	movzx eax, al
-Field_KeyDownEvent_270:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_270:
 	test eax, eax
-	jz Field_KeyDownEvent_240
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_240
 	lea eax, [edx-0x1]
 	mov edx, eax
 	mov ebx, [ebp-0x2c]
 	mov [ebx], eax
 	test eax, eax
-	jle Field_KeyDownEvent_240
-Field_KeyDownEvent_250:
+	jle _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_240
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_250:
 	mov ebx, [ebp-0x2c]
 	movsx ecx, byte [eax+ebx+0x17]
 	test ecx, 0xffffff80
-	jz Field_KeyDownEvent_260
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_260
 	mov dword [esp+0x4], 0x500
 	mov [esp], ecx
 	call __maskrune
@@ -903,8 +902,8 @@ Field_KeyDownEvent_250:
 	movzx eax, al
 	mov ecx, [ebp-0x2c]
 	mov edx, [ecx]
-	jmp Field_KeyDownEvent_270
-Field_KeyDownEvent_90:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_270
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_90:
 	lea eax, [ebx+ebx*2]
 	lea eax, [ebx+eax*4]
 	lea eax, [ebx+eax*8]
@@ -915,56 +914,56 @@ Field_KeyDownEvent_90:
 	setz dl
 	mov [eax+playerKeys+0x11c], edx
 	xor edi, edi
-	jmp Field_KeyDownEvent_100
-Field_KeyDownEvent_190:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_100
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_190:
 	mov eax, edx
 	cmp edi, edx
-	jg Field_KeyDownEvent_280
-	jmp Field_KeyDownEvent_160
-Field_KeyDownEvent_290:
+	jg _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_280
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_160
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_290:
 	mov eax, [0xd5cc084]
 	test dword [eax+edx*4+0x34], 0x500
 	setnz al
 	movzx eax, al
-Field_KeyDownEvent_300:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_300:
 	test eax, eax
-	jnz Field_KeyDownEvent_160
+	jnz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_160
 	mov ebx, [ebp-0x2c]
 	mov eax, [ebx]
 	add eax, 0x1
 	mov [ebx], eax
 	cmp edi, eax
-	jle Field_KeyDownEvent_160
-Field_KeyDownEvent_280:
+	jle _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_160
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_280:
 	mov ebx, [ebp-0x2c]
 	movsx edx, byte [eax+ebx+0x18]
 	test edx, 0xffffff80
-	jz Field_KeyDownEvent_290
+	jz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_290
 	mov dword [esp+0x4], 0x500
 	mov [esp], edx
 	call __maskrune
 	test eax, eax
 	setnz al
 	movzx eax, al
-	jmp Field_KeyDownEvent_300
-Field_KeyDownEvent_150:
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_300
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_150:
 	xor esi, esi
-Field_KeyDownEvent_310:
+_Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_310:
 	mov edx, [ebp-0x1c]
 	movsx eax, byte [edx+esi]
 	mov [esp], eax
 	mov ecx, [ebp-0x2c]
 	mov edx, [ebp-0x28]
 	mov eax, ebx
-	call Field_CharEvent
+	call _Z15Field_CharEventiPK15ScreenPlacementP7field_ti
 	add esi, 0x1
 	cmp edi, esi
-	jnz Field_KeyDownEvent_310
-	jmp Field_KeyDownEvent_320
+	jnz _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_310
+	jmp _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti_320
 
 
 ;Message_Key(int, int)
-Message_Key:
+_Z11Message_Keyii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -980,11 +979,11 @@ Message_Key:
 	shl eax, 0x3
 	lea esi, [eax+playerKeys]
 	cmp edx, 0x1b
-	jz Message_Key_10
+	jz _Z11Message_Keyii_10
 	cmp edx, 0xd
-	jz Message_Key_20
+	jz _Z11Message_Keyii_20
 	cmp edx, 0xbf
-	jz Message_Key_20
+	jz _Z11Message_Keyii_20
 	mov eax, ebx
 	shl eax, 0x6
 	lea edx, [eax+ebx*4]
@@ -992,72 +991,72 @@ Message_Key:
 	mov [esp], ecx
 	mov ecx, esi
 	mov eax, ebx
-	call Field_KeyDownEvent
+	call _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti
 	add esp, 0x41c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Message_Key_20:
+_Z11Message_Keyii_20:
 	mov ecx, clientUIActives
 	mov edx, [ecx+0xc]
 	cmp byte [esi+0x18], 0x0
-	jnz Message_Key_30
-Message_Key_40:
+	jnz _Z11Message_Keyii_30
+_Z11Message_Keyii_40:
 	and dword [ecx+0x4], 0xffffffdf
 	mov [esp], esi
-	call Field_Clear
+	call _Z11Field_ClearP7field_t
 	add esp, 0x41c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Message_Key_30:
+_Z11Message_Keyii_30:
 	cmp edx, 0x9
-	jnz Message_Key_40
+	jnz _Z11Message_Keyii_40
 	mov eax, [eax+playerKeys+0x118]
 	test eax, eax
-	jz Message_Key_50
+	jz _Z11Message_Keyii_50
 	lea eax, [esi+0x18]
 	mov [esp+0xc], eax
 	mov dword [esp+0x8], _cstring_say_team_s
 	mov dword [esp+0x4], 0x400
 	lea edi, [ebp-0x418]
 	mov [esp], edi
-	call Com_sprintf
-Message_Key_60:
+	call _Z11Com_sprintfPciPKcz
+_Z11Message_Keyii_60:
 	mov [esp+0x4], edi
 	mov [esp], ebx
-	call CL_AddReliableCommand
+	call _Z21CL_AddReliableCommandiPKc
 	mov ecx, clientUIActives
-	jmp Message_Key_40
-Message_Key_10:
+	jmp _Z11Message_Keyii_40
+_Z11Message_Keyii_10:
 	mov eax, clientUIActives
 	and dword [eax+0x4], 0xffffffdf
 	mov [esp], esi
-	call Field_Clear
+	call _Z11Field_ClearP7field_t
 	add esp, 0x41c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Message_Key_50:
+_Z11Message_Keyii_50:
 	lea eax, [esi+0x18]
 	mov [esp+0xc], eax
 	mov dword [esp+0x8], _cstring_say_s
 	mov dword [esp+0x4], 0x400
 	lea edi, [ebp-0x418]
 	mov [esp], edi
-	call Com_sprintf
-	jmp Message_Key_60
+	call _Z11Com_sprintfPciPKcz
+	jmp _Z11Message_Keyii_60
 	nop
 
 
 ;Field_Draw(int, field_t*, int, int, int, int)
-Field_Draw:
+_Z10Field_DrawiP7field_tiiii:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -1066,9 +1065,9 @@ Field_Draw:
 	mov esi, [ebp+0xc]
 	mov eax, [esi+0x8]
 	test eax, eax
-	jnz Field_Draw_10
+	jnz _Z10Field_DrawiP7field_tiiii_10
 	mov dword [esi+0x8], 0x100
-Field_Draw_10:
+_Z10Field_DrawiP7field_tiiii_10:
 	mov edx, [esi+0x4]
 	mov eax, 0x100
 	sub eax, edx
@@ -1077,7 +1076,7 @@ Field_Draw_10:
 	mov [esp+0x4], eax
 	lea ebx, [ebp-0x408]
 	mov [esp], ebx
-	call Q_strncpyz
+	call _Z10I_strncpyzPcPKci
 	mov eax, [esi]
 	sub eax, [esi+0x4]
 	mov [esp+0x20], eax
@@ -1095,7 +1094,7 @@ Field_Draw_10:
 	mov [esp+0x4], esi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Field_DrawTextOverride
+	call _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii
 	add esp, 0x430
 	pop ebx
 	pop esi
@@ -1105,7 +1104,7 @@ Field_Draw_10:
 
 
 ;Key_Bind_f()
-Key_Bind_f:
+_Z10Key_Bind_fv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1117,76 +1116,76 @@ Key_Bind_f:
 	mov edx, [ebx+eax*4+0x44]
 	mov [ebp-0x424], edx
 	sub edx, 0x1
-	jle Key_Bind_f_10
+	jle _Z10Key_Bind_fv_10
 	mov eax, [ebx+eax*4+0x64]
 	mov eax, [eax+0x4]
-	call Key_StringToKeynum
+	call _Z18Key_StringToKeynumPKc
 	cmp eax, 0xffffffff
-	jz Key_Bind_f_20
+	jz _Z10Key_Bind_fv_20
 	mov [esp], eax
 	call tolower
 	mov [ebp-0x41c], eax
 	cmp dword [ebp-0x424], 0x2
-	jz Key_Bind_f_30
+	jz _Z10Key_Bind_fv_30
 	mov byte [ebp-0x418], 0x0
-	jle Key_Bind_f_40
+	jle _Z10Key_Bind_fv_40
 	mov eax, [ebp-0x424]
 	sub eax, 0x1
 	mov [ebp-0x420], eax
 	mov ebx, 0x2
 	mov esi, 0x8
 	cmp dword [ebp-0x424], 0x3
-	jnz Key_Bind_f_50
-	jmp Key_Bind_f_60
-Key_Bind_f_80:
+	jnz _Z10Key_Bind_fv_50
+	jmp _Z10Key_Bind_fv_60
+_Z10Key_Bind_fv_80:
 	mov eax, _cstring_null
-Key_Bind_f_90:
+_Z10Key_Bind_fv_90:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x400
 	lea eax, [ebp-0x418]
 	mov [esp], eax
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	cmp ebx, [ebp-0x420]
-	jz Key_Bind_f_70
+	jz _Z10Key_Bind_fv_70
 	mov dword [esp+0x8], _cstring_space
 	mov dword [esp+0x4], 0x400
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Q_strncat
-Key_Bind_f_70:
+	call _Z9I_strncatPciPKc
+_Z10Key_Bind_fv_70:
 	add ebx, 0x1
 	add esi, 0x4
 	cmp [ebp-0x424], ebx
-	jz Key_Bind_f_40
-Key_Bind_f_60:
+	jz _Z10Key_Bind_fv_40
+_Z10Key_Bind_fv_60:
 	mov edi, cmd_args
 	mov eax, [edi]
 	cmp ebx, [edi+eax*4+0x44]
-	jge Key_Bind_f_80
+	jge _Z10Key_Bind_fv_80
 	mov eax, [edi+eax*4+0x64]
 	mov eax, [eax+esi]
-	jmp Key_Bind_f_90
-Key_Bind_f_20:
+	jmp _Z10Key_Bind_fv_90
+_Z10Key_Bind_fv_20:
 	mov eax, [ebx]
 	cmp dword [ebx+eax*4+0x44], 0x1
-	jle Key_Bind_f_100
+	jle _Z10Key_Bind_fv_100
 	mov eax, [ebx+eax*4+0x64]
 	mov eax, [eax+0x4]
-Key_Bind_f_220:
+_Z10Key_Bind_fv_220:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s_isnt_a_valid_k
 	mov dword [esp], 0x0
-	call Com_Printf
-Key_Bind_f_110:
+	call _Z10Com_PrintfiPKcz
+_Z10Key_Bind_fv_110:
 	add esp, 0x42c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Key_Bind_f_40:
+_Z10Key_Bind_fv_40:
 	cmp dword [ebp-0x41c], 0xffffffff
-	jz Key_Bind_f_110
+	jz _Z10Key_Bind_fv_110
 	lea eax, [ebp-0x418]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x41c]
@@ -1202,128 +1201,128 @@ Key_Bind_f_40:
 	pop edi
 	pop ebp
 	ret
-Key_Bind_f_10:
+_Z10Key_Bind_fv_10:
 	mov dword [esp+0x4], _cstring_bind_key_command
 	mov dword [esp], 0x0
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	add esp, 0x42c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Key_Bind_f_160:
+_Z10Key_Bind_fv_160:
 	mov eax, [edi+eax*4+0x64]
 	mov eax, [eax+esi]
-Key_Bind_f_170:
+_Z10Key_Bind_fv_170:
 	mov dword [esp+0x4], 0x20
 	mov [esp], eax
 	call strchr
 	test eax, eax
-	jz Key_Bind_f_120
+	jz _Z10Key_Bind_fv_120
 	mov dword [esp+0x8], _cstring_
 	mov dword [esp+0x4], 0x400
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov byte [ebp-0x425], 0x1
 	mov edi, cmd_args
 	mov eax, [edi]
 	cmp ebx, [edi+eax*4+0x44]
-	jge Key_Bind_f_130
-Key_Bind_f_180:
+	jge _Z10Key_Bind_fv_130
+_Z10Key_Bind_fv_180:
 	mov eax, [edi+eax*4+0x64]
 	mov eax, [eax+esi]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x400
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	cmp byte [ebp-0x425], 0x0
-	jnz Key_Bind_f_140
-Key_Bind_f_190:
+	jnz _Z10Key_Bind_fv_140
+_Z10Key_Bind_fv_190:
 	cmp ebx, [ebp-0x420]
-	jz Key_Bind_f_150
+	jz _Z10Key_Bind_fv_150
 	mov dword [esp+0x8], _cstring_space
 	mov dword [esp+0x4], 0x400
 	lea eax, [ebp-0x418]
 	mov [esp], eax
-	call Q_strncat
-Key_Bind_f_150:
+	call _Z9I_strncatPciPKc
+_Z10Key_Bind_fv_150:
 	add ebx, 0x1
 	add esi, 0x4
 	cmp [ebp-0x424], ebx
-	jz Key_Bind_f_40
-Key_Bind_f_50:
+	jz _Z10Key_Bind_fv_40
+_Z10Key_Bind_fv_50:
 	mov edi, cmd_args
 	mov eax, [edi]
 	cmp ebx, [edi+eax*4+0x44]
-	jl Key_Bind_f_160
+	jl _Z10Key_Bind_fv_160
 	mov eax, _cstring_null
-	jmp Key_Bind_f_170
-Key_Bind_f_120:
+	jmp _Z10Key_Bind_fv_170
+_Z10Key_Bind_fv_120:
 	mov byte [ebp-0x425], 0x0
 	mov eax, [edi]
 	cmp ebx, [edi+eax*4+0x44]
-	jl Key_Bind_f_180
-Key_Bind_f_130:
+	jl _Z10Key_Bind_fv_180
+_Z10Key_Bind_fv_130:
 	mov eax, _cstring_null
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x400
 	lea edx, [ebp-0x418]
 	mov [esp], edx
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	cmp byte [ebp-0x425], 0x0
-	jz Key_Bind_f_190
-Key_Bind_f_140:
+	jz _Z10Key_Bind_fv_190
+_Z10Key_Bind_fv_140:
 	mov dword [esp+0x8], _cstring_
 	mov dword [esp+0x4], 0x400
 	lea eax, [ebp-0x418]
 	mov [esp], eax
-	call Q_strncat
-	jmp Key_Bind_f_190
-Key_Bind_f_30:
+	call _Z9I_strncatPciPKc
+	jmp _Z10Key_Bind_fv_190
+_Z10Key_Bind_fv_30:
 	lea eax, [eax+eax*2]
 	mov edx, [eax*4+playerKeys+0x12c]
 	test edx, edx
-	jz Key_Bind_f_200
+	jz _Z10Key_Bind_fv_200
 	mov eax, [ebx]
 	cmp dword [ebx+eax*4+0x44], 0x1
-	jle Key_Bind_f_210
+	jle _Z10Key_Bind_fv_210
 	mov eax, [ebx+eax*4+0x64]
 	mov eax, [eax+0x4]
-Key_Bind_f_240:
+_Z10Key_Bind_fv_240:
 	mov [esp+0xc], edx
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s__s
 	mov dword [esp], 0x0
-	call Com_Printf
-	jmp Key_Bind_f_110
-Key_Bind_f_100:
+	call _Z10Com_PrintfiPKcz
+	jmp _Z10Key_Bind_fv_110
+_Z10Key_Bind_fv_100:
 	mov eax, _cstring_null
-	jmp Key_Bind_f_220
-Key_Bind_f_200:
+	jmp _Z10Key_Bind_fv_220
+_Z10Key_Bind_fv_200:
 	mov eax, [ebx]
 	cmp dword [ebx+eax*4+0x44], 0x1
-	jle Key_Bind_f_230
+	jle _Z10Key_Bind_fv_230
 	mov eax, [ebx+eax*4+0x64]
 	mov eax, [eax+0x4]
-Key_Bind_f_250:
+_Z10Key_Bind_fv_250:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s_is_not_bound
 	mov dword [esp], 0x0
-	call Com_Printf
-	jmp Key_Bind_f_110
-Key_Bind_f_210:
+	call _Z10Com_PrintfiPKcz
+	jmp _Z10Key_Bind_fv_110
+_Z10Key_Bind_fv_210:
 	mov eax, _cstring_null
-	jmp Key_Bind_f_240
-Key_Bind_f_230:
+	jmp _Z10Key_Bind_fv_240
+_Z10Key_Bind_fv_230:
 	mov eax, _cstring_null
-	jmp Key_Bind_f_250
+	jmp _Z10Key_Bind_fv_250
 
 
 ;CL_KeyEvent(int, int, int, unsigned int)
-CL_KeyEvent:
+_Z11CL_KeyEventiiij:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1345,61 +1344,61 @@ CL_KeyEvent:
 	mov eax, [ebp+0x10]
 	mov [ebx], eax
 	test eax, eax
-	jz CL_KeyEvent_10
+	jz _Z11CL_KeyEventiiij_10
 	mov eax, [ebx+0x4]
 	add eax, 0x1
 	mov [ebx+0x4], eax
 	sub eax, 0x1
-	jz CL_KeyEvent_20
-CL_KeyEvent_150:
+	jz _Z11CL_KeyEventiiij_20
+_Z11CL_KeyEventiiij_150:
 	cmp edi, 0x60
-	jz CL_KeyEvent_30
+	jz _Z11CL_KeyEventiiij_30
 	cmp edi, 0x7e
-	jz CL_KeyEvent_30
+	jz _Z11CL_KeyEventiiij_30
 	mov eax, clientUIActives
 	test byte [eax+0x4], 0x1
-	jz CL_KeyEvent_40
-CL_KeyEvent_30:
+	jz _Z11CL_KeyEventiiij_40
+_Z11CL_KeyEventiiij_30:
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jz CL_KeyEvent_50
-CL_KeyEvent_210:
+	jz _Z11CL_KeyEventiiij_50
+_Z11CL_KeyEventiiij_210:
 	cmp dword [ebx+0x4], 0x1
-	jle CL_KeyEvent_50
+	jle _Z11CL_KeyEventiiij_50
 	mov eax, clientUIActives
 	mov eax, [eax+0x4]
 	test al, 0x21
-	jnz CL_KeyEvent_60
+	jnz _Z11CL_KeyEventiiij_60
 	test al, 0x10
-	jz CL_KeyEvent_70
+	jz _Z11CL_KeyEventiiij_70
 	lea ecx, [edi-0x9a]
 	cmp ecx, 0xa
-	ja CL_KeyEvent_70
+	ja _Z11CL_KeyEventiiij_70
 	mov eax, 0x1
 	shl eax, cl
 	test eax, 0x603
-	jz CL_KeyEvent_70
-CL_KeyEvent_60:
+	jz _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_60:
 	cmp edi, 0x60
-	jz CL_KeyEvent_70
+	jz _Z11CL_KeyEventiiij_70
 	cmp edi, 0x7e
-	jz CL_KeyEvent_70
+	jz _Z11CL_KeyEventiiij_70
 	cmp edi, 0x1b
-	jz CL_KeyEvent_70
-CL_KeyEvent_50:
+	jz _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_50:
 	mov eax, con_restricted
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz CL_KeyEvent_80
-CL_KeyEvent_160:
+	jnz _Z11CL_KeyEventiiij_80
+_Z11CL_KeyEventiiij_160:
 	cmp edi, 0x7e
-	jz CL_KeyEvent_90
+	jz _Z11CL_KeyEventiiij_90
 	call _ZN11MacFeatures19GetKeyboardLanguageEv
 	sub eax, 0x1
-	jz CL_KeyEvent_100
+	jz _Z11CL_KeyEventiiij_100
 	cmp edi, 0x60
-	jz CL_KeyEvent_90
-CL_KeyEvent_100:
+	jz _Z11CL_KeyEventiiij_90
+_Z11CL_KeyEventiiij_100:
 	lea eax, [esi+esi*2]
 	lea eax, [esi+eax*4]
 	lea eax, [esi+eax*8]
@@ -1409,15 +1408,15 @@ CL_KeyEvent_100:
 	mov ecx, clientUIActives
 	mov edx, [ecx+0x4]
 	test dl, 0x8
-	jz CL_KeyEvent_110
+	jz _Z11CL_KeyEventiiij_110
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jle CL_KeyEvent_120
+	jle _Z11CL_KeyEventiiij_120
 	cmp edi, 0x1b
-	jz CL_KeyEvent_130
+	jz _Z11CL_KeyEventiiij_130
 	mov edx, [ebx+0x8]
 	test edx, edx
-	jz CL_KeyEvent_70
+	jz _Z11CL_KeyEventiiij_70
 	mov edi, _cstring_attack
 	mov ebx, 0x8
 	cld
@@ -1425,310 +1424,310 @@ CL_KeyEvent_100:
 	mov ecx, ebx
 	repe cmpsb
 	mov edx, 0x0
-	jz CL_KeyEvent_140
+	jz _Z11CL_KeyEventiiij_140
 	movzx edx, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub edx, ecx
-CL_KeyEvent_140:
+_Z11CL_KeyEventiiij_140:
 	test edx, edx
-	jnz CL_KeyEvent_70
+	jnz _Z11CL_KeyEventiiij_70
 	mov eax, [ebp-0x42c]
 	mov dword [eax], 0x1
-CL_KeyEvent_70:
+_Z11CL_KeyEventiiij_70:
 	add esp, 0x44c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CL_KeyEvent_10:
+_Z11CL_KeyEventiiij_10:
 	mov dword [ebx+0x4], 0x0
 	mov eax, [edx+playerKeys+0x120]
 	sub eax, 0x1
 	cmovs eax, [ebp+0x10]
 	mov [edx+playerKeys+0x120], eax
-	jmp CL_KeyEvent_150
-CL_KeyEvent_80:
+	jmp _Z11CL_KeyEventiiij_150
+_Z11CL_KeyEventiiij_80:
 	mov eax, clientUIActives
 	test byte [eax+0x4], 0x1
-	jnz CL_KeyEvent_160
+	jnz _Z11CL_KeyEventiiij_160
 	cmp edi, 0xa5
-	jz CL_KeyEvent_170
+	jz _Z11CL_KeyEventiiij_170
 	cmp edi, 0x7e
-	jz CL_KeyEvent_70
-CL_KeyEvent_350:
+	jz _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_350:
 	call _ZN11MacFeatures19GetKeyboardLanguageEv
 	sub eax, 0x1
-	jz CL_KeyEvent_100
+	jz _Z11CL_KeyEventiiij_100
 	cmp edi, 0x60
-	jnz CL_KeyEvent_100
-	jmp CL_KeyEvent_70
-CL_KeyEvent_90:
+	jnz _Z11CL_KeyEventiiij_100
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_90:
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jz CL_KeyEvent_70
+	jz _Z11CL_KeyEventiiij_70
 	mov eax, clientUIActives
 	test byte [eax+0x4], 0x1
-	jz CL_KeyEvent_180
-CL_KeyEvent_290:
+	jz _Z11CL_KeyEventiiij_180
+_Z11CL_KeyEventiiij_290:
 	mov eax, [ebp-0x420]
 	mov eax, [eax+0x780]
 	test eax, eax
-	jz CL_KeyEvent_190
+	jz _Z11CL_KeyEventiiij_190
 	mov [esp], esi
-	call Con_IsActive
+	call _Z12Con_IsActivei
 	test al, al
-	jz CL_KeyEvent_200
-	call Con_ToggleConsoleOutput
-	jmp CL_KeyEvent_70
-CL_KeyEvent_40:
+	jz _Z11CL_KeyEventiiij_200
+	call _Z23Con_ToggleConsoleOutputv
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_40:
 	mov eax, [ebx+0x8]
 	test eax, eax
-	jz CL_KeyEvent_30
+	jz _Z11CL_KeyEventiiij_30
 	mov dword [esp+0x4], _cstring_devgui
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz CL_KeyEvent_30
+	jnz _Z11CL_KeyEventiiij_30
 	mov edx, [ebp+0x10]
 	test edx, edx
-	jz CL_KeyEvent_50
+	jz _Z11CL_KeyEventiiij_50
 	cmp dword [ebx+0x4], 0x1
-	jnz CL_KeyEvent_210
+	jnz _Z11CL_KeyEventiiij_210
 	mov eax, [ebx+0x8]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call Cbuf_AddText
-	jmp CL_KeyEvent_70
-CL_KeyEvent_110:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_110:
 	mov ecx, eax
-CL_KeyEvent_490:
+_Z11CL_KeyEventiiij_490:
 	mov dword [ecx], 0x0
 	mov eax, clientUIActives
 	mov eax, [eax+0xc]
 	mov [ebp-0x41c], eax
 	mov ecx, [ebp+0x10]
 	test ecx, ecx
-	jz CL_KeyEvent_220
+	jz _Z11CL_KeyEventiiij_220
 	cmp edi, 0xc8
-	jz CL_KeyEvent_230
+	jz _Z11CL_KeyEventiiij_230
 	cmp edi, 0x7f
-	jle CL_KeyEvent_230
-CL_KeyEvent_220:
+	jle _Z11CL_KeyEventiiij_230
+_Z11CL_KeyEventiiij_220:
 	cmp edi, 0x1b
-	jz CL_KeyEvent_240
-CL_KeyEvent_430:
+	jz _Z11CL_KeyEventiiij_240
+_Z11CL_KeyEventiiij_430:
 	mov ecx, clientUIActives
 	cmp byte [ecx+0x2], 0x0
-	jnz CL_KeyEvent_250
-CL_KeyEvent_360:
+	jnz _Z11CL_KeyEventiiij_250
+_Z11CL_KeyEventiiij_360:
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jnz CL_KeyEvent_260
-CL_KeyEvent_370:
+	jnz _Z11CL_KeyEventiiij_260
+_Z11CL_KeyEventiiij_370:
 	mov eax, [ebx+0x8]
 	test eax, eax
-	jz CL_KeyEvent_270
+	jz _Z11CL_KeyEventiiij_270
 	cmp byte [eax], 0x2b
-	jz CL_KeyEvent_280
-CL_KeyEvent_270:
+	jz _Z11CL_KeyEventiiij_280
+_Z11CL_KeyEventiiij_270:
 	mov eax, clientUIActives
 	test byte [eax+0x4], 0x10
-	jz CL_KeyEvent_70
+	jz _Z11CL_KeyEventiiij_70
 	mov eax, cls
 	mov ecx, [eax+0x110]
 	test ecx, ecx
-	jz CL_KeyEvent_70
+	jz _Z11CL_KeyEventiiij_70
 	mov dword [esp+0x8], 0x0
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call UI_KeyEvent
-	jmp CL_KeyEvent_70
-CL_KeyEvent_20:
+	call _Z11UI_KeyEventiii
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_20:
 	add dword [edx+playerKeys+0x120], 0x1
-	jmp CL_KeyEvent_150
-CL_KeyEvent_180:
+	jmp _Z11CL_KeyEventiiij_150
+_Z11CL_KeyEventiiij_180:
 	mov eax, com_sv_running
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz CL_KeyEvent_290
+	jnz _Z11CL_KeyEventiiij_290
 	mov eax, sv_disableClientConsole
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz CL_KeyEvent_70
-	jmp CL_KeyEvent_290
-CL_KeyEvent_230:
+	jnz _Z11CL_KeyEventiiij_70
+	jmp _Z11CL_KeyEventiiij_290
+_Z11CL_KeyEventiiij_230:
 	mov eax, clientConnections
 	mov eax, [eax+0x4018c]
 	test eax, eax
-	jnz CL_KeyEvent_300
+	jnz _Z11CL_KeyEventiiij_300
 	cmp dword [ebp-0x41c], 0x1
-	jz CL_KeyEvent_300
+	jz _Z11CL_KeyEventiiij_300
 	cmp dword [ebp-0x41c], 0x2
-	jnz CL_KeyEvent_220
-CL_KeyEvent_300:
+	jnz _Z11CL_KeyEventiiij_220
+_Z11CL_KeyEventiiij_300:
 	test edx, edx
-	jnz CL_KeyEvent_220
+	jnz _Z11CL_KeyEventiiij_220
 	mov dword [esp+0x4], _cstring_null
 	mov eax, nextdemo
 	mov eax, [eax]
 	mov [esp], eax
-	call Cvar_SetString
-CL_KeyEvent_440:
+	call _Z14Dvar_SetStringPK6dvar_sPKc
+_Z11CL_KeyEventiiij_440:
 	mov edx, clientUIActives
 	mov eax, [edx+0x4]
 	test al, 0x20
-	jnz CL_KeyEvent_310
+	jnz _Z11CL_KeyEventiiij_310
 	test al, 0x1
-	jnz CL_KeyEvent_320
-CL_KeyEvent_500:
+	jnz _Z11CL_KeyEventiiij_320
+_Z11CL_KeyEventiiij_500:
 	test al, 0x10
-	jnz CL_KeyEvent_330
+	jnz _Z11CL_KeyEventiiij_330
 	cmp dword [ebp-0x41c], 0x9
-	ja CL_KeyEvent_340
+	ja _Z11CL_KeyEventiiij_340
 	mov eax, [ebp-0x41c]
-	jmp dword [eax*4+CL_KeyEvent_jumptab_0]
-CL_KeyEvent_170:
+	jmp dword [eax*4+_Z11CL_KeyEventiiij_jumptab_0]
+_Z11CL_KeyEventiiij_170:
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jz CL_KeyEvent_350
+	jz _Z11CL_KeyEventiiij_350
 	mov edx, [ebp-0x420]
 	mov eax, [edx+0x5f4]
 	test eax, eax
-	jz CL_KeyEvent_350
-CL_KeyEvent_190:
-	call Con_ToggleConsole
+	jz _Z11CL_KeyEventiiij_350
+_Z11CL_KeyEventiiij_190:
+	call _Z17Con_ToggleConsolev
 	add esp, 0x44c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CL_KeyEvent_250:
+_Z11CL_KeyEventiiij_250:
 	mov [esp], esi
-	call CG_IsScoreboardDisplayed
+	call _Z24CG_IsScoreboardDisplayedi
 	test eax, eax
-	jz CL_KeyEvent_360
+	jz _Z11CL_KeyEventiiij_360
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jz CL_KeyEvent_370
+	jz _Z11CL_KeyEventiiij_370
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call Scoreboard_HandleInput
+	call _Z22Scoreboard_HandleInputii
 	test al, al
-	jnz CL_KeyEvent_70
-CL_KeyEvent_260:
+	jnz _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_260:
 	mov ecx, clientUIActives
 	mov eax, [ecx+0x4]
 	test al, 0x1
-	jnz CL_KeyEvent_380
+	jnz _Z11CL_KeyEventiiij_380
 	test al, 0x10
-	jnz CL_KeyEvent_390
-CL_KeyEvent_450:
+	jnz _Z11CL_KeyEventiiij_390
+_Z11CL_KeyEventiiij_450:
 	mov eax, clientUIActives
 	test byte [eax+0x4], 0x20
-	jnz CL_KeyEvent_400
+	jnz _Z11CL_KeyEventiiij_400
 	mov eax, [ebp-0x41c]
 	test eax, eax
-	jz CL_KeyEvent_380
+	jz _Z11CL_KeyEventiiij_380
 	mov eax, [ebx+0x8]
 	test eax, eax
-	jz CL_KeyEvent_410
+	jz _Z11CL_KeyEventiiij_410
 	cmp byte [eax], 0x2b
-	jz CL_KeyEvent_420
+	jz _Z11CL_KeyEventiiij_420
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call Cbuf_AddText
+	call _Z12Cbuf_AddTextiPKc
 	mov dword [esp+0x4], _cstring_1
 	mov [esp], esi
-	call Cbuf_AddText
-	jmp CL_KeyEvent_70
-CL_KeyEvent_240:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_240:
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jz CL_KeyEvent_430
-	jmp CL_KeyEvent_440
-CL_KeyEvent_200:
-	call Con_ToggleConsole
-	call Con_ToggleConsoleOutput
-	jmp CL_KeyEvent_70
-CL_KeyEvent_390:
+	jz _Z11CL_KeyEventiiij_430
+	jmp _Z11CL_KeyEventiiij_440
+_Z11CL_KeyEventiiij_200:
+	call _Z17Con_ToggleConsolev
+	call _Z23Con_ToggleConsoleOutputv
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_390:
 	mov [esp], esi
-	call UI_GetActiveMenu
+	call _Z16UI_GetActiveMenui
 	cmp eax, 0xa
-	jz CL_KeyEvent_450
+	jz _Z11CL_KeyEventiiij_450
 	mov eax, cl_bypassMouseInput
 	mov eax, [eax]
 	test eax, eax
-	jz CL_KeyEvent_460
+	jz _Z11CL_KeyEventiiij_460
 	cmp byte [eax+0xc], 0x0
-	jz CL_KeyEvent_460
+	jz _Z11CL_KeyEventiiij_460
 	lea eax, [edi-0xc8]
 	cmp eax, 0x2
-	jbe CL_KeyEvent_450
+	jbe _Z11CL_KeyEventiiij_450
 	mov eax, cls
 	mov edx, [eax+0x110]
 	test edx, edx
-	jnz CL_KeyEvent_470
-CL_KeyEvent_510:
+	jnz _Z11CL_KeyEventiiij_470
+_Z11CL_KeyEventiiij_510:
 	mov ecx, [eax+0x110]
 	test ecx, ecx
-	jz CL_KeyEvent_70
+	jz _Z11CL_KeyEventiiij_70
 	mov edx, [ebp+0x10]
 	mov [esp+0x8], edx
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call UI_KeyEvent
-	jmp CL_KeyEvent_70
-CL_KeyEvent_340:
+	call _Z11UI_KeyEventiii
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_340:
 	mov eax, cls
 	mov eax, [eax+0x110]
 	test eax, eax
-	jz CL_KeyEvent_70
-CL_KeyEvent_480:
+	jz _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_480:
 	mov dword [esp+0x4], 0x1
 	mov [esp], esi
-	call UI_SetActiveMenu
-	jmp CL_KeyEvent_70
-CL_KeyEvent_520:
+	call _Z16UI_SetActiveMenuii
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_520:
 	mov [esp], esi
-	call CL_StopLogoOrCinematic
-	jmp CL_KeyEvent_70
-CL_KeyEvent_530:
+	call _Z22CL_StopLogoOrCinematici
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_530:
 	mov eax, clientConnections
 	mov eax, [eax+0x4018c]
 	test eax, eax
-	jnz CL_KeyEvent_480
+	jnz _Z11CL_KeyEventiiij_480
 	mov eax, cl_waitingOnServerToLoadMap
 	cmp byte [eax+esi], 0x0
-	jnz CL_KeyEvent_480
+	jnz _Z11CL_KeyEventiiij_480
 	mov dword [esp+0x4], 0x2
 	mov [esp], esi
-	call UI_SetActiveMenu
-	jmp CL_KeyEvent_70
-CL_KeyEvent_130:
+	call _Z16UI_SetActiveMenuii
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_130:
 	mov edx, [ebp-0x42c]
 	mov dword [edx], 0x2
-	jmp CL_KeyEvent_70
-CL_KeyEvent_120:
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_120:
 	mov ecx, [ebp-0x42c]
-	jmp CL_KeyEvent_490
-CL_KeyEvent_380:
+	jmp _Z11CL_KeyEventiiij_490
+_Z11CL_KeyEventiiij_380:
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call Console_Key
-	jmp CL_KeyEvent_70
-CL_KeyEvent_310:
+	call _Z11Console_Keyii
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_310:
 	mov edx, 0x1b
 	mov eax, esi
-	call Message_Key
-	jmp CL_KeyEvent_70
-CL_KeyEvent_400:
+	call _Z11Message_Keyii
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_400:
 	mov edx, edi
 	mov eax, esi
-	call Message_Key
-	jmp CL_KeyEvent_70
-CL_KeyEvent_280:
+	call _Z11Message_Keyii
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_280:
 	mov edx, [ebp+0x14]
 	mov [esp+0x14], edx
 	mov [esp+0x10], edi
@@ -1738,33 +1737,33 @@ CL_KeyEvent_280:
 	mov dword [esp+0x4], 0x400
 	lea ebx, [ebp-0x418]
 	mov [esp], ebx
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call Cbuf_AddText
-	jmp CL_KeyEvent_270
-CL_KeyEvent_330:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z11CL_KeyEventiiij_270
+_Z11CL_KeyEventiiij_330:
 	mov edx, [ebp+0x10]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x1b
 	mov [esp], esi
-	call UI_KeyEvent
-	jmp CL_KeyEvent_70
-CL_KeyEvent_320:
-	call Con_CancelAutoComplete
+	call _Z11UI_KeyEventiii
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_320:
+	call _Z22Con_CancelAutoCompletev
 	mov ecx, clientUIActives
 	mov eax, [ecx+0x4]
-	jmp CL_KeyEvent_500
-CL_KeyEvent_470:
+	jmp _Z11CL_KeyEventiiij_500
+_Z11CL_KeyEventiiij_470:
 	mov [esp+0x4], edi
 	mov [esp], esi
-	call UI_CheckExecKey
+	call _Z15UI_CheckExecKeyii
 	test eax, eax
-	jz CL_KeyEvent_450
-CL_KeyEvent_460:
+	jz _Z11CL_KeyEventiiij_450
+_Z11CL_KeyEventiiij_460:
 	mov eax, cls
-	jmp CL_KeyEvent_510
-CL_KeyEvent_420:
+	jmp _Z11CL_KeyEventiiij_510
+_Z11CL_KeyEventiiij_420:
 	mov ecx, [ebp+0x14]
 	mov [esp+0x14], ecx
 	mov [esp+0x10], edi
@@ -1773,39 +1772,39 @@ CL_KeyEvent_420:
 	mov dword [esp+0x4], 0x400
 	lea ebx, [ebp-0x418]
 	mov [esp], ebx
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call Cbuf_AddText
-	jmp CL_KeyEvent_70
-CL_KeyEvent_410:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z11CL_KeyEventiiij_70
+_Z11CL_KeyEventiiij_410:
 	cmp edi, 0xce
-	jle CL_KeyEvent_70
+	jle _Z11CL_KeyEventiiij_70
 	mov dword [esp+0x4], 0x0
 	mov [esp], edi
-	call Key_KeynumToString
+	call _Z18Key_KeynumToStringii
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s_is_unbound_use
 	mov dword [esp], 0xe
-	call Com_Printf
-	jmp CL_KeyEvent_70
+	call _Z10Com_PrintfiPKcz
+	jmp _Z11CL_KeyEventiiij_70
 	
 	
-CL_KeyEvent_jumptab_0:
-	dd CL_KeyEvent_340
-	dd CL_KeyEvent_520
-	dd CL_KeyEvent_520
-	dd CL_KeyEvent_70
-	dd CL_KeyEvent_70
-	dd CL_KeyEvent_70
-	dd CL_KeyEvent_340
-	dd CL_KeyEvent_340
-	dd CL_KeyEvent_340
-	dd CL_KeyEvent_530
+_Z11CL_KeyEventiiij_jumptab_0:
+	dd _Z11CL_KeyEventiiij_340
+	dd _Z11CL_KeyEventiiij_520
+	dd _Z11CL_KeyEventiiij_520
+	dd _Z11CL_KeyEventiiij_70
+	dd _Z11CL_KeyEventiiij_70
+	dd _Z11CL_KeyEventiiij_70
+	dd _Z11CL_KeyEventiiij_340
+	dd _Z11CL_KeyEventiiij_340
+	dd _Z11CL_KeyEventiiij_340
+	dd _Z11CL_KeyEventiiij_530
 
 
 ;Console_Key(int, int)
-Console_Key:
+_Z11Console_Keyii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1833,33 +1832,33 @@ Console_Key:
 	shr edi, 0x8
 	and edi, 0x1
 	cmp esi, 0x6c
-	jz Console_Key_10
+	jz _Z11Console_Keyii_10
 	cmp esi, 0xd
-	jz Console_Key_20
+	jz _Z11Console_Keyii_20
 	cmp esi, 0xbf
-	jz Console_Key_20
+	jz _Z11Console_Keyii_20
 	cmp esi, 0x9
-	jz Console_Key_30
+	jz _Z11Console_Keyii_30
 	cmp esi, 0x9a
-	jz Console_Key_40
+	jz _Z11Console_Keyii_40
 	cmp esi, 0x9b
-	jz Console_Key_50
+	jz _Z11Console_Keyii_50
 	cmp esi, 0xce
-	jnz Console_Key_60
+	jnz _Z11Console_Keyii_60
 	mov eax, [ebp-0x380]
 	test eax, eax
-	jz Console_Key_60
-Console_Key_160:
+	jz _Z11Console_Keyii_60
+_Z11Console_Keyii_160:
 	mov edx, [historyLine]
 	mov eax, [nextHistoryLine]
 	sub eax, edx
 	cmp eax, 0x1f
-	jle Console_Key_70
-Console_Key_300:
+	jle _Z11Console_Keyii_70
+_Z11Console_Keyii_300:
 	mov eax, edx
 	and eax, 0x8000001f
-	js Console_Key_80
-Console_Key_460:
+	js _Z11Console_Keyii_80
+_Z11Console_Keyii_460:
 	lea eax, [eax+eax*4]
 	lea edx, [eax*8]
 	sub edx, eax
@@ -1871,45 +1870,45 @@ Console_Key_460:
 	mov dword [esp+0x4], g_consoleField
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call Field_AdjustScroll
+	call _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t
 	mov dword [esp], 0x0
-	call Con_AllowAutoCompleteCycling
-Console_Key_90:
+	call _Z28Con_AllowAutoCompleteCyclingh
+_Z11Console_Keyii_90:
 	add esp, 0x3ac
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Console_Key_20:
-	call Con_CommitToAutoComplete
+_Z11Console_Keyii_20:
+	call _Z24Con_CommitToAutoCompletev
 	test al, al
-	jnz Console_Key_90
+	jnz _Z11Console_Keyii_90
 	mov dword [esp+0x8], g_consoleField+0x18
 	mov dword [esp+0x4], _cstring_s
 	mov dword [esp], 0x0
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	movzx eax, byte [g_consoleField+0x18]
 	cmp al, 0x5c
-	jz Console_Key_100
+	jz _Z11Console_Keyii_100
 	cmp al, 0x2f
-	jnz Console_Key_110
-Console_Key_100:
+	jnz _Z11Console_Keyii_110
+_Z11Console_Keyii_100:
 	mov dword [esp+0x4], g_consoleField+0x19
-Console_Key_450:
+_Z11Console_Keyii_450:
 	mov [esp], ebx
-	call Cbuf_AddText
+	call _Z12Cbuf_AddTextiPKc
 	mov dword [esp+0x4], _cstring_1
 	mov [esp], ebx
-	call Cbuf_AddText
-Console_Key_440:
+	call _Z12Cbuf_AddTextiPKc
+_Z11Console_Keyii_440:
 	cmp byte [g_consoleField+0x18], 0x0
-	jz Console_Key_120
+	jz _Z11Console_Keyii_120
 	mov ebx, [nextHistoryLine]
 	mov eax, ebx
 	and eax, 0x8000001f
-	js Console_Key_130
-Console_Key_510:
+	js _Z11Console_Keyii_130
+_Z11Console_Keyii_510:
 	lea eax, [eax+eax*4]
 	lea edx, [eax*8]
 	sub edx, eax
@@ -1921,9 +1920,9 @@ Console_Key_510:
 	lea eax, [ebx+0x1]
 	mov [nextHistoryLine], eax
 	mov [historyLine], eax
-Console_Key_120:
+_Z11Console_Keyii_120:
 	mov dword [esp], g_consoleField
-	call Field_Clear
+	call _Z11Field_ClearP7field_t
 	mov eax, g_console_field_width
 	mov eax, [eax]
 	mov [g_consoleField+0xc], eax
@@ -1931,120 +1930,120 @@ Console_Key_120:
 	mov eax, [eax]
 	mov [g_consoleField+0x10], eax
 	mov dword [g_consoleField+0x14], 0x1
-	call CL_AllLocalClientsDisconnected
+	call _Z30CL_AllLocalClientsDisconnectedv
 	test al, al
-	jz Console_Key_90
-	call SCR_UpdateScreen
-	jmp Console_Key_90
-Console_Key_10:
+	jz _Z11Console_Keyii_90
+	call _Z16SCR_UpdateScreenv
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_10:
 	mov edx, [ebp-0x37c]
 	test edx, edx
-	jnz Console_Key_140
-Console_Key_60:
+	jnz _Z11Console_Keyii_140
+_Z11Console_Keyii_60:
 	mov [esp], esi
 	call tolower
 	cmp eax, 0x70
-	jz Console_Key_150
-Console_Key_310:
+	jz _Z11Console_Keyii_150
+_Z11Console_Keyii_310:
 	xor eax, eax
-Console_Key_320:
+_Z11Console_Keyii_320:
 	test eax, eax
-	jnz Console_Key_160
+	jnz _Z11Console_Keyii_160
 	cmp esi, 0xcd
-	jz Console_Key_170
+	jz _Z11Console_Keyii_170
 	cmp esi, 0x9b
-	jz Console_Key_180
-Console_Key_390:
+	jz _Z11Console_Keyii_180
+_Z11Console_Keyii_390:
 	mov [esp], esi
 	call tolower
 	cmp eax, 0x6e
-	jz Console_Key_190
-Console_Key_410:
+	jz _Z11Console_Keyii_190
+_Z11Console_Keyii_410:
 	xor eax, eax
-Console_Key_420:
+_Z11Console_Keyii_420:
 	test eax, eax
-	jnz Console_Key_200
+	jnz _Z11Console_Keyii_200
 	cmp esi, 0xa4
-	jz Console_Key_210
+	jz _Z11Console_Keyii_210
 	cmp esi, 0xa3
-	jz Console_Key_220
+	jz _Z11Console_Keyii_220
 	cmp esi, 0xce
-	jz Console_Key_230
+	jz _Z11Console_Keyii_230
 	cmp esi, 0xcd
-	jz Console_Key_240
+	jz _Z11Console_Keyii_240
 	cmp esi, 0xa5
-	jz Console_Key_250
+	jz _Z11Console_Keyii_250
 	cmp esi, 0xa6
-	jz Console_Key_260
+	jz _Z11Console_Keyii_260
 	cmp esi, 0xa2
-	jz Console_Key_270
+	jz _Z11Console_Keyii_270
 	cmp esi, 0x1b
-	jz Console_Key_270
-Console_Key_480:
+	jz _Z11Console_Keyii_270
+_Z11Console_Keyii_480:
 	lea eax, [esi-0x9c]
 	cmp eax, 0x1
-	jbe Console_Key_280
+	jbe _Z11Console_Keyii_280
 	cmp esi, 0x7f
-	jz Console_Key_290
+	jz _Z11Console_Keyii_290
 	mov eax, [ebp-0x37c]
 	test eax, eax
-	jnz Console_Key_290
+	jnz _Z11Console_Keyii_290
 	mov eax, [ebp-0x378]
 	test eax, eax
-	jnz Console_Key_290
+	jnz _Z11Console_Keyii_290
 	mov eax, [ebp-0x380]
 	test eax, eax
-	jnz Console_Key_290
+	jnz _Z11Console_Keyii_290
 	test edi, edi
-	jz Console_Key_280
-Console_Key_290:
+	jz _Z11Console_Keyii_280
+_Z11Console_Keyii_290:
 	mov edx, scrPlaceFull
 	mov [esp], esi
 	mov ecx, g_consoleField
 	mov eax, ebx
-	call Field_KeyDownEvent
+	call _Z18Field_KeyDownEventiPK15ScreenPlacementP7field_ti
 	test al, al
-	jz Console_Key_90
+	jz _Z11Console_Keyii_90
 	mov dword [esp], 0x1
-	call Con_AllowAutoCompleteCycling
-	jmp Console_Key_90
-Console_Key_70:
+	call _Z28Con_AllowAutoCompleteCyclingh
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_70:
 	test edx, edx
-	jle Console_Key_300
+	jle _Z11Console_Keyii_300
 	sub edx, 0x1
 	mov [historyLine], edx
-	jmp Console_Key_300
-Console_Key_150:
+	jmp _Z11Console_Keyii_300
+_Z11Console_Keyii_150:
 	mov eax, [ebp-0x37c]
 	test eax, eax
-	jz Console_Key_310
-Console_Key_380:
+	jz _Z11Console_Keyii_310
+_Z11Console_Keyii_380:
 	mov eax, 0x1
-	jmp Console_Key_320
-Console_Key_50:
+	jmp _Z11Console_Keyii_320
+_Z11Console_Keyii_50:
 	mov eax, [ebp-0x37c]
 	test eax, eax
-	jz Console_Key_60
+	jz _Z11Console_Keyii_60
 	mov dword [esp], 0x1
-	call Con_CycleAutoComplete
-	jmp Console_Key_90
-Console_Key_30:
+	call _Z21Con_CycleAutoCompletei
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_30:
 	cmp byte [ebp-0x381], 0x0
-	jz Console_Key_330
+	jz _Z11Console_Keyii_330
 	movzx eax, byte [g_consoleField+0x18]
 	cmp al, 0x2f
-	jz Console_Key_340
+	jz _Z11Console_Keyii_340
 	cmp al, 0x5c
-	jz Console_Key_340
+	jz _Z11Console_Keyii_340
 	xor eax, eax
-Console_Key_470:
+_Z11Console_Keyii_470:
 	lea ebx, [eax+g_consoleField+0x18]
 	mov dword [esp+0x8], 0x3
 	mov dword [esp+0x4], _cstring_pb_
 	mov [esp], ebx
 	call strncasecmp
 	test eax, eax
-	jnz Console_Key_350
+	jnz _Z11Console_Keyii_350
 	mov dword [esp+0x8], 0xff
 	mov [esp+0x4], ebx
 	lea ebx, [ebp-0x225]
@@ -2056,16 +2055,16 @@ Console_Key_470:
 	mov [esp], ebx
 	call strncasecmp
 	test eax, eax
-	jnz Console_Key_360
+	jnz _Z11Console_Keyii_360
 	mov dword [esp+0x4], 0xff
 	mov [esp], ebx
-	call PbServerCompleteCommand
-Console_Key_650:
+	call _Z23PbServerCompleteCommandPci
+_Z11Console_Keyii_650:
 	mov [esp+0xc], ebx
 	mov dword [esp+0x8], _cstring_s1
 	mov dword [esp+0x4], 0x100
 	mov dword [esp], g_consoleField+0x18
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov edi, g_consoleField+0x18
 	cld
 	mov ecx, 0xffffffff
@@ -2077,37 +2076,37 @@ Console_Key_650:
 	mov dword [esp+0x4], g_consoleField
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call Field_AdjustScroll
-	jmp Console_Key_370
-Console_Key_40:
+	call _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t
+	jmp _Z11Console_Keyii_370
+_Z11Console_Keyii_40:
 	mov eax, [ebp-0x37c]
 	test eax, eax
-	jz Console_Key_380
+	jz _Z11Console_Keyii_380
 	mov dword [esp], 0xffffffff
-	call Con_CycleAutoComplete
-	jmp Console_Key_90
-Console_Key_140:
+	call _Z21Con_CycleAutoCompletei
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_140:
 	mov dword [esp+0x4], _cstring_clear
 	mov [esp], ebx
-	call Cbuf_AddText
-	jmp Console_Key_90
-Console_Key_170:
+	call _Z12Cbuf_AddTextiPKc
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_170:
 	mov eax, [ebp-0x380]
 	test eax, eax
-	jz Console_Key_390
-Console_Key_200:
+	jz _Z11Console_Keyii_390
+_Z11Console_Keyii_200:
 	mov dword [esp], 0x1
-	call Con_CycleAutoComplete
+	call _Z21Con_CycleAutoCompletei
 	test al, al
-	jnz Console_Key_90
+	jnz _Z11Console_Keyii_90
 	mov eax, [historyLine]
 	cmp eax, [nextHistoryLine]
-	jz Console_Key_90
+	jz _Z11Console_Keyii_90
 	add eax, 0x1
 	mov [historyLine], eax
 	and eax, 0x8000001f
-	js Console_Key_400
-Console_Key_730:
+	js _Z11Console_Keyii_400
+_Z11Console_Keyii_730:
 	lea eax, [eax+eax*4]
 	lea edx, [eax*8]
 	sub edx, eax
@@ -2119,16 +2118,16 @@ Console_Key_730:
 	mov dword [esp+0x4], g_consoleField
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call Field_AdjustScroll
-	jmp Console_Key_90
-Console_Key_330:
+	call _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_330:
 	cmp dword [ebp-0x380], 0x1
 	sbb eax, eax
 	and eax, 0x2
 	sub eax, 0x1
 	mov [esp], eax
-	call Con_CycleAutoComplete
-Console_Key_370:
+	call _Z21Con_CycleAutoCompletei
+_Z11Console_Keyii_370:
 	mov byte [s_shouldCompleteCmd], 0x0
 	add esp, 0x3ac
 	pop ebx
@@ -2136,105 +2135,105 @@ Console_Key_370:
 	pop edi
 	pop ebp
 	ret
-Console_Key_190:
+_Z11Console_Keyii_190:
 	mov eax, [ebp-0x37c]
 	test eax, eax
-	jz Console_Key_410
-Console_Key_180:
+	jz _Z11Console_Keyii_410
+_Z11Console_Keyii_180:
 	mov eax, 0x1
-	jmp Console_Key_420
-Console_Key_110:
-	call CL_AllLocalClientsDisconnected
+	jmp _Z11Console_Keyii_420
+_Z11Console_Keyii_110:
+	call _Z30CL_AllLocalClientsDisconnectedv
 	test al, al
-	jnz Console_Key_430
-Console_Key_490:
+	jnz _Z11Console_Keyii_430
+_Z11Console_Keyii_490:
 	cmp byte [g_consoleField+0x18], 0x0
-	jz Console_Key_90
+	jz _Z11Console_Keyii_90
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], _cstring_rcon
 	mov dword [esp], g_consoleField+0x18
-	call Q_strncmp
+	call _Z9I_strncmpPKcS0_i
 	test eax, eax
-	jz Console_Key_440
+	jz _Z11Console_Keyii_440
 	mov dword [esp+0x4], _cstring_cmd_say_
 	mov [esp], ebx
-	call Cbuf_AddText
-Console_Key_500:
+	call _Z12Cbuf_AddTextiPKc
+_Z11Console_Keyii_500:
 	mov dword [esp+0x4], g_consoleField+0x18
-	jmp Console_Key_450
-Console_Key_80:
+	jmp _Z11Console_Keyii_450
+_Z11Console_Keyii_80:
 	sub eax, 0x1
 	or eax, 0xffffffe0
 	add eax, 0x1
-	jmp Console_Key_460
-Console_Key_340:
+	jmp _Z11Console_Keyii_460
+_Z11Console_Keyii_340:
 	mov eax, 0x1
-	jmp Console_Key_470
-Console_Key_250:
+	jmp _Z11Console_Keyii_470
+_Z11Console_Keyii_250:
 	mov edx, [ebp-0x37c]
 	test edx, edx
-	jz Console_Key_480
-	call Con_Top
-	jmp Console_Key_90
-Console_Key_430:
+	jz _Z11Console_Keyii_480
+	call _Z7Con_Topv
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_430:
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], _cstring_quit
 	mov dword [esp], g_consoleField+0x18
-	call Q_stricmpn
+	call _Z10I_strnicmpPKcS0_i
 	test eax, eax
-	jz Console_Key_490
+	jz _Z11Console_Keyii_490
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], _cstring_kill
 	mov dword [esp], g_consoleField+0x18
-	call Q_stricmpn
+	call _Z10I_strnicmpPKcS0_i
 	test eax, eax
-	jz Console_Key_490
-	jmp Console_Key_500
-Console_Key_130:
+	jz _Z11Console_Keyii_490
+	jmp _Z11Console_Keyii_500
+_Z11Console_Keyii_130:
 	sub eax, 0x1
 	or eax, 0xffffffe0
 	add eax, 0x1
-	jmp Console_Key_510
-Console_Key_280:
-	call Con_CommitToAutoComplete
-	jmp Console_Key_290
-Console_Key_350:
-	call Con_TokenizeInput
+	jmp _Z11Console_Keyii_510
+_Z11Console_Keyii_280:
+	call _Z24Con_CommitToAutoCompletev
+	jmp _Z11Console_Keyii_290
+_Z11Console_Keyii_350:
+	call _Z17Con_TokenizeInputv
 	mov esi, eax
 	mov [s_completionString], eax
 	mov dword [s_matchCount], 0x0
 	mov dword [s_prefixMatchCount], 0x0
 	mov byte [s_shortestMatch], 0x0
 	cmp byte [eax], 0x0
-	jz Console_Key_520
+	jz _Z11Console_Keyii_520
 	mov ebx, cmd_args
 	mov eax, [ebx]
 	cmp dword [ebx+eax*4+0x44], 0x1
-	jle Console_Key_530
+	jle _Z11Console_Keyii_530
 	mov [esp], esi
-	call Con_IsDvarCommand
+	call _Z17Con_IsDvarCommandPKc
 	test al, al
-	jnz Console_Key_540
-Console_Key_530:
+	jnz _Z11Console_Keyii_540
+_Z11Console_Keyii_530:
 	mov byte [ebp-0x372], 0x0
 	mov byte [ebp-0x351], 0x0
-Console_Key_1040:
+_Z11Console_Keyii_1040:
 	mov eax, con_matchPrefixOnly
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz Console_Key_550
+	jnz _Z11Console_Keyii_550
 	mov eax, con_ignoreMatchPrefixOnly
 	mov byte [eax], 0x0
 	mov dword [s_matchCount], 0x0
 	mov dword [s_prefixMatchCount], 0x0
 	mov byte [s_shortestMatch], 0x0
 	cmp byte [ebp-0x351], 0x0
-	jz Console_Key_560
-Console_Key_700:
+	jz _Z11Console_Keyii_560
+_Z11Console_Keyii_700:
 	mov dword [ebp-0x370], 0x0
-Console_Key_710:
-	mov dword [esp], FindMatches
-	call Cvar_ForEachName
+_Z11Console_Keyii_710:
+	mov dword [esp], _Z11FindMatchesPKc
+	call _Z16Dvar_ForEachNamePFvPKcE
 	cld
 	mov ecx, 0xffffffff
 	xor eax, eax
@@ -2244,31 +2243,31 @@ Console_Key_710:
 	sub ecx, 0x1
 	mov [ebp-0x36c], ecx
 	mov edx, [s_matchCount]
-Console_Key_670:
+_Z11Console_Keyii_670:
 	mov ebx, edx
 	test edx, edx
-	jz Console_Key_520
-Console_Key_690:
+	jz _Z11Console_Keyii_520
+_Z11Console_Keyii_690:
 	lea eax, [ebp-0x340]
 	mov dword [esp+0x8], 0x118
 	mov dword [esp+0x4], g_consoleField
 	mov [esp], eax
 	call memcpy
 	cmp byte [ebp-0x372], 0x0
-	jnz Console_Key_570
+	jnz _Z11Console_Keyii_570
 	sub ebx, 0x1
-	jz Console_Key_580
+	jz _Z11Console_Keyii_580
 	cmp byte [s_hasExactMatch], 0x0
-	jnz Console_Key_590
-Console_Key_860:
+	jnz _Z11Console_Keyii_590
+_Z11Console_Keyii_860:
 	mov byte [ebp-0x371], 0x0
-Console_Key_870:
+_Z11Console_Keyii_870:
 	mov dword [esp+0xc], s_shortestMatch
 	mov dword [esp+0x8], _cstring_s1
 	mov dword [esp+0x4], 0x100
 	mov dword [esp], g_consoleField+0x18
-	call Com_sprintf
-Console_Key_720:
+	call _Z11Com_sprintfPciPKcz
+_Z11Console_Keyii_720:
 	xor esi, esi
 	cld
 	mov ecx, 0xffffffff
@@ -2285,7 +2284,7 @@ Console_Key_720:
 	call strstr
 	mov edx, eax
 	test eax, eax
-	jz Console_Key_600
+	jz _Z11Console_Keyii_600
 	cld
 	mov ecx, 0xffffffff
 	mov edi, ebx
@@ -2296,20 +2295,20 @@ Console_Key_720:
 	mov [esp+0x8], ecx
 	mov dword [esp+0x4], 0x100
 	mov dword [esp], g_consoleField+0x18
-	call Q_strncat
-Console_Key_740:
+	call _Z9I_strncatPciPKc
+_Z11Console_Keyii_740:
 	cmp byte [ebp-0x371], 0x0
-	jz Console_Key_610
+	jz _Z11Console_Keyii_610
 	cmp byte [ebp-0x372], 0x0
-	jnz Console_Key_620
+	jnz _Z11Console_Keyii_620
 	mov ebx, cmd_args
 	mov eax, [ebx]
 	mov eax, [ebx+eax*4+0x44]
 	cmp eax, 0x1
-	jz Console_Key_630
+	jz _Z11Console_Keyii_630
 	cmp eax, 0x2
-	jz Console_Key_640
-Console_Key_620:
+	jz _Z11Console_Keyii_640
+_Z11Console_Keyii_620:
 	cld
 	mov ecx, 0xffffffff
 	xor eax, eax
@@ -2318,51 +2317,51 @@ Console_Key_620:
 	not ecx
 	sub ecx, 0x1
 	mov [g_consoleField], ecx
-Console_Key_840:
-	call Cmd_EndTokenizedString
+_Z11Console_Keyii_840:
+	call _Z22Cmd_EndTokenizedStringv
 	mov dword [esp+0x4], g_consoleField
 	mov eax, scrPlaceFull
 	mov [esp], eax
-	call Field_AdjustScroll
-	jmp Console_Key_370
-Console_Key_230:
-	call Con_PageUp
+	call _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t
+	jmp _Z11Console_Keyii_370
+_Z11Console_Keyii_230:
+	call _Z10Con_PageUpv
 	mov ebx, [ebp-0x37c]
 	test ebx, ebx
-	jz Console_Key_90
-	call Con_PageUp
-Console_Key_210:
-	call Con_PageUp
-	jmp Console_Key_90
-Console_Key_240:
-	call Con_PageDown
+	jz _Z11Console_Keyii_90
+	call _Z10Con_PageUpv
+_Z11Console_Keyii_210:
+	call _Z10Con_PageUpv
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_240:
+	call _Z12Con_PageDownv
 	mov ecx, [ebp-0x37c]
 	test ecx, ecx
-	jz Console_Key_90
-	call Con_PageDown
-Console_Key_220:
-	call Con_PageDown
-	jmp Console_Key_90
-Console_Key_360:
+	jz _Z11Console_Keyii_90
+	call _Z12Con_PageDownv
+_Z11Console_Keyii_220:
+	call _Z12Con_PageDownv
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_360:
 	mov dword [esp+0x4], 0xff
 	mov [esp], ebx
-	call PbClientCompleteCommand
-	jmp Console_Key_650
-Console_Key_520:
-	call Cmd_EndTokenizedString
-	jmp Console_Key_370
-Console_Key_260:
+	call _Z23PbClientCompleteCommandPci
+	jmp _Z11Console_Keyii_650
+_Z11Console_Keyii_520:
+	call _Z22Cmd_EndTokenizedStringv
+	jmp _Z11Console_Keyii_370
+_Z11Console_Keyii_260:
 	mov eax, [ebp-0x37c]
 	test eax, eax
-	jz Console_Key_480
-	call Con_Bottom
-	jmp Console_Key_90
-Console_Key_270:
-	call Con_CancelAutoComplete
+	jz _Z11Console_Keyii_480
+	call _Z10Con_Bottomv
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_270:
+	call _Z22Con_CancelAutoCompletev
 	test al, al
-	jz Console_Key_290
-	jmp Console_Key_90
-Console_Key_550:
+	jz _Z11Console_Keyii_290
+	jmp _Z11Console_Keyii_90
+_Z11Console_Keyii_550:
 	mov eax, con_ignoreMatchPrefixOnly
 	mov byte [eax], 0x1
 	mov dword [s_matchCount], 0x0
@@ -2371,11 +2370,11 @@ Console_Key_550:
 	movzx edx, byte [ebp-0x351]
 	xor dl, 0x1
 	mov [ebp-0x365], dl
-	jnz Console_Key_660
+	jnz _Z11Console_Keyii_660
 	mov dword [ebp-0x370], 0x0
-Console_Key_850:
-	mov dword [esp], FindMatches
-	call Cvar_ForEachName
+_Z11Console_Keyii_850:
+	mov dword [esp], _Z11FindMatchesPKc
+	call _Z16Dvar_ForEachNamePFvPKcE
 	mov ebx, 0xffffffff
 	cld
 	mov ecx, ebx
@@ -2388,18 +2387,18 @@ Console_Key_850:
 	mov edx, [s_matchCount]
 	mov eax, con_inputMaxMatchesShown
 	cmp edx, [eax]
-	jle Console_Key_670
+	jle _Z11Console_Keyii_670
 	mov eax, con_ignoreMatchPrefixOnly
 	mov byte [eax], 0x0
 	mov dword [s_matchCount], 0x0
 	mov dword [s_prefixMatchCount], 0x0
 	mov byte [s_shortestMatch], 0x0
 	cmp byte [ebp-0x365], 0x0
-	jnz Console_Key_680
+	jnz _Z11Console_Keyii_680
 	mov dword [ebp-0x370], 0x0
-Console_Key_890:
-	mov dword [esp], FindMatches
-	call Cvar_ForEachName
+_Z11Console_Keyii_890:
+	mov dword [esp], _Z11FindMatchesPKc
+	call _Z16Dvar_ForEachNamePFvPKcE
 	cld
 	mov ecx, 0xffffffff
 	mov edi, s_shortestMatch
@@ -2410,16 +2409,16 @@ Console_Key_890:
 	mov [ebp-0x36c], ecx
 	mov ebx, [s_matchCount]
 	test ebx, ebx
-	jnz Console_Key_690
+	jnz _Z11Console_Keyii_690
 	mov eax, con_ignoreMatchPrefixOnly
 	mov byte [eax], 0x1
 	mov dword [s_matchCount], 0x0
 	mov dword [s_prefixMatchCount], 0x0
 	mov byte [s_shortestMatch], 0x0
 	cmp byte [ebp-0x365], 0x0
-	jz Console_Key_700
-	mov dword [esp], FindMatches
-	call Cmd_ForEach
+	jz _Z11Console_Keyii_700
+	mov dword [esp], _Z11FindMatchesPKc
+	call _Z11Cmd_ForEachPFvPKcE
 	cld
 	mov ecx, 0xffffffff
 	mov edi, s_shortestMatch
@@ -2428,100 +2427,100 @@ Console_Key_890:
 	not ecx
 	sub ecx, 0x1
 	mov [ebp-0x370], ecx
-	jmp Console_Key_710
-Console_Key_570:
+	jmp _Z11Console_Keyii_710
+_Z11Console_Keyii_570:
 	mov dword [esp+0x10], s_shortestMatch
 	mov [esp+0xc], esi
 	mov dword [esp+0x8], _cstring_s_s
 	mov dword [esp+0x4], 0x100
 	mov dword [esp], g_consoleField+0x18
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	mov byte [ebp-0x371], 0x1
-	jmp Console_Key_720
-Console_Key_400:
+	jmp _Z11Console_Keyii_720
+_Z11Console_Keyii_400:
 	sub eax, 0x1
 	or eax, 0xffffffe0
 	add eax, 0x1
-	jmp Console_Key_730
-Console_Key_600:
+	jmp _Z11Console_Keyii_730
+_Z11Console_Keyii_600:
 	mov edx, cmd_args
 	mov eax, [edx]
 	cmp dword [edx+eax*4+0x44], 0x1
-	jle Console_Key_740
+	jle _Z11Console_Keyii_740
 	mov esi, 0x1
 	mov edi, 0x4
-Console_Key_810:
+_Z11Console_Keyii_810:
 	mov dword [esp+0x8], _cstring_space
 	mov dword [esp+0x4], 0x100
 	mov dword [esp], g_consoleField+0x18
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov edx, cmd_args
 	mov eax, [edx]
 	cmp esi, [edx+eax*4+0x44]
-	jl Console_Key_750
+	jl _Z11Console_Keyii_750
 	mov ebx, _cstring_null
-Console_Key_820:
+_Z11Console_Keyii_820:
 	movzx eax, byte [ebx]
 	test al, al
-	jz Console_Key_760
-Console_Key_780:
+	jz _Z11Console_Keyii_760
+_Z11Console_Keyii_780:
 	cmp al, 0x20
-	jz Console_Key_770
+	jz _Z11Console_Keyii_770
 	add ebx, 0x1
 	movzx eax, byte [ebx]
 	test al, al
-	jnz Console_Key_780
-Console_Key_760:
+	jnz _Z11Console_Keyii_780
+_Z11Console_Keyii_760:
 	mov eax, [edx]
 	cmp esi, [edx+eax*4+0x44]
-	jl Console_Key_790
+	jl _Z11Console_Keyii_790
 	mov eax, _cstring_null
-Console_Key_830:
+_Z11Console_Keyii_830:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x100
 	mov dword [esp], g_consoleField+0x18
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	cmp byte [ebx], 0x20
-	jz Console_Key_800
-Console_Key_880:
+	jz _Z11Console_Keyii_800
+_Z11Console_Keyii_880:
 	add esi, 0x1
 	add edi, 0x4
 	mov edx, cmd_args
 	mov eax, [edx]
 	cmp esi, [edx+eax*4+0x44]
-	jl Console_Key_810
-	jmp Console_Key_740
-Console_Key_750:
+	jl _Z11Console_Keyii_810
+	jmp _Z11Console_Keyii_740
+_Z11Console_Keyii_750:
 	mov eax, [edx+eax*4+0x64]
 	mov ebx, [eax+edi]
-	jmp Console_Key_820
-Console_Key_790:
+	jmp _Z11Console_Keyii_820
+_Z11Console_Keyii_790:
 	mov eax, [edx+eax*4+0x64]
 	mov eax, [eax+edi]
-	jmp Console_Key_830
-Console_Key_770:
+	jmp _Z11Console_Keyii_830
+_Z11Console_Keyii_770:
 	mov dword [esp+0x8], _cstring_
 	mov dword [esp+0x4], 0x100
 	mov dword [esp], g_consoleField+0x18
-	call Q_strncat
+	call _Z9I_strncatPciPKc
 	mov edx, cmd_args
-	jmp Console_Key_760
-Console_Key_610:
-	call Con_HasTooManyMatchesToShow
+	jmp _Z11Console_Keyii_760
+_Z11Console_Keyii_610:
+	call _Z27Con_HasTooManyMatchesToShowv
 	test al, al
-	jz Console_Key_840
+	jz _Z11Console_Keyii_840
 	mov dword [esp+0x8], g_consoleField+0x18
 	mov dword [esp+0x4], _cstring_s
 	mov dword [esp], 0x0
-	call Com_Printf
-	mov dword [esp], PrintMatches
-	call Cmd_ForEach
-	mov dword [esp], PrintMatches
-	call Cvar_ForEachName
-	jmp Console_Key_840
-Console_Key_660:
-	mov dword [esp], FindMatches
-	call Cmd_ForEach
+	call _Z10Com_PrintfiPKcz
+	mov dword [esp], _Z12PrintMatchesPKc
+	call _Z11Cmd_ForEachPFvPKcE
+	mov dword [esp], _Z12PrintMatchesPKc
+	call _Z16Dvar_ForEachNamePFvPKcE
+	jmp _Z11Console_Keyii_840
+_Z11Console_Keyii_660:
+	mov dword [esp], _Z11FindMatchesPKc
+	call _Z11Cmd_ForEachPFvPKcE
 	cld
 	mov ecx, 0xffffffff
 	mov edi, s_shortestMatch
@@ -2530,10 +2529,10 @@ Console_Key_660:
 	not ecx
 	sub ecx, 0x1
 	mov [ebp-0x370], ecx
-	jmp Console_Key_850
-Console_Key_560:
-	mov dword [esp], FindMatches
-	call Cmd_ForEach
+	jmp _Z11Console_Keyii_850
+_Z11Console_Keyii_560:
+	mov dword [esp], _Z11FindMatchesPKc
+	call _Z11Cmd_ForEachPFvPKcE
 	cld
 	mov ecx, 0xffffffff
 	mov edi, s_shortestMatch
@@ -2542,23 +2541,23 @@ Console_Key_560:
 	not ecx
 	sub ecx, 0x1
 	mov [ebp-0x370], ecx
-	jmp Console_Key_710
-Console_Key_590:
-	call Con_AnySpaceAfterCommand
+	jmp _Z11Console_Keyii_710
+_Z11Console_Keyii_590:
+	call _Z24Con_AnySpaceAfterCommandv
 	test al, al
-	jz Console_Key_860
-Console_Key_580:
+	jz _Z11Console_Keyii_860
+_Z11Console_Keyii_580:
 	mov byte [ebp-0x371], 0x1
-	jmp Console_Key_870
-Console_Key_800:
+	jmp _Z11Console_Keyii_870
+_Z11Console_Keyii_800:
 	mov dword [esp+0x8], _cstring_
 	mov dword [esp+0x4], 0x100
 	mov dword [esp], g_consoleField+0x18
-	call Q_strncat
-	jmp Console_Key_880
-Console_Key_680:
-	mov dword [esp], FindMatches
-	call Cmd_ForEach
+	call _Z9I_strncatPciPKc
+	jmp _Z11Console_Keyii_880
+_Z11Console_Keyii_680:
+	mov dword [esp], _Z11FindMatchesPKc
+	call _Z11Cmd_ForEachPFvPKcE
 	cld
 	mov ecx, ebx
 	mov edi, s_shortestMatch
@@ -2567,29 +2566,29 @@ Console_Key_680:
 	not ecx
 	sub ecx, 0x1
 	mov [ebp-0x370], ecx
-	jmp Console_Key_890
-Console_Key_640:
+	jmp _Z11Console_Keyii_890
+_Z11Console_Keyii_640:
 	mov edx, [ebp-0x36c]
 	cmp [ebp-0x370], edx
-	jz Console_Key_900
-	call Con_TokenizeInput
+	jz _Z11Console_Keyii_900
+	call _Z17Con_TokenizeInputv
 	mov [esp], eax
-	call Cvar_FindVar
+	call _Z12Dvar_FindVarPKc
 	mov edx, eax
 	cmp byte [eax+0xa], 0x6
-	jnz Console_Key_910
+	jnz _Z11Console_Keyii_910
 	mov eax, [ebx]
 	cmp dword [ebx+eax*4+0x44], 0x1
-	jle Console_Key_920
+	jle _Z11Console_Keyii_920
 	mov eax, [ebx+eax*4+0x64]
 	mov ebx, [eax+0x4]
-Console_Key_970:
+_Z11Console_Keyii_970:
 	cmp byte [ebx], 0x0
-	jnz Console_Key_930
-Console_Key_910:
-	call Cmd_EndTokenizedString
-	jmp Console_Key_620
-Console_Key_930:
+	jnz _Z11Console_Keyii_930
+_Z11Console_Keyii_910:
+	call _Z22Cmd_EndTokenizedStringv
+	jmp _Z11Console_Keyii_620
+_Z11Console_Keyii_930:
 	mov dword [esp+0x10], 0x100
 	lea eax, [ebp-0x11c]
 	mov [esp+0xc], eax
@@ -2598,7 +2597,7 @@ Console_Key_930:
 	mov [esp+0x4], eax
 	mov eax, [edx+0x40]
 	mov [esp], eax
-	call Con_AutoCompleteFromList
+	call _Z24Con_AutoCompleteFromListPPKcjS0_Pcj
 	mov edx, 0xffffffff
 	xor eax, eax
 	cld
@@ -2609,7 +2608,7 @@ Console_Key_930:
 	sub ecx, 0x1
 	mov [ebp-0x35c], ecx
 	cmp byte [ebp-0x11c], 0x0
-	jz Console_Key_910
+	jz _Z11Console_Keyii_910
 	mov ecx, edx
 	mov edi, g_consoleField+0x18
 	repne scasb
@@ -2617,9 +2616,9 @@ Console_Key_930:
 	mov edx, ecx
 	sub edx, 0x1
 	mov [ebp-0x358], edx
-	jnz Console_Key_940
+	jnz _Z11Console_Keyii_940
 	xor ebx, ebx
-Console_Key_1060:
+_Z11Console_Keyii_1060:
 	mov edx, ebx
 	sub edx, [ebp-0x35c]
 	mov eax, 0x100
@@ -2629,50 +2628,50 @@ Console_Key_1060:
 	mov [esp+0x4], eax
 	add edx, g_consoleField+0x18
 	mov [esp], edx
-	call Q_strncpyz
-	call Cmd_EndTokenizedString
-	jmp Console_Key_620
-Console_Key_630:
+	call _Z10I_strncpyzPcPKci
+	call _Z22Cmd_EndTokenizedStringv
+	jmp _Z11Console_Keyii_620
+_Z11Console_Keyii_630:
 	mov dword [esp+0x8], _cstring_space
 	mov dword [esp+0x4], 0x100
 	mov dword [esp], g_consoleField+0x18
-	call Q_strncat
-	jmp Console_Key_620
-Console_Key_900:
-	call Con_TokenizeInput
+	call _Z9I_strncatPciPKc
+	jmp _Z11Console_Keyii_620
+_Z11Console_Keyii_900:
+	call _Z17Con_TokenizeInputv
 	mov edx, eax
 	mov eax, [ebx]
 	cmp dword [ebx+eax*4+0x44], 0x1
-	jle Console_Key_950
+	jle _Z11Console_Keyii_950
 	mov eax, [ebx+eax*4+0x64]
 	mov esi, [eax+0x4]
-Console_Key_980:
+_Z11Console_Keyii_980:
 	cmp byte [esi], 0x0
-	jz Console_Key_910
+	jz _Z11Console_Keyii_910
 	mov dword [esp+0x8], 0xa
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call Cmd_GetAutoCompleteFileList
+	call _Z27Cmd_GetAutoCompleteFileListPKcPii
 	mov ebx, eax
-	call Cmd_EndTokenizedString
+	call _Z22Cmd_EndTokenizedStringv
 	mov eax, [ebp-0x1c]
 	test eax, eax
-	jz Console_Key_620
+	jz _Z11Console_Keyii_620
 	mov dword [esp+0x10], 0x100
 	lea edx, [ebp-0x11c]
 	mov [esp+0xc], edx
 	mov [esp+0x8], esi
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call Con_AutoCompleteFromList
+	call _Z24Con_AutoCompleteFromListPPKcjS0_Pcj
 	mov dword [esp+0x4], 0xa
 	mov [esp], ebx
 	call FS_FreeFileList
 	lea eax, [ebp-0x11c]
 	mov [esp+0x4], eax
 	mov [esp], eax
-	call Com_StripExtension
+	call _Z18Com_StripExtensionPKcPc
 	mov edx, 0xffffffff
 	xor eax, eax
 	cld
@@ -2683,7 +2682,7 @@ Console_Key_980:
 	sub ecx, 0x1
 	mov [ebp-0x364], ecx
 	cmp byte [ebp-0x11c], 0x0
-	jz Console_Key_620
+	jz _Z11Console_Keyii_620
 	mov ecx, edx
 	mov edi, g_consoleField+0x18
 	repne scasb
@@ -2691,9 +2690,9 @@ Console_Key_980:
 	mov eax, ecx
 	sub eax, 0x1
 	mov [ebp-0x360], eax
-	jnz Console_Key_960
+	jnz _Z11Console_Keyii_960
 	xor ebx, ebx
-Console_Key_1000:
+_Z11Console_Keyii_1000:
 	mov edx, ebx
 	sub edx, [ebp-0x364]
 	mov eax, 0x100
@@ -2703,15 +2702,15 @@ Console_Key_1000:
 	mov [esp+0x4], eax
 	add edx, g_consoleField+0x18
 	mov [esp], edx
-	call Q_strncpyz
-	jmp Console_Key_620
-Console_Key_920:
+	call _Z10I_strncpyzPcPKci
+	jmp _Z11Console_Keyii_620
+_Z11Console_Keyii_920:
 	mov ebx, _cstring_null
-	jmp Console_Key_970
-Console_Key_950:
+	jmp _Z11Console_Keyii_970
+_Z11Console_Keyii_950:
 	mov esi, _cstring_null
-	jmp Console_Key_980
-Console_Key_960:
+	jmp _Z11Console_Keyii_980
+_Z11Console_Keyii_960:
 	lea eax, [ecx+0xf]
 	lea esi, [eax+g_consoleField+0x8]
 	mov ebx, [ebp-0x360]
@@ -2719,38 +2718,38 @@ Console_Key_960:
 	sub ecx, eax
 	add ecx, 0xe
 	mov [ebp-0x388], ecx
-Console_Key_1020:
+_Z11Console_Keyii_1020:
 	lea edi, [ebx-0x1]
 	mov edx, [ebp-0x388]
 	movsx eax, byte [edx+esi]
 	test eax, 0xffffff80
-	jnz Console_Key_990
+	jnz _Z11Console_Keyii_990
 	mov edx, [0xd5cc084]
 	mov eax, [edx+eax*4+0x34]
 	shr eax, 0xe
 	and eax, 0x1
-Console_Key_1110:
+_Z11Console_Keyii_1110:
 	test eax, eax
-	jz Console_Key_1000
+	jz _Z11Console_Keyii_1000
 	add dword [ebp-0x350], 0x1
 	sub esi, 0x1
 	mov edx, [ebp-0x350]
 	cmp [ebp-0x360], edx
-	jz Console_Key_1010
+	jz _Z11Console_Keyii_1010
 	mov ebx, edi
-	jmp Console_Key_1020
-Console_Key_540:
+	jmp _Z11Console_Keyii_1020
+_Z11Console_Keyii_540:
 	mov byte [ebp-0x372], 0x1
 	mov byte [ebp-0x351], 0x1
 	mov edx, [ebx]
 	cmp dword [ebx+edx*4+0x44], 0x1
-	jle Console_Key_1030
+	jle _Z11Console_Keyii_1030
 	mov eax, [ebx+edx*4+0x64]
 	mov eax, [eax+0x4]
-Console_Key_1100:
+_Z11Console_Keyii_1100:
 	mov [s_completionString], eax
-	jmp Console_Key_1040
-Console_Key_940:
+	jmp _Z11Console_Keyii_1040
+_Z11Console_Keyii_940:
 	lea eax, [ecx+0xf]
 	lea esi, [eax+g_consoleField+0x8]
 	mov ebx, [ebp-0x358]
@@ -2758,56 +2757,56 @@ Console_Key_940:
 	sub ecx, eax
 	add ecx, 0xe
 	mov [ebp-0x38c], ecx
-	jmp Console_Key_1050
-Console_Key_1080:
+	jmp _Z11Console_Keyii_1050
+_Z11Console_Keyii_1080:
 	mov edx, [0xd5cc084]
 	mov eax, [edx+eax*4+0x34]
 	shr eax, 0xe
 	and eax, 0x1
-Console_Key_1090:
+_Z11Console_Keyii_1090:
 	test eax, eax
-	jz Console_Key_1060
+	jz _Z11Console_Keyii_1060
 	add dword [ebp-0x34c], 0x1
 	sub esi, 0x1
 	mov eax, [ebp-0x34c]
 	cmp [ebp-0x358], eax
-	jz Console_Key_1070
+	jz _Z11Console_Keyii_1070
 	mov ebx, edi
-Console_Key_1050:
+_Z11Console_Keyii_1050:
 	lea edi, [ebx-0x1]
 	mov edx, [ebp-0x38c]
 	movsx eax, byte [edx+esi]
 	test eax, 0xffffff80
-	jz Console_Key_1080
+	jz _Z11Console_Keyii_1080
 	mov dword [esp+0x4], 0x4000
 	mov [esp], eax
 	call __maskrune
 	test eax, eax
 	setnz al
 	movzx eax, al
-	jmp Console_Key_1090
-Console_Key_1030:
+	jmp _Z11Console_Keyii_1090
+_Z11Console_Keyii_1030:
 	mov eax, _cstring_null
-	jmp Console_Key_1100
-Console_Key_1070:
+	jmp _Z11Console_Keyii_1100
+_Z11Console_Keyii_1070:
 	mov ebx, edi
-	jmp Console_Key_1060
-Console_Key_1010:
+	jmp _Z11Console_Keyii_1060
+_Z11Console_Keyii_1010:
 	mov ebx, edi
-	jmp Console_Key_1000
-Console_Key_990:
+	jmp _Z11Console_Keyii_1000
+_Z11Console_Keyii_990:
 	mov dword [esp+0x4], 0x4000
 	mov [esp], eax
 	call __maskrune
 	test eax, eax
 	setnz al
 	movzx eax, al
-	jmp Console_Key_1110
+	jmp _Z11Console_Keyii_1110
 	nop
 
 
 ;CL_CharEvent(int, int)
-CL_CharEvent:
+_Z12CL_CharEventii:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -2816,55 +2815,55 @@ CL_CharEvent:
 	mov esi, [ebp+0x8]
 	mov ebx, [ebp+0xc]
 	cmp ebx, 0x7e
-	jz CL_CharEvent_10
+	jz _Z12CL_CharEventii_10
 	call _ZN11MacFeatures19GetKeyboardLanguageEv
 	sub eax, 0x1
-	jz CL_CharEvent_20
+	jz _Z12CL_CharEventii_20
 	cmp ebx, 0x60
-	jz CL_CharEvent_10
-CL_CharEvent_20:
+	jz _Z12CL_CharEventii_10
+_Z12CL_CharEventii_20:
 	mov edx, clientUIActives
 	mov eax, [edx+0x4]
 	test al, 0x1
-	jnz CL_CharEvent_30
+	jnz _Z12CL_CharEventii_30
 	test al, 0x20
-	jnz CL_CharEvent_40
+	jnz _Z12CL_CharEventii_40
 	test al, 0x10
-	jnz CL_CharEvent_50
+	jnz _Z12CL_CharEventii_50
 	mov eax, [edx+0xc]
 	test eax, eax
-	jz CL_CharEvent_60
-CL_CharEvent_10:
+	jz _Z12CL_CharEventii_60
+_Z12CL_CharEventii_10:
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-CL_CharEvent_30:
+_Z12CL_CharEventii_30:
 	cmp ebx, 0x8
-	jz CL_CharEvent_70
-CL_CharEvent_60:
+	jz _Z12CL_CharEventii_70
+_Z12CL_CharEventii_60:
 	mov edx, scrPlaceFull
 	mov [esp], ebx
 	mov ecx, g_consoleField
 	mov eax, esi
-	call Field_CharEvent
+	call _Z15Field_CharEventiPK15ScreenPlacementP7field_ti
 	test al, al
-	jz CL_CharEvent_10
+	jz _Z12CL_CharEventii_10
 	mov dword [ebp+0x8], 0x1
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
-	jmp Con_AllowAutoCompleteCycling
-CL_CharEvent_50:
+	jmp _Z28Con_AllowAutoCompleteCyclingh
+_Z12CL_CharEventii_50:
 	mov dword [esp+0x8], 0x1
 	or bh, 0x4
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call UI_KeyEvent
-	jmp CL_CharEvent_10
-CL_CharEvent_40:
+	call _Z11UI_KeyEventiii
+	jmp _Z12CL_CharEventii_10
+_Z12CL_CharEventii_40:
 	lea ecx, [esi+esi*2]
 	lea ecx, [esi+ecx*4]
 	lea ecx, [esi+ecx*8]
@@ -2876,18 +2875,18 @@ CL_CharEvent_40:
 	add edx, scrPlaceView
 	mov [esp], ebx
 	mov eax, esi
-	call Field_CharEvent
-	jmp CL_CharEvent_10
-CL_CharEvent_70:
-	call Con_CancelAutoComplete
+	call _Z15Field_CharEventiPK15ScreenPlacementP7field_ti
+	jmp _Z12CL_CharEventii_10
+_Z12CL_CharEventii_70:
+	call _Z22Con_CancelAutoCompletev
 	test al, al
-	jz CL_CharEvent_60
-	jmp CL_CharEvent_10
+	jz _Z12CL_CharEventii_60
+	jmp _Z12CL_CharEventii_10
 	nop
 
 
 ;Key_Shutdown()
-Key_Shutdown:
+_Z12Key_Shutdownv:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -2895,17 +2894,17 @@ Key_Shutdown:
 	sub esp, 0x10
 	mov ebx, playerKeys
 	mov esi, playerKeys+0xc00
-Key_Shutdown_20:
+_Z12Key_Shutdownv_20:
 	mov eax, [ebx+0x12c]
 	test eax, eax
-	jz Key_Shutdown_10
+	jz _Z12Key_Shutdownv_10
 	mov [esp], eax
 	call FreeStringInternal
 	mov dword [ebx+0x12c], 0x0
-Key_Shutdown_10:
+_Z12Key_Shutdownv_10:
 	add ebx, 0xc
 	cmp esi, ebx
-	jnz Key_Shutdown_20
+	jnz _Z12Key_Shutdownv_20
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -2914,7 +2913,7 @@ Key_Shutdown_10:
 
 
 ;Key_Unbind_f()
-Key_Unbind_f:
+_Z12Key_Unbind_fv:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -2922,35 +2921,35 @@ Key_Unbind_f:
 	mov ebx, cmd_args
 	mov eax, [ebx]
 	cmp dword [ebx+eax*4+0x44], 0x2
-	jz Key_Unbind_f_10
+	jz _Z12Key_Unbind_fv_10
 	mov dword [esp+0x4], _cstring_unbind_key__remo
 	mov dword [esp], 0x0
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-Key_Unbind_f_10:
+_Z12Key_Unbind_fv_10:
 	mov eax, [ebx+eax*4+0x64]
 	mov eax, [eax+0x4]
-	call Key_StringToKeynum
+	call _Z18Key_StringToKeynumPKc
 	cmp eax, 0xffffffff
-	jnz Key_Unbind_f_20
+	jnz _Z12Key_Unbind_fv_20
 	mov eax, [ebx]
 	cmp dword [ebx+eax*4+0x44], 0x1
-	jle Key_Unbind_f_30
+	jle _Z12Key_Unbind_fv_30
 	mov eax, [ebx+eax*4+0x64]
 	mov eax, [eax+0x4]
-Key_Unbind_f_40:
+_Z12Key_Unbind_fv_40:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s_isnt_a_valid_k
 	mov dword [esp], 0x0
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-Key_Unbind_f_20:
+_Z12Key_Unbind_fv_20:
 	mov dword [esp+0x4], _cstring_null
 	lea eax, [eax+eax*2]
 	lea eax, [eax*4+playerKeys+0x12c]
@@ -2962,13 +2961,13 @@ Key_Unbind_f_20:
 	pop ebx
 	pop ebp
 	ret
-Key_Unbind_f_30:
+_Z12Key_Unbind_fv_30:
 	mov eax, _cstring_null
-	jmp Key_Unbind_f_40
+	jmp _Z12Key_Unbind_fv_40
 
 
 ;Key_AddCatcher(int, int)
-Key_AddCatcher:
+_Z14Key_AddCatcherii:
 	push ebp
 	mov ebp, esp
 	mov edx, clientUIActives
@@ -2980,7 +2979,7 @@ Key_AddCatcher:
 
 
 ;Key_Bindlist_f()
-Key_Bindlist_f:
+_Z14Key_Bindlist_fv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2989,31 +2988,31 @@ Key_Bindlist_f:
 	sub esp, 0x1c
 	xor esi, esi
 	mov edi, playerKeys
-	jmp Key_Bindlist_f_10
-Key_Bindlist_f_30:
+	jmp _Z14Key_Bindlist_fv_10
+_Z14Key_Bindlist_fv_30:
 	add esi, 0x1
 	add edi, 0xc
 	cmp esi, 0x100
-	jz Key_Bindlist_f_20
-Key_Bindlist_f_10:
+	jz _Z14Key_Bindlist_fv_20
+_Z14Key_Bindlist_fv_10:
 	mov ebx, [edi+0x12c]
 	test ebx, ebx
-	jz Key_Bindlist_f_30
+	jz _Z14Key_Bindlist_fv_30
 	cmp byte [ebx], 0x0
-	jz Key_Bindlist_f_30
+	jz _Z14Key_Bindlist_fv_30
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call Key_KeynumToString
+	call _Z18Key_KeynumToStringii
 	mov [esp+0xc], ebx
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s_s1
 	mov dword [esp], 0x0
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	add esi, 0x1
 	add edi, 0xc
 	cmp esi, 0x100
-	jnz Key_Bindlist_f_10
-Key_Bindlist_f_20:
+	jnz _Z14Key_Bindlist_fv_10
+_Z14Key_Bindlist_fv_20:
 	add esp, 0x1c
 	pop ebx
 	pop esi
@@ -3024,7 +3023,7 @@ Key_Bindlist_f_20:
 
 
 ;Key_GetBinding(int, int)
-Key_GetBinding:
+_Z14Key_GetBindingii:
 	push ebp
 	mov ebp, esp
 	mov edx, [ebp+0x8]
@@ -3041,14 +3040,14 @@ Key_GetBinding:
 
 
 ;Key_SetBinding(int, int, char const*)
-Key_SetBinding:
+_Z14Key_SetBindingiiPKc:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov ecx, [ebp+0x8]
 	mov eax, [ebp+0xc]
 	cmp eax, 0xffffffff
-	jz Key_SetBinding_10
+	jz _Z14Key_SetBindingiiPKc_10
 	mov edx, [ebp+0x10]
 	mov [esp+0x4], edx
 	lea edx, [eax+eax*2]
@@ -3062,37 +3061,37 @@ Key_SetBinding:
 	call ReplaceStringInternal
 	mov eax, dvar_modifiedFlags
 	or dword [eax], 0x1
-Key_SetBinding_10:
+_Z14Key_SetBindingiiPKc_10:
 	leave
 	ret
 	nop
 
 
 ;Key_SetCatcher(int, int)
-Key_SetCatcher:
+_Z14Key_SetCatcherii:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0xc]
 	mov edx, clientUIActives
 	test byte [edx+0x4], 0x1
-	jz Key_SetCatcher_10
+	jz _Z14Key_SetCatcherii_10
 	or eax, 0x1
 	mov [edx+0x4], eax
-Key_SetCatcher_30:
+_Z14Key_SetCatcherii_30:
 	test byte [edx+0x4], 0x10
-	jnz Key_SetCatcher_20
+	jnz _Z14Key_SetCatcherii_20
 	mov byte [edx+0x8], 0x0
-Key_SetCatcher_20:
+_Z14Key_SetCatcherii_20:
 	pop ebp
 	ret
-Key_SetCatcher_10:
+_Z14Key_SetCatcherii_10:
 	mov [edx+0x4], eax
-	jmp Key_SetCatcher_30
+	jmp _Z14Key_SetCatcherii_30
 	nop
 
 
 ;Key_ClearStates(int)
-Key_ClearStates:
+_Z15Key_ClearStatesi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3108,30 +3107,30 @@ Key_ClearStates:
 	mov dword [eax+playerKeys+0x120], 0x0
 	lea ebx, [eax+playerKeys+0x124]
 	xor esi, esi
-	jmp Key_ClearStates_10
-Key_ClearStates_30:
+	jmp _Z15Key_ClearStatesi_10
+_Z15Key_ClearStatesi_30:
 	mov dword [ebx], 0x0
 	mov dword [ebx+0x4], 0x0
 	add esi, 0x1
 	add ebx, 0xc
 	cmp esi, 0x100
-	jz Key_ClearStates_20
-Key_ClearStates_10:
+	jz _Z15Key_ClearStatesi_20
+_Z15Key_ClearStatesi_10:
 	mov ecx, [ebx]
 	test ecx, ecx
-	jz Key_ClearStates_30
+	jz _Z15Key_ClearStatesi_30
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x0
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call CL_KeyEvent
+	call _Z11CL_KeyEventiiij
 	mov dword [ebx], 0x0
 	mov dword [ebx+0x4], 0x0
 	add esi, 0x1
 	add ebx, 0xc
 	cmp esi, 0x100
-	jnz Key_ClearStates_10
-Key_ClearStates_20:
+	jnz _Z15Key_ClearStatesi_10
+_Z15Key_ClearStatesi_20:
 	add esp, 0x1c
 	pop ebx
 	pop esi
@@ -3142,7 +3141,7 @@ Key_ClearStates_20:
 
 
 ;Key_Unbindall_f()
-Key_Unbindall_f:
+_Z15Key_Unbindall_fv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3152,23 +3151,23 @@ Key_Unbindall_f:
 	mov esi, playerKeys+0x124
 	xor ebx, ebx
 	mov edi, playerKeys+0x12c
-Key_Unbindall_f_20:
+_Z15Key_Unbindall_fv_20:
 	mov eax, [esi+0x8]
 	test eax, eax
-	jz Key_Unbindall_f_10
+	jz _Z15Key_Unbindall_fv_10
 	cmp ebx, 0xffffffff
-	jz Key_Unbindall_f_10
+	jz _Z15Key_Unbindall_fv_10
 	mov dword [esp+0x4], _cstring_null
 	mov [esp], edi
 	call ReplaceStringInternal
 	mov eax, dvar_modifiedFlags
 	or dword [eax], 0x1
-Key_Unbindall_f_10:
+_Z15Key_Unbindall_fv_10:
 	add ebx, 0x1
 	add edi, 0xc
 	add esi, 0xc
 	cmp ebx, 0x100
-	jnz Key_Unbindall_f_20
+	jnz _Z15Key_Unbindall_fv_20
 	add esp, 0x1c
 	pop ebx
 	pop esi
@@ -3178,7 +3177,7 @@ Key_Unbindall_f_10:
 
 
 ;CL_GetKeyBinding(int, char const*, char (*) [128])
-CL_GetKeyBinding:
+_Z16CL_GetKeyBindingiPKcPA128_c:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3200,35 +3199,35 @@ CL_GetKeyBinding:
 	lea ebx, [eax*8+playerKeys]
 	xor edi, edi
 	xor esi, esi
-	jmp CL_GetKeyBinding_10
-CL_GetKeyBinding_30:
+	jmp _Z16CL_GetKeyBindingiPKcPA128_c_10
+_Z16CL_GetKeyBindingiPKcPA128_c_30:
 	add esi, 0x1
 	add ebx, 0xc
 	cmp esi, 0x100
-	jz CL_GetKeyBinding_20
-CL_GetKeyBinding_10:
+	jz _Z16CL_GetKeyBindingiPKcPA128_c_20
+_Z16CL_GetKeyBindingiPKcPA128_c_10:
 	mov eax, [ebx+0x12c]
 	test eax, eax
-	jz CL_GetKeyBinding_30
+	jz _Z16CL_GetKeyBindingiPKcPA128_c_30
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz CL_GetKeyBinding_30
+	jnz _Z16CL_GetKeyBindingiPKcPA128_c_30
 	mov [ebp+edi*4-0x20], esi
 	add edi, 0x1
 	cmp edi, 0x2
-	jnz CL_GetKeyBinding_30
-CL_GetKeyBinding_50:
+	jnz _Z16CL_GetKeyBindingiPKcPA128_c_30
+_Z16CL_GetKeyBindingiPKcPA128_c_50:
 	mov dword [esp+0x8], 0x80
 	mov edx, [ebp+0x10]
 	mov [esp+0x4], edx
 	mov eax, [ebp-0x20]
 	mov [esp], eax
-	call Key_KeynumToStringBuf
+	call _Z21Key_KeynumToStringBufiPci
 	cmp edi, 0x2
-	jz CL_GetKeyBinding_40
+	jz _Z16CL_GetKeyBindingiPKcPA128_c_40
 	mov eax, edi
 	add esp, 0x3c
 	pop ebx
@@ -3236,13 +3235,13 @@ CL_GetKeyBinding_50:
 	pop edi
 	pop ebp
 	ret
-CL_GetKeyBinding_40:
+_Z16CL_GetKeyBindingiPKcPA128_c_40:
 	mov dword [esp+0x8], 0x80
 	mov eax, [ebp-0x2c]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call Key_KeynumToStringBuf
+	call _Z21Key_KeynumToStringBufiPci
 	mov eax, edi
 	add esp, 0x3c
 	pop ebx
@@ -3250,13 +3249,13 @@ CL_GetKeyBinding_40:
 	pop edi
 	pop ebp
 	ret
-CL_GetKeyBinding_20:
+_Z16CL_GetKeyBindingiPKcPA128_c_20:
 	test edi, edi
-	jnz CL_GetKeyBinding_50
+	jnz _Z16CL_GetKeyBindingiPKcPA128_c_50
 	mov eax, [ebp+0x10]
 	mov dword [eax], 0x5f59454b
 	mov dword [eax+0x4], 0x4f424e55
-	mov dword [eax+0x8], g_assetEntryPool+0xdd15
+	mov dword [eax+0x8], 0x444e55
 	mov eax, edi
 	add esp, 0x3c
 	pop ebx
@@ -3268,7 +3267,7 @@ CL_GetKeyBinding_20:
 
 
 ;Key_RemoveCatcher(int, int)
-Key_RemoveCatcher:
+_Z17Key_RemoveCatcherii:
 	push ebp
 	mov ebp, esp
 	mov edx, clientUIActives
@@ -3276,15 +3275,15 @@ Key_RemoveCatcher:
 	and eax, [ebp+0xc]
 	mov [edx+0x4], eax
 	test al, 0x10
-	jnz Key_RemoveCatcher_10
+	jnz _Z17Key_RemoveCatcherii_10
 	mov byte [edx+0x8], 0x0
-Key_RemoveCatcher_10:
+_Z17Key_RemoveCatcherii_10:
 	pop ebp
 	ret
 
 
 ;Key_WriteBindings(int, int)
-Key_WriteBindings:
+_Z17Key_WriteBindingsii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3299,21 +3298,21 @@ Key_WriteBindings:
 	lea ebx, [eax*8+playerKeys+0x124]
 	xor edi, edi
 	xor esi, esi
-	jmp Key_WriteBindings_10
-Key_WriteBindings_30:
+	jmp _Z17Key_WriteBindingsii_10
+_Z17Key_WriteBindingsii_30:
 	add esi, 0x1
 	add ebx, 0xc
 	cmp esi, 0x100
-	jz Key_WriteBindings_20
-Key_WriteBindings_10:
+	jz _Z17Key_WriteBindingsii_20
+_Z17Key_WriteBindingsii_10:
 	mov eax, [ebx+0x8]
 	test eax, eax
-	jz Key_WriteBindings_30
+	jz _Z17Key_WriteBindingsii_30
 	cmp byte [eax], 0x0
-	jz Key_WriteBindings_30
+	jz _Z17Key_WriteBindingsii_30
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call Key_KeynumToString
+	call _Z18Key_KeynumToStringii
 	mov [esp+0xc], eax
 	mov dword [esp+0x8], _cstring_bind_s_
 	mov eax, 0x1ffc
@@ -3322,84 +3321,84 @@ Key_WriteBindings_10:
 	lea eax, [ebp-0x2018]
 	add eax, edi
 	mov [esp], eax
-	call Com_sprintf
+	call _Z11Com_sprintfPciPKcz
 	test eax, eax
-	js Key_WriteBindings_40
+	js _Z17Key_WriteBindingsii_40
 	add eax, edi
 	mov ecx, [ebx+0x8]
 	movzx edx, byte [ecx]
 	test dl, dl
-	jz Key_WriteBindings_50
-Key_WriteBindings_70:
+	jz _Z17Key_WriteBindingsii_50
+_Z17Key_WriteBindingsii_70:
 	cmp eax, 0x1ffb
-	jg Key_WriteBindings_50
+	jg _Z17Key_WriteBindingsii_50
 	cmp dl, 0x22
-	jz Key_WriteBindings_60
-Key_WriteBindings_80:
+	jz _Z17Key_WriteBindingsii_60
+_Z17Key_WriteBindingsii_80:
 	mov [ebp+eax-0x2018], dl
 	add eax, 0x1
 	add ecx, 0x1
 	movzx edx, byte [ecx]
 	test dl, dl
-	jnz Key_WriteBindings_70
-Key_WriteBindings_50:
+	jnz _Z17Key_WriteBindingsii_70
+_Z17Key_WriteBindingsii_50:
 	mov byte [ebp+eax-0x2018], 0x22
 	mov byte [ebp+eax-0x2017], 0xa
 	lea edi, [eax+0x2]
 	add esi, 0x1
 	add ebx, 0xc
 	cmp esi, 0x100
-	jnz Key_WriteBindings_10
-Key_WriteBindings_20:
+	jnz _Z17Key_WriteBindingsii_10
+_Z17Key_WriteBindingsii_20:
 	mov byte [ebp+edi-0x2018], 0x0
-Key_WriteBindings_40:
+_Z17Key_WriteBindingsii_40:
 	lea eax, [ebp-0x2018]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_s2
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call FS_Printf
+	call _Z9FS_PrintfiPKcz
 	add esp, 0x201c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Key_WriteBindings_60:
+_Z17Key_WriteBindingsii_60:
 	mov byte [ebp+eax-0x2018], 0x5c
 	add eax, 0x1
 	movzx edx, byte [ecx]
-	jmp Key_WriteBindings_80
+	jmp _Z17Key_WriteBindingsii_80
 
 
 ;CL_InitKeyCommands()
-CL_InitKeyCommands:
+_Z18CL_InitKeyCommandsv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov dword [esp+0x8], _ZZ18CL_InitKeyCommandsvE14Key_Bind_f_VAR
-	mov dword [esp+0x4], Key_Bind_f
+	mov dword [esp+0x4], _Z10Key_Bind_fv
 	mov dword [esp], _cstring_bind
-	call Cmd_AddCommand
+	call _Z22Cmd_AddCommandInternalPKcPFvvEP14cmd_function_s
 	mov dword [esp+0x8], _ZZ18CL_InitKeyCommandsvE16Key_Unbind_f_VAR
-	mov dword [esp+0x4], Key_Unbind_f
+	mov dword [esp+0x4], _Z12Key_Unbind_fv
 	mov dword [esp], _cstring_unbind
-	call Cmd_AddCommand
+	call _Z22Cmd_AddCommandInternalPKcPFvvEP14cmd_function_s
 	mov dword [esp+0x8], _ZZ18CL_InitKeyCommandsvE19Key_Unbindall_f_VAR
-	mov dword [esp+0x4], Key_Unbindall_f
+	mov dword [esp+0x4], _Z15Key_Unbindall_fv
 	mov dword [esp], _cstring_unbindall
-	call Cmd_AddCommand
+	call _Z22Cmd_AddCommandInternalPKcPFvvEP14cmd_function_s
 	mov dword [esp+0x8], _ZZ18CL_InitKeyCommandsvE18Key_Bindlist_f_VAR
-	mov dword [esp+0x4], Key_Bindlist_f
+	mov dword [esp+0x4], _Z14Key_Bindlist_fv
 	mov dword [esp], _cstring_bindlist
-	call Cmd_AddCommand
+	call _Z22Cmd_AddCommandInternalPKcPFvvEP14cmd_function_s
 	leave
 	ret
 	add [eax], al
 
 
 ;Field_AdjustScroll(ScreenPlacement const*, field_t*)
-Field_AdjustScroll:
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3414,17 +3413,17 @@ Field_AdjustScroll:
 	movss [ebp-0x1c], xmm1
 	mov edx, [edx+0x14]
 	test edx, edx
-	jz Field_AdjustScroll_10
+	jz _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_10
 	mulss xmm0, [eax+0x10]
 	mulss xmm1, [eax+0x14]
 	movss [ebp-0x1c], xmm1
 	mov eax, cls
 	mov eax, [eax+0x2dbff8]
 	mov [ebp-0x3c], eax
-Field_AdjustScroll_140:
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_140:
 	movss [esp+0x4], xmm0
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0x20]
 	mov esi, [ebp+0xc]
 	add esi, 0x18
@@ -3432,30 +3431,30 @@ Field_AdjustScroll_140:
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [ebp-0x20]
 	movss xmm1, dword [ebp-0x1c]
 	ucomiss xmm1, xmm0
-	ja Field_AdjustScroll_20
+	ja _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_20
 	ucomiss xmm1, [_float_0_00000000]
-	jbe Field_AdjustScroll_30
+	jbe _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_30
 	mov eax, [ebp+0xc]
 	mov ebx, [eax+0x4]
 	mov eax, ebx
-Field_AdjustScroll_60:
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_60:
 	test ebx, ebx
-	jle Field_AdjustScroll_40
+	jle _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_40
 	mov edi, [ebp-0x3c]
 	mov [esp+0x8], edi
 	mov dword [esp+0x4], 0x0
 	lea eax, [esi+eax-0x1]
 	mov [esp], eax
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [ebp-0x20]
 	ucomiss xmm0, [ebp-0x1c]
-	jae Field_AdjustScroll_50
+	jae _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_50
 	mov edx, [ebp+0xc]
 	mov eax, [edx+0x4]
 	sub eax, 0x1
@@ -3463,14 +3462,14 @@ Field_AdjustScroll_60:
 	mov [edx+0x4], eax
 	movss xmm1, dword [ebp-0x1c]
 	ucomiss xmm1, xmm0
-	ja Field_AdjustScroll_60
-Field_AdjustScroll_40:
+	ja _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_60
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_40:
 	mov edi, [ebp-0x3c]
 	mov [esp+0x8], edi
 	mov dword [esp+0x4], 0x0
 	lea eax, [esi+ebx]
 	mov [esp], eax
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	mov ebx, eax
 	mov [esp+0x8], edi
 	mov dword [esp+0x4], 0x0
@@ -3478,7 +3477,7 @@ Field_AdjustScroll_40:
 	mov edx, [ebp+0xc]
 	add eax, [edx]
 	mov [esp], eax
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	cvtsi2ss xmm1, ebx
 	mulss xmm1, [ebp-0x20]
 	cvtsi2ss xmm0, eax
@@ -3486,36 +3485,36 @@ Field_AdjustScroll_40:
 	subss xmm1, xmm0
 	pxor xmm0, xmm0
 	ucomiss xmm0, xmm1
-	ja Field_AdjustScroll_70
+	ja _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_70
 	ucomiss xmm1, [ebp-0x1c]
-	jb Field_AdjustScroll_80
+	jb _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_80
 	mov edx, [ebp+0xc]
 	mov ebx, [edx+0x4]
 	add ebx, 0x1
 	mov [edx+0x4], ebx
-	jmp Field_AdjustScroll_40
-Field_AdjustScroll_30:
+	jmp _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_40
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_30:
 	mov edx, [ebp+0xc]
 	mov ebx, [edx+0x4]
-	jmp Field_AdjustScroll_40
-Field_AdjustScroll_70:
+	jmp _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_40
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_70:
 	mov eax, [ebp+0xc]
 	mov ebx, [eax+0x4]
 	test ebx, ebx
-	jz Field_AdjustScroll_90
+	jz _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_90
 	sub ebx, 0x1
 	mov [eax+0x4], ebx
-	jmp Field_AdjustScroll_40
-Field_AdjustScroll_90:
+	jmp _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_40
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_90:
 	ucomiss xmm0, [ebp-0x1c]
-	jae Field_AdjustScroll_40
+	jae _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_40
 	mov edx, [ebp+0xc]
-	jmp Field_AdjustScroll_100
-Field_AdjustScroll_80:
+	jmp _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_100
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_80:
 	mov edi, [ebp+0xc]
 	mov ebx, [edi+0x4]
 	mov edx, edi
-Field_AdjustScroll_100:
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_100:
 	lea edi, [esi+ebx]
 	mov [ebp-0x28], edi
 	cld
@@ -3530,51 +3529,51 @@ Field_AdjustScroll_100:
 	mov [edx+0x8], eax
 	movss xmm1, dword [ebp-0x1c]
 	ucomiss xmm1, xmm0
-	jbe Field_AdjustScroll_110
+	jbe _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_110
 	cmp [ebp-0x24], eax
-	jg Field_AdjustScroll_120
-Field_AdjustScroll_110:
+	jg _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_120
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_110:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Field_AdjustScroll_130:
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_130:
 	mov edx, [ebp+0xc]
 	mov eax, [edx+0x8]
 	add eax, 0x1
 	mov [edx+0x8], eax
 	ucomiss xmm1, xmm0
-	jbe Field_AdjustScroll_110
+	jbe _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_110
 	cmp eax, [ebp-0x24]
-	jge Field_AdjustScroll_110
+	jge _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_110
 	mov edx, [ebp+0xc]
 	mov ebx, [edx+0x4]
-Field_AdjustScroll_120:
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_120:
 	mov edi, [ebp-0x3c]
 	mov [esp+0x8], edi
 	add eax, 0x1
 	mov [esp+0x4], eax
 	lea eax, [esi+ebx]
 	mov [esp], eax
-	call R_TextWidth
+	call _Z11R_TextWidthPKciP6Font_s
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [ebp-0x20]
 	movss xmm1, dword [ebp-0x1c]
 	ucomiss xmm1, xmm0
-	ja Field_AdjustScroll_130
+	ja _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_130
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Field_AdjustScroll_20:
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_20:
 	mov eax, [ebp+0xc]
 	mov dword [eax+0x4], 0x0
 	mov [esp], esi
-	call SEH_PrintStrlen
+	call _Z15SEH_PrintStrlenPKc
 	mov edx, [ebp+0xc]
 	mov [edx+0x8], eax
 	add esp, 0x4c
@@ -3583,24 +3582,24 @@ Field_AdjustScroll_20:
 	pop edi
 	pop ebp
 	ret
-Field_AdjustScroll_10:
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_10:
 	movss [esp+0x8], xmm0
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
 	movss [ebp-0x38], xmm0
-	call UI_GetFontHandle
+	call _Z16UI_GetFontHandlePK15ScreenPlacementif
 	mov [ebp-0x3c], eax
 	movss xmm0, dword [ebp-0x38]
-	jmp Field_AdjustScroll_140
-Field_AdjustScroll_50:
+	jmp _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_140
+_Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_50:
 	mov eax, [ebp+0xc]
 	mov ebx, [eax+0x4]
-	jmp Field_AdjustScroll_40
+	jmp _Z18Field_AdjustScrollPK15ScreenPlacementP7field_t_40
 	nop
 
 
 ;Key_IsCommandBound(int, char const*)
-Key_IsCommandBound:
+_Z18Key_IsCommandBoundiPKc:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3617,27 +3616,27 @@ Key_IsCommandBound:
 	lea ebx, [eax*8+playerKeys]
 	xor edi, edi
 	xor esi, esi
-	jmp Key_IsCommandBound_10
-Key_IsCommandBound_30:
+	jmp _Z18Key_IsCommandBoundiPKc_10
+_Z18Key_IsCommandBoundiPKc_30:
 	add esi, 0x1
 	add ebx, 0xc
 	cmp esi, 0x100
-	jz Key_IsCommandBound_20
-Key_IsCommandBound_10:
+	jz _Z18Key_IsCommandBoundiPKc_20
+_Z18Key_IsCommandBoundiPKc_10:
 	mov eax, [ebx+0x12c]
 	test eax, eax
-	jz Key_IsCommandBound_30
+	jz _Z18Key_IsCommandBoundiPKc_30
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz Key_IsCommandBound_30
+	jnz _Z18Key_IsCommandBoundiPKc_30
 	mov [ebp+edi*4-0x20], esi
 	add edi, 0x1
 	cmp edi, 0x2
-	jnz Key_IsCommandBound_30
-Key_IsCommandBound_20:
+	jnz _Z18Key_IsCommandBoundiPKc_30
+_Z18Key_IsCommandBoundiPKc_20:
 	xor eax, eax
 	test edi, edi
 	setg al
@@ -3651,7 +3650,7 @@ Key_IsCommandBound_20:
 
 
 ;Key_KeynumToString(int, int)
-Key_KeynumToString:
+_Z18Key_KeynumToStringii:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -3660,58 +3659,58 @@ Key_KeynumToString:
 	mov ebx, [ebp+0x8]
 	mov esi, [ebp+0xc]
 	cmp ebx, 0xffffffff
-	jz Key_KeynumToString_10
+	jz _Z18Key_KeynumToStringii_10
 	cmp ebx, 0xff
-	ja Key_KeynumToString_20
+	ja _Z18Key_KeynumToStringii_20
 	test esi, esi
-	jnz Key_KeynumToString_30
-Key_KeynumToString_120:
+	jnz _Z18Key_KeynumToStringii_30
+_Z18Key_KeynumToStringii_120:
 	lea eax, [ebx-0x21]
 	cmp eax, 0x5d
-	ja Key_KeynumToString_40
+	ja _Z18Key_KeynumToStringii_40
 	cmp ebx, 0x22
-	jz Key_KeynumToString_40
+	jz _Z18Key_KeynumToStringii_40
 	mov [esp], ebx
-	call __toupper
+	call toupper
 	mov [_ZZ18Key_KeynumToStringiiE7tinystr], al
 	mov byte [_ZZ18Key_KeynumToStringiiE7tinystr+0x1], 0x0
 	cmp ebx, 0x3b
-	jz Key_KeynumToString_50
+	jz _Z18Key_KeynumToStringii_50
 	mov ecx, _ZZ18Key_KeynumToStringiiE7tinystr
-Key_KeynumToString_80:
+_Z18Key_KeynumToStringii_80:
 	mov eax, ecx
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-Key_KeynumToString_40:
+_Z18Key_KeynumToStringii_40:
 	test esi, esi
-	jnz Key_KeynumToString_60
-Key_KeynumToString_130:
+	jnz _Z18Key_KeynumToStringii_60
+_Z18Key_KeynumToStringii_130:
 	mov eax, keynames
-Key_KeynumToString_100:
+_Z18Key_KeynumToStringii_100:
 	mov ecx, [eax]
 	test ecx, ecx
-	jz Key_KeynumToString_70
+	jz _Z18Key_KeynumToStringii_70
 	cmp ebx, [eax+0x4]
-	jz Key_KeynumToString_80
+	jz _Z18Key_KeynumToStringii_80
 	lea edx, [eax+0x8]
-Key_KeynumToString_90:
+_Z18Key_KeynumToStringii_90:
 	mov ecx, [edx]
 	test ecx, ecx
-	jz Key_KeynumToString_70
+	jz _Z18Key_KeynumToStringii_70
 	mov eax, [edx+0x4]
 	add edx, 0x8
 	cmp ebx, eax
-	jnz Key_KeynumToString_90
+	jnz _Z18Key_KeynumToStringii_90
 	mov eax, ecx
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-Key_KeynumToString_20:
+_Z18Key_KeynumToStringii_20:
 	mov ecx, _cstring_out_of_range
 	mov eax, ecx
 	add esp, 0x10
@@ -3719,27 +3718,27 @@ Key_KeynumToString_20:
 	pop esi
 	pop ebp
 	ret
-Key_KeynumToString_60:
+_Z18Key_KeynumToStringii_60:
 	mov eax, keynames_localized
-	jmp Key_KeynumToString_100
-Key_KeynumToString_30:
-	call SEH_GetCurrentLanguage
+	jmp _Z18Key_KeynumToStringii_100
+_Z18Key_KeynumToStringii_30:
+	call _Z22SEH_GetCurrentLanguagev
 	sub eax, 0x1
-	jz Key_KeynumToString_110
-Key_KeynumToString_180:
-	call SEH_GetCurrentLanguage
+	jz _Z18Key_KeynumToStringii_110
+_Z18Key_KeynumToStringii_180:
+	call _Z22SEH_GetCurrentLanguagev
 	sub eax, 0x1
-	jnz Key_KeynumToString_120
+	jnz _Z18Key_KeynumToStringii_120
 	cmp ebx, 0x82
-	jnz Key_KeynumToString_120
+	jnz _Z18Key_KeynumToStringii_120
 	mov ecx, [frenchNumberKeysMap+0x18]
-	jmp Key_KeynumToString_80
-Key_KeynumToString_50:
+	jmp _Z18Key_KeynumToStringii_80
+_Z18Key_KeynumToStringii_50:
 	test esi, esi
-	jz Key_KeynumToString_130
+	jz _Z18Key_KeynumToStringii_130
 	mov ecx, _ZZ18Key_KeynumToStringiiE7tinystr
-	jmp Key_KeynumToString_80
-Key_KeynumToString_10:
+	jmp _Z18Key_KeynumToStringii_80
+_Z18Key_KeynumToStringii_10:
 	mov ecx, _cstring_key_not_found
 	mov eax, ecx
 	add esp, 0x10
@@ -3747,7 +3746,7 @@ Key_KeynumToString_10:
 	pop esi
 	pop ebp
 	ret
-Key_KeynumToString_70:
+_Z18Key_KeynumToStringii_70:
 	mov edx, ebx
 	sar edx, 0x4
 	mov eax, ebx
@@ -3755,14 +3754,14 @@ Key_KeynumToString_70:
 	mov byte [_ZZ18Key_KeynumToStringiiE7tinystr], 0x30
 	mov byte [_ZZ18Key_KeynumToStringiiE7tinystr+0x1], 0x78
 	cmp edx, 0x9
-	jle Key_KeynumToString_140
+	jle _Z18Key_KeynumToStringii_140
 	add dl, 0x57
-Key_KeynumToString_160:
+_Z18Key_KeynumToStringii_160:
 	mov [_ZZ18Key_KeynumToStringiiE7tinystr+0x2], dl
 	cmp eax, 0x9
-	jle Key_KeynumToString_150
+	jle _Z18Key_KeynumToStringii_150
 	add al, 0x57
-Key_KeynumToString_170:
+_Z18Key_KeynumToStringii_170:
 	mov [_ZZ18Key_KeynumToStringiiE7tinystr+0x3], al
 	mov byte [_ZZ18Key_KeynumToStringiiE7tinystr+0x4], 0x0
 	mov ecx, _ZZ18Key_KeynumToStringiiE7tinystr
@@ -3772,24 +3771,24 @@ Key_KeynumToString_170:
 	pop esi
 	pop ebp
 	ret
-Key_KeynumToString_140:
+_Z18Key_KeynumToStringii_140:
 	add dl, 0x30
-	jmp Key_KeynumToString_160
-Key_KeynumToString_150:
+	jmp _Z18Key_KeynumToStringii_160
+_Z18Key_KeynumToStringii_150:
 	add al, 0x30
-	jmp Key_KeynumToString_170
-Key_KeynumToString_110:
+	jmp _Z18Key_KeynumToStringii_170
+_Z18Key_KeynumToStringii_110:
 	cmp ebx, 0x2f
-	jle Key_KeynumToString_180
+	jle _Z18Key_KeynumToStringii_180
 	cmp ebx, 0x39
-	jg Key_KeynumToString_180
+	jg _Z18Key_KeynumToStringii_180
 	mov ecx, [ebx*4+snd_drawInfoStrings+0xc]
-	jmp Key_KeynumToString_80
+	jmp _Z18Key_KeynumToStringii_80
 	nop
 
 
 ;Key_IsCatcherActive(int, int)
-Key_IsCatcherActive:
+_Z19Key_IsCatcherActiveii:
 	push ebp
 	mov ebp, esp
 	mov eax, clientUIActives
@@ -3802,7 +3801,7 @@ Key_IsCatcherActive:
 
 
 ;Key_GetOverstrikeMode(int)
-Key_GetOverstrikeMode:
+_Z21Key_GetOverstrikeModei:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -3817,7 +3816,7 @@ Key_GetOverstrikeMode:
 
 
 ;Key_SetOverstrikeMode(int, int)
-Key_SetOverstrikeMode:
+_Z21Key_SetOverstrikeModeii:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -3832,7 +3831,7 @@ Key_SetOverstrikeMode:
 
 
 ;Field_DrawTextOverride(int, field_t const*, int, int, int, int, char const*, int, int)
-Field_DrawTextOverride:
+_Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3847,7 +3846,7 @@ Field_DrawTextOverride:
 	add esi, scrPlaceView
 	mov edi, [edx+0x14]
 	test edi, edi
-	jz Field_DrawTextOverride_10
+	jz _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_10
 	mov eax, cls
 	mov edi, [eax+0x2dbff8]
 	lea eax, [ebx+ebx*2]
@@ -3856,16 +3855,16 @@ Field_DrawTextOverride:
 	lea eax, [ebx+eax*4]
 	mov ebx, [eax*8+playerKeys+0x11c]
 	test ebx, ebx
-	jz Field_DrawTextOverride_20
+	jz _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_20
 	mov dword [ebp-0x20], 0x0
 	movss xmm1, dword [_float_1_00000000]
 	movaps xmm0, xmm1
 	mov ebx, 0x5f
-Field_DrawTextOverride_30:
+_Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_30:
 	mov [esp], edi
 	movss [ebp-0x38], xmm0
 	movss [ebp-0x48], xmm1
-	call R_TextHeight
+	call _Z12R_TextHeightP6Font_s
 	mov [esp+0x34], ebx
 	mov edx, [ebp+0x28]
 	mov [esp+0x30], edx
@@ -3895,63 +3894,63 @@ Field_DrawTextOverride_30:
 	mov eax, [ebp+0x20]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call CL_DrawTextWithCursor
+	call _Z21CL_DrawTextWithCursorPK15ScreenPlacementPKciP6Font_sffiiffPKfiic
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-Field_DrawTextOverride_20:
+_Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_20:
 	mov dword [ebp-0x20], 0x0
 	movss xmm1, dword [_float_1_00000000]
 	movaps xmm0, xmm1
 	mov ebx, 0x7c
-	jmp Field_DrawTextOverride_30
-Field_DrawTextOverride_10:
+	jmp _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_30
+_Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_10:
 	movss xmm0, dword [edx+0x10]
 	divss xmm0, dword [_float_48_00000000]
 	movss [esp+0x8], xmm0
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
 	movss [ebp-0x38], xmm0
-	call UI_GetFontHandle
+	call _Z16UI_GetFontHandlePK15ScreenPlacementif
 	mov edi, eax
 	movss xmm0, dword [ebp-0x38]
 	movss [esp+0x4], xmm0
 	mov [esp], eax
-	call R_NormalizedTextScale
+	call _Z21R_NormalizedTextScaleP6Font_sf
 	fstp dword [ebp-0x1c]
 	cmp dword [ebp+0x1c], 0x5
-	jz Field_DrawTextOverride_40
+	jz _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_40
 	movss xmm1, dword [ebp-0x1c]
 	movaps xmm0, xmm1
-Field_DrawTextOverride_60:
+_Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_60:
 	lea eax, [ebx+ebx*2]
 	lea eax, [ebx+eax*4]
 	lea eax, [ebx+eax*8]
 	lea eax, [ebx+eax*4]
 	mov ecx, [eax*8+playerKeys+0x11c]
 	test ecx, ecx
-	jz Field_DrawTextOverride_50
+	jz _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_50
 	mov dword [ebp-0x20], 0x3
 	mov ebx, 0x5f
-	jmp Field_DrawTextOverride_30
-Field_DrawTextOverride_50:
+	jmp _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_30
+_Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_50:
 	mov dword [ebp-0x20], 0x3
 	mov ebx, 0x7c
-	jmp Field_DrawTextOverride_30
-Field_DrawTextOverride_40:
+	jmp _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_30
+_Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_40:
 	movss xmm0, dword [ebp-0x1c]
 	mulss xmm0, [esi]
 	movss xmm1, dword [ebp-0x1c]
 	mulss xmm1, [esi+0x4]
-	jmp Field_DrawTextOverride_60
+	jmp _Z22Field_DrawTextOverrideiPK7field_tiiiiPKcii_60
 	nop
 
 
 ;Key_GetCommandAssignment(int, char const*, int*)
-Key_GetCommandAssignment:
+_Z24Key_GetCommandAssignmentiPKcPi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -3969,28 +3968,28 @@ Key_GetCommandAssignment:
 	lea ebx, [eax*8+playerKeys]
 	xor edi, edi
 	xor esi, esi
-	jmp Key_GetCommandAssignment_10
-Key_GetCommandAssignment_30:
+	jmp _Z24Key_GetCommandAssignmentiPKcPi_10
+_Z24Key_GetCommandAssignmentiPKcPi_30:
 	add esi, 0x1
 	add ebx, 0xc
 	cmp esi, 0x100
-	jz Key_GetCommandAssignment_20
-Key_GetCommandAssignment_10:
+	jz _Z24Key_GetCommandAssignmentiPKcPi_20
+_Z24Key_GetCommandAssignmentiPKcPi_10:
 	mov eax, [ebx+0x12c]
 	test eax, eax
-	jz Key_GetCommandAssignment_30
+	jz _Z24Key_GetCommandAssignmentiPKcPi_30
 	mov edx, [ebp+0xc]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz Key_GetCommandAssignment_30
+	jnz _Z24Key_GetCommandAssignmentiPKcPi_30
 	mov eax, [ebp+0x10]
 	mov [eax+edi*4], esi
 	add edi, 0x1
 	cmp edi, 0x2
-	jnz Key_GetCommandAssignment_30
-Key_GetCommandAssignment_20:
+	jnz _Z24Key_GetCommandAssignmentiPKcPi_30
+_Z24Key_GetCommandAssignmentiPKcPi_20:
 	mov eax, edi
 	add esp, 0x1c
 	pop ebx
@@ -4001,7 +4000,7 @@ Key_GetCommandAssignment_20:
 
 
 ;PbMaxKeys()
-PbMaxKeys:
+_Z9PbMaxKeysv:
 	push ebp
 	mov ebp, esp
 	mov eax, 0x100

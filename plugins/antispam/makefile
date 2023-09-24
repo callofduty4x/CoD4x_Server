@@ -22,12 +22,10 @@ endif
 all: antispam_plugin.cpp
 	$(CPP) $(CFLAGS) -c *.cpp
 	$(CPP) $(LFLAGS) -o $(TARGET_NAME).$(EXT) *.o $(LIBS)
-	
-	#$(CC) -m32 -Wall -O1 -g -mtune=core2 -c *.c
-	#$(CC) -m32 -g -shared -static-libgcc -static-libstdc++ -L.. -o nehoscreenshotuploader.dll *.o -lcom_plugin
-	#$(CC) -m32 -Wall -O1 -g -fvisibility=hidden -mtune=core2 -c *.c
-	#$(CC) -m32 -g -shared -o nehoscreenshotuploader.so *.o
-
 		
 clean:
+ifeq ($(OS),Windows_NT)
+	del *.o
+else
 	rm *.o
+endif

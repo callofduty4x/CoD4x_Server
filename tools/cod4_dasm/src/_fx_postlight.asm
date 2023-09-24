@@ -1,22 +1,22 @@
 ;Imports of fx_postlight:
-	extern R_ReserveCodeMeshIndices
-	extern R_ReserveCodeMeshVerts
-	extern R_ReserveCodeMeshArgs
-	extern R_GetCodeMeshVerts
-	extern R_GetCodeMeshArgs
-	extern Vec3NormalizeTo
-	extern PerpendicularVector
+	extern _Z24R_ReserveCodeMeshIndicesiPP16r_double_index_t
+	extern _Z22R_ReserveCodeMeshVertsiPt
+	extern _Z21R_ReserveCodeMeshArgsiPj
+	extern _Z18R_GetCodeMeshVertst
+	extern _Z17R_GetCodeMeshArgsj
+	extern _Z15Vec3NormalizeToPKfPf
+	extern _Z19PerpendicularVectorPKfPf
 	extern sinf
 	extern cosf
-	extern R_AddCodeMeshDrawSurf
+	extern _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
 
 ;Exports of fx_postlight:
 	global _GLOBAL__I__Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem
 	global g_postLightInfo
-	global FX_PostLight_Add
-	global FX_PostLight_Begin
-	global FX_PostLight_GetInfo
-	global FX_PostLight_GenerateVerts
+	global _Z16FX_PostLight_AddP11FxPostLight
+	global _Z18FX_PostLight_Beginv
+	global _Z20FX_PostLight_GetInfov
+	global _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem
 
 
 SECTION .text
@@ -29,21 +29,21 @@ _GLOBAL__I__Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -313,14 +313,14 @@ __static_initialization_and_destruction_0_10:
 
 
 ;FX_PostLight_Add(FxPostLight*)
-FX_PostLight_Add:
+_Z16FX_PostLight_AddP11FxPostLight:
 	push ebp
 	mov ebp, esp
 	push ebx
 	mov ecx, [ebp+0x8]
 	mov ebx, [g_postLightInfo+0xd80]
 	cmp ebx, 0x60
-	jz FX_PostLight_Add_10
+	jz _Z16FX_PostLight_AddP11FxPostLight_10
 	lea edx, [ebx+ebx*8]
 	shl edx, 0x2
 	mov eax, [ecx]
@@ -343,7 +343,7 @@ FX_PostLight_Add:
 	mov [edx+g_postLightInfo+0x20], eax
 	lea eax, [ebx+0x1]
 	mov [g_postLightInfo+0xd80], eax
-FX_PostLight_Add_10:
+_Z16FX_PostLight_AddP11FxPostLight_10:
 	pop ebx
 	pop ebp
 	ret
@@ -351,7 +351,7 @@ FX_PostLight_Add_10:
 
 
 ;FX_PostLight_Begin()
-FX_PostLight_Begin:
+_Z18FX_PostLight_Beginv:
 	push ebp
 	mov ebp, esp
 	mov dword [g_postLightInfo+0xd80], 0x0
@@ -361,7 +361,7 @@ FX_PostLight_Begin:
 
 
 ;FX_PostLight_GetInfo()
-FX_PostLight_GetInfo:
+_Z20FX_PostLight_GetInfov:
 	push ebp
 	mov ebp, esp
 	mov eax, g_postLightInfo
@@ -370,7 +370,7 @@ FX_PostLight_GetInfo:
 
 
 ;FX_PostLight_GenerateVerts(FxPostLightInfo*, FxSystem*)
-FX_PostLight_GenerateVerts:
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -387,21 +387,21 @@ FX_PostLight_GenerateVerts:
 	mov eax, [ebp+0x8]
 	mov edx, [eax+0xd80]
 	test edx, edx
-	jz FX_PostLight_GenerateVerts_10
+	jz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_10
 	mov dword [ebp-0x84], 0x0
 	mov [ebp-0x88], eax
 	mov edx, eax
-	jmp FX_PostLight_GenerateVerts_20
-FX_PostLight_GenerateVerts_40:
+	jmp _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_20
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_40:
 	add dword [ebp-0x84], 0x1
 	add dword [ebp-0x88], 0x24
 	mov eax, [ebp-0x84]
 	mov ecx, [ebp+0x8]
 	cmp eax, [ecx+0xd80]
-	jz FX_PostLight_GenerateVerts_10
-FX_PostLight_GenerateVerts_110:
+	jz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_10
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_110:
 	mov edx, [ebp-0x88]
-FX_PostLight_GenerateVerts_20:
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_20:
 	movss xmm2, dword [edx+0xc]
 	subss xmm2, [edx]
 	movss [ebp-0x30], xmm2
@@ -418,34 +418,34 @@ FX_PostLight_GenerateVerts_20:
 	addss xmm0, xmm1
 	movss [ebp-0x80], xmm0
 	ucomiss xmm0, [_float_0_00010000]
-	jp FX_PostLight_GenerateVerts_30
-	jb FX_PostLight_GenerateVerts_40
-FX_PostLight_GenerateVerts_30:
+	jp _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_30
+	jb _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_40
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_30:
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x54
-	call R_ReserveCodeMeshIndices
+	call _Z24R_ReserveCodeMeshIndicesiPP16r_double_index_t
 	test al, al
-	jz FX_PostLight_GenerateVerts_10
+	jz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_10
 	lea eax, [ebp-0x1a]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x10
-	call R_ReserveCodeMeshVerts
+	call _Z22R_ReserveCodeMeshVertsiPt
 	test al, al
-	jz FX_PostLight_GenerateVerts_10
+	jz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_10
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x2
-	call R_ReserveCodeMeshArgs
+	call _Z21R_ReserveCodeMeshArgsiPj
 	test al, al
-	jz FX_PostLight_GenerateVerts_10
+	jz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_10
 	movzx eax, word [ebp-0x1a]
 	mov [esp], eax
-	call R_GetCodeMeshVerts
+	call _Z18R_GetCodeMeshVertst
 	mov edi, eax
 	mov eax, [ebp-0x24]
 	mov [esp], eax
-	call R_GetCodeMeshArgs
+	call _Z17R_GetCodeMeshArgsj
 	mov ecx, [ebp-0x88]
 	movss xmm2, dword [ecx+0x4]
 	subss xmm2, [ebp-0x70]
@@ -476,12 +476,12 @@ FX_PostLight_GenerateVerts_30:
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0x30]
 	mov [esp], eax
-	call Vec3NormalizeTo
+	call _Z15Vec3NormalizeToPKfPf
 	fstp st0
 	lea eax, [ebp-0x48]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call PerpendicularVector
+	call _Z19PerpendicularVectorPKfPf
 	movss xmm2, dword [ebp-0x38]
 	movss xmm1, dword [ebp-0x40]
 	movss xmm4, dword [ebp-0x34]
@@ -512,7 +512,7 @@ FX_PostLight_GenerateVerts_30:
 	lea esi, [edi+0x114]
 	mov ebx, edi
 	xor edi, edi
-FX_PostLight_GenerateVerts_50:
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_50:
 	cvtsi2ss xmm0, edi
 	addss xmm0, xmm0
 	mulss xmm0, [_float_3_14159274]
@@ -588,14 +588,14 @@ FX_PostLight_GenerateVerts_50:
 	add edi, 0x1
 	add esi, 0x20
 	cmp edi, 0x8
-	jnz FX_PostLight_GenerateVerts_50
+	jnz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_50
 	mov ebx, [ebp-0x20]
 	lea ecx, [ebx+0x6]
 	mov [ebp-0x54], ecx
 	lea edi, [ebx+0xa]
 	mov dword [ebp-0x4c], 0x0
-	jmp FX_PostLight_GenerateVerts_60
-FX_PostLight_GenerateVerts_80:
+	jmp _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_60
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_80:
 	mov edx, eax
 	lea eax, [esi+edx]
 	mov [ebx+0x2], ax
@@ -615,24 +615,24 @@ FX_PostLight_GenerateVerts_80:
 	mov [ebp-0x54], ecx
 	add edi, 0xc
 	cmp dword [ebp-0x4c], 0x8
-	jz FX_PostLight_GenerateVerts_70
-FX_PostLight_GenerateVerts_60:
+	jz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_70
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_60:
 	add dword [ebp-0x4c], 0x1
 	movzx ecx, word [ebp-0x4c]
 	sub ecx, 0x1
 	movzx esi, word [ebp-0x1a]
 	mov eax, [ebp-0x4c]
 	and eax, 0x80000007
-	jns FX_PostLight_GenerateVerts_80
+	jns _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_80
 	sub eax, 0x1
 	or eax, 0xfffffff8
 	add eax, 0x1
-	jmp FX_PostLight_GenerateVerts_80
-FX_PostLight_GenerateVerts_70:
+	jmp _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_80
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_70:
 	lea edi, [ebx+0x6]
 	lea esi, [ebx+0xa]
 	mov dword [ebp-0x50], 0x0
-FX_PostLight_GenerateVerts_90:
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_90:
 	movzx ecx, word [ebp-0x50]
 	mov eax, ecx
 	add ax, [ebp-0x1a]
@@ -653,11 +653,11 @@ FX_PostLight_GenerateVerts_90:
 	add edi, 0xc
 	add esi, 0xc
 	cmp dword [ebp-0x50], 0x6
-	jnz FX_PostLight_GenerateVerts_90
+	jnz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_90
 	lea edi, [ebx+0x6]
 	lea esi, [ebx+0xa]
 	mov dword [ebp-0x7c], 0x0
-FX_PostLight_GenerateVerts_100:
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_100:
 	movzx eax, word [ebp-0x1a]
 	movzx ecx, word [ebp-0x7c]
 	lea edx, [eax+ecx+0x9]
@@ -679,7 +679,7 @@ FX_PostLight_GenerateVerts_100:
 	add edi, 0xc
 	add esi, 0xc
 	cmp dword [ebp-0x7c], 0x6
-	jnz FX_PostLight_GenerateVerts_100
+	jnz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_100
 	mov dword [esp+0x14], _cstring_postlight
 	mov dword [esp+0x10], 0x2
 	mov eax, [ebp-0x24]
@@ -690,14 +690,14 @@ FX_PostLight_GenerateVerts_100:
 	mov edx, [ebp-0x88]
 	mov eax, [edx+0x20]
 	mov [esp], eax
-	call R_AddCodeMeshDrawSurf
+	call _Z21R_AddCodeMeshDrawSurfP8MaterialP16r_double_index_tjjjPKc
 	add dword [ebp-0x84], 0x1
 	add dword [ebp-0x88], 0x24
 	mov eax, [ebp-0x84]
 	mov ecx, [ebp+0x8]
 	cmp eax, [ecx+0xd80]
-	jnz FX_PostLight_GenerateVerts_110
-FX_PostLight_GenerateVerts_10:
+	jnz _Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_110
+_Z26FX_PostLight_GenerateVertsP15FxPostLightInfoP8FxSystem_10:
 	add esp, 0xcc
 	pop ebx
 	pop esi
@@ -744,7 +744,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x80000000, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of fx_postlight:
@@ -781,7 +781,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 g_postLightInfo: resb 0xe00
 
 

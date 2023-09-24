@@ -1,35 +1,35 @@
 ;Imports of cg_weapons:
-	extern XAnimSetGoalWeight
-	extern DObjGetTree
-	extern XAnimSetTime
-	extern Hunk_AllocXAnimClient
-	extern XAnimCreateAnims
-	extern XAnimBlend
-	extern BG_CreateXAnim
-	extern XAnimCreateTree
-	extern Com_Error
-	extern XAnimIsLooped
+	extern _Z18XAnimSetGoalWeightP6DObj_sjfffjji
+	extern _Z11DObjGetTreePK6DObj_s
+	extern _Z12XAnimSetTimeP11XAnimTree_sjf
+	extern _Z21Hunk_AllocXAnimClienti
+	extern _Z16XAnimCreateAnimsPKciPFPviE
+	extern _Z10XAnimBlendP7XAnim_sjPKcjjj
+	extern _Z14BG_CreateXAnimP7XAnim_sjPKc
+	extern _Z15XAnimCreateTreeP7XAnim_sPFPviE
+	extern _Z9Com_Error11errorParm_tPKcz
+	extern _Z13XAnimIsLoopedPK7XAnim_sj
 	extern cmd_args
 	extern atoi
-	extern Com_Printf
-	extern Com_Memset
-	extern CG_LocationalTrace
-	extern Trace_GetEntityHitId
+	extern _Z10Com_PrintfiPKcz
+	extern _Z10Com_MemsetPvii
+	extern _Z18CG_LocationalTraceP7trace_tPKfS2_ii
+	extern _Z20Trace_GetEntityHitIdPK7trace_t
 	extern cg_entitiesArray
 	extern cg_weaponsArray
-	extern BG_GetWeaponDef
-	extern Com_SafeClientDObjFree
+	extern _Z15BG_GetWeaponDefj
+	extern _Z22Com_SafeClientDObjFreeii
 	extern scr_const
 	extern overrideNVGModelWithKnife
-	extern Com_ClientDObjCreate
-	extern DObjSetHidePartBits
-	extern DObjUpdateClientInfo
-	extern XAnimGetAnims
+	extern _Z20Com_ClientDObjCreateP11DObjModel_stP11XAnimTree_sii
+	extern _Z19DObjSetHidePartBitsP6DObj_sPKj
+	extern _Z20DObjUpdateClientInfoP6DObj_sfh
+	extern _Z13XAnimGetAnimsPK11XAnimTree_s
 	extern cgArray
 	extern perk_weapReloadMultiplier
 	extern perk_weapRateMultiplier
-	extern XAnimGetLengthMsec
-	extern BG_GetViewmodelWeaponIndex
+	extern _Z18XAnimGetLengthMsecPK7XAnim_sj
+	extern _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	extern cg_gun_move_minspeed
 	extern cg_gun_move_f
 	extern cg_gun_move_r
@@ -38,23 +38,23 @@
 	extern cg_gun_ofs_f
 	extern cg_gun_ofs_r
 	extern cg_gun_ofs_u
-	extern BG_GetNumWeapons
-	extern BG_WeaponAmmo
-	extern Com_PrintError
-	extern CL_IsLocalClientActive
-	extern Com_GetClientDObj
-	extern CG_DObjGetWorldTagPos
-	extern SL_ConvertToString
-	extern Com_DPrintf
+	extern _Z16BG_GetNumWeaponsv
+	extern _Z13BG_WeaponAmmoPK13playerState_si
+	extern _Z14Com_PrintErroriPKcz
+	extern _Z22CL_IsLocalClientActivei
+	extern _Z17Com_GetClientDObjii
+	extern _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf
+	extern _Z18SL_ConvertToStringj
+	extern _Z11Com_DPrintfiPKcz
 	extern cg_tracerChance
-	extern ms_rand
-	extern Vec3NormalizeTo
+	extern _Z7ms_randv
+	extern _Z15Vec3NormalizeToPKfPf
 	extern sv_clientSideBullets
-	extern DynEntCl_DynEntImpactEvent
+	extern _Z26DynEntCl_DynEntImpactEventiiPKfS0_ih
 	extern cgMedia
-	extern CG_PlaySoundAlias
+	extern _Z17CG_PlaySoundAliasiiPKfP16snd_alias_list_t
 	extern cg_marks_ents_player_only
-	extern FX_PlayOrientedEffectWithMarkEntity
+	extern _Z35FX_PlayOrientedEffectWithMarkEntityiPK11FxEffectDefiPKfPA3_S2_j
 	extern cg_blood
 	extern cg_tracerWidth
 	extern cg_tracerScale
@@ -62,152 +62,152 @@
 	extern cg_tracerScaleDistRange
 	extern cg_tracerScrewDist
 	extern cg_tracerScrewRadius
-	extern FX_Beam_Add
-	extern DObjClearSkel
-	extern AxisToAngles
-	extern BG_WeaponFireRecoil
-	extern CG_PlayBoltedEffect
-	extern BG_WeaponIsClipOnly
-	extern BG_ClipForWeapon
-	extern BG_AmmoForWeapon
-	extern BG_TakePlayerWeapon
-	extern BG_EvaluateTrajectory
-	extern CG_GetBoneIndex
-	extern FX_GetBoneOrientation
-	extern BG_GetSpreadForWeapon
-	extern AngleVectors
+	extern _Z11FX_Beam_AddP6FxBeam
+	extern _Z13DObjClearSkelPK6DObj_s
+	extern _Z12AxisToAnglesPA3_KfPf
+	extern _Z19BG_WeaponFireRecoilPK13playerState_sPfS2_
+	extern _Z19CG_PlayBoltedEffectiPK11FxEffectDefij
+	extern _Z19BG_WeaponIsClipOnlyi
+	extern _Z16BG_ClipForWeaponi
+	extern _Z16BG_AmmoForWeaponi
+	extern _Z19BG_TakePlayerWeaponP13playerState_sji
+	extern _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
+	extern _Z15CG_GetBoneIndexiijPh
+	extern _Z21FX_GetBoneOrientationiiiP13orientation_t
+	extern _Z21BG_GetSpreadForWeaponPK13playerState_sPK9WeaponDefPfS5_
+	extern _Z12AngleVectorsPKfPfS1_S1_
 	extern cg_firstPersonTracerChance
 	extern tan
 	extern heli_barrelRotation
-	extern Veh_IncTurretBarrelRoll
-	extern SND_GetKnownLength
-	extern CG_CompassAddWeaponPingInfo
+	extern _Z23Veh_IncTurretBarrelRolliif
+	extern _Z18SND_GetKnownLengthiPi
+	extern _Z27CG_CompassAddWeaponPingInfoiPK9centity_sPKfi
 	extern cosf
 	extern sinf
-	extern BG_GetWeaponIndex
-	extern BG_GetSurfacePenetrationDepth
-	extern BG_AdvanceTrace
+	extern _Z17BG_GetWeaponIndexPK9WeaponDef
+	extern _Z29BG_GetSurfacePenetrationDepthPK9WeaponDefi
+	extern _Z15BG_AdvanceTraceP16BulletFireParamsP18BulletTraceResultsf
 	extern Com_Memcpy
 	extern bullet_penetrationMinFxDist
-	extern BG_IsProneAnim
-	extern BG_IsAds
-	extern DynEntCl_EntityImpactEvent
-	extern BG_IsCrouchingAnim
+	extern _Z14BG_IsProneAnimPK12clientInfo_ti
+	extern _Z8BG_IsAdsPK12clientInfo_ti
+	extern _Z26DynEntCl_EntityImpactEventPK7trace_tiiPKfS3_h
+	extern _Z18BG_IsCrouchingAnimPK12clientInfo_ti
 	extern perk_bulletPenetrationMultiplier
-	extern CG_AllocLocalEntity
+	extern _Z19CG_AllocLocalEntityi
 	extern cg_tracerSpeed
 	extern cg_weaponCycleDelay
-	extern CG_MenuShowNotify
+	extern _Z17CG_MenuShowNotifyii
 	extern cg_drawGun
-	extern CG_GetWeapReticleZoom
-	extern BG_CalculateWeaponPosition_Sway
-	extern BG_IsAimDownSightWeapon
-	extern MatrixTransformVector43
+	extern _Z21CG_GetWeapReticleZoomPK4cg_sPf
+	extern _Z31BG_CalculateWeaponPosition_SwayPK13playerState_sPfS2_S2_fi
+	extern _Z23BG_IsAimDownSightWeaponj
+	extern _Z23MatrixTransformVector43PKfPA3_S_Pf
 	extern cg_gun_x
 	extern cg_gun_y
 	extern cg_gun_z
-	extern BG_CalculateWeaponAngles
-	extern AnglesToAxis
-	extern MatrixMultiply
-	extern AxisToQuat
-	extern UnitQuatToAngles
-	extern AngleNormalize360
-	extern GetLeanFraction
-	extern CL_GetConfigString
+	extern _Z24BG_CalculateWeaponAnglesP13weaponState_tPf
+	extern _Z12AnglesToAxisPKfPA3_f
+	extern _Z14MatrixMultiplyPA3_KfS1_PA3_f
+	extern _Z10AxisToQuatPA3_KfPf
+	extern _Z16UnitQuatToAnglesPKfPf
+	extern _Z17AngleNormalize360f
+	extern _Z15GetLeanFractionf
+	extern _Z18CL_GetConfigStringii
 	extern strcpy
-	extern SCR_UpdateLoadScreen
+	extern _Z20SCR_UpdateLoadScreenv
 	extern memset
 	extern bg_itemlist
-	extern XAnimClearTreeGoalWeights
-	extern DObjGetBoneIndex
-	extern SEH_StringEd_GetString
+	extern _Z25XAnimClearTreeGoalWeightsP11XAnimTree_sjf
+	extern _Z16DObjGetBoneIndexPK6DObj_sjPh
+	extern _Z22SEH_StringEd_GetStringPKc
 	extern loc_warnings
 	extern loc_warningsAsErrors
-	extern Com_PrintWarning
-	extern BG_GetWeaponIndexForName
-	extern UnitQuatToAxis
+	extern _Z16Com_PrintWarningiPKcz
+	extern _Z24BG_GetWeaponIndexForNamePKcPFvjE
+	extern _Z14UnitQuatToAxisPKfPA3_f
 	extern player_breath_hold_time
 	extern cgsArray
-	extern SND_GetEntChannelCount
-	extern SND_SetChannelVolumes
-	extern SND_DeactivateChannelVolumes
-	extern AddLeanToPosition
-	extern R_AddDObjToScene
-	extern CG_LookingThroughNightVision
+	extern _Z22SND_GetEntChannelCountv
+	extern _Z21SND_SetChannelVolumesiPKfi
+	extern _Z28SND_DeactivateChannelVolumesii
+	extern _Z17AddLeanToPositionPfffff
+	extern _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
+	extern _Z28CG_LookingThroughNightVisioni
 	extern cg_laserForceOn
-	extern CG_Laser_Add
+	extern _Z12CG_Laser_AddP9centity_sP6DObj_sP7cpose_tPKf14LaserOwnerEnum
 	extern player_breath_snd_lerp
-	extern DiffTrack
-	extern CG_PlayClientSoundAlias
+	extern _Z9DiffTrackffff
+	extern _Z23CG_PlayClientSoundAliasiP16snd_alias_list_t
 	extern player_breath_snd_delay
 	extern cg_brass
-	extern BG_GetPlayerViewDirection
-	extern randomf
-	extern RotatePointAroundVector
+	extern _Z25BG_GetPlayerViewDirectionPK13playerState_sPfS2_S2_
+	extern _Z7randomfv
+	extern _Z23RotatePointAroundVectorPfPKfS1_f
 	extern clientUIActives
-	extern CL_SetADS
-	extern BG_GetPlayerViewOrigin
-	extern DObjGetClientNotifyList
-	extern Q_stricmp
-	extern SL_FindLowercaseString
-	extern CG_PlayClientSoundAliasByName
-	extern XAnimHasFinished
+	extern _Z9CL_SetADSih
+	extern _Z22BG_GetPlayerViewOriginPK13playerState_sPfi
+	extern _Z23DObjGetClientNotifyListPP13XAnimNotify_s
+	extern _Z9I_stricmpPKcS0_
+	extern _Z22SL_FindLowercaseStringPKc
+	extern _Z29CG_PlayClientSoundAliasByNameiPKc
+	extern _Z16XAnimHasFinishedPK11XAnimTree_sj
 
 ;Exports of cg_weapons:
 	global _GLOBAL__I__Z13CG_JavelinADSi
 	global g_animRateOffsets
-	global PlayADSAnim
-	global CG_CreateWeaponViewModelXAnim
-	global ActionParms
-	global BulletTrace
-	global ChangeViewmodelDobj
-	global StartWeaponAnim
+	global _Z11PlayADSAnimfiP6DObj_si
+	global _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef
+	global _Z11ActionParmsPi
+	global _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi
+	global _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h
+	global _Z15StartWeaponAnimiiP6DObj_sif
 	global _ZZ45CalculateWeaponPosition_BasePosition_movementP4cg_sPfE10MYLERP_END
 	global _ZZ45CalculateWeaponPosition_BasePosition_movementP4cg_sPfE12MYLERP_START
-	global CalculateWeaponPosition_BasePosition_movement
-	global NextWeapInCycle
-	global CycleWeapPrimary
-	global CalcMuzzlePoint
-	global BulletTrajectoryEffects
-	global CG_BulletHitEvent_Internal
-	global CG_DrawTracer
-	global CG_FireWeapon
-	global CG_JavelinADS
-	global CG_SpawnTracer
-	global CG_CalcEyePoint
-	global CG_NextWeapon_f
-	global CG_PrevWeapon_f
-	global CG_AddViewWeapon
-	global CG_RegisterItems
-	global CG_ActionSlotUp_f
-	global CG_BulletHitEvent
-	global CG_HoldBreathInit
-	global CG_RegisterWeapon
-	global CG_SetupWeaponDef
-	global CG_AddPlayerWeapon
-	global CG_MeleeBloodEvent
-	global CG_OutOfAmmoChange
-	global CG_ActionSlotDown_f
-	global CG_EjectWeaponBrass
-	global CG_GetViewDirection
-	global CG_RandomEffectAxis
-	global CG_ScopeIsOverlayed
-	global CG_WeaponDObjHandle
-	global CG_SelectWeaponIndex
-	global CG_GetPlayerViewOrigin
-	global CG_UpdateViewModelPose
-	global CG_AltWeaponToggleIndex
-	global CG_BulletHitClientEvent
-	global CG_UICheckWeapLockBlink
-	global CG_UpdateHandViewmodels
-	global CG_UpdateViewWeaponAnim
-	global CG_ImpactEffectForWeapon
-	global CG_PlayerTurretWeaponIdx
-	global CG_UpdateWeaponViewmodels
-	global CG_PlayerUsingScopedTurret
-	global CG_UICheckWeapLockAttackTop
-	global CG_GetLocalClientGlobalsForEnt
-	global CG_UICheckWeapLockAttackDirect
+	global _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf
+	global _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh
+	global _Z16CycleWeapPrimaryiii
+	global _Z15CalcMuzzlePointiiPfj
+	global _Z23BulletTrajectoryEffectsiiPKfS0_ijhi
+	global _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii
+	global _Z13CG_DrawTracerPKfS0_PK8refdef_s
+	global _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s
+	global _Z13CG_JavelinADSi
+	global _Z14CG_SpawnTraceriPKfS0_
+	global _Z15CG_CalcEyePointiiPf
+	global _Z15CG_NextWeapon_fv
+	global _Z15CG_PrevWeapon_fv
+	global _Z16CG_AddViewWeaponi
+	global _Z16CG_RegisterItemsi
+	global _Z17CG_ActionSlotUp_fv
+	global _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii
+	global _Z17CG_HoldBreathInitP4cg_s
+	global _Z17CG_RegisterWeaponii
+	global _Z17CG_SetupWeaponDefi
+	global _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si
+	global _Z18CG_MeleeBloodEventiPK9centity_si
+	global _Z18CG_OutOfAmmoChangei
+	global _Z19CG_ActionSlotDown_fv
+	global _Z19CG_EjectWeaponBrassiPK13entityState_si
+	global _Z19CG_GetViewDirectioniiPfS_S_
+	global _Z19CG_RandomEffectAxisPKfPfS1_
+	global _Z19CG_ScopeIsOverlayedi
+	global _Z19CG_WeaponDObjHandlei
+	global _Z20CG_SelectWeaponIndexij
+	global _Z22CG_GetPlayerViewOriginiPK13playerState_sPf
+	global _Z22CG_UpdateViewModelPosePK6DObj_si
+	global _Z23CG_AltWeaponToggleIndexiPK4cg_s
+	global _Z23CG_BulletHitClientEventiiPKfS0_iii
+	global _Z23CG_UICheckWeapLockBlinkif
+	global _Z23CG_UpdateHandViewmodelsiP6XModel
+	global _Z23CG_UpdateViewWeaponAnimi
+	global _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t
+	global _Z24CG_PlayerTurretWeaponIdxi
+	global _Z25CG_UpdateWeaponViewmodelsi
+	global _Z26CG_PlayerUsingScopedTurreti
+	global _Z27CG_UICheckWeapLockAttackTopi
+	global _Z30CG_GetLocalClientGlobalsForEntii
+	global _Z30CG_UICheckWeapLockAttackDirecti
 	global removeMeWhenMPStopsCrashingInHere
 
 
@@ -221,11 +221,11 @@ _GLOBAL__I__Z13CG_JavelinADSi:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;PlayADSAnim(float, int, DObj_s*, int)
-PlayADSAnim:
+_Z11PlayADSAnimfiP6DObj_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -235,7 +235,7 @@ PlayADSAnim:
 	movss [ebp-0x1c], xmm0
 	mov edi, edx
 	cmp ecx, 0x1f
-	jz PlayADSAnim_10
+	jz _Z11PlayADSAnimfiP6DObj_si_10
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x0
@@ -246,7 +246,7 @@ PlayADSAnim:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], 0x1f
 	mov [esp], edx
-	call XAnimSetGoalWeight
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x1
 	mov dword [esp+0x14], 0x0
@@ -255,30 +255,30 @@ PlayADSAnim:
 	mov dword [esp+0x8], 0x3f800000
 	mov dword [esp+0x4], 0x20
 	mov [esp], edi
-	call XAnimSetGoalWeight
-PlayADSAnim_20:
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
+_Z11PlayADSAnimfiP6DObj_si_20:
 	mov [esp], edi
-	call DObjGetTree
+	call _Z11DObjGetTreePK6DObj_s
 	movss xmm0, dword [ebp-0x1c]
 	movss [esp+0x8], xmm0
 	mov dword [esp+0x4], 0x1f
 	mov [esp], eax
-	call XAnimSetTime
+	call _Z12XAnimSetTimeP11XAnimTree_sjf
 	mov [esp], edi
-	call DObjGetTree
+	call _Z11DObjGetTreePK6DObj_s
 	movss xmm0, dword [_float_1_00000000]
 	subss xmm0, [ebp-0x1c]
 	movss [esp+0x8], xmm0
 	mov dword [esp+0x4], 0x20
 	mov [esp], eax
-	call XAnimSetTime
+	call _Z12XAnimSetTimeP11XAnimTree_sjf
 	add esp, 0x3c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-PlayADSAnim_10:
+_Z11PlayADSAnimfiP6DObj_si_10:
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x1
 	mov dword [esp+0x14], 0x0
@@ -289,7 +289,7 @@ PlayADSAnim_10:
 	mov dword [esp+0x8], 0x3f800000
 	mov dword [esp+0x4], 0x1f
 	mov [esp], edx
-	call XAnimSetGoalWeight
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x0
@@ -298,12 +298,12 @@ PlayADSAnim_10:
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], 0x20
 	mov [esp], edi
-	call XAnimSetGoalWeight
-	jmp PlayADSAnim_20
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
+	jmp _Z11PlayADSAnimfiP6DObj_si_20
 
 
 ;CG_CreateWeaponViewModelXAnim(WeaponDef*)
-CG_CreateWeaponViewModelXAnim:
+_Z29CG_CreateWeaponViewModelXAnimP9WeaponDef:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -311,11 +311,11 @@ CG_CreateWeaponViewModelXAnim:
 	push ebx
 	sub esp, 0x3c
 	mov edi, eax
-	mov eax, Hunk_AllocXAnimClient
+	mov eax, _Z21Hunk_AllocXAnimClienti
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x21
 	mov dword [esp], _cstring_viewmodel
-	call XAnimCreateAnims
+	call _Z16XAnimCreateAnimsPKciPFPviE
 	mov [ebp-0x1c], eax
 	mov dword [esp+0x14], 0x0
 	mov dword [esp+0x10], 0x20
@@ -323,10 +323,10 @@ CG_CreateWeaponViewModelXAnim:
 	mov dword [esp+0x8], _cstring_root
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call XAnimBlend
+	call _Z10XAnimBlendP7XAnim_sjPKcjjj
 	mov ebx, edi
 	mov esi, 0x1
-CG_CreateWeaponViewModelXAnim_10:
+_Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_10:
 	mov eax, [ebx+0x54]
 	mov edx, 0x1
 	cmp byte [eax], 0x0
@@ -336,30 +336,30 @@ CG_CreateWeaponViewModelXAnim_10:
 	mov [esp+0x4], esi
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call BG_CreateXAnim
+	call _Z14BG_CreateXAnimP7XAnim_sjPKc
 	add esi, 0x1
 	add ebx, 0x4
 	cmp esi, 0x21
-	jnz CG_CreateWeaponViewModelXAnim_10
-	mov eax, Hunk_AllocXAnimClient
+	jnz _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_10
+	mov eax, _Z21Hunk_AllocXAnimClienti
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call XAnimCreateTree
+	call _Z15XAnimCreateTreeP7XAnim_sPFPviE
 	mov ebx, eax
 	mov eax, [edi+0x54]
 	test eax, eax
-	jz CG_CreateWeaponViewModelXAnim_20
+	jz _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_20
 	cmp byte [eax], 0x0
-	jz CG_CreateWeaponViewModelXAnim_20
+	jz _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_20
 	mov eax, [edi+0xcc]
 	cmp byte [eax], 0x0
-	jnz CG_CreateWeaponViewModelXAnim_30
-CG_CreateWeaponViewModelXAnim_50:
+	jnz _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_30
+_Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_50:
 	mov eax, [edi+0xd0]
 	cmp byte [eax], 0x0
-	jnz CG_CreateWeaponViewModelXAnim_40
-CG_CreateWeaponViewModelXAnim_60:
+	jnz _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_40
+_Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_60:
 	mov eax, ebx
 	add esp, 0x3c
 	pop ebx
@@ -367,40 +367,40 @@ CG_CreateWeaponViewModelXAnim_60:
 	pop edi
 	pop ebp
 	ret
-CG_CreateWeaponViewModelXAnim_20:
+_Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_20:
 	mov eax, [edi+0x4]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_cg_registerweapo
 	mov dword [esp], 0x2
-	call Com_Error
+	call _Z9Com_Error11errorParm_tPKcz
 	mov eax, [edi+0xcc]
 	cmp byte [eax], 0x0
-	jz CG_CreateWeaponViewModelXAnim_50
-CG_CreateWeaponViewModelXAnim_30:
+	jz _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_50
+_Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_30:
 	mov dword [esp+0x4], 0x1f
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call XAnimIsLooped
+	call _Z13XAnimIsLoopedPK7XAnim_sj
 	test al, al
-	jz CG_CreateWeaponViewModelXAnim_50
+	jz _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_50
 	mov eax, [edi+0xcc]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_cg_registerweapo1
 	mov dword [esp], 0x2
-	call Com_Error
-	jmp CG_CreateWeaponViewModelXAnim_50
-CG_CreateWeaponViewModelXAnim_40:
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_50
+_Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_40:
 	mov dword [esp+0x4], 0x20
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call XAnimIsLooped
+	call _Z13XAnimIsLoopedPK7XAnim_sj
 	test al, al
-	jz CG_CreateWeaponViewModelXAnim_60
+	jz _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef_60
 	mov eax, [edi+0xd0]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_cg_registerweapo1
 	mov dword [esp], 0x2
-	call Com_Error
+	call _Z9Com_Error11errorParm_tPKcz
 	mov eax, ebx
 	add esp, 0x3c
 	pop ebx
@@ -411,7 +411,7 @@ CG_CreateWeaponViewModelXAnim_40:
 
 
 ;ActionParms(int*)
-ActionParms:
+_Z11ActionParmsPi:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -420,35 +420,35 @@ ActionParms:
 	mov eax, cmd_args
 	mov edx, [eax]
 	cmp dword [eax+edx*4+0x44], 0x1
-	jle ActionParms_10
+	jle _Z11ActionParmsPi_10
 	mov eax, [eax+edx*4+0x64]
 	mov eax, [eax+0x4]
 	mov [esp], eax
 	call atoi
 	lea edx, [eax-0x1]
 	cmp edx, 0x3
-	ja ActionParms_20
+	ja _Z11ActionParmsPi_20
 	mov [ebx], edx
 	mov eax, 0x1
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-ActionParms_20:
+_Z11ActionParmsPi_20:
 	mov dword [esp+0xc], 0x4
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_actionslot_numbe
 	mov dword [esp], 0x0
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	xor eax, eax
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-ActionParms_10:
+_Z11ActionParmsPi_10:
 	mov dword [esp+0x4], _cstring_usage_actionslot
 	mov dword [esp], 0x0
-	call Com_Printf
+	call _Z10Com_PrintfiPKcz
 	xor eax, eax
 	add esp, 0x14
 	pop ebx
@@ -458,17 +458,17 @@ ActionParms_10:
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov eax, [g_fltMin__uint4]
 	mov [g_fltMin], eax
 	mov eax, [g_fltMin__uint4+0x4]
@@ -738,7 +738,7 @@ __static_initialization_and_destruction_0_10:
 
 
 ;BulletTrace(int, BulletFireParams const*, WeaponDef const*, centity_s const*, BulletTraceResults*, int)
-BulletTrace:
+_Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -750,7 +750,7 @@ BulletTrace:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call Com_Memset
+	call _Z10Com_MemsetPvii
 	lea edi, [ebx+0x28]
 	lea esi, [ebx+0x1c]
 	mov dword [esp+0x10], 0x2806831
@@ -760,11 +760,11 @@ BulletTrace:
 	mov [esp+0x4], esi
 	mov edx, [ebp+0xc]
 	mov [esp], edx
-	call CG_LocationalTrace
+	call _Z18CG_LocationalTraceP7trace_tPKfS2_ii
 	mov ebx, [ebp+0xc]
 	mov eax, [ebx+0x1c]
 	test eax, eax
-	jnz BulletTrace_10
+	jnz _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_10
 	xor eax, eax
 	add esp, 0x2c
 	pop ebx
@@ -772,12 +772,12 @@ BulletTrace:
 	pop edi
 	pop ebp
 	ret
-BulletTrace_10:
+_Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_10:
 	mov [esp], ebx
-	call Trace_GetEntityHitId
+	call _Z20Trace_GetEntityHitIdPK7trace_t
 	mov ecx, eax
 	cmp ax, 0x3fe
-	jz BulletTrace_20
+	jz _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_20
 	movzx eax, ax
 	lea edx, [eax*4]
 	shl eax, 0x5
@@ -786,7 +786,7 @@ BulletTrace_10:
 	shl edx, 0x4
 	lea edx, [eax+edx]
 	add edx, cg_entitiesArray
-BulletTrace_70:
+_Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_70:
 	mov eax, [ebp+0xc]
 	add eax, 0x30
 	mov ebx, [ebp+0xc]
@@ -810,18 +810,18 @@ BulletTrace_70:
 	addss xmm1, xmm2
 	movss [eax+0x8], xmm1
 	test edx, edx
-	jz BulletTrace_30
+	jz _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_30
 	mov eax, [edx+0xd0]
 	sub eax, 0x1
 	cmp eax, 0x1
-	jbe BulletTrace_40
-BulletTrace_80:
+	jbe _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_40
+_Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_80:
 	movzx eax, cx
 	mov edx, [ebp+0x8]
 	cmp eax, [edx+0xcc]
 	mov ebx, [ebp+0xc]
 	setz byte [ebx+0x3c]
-BulletTrace_30:
+_Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_30:
 	mov edx, [ebp+0xc]
 	mov eax, [edx+0x10]
 	mov edx, eax
@@ -832,7 +832,7 @@ BulletTrace_30:
 	mov ebx, [ebp+0xc]
 	mov [ebx+0x40], edx
 	test ah, 0x1
-	jz BulletTrace_50
+	jz _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_50
 	mov dword [ebx+0x40], 0x0
 	mov eax, 0x1
 	add esp, 0x2c
@@ -841,12 +841,12 @@ BulletTrace_30:
 	pop edi
 	pop ebp
 	ret
-BulletTrace_50:
+_Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_50:
 	test cl, cl
-	jnz BulletTrace_60
+	jnz _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_60
 	mov ebx, [ebp+0x10]
 	test ebx, ebx
-	jz BulletTrace_60
+	jz _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_60
 	mov edx, [ebp+0x10]
 	mov eax, [ebp+0xc]
 	mov [eax+0x40], edx
@@ -857,7 +857,7 @@ BulletTrace_50:
 	pop edi
 	pop ebp
 	ret
-BulletTrace_60:
+_Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_60:
 	mov eax, 0x1
 	add esp, 0x2c
 	pop ebx
@@ -865,20 +865,20 @@ BulletTrace_60:
 	pop edi
 	pop ebp
 	ret
-BulletTrace_20:
+_Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_20:
 	xor edx, edx
-	jmp BulletTrace_70
-BulletTrace_40:
+	jmp _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_70
+_Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_40:
 	mov esi, [ebx+0x10]
 	test esi, esi
-	jnz BulletTrace_80
+	jnz _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_80
 	mov dword [ebx+0x10], 0x700000
-	jmp BulletTrace_80
+	jmp _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi_80
 	nop
 
 
 ;ChangeViewmodelDobj(int, int, unsigned char, XModel*, XModel*, XModel*, XModel*, unsigned char)
-ChangeViewmodelDobj:
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -892,26 +892,26 @@ ChangeViewmodelDobj:
 	movzx eax, byte [ebp+0x18]
 	mov [ebp-0x4d], al
 	test edx, edx
-	jnz ChangeViewmodelDobj_10
-ChangeViewmodelDobj_20:
+	jnz _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_10
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_20:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-ChangeViewmodelDobj_10:
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_10:
 	mov eax, edx
 	shl eax, 0x6
 	lea esi, [eax+edx*4]
 	add esi, cg_weaponsArray
 	mov [esp], edx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov [ebp-0x44], eax
 	and edi, 0xff
 	mov eax, [eax+edi*4+0xc]
 	test eax, eax
-	jz ChangeViewmodelDobj_20
+	jz _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_20
 	mov edx, [ebp+0x8]
 	mov [esi+0x4], edx
 	mov eax, [ebp+0xc]
@@ -926,16 +926,16 @@ ChangeViewmodelDobj_10:
 	mov [ebp-0x3c], ebx
 	mov eax, [esi]
 	test eax, eax
-	jz ChangeViewmodelDobj_30
+	jz _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_30
 	mov [esp], eax
-	call DObjGetTree
+	call _Z11DObjGetTreePK6DObj_s
 	mov [ebp-0x40], eax
 	mov eax, [ebp-0x48]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x3c]
 	mov [esp], edx
-	call Com_SafeClientDObjFree
-ChangeViewmodelDobj_100:
+	call _Z22Com_SafeClientDObjFreeii
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_100:
 	mov word [ebp-0x34], 0x0
 	mov byte [ebp-0x32], 0x0
 	mov eax, [esi+0x4]
@@ -949,36 +949,36 @@ ChangeViewmodelDobj_100:
 	mov [ebp-0x30], eax
 	mov edx, [esi+0x8]
 	test edx, edx
-	jz ChangeViewmodelDobj_40
+	jz _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_40
 	mov eax, overrideNVGModelWithKnife
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz ChangeViewmodelDobj_50
+	jz _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_50
 	movzx eax, word [ebx+0xb0]
 	mov [ebp-0x24], ax
-ChangeViewmodelDobj_80:
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_80:
 	mov [ebp-0x28], edx
 	mov byte [ebp-0x22], 0x0
 	mov edx, 0x3
-ChangeViewmodelDobj_90:
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_90:
 	mov ecx, [esi+0xc]
 	test ecx, ecx
-	jz ChangeViewmodelDobj_60
+	jz _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_60
 	movzx eax, word [ebx+0x8e]
 	mov [ebp+edx*8-0x34], ax
 	mov byte [ebp+edx*8-0x32], 0x0
 	mov [ebp+edx*8-0x38], ecx
 	add edx, 0x1
-ChangeViewmodelDobj_60:
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_60:
 	mov ecx, [esi+0x10]
 	test ecx, ecx
-	jz ChangeViewmodelDobj_70
+	jz _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_70
 	movzx eax, word [ebx+0x9e]
 	mov [ebp+edx*8-0x34], ax
 	mov byte [ebp+edx*8-0x32], 0x0
 	mov [ebp+edx*8-0x38], ecx
 	add edx, 0x1
-ChangeViewmodelDobj_70:
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_70:
 	mov eax, [ebp-0x48]
 	mov [esp+0x10], eax
 	mov eax, [ebp-0x3c]
@@ -989,42 +989,42 @@ ChangeViewmodelDobj_70:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x38]
 	mov [esp], eax
-	call Com_ClientDObjCreate
+	call _Z20Com_ClientDObjCreateP11DObjModel_stP11XAnimTree_sii
 	mov [esi], eax
 	lea edx, [esi+0x18]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call DObjSetHidePartBits
+	call _Z19DObjSetHidePartBitsP6DObj_sPKj
 	cmp byte [ebp-0x4d], 0x0
-	jz ChangeViewmodelDobj_20
+	jz _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_20
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x3d4ccccd
 	mov eax, [esi]
 	mov [esp], eax
-	call DObjUpdateClientInfo
+	call _Z20DObjUpdateClientInfoP6DObj_sfh
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-ChangeViewmodelDobj_50:
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_50:
 	movzx eax, word [ebx+0xae]
 	mov [ebp-0x24], ax
-	jmp ChangeViewmodelDobj_80
-ChangeViewmodelDobj_40:
+	jmp _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_80
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_40:
 	mov dl, 0x2
-	jmp ChangeViewmodelDobj_90
-ChangeViewmodelDobj_30:
+	jmp _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_90
+_Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_30:
 	mov eax, [ebp-0x44]
-	call CG_CreateWeaponViewModelXAnim
+	call _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef
 	mov [ebp-0x40], eax
 	mov [esi+0x2c], eax
-	jmp ChangeViewmodelDobj_100
+	jmp _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h_100
 
 
 ;StartWeaponAnim(int, int, DObj_s*, int, float)
-StartWeaponAnim:
+_Z15StartWeaponAnimiiP6DObj_sif:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1041,38 +1041,38 @@ StartWeaponAnim:
 	mov eax, cg_weaponsArray
 	mov eax, [eax+edx+0x2c]
 	mov [esp], eax
-	call XAnimGetAnims
+	call _Z13XAnimGetAnimsPK11XAnimTree_s
 	mov [ebp-0x1c], eax
 	mov [esp], ebx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov edx, eax
 	mov eax, [esi*4+g_animRateOffsets]
 	test eax, eax
-	js StartWeaponAnim_10
+	js _Z15StartWeaponAnimiiP6DObj_sif_10
 	mov ebx, [edx+eax]
 	pxor xmm1, xmm1
 	test ebx, ebx
-	jnz StartWeaponAnim_20
-StartWeaponAnim_120:
+	jnz _Z15StartWeaponAnimiiP6DObj_sif_20
+_Z15StartWeaponAnimiiP6DObj_sif_120:
 	mov edx, cgArray
 	mov eax, [edx+0x46228]
 	cmp eax, 0x7
-	jz StartWeaponAnim_30
+	jz _Z15StartWeaponAnimiiP6DObj_sif_30
 	cmp eax, 0x9
-	jz StartWeaponAnim_30
+	jz _Z15StartWeaponAnimiiP6DObj_sif_30
 	cmp eax, 0xb
-	jz StartWeaponAnim_30
+	jz _Z15StartWeaponAnimiiP6DObj_sif_30
 	cmp eax, 0xa
-	jz StartWeaponAnim_30
+	jz _Z15StartWeaponAnimiiP6DObj_sif_30
 	cmp eax, 0x8
-	jz StartWeaponAnim_30
-StartWeaponAnim_80:
+	jz _Z15StartWeaponAnimiiP6DObj_sif_30
+_Z15StartWeaponAnimiiP6DObj_sif_80:
 	cmp eax, 0x6
-	jz StartWeaponAnim_40
-StartWeaponAnim_100:
+	jz _Z15StartWeaponAnimiiP6DObj_sif_40
+_Z15StartWeaponAnimiiP6DObj_sif_100:
 	mov ebx, 0x1
-	jmp StartWeaponAnim_50
-StartWeaponAnim_70:
+	jmp _Z15StartWeaponAnimiiP6DObj_sif_50
+_Z15StartWeaponAnimiiP6DObj_sif_70:
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x0
@@ -1083,14 +1083,14 @@ StartWeaponAnim_70:
 	mov [esp+0x4], ebx
 	mov [esp], edi
 	movss [ebp-0x38], xmm1
-	call XAnimSetGoalWeight
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
 	movss xmm1, dword [ebp-0x38]
 	add ebx, 0x1
 	cmp ebx, 0x1f
-	jz StartWeaponAnim_60
-StartWeaponAnim_50:
+	jz _Z15StartWeaponAnimiiP6DObj_sif_60
+_Z15StartWeaponAnimiiP6DObj_sif_50:
 	cmp esi, ebx
-	jnz StartWeaponAnim_70
+	jnz _Z15StartWeaponAnimiiP6DObj_sif_70
 	mov dword [esp+0x1c], 0x1
 	mov dword [esp+0x18], 0x1
 	mov dword [esp+0x14], 0x0
@@ -1101,58 +1101,58 @@ StartWeaponAnim_50:
 	mov [esp+0x4], ebx
 	mov [esp], edi
 	movss [ebp-0x38], xmm1
-	call XAnimSetGoalWeight
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
 	movss xmm1, dword [ebp-0x38]
 	add ebx, 0x1
 	cmp ebx, 0x1f
-	jnz StartWeaponAnim_50
-StartWeaponAnim_60:
+	jnz _Z15StartWeaponAnimiiP6DObj_sif_50
+_Z15StartWeaponAnimiiP6DObj_sif_60:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-StartWeaponAnim_30:
+_Z15StartWeaponAnimiiP6DObj_sif_30:
 	test byte [edx+0x46738], 0x4
-	jz StartWeaponAnim_80
+	jz _Z15StartWeaponAnimiiP6DObj_sif_80
 	mov eax, perk_weapReloadMultiplier
 	mov eax, [eax]
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm0, [_float_0_00000000]
-	jnz StartWeaponAnim_90
-StartWeaponAnim_110:
-	jp StartWeaponAnim_90
+	jnz _Z15StartWeaponAnimiiP6DObj_sif_90
+_Z15StartWeaponAnimiiP6DObj_sif_110:
+	jp _Z15StartWeaponAnimiiP6DObj_sif_90
 	movss xmm1, dword [_float_1000_00000000]
-	jmp StartWeaponAnim_100
-StartWeaponAnim_40:
+	jmp _Z15StartWeaponAnimiiP6DObj_sif_100
+_Z15StartWeaponAnimiiP6DObj_sif_40:
 	test byte [edx+0x46738], 0x8
-	jz StartWeaponAnim_100
+	jz _Z15StartWeaponAnimiiP6DObj_sif_100
 	mov eax, perk_weapRateMultiplier
 	mov eax, [eax]
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm0, [_float_0_00000000]
-	jz StartWeaponAnim_110
-StartWeaponAnim_90:
+	jz _Z15StartWeaponAnimiiP6DObj_sif_110
+_Z15StartWeaponAnimiiP6DObj_sif_90:
 	divss xmm1, xmm0
-	jmp StartWeaponAnim_100
-StartWeaponAnim_20:
+	jmp _Z15StartWeaponAnimiiP6DObj_sif_100
+_Z15StartWeaponAnimiiP6DObj_sif_20:
 	mov [esp+0x4], esi
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call XAnimGetLengthMsec
+	call _Z18XAnimGetLengthMsecPK7XAnim_sj
 	cvtsi2ss xmm1, eax
 	cvtsi2ss xmm0, ebx
 	divss xmm1, xmm0
-	jmp StartWeaponAnim_120
-StartWeaponAnim_10:
+	jmp _Z15StartWeaponAnimiiP6DObj_sif_120
+_Z15StartWeaponAnimiiP6DObj_sif_10:
 	movss xmm1, dword [_float_1_00000000]
-	jmp StartWeaponAnim_120
+	jmp _Z15StartWeaponAnimiiP6DObj_sif_120
 	nop
 
 
 ;CalculateWeaponPosition_BasePosition_movement(cg_s*, float*)
-CalculateWeaponPosition_BasePosition_movement:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1165,9 +1165,9 @@ CalculateWeaponPosition_BasePosition_movement:
 	add eax, 0x4927c
 	mov [ebp-0x30], eax
 	mov [esp], esi
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov edi, eax
 	mov edx, [ebp+0x8]
 	mov ecx, [edx+0x49174]
@@ -1176,12 +1176,12 @@ CalculateWeaponPosition_BasePosition_movement:
 	mov edx, eax
 	and dl, 0x1
 	mov [ebp-0x35], dl
-	jz CalculateWeaponPosition_BasePosition_movement_10
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_10
 	mov eax, cg_gun_move_minspeed
 	mov eax, [eax]
 	movss xmm2, dword [edi+0x2a4]
 	addss xmm2, [eax+0xc]
-CalculateWeaponPosition_BasePosition_movement_220:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_220:
 	mov eax, [ebp+0x8]
 	movss xmm0, dword [eax+0x5040c]
 	ucomiss xmm0, xmm2
@@ -1195,11 +1195,11 @@ CalculateWeaponPosition_BasePosition_movement_220:
 	cmp ebx, 0xb
 	setz byte [ebp-0x29]
 	test dl, dl
-	jz CalculateWeaponPosition_BasePosition_movement_20
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_20
 	cmp dword [ebp-0x34], 0x7
-	jz CalculateWeaponPosition_BasePosition_movement_20
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_20
 	cmp byte [ebp-0x2a], 0x0
-	jnz CalculateWeaponPosition_BasePosition_movement_20
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_20
 	movaps xmm3, xmm0
 	subss xmm3, xmm2
 	cvtsi2ss xmm0, dword [esi+0x60]
@@ -1217,11 +1217,11 @@ CalculateWeaponPosition_BasePosition_movement_220:
 	andnps xmm3, xmm2
 	orps xmm3, xmm1
 	cmp byte [ebp-0x35], 0x0
-	jz CalculateWeaponPosition_BasePosition_movement_30
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_30
 	lea eax, [edi+0x27c]
 	movaps xmm0, xmm3
 	mulss xmm0, [edi+0x27c]
-CalculateWeaponPosition_BasePosition_movement_280:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_280:
 	movss [ebp-0x24], xmm0
 	movaps xmm0, xmm3
 	mulss xmm0, [eax+0x4]
@@ -1246,29 +1246,29 @@ CalculateWeaponPosition_BasePosition_movement_280:
 	mulss xmm3, [eax+0xc]
 	addss xmm3, [ebp-0x1c]
 	movss [ebp-0x1c], xmm3
-CalculateWeaponPosition_BasePosition_movement_140:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_140:
 	cmp ebx, 0x28
-	jz CalculateWeaponPosition_BasePosition_movement_40
-CalculateWeaponPosition_BasePosition_movement_160:
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_40
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_160:
 	cmp byte [ebp-0x29], 0x0
-	jnz CalculateWeaponPosition_BasePosition_movement_40
-CalculateWeaponPosition_BasePosition_movement_150:
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_40
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_150:
 	mov edx, [ebp-0x30]
 	mov ecx, 0x1
 	movss xmm7, dword [_float_11_00000000]
 	movss xmm6, dword [_float_0_00100000]
-CalculateWeaponPosition_BasePosition_movement_100:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_100:
 	lea ebx, [edx+0x18]
 	movss xmm3, dword [edx+0x18]
 	movss xmm2, dword [ebp+ecx*4-0x28]
 	ucomiss xmm3, xmm2
-	jp CalculateWeaponPosition_BasePosition_movement_50
-	jz CalculateWeaponPosition_BasePosition_movement_60
-CalculateWeaponPosition_BasePosition_movement_50:
+	jp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_50
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_60
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_50:
 	movss xmm0, dword [esi+0x118]
 	ucomiss xmm0, xmm7
-	jnz CalculateWeaponPosition_BasePosition_movement_70
-	jp CalculateWeaponPosition_BasePosition_movement_70
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_70
+	jp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_70
 	mov eax, [ebp+0x8]
 	cvtsi2ss xmm4, dword [eax+0x46124]
 	movaps xmm5, xmm6
@@ -1283,9 +1283,9 @@ CalculateWeaponPosition_BasePosition_movement_50:
 	movss xmm0, dword [edi+0x298]
 	addss xmm0, [eax+0xc]
 	mulss xmm1, xmm0
-CalculateWeaponPosition_BasePosition_movement_200:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_200:
 	ucomiss xmm2, xmm3
-	jbe CalculateWeaponPosition_BasePosition_movement_80
+	jbe _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_80
 	movaps xmm0, xmm4
 	mulss xmm0, xmm5
 	mulss xmm0, [_float_0_10000000]
@@ -1293,22 +1293,22 @@ CalculateWeaponPosition_BasePosition_movement_200:
 	addss xmm0, xmm3
 	movss [ebx], xmm0
 	ucomiss xmm0, xmm2
-	ja CalculateWeaponPosition_BasePosition_movement_90
-CalculateWeaponPosition_BasePosition_movement_60:
+	ja _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_90
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_60:
 	add ecx, 0x1
 	add edx, 0x4
 	cmp ecx, 0x4
-	jnz CalculateWeaponPosition_BasePosition_movement_100
-CalculateWeaponPosition_BasePosition_movement_190:
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_100
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_190:
 	movss xmm1, dword [esi+0xf4]
 	pxor xmm0, xmm0
 	ucomiss xmm1, xmm0
-	jp CalculateWeaponPosition_BasePosition_movement_110
-	jz CalculateWeaponPosition_BasePosition_movement_120
-CalculateWeaponPosition_BasePosition_movement_110:
+	jp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_110
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_120
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_110:
 	ucomiss xmm1, [_float_0_50000000]
-	jae CalculateWeaponPosition_BasePosition_movement_130
-	jp CalculateWeaponPosition_BasePosition_movement_130
+	jae _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_130
+	jp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_130
 	mulss xmm1, [_float__2_00000000]
 	addss xmm1, [_float_1_00000000]
 	mov eax, [ebp-0x30]
@@ -1326,39 +1326,39 @@ CalculateWeaponPosition_BasePosition_movement_110:
 	mulss xmm1, [eax+0x8]
 	addss xmm1, [edx+0x8]
 	movss [edx+0x8], xmm1
-CalculateWeaponPosition_BasePosition_movement_130:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_130:
 	add esp, 0x4c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CalculateWeaponPosition_BasePosition_movement_20:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_20:
 	mov dword [ebp-0x24], 0x0
 	mov dword [ebp-0x20], 0x0
 	mov dword [ebp-0x1c], 0x0
 	test dl, dl
-	jz CalculateWeaponPosition_BasePosition_movement_140
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_140
 	cmp byte [ebp-0x2a], 0x0
-	jz CalculateWeaponPosition_BasePosition_movement_140
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_140
 	cmp byte [ebp-0x29], 0x0
-	jnz CalculateWeaponPosition_BasePosition_movement_150
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_150
 	cmp ebx, 0x28
-	jnz CalculateWeaponPosition_BasePosition_movement_160
-CalculateWeaponPosition_BasePosition_movement_40:
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_160
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_40:
 	cmp byte [ebp-0x2a], 0x0
-	jnz CalculateWeaponPosition_BasePosition_movement_170
-CalculateWeaponPosition_BasePosition_movement_230:
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_170
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_230:
 	movss xmm2, dword [_float_1_00000000]
-CalculateWeaponPosition_BasePosition_movement_250:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_250:
 	cmp ebx, 0x28
-	jz CalculateWeaponPosition_BasePosition_movement_180
+	jz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_180
 	cmp ebx, 0xb
-	jnz CalculateWeaponPosition_BasePosition_movement_150
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_150
 	lea eax, [edi+0x270]
 	movaps xmm0, xmm2
 	mulss xmm0, [edi+0x270]
-CalculateWeaponPosition_BasePosition_movement_260:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_260:
 	addss xmm0, [ebp-0x24]
 	movss [ebp-0x24], xmm0
 	movaps xmm1, xmm2
@@ -1380,22 +1380,22 @@ CalculateWeaponPosition_BasePosition_movement_260:
 	mov eax, [eax]
 	addss xmm2, [eax+0xc]
 	movss [ebp-0x1c], xmm2
-	jmp CalculateWeaponPosition_BasePosition_movement_150
-CalculateWeaponPosition_BasePosition_movement_80:
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_150
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_80:
 	movaps xmm0, xmm4
 	mulss xmm0, xmm5
 	mulss xmm0, [_float__0_10000000]
 	minss xmm0, xmm1
 	addss xmm0, xmm3
 	maxss xmm2, xmm0
-CalculateWeaponPosition_BasePosition_movement_90:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_90:
 	movss [ebx], xmm2
 	add ecx, 0x1
 	add edx, 0x4
 	cmp ecx, 0x4
-	jnz CalculateWeaponPosition_BasePosition_movement_100
-	jmp CalculateWeaponPosition_BasePosition_movement_190
-CalculateWeaponPosition_BasePosition_movement_70:
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_100
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_190
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_70:
 	mov eax, [ebp+0x8]
 	cvtsi2ss xmm4, dword [eax+0x46124]
 	movaps xmm5, xmm6
@@ -1410,16 +1410,16 @@ CalculateWeaponPosition_BasePosition_movement_70:
 	movss xmm0, dword [edi+0x294]
 	addss xmm0, [eax+0xc]
 	mulss xmm1, xmm0
-	jmp CalculateWeaponPosition_BasePosition_movement_200
-CalculateWeaponPosition_BasePosition_movement_10:
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_200
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_10:
 	test cl, 0x4
-	jnz CalculateWeaponPosition_BasePosition_movement_210
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_210
 	mov eax, cg_gun_move_minspeed
 	mov eax, [eax]
 	movss xmm2, dword [edi+0x29c]
 	addss xmm2, [eax+0xc]
-	jmp CalculateWeaponPosition_BasePosition_movement_220
-CalculateWeaponPosition_BasePosition_movement_120:
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_220
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_120:
 	mov eax, [ebp-0x30]
 	add eax, 0x18
 	mov edx, [ebp+0xc]
@@ -1440,53 +1440,53 @@ CalculateWeaponPosition_BasePosition_movement_120:
 	pop edi
 	pop ebp
 	ret
-CalculateWeaponPosition_BasePosition_movement_170:
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_170:
 	cvtsi2ss xmm1, dword [esi+0x3c]
 	cvtsi2ss xmm0, dword [edi+0x3d4]
 	divss xmm1, xmm0
 	movss xmm0, dword [_ZZ45CalculateWeaponPosition_BasePosition_movementP4cg_sPfE10MYLERP_END]
 	ucomiss xmm0, xmm1
-	ja CalculateWeaponPosition_BasePosition_movement_230
+	ja _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_230
 	movss xmm2, dword [_ZZ45CalculateWeaponPosition_BasePosition_movementP4cg_sPfE12MYLERP_START]
 	ucomiss xmm2, xmm1
-	ja CalculateWeaponPosition_BasePosition_movement_240
+	ja _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_240
 	pxor xmm2, xmm2
-	jmp CalculateWeaponPosition_BasePosition_movement_250
-CalculateWeaponPosition_BasePosition_movement_210:
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_250
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_210:
 	mov eax, cg_gun_move_minspeed
 	mov eax, [eax]
 	movss xmm2, dword [edi+0x2a0]
 	addss xmm2, [eax+0xc]
-	jmp CalculateWeaponPosition_BasePosition_movement_220
-CalculateWeaponPosition_BasePosition_movement_180:
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_220
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_180:
 	lea eax, [edi+0x24c]
 	movaps xmm0, xmm2
 	mulss xmm0, [edi+0x24c]
-	jmp CalculateWeaponPosition_BasePosition_movement_260
-CalculateWeaponPosition_BasePosition_movement_30:
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_260
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_30:
 	and cl, 0x4
-	jnz CalculateWeaponPosition_BasePosition_movement_270
+	jnz _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_270
 	lea eax, [edi+0x234]
 	movaps xmm0, xmm3
 	mulss xmm0, [edi+0x234]
-	jmp CalculateWeaponPosition_BasePosition_movement_280
-CalculateWeaponPosition_BasePosition_movement_240:
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_280
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_240:
 	subss xmm1, xmm0
 	subss xmm2, xmm0
 	divss xmm1, xmm2
 	movss xmm2, dword [_float_1_00000000]
 	subss xmm2, xmm1
-	jmp CalculateWeaponPosition_BasePosition_movement_250
-CalculateWeaponPosition_BasePosition_movement_270:
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_250
+_Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_270:
 	lea eax, [edi+0x258]
 	movaps xmm0, xmm3
 	mulss xmm0, [edi+0x258]
-	jmp CalculateWeaponPosition_BasePosition_movement_280
+	jmp _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf_280
 	nop
 
 
 ;NextWeapInCycle(int, playerState_s const*, weapInventoryType_t, unsigned int, unsigned char, unsigned char, unsigned char)
-NextWeapInCycle:
+_Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1500,10 +1500,10 @@ NextWeapInCycle:
 	mov [ebp-0x25], al
 	movzx edx, byte [ebp+0x14]
 	mov [ebp-0x26], dl
-	call BG_GetNumWeapons
+	call _Z16BG_GetNumWeaponsv
 	cmp eax, 0x1
-	jbe NextWeapInCycle_10
-	call BG_GetNumWeapons
+	jbe _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_10
+	call _Z16BG_GetNumWeaponsv
 	lea esi, [eax-0x1]
 	cmp bl, 0x1
 	sbb eax, eax
@@ -1521,27 +1521,27 @@ NextWeapInCycle:
 	div esi
 	lea ebx, [edx+0x1]
 	cmp [ebp+0x8], ebx
-	jz NextWeapInCycle_10
-NextWeapInCycle_30:
+	jz _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_10
+_Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_30:
 	mov [esp], ebx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov edi, eax
 	mov eax, [ebp-0x24]
 	cmp [edi+0x13c], eax
-	jz NextWeapInCycle_20
-NextWeapInCycle_40:
+	jz _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_20
+_Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_40:
 	mov edx, [ebp-0x1c]
-NextWeapInCycle_70:
+_Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_70:
 	lea eax, [ebx+edx]
 	lea eax, [esi+eax-0x1]
 	xor edx, edx
 	div esi
 	lea ebx, [edx+0x1]
 	cmp [ebp+0x8], ebx
-	jnz NextWeapInCycle_30
-NextWeapInCycle_10:
+	jnz _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_30
+_Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_10:
 	xor ebx, ebx
-NextWeapInCycle_60:
+_Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_60:
 	mov eax, ebx
 	add esp, 0x2c
 	pop ebx
@@ -1549,7 +1549,7 @@ NextWeapInCycle_60:
 	pop edi
 	pop ebp
 	ret
-NextWeapInCycle_20:
+_Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_20:
 	mov eax, ebx
 	sar eax, 0x5
 	mov ecx, ebx
@@ -1559,29 +1559,29 @@ NextWeapInCycle_20:
 	mov ecx, edx
 	mov edx, [ebp-0x20]
 	test [edx+eax*4+0x55c], ecx
-	jz NextWeapInCycle_40
+	jz _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_40
 	cmp byte [ebp-0x25], 0x0
-	jnz NextWeapInCycle_50
-NextWeapInCycle_80:
+	jnz _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_50
+_Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_80:
 	cmp byte [ebp-0x26], 0x0
-	jz NextWeapInCycle_60
+	jz _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_60
 	mov eax, [edi+0x540]
 	test eax, eax
-	jnz NextWeapInCycle_60
+	jnz _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_60
 	mov edx, [ebp-0x1c]
-	jmp NextWeapInCycle_70
-NextWeapInCycle_50:
+	jmp _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_70
+_Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_50:
 	mov [esp+0x4], ebx
 	mov [esp], edx
-	call BG_WeaponAmmo
+	call _Z13BG_WeaponAmmoPK13playerState_si
 	test eax, eax
-	jnz NextWeapInCycle_80
+	jnz _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_80
 	mov edx, [ebp-0x1c]
-	jmp NextWeapInCycle_70
+	jmp _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh_70
 
 
 ;CycleWeapPrimary(int, int, int)
-CycleWeapPrimary:
+_Z16CycleWeapPrimaryiii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1594,37 +1594,37 @@ CycleWeapPrimary:
 	mov ebx, cgArray
 	mov eax, [ebx+0x24]
 	test eax, eax
-	jz CycleWeapPrimary_10
+	jz _Z16CycleWeapPrimaryiii_10
 	test byte [eax+0x20], 0x4
-	jz CycleWeapPrimary_10
+	jz _Z16CycleWeapPrimaryiii_10
 	cmp dword [ebx+0x46140], 0x6
-	jle CycleWeapPrimary_20
-CycleWeapPrimary_10:
+	jle _Z16CycleWeapPrimaryiii_20
+_Z16CycleWeapPrimaryiii_10:
 	xor eax, eax
-CycleWeapPrimary_90:
+_Z16CycleWeapPrimaryiii_90:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CycleWeapPrimary_20:
+_Z16CycleWeapPrimaryiii_20:
 	mov eax, [ebx+0x5036c]
 	mov [ebp-0x1c], eax
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov esi, eax
-	call BG_GetNumWeapons
+	call _Z16BG_GetNumWeaponsv
 	cmp eax, 0x1
-	jbe CycleWeapPrimary_10
+	jbe _Z16CycleWeapPrimaryiii_10
 	mov eax, [esi+0x13c]
 	cmp eax, 0x3
-	jz CycleWeapPrimary_30
+	jz _Z16CycleWeapPrimaryiii_30
 	test eax, eax
-	jz CycleWeapPrimary_40
+	jz _Z16CycleWeapPrimaryiii_40
 	mov esi, [ebx+0x50374]
 	test esi, esi
-	jz CycleWeapPrimary_40
+	jz _Z16CycleWeapPrimaryiii_40
 	mov edx, esi
 	sar edx, 0x5
 	mov ecx, esi
@@ -1632,9 +1632,9 @@ CycleWeapPrimary_20:
 	mov eax, 0x1
 	shl eax, cl
 	test [ebx+edx*4+0x46698], eax
-	jnz CycleWeapPrimary_50
-CycleWeapPrimary_40:
-	call BG_GetNumWeapons
+	jnz _Z16CycleWeapPrimaryiii_50
+_Z16CycleWeapPrimaryiii_40:
+	call _Z16BG_GetNumWeaponsv
 	lea esi, [eax-0x1]
 	cmp edi, 0x1
 	sbb edi, edi
@@ -1644,14 +1644,14 @@ CycleWeapPrimary_40:
 	test eax, eax
 	cmovnz ebx, [ebp-0x1c]
 	mov [ebp-0x1c], ebx
-CycleWeapPrimary_70:
+_Z16CycleWeapPrimaryiii_70:
 	lea eax, [ebx+edi]
 	lea eax, [esi+eax-0x1]
 	xor edx, edx
 	div esi
 	lea ebx, [edx+0x1]
 	cmp [ebp-0x1c], ebx
-	jz CycleWeapPrimary_60
+	jz _Z16CycleWeapPrimaryiii_60
 	mov edx, ebx
 	sar edx, 0x5
 	mov ecx, ebx
@@ -1660,34 +1660,34 @@ CycleWeapPrimary_70:
 	shl eax, cl
 	mov ecx, cgArray
 	test [ecx+edx*4+0x46698], eax
-	jz CycleWeapPrimary_70
+	jz _Z16CycleWeapPrimaryiii_70
 	mov eax, [ebp-0x24]
 	test eax, eax
-	jz CycleWeapPrimary_80
+	jz _Z16CycleWeapPrimaryiii_80
 	mov [esp+0x4], ebx
 	mov eax, ecx
 	add eax, 0x4613c
 	mov [esp], eax
-	call BG_WeaponAmmo
+	call _Z13BG_WeaponAmmoPK13playerState_si
 	test eax, eax
-	jz CycleWeapPrimary_70
-CycleWeapPrimary_80:
+	jz _Z16CycleWeapPrimaryiii_70
+_Z16CycleWeapPrimaryiii_80:
 	mov [esp], ebx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov eax, [eax+0x13c]
 	cmp eax, 0x3
-	jz CycleWeapPrimary_70
+	jz _Z16CycleWeapPrimaryiii_70
 	cmp eax, 0x2
-	jz CycleWeapPrimary_70
+	jz _Z16CycleWeapPrimaryiii_70
 	sub eax, 0x1
-	jz CycleWeapPrimary_70
+	jz _Z16CycleWeapPrimaryiii_70
 	mov [esp+0x4], ebx
 	mov eax, [ebp-0x20]
 	mov [esp], eax
-	call CG_SelectWeaponIndex
+	call _Z20CG_SelectWeaponIndexij
 	mov eax, 0x1
-	jmp CycleWeapPrimary_90
-CycleWeapPrimary_30:
+	jmp _Z16CycleWeapPrimaryiii_90
+_Z16CycleWeapPrimaryiii_30:
 	mov edi, [esi+0x540]
 	mov edx, edi
 	sar edx, 0x5
@@ -1696,14 +1696,14 @@ CycleWeapPrimary_30:
 	mov al, 0x1
 	shl eax, cl
 	test [ebx+edx*4+0x46698], eax
-	jz CycleWeapPrimary_100
+	jz _Z16CycleWeapPrimaryiii_100
 	mov [esp+0x4], edi
 	mov ecx, [ebp-0x20]
 	mov [esp], ecx
-	call CG_SelectWeaponIndex
+	call _Z20CG_SelectWeaponIndexij
 	mov eax, 0x1
-	jmp CycleWeapPrimary_90
-CycleWeapPrimary_60:
+	jmp _Z16CycleWeapPrimaryiii_90
+_Z16CycleWeapPrimaryiii_60:
 	mov eax, cgArray
 	mov ecx, [eax+0x5036c]
 	mov edx, ecx
@@ -1713,38 +1713,38 @@ CycleWeapPrimary_60:
 	shl eax, cl
 	mov ecx, cgArray
 	test [ecx+edx*4+0x46698], eax
-	jnz CycleWeapPrimary_10
+	jnz _Z16CycleWeapPrimaryiii_10
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp-0x20]
 	mov [esp], eax
-	call CG_SelectWeaponIndex
+	call _Z20CG_SelectWeaponIndexij
 	xor eax, eax
-	jmp CycleWeapPrimary_90
-CycleWeapPrimary_50:
+	jmp _Z16CycleWeapPrimaryiii_90
+_Z16CycleWeapPrimaryiii_50:
 	mov [esp+0x4], esi
 	mov ecx, [ebp-0x20]
 	mov [esp], ecx
-	call CG_SelectWeaponIndex
+	call _Z20CG_SelectWeaponIndexij
 	mov eax, 0x1
-	jmp CycleWeapPrimary_90
-CycleWeapPrimary_100:
+	jmp _Z16CycleWeapPrimaryiii_90
+_Z16CycleWeapPrimaryiii_100:
 	mov eax, [esi+0x53c]
 	mov [esp+0xc], eax
 	mov eax, [esi]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_player_is_holdin
 	mov dword [esp], 0xe
-	call Com_PrintError
+	call _Z14Com_PrintErroriPKcz
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp-0x20]
 	mov [esp], eax
-	call CG_SelectWeaponIndex
-	jmp CycleWeapPrimary_10
+	call _Z20CG_SelectWeaponIndexij
+	jmp _Z16CycleWeapPrimaryiii_10
 	nop
 
 
 ;CalcMuzzlePoint(int, int, float*, unsigned int)
-CalcMuzzlePoint:
+_Z15CalcMuzzlePointiiPfj:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1755,19 +1755,19 @@ CalcMuzzlePoint:
 	mov esi, edx
 	mov edi, ecx
 	mov dword [esp], 0x0
-	call CL_IsLocalClientActive
+	call _Z22CL_IsLocalClientActivei
 	test al, al
-	jz CalcMuzzlePoint_10
+	jz _Z15CalcMuzzlePointiiPfj_10
 	mov eax, cgArray
 	mov edx, [eax+0x24]
 	test byte [edx+0x20], 0x6
-	jnz CalcMuzzlePoint_20
-CalcMuzzlePoint_70:
+	jnz _Z15CalcMuzzlePointiiPfj_20
+_Z15CalcMuzzlePointiiPfj_70:
 	xor edx, edx
-CalcMuzzlePoint_80:
+_Z15CalcMuzzlePointiiPfj_80:
 	test edx, edx
-	jnz CalcMuzzlePoint_30
-CalcMuzzlePoint_10:
+	jnz _Z15CalcMuzzlePointiiPfj_30
+_Z15CalcMuzzlePointiiPfj_10:
 	lea edx, [esi*4]
 	mov eax, esi
 	shl eax, 0x5
@@ -1780,17 +1780,17 @@ CalcMuzzlePoint_10:
 	mov [esp+0x4], eax
 	mov eax, [ebx+0xcc]
 	mov [esp], eax
-	call Com_GetClientDObj
+	call _Z17Com_GetClientDObjii
 	test eax, eax
-	jz CalcMuzzlePoint_40
+	jz _Z15CalcMuzzlePointiiPfj_40
 	mov [esp+0xc], edi
 	mov edx, [ebp+0x8]
 	mov [esp+0x8], edx
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call CG_DObjGetWorldTagPos
+	call _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf
 	test eax, eax
-	jnz CalcMuzzlePoint_50
+	jnz _Z15CalcMuzzlePointiiPfj_50
 	lea edx, [ebx+0xe4]
 	mov eax, [ebx+0xe4]
 	mov [edi], eax
@@ -1799,41 +1799,41 @@ CalcMuzzlePoint_10:
 	mov eax, [edx+0x8]
 	mov [edi+0x8], eax
 	cmp esi, 0x3f
-	jle CalcMuzzlePoint_60
-CalcMuzzlePoint_50:
+	jle _Z15CalcMuzzlePointiiPfj_60
+_Z15CalcMuzzlePointiiPfj_50:
 	mov eax, 0x1
-CalcMuzzlePoint_40:
+_Z15CalcMuzzlePointiiPfj_40:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CalcMuzzlePoint_20:
+_Z15CalcMuzzlePointiiPfj_20:
 	cmp esi, [edx+0xe8]
-	jnz CalcMuzzlePoint_70
+	jnz _Z15CalcMuzzlePointiiPfj_70
 	mov edx, 0x1
-	jmp CalcMuzzlePoint_80
-CalcMuzzlePoint_60:
+	jmp _Z15CalcMuzzlePointiiPfj_80
+_Z15CalcMuzzlePointiiPfj_60:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call SL_ConvertToString
+	call _Z18SL_ConvertToStringj
 	mov [esp+0xc], esi
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_no_s_in_calcmuzz
 	mov dword [esp], 0x11
-	call Com_DPrintf
+	call _Z11Com_DPrintfiPKcz
 	mov eax, [ebx+0xd4]
 	test al, 0x8
-	jnz CalcMuzzlePoint_90
+	jnz _Z15CalcMuzzlePointiiPfj_90
 	test al, 0x4
-	jz CalcMuzzlePoint_100
+	jz _Z15CalcMuzzlePointiiPfj_100
 	movss xmm0, dword [_float_40_00000000]
 	addss xmm0, [edi+0x8]
 	movss [edi+0x8], xmm0
 	mov eax, 0x1
-	jmp CalcMuzzlePoint_40
-CalcMuzzlePoint_90:
+	jmp _Z15CalcMuzzlePointiiPfj_40
+_Z15CalcMuzzlePointiiPfj_90:
 	movss xmm0, dword [_float_11_00000000]
 	addss xmm0, [edi+0x8]
 	movss [edi+0x8], xmm0
@@ -1844,13 +1844,13 @@ CalcMuzzlePoint_90:
 	pop edi
 	pop ebp
 	ret
-CalcMuzzlePoint_100:
+_Z15CalcMuzzlePointiiPfj_100:
 	movss xmm0, dword [_float_60_00000000]
 	addss xmm0, [edi+0x8]
 	movss [edi+0x8], xmm0
 	mov eax, 0x1
-	jmp CalcMuzzlePoint_40
-CalcMuzzlePoint_30:
+	jmp _Z15CalcMuzzlePointiiPfj_40
+_Z15CalcMuzzlePointiiPfj_30:
 	lea edx, [eax+0x492e0]
 	mov eax, [eax+0x492e0]
 	mov [edi], eax
@@ -1859,12 +1859,12 @@ CalcMuzzlePoint_30:
 	mov eax, [edx+0x8]
 	mov [edi+0x8], eax
 	mov eax, 0x1
-	jmp CalcMuzzlePoint_40
+	jmp _Z15CalcMuzzlePointiiPfj_40
 	nop
 
 
 ;BulletTrajectoryEffects(int, int, float const*, float const*, int, unsigned int, unsigned char, int)
-BulletTrajectoryEffects:
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1881,28 +1881,28 @@ BulletTrajectoryEffects:
 	mov [esp], eax
 	lea ecx, [ebp-0x24]
 	mov eax, esi
-	call CalcMuzzlePoint
+	call _Z15CalcMuzzlePointiiPfj
 	test eax, eax
-	jz BulletTrajectoryEffects_10
+	jz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_10
 	mov eax, cg_tracerChance
 	mov eax, [eax]
 	pxor xmm0, xmm0
 	ucomiss xmm0, [eax+0xc]
-	jae BulletTrajectoryEffects_20
+	jae _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_20
 	mov edx, cgArray
 	mov eax, [edx+0x24]
 	test byte [eax+0x20], 0x6
-	jnz BulletTrajectoryEffects_30
-BulletTrajectoryEffects_90:
+	jnz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_30
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_90:
 	xor eax, eax
-BulletTrajectoryEffects_100:
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_100:
 	test eax, eax
-	jnz BulletTrajectoryEffects_20
+	jnz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_20
 	test dword [edx+0x461ec], 0x300
-	jz BulletTrajectoryEffects_40
+	jz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_40
 	mov eax, [edx+0x466d4]
 	test eax, eax
-	jz BulletTrajectoryEffects_40
+	jz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_40
 	mov eax, [edx+0x466d8]
 	lea edx, [eax*4]
 	shl eax, 0x5
@@ -1913,17 +1913,17 @@ BulletTrajectoryEffects_100:
 	mov edx, cg_entitiesArray
 	mov eax, [edx+eax+0x190]
 	test eax, eax
-	jnz BulletTrajectoryEffects_50
-BulletTrajectoryEffects_40:
-	call ms_rand
+	jnz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_50
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_40:
+	call _Z7ms_randv
 	cvtsi2ss xmm1, eax
 	mov eax, cg_tracerChance
 	mov eax, [eax]
 	movss xmm0, dword [_float_32768_00000000]
 	mulss xmm0, [eax+0xc]
 	ucomiss xmm1, xmm0
-	jb BulletTrajectoryEffects_60
-BulletTrajectoryEffects_20:
+	jb _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_60
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_20:
 	movss xmm0, dword [edi]
 	subss xmm0, [ebp-0x24]
 	movss [ebp-0x30], xmm0
@@ -1937,7 +1937,7 @@ BulletTrajectoryEffects_20:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x30]
 	mov [esp], eax
-	call Vec3NormalizeTo
+	call _Z15Vec3NormalizeToPKfPf
 	fstp st0
 	movss xmm5, dword [ebp-0x3c]
 	movss xmm3, dword [ebp-0x38]
@@ -1974,14 +1974,14 @@ BulletTrajectoryEffects_20:
 	addss xmm1, xmm0
 	movss xmm0, dword [_float_64_00000000]
 	ucomiss xmm0, xmm1
-	jbe BulletTrajectoryEffects_70
-BulletTrajectoryEffects_80:
+	jbe _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_70
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_80:
 	test byte [ebp-0x5d], 0x4
-	jnz BulletTrajectoryEffects_10
+	jnz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_10
 	mov eax, sv_clientSideBullets
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz BulletTrajectoryEffects_10
+	jnz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_10
 	mov dword [esp+0x14], 0x0
 	mov eax, [ebp+0x18]
 	mov [esp+0x10], eax
@@ -1990,18 +1990,18 @@ BulletTrajectoryEffects_80:
 	mov [esp+0x8], eax
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call DynEntCl_DynEntImpactEvent
-BulletTrajectoryEffects_10:
+	call _Z26DynEntCl_DynEntImpactEventiiPKfS0_ih
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_10:
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-BulletTrajectoryEffects_70:
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_70:
 	addss xmm0, xmm1
 	ucomiss xmm0, xmm2
-	ja BulletTrajectoryEffects_80
+	ja _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_80
 	movaps xmm0, xmm5
 	mulss xmm0, xmm1
 	addss xmm6, xmm0
@@ -2028,7 +2028,7 @@ BulletTrajectoryEffects_70:
 	addss xmm0, xmm1
 	sqrtss xmm0, xmm0
 	ucomiss xmm0, [_float_140_00000000]
-	ja BulletTrajectoryEffects_80
+	ja _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_80
 	movss xmm0, dword [_float__16_00000000]
 	mulss xmm5, xmm0
 	addss xmm5, xmm6
@@ -2046,35 +2046,35 @@ BulletTrajectoryEffects_70:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x3fe
 	mov [esp], esi
-	call CG_PlaySoundAlias
-	jmp BulletTrajectoryEffects_80
-BulletTrajectoryEffects_30:
+	call _Z17CG_PlaySoundAliasiiPKfP16snd_alias_list_t
+	jmp _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_80
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_30:
 	cmp ebx, [eax+0xe8]
-	jnz BulletTrajectoryEffects_90
+	jnz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_90
 	mov eax, 0x1
-	jmp BulletTrajectoryEffects_100
-BulletTrajectoryEffects_50:
+	jmp _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_100
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_50:
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov eax, [eax+0x430]
 	test eax, eax
-	jz BulletTrajectoryEffects_40
+	jz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_40
 	mov eax, cgArray
 	cmp ebx, [eax+0x466d8]
-	jnz BulletTrajectoryEffects_40
-	jmp BulletTrajectoryEffects_20
-BulletTrajectoryEffects_60:
+	jnz _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_40
+	jmp _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_20
+_Z23BulletTrajectoryEffectsiiPKfS0_ijhi_60:
 	mov [esp+0x8], edi
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call CG_SpawnTracer
-	jmp BulletTrajectoryEffects_20
+	call _Z14CG_SpawnTraceriPKfS0_
+	jmp _Z23BulletTrajectoryEffectsiiPKfS0_ijhi_20
 	nop
 
 
 ;CG_BulletHitEvent_Internal(int, int, int, int, float const*, float const*, float const*, int, int, unsigned char, int, int)
-CG_BulletHitEvent_Internal:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2087,36 +2087,36 @@ CG_BulletHitEvent_Internal:
 	mov esi, [ebp+0x14]
 	movzx eax, byte [ebp+0x20]
 	test byte [ebp+0x29], 0x8
-	jz CG_BulletHitEvent_Internal_10
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_10
 	movzx eax, al
 	mov [ebp-0x50], eax
-CG_BulletHitEvent_Internal_110:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_110:
 	xor ecx, ecx
 	xor ebx, ebx
-CG_BulletHitEvent_Internal_200:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_200:
 	test ecx, ecx
-	jz CG_BulletHitEvent_Internal_20
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_20
 	mov [esp+0xc], ecx
 	mov edx, [ebp+0x10]
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x3fe
 	mov [esp], edi
-	call CG_PlaySoundAlias
-CG_BulletHitEvent_Internal_20:
+	call _Z17CG_PlaySoundAliasiiPKfP16snd_alias_list_t
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_20:
 	test ebx, ebx
-	jz CG_BulletHitEvent_Internal_30
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_30
 	movss xmm1, dword [esi]
 	pxor xmm0, xmm0
 	ucomiss xmm1, xmm0
-	jp CG_BulletHitEvent_Internal_40
-	jnz CG_BulletHitEvent_Internal_40
+	jp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_40
+	jnz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_40
 	lea eax, [esi+0x4]
 	ucomiss xmm0, [esi+0x4]
-	jp CG_BulletHitEvent_Internal_50
-	jz CG_BulletHitEvent_Internal_60
-CG_BulletHitEvent_Internal_50:
+	jp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_50
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_60
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_50:
 	lea edx, [esi+0x8]
-CG_BulletHitEvent_Internal_80:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_80:
 	movss [ebp-0x3c], xmm1
 	lea esi, [ebp-0x3c]
 	mov eax, [eax]
@@ -2128,14 +2128,14 @@ CG_BulletHitEvent_Internal_80:
 	lea eax, [ebp-0x30]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call CG_RandomEffectAxis
+	call _Z19CG_RandomEffectAxisPKfPfS1_
 	mov eax, cg_marks_ents_player_only
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz CG_BulletHitEvent_Internal_70
+	jnz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_70
 	mov ecx, [ebp-0x58]
 	mov edx, cgArray
-CG_BulletHitEvent_Internal_100:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_100:
 	mov [esp+0x14], ecx
 	mov [esp+0x10], esi
 	mov eax, [ebp+0x10]
@@ -2144,8 +2144,8 @@ CG_BulletHitEvent_Internal_100:
 	mov [esp+0x8], eax
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call FX_PlayOrientedEffectWithMarkEntity
-CG_BulletHitEvent_Internal_30:
+	call _Z35FX_PlayOrientedEffectWithMarkEntityiPK11FxEffectDefiPKfPA3_S2_j
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_30:
 	mov eax, [ebp+0x24]
 	mov [esp+0x10], eax
 	mov edx, [ebp-0x50]
@@ -2160,94 +2160,94 @@ CG_BulletHitEvent_Internal_30:
 	mov ecx, [ebp+0xc]
 	mov edx, [ebp-0x54]
 	mov eax, edi
-	call BulletTrajectoryEffects
+	call _Z23BulletTrajectoryEffectsiiPKfS0_ijhi
 	add esp, 0x7c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_BulletHitEvent_Internal_60:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_60:
 	lea edx, [esi+0x8]
 	ucomiss xmm0, [esi+0x8]
-	jp CG_BulletHitEvent_Internal_80
-	jnz CG_BulletHitEvent_Internal_80
-	jmp CG_BulletHitEvent_Internal_30
-CG_BulletHitEvent_Internal_70:
+	jp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_80
+	jnz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_80
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_30
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_70:
 	mov edx, cgArray
 	mov eax, [edx+0x24]
 	test byte [eax+0x20], 0x6
-	jnz CG_BulletHitEvent_Internal_90
-CG_BulletHitEvent_Internal_120:
+	jnz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_90
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_120:
 	xor eax, eax
-CG_BulletHitEvent_Internal_130:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_130:
 	mov ecx, 0x3ff
 	test eax, eax
 	cmovnz ecx, [ebp-0x58]
-	jmp CG_BulletHitEvent_Internal_100
-CG_BulletHitEvent_Internal_10:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_100
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_10:
 	movzx eax, al
 	mov [ebp-0x50], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov edx, eax
 	mov eax, [ebp-0x50]
 	shr eax, 0x2
 	mov ecx, eax
 	and cl, 0x1
 	cmp dword [edx+0x138], 0x8
-	ja CG_BulletHitEvent_Internal_110
+	ja _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_110
 	mov eax, [edx+0x138]
-	jmp dword [eax*4+CG_BulletHitEvent_Internal_jumptab_0]
-CG_BulletHitEvent_Internal_40:
+	jmp dword [eax*4+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_jumptab_0]
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_40:
 	lea eax, [esi+0x4]
 	lea edx, [esi+0x8]
-	jmp CG_BulletHitEvent_Internal_80
-CG_BulletHitEvent_Internal_90:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_80
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_90:
 	mov ecx, [ebp-0x54]
 	cmp ecx, [eax+0xe8]
-	jnz CG_BulletHitEvent_Internal_120
+	jnz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_120
 	mov eax, 0x1
-	jmp CG_BulletHitEvent_Internal_130
-CG_BulletHitEvent_Internal_260:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_130
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_260:
 	test cl, cl
-	jz CG_BulletHitEvent_Internal_140
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_140
 	mov edx, [ebp+0x18]
 	mov ebx, cgMedia
 	mov ecx, [ebx+edx*4+0x520]
 	mov eax, 0x1
 	mov [ebp-0x4c], eax
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_270:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_270:
 	test cl, cl
-	jz CG_BulletHitEvent_Internal_160
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_160
 	mov eax, [ebp+0x18]
 	mov edx, cgMedia
 	mov ecx, [edx+eax*4+0x594]
 	mov eax, 0x3
 	mov [ebp-0x4c], eax
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_280:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_280:
 	test cl, cl
-	jz CG_BulletHitEvent_Internal_170
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_170
 	mov ebx, [ebp+0x18]
 	mov eax, cgMedia
 	mov ecx, [eax+ebx*4+0x608]
 	mov eax, 0x7
 	mov [ebp-0x4c], eax
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_300:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_300:
 	mov eax, [edx+0x208]
 	test eax, eax
-	jz CG_BulletHitEvent_Internal_180
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_180
 	mov edx, [ebp+0x18]
 	mov ecx, [eax+edx*4]
-CG_BulletHitEvent_Internal_250:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_250:
 	mov dword [ebp-0x4c], 0x8
-CG_BulletHitEvent_Internal_150:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150:
 	cmp dword [ebp+0x18], 0x7
-	jz CG_BulletHitEvent_Internal_190
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_190
 	mov edx, cgMedia
 	mov eax, [edx+0x2754]
 	mov edx, [eax+0x4]
@@ -2258,53 +2258,53 @@ CG_BulletHitEvent_Internal_150:
 	mov ebx, [ebp+0x18]
 	lea eax, [eax+ebx*4]
 	mov ebx, [eax+edx]
-CG_BulletHitEvent_Internal_230:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_230:
 	test ebx, ebx
-	jz CG_BulletHitEvent_Internal_200
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_200
 	mov eax, cg_blood
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz CG_BulletHitEvent_Internal_200
+	jnz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_200
 	cmp dword [ebp+0x18], 0x7
-	jnz CG_BulletHitEvent_Internal_200
+	jnz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_200
 	mov eax, cgMedia
 	mov ebx, [eax+0x2758]
-	jmp CG_BulletHitEvent_Internal_200
-CG_BulletHitEvent_Internal_290:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_200
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_290:
 	test cl, cl
-	jz CG_BulletHitEvent_Internal_210
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_210
 	mov edx, [ebp+0x18]
 	mov ebx, cgMedia
 	mov ecx, [ebx+edx*4+0x67c]
 	mov eax, 0x5
 	mov [ebp-0x4c], eax
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_320:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_320:
 	mov edx, [ebp+0x18]
 	mov ebx, cgMedia
 	mov ecx, [ebx+edx*4+0x2dc]
 	mov dword [ebp-0x4c], 0xa
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_310:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_310:
 	mov ebx, [ebp+0x18]
 	mov eax, cgMedia
 	mov ecx, [eax+ebx*4+0x268]
 	mov dword [ebp-0x4c], 0x9
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_330:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_330:
 	mov ecx, [edx+0x59c]
 	mov dword [ebp-0x4c], 0xb
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_190:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_190:
 	test byte [ebp-0x50], 0x2
-	jz CG_BulletHitEvent_Internal_220
+	jz _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_220
 	mov eax, [ebp-0x50]
 	and eax, 0x1
 	cmp eax, 0x1
 	sbb ebx, ebx
 	and ebx, 0xfffffffe
 	add ebx, 0x3
-CG_BulletHitEvent_Internal_240:
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_240:
 	mov eax, cgMedia
 	mov eax, [eax+0x2754]
 	mov [ebp-0x5c], eax
@@ -2316,61 +2316,61 @@ CG_BulletHitEvent_Internal_240:
 	mov ebx, [ebp-0x5c]
 	add eax, [ebx+0x4]
 	mov ebx, [eax+0x74]
-	jmp CG_BulletHitEvent_Internal_230
-CG_BulletHitEvent_Internal_220:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_230
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_220:
 	mov ebx, [ebp-0x50]
 	and ebx, 0x1
 	neg ebx
 	and ebx, 0x2
-	jmp CG_BulletHitEvent_Internal_240
-CG_BulletHitEvent_Internal_160:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_240
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_160:
 	mov ebx, [ebp+0x18]
 	mov eax, cgMedia
 	mov ecx, [eax+ebx*4+0x3c4]
 	mov eax, 0x2
 	mov [ebp-0x4c], eax
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_170:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_170:
 	mov edx, [ebp+0x18]
 	mov ebx, cgMedia
 	mov ecx, [ebx+edx*4+0x438]
 	mov eax, 0x6
 	mov [ebp-0x4c], eax
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_210:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_210:
 	mov eax, [ebp+0x18]
 	mov edx, cgMedia
 	mov ecx, [edx+eax*4+0x4ac]
 	mov eax, 0x4
 	mov [ebp-0x4c], eax
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_140:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_140:
 	mov eax, [ebp+0x18]
 	mov edx, cgMedia
 	mov ecx, [edx+eax*4+0x350]
 	xor eax, eax
 	mov [ebp-0x4c], eax
-	jmp CG_BulletHitEvent_Internal_150
-CG_BulletHitEvent_Internal_180:
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_150
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_180:
 	xor ecx, ecx
-	jmp CG_BulletHitEvent_Internal_250
+	jmp _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_250
 	nop
 	
 	
-CG_BulletHitEvent_Internal_jumptab_0:
-	dd CG_BulletHitEvent_Internal_110
-	dd CG_BulletHitEvent_Internal_260
-	dd CG_BulletHitEvent_Internal_270
-	dd CG_BulletHitEvent_Internal_280
-	dd CG_BulletHitEvent_Internal_290
-	dd CG_BulletHitEvent_Internal_300
-	dd CG_BulletHitEvent_Internal_310
-	dd CG_BulletHitEvent_Internal_320
-	dd CG_BulletHitEvent_Internal_330
+_Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_jumptab_0:
+	dd _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_110
+	dd _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_260
+	dd _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_270
+	dd _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_280
+	dd _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_290
+	dd _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_300
+	dd _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_310
+	dd _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_320
+	dd _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii_330
 
 
 ;CG_DrawTracer(float const*, float const*, refdef_s const*)
-CG_DrawTracer:
+_Z13CG_DrawTracerPKfS0_PK8refdef_s:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -2394,11 +2394,11 @@ CG_DrawTracer:
 	movss xmm2, dword [eax+0xc]
 	movss [ebp-0x4c], xmm2
 	ucomiss xmm6, [_float_1_00000000]
-	jnz CG_DrawTracer_10
-	jp CG_DrawTracer_10
+	jnz _Z13CG_DrawTracerPKfS0_PK8refdef_s_10
+	jp _Z13CG_DrawTracerPKfS0_PK8refdef_s_10
 	movaps xmm3, xmm0
 	movaps xmm4, xmm0
-CG_DrawTracer_100:
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_100:
 	mov eax, [ecx]
 	mov [ebp-0x3c], eax
 	mov eax, [ecx+0x4]
@@ -2439,12 +2439,12 @@ CG_DrawTracer_100:
 	mov [ebp-0xc], eax
 	lea eax, [ebp-0x3c]
 	mov [esp], eax
-	call FX_Beam_Add
+	call _Z11FX_Beam_AddP6FxBeam
 	add esp, 0x64
 	pop ebx
 	pop ebp
 	ret
-CG_DrawTracer_10:
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_10:
 	movss xmm3, dword [edx]
 	movaps xmm0, xmm3
 	subss xmm0, [ecx]
@@ -2471,62 +2471,62 @@ CG_DrawTracer_10:
 	sqrtss xmm3, xmm3
 	pxor xmm1, xmm1
 	ucomiss xmm7, xmm1
-	jp CG_DrawTracer_20
-	jz CG_DrawTracer_30
-CG_DrawTracer_20:
+	jp _Z13CG_DrawTracerPKfS0_PK8refdef_s_20
+	jz _Z13CG_DrawTracerPKfS0_PK8refdef_s_30
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_20:
 	subss xmm0, xmm7
 	subss xmm3, xmm7
-CG_DrawTracer_30:
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_30:
 	ucomiss xmm0, xmm1
-	jbe CG_DrawTracer_40
+	jbe _Z13CG_DrawTracerPKfS0_PK8refdef_s_40
 	movss xmm2, dword [ebp-0x4c]
 	ucomiss xmm2, xmm1
-	jbe CG_DrawTracer_50
+	jbe _Z13CG_DrawTracerPKfS0_PK8refdef_s_50
 	divss xmm0, xmm2
 	mulss xmm0, xmm6
 	movss xmm2, dword [_float_1_00000000]
 	ucomiss xmm2, xmm0
-	ja CG_DrawTracer_60
+	ja _Z13CG_DrawTracerPKfS0_PK8refdef_s_60
 	ucomiss xmm0, xmm6
-	ja CG_DrawTracer_50
-CG_DrawTracer_110:
+	ja _Z13CG_DrawTracerPKfS0_PK8refdef_s_50
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_110:
 	movss xmm4, dword [ebp-0x50]
 	mulss xmm4, xmm0
-CG_DrawTracer_120:
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_120:
 	ucomiss xmm3, xmm1
-	jbe CG_DrawTracer_70
+	jbe _Z13CG_DrawTracerPKfS0_PK8refdef_s_70
 	movss xmm0, dword [ebp-0x4c]
 	ucomiss xmm0, xmm1
-	jbe CG_DrawTracer_80
+	jbe _Z13CG_DrawTracerPKfS0_PK8refdef_s_80
 	divss xmm3, xmm0
 	mulss xmm3, xmm6
 	movss xmm2, dword [_float_1_00000000]
 	ucomiss xmm2, xmm3
-	ja CG_DrawTracer_90
+	ja _Z13CG_DrawTracerPKfS0_PK8refdef_s_90
 	minss xmm6, xmm3
-CG_DrawTracer_80:
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_80:
 	movss xmm3, dword [ebp-0x50]
 	mulss xmm3, xmm6
-	jmp CG_DrawTracer_100
-CG_DrawTracer_50:
+	jmp _Z13CG_DrawTracerPKfS0_PK8refdef_s_100
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_50:
 	movaps xmm0, xmm6
-	jmp CG_DrawTracer_110
-CG_DrawTracer_40:
+	jmp _Z13CG_DrawTracerPKfS0_PK8refdef_s_110
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_40:
 	movss xmm4, dword [ebp-0x50]
-	jmp CG_DrawTracer_120
-CG_DrawTracer_90:
+	jmp _Z13CG_DrawTracerPKfS0_PK8refdef_s_120
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_90:
 	movaps xmm6, xmm2
-	jmp CG_DrawTracer_80
-CG_DrawTracer_60:
+	jmp _Z13CG_DrawTracerPKfS0_PK8refdef_s_80
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_60:
 	movaps xmm0, xmm2
-	jmp CG_DrawTracer_110
-CG_DrawTracer_70:
+	jmp _Z13CG_DrawTracerPKfS0_PK8refdef_s_110
+_Z13CG_DrawTracerPKfS0_PK8refdef_s_70:
 	movss xmm3, dword [ebp-0x50]
-	jmp CG_DrawTracer_100
+	jmp _Z13CG_DrawTracerPKfS0_PK8refdef_s_100
 
 
 ;CG_FireWeapon(int, centity_s*, int, unsigned short, unsigned int, playerState_s const*)
-CG_FireWeapon:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2540,15 +2540,15 @@ CG_FireWeapon:
 	mov [ebp-0x28c], edx
 	mov ecx, [ebp+0x18]
 	test ecx, ecx
-	jnz CG_FireWeapon_10
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_10
 	mov ecx, [edx+0xc4]
 	mov [ebp+0x18], ecx
 	test ecx, ecx
-	jz CG_FireWeapon_20
-CG_FireWeapon_10:
-	call BG_GetNumWeapons
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_20
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_10:
+	call _Z16BG_GetNumWeaponsv
 	cmp eax, [ebp+0x18]
-	jbe CG_FireWeapon_30
+	jbe _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_30
 	mov eax, [ebp+0x18]
 	shl eax, 0x6
 	mov edx, [ebp+0x18]
@@ -2557,7 +2557,7 @@ CG_FireWeapon_10:
 	add eax, ecx
 	mov [ebp-0x290], eax
 	mov [esp], edx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov [ebp-0x288], eax
 	mov eax, [ebp+0xc]
 	mov byte [eax+0x1c1], 0x1
@@ -2566,71 +2566,71 @@ CG_FireWeapon_10:
 	mov edx, [esi+0x24]
 	mov ecx, [edx+0x20]
 	test cl, 0x6
-	jnz CG_FireWeapon_40
-CG_FireWeapon_280:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_40
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_280:
 	xor eax, eax
-CG_FireWeapon_290:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_290:
 	mov [ebp-0x291], al
 	movzx eax, al
 	mov [ebp-0x284], eax
 	mov eax, sv_clientSideBullets
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	movzx edi, word [ebp-0x294]
 	and cl, 0x6
-	jz CG_FireWeapon_60
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_60
 	cmp ebx, [edx+0xe8]
-	jz CG_FireWeapon_70
-CG_FireWeapon_60:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_70
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_60:
 	xor eax, eax
-CG_FireWeapon_510:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_510:
 	test eax, eax
-	jnz CG_FireWeapon_80
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_80
 	mov ecx, [ebp+0xc]
 	mov eax, [ecx+0xd0]
 	cmp eax, 0x1
-	jz CG_FireWeapon_90
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_90
 	cmp eax, 0xb
-	jz CG_FireWeapon_100
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_100
 	cmp eax, 0xe
-	jz CG_FireWeapon_110
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_110
 	cmp eax, 0xc
-	jz CG_FireWeapon_110
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_110
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_unknown_etype_i_
 	mov dword [esp], 0xe
-	call Com_PrintError
-CG_FireWeapon_50:
+	call _Z14Com_PrintErroriPKcz
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50:
 	cmp byte [ebp-0x291], 0x0
-	jnz CG_FireWeapon_120
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_120
 	mov ecx, [ebp-0x28c]
 	cmp dword [ecx+0x4], 0xb
-	jz CG_FireWeapon_130
-CG_FireWeapon_310:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_130
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_310:
 	cmp dword [ecx+0x4], 0xc
-	jz CG_FireWeapon_140
-CG_FireWeapon_480:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_140
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_480:
 	mov ecx, [ebp-0x288]
 	mov edx, [ecx+0x170]
 	mov eax, [ebp-0x284]
 	test eax, eax
-	jnz CG_FireWeapon_150
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_150
 	cmp dword [ebp+0x10], 0x1b
-	jz CG_FireWeapon_160
-CG_FireWeapon_240:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_160
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_240:
 	test edx, edx
-	jz CG_FireWeapon_170
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_170
 	mov ebx, edx
-CG_FireWeapon_490:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_490:
 	mov esi, [ebp-0x284]
 	test esi, esi
-	jz CG_FireWeapon_180
-CG_FireWeapon_260:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_180
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_260:
 	mov eax, [ebp-0x290]
 	mov edx, [eax]
 	test edx, edx
-	jz CG_FireWeapon_190
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_190
 	lea esi, [ebp-0x34]
 	mov [esp+0xc], esi
 	movzx eax, word [ebp-0x294]
@@ -2639,10 +2639,10 @@ CG_FireWeapon_260:
 	mov eax, cgArray
 	add eax, 0xfd234
 	mov [esp], eax
-	call CG_DObjGetWorldTagPos
+	call _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf
 	test eax, eax
-	jz CG_FireWeapon_200
-CG_FireWeapon_360:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_200
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_360:
 	mov [esp+0xc], ebx
 	mov [esp+0x8], esi
 	mov edx, [ebp-0x28c]
@@ -2650,78 +2650,78 @@ CG_FireWeapon_360:
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_PlaySoundAlias
+	call _Z17CG_PlaySoundAliasiiPKfP16snd_alias_list_t
 	mov edx, eax
 	mov eax, [ebp+0xc]
 	cmp dword [eax+0xd0], 0x1
-	jnz CG_FireWeapon_170
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_170
 	mov ecx, [ebp-0x288]
 	mov ebx, [ecx+0x550]
 	test ebx, ebx
-	jz CG_FireWeapon_210
-CG_FireWeapon_170:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_210
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_170:
 	mov ecx, [ebp+0x18]
 	mov [esp], ecx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ecx, [eax+0x4e8]
 	test ecx, ecx
-	jz CG_FireWeapon_220
-CG_FireWeapon_380:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_220
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_380:
 	mov edx, [ebp-0x284]
 	test edx, edx
-	jnz CG_FireWeapon_230
-CG_FireWeapon_20:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_230
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_20:
 	add esp, 0x2dc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_FireWeapon_30:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_30:
 	mov dword [esp+0x4], _cstring_cg_fireweapon_we
 	mov dword [esp], 0x2
-	call Com_Error
+	call _Z9Com_Error11errorParm_tPKcz
 	add esp, 0x2dc
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_FireWeapon_150:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_150:
 	mov eax, [ecx+0x174]
 	test eax, eax
 	cmovnz edx, eax
 	cmp dword [ebp+0x10], 0x1b
-	jnz CG_FireWeapon_240
-CG_FireWeapon_160:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_240
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_160:
 	mov edi, [ebp-0x284]
 	test edi, edi
-	jz CG_FireWeapon_250
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_250
 	mov eax, [ebp-0x288]
 	mov ebx, [eax+0x18c]
 	test ebx, ebx
-	jnz CG_FireWeapon_260
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_260
 	mov ecx, eax
-	jmp CG_FireWeapon_270
-CG_FireWeapon_40:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_270
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_40:
 	cmp ebx, [edx+0xe8]
-	jnz CG_FireWeapon_280
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_280
 	mov eax, 0x1
-	jmp CG_FireWeapon_290
-CG_FireWeapon_120:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_290
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_120:
 	mov edx, [ebp-0x290]
 	mov eax, [edx]
 	test eax, eax
-	jz CG_FireWeapon_300
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_300
 	mov [esp], eax
-	call DObjClearSkel
-CG_FireWeapon_300:
+	call _Z13DObjClearSkelPK6DObj_s
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_300:
 	mov ebx, cgArray
 	lea eax, [ebx+0xfd25c]
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x50460]
 	mov [esp], eax
-	call AxisToAngles
+	call _Z12AxisToAnglesPA3_KfPf
 	mov eax, [ebx+0x50484]
 	mov [ebx+0xfd250], eax
 	mov eax, [ebx+0x50488]
@@ -2734,85 +2734,85 @@ CG_FireWeapon_300:
 	mov [esp+0x4], eax
 	add ebx, 0x4613c
 	mov [esp], ebx
-	call BG_WeaponFireRecoil
+	call _Z19BG_WeaponFireRecoilPK13playerState_sPfS2_
 	mov ecx, [ebp-0x28c]
 	cmp dword [ecx+0x4], 0xb
-	jnz CG_FireWeapon_310
-CG_FireWeapon_130:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_310
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_130:
 	mov eax, [ebp+0x1c]
 	test dword [eax+0xb0], 0x300
-	jz CG_FireWeapon_320
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_320
 	mov eax, [eax+0x59c]
 	cmp eax, [ecx]
-	jz CG_FireWeapon_330
-CG_FireWeapon_320:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_330
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_320:
 	xor edi, edi
-CG_FireWeapon_520:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_520:
 	movzx esi, word [ebp-0x294]
 	mov ecx, [ebp-0x28c]
 	mov ebx, [ecx]
 	mov eax, [ebp+0x18]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	test edi, edi
-	jz CG_FireWeapon_340
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_340
 	mov eax, [eax+0x14c]
-CG_FireWeapon_500:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_500:
 	test eax, eax
-	jz CG_FireWeapon_350
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_350
 	mov [esp+0xc], esi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_PlayBoltedEffect
+	call _Z19CG_PlayBoltedEffectiPK11FxEffectDefij
 	mov ecx, [ebp-0x28c]
-	jmp CG_FireWeapon_310
-CG_FireWeapon_230:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_310
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_230:
 	mov ebx, cgArray
 	mov eax, [ebx+0x46224]
 	mov [esp], eax
-	call BG_WeaponIsClipOnly
+	call _Z19BG_WeaponIsClipOnlyi
 	test eax, eax
-	jz CG_FireWeapon_20
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_20
 	mov eax, [ebx+0x46224]
 	mov [esp], eax
-	call BG_ClipForWeapon
+	call _Z16BG_ClipForWeaponi
 	mov eax, [ebx+eax*4+0x46498]
 	test eax, eax
-	jnz CG_FireWeapon_20
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_20
 	mov eax, [ebx+0x46224]
 	mov [esp], eax
-	call BG_AmmoForWeapon
+	call _Z16BG_AmmoForWeaponi
 	mov eax, [ebx+eax*4+0x46298]
 	test eax, eax
-	jnz CG_FireWeapon_20
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_20
 	mov eax, [ebx+0x46224]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov eax, [eax+0x5a8]
 	test eax, eax
-	jnz CG_FireWeapon_20
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_20
 	mov dword [esp+0x8], 0x0
 	mov eax, [ebx+0x46224]
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x4613c]
 	mov [esp], eax
-	call BG_TakePlayerWeapon
+	call _Z19BG_TakePlayerWeaponP13playerState_sji
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_OutOfAmmoChange
-	jmp CG_FireWeapon_20
-CG_FireWeapon_180:
+	call _Z18CG_OutOfAmmoChangei
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_20
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_180:
 	mov edx, [ebp+0x8]
 	mov [esp+0x4], edx
 	mov ecx, [ebp-0x28c]
 	mov eax, [ecx]
 	mov [esp], eax
-	call Com_GetClientDObj
+	call _Z17Com_GetClientDObjii
 	mov edx, eax
 	test eax, eax
-	jz CG_FireWeapon_190
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_190
 	lea esi, [ebp-0x34]
 	mov [esp+0xc], esi
 	movzx eax, word [ebp-0x294]
@@ -2820,13 +2820,13 @@ CG_FireWeapon_180:
 	mov [esp+0x4], edx
 	mov eax, [ebp+0xc]
 	mov [esp], eax
-	call CG_DObjGetWorldTagPos
+	call _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf
 	test eax, eax
-	jnz CG_FireWeapon_360
-	jmp CG_FireWeapon_200
-CG_FireWeapon_190:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_360
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_200
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_190:
 	lea esi, [ebp-0x34]
-CG_FireWeapon_200:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_200:
 	mov [esp+0x8], esi
 	mov eax, cgArray
 	mov eax, [eax+0x46128]
@@ -2834,9 +2834,9 @@ CG_FireWeapon_200:
 	mov eax, [ebp-0x28c]
 	add eax, 0xc
 	mov [esp], eax
-	call BG_EvaluateTrajectory
-	jmp CG_FireWeapon_360
-CG_FireWeapon_110:
+	call _Z21BG_EvaluateTrajectoryPK12trajectory_tiPf
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_360
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_110:
 	mov edx, [ebp-0x288]
 	mov eax, [edx+0x71c]
 	mov [ebp-0x28], eax
@@ -2850,9 +2850,9 @@ CG_FireWeapon_110:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_GetBoneIndex
+	call _Z15CG_GetBoneIndexiijPh
 	test eax, eax
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	lea eax, [ebp-0x88]
 	mov [esp+0xc], eax
 	movzx eax, byte [ebp-0x19]
@@ -2860,9 +2860,9 @@ CG_FireWeapon_110:
 	mov [esp+0x4], ebx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call FX_GetBoneOrientation
+	call _Z21FX_GetBoneOrientationiiiP13orientation_t
 	test al, al
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	mov ebx, [ebp-0x88]
 	mov [ebp-0x40], ebx
 	mov ecx, [ebp-0x84]
@@ -2875,27 +2875,27 @@ CG_FireWeapon_110:
 	pxor xmm0, xmm0
 	movss [ebp-0x280], xmm0
 	mov byte [ebp-0x26d], 0x0
-CG_FireWeapon_400:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_400:
 	mov eax, [ebp-0x288]
 	movss xmm0, dword [eax+0x71c]
 	movss xmm1, dword [ebp-0x24]
 	subss xmm1, xmm0
 	mulss xmm1, [ebp-0x280]
 	addss xmm1, xmm0
-	jmp CG_FireWeapon_370
-CG_FireWeapon_220:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_370
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_220:
 	mov eax, [ebp+0x10]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x28c]
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_EjectWeaponBrass
-	jmp CG_FireWeapon_380
-CG_FireWeapon_80:
+	call _Z19CG_EjectWeaponBrassiPK13entityState_si
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_380
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_80:
 	mov edx, [ebp+0x1c]
 	mov [esp], edx
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	lea esi, [eax+0x400]
 	mov ebx, cgArray
 	movss xmm0, dword [ebx+0xfd764]
@@ -2917,14 +2917,14 @@ CG_FireWeapon_80:
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x1c]
 	mov [esp], ecx
-	call BG_GetSpreadForWeapon
+	call _Z21BG_GetSpreadForWeaponPK13playerState_sPK9WeaponDefPfS5_
 	lea eax, [ebp-0x40]
 	mov [esp+0x8], eax
 	mov eax, [ebp+0x1c]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_GetPlayerViewOrigin
+	call _Z22CG_GetPlayerViewOriginiPK13playerState_sPf
 	mov eax, [ebx+0x50434]
 	mov [ebp-0x58], eax
 	mov eax, [ebx+0x50438]
@@ -2938,12 +2938,12 @@ CG_FireWeapon_80:
 	mov [esp+0x4], esi
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_GetBoneIndex
+	call _Z15CG_GetBoneIndexiijPh
 	test eax, eax
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	mov eax, [ebx+0x46138]
 	test eax, eax
-	jnz CG_FireWeapon_390
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_390
 	lea eax, [ebp-0xb8]
 	mov [esp+0xc], eax
 	movzx eax, byte [ebp-0x19]
@@ -2951,9 +2951,9 @@ CG_FireWeapon_80:
 	mov [esp+0x4], esi
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call FX_GetBoneOrientation
+	call _Z21FX_GetBoneOrientationiiiP13orientation_t
 	test al, al
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	mov eax, [ebp-0xb8]
 	mov [ebp-0x4c], eax
 	mov eax, [ebp-0xb4]
@@ -2968,9 +2968,9 @@ CG_FireWeapon_80:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x58]
 	mov [esp], eax
-	call AngleVectors
-CG_FireWeapon_940:
-	call ms_rand
+	call _Z12AngleVectorsPKfPfS1_S1_
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_940:
+	call _Z7ms_randv
 	cvtsi2ss xmm1, eax
 	mov eax, cg_firstPersonTracerChance
 	mov eax, [eax]
@@ -2978,17 +2978,17 @@ CG_FireWeapon_940:
 	mulss xmm0, [eax+0xc]
 	ucomiss xmm0, xmm1
 	seta byte [ebp-0x26d]
-CG_FireWeapon_870:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_870:
 	mov eax, [ebp-0x27c]
 	test eax, eax
-	jnz CG_FireWeapon_400
-CG_FireWeapon_920:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_400
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_920:
 	movss xmm0, dword [ebp-0x28]
 	movss xmm1, dword [ebp-0x24]
 	subss xmm1, xmm0
 	mulss xmm1, [ebp-0x280]
 	addss xmm1, xmm0
-CG_FireWeapon_370:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_370:
 	cld
 	mov ecx, 0x10
 	xor eax, eax
@@ -3002,17 +3002,17 @@ CG_FireWeapon_370:
 	mov ecx, [ebp-0x288]
 	mov eax, [ecx+0x4e0]
 	test eax, eax
-	jnz CG_FireWeapon_410
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_410
 	mov eax, 0x1
-CG_FireWeapon_930:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_930:
 	mov [ebp-0x12c], eax
 	mov edx, [ebp-0x288]
 	cmp dword [edx+0x130], 0x3
-	jz CG_FireWeapon_420
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_420
 	mov dword [ebp-0x278], 0x1
 	movss xmm0, dword [_float_8192_00000000]
 	movss [ebp-0x260], xmm0
-CG_FireWeapon_1020:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1020:
 	mov ebx, [ebp-0x40]
 	mov [ebp-0x128], ebx
 	mov ecx, [ebp-0x3c]
@@ -3021,13 +3021,13 @@ CG_FireWeapon_1020:
 	mov [ebp-0x120], edx
 	mov eax, [ebp-0x278]
 	test eax, eax
-	jle CG_FireWeapon_50
+	jle _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	cvtss2sd xmm1, xmm1
 	movsd xmm0, qword [_double_0_01745329]
 	mulsd xmm0, xmm1
 	movsd [ebp-0x220], xmm0
 	mov dword [ebp-0x274], 0x0
-CG_FireWeapon_630:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_630:
 	mov eax, [ebp-0x7c]
 	mov [ebp-0x104], eax
 	mov eax, [ebp-0x78]
@@ -3050,17 +3050,17 @@ CG_FireWeapon_630:
 	neg ebx
 	mov edi, 0x27
 	lea esi, [ebp-0x160]
-	jmp CG_FireWeapon_430
-CG_FireWeapon_460:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_430
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_460:
 	cmp edi, 0x1f
-	jg CG_FireWeapon_440
+	jg _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_440
 	mov [esi], ebx
-CG_FireWeapon_440:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_440:
 	sub edi, 0x1
 	sub esi, 0x4
 	cmp edi, 0xffffffff
-	jz CG_FireWeapon_450
-CG_FireWeapon_430:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_450
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_430:
 	mov eax, 0x834e0b5f
 	imul ebx
 	mov ecx, edx
@@ -3097,32 +3097,32 @@ CG_FireWeapon_430:
 	sub eax, edx
 	add eax, ecx
 	sub ebx, eax
-	jns CG_FireWeapon_460
+	jns _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_460
 	lea ebx, [ebx+0x7fffffff]
-	jmp CG_FireWeapon_460
-CG_FireWeapon_140:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_460
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_140:
 	movzx esi, word [ebp-0x294]
 	mov ebx, [ecx]
 	mov eax, [ebp+0x18]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov eax, [eax+0x150]
 	test eax, eax
-	jz CG_FireWeapon_470
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_470
 	mov [esp+0xc], esi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_PlayBoltedEffect
-CG_FireWeapon_470:
+	call _Z19CG_PlayBoltedEffectiPK11FxEffectDefij
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_470:
 	mov ecx, [ebp+0x10]
 	mov [esp+0x8], ecx
 	mov eax, [ebp-0x28c]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_EjectWeaponBrass
+	call _Z19CG_EjectWeaponBrassiPK13entityState_si
 	mov eax, heli_barrelRotation
 	mov eax, [eax]
 	mov eax, [eax+0xc]
@@ -3132,25 +3132,25 @@ CG_FireWeapon_470:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call Veh_IncTurretBarrelRoll
-	jmp CG_FireWeapon_480
-CG_FireWeapon_250:
+	call _Z23Veh_IncTurretBarrelRolliif
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_480
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_250:
 	mov ecx, [ebp-0x288]
-CG_FireWeapon_270:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_270:
 	mov ebx, [ecx+0x188]
 	test ebx, ebx
-	jnz CG_FireWeapon_490
-	jmp CG_FireWeapon_240
-CG_FireWeapon_340:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_490
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_240
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_340:
 	mov eax, [eax+0x150]
-	jmp CG_FireWeapon_500
-CG_FireWeapon_210:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_500
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_210:
 	cmp dword [ecx+0x12c], 0x1
-	jz CG_FireWeapon_170
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_170
 	lea eax, [ebp-0x20]
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call SND_GetKnownLength
+	call _Z18SND_GetKnownLengthiPi
 	mov eax, [ebp-0x20]
 	mov [esp+0xc], eax
 	mov [esp+0x8], esi
@@ -3158,16 +3158,16 @@ CG_FireWeapon_210:
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_CompassAddWeaponPingInfo
-	jmp CG_FireWeapon_170
-CG_FireWeapon_70:
+	call _Z27CG_CompassAddWeaponPingInfoiPK9centity_sPKfi
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_170
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_70:
 	mov eax, 0x1
-	jmp CG_FireWeapon_510
-CG_FireWeapon_330:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_510
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_330:
 	mov dword [ebp-0x284], 0x1
 	mov edi, 0x1
-	jmp CG_FireWeapon_520
-CG_FireWeapon_450:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_520
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_450:
 	mov eax, 0x834e0b5f
 	imul ebx
 	lea esi, [edx+ebx]
@@ -3203,8 +3203,8 @@ CG_FireWeapon_450:
 	sub eax, edx
 	add eax, esi
 	sub ecx, eax
-	js CG_FireWeapon_530
-CG_FireWeapon_890:
+	js _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_530
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_890:
 	mov eax, [ebp-0x1fc]
 	lea edx, [eax+0x3ffffff]
 	cmp eax, 0xffffffff
@@ -3218,26 +3218,26 @@ CG_FireWeapon_890:
 	subsd xmm0, xmm1
 	pxor xmm4, xmm4
 	ucomisd xmm0, xmm4
-	jb CG_FireWeapon_540
+	jb _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_540
 	cvtsd2ss xmm0, xmm1
-CG_FireWeapon_880:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_880:
 	movaps xmm5, xmm0
 	mulss xmm5, [_float_360_00000000]
 	mov ebx, ecx
 	neg ebx
 	mov edi, 0x27
 	lea esi, [ebp-0x160]
-	jmp CG_FireWeapon_550
-CG_FireWeapon_580:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_550
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_580:
 	cmp edi, 0x1f
-	jg CG_FireWeapon_560
+	jg _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_560
 	mov [esi], ebx
-CG_FireWeapon_560:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_560:
 	sub edi, 0x1
 	sub esi, 0x4
 	cmp edi, 0xffffffff
-	jz CG_FireWeapon_570
-CG_FireWeapon_550:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_570
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_550:
 	mov eax, 0x834e0b5f
 	imul ebx
 	mov ecx, edx
@@ -3274,10 +3274,10 @@ CG_FireWeapon_550:
 	sub eax, edx
 	add eax, ecx
 	sub ebx, eax
-	jns CG_FireWeapon_580
+	jns _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_580
 	lea ebx, [ebx+0x7fffffff]
-	jmp CG_FireWeapon_580
-CG_FireWeapon_570:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_580
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_570:
 	mov eax, [ebp-0x1fc]
 	lea edx, [eax+0x3ffffff]
 	cmp eax, 0xffffffff
@@ -3288,10 +3288,10 @@ CG_FireWeapon_570:
 	movapd xmm0, xmm3
 	subsd xmm0, xmm1
 	ucomisd xmm0, xmm4
-	jb CG_FireWeapon_590
+	jb _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_590
 	cvtsd2ss xmm1, xmm1
 	movss [ebp-0x214], xmm1
-CG_FireWeapon_910:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_910:
 	cvtss2sd xmm0, xmm5
 	mulsd xmm0, [_double_0_01745329]
 	cvtsd2ss xmm0, xmm0
@@ -3362,9 +3362,9 @@ CG_FireWeapon_910:
 	movaps xmm0, xmm1
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
-	jb CG_FireWeapon_600
+	jb _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_600
 	movss xmm1, dword [_float_1_00000000]
-CG_FireWeapon_900:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_900:
 	mulss xmm3, xmm1
 	movss [ebp-0x104], xmm3
 	movaps xmm0, xmm1
@@ -3376,7 +3376,7 @@ CG_FireWeapon_900:
 	movzx ebx, byte [ebp-0x26d]
 	mov eax, [ebp-0x288]
 	mov [esp], eax
-	call BG_GetWeaponIndex
+	call _Z17BG_GetWeaponIndexPK9WeaponDef
 	mov [ebp-0x230], eax
 	mov edx, [ebp-0x288]
 	mov edi, [edx+0x12c]
@@ -3391,59 +3391,59 @@ CG_FireWeapon_900:
 	mov ecx, edx
 	lea edx, [ebp-0x138]
 	mov eax, [ebp+0x8]
-	call BulletTrace
+	call _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi
 	test al, al
-	jnz CG_FireWeapon_610
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_610
 	test bl, bl
-	jnz CG_FireWeapon_620
-CG_FireWeapon_660:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_620
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660:
 	add dword [ebp-0x274], 0x1
 	mov ecx, [ebp-0x274]
 	cmp [ebp-0x278], ecx
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	mov ebx, [ebp-0x40]
 	mov ecx, [ebp-0x3c]
 	mov edx, [ebp-0x38]
 	movsd xmm0, qword [ebp-0x220]
-	jmp CG_FireWeapon_630
-CG_FireWeapon_350:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_630
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_350:
 	mov ecx, [ebp-0x28c]
-	jmp CG_FireWeapon_310
-CG_FireWeapon_610:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_310
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_610:
 	lea ecx, [ebp-0x17c]
 	mov [esp], ecx
-	call Trace_GetEntityHitId
+	call _Z20Trace_GetEntityHitIdPK7trace_t
 	mov esi, eax
 	test bl, bl
-	jnz CG_FireWeapon_640
-CG_FireWeapon_1090:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_640
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1090:
 	test edi, edi
-	jz CG_FireWeapon_650
-CG_FireWeapon_1070:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_650
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1070:
 	mov edx, [ebp-0x288]
 	mov eax, [edx+0x134]
 	test eax, eax
-	jz CG_FireWeapon_660
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
 	cmp byte [ebp-0x153], 0x0
-	jnz CG_FireWeapon_660
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
 	mov dword [ebp-0x210], 0x5
-CG_FireWeapon_820:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_820:
 	mov eax, [ebp-0x13c]
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x288]
 	mov [esp], ecx
-	call BG_GetSurfacePenetrationDepth
+	call _Z29BG_GetSurfacePenetrationDepthPK9WeaponDefi
 	fstp dword [ebp-0x254]
 	mov eax, [ebp+0xc]
 	cmp dword [eax+0xd0], 0x1
-	jz CG_FireWeapon_670
-CG_FireWeapon_1140:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_670
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1140:
 	movss xmm1, dword [ebp-0x254]
-CG_FireWeapon_1150:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1150:
 	ucomiss xmm1, [_float_0_00000000]
-	jp CG_FireWeapon_680
-	jbe CG_FireWeapon_660
-CG_FireWeapon_680:
+	jp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_680
+	jbe _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_680:
 	movss xmm0, dword [ebp-0x14c]
 	movss [ebp-0x224], xmm0
 	movss xmm1, dword [ebp-0x148]
@@ -3455,9 +3455,9 @@ CG_FireWeapon_680:
 	mov [esp+0x4], eax
 	lea edx, [ebp-0x138]
 	mov [esp], edx
-	call BG_AdvanceTrace
+	call _Z15BG_AdvanceTraceP16BulletFireParamsP18BulletTraceResultsf
 	test al, al
-	jz CG_FireWeapon_660
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
 	mov eax, [ebp-0x13c]
 	mov [esp+0x8], eax
 	lea ecx, [ebp-0x17c]
@@ -3467,7 +3467,7 @@ CG_FireWeapon_680:
 	mov ecx, [ebp-0x288]
 	lea edx, [ebp-0x138]
 	mov eax, [ebp+0x8]
-	call BulletTrace
+	call _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi
 	mov [ebp-0x209], al
 	mov dword [esp+0x8], 0x40
 	lea edx, [ebp-0x138]
@@ -3515,8 +3515,8 @@ CG_FireWeapon_680:
 	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x1f0], xmm0
 	cmp byte [ebp-0x209], 0x0
-	jnz CG_FireWeapon_690
-CG_FireWeapon_1130:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_690
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1130:
 	mov eax, [ebp-0x1bc]
 	mov [esp+0x8], eax
 	lea edx, [ebp-0x1fc]
@@ -3526,20 +3526,20 @@ CG_FireWeapon_1130:
 	mov ecx, [ebp-0x288]
 	lea edx, [ebp-0xf8]
 	mov eax, [ebp+0x8]
-	call BulletTrace
+	call _Z11BulletTraceiPK16BulletFireParamsPK9WeaponDefPK9centity_sP18BulletTraceResultsi
 	mov ebx, eax
 	test al, al
-	jz CG_FireWeapon_700
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_700
 	cmp byte [ebp-0x1d4], 0x0
-	jz CG_FireWeapon_700
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_700
 	mov byte [ebp-0x259], 0x1
-CG_FireWeapon_960:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_960:
 	lea edx, [ebp-0x1fc]
 	mov [esp], edx
-	call Trace_GetEntityHitId
+	call _Z20Trace_GetEntityHitIdPK7trace_t
 	mov esi, eax
 	cmp byte [ebp-0x259], 0x0
-	jz CG_FireWeapon_710
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_710
 	movss xmm0, dword [ebp-0xd0]
 	subss xmm0, [ebp-0xdc]
 	movss xmm1, dword [ebp-0xcc]
@@ -3553,16 +3553,16 @@ CG_FireWeapon_960:
 	addss xmm0, xmm2
 	sqrtss xmm0, xmm0
 	movss [ebp-0x258], xmm0
-CG_FireWeapon_1120:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1120:
 	movss xmm0, dword [_float_1_00000000]
 	maxss xmm0, [ebp-0x258]
 	movss [ebp-0x258], xmm0
 	pxor xmm2, xmm2
 	test bl, bl
-	jz CG_FireWeapon_720
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_720
 	mov eax, [ebp+0xc]
 	cmp dword [eax+0xd0], 0x1
-	jnz CG_FireWeapon_730
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_730
 	mov eax, [eax+0x158]
 	lea edx, [eax+eax*8]
 	mov ecx, edx
@@ -3572,22 +3572,22 @@ CG_FireWeapon_1120:
 	shl edx, 0x2
 	add edx, cgArray
 	test byte [edx+0xe9f60], 0x20
-	jnz CG_FireWeapon_740
-CG_FireWeapon_730:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_740
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_730:
 	mov eax, [ebp-0x1bc]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x288]
 	mov [esp], eax
-	call BG_GetSurfacePenetrationDepth
+	call _Z29BG_GetSurfacePenetrationDepthPK9WeaponDefi
 	fstp dword [ebp-0x2ac]
 	movss xmm1, dword [ebp-0x2ac]
-CG_FireWeapon_1230:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1230:
 	movaps xmm0, xmm1
 	subss xmm0, [ebp-0x254]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
-	jb CG_FireWeapon_750
-CG_FireWeapon_720:
+	jb _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_750
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_720:
 	movss xmm0, dword [ebp-0x258]
 	divss xmm0, dword [ebp-0x254]
 	movss [ebp-0x258], xmm0
@@ -3595,11 +3595,11 @@ CG_FireWeapon_720:
 	subss xmm0, [ebp-0x258]
 	movss [ebp-0x130], xmm0
 	ucomiss xmm2, xmm0
-	jae CG_FireWeapon_660
+	jae _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
 	cmp byte [ebp-0x259], 0x0
-	jnz CG_FireWeapon_760
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_760
 	test edi, edi
-	jnz CG_FireWeapon_760
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_760
 	movss xmm0, dword [ebp-0x1cc]
 	subss xmm0, [ebp-0x14c]
 	movss xmm1, dword [ebp-0x1c8]
@@ -3616,14 +3616,14 @@ CG_FireWeapon_720:
 	addss xmm0, xmm2
 	mulss xmm3, xmm3
 	ucomiss xmm0, xmm3
-	jbe CG_FireWeapon_760
+	jbe _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_760
 	cmp byte [ebp-0x209], 0x0
-	jz CG_FireWeapon_770
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_770
 	mov eax, [ebp-0x16c]
 	test al, 0x4
-	jz CG_FireWeapon_770
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_770
 	movzx esi, si
-CG_FireWeapon_1200:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1200:
 	mov edx, [ebp-0x168]
 	mov [ebp-0x240], edx
 	mov ecx, [ebp-0x288]
@@ -3637,7 +3637,7 @@ CG_FireWeapon_1200:
 	mov eax, sv_clientSideBullets
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_FireWeapon_780
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_780
 	lea eax, [esi*4]
 	mov edx, esi
 	shl edx, 0x5
@@ -3647,15 +3647,15 @@ CG_FireWeapon_1200:
 	add edx, eax
 	mov eax, edx
 	add eax, cg_entitiesArray
-	jz CG_FireWeapon_790
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_790
 	cmp dword [eax+0xd0], 0x1
-	jz CG_FireWeapon_800
-CG_FireWeapon_790:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_800
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_790:
 	xor eax, eax
-CG_FireWeapon_830:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_830:
 	test eax, eax
-	jnz CG_FireWeapon_810
-CG_FireWeapon_780:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_810
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_780:
 	mov eax, [ebp-0x240]
 	mov [esp+0x2c], eax
 	mov edx, [ebp-0x23c]
@@ -3672,14 +3672,14 @@ CG_FireWeapon_780:
 	mov edx, [ebp-0x230]
 	mov [esp+0xc], edx
 	mov [esp+0x8], esi
-CG_FireWeapon_1010:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1010:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_BulletHitEvent
+	call _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii
 	mov eax, [ebp+0xc]
 	mov ebx, [eax+0xcc]
-CG_FireWeapon_810:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_810:
 	mov dword [esp+0x14], 0x0
 	mov edx, [ebp-0x288]
 	mov eax, [edx+0x34c]
@@ -3691,15 +3691,15 @@ CG_FireWeapon_810:
 	mov [esp+0x4], ebx
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call DynEntCl_DynEntImpactEvent
-CG_FireWeapon_970:
+	call _Z26DynEntCl_DynEntImpactEventiiPKfS0_ih
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_970:
 	sub dword [ebp-0x210], 0x1
-	jnz CG_FireWeapon_820
-	jmp CG_FireWeapon_660
-CG_FireWeapon_800:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_820
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_800:
 	mov eax, 0x1
-	jmp CG_FireWeapon_830
-CG_FireWeapon_90:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_830
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_90:
 	lea eax, [ebx+ebx*8]
 	mov edx, eax
 	shl edx, 0x4
@@ -3709,15 +3709,15 @@ CG_FireWeapon_90:
 	mov eax, [ecx+0x198]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call BG_IsProneAnim
+	call _Z14BG_IsProneAnimPK12clientInfo_ti
 	test eax, eax
-	jz CG_FireWeapon_840
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_840
 	mov edx, [ebp-0x288]
 	mov eax, [edx+0x458]
 	mov [ebp-0x28], eax
 	mov eax, [edx+0x464]
 	mov [ebp-0x24], eax
-CG_FireWeapon_1110:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1110:
 	mov eax, [ebp+0xc]
 	mov edx, [eax+0xcc]
 	lea eax, [edx+edx*8]
@@ -3731,7 +3731,7 @@ CG_FireWeapon_1110:
 	mov eax, [edx+0x198]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call BG_IsAds
+	call _Z8BG_IsAdsPK12clientInfo_ti
 	test eax, eax
 	setnz al
 	mov ecx, eax
@@ -3753,7 +3753,7 @@ CG_FireWeapon_1110:
 	mov eax, [ebx+0x20]
 	mov eax, [eax+0x8]
 	cmp edx, eax
-	jz CG_FireWeapon_850
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_850
 	sub edx, eax
 	cvtsi2ss xmm1, edx
 	movss xmm0, dword [_float_1000_00000000]
@@ -3761,7 +3761,7 @@ CG_FireWeapon_1110:
 	mulss xmm2, xmm0
 	mulss xmm3, xmm0
 	mulss xmm4, xmm0
-CG_FireWeapon_850:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_850:
 	mulss xmm2, xmm2
 	mulss xmm3, xmm3
 	addss xmm2, xmm3
@@ -3772,10 +3772,10 @@ CG_FireWeapon_850:
 	movaps xmm0, xmm1
 	subss xmm0, xmm2
 	ucomiss xmm0, [_float_0_00000000]
-	jb CG_FireWeapon_860
+	jb _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_860
 	movss xmm0, dword [_float_1_00000000]
 	movss [ebp-0x280], xmm0
-CG_FireWeapon_1160:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1160:
 	mov eax, [ebp+0xc]
 	mov ebx, [eax+0xcc]
 	mov byte [ebp-0x19], 0x0
@@ -3786,9 +3786,9 @@ CG_FireWeapon_1160:
 	mov [esp+0x4], ebx
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_GetBoneIndex
+	call _Z15CG_GetBoneIndexiijPh
 	test eax, eax
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	lea eax, [ebp-0x88]
 	mov [esp+0xc], eax
 	movzx eax, byte [ebp-0x19]
@@ -3796,9 +3796,9 @@ CG_FireWeapon_1160:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call FX_GetBoneOrientation
+	call _Z21FX_GetBoneOrientationiiiP13orientation_t
 	test al, al
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	mov ebx, [ebp-0x88]
 	mov [ebp-0x40], ebx
 	mov ecx, [ebp-0x84]
@@ -3816,34 +3816,34 @@ CG_FireWeapon_1160:
 	mov [esp+0x4], eax
 	lea eax, [esi+0x3e4]
 	mov [esp], eax
-	call AngleVectors
+	call _Z12AngleVectorsPKfPfS1_S1_
 	mov byte [ebp-0x26d], 0x0
-	jmp CG_FireWeapon_870
-CG_FireWeapon_620:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_870
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_620:
 	lea eax, [ebp-0x110]
 	mov [esp+0x8], eax
 	lea eax, [ebp-0x4c]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_SpawnTracer
-	jmp CG_FireWeapon_660
-CG_FireWeapon_540:
+	call _Z14CG_SpawnTraceriPKfS0_
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_540:
 	movss xmm0, dword [_float_0_99999988]
-	jmp CG_FireWeapon_880
-CG_FireWeapon_530:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_880
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_530:
 	lea ecx, [ecx+0x7fffffff]
-	jmp CG_FireWeapon_890
-CG_FireWeapon_600:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_890
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_600:
 	movss xmm0, dword [_float_1_00000000]
 	divss xmm0, xmm1
 	movaps xmm1, xmm0
-	jmp CG_FireWeapon_900
-CG_FireWeapon_590:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_900
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_590:
 	movss xmm0, dword [_float_0_99999988]
 	movss [ebp-0x214], xmm0
-	jmp CG_FireWeapon_910
-CG_FireWeapon_100:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_910
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_100:
 	mov edx, [ebp-0x288]
 	mov eax, [edx+0x7b0]
 	mov [ebp-0x28], eax
@@ -3857,9 +3857,9 @@ CG_FireWeapon_100:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_GetBoneIndex
+	call _Z15CG_GetBoneIndexiijPh
 	test eax, eax
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	lea eax, [ebp-0x88]
 	mov [esp+0xc], eax
 	movzx eax, byte [ebp-0x19]
@@ -3867,9 +3867,9 @@ CG_FireWeapon_100:
 	mov [esp+0x4], ebx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call FX_GetBoneOrientation
+	call _Z21FX_GetBoneOrientationiiiP13orientation_t
 	test al, al
-	jz CG_FireWeapon_50
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_50
 	mov ebx, [ebp-0x88]
 	mov [ebp-0x40], ebx
 	mov ecx, [ebp-0x84]
@@ -3881,11 +3881,11 @@ CG_FireWeapon_100:
 	mov [ebp-0x44], edx
 	mov dword [ebp-0x280], 0x3f800000
 	mov byte [ebp-0x26d], 0x0
-	jmp CG_FireWeapon_920
-CG_FireWeapon_410:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_920
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_410:
 	mov eax, 0x2
-	jmp CG_FireWeapon_930
-CG_FireWeapon_390:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_930
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_390:
 	mov edx, [ebp+0xc]
 	mov eax, [edx+0xcc]
 	lea ecx, [eax+eax*8]
@@ -3907,7 +3907,7 @@ CG_FireWeapon_390:
 	mov [esp+0x4], eax
 	lea ecx, [ebx+ecx*4+0xea318]
 	mov [esp], ecx
-	call AngleVectors
+	call _Z12AngleVectorsPKfPfS1_S1_
 	movss xmm1, dword [_float_30_00000000]
 	movss xmm0, dword [ebp-0x7c]
 	mulss xmm0, xmm1
@@ -3920,22 +3920,22 @@ CG_FireWeapon_390:
 	mulss xmm1, [ebp-0x74]
 	addss xmm1, [ebp-0x44]
 	movss [ebp-0x44], xmm1
-	jmp CG_FireWeapon_940
-CG_FireWeapon_700:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_940
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_700:
 	cmp byte [ebp-0x153], 0x0
-	jz CG_FireWeapon_950
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_950
 	cmp byte [ebp-0x1d3], 0x0
-	jz CG_FireWeapon_950
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_950
 	mov byte [ebp-0x259], 0x1
-CG_FireWeapon_1030:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1030:
 	test bl, bl
-	jnz CG_FireWeapon_960
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_960
 	cmp byte [ebp-0x259], 0x0
-	jnz CG_FireWeapon_960
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_960
 	cmp byte [ebp-0x209], 0x0
-	jz CG_FireWeapon_660
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
 	cmp byte [ebp-0x154], 0x0
-	jnz CG_FireWeapon_970
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_970
 	movss xmm0, dword [ebp-0x224]
 	subss xmm0, [ebp-0x14c]
 	movss [ebp-0x224], xmm0
@@ -3964,12 +3964,12 @@ CG_FireWeapon_1030:
 	addss xmm1, [ebp-0x22c]
 	mulss xmm0, xmm0
 	ucomiss xmm1, xmm0
-	jbe CG_FireWeapon_970
+	jbe _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_970
 	lea eax, [ebp-0x17c]
 	mov [esp], eax
-	call Trace_GetEntityHitId
+	call _Z20Trace_GetEntityHitIdPK7trace_t
 	test edi, edi
-	jnz CG_FireWeapon_970
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_970
 	mov edx, [ebp-0x168]
 	mov [ebp-0x238], edx
 	mov ecx, [ebp-0x288]
@@ -3984,7 +3984,7 @@ CG_FireWeapon_1030:
 	mov eax, sv_clientSideBullets
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_FireWeapon_980
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_980
 	lea eax, [ecx*4]
 	mov edx, ecx
 	shl edx, 0x5
@@ -3994,15 +3994,15 @@ CG_FireWeapon_1030:
 	add edx, eax
 	mov eax, edx
 	add eax, cg_entitiesArray
-	jz CG_FireWeapon_990
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_990
 	cmp dword [eax+0xd0], 0x1
-	jz CG_FireWeapon_1000
-CG_FireWeapon_990:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1000
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_990:
 	xor eax, eax
-CG_FireWeapon_1240:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1240:
 	test eax, eax
-	jnz CG_FireWeapon_810
-CG_FireWeapon_980:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_810
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_980:
 	mov edx, [ebp-0x238]
 	mov [esp+0x2c], edx
 	mov eax, [ebp-0x234]
@@ -4019,22 +4019,22 @@ CG_FireWeapon_980:
 	mov edx, [ebp-0x230]
 	mov [esp+0xc], edx
 	mov [esp+0x8], ecx
-	jmp CG_FireWeapon_1010
-CG_FireWeapon_420:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1010
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_420:
 	mov eax, [edx+0x33c]
 	mov [ebp-0x278], eax
 	mov edx, [ebp-0x288]
 	movss xmm0, dword [edx+0x80c]
 	movss [ebp-0x260], xmm0
-	jmp CG_FireWeapon_1020
-CG_FireWeapon_950:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1020
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_950:
 	mov byte [ebp-0x259], 0x0
-	jmp CG_FireWeapon_1030
-CG_FireWeapon_760:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1030
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_760:
 	cmp byte [ebp-0x209], 0x0
-	jnz CG_FireWeapon_970
-	jmp CG_FireWeapon_660
-CG_FireWeapon_650:
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_970
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_650:
 	mov dword [esp+0x14], 0x0
 	lea ecx, [ebp-0x14c]
 	mov [esp+0x10], ecx
@@ -4047,7 +4047,7 @@ CG_FireWeapon_650:
 	mov [esp+0x4], ecx
 	lea eax, [ebp-0x17c]
 	mov [esp], eax
-	call DynEntCl_EntityImpactEvent
+	call _Z26DynEntCl_EntityImpactEventPK7trace_tiiPKfS3_h
 	mov dword [esp+0x14], 0x0
 	mov edx, [ebp-0x288]
 	mov eax, [edx+0x34c]
@@ -4061,7 +4061,7 @@ CG_FireWeapon_650:
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call DynEntCl_DynEntImpactEvent
+	call _Z26DynEntCl_DynEntImpactEventiiPKfS0_ih
 	mov eax, [ebp-0x168]
 	mov [ebp-0x250], eax
 	mov edx, [ebp-0x288]
@@ -4076,7 +4076,7 @@ CG_FireWeapon_650:
 	mov eax, sv_clientSideBullets
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_FireWeapon_1040
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1040
 	lea eax, [ebx*4]
 	mov edx, ebx
 	shl edx, 0x5
@@ -4086,16 +4086,16 @@ CG_FireWeapon_650:
 	add edx, eax
 	mov eax, edx
 	add eax, cg_entitiesArray
-	jz CG_FireWeapon_1050
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1050
 	cmp dword [eax+0xd0], 0x1
-	jz CG_FireWeapon_1060
-CG_FireWeapon_1050:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1060
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1050:
 	xor eax, eax
-CG_FireWeapon_1080:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1080:
 	test eax, eax
-	jnz CG_FireWeapon_1070
+	jnz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1070
 	mov edx, [ebp-0x24c]
-CG_FireWeapon_1040:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1040:
 	mov eax, [ebp-0x250]
 	mov [esp+0x2c], eax
 	mov [esp+0x28], edx
@@ -4114,35 +4114,35 @@ CG_FireWeapon_1040:
 	mov [esp+0x4], esi
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_BulletHitEvent
-	jmp CG_FireWeapon_1070
-CG_FireWeapon_1060:
+	call _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1070
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1060:
 	mov eax, 0x1
-	jmp CG_FireWeapon_1080
-CG_FireWeapon_640:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1080
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_640:
 	lea eax, [ebp-0x14c]
 	mov [esp+0x8], eax
 	lea eax, [ebp-0x4c]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_SpawnTracer
-	jmp CG_FireWeapon_1090
-CG_FireWeapon_840:
+	call _Z14CG_SpawnTraceriPKfS0_
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1090
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_840:
 	mov ecx, [ebp+0xc]
 	mov eax, [ecx+0x198]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call BG_IsCrouchingAnim
+	call _Z18BG_IsCrouchingAnimPK12clientInfo_ti
 	test eax, eax
-	jz CG_FireWeapon_1100
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1100
 	mov edx, [ebp-0x288]
 	mov eax, [edx+0x454]
 	mov [ebp-0x28], eax
 	mov eax, [edx+0x460]
 	mov [ebp-0x24], eax
-	jmp CG_FireWeapon_1110
-CG_FireWeapon_710:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1110
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_710:
 	movss xmm0, dword [ebp-0x224]
 	subss xmm0, [ebp-0x1cc]
 	movss [ebp-0x224], xmm0
@@ -4164,16 +4164,16 @@ CG_FireWeapon_710:
 	addss xmm0, xmm1
 	sqrtss xmm1, xmm0
 	movss [ebp-0x258], xmm1
-	jmp CG_FireWeapon_1120
-CG_FireWeapon_690:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1120
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_690:
 	mov dword [esp+0x8], 0x3c23d70a
 	lea ecx, [ebp-0x1fc]
 	mov [esp+0x4], ecx
 	lea eax, [ebp-0xf8]
 	mov [esp], eax
-	call BG_AdvanceTrace
-	jmp CG_FireWeapon_1130
-CG_FireWeapon_670:
+	call _Z15BG_AdvanceTraceP16BulletFireParamsP18BulletTraceResultsf
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1130
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_670:
 	mov eax, [eax+0x158]
 	lea edx, [eax+eax*8]
 	mov ecx, edx
@@ -4183,26 +4183,26 @@ CG_FireWeapon_670:
 	shl edx, 0x2
 	add edx, cgArray
 	test byte [edx+0xe9f60], 0x20
-	jz CG_FireWeapon_1140
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1140
 	mov eax, perk_bulletPenetrationMultiplier
 	mov eax, [eax]
 	movss xmm0, dword [ebp-0x254]
 	mulss xmm0, [eax+0xc]
 	movss [ebp-0x254], xmm0
 	movaps xmm1, xmm0
-	jmp CG_FireWeapon_1150
-CG_FireWeapon_860:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1150
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_860:
 	divss xmm1, xmm2
 	movss [ebp-0x280], xmm1
-	jmp CG_FireWeapon_1160
-CG_FireWeapon_1100:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1160
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1100:
 	mov ecx, [ebp-0x288]
 	mov eax, [ecx+0x450]
 	mov [ebp-0x28], eax
 	mov eax, [ecx+0x45c]
 	mov [ebp-0x24], eax
-	jmp CG_FireWeapon_1110
-CG_FireWeapon_770:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1110
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_770:
 	mov eax, [ebp-0x1e8]
 	mov [ebp-0x248], eax
 	mov edx, [ebp-0x288]
@@ -4217,7 +4217,7 @@ CG_FireWeapon_770:
 	mov eax, sv_clientSideBullets
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_FireWeapon_1170
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1170
 	lea eax, [esi*4]
 	mov edx, esi
 	shl edx, 0x5
@@ -4227,28 +4227,28 @@ CG_FireWeapon_770:
 	add edx, eax
 	mov eax, edx
 	add eax, cg_entitiesArray
-	jz CG_FireWeapon_1180
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1180
 	cmp dword [eax+0xd0], 0x1
-	jz CG_FireWeapon_1190
-CG_FireWeapon_1180:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1190
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1180:
 	xor eax, eax
-CG_FireWeapon_1210:
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1210:
 	test eax, eax
-	jz CG_FireWeapon_1170
-CG_FireWeapon_1220:
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1170
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1220:
 	cmp byte [ebp-0x209], 0x0
-	jz CG_FireWeapon_660
+	jz _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
 	mov eax, [ebp-0x16c]
-	jmp CG_FireWeapon_1200
-CG_FireWeapon_1190:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1200
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1190:
 	mov eax, 0x1
-	jmp CG_FireWeapon_1210
-CG_FireWeapon_750:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1210
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_750:
 	ucomiss xmm2, xmm1
-	jae CG_FireWeapon_660
+	jae _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_660
 	movss [ebp-0x254], xmm1
-	jmp CG_FireWeapon_720
-CG_FireWeapon_1170:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_720
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1170:
 	mov edx, [ebp-0x248]
 	mov [esp+0x2c], edx
 	mov eax, [ebp-0x244]
@@ -4268,28 +4268,28 @@ CG_FireWeapon_1170:
 	mov [esp+0x4], ebx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_BulletHitEvent
-	jmp CG_FireWeapon_1220
-CG_FireWeapon_740:
+	call _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1220
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_740:
 	mov eax, [ebp-0x1bc]
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x288]
 	mov [esp], ecx
-	call BG_GetSurfacePenetrationDepth
+	call _Z29BG_GetSurfacePenetrationDepthPK9WeaponDefi
 	fstp dword [ebp-0x2ac]
 	movss xmm1, dword [ebp-0x2ac]
 	mov eax, perk_bulletPenetrationMultiplier
 	mov eax, [eax]
 	mulss xmm1, [eax+0xc]
-	jmp CG_FireWeapon_1230
-CG_FireWeapon_1000:
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1230
+_Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1000:
 	mov eax, 0x1
-	jmp CG_FireWeapon_1240
+	jmp _Z13CG_FireWeaponiP9centity_sitjPK13playerState_s_1240
 	add [eax], al
 
 
 ;CG_JavelinADS(int)
-CG_JavelinADS:
+_Z13CG_JavelinADSi:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -4297,31 +4297,31 @@ CG_JavelinADS:
 	mov ebx, cgArray
 	lea eax, [ebx+0x4613c]
 	mov [esp], eax
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	test eax, eax
-	jle CG_JavelinADS_10
+	jle _Z13CG_JavelinADSi_10
 	movss xmm0, dword [_float_1_00000000]
 	ucomiss xmm0, [ebx+0x46230]
-	jz CG_JavelinADS_20
-CG_JavelinADS_10:
+	jz _Z13CG_JavelinADSi_20
+_Z13CG_JavelinADSi_10:
 	xor eax, eax
-CG_JavelinADS_30:
+_Z13CG_JavelinADSi_30:
 	add esp, 0x14
 	pop ebx
 	pop ebp
 	ret
-CG_JavelinADS_20:
-	jp CG_JavelinADS_10
+_Z13CG_JavelinADSi_20:
+	jp _Z13CG_JavelinADSi_10
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	cmp dword [eax+0x43c], 0x1
-	jnz CG_JavelinADS_10
+	jnz _Z13CG_JavelinADSi_10
 	mov eax, 0x1
-	jmp CG_JavelinADS_30
+	jmp _Z13CG_JavelinADSi_30
 
 
 ;CG_SpawnTracer(int, float const*, float const*)
-CG_SpawnTracer:
+_Z14CG_SpawnTraceriPKfS0_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4352,11 +4352,11 @@ CG_SpawnTracer:
 	addss xmm0, xmm1
 	sqrtss xmm2, xmm0
 	movaps xmm0, xmm2
-	xorps xmm0, [g_fltMin__uint4+0xb0]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
-	jb CG_SpawnTracer_10
+	jb _Z14CG_SpawnTraceriPKfS0__10
 	movss xmm1, dword [_float_1_00000000]
-CG_SpawnTracer_40:
+_Z14CG_SpawnTraceriPKfS0__40:
 	mulss xmm5, xmm1
 	movss [ebp-0x1c], xmm5
 	mulss xmm4, xmm1
@@ -4366,7 +4366,7 @@ CG_SpawnTracer_40:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
 	movss [ebp-0x48], xmm2
-	call CG_AllocLocalEntity
+	call _Z19CG_AllocLocalEntityi
 	mov ebx, eax
 	mov dword [eax+0x8], 0x0
 	movss xmm2, dword [ebp-0x48]
@@ -4375,9 +4375,9 @@ CG_SpawnTracer_40:
 	mov edi, [esi+0x46128]
 	mov eax, [esi+0x46124]
 	test eax, eax
-	jnz CG_SpawnTracer_20
+	jnz _Z14CG_SpawnTraceriPKfS0__20
 	xor eax, eax
-CG_SpawnTracer_30:
+_Z14CG_SpawnTraceriPKfS0__30:
 	mov edx, edi
 	sub edx, eax
 	mulss xmm2, [_float_1000_00000000]
@@ -4413,9 +4413,9 @@ CG_SpawnTracer_30:
 	pop edi
 	pop ebp
 	ret
-CG_SpawnTracer_20:
+_Z14CG_SpawnTraceriPKfS0__20:
 	movss [ebp-0x48], xmm2
-	call ms_rand
+	call _Z7ms_randv
 	cdq
 	idiv dword [esi+0x46124]
 	mov eax, edx
@@ -4423,15 +4423,15 @@ CG_SpawnTracer_20:
 	add eax, edx
 	sar eax, 1
 	movss xmm2, dword [ebp-0x48]
-	jmp CG_SpawnTracer_30
-CG_SpawnTracer_10:
+	jmp _Z14CG_SpawnTraceriPKfS0__30
+_Z14CG_SpawnTraceriPKfS0__10:
 	movss xmm1, dword [_float_1_00000000]
 	divss xmm1, xmm2
-	jmp CG_SpawnTracer_40
+	jmp _Z14CG_SpawnTraceriPKfS0__40
 
 
 ;CG_CalcEyePoint(int, int, float*)
-CG_CalcEyePoint:
+_Z15CG_CalcEyePointiiPf:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4440,19 +4440,19 @@ CG_CalcEyePoint:
 	mov esi, [ebp+0xc]
 	mov ebx, [ebp+0x10]
 	mov dword [esp], 0x0
-	call CL_IsLocalClientActive
+	call _Z22CL_IsLocalClientActivei
 	test al, al
-	jz CG_CalcEyePoint_10
+	jz _Z15CG_CalcEyePointiiPf_10
 	mov eax, cgArray
 	mov edx, [eax+0x24]
 	test byte [edx+0x20], 0x6
-	jnz CG_CalcEyePoint_20
-CG_CalcEyePoint_70:
+	jnz _Z15CG_CalcEyePointiiPf_20
+_Z15CG_CalcEyePointiiPf_70:
 	xor edx, edx
-CG_CalcEyePoint_80:
+_Z15CG_CalcEyePointiiPf_80:
 	test edx, edx
-	jnz CG_CalcEyePoint_30
-CG_CalcEyePoint_10:
+	jnz _Z15CG_CalcEyePointiiPf_30
+_Z15CG_CalcEyePointiiPf_10:
 	lea edx, [esi*4]
 	mov eax, esi
 	shl eax, 0x5
@@ -4469,21 +4469,21 @@ CG_CalcEyePoint_10:
 	movss xmm0, dword [edx+0x8]
 	movss [ebx+0x8], xmm0
 	cmp esi, 0x3f
-	jg CG_CalcEyePoint_40
+	jg _Z15CG_CalcEyePointiiPf_40
 	mov eax, [ecx+0xd4]
 	test al, 0x8
-	jnz CG_CalcEyePoint_50
+	jnz _Z15CG_CalcEyePointiiPf_50
 	test al, 0x4
-	jnz CG_CalcEyePoint_60
+	jnz _Z15CG_CalcEyePointiiPf_60
 	addss xmm0, [_float_60_00000000]
 	movss [ebx+0x8], xmm0
-CG_CalcEyePoint_40:
+_Z15CG_CalcEyePointiiPf_40:
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-CG_CalcEyePoint_50:
+_Z15CG_CalcEyePointiiPf_50:
 	addss xmm0, [_float_11_00000000]
 	movss [ebx+0x8], xmm0
 	add esp, 0x10
@@ -4491,12 +4491,12 @@ CG_CalcEyePoint_50:
 	pop esi
 	pop ebp
 	ret
-CG_CalcEyePoint_20:
+_Z15CG_CalcEyePointiiPf_20:
 	cmp esi, [edx+0xe8]
-	jnz CG_CalcEyePoint_70
+	jnz _Z15CG_CalcEyePointiiPf_70
 	mov edx, 0x1
-	jmp CG_CalcEyePoint_80
-CG_CalcEyePoint_60:
+	jmp _Z15CG_CalcEyePointiiPf_80
+_Z15CG_CalcEyePointiiPf_60:
 	addss xmm0, [_float_40_00000000]
 	movss [ebx+0x8], xmm0
 	add esp, 0x10
@@ -4504,7 +4504,7 @@ CG_CalcEyePoint_60:
 	pop esi
 	pop ebp
 	ret
-CG_CalcEyePoint_30:
+_Z15CG_CalcEyePointiiPf_30:
 	lea edx, [eax+0x492e0]
 	mov eax, [eax+0x492e0]
 	mov [ebx], eax
@@ -4512,12 +4512,12 @@ CG_CalcEyePoint_30:
 	mov [ebx+0x4], eax
 	mov eax, [edx+0x8]
 	mov [ebx+0x8], eax
-	jmp CG_CalcEyePoint_40
+	jmp _Z15CG_CalcEyePointiiPf_40
 	nop
 
 
 ;CG_NextWeapon_f()
-CG_NextWeapon_f:
+_Z15CG_NextWeapon_fv:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4526,40 +4526,40 @@ CG_NextWeapon_f:
 	mov ecx, cgArray
 	mov ebx, [ecx+0x24]
 	test ebx, ebx
-	jz CG_NextWeapon_f_10
+	jz _Z15CG_NextWeapon_fv_10
 	test dword [ecx+0x46148], 0xc00
-	jnz CG_NextWeapon_f_10
+	jnz _Z15CG_NextWeapon_fv_10
 	cmp byte [ecx+0x4614c], 0x0
-	js CG_NextWeapon_f_10
+	js _Z15CG_NextWeapon_fv_10
 	mov esi, [ecx+0x46128]
 	mov eax, esi
 	sub eax, [ecx+0x50370]
 	mov edx, cg_weaponCycleDelay
 	mov edx, [edx]
 	cmp eax, [edx+0xc]
-	jge CG_NextWeapon_f_20
-CG_NextWeapon_f_10:
+	jge _Z15CG_NextWeapon_fv_20
+_Z15CG_NextWeapon_fv_10:
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-CG_NextWeapon_f_20:
+_Z15CG_NextWeapon_fv_20:
 	test byte [ebx+0x20], 0x4
-	jz CG_NextWeapon_f_10
+	jz _Z15CG_NextWeapon_fv_10
 	mov [ecx+0x50370], esi
 	mov dword [esp+0x4], 0x1
 	mov dword [esp], 0x0
-	call CG_MenuShowNotify
+	call _Z17CG_MenuShowNotifyii
 	xor ecx, ecx
 	mov edx, 0x1
 	xor eax, eax
-	call CycleWeapPrimary
-	jmp CG_NextWeapon_f_10
+	call _Z16CycleWeapPrimaryiii
+	jmp _Z15CG_NextWeapon_fv_10
 
 
 ;CG_PrevWeapon_f()
-CG_PrevWeapon_f:
+_Z15CG_PrevWeapon_fv:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -4567,31 +4567,31 @@ CG_PrevWeapon_f:
 	mov ecx, cgArray
 	mov ebx, [ecx+0x24]
 	test ebx, ebx
-	jz CG_PrevWeapon_f_10
+	jz _Z15CG_PrevWeapon_fv_10
 	test dword [ecx+0x46148], 0xc00
-	jnz CG_PrevWeapon_f_10
+	jnz _Z15CG_PrevWeapon_fv_10
 	cmp byte [ecx+0x4614c], 0x0
-	js CG_PrevWeapon_f_10
+	js _Z15CG_PrevWeapon_fv_10
 	mov esi, [ecx+0x46128]
 	mov eax, esi
 	sub eax, [ecx+0x50370]
 	mov edx, cg_weaponCycleDelay
 	mov edx, [edx]
 	cmp eax, [edx+0xc]
-	jge CG_PrevWeapon_f_20
-CG_PrevWeapon_f_10:
+	jge _Z15CG_PrevWeapon_fv_20
+_Z15CG_PrevWeapon_fv_10:
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-CG_PrevWeapon_f_20:
+_Z15CG_PrevWeapon_fv_20:
 	test byte [ebx+0x20], 0x4
-	jz CG_PrevWeapon_f_10
+	jz _Z15CG_PrevWeapon_fv_10
 	mov [ecx+0x50370], esi
 	xor ecx, ecx
 	xor edx, edx
 	xor eax, eax
-	call CycleWeapPrimary
+	call _Z16CycleWeapPrimaryiii
 	pop ebx
 	pop esi
 	pop ebp
@@ -4600,7 +4600,7 @@ CG_PrevWeapon_f_20:
 
 
 ;CG_AddViewWeapon(int)
-CG_AddViewWeapon:
+_Z16CG_AddViewWeaponi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -4614,63 +4614,63 @@ CG_AddViewWeapon:
 	mov eax, [edi+0x46140]
 	sub eax, 0x4
 	cmp eax, 0x1
-	jbe CG_AddViewWeapon_10
+	jbe _Z16CG_AddViewWeaponi_10
 	mov ebx, [edi+0x46138]
 	test ebx, ebx
-	jnz CG_AddViewWeapon_10
+	jnz _Z16CG_AddViewWeaponi_10
 	mov ecx, [edi+0xc]
 	test ecx, ecx
-	jz CG_AddViewWeapon_20
-CG_AddViewWeapon_40:
+	jz _Z16CG_AddViewWeaponi_20
+_Z16CG_AddViewWeaponi_40:
 	mov dword [ebp-0x140], 0x0
-CG_AddViewWeapon_50:
+_Z16CG_AddViewWeaponi_50:
 	test dword [edi+0x461ec], 0x300
-	jz CG_AddViewWeapon_30
-CG_AddViewWeapon_10:
+	jz _Z16CG_AddViewWeaponi_30
+_Z16CG_AddViewWeaponi_10:
 	add esp, 0x17c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_AddViewWeapon_20:
+_Z16CG_AddViewWeaponi_20:
 	mov eax, cg_drawGun
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_AddViewWeapon_40
+	jz _Z16CG_AddViewWeaponi_40
 	lea eax, [ebp-0x1c]
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call CG_GetWeapReticleZoom
+	call _Z21CG_GetWeapReticleZoomPK4cg_sPf
 	test al, al
-	jnz CG_AddViewWeapon_40
+	jnz _Z16CG_AddViewWeaponi_40
 	mov dword [ebp-0x140], 0x1
-	jmp CG_AddViewWeapon_50
-CG_AddViewWeapon_30:
+	jmp _Z16CG_AddViewWeaponi_50
+_Z16CG_AddViewWeaponi_30:
 	lea ebx, [edi+0x4613c]
 	mov [esp], ebx
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	mov [ebp-0x13c], eax
 	test eax, eax
-	jle CG_AddViewWeapon_60
+	jle _Z16CG_AddViewWeaponi_60
 	mov [esp], ebx
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ecx, eax
 	mov edx, [edi+0x504d4]
 	add edx, [edi+0x504d8]
 	sub edx, [edi+0x46128]
 	test edx, edx
-	jle CG_AddViewWeapon_70
+	jle _Z16CG_AddViewWeaponi_70
 	mov eax, [edi+0x504d0]
 	mov eax, [eax+0x14]
 	cmp edx, eax
-	jl CG_AddViewWeapon_80
+	jl _Z16CG_AddViewWeaponi_80
 	movss xmm3, dword [_float_1_00000000]
 	movaps xmm2, xmm3
 	movss xmm0, dword [_float__2_00000000]
-CG_AddViewWeapon_240:
+_Z16CG_AddViewWeaponi_240:
 	movaps xmm1, xmm0
 	addss xmm1, [_float_3_00000000]
 	mulss xmm1, xmm2
@@ -4679,7 +4679,7 @@ CG_AddViewWeapon_240:
 	subss xmm0, xmm3
 	mulss xmm1, xmm0
 	addss xmm1, xmm3
-CG_AddViewWeapon_280:
+_Z16CG_AddViewWeaponi_280:
 	mov esi, cgArray
 	mov eax, [esi+0x46124]
 	mov [esp+0x14], eax
@@ -4692,25 +4692,25 @@ CG_AddViewWeapon_280:
 	mov [esp+0x4], eax
 	lea ebx, [esi+0x4613c]
 	mov [esp], ebx
-	call BG_CalculateWeaponPosition_Sway
+	call _Z31BG_CalculateWeaponPosition_SwayPK13playerState_sPfS2_S2_fi
 	mov [esp], ebx
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	mov [esp], eax
-	call BG_IsAimDownSightWeapon
+	call _Z23BG_IsAimDownSightWeaponj
 	test eax, eax
-	jz CG_AddViewWeapon_90
+	jz _Z16CG_AddViewWeaponi_90
 	movss xmm0, dword [esi+0x46230]
 	ucomiss xmm0, [_float_1_00000000]
-	jz CG_AddViewWeapon_100
-CG_AddViewWeapon_250:
+	jz _Z16CG_AddViewWeaponi_100
+_Z16CG_AddViewWeaponi_250:
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
-	jnz CG_AddViewWeapon_110
-	jp CG_AddViewWeapon_110
+	jnz _Z16CG_AddViewWeaponi_110
+	jp _Z16CG_AddViewWeaponi_110
 	mov edi, cgArray
 	mov dword [edi+0x49280], 0x1
-	jmp CG_AddViewWeapon_120
-CG_AddViewWeapon_60:
+	jmp _Z16CG_AddViewWeaponi_120
+_Z16CG_AddViewWeaponi_60:
 	mov eax, [edi+0x4d360]
 	mov [edi+0x50434], eax
 	mov eax, [edi+0x4d364]
@@ -4725,29 +4725,29 @@ CG_AddViewWeapon_60:
 	pop edi
 	pop ebp
 	ret
-CG_AddViewWeapon_90:
+_Z16CG_AddViewWeaponi_90:
 	mov edi, esi
 	pxor xmm1, xmm1
-CG_AddViewWeapon_260:
+_Z16CG_AddViewWeaponi_260:
 	mov dword [ebp-0x5c], 0x0
 	mov dword [ebp-0x58], 0x0
 	mov dword [ebp-0x54], 0x0
 	movss xmm0, dword [edi+0x46198]
 	ucomiss xmm0, xmm1
-	jp CG_AddViewWeapon_130
-	jz CG_AddViewWeapon_140
-CG_AddViewWeapon_130:
+	jp _Z16CG_AddViewWeaponi_130
+	jz _Z16CG_AddViewWeaponi_140
+_Z16CG_AddViewWeaponi_130:
 	movss xmm1, dword [_float_1_00000000]
 	ucomiss xmm1, [edi+0x46230]
-	ja CG_AddViewWeapon_150
-CG_AddViewWeapon_140:
+	ja _Z16CG_AddViewWeaponi_150
+_Z16CG_AddViewWeaponi_140:
 	mov dword [ebp-0x40], 0x0
 	mov dword [ebp-0x3c], 0x0
 	mov dword [ebp-0x38], 0x0
 	lea ebx, [ebp-0x40]
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call CalculateWeaponPosition_BasePosition_movement
+	call _Z45CalculateWeaponPosition_BasePosition_movementP4cg_sPf
 	movss xmm2, dword [ebp-0x40]
 	movss [edi+0x49284], xmm2
 	movss xmm1, dword [ebp-0x3c]
@@ -4772,11 +4772,11 @@ CG_AddViewWeapon_140:
 	lea eax, [edi+0x50460]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call MatrixTransformVector43
+	call _Z23MatrixTransformVector43PKfPA3_S_Pf
 	mov edx, [edi+0x46128]
 	sub edx, [edi+0x492c0]
 	cmp edx, 0x95
-	jg CG_AddViewWeapon_160
+	jg _Z16CG_AddViewWeaponi_160
 	movss xmm0, dword [_float_0_25000000]
 	mulss xmm0, [edi+0x492bc]
 	cvtsi2ss xmm1, edx
@@ -4784,27 +4784,27 @@ CG_AddViewWeapon_140:
 	divss xmm0, dword [_float_150_00000000]
 	addss xmm0, [ebp-0x54]
 	movss [ebp-0x54], xmm0
-CG_AddViewWeapon_200:
+_Z16CG_AddViewWeaponi_200:
 	mov ebx, cgArray
 	lea eax, [ebx+0x4613c]
 	mov [esp], eax
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	mov [esp], eax
-	call BG_IsAimDownSightWeapon
+	call _Z23BG_IsAimDownSightWeaponj
 	test eax, eax
-	jz CG_AddViewWeapon_170
+	jz _Z16CG_AddViewWeaponi_170
 	movss xmm1, dword [ebx+0x46230]
 	ucomiss xmm1, [_float_0_00000000]
-	jp CG_AddViewWeapon_180
-	jnz CG_AddViewWeapon_180
+	jp _Z16CG_AddViewWeaponi_180
+	jnz _Z16CG_AddViewWeaponi_180
 	mov edi, cgArray
 	mov dword [edi+0x5043c], 0x0
 	mov dword [edi+0x50440], 0x0
 	mov dword [edi+0x50444], 0x0
-	jmp CG_AddViewWeapon_190
-CG_AddViewWeapon_160:
+	jmp _Z16CG_AddViewWeaponi_190
+_Z16CG_AddViewWeaponi_160:
 	cmp edx, 0x1c1
-	jg CG_AddViewWeapon_200
+	jg _Z16CG_AddViewWeaponi_200
 	movss xmm0, dword [_float_0_25000000]
 	mulss xmm0, [edi+0x492bc]
 	mov eax, 0x1c2
@@ -4814,14 +4814,14 @@ CG_AddViewWeapon_160:
 	divss xmm0, dword [_float_300_00000000]
 	addss xmm0, [ebp-0x54]
 	movss [ebp-0x54], xmm0
-	jmp CG_AddViewWeapon_200
-CG_AddViewWeapon_170:
+	jmp _Z16CG_AddViewWeaponi_200
+_Z16CG_AddViewWeaponi_170:
 	xor eax, eax
 	mov [ebx+0x5043c], eax
 	mov [ebx+0x50440], eax
 	mov [ebx+0x50444], eax
 	mov edi, ebx
-CG_AddViewWeapon_190:
+_Z16CG_AddViewWeaponi_190:
 	mov eax, cg_gun_x
 	mov eax, [eax]
 	movss xmm1, dword [eax+0xc]
@@ -4885,9 +4885,9 @@ CG_AddViewWeapon_190:
 	mov [ebp-0x110], eax
 	mov eax, [edi+0x503e0]
 	test eax, eax
-	jz CG_AddViewWeapon_210
+	jz _Z16CG_AddViewWeaponi_210
 	sub eax, edx
-CG_AddViewWeapon_210:
+_Z16CG_AddViewWeaponi_210:
 	mov [ebp-0x10c], eax
 	mov eax, [edi+0x50400]
 	mov [ebp-0x108], eax
@@ -4917,47 +4917,47 @@ CG_AddViewWeapon_210:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x12c]
 	mov [esp], eax
-	call BG_CalculateWeaponAngles
+	call _Z24BG_CalculateWeaponAnglesP13weaponState_tPf
 	lea eax, [ebp-0xb4]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x34]
 	mov [esp], eax
-	call AnglesToAxis
+	call _Z12AnglesToAxisPKfPA3_f
 	lea ebx, [ebp-0x90]
 	mov [esp+0x4], ebx
 	lea eax, [edi+0x46244]
 	mov [esp], eax
-	call AnglesToAxis
+	call _Z12AnglesToAxisPKfPA3_f
 	lea esi, [ebp-0xd8]
 	mov [esp+0x8], esi
 	mov [esp+0x4], ebx
 	lea eax, [ebp-0xb4]
 	mov [esp], eax
-	call MatrixMultiply
+	call _Z14MatrixMultiplyPA3_KfS1_PA3_f
 	lea eax, [ebp-0x6c]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call AxisToQuat
+	call _Z10AxisToQuatPA3_KfPf
 	mov eax, [ebp-0x13c]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ebx, eax
 	mov eax, [edi+0x46224]
 	mov [esp], eax
-	call BG_IsAimDownSightWeapon
+	call _Z23BG_IsAimDownSightWeaponj
 	test eax, eax
-	jz CG_AddViewWeapon_220
+	jz _Z16CG_AddViewWeaponi_220
 	pxor xmm0, xmm0
 	ucomiss xmm0, [edi+0x46230]
-	jp CG_AddViewWeapon_230
-	jnz CG_AddViewWeapon_230
-CG_AddViewWeapon_220:
+	jp _Z16CG_AddViewWeaponi_230
+	jnz _Z16CG_AddViewWeaponi_230
+_Z16CG_AddViewWeaponi_220:
 	mov edi, cgArray
 	mov eax, [edi+0x4d360]
 	mov [edi+0x50434], eax
 	mov eax, [edi+0x4d364]
 	mov [edi+0x50438], eax
-CG_AddViewWeapon_270:
+_Z16CG_AddViewWeaponi_270:
 	mov eax, [ebp-0x120]
 	mov [edi+0x492a0], eax
 	mov eax, [ebp-0x11c]
@@ -4989,50 +4989,50 @@ CG_AddViewWeapon_270:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_AddPlayerWeapon
+	call _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si
 	add esp, 0x17c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_AddViewWeapon_80:
+_Z16CG_AddViewWeaponi_80:
 	cvtsi2ss xmm2, edx
 	cvtsi2ss xmm0, eax
 	divss xmm2, xmm0
 	movaps xmm0, xmm2
 	mulss xmm0, [_float__2_00000000]
 	movss xmm3, dword [_float_1_00000000]
-	jmp CG_AddViewWeapon_240
-CG_AddViewWeapon_100:
-	jp CG_AddViewWeapon_250
+	jmp _Z16CG_AddViewWeaponi_240
+_Z16CG_AddViewWeaponi_100:
+	jp _Z16CG_AddViewWeaponi_250
 	mov dword [esi+0x49280], 0x0
 	mov edi, esi
 	pxor xmm1, xmm1
-CG_AddViewWeapon_120:
+_Z16CG_AddViewWeaponi_120:
 	mov eax, [edi+0x46230]
 	mov [edi+0x4927c], eax
-	jmp CG_AddViewWeapon_260
-CG_AddViewWeapon_230:
+	jmp _Z16CG_AddViewWeaponi_260
+_Z16CG_AddViewWeaponi_230:
 	mov edx, [ebx+0x438]
 	test edx, edx
-	jnz CG_AddViewWeapon_220
+	jnz _Z16CG_AddViewWeaponi_220
 	lea eax, [ebp-0x34]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x6c]
 	mov [esp], eax
-	call UnitQuatToAngles
+	call _Z16UnitQuatToAnglesPKfPf
 	mov eax, [ebp-0x34]
 	mov [esp], eax
-	call AngleNormalize360
+	call _Z17AngleNormalize360f
 	fstp dword [edi+0x50434]
 	mov eax, [ebp-0x30]
 	mov [esp], eax
-	call AngleNormalize360
+	call _Z17AngleNormalize360f
 	fstp dword [edi+0x50438]
 	mov edi, cgArray
-	jmp CG_AddViewWeapon_270
-CG_AddViewWeapon_180:
+	jmp _Z16CG_AddViewWeaponi_270
+_Z16CG_AddViewWeaponi_180:
 	movss xmm0, dword [ebp-0x5c]
 	subss xmm0, [ebx+0x492e0]
 	mulss xmm0, xmm1
@@ -5046,19 +5046,19 @@ CG_AddViewWeapon_180:
 	mulss xmm1, xmm0
 	movss [ebx+0x50444], xmm1
 	mov edi, ebx
-	jmp CG_AddViewWeapon_190
-CG_AddViewWeapon_70:
+	jmp _Z16CG_AddViewWeaponi_190
+_Z16CG_AddViewWeaponi_70:
 	movss xmm1, dword [_float_1_00000000]
-	jmp CG_AddViewWeapon_280
-CG_AddViewWeapon_110:
+	jmp _Z16CG_AddViewWeaponi_280
+_Z16CG_AddViewWeaponi_110:
 	mov edi, cgArray
-	jmp CG_AddViewWeapon_120
-CG_AddViewWeapon_150:
+	jmp _Z16CG_AddViewWeaponi_120
+_Z16CG_AddViewWeaponi_150:
 	mov dword [ebp-0x28], 0x0
 	mov dword [ebp-0x24], 0x0
 	mov dword [ebp-0x20], 0x0
 	movss [esp], xmm0
-	call GetLeanFraction
+	call _Z15GetLeanFractionf
 	fstp dword [ebp-0x15c]
 	movss xmm2, dword [ebp-0x15c]
 	movaps xmm0, xmm2
@@ -5076,7 +5076,7 @@ CG_AddViewWeapon_150:
 	lea eax, [ebp-0x28]
 	mov [esp], eax
 	movss [ebp-0x158], xmm1
-	call AngleVectors
+	call _Z12AngleVectorsPKfPfS1_S1_
 	movss xmm1, dword [ebp-0x158]
 	movaps xmm0, xmm1
 	mulss xmm0, [ebp-0x4c]
@@ -5090,11 +5090,11 @@ CG_AddViewWeapon_150:
 	addss xmm1, [ebp-0x54]
 	movss [ebp-0x54], xmm1
 	mov edi, cgArray
-	jmp CG_AddViewWeapon_140
+	jmp _Z16CG_AddViewWeaponi_140
 
 
 ;CG_RegisterItems(int)
-CG_RegisterItems:
+_Z16CG_RegisterItemsi:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -5103,89 +5103,89 @@ CG_RegisterItems:
 	mov esi, [ebp+0x8]
 	mov dword [esp+0x4], 0x90a
 	mov [esp], esi
-	call CL_GetConfigString
+	call _Z18CL_GetConfigStringii
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x88]
 	mov [esp], eax
 	call strcpy
 	mov ebx, 0x1
-	jmp CG_RegisterItems_10
-CG_RegisterItems_50:
+	jmp _Z16CG_RegisterItemsi_10
+_Z16CG_RegisterItemsi_50:
 	sub eax, 0x30
 	mov ecx, ebx
 	and ecx, 0x3
 	sar eax, cl
 	test al, 0x1
-	jnz CG_RegisterItems_20
-CG_RegisterItems_60:
+	jnz _Z16CG_RegisterItemsi_20
+_Z16CG_RegisterItemsi_60:
 	add ebx, 0x1
 	cmp ebx, 0x80
-	jz CG_RegisterItems_30
-CG_RegisterItems_10:
+	jz _Z16CG_RegisterItemsi_30
+_Z16CG_RegisterItemsi_10:
 	mov eax, ebx
 	test ebx, ebx
-	js CG_RegisterItems_40
-CG_RegisterItems_70:
+	js _Z16CG_RegisterItemsi_40
+_Z16CG_RegisterItemsi_70:
 	sar eax, 0x2
 	movsx eax, byte [ebp+eax-0x88]
 	cmp eax, 0x39
-	jle CG_RegisterItems_50
+	jle _Z16CG_RegisterItemsi_50
 	sub eax, 0x57
 	mov ecx, ebx
 	and ecx, 0x3
 	sar eax, cl
 	test al, 0x1
-	jz CG_RegisterItems_60
-CG_RegisterItems_20:
+	jz _Z16CG_RegisterItemsi_60
+_Z16CG_RegisterItemsi_20:
 	mov [esp+0x4], ebx
 	mov [esp], esi
-	call CG_RegisterWeapon
+	call _Z17CG_RegisterWeaponii
 	add ebx, 0x1
 	cmp ebx, 0x80
-	jnz CG_RegisterItems_10
-CG_RegisterItems_30:
+	jnz _Z16CG_RegisterItemsi_10
+_Z16CG_RegisterItemsi_30:
 	add esp, 0x90
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-CG_RegisterItems_40:
+_Z16CG_RegisterItemsi_40:
 	lea eax, [ebx+0x3]
-	jmp CG_RegisterItems_70
+	jmp _Z16CG_RegisterItemsi_70
 	add [eax], al
 
 
 ;CG_ActionSlotUp_f()
-CG_ActionSlotUp_f:
+_Z17CG_ActionSlotUp_fv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov edx, cgArray
 	mov ecx, [edx+0x24]
 	test ecx, ecx
-	jz CG_ActionSlotUp_f_10
+	jz _Z17CG_ActionSlotUp_fv_10
 	mov eax, [edx+0x46228]
 	sub eax, 0x3
 	cmp eax, 0x1
-	jbe CG_ActionSlotUp_f_10
+	jbe _Z17CG_ActionSlotUp_fv_10
 	test dword [edx+0x46148], 0xc00
-	jz CG_ActionSlotUp_f_20
-CG_ActionSlotUp_f_10:
+	jz _Z17CG_ActionSlotUp_fv_20
+_Z17CG_ActionSlotUp_fv_10:
 	leave
 	ret
-CG_ActionSlotUp_f_20:
+_Z17CG_ActionSlotUp_fv_20:
 	cmp byte [edx+0x4614c], 0x0
-	js CG_ActionSlotUp_f_10
+	js _Z17CG_ActionSlotUp_fv_10
 	test byte [ecx+0x20], 0x4
-	jz CG_ActionSlotUp_f_10
+	jz _Z17CG_ActionSlotUp_fv_10
 	lea eax, [ebp-0xc]
-	call ActionParms
+	call _Z11ActionParmsPi
 	leave
 	ret
 
 
 ;CG_BulletHitEvent(int, int, int, int, float const*, float const*, float const*, int, int, unsigned char, int, int)
-CG_BulletHitEvent:
+_Z17CG_BulletHitEventiiiiPKfS0_S0_iihii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5200,7 +5200,7 @@ CG_BulletHitEvent:
 	mov eax, sv_clientSideBullets
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_BulletHitEvent_10
+	jz _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_10
 	lea eax, [ebx*4]
 	mov edx, ebx
 	shl edx, 0x5
@@ -5210,15 +5210,15 @@ CG_BulletHitEvent:
 	add edx, eax
 	mov eax, edx
 	add eax, cg_entitiesArray
-	jz CG_BulletHitEvent_20
+	jz _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_20
 	cmp dword [eax+0xd0], 0x1
-	jz CG_BulletHitEvent_30
-CG_BulletHitEvent_20:
+	jz _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_30
+_Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_20:
 	xor eax, eax
-CG_BulletHitEvent_60:
+_Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_60:
 	test eax, eax
-	jnz CG_BulletHitEvent_40
-CG_BulletHitEvent_10:
+	jnz _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_40
+_Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_10:
 	mov eax, [ebp+0x34]
 	mov [esp+0x20], eax
 	mov eax, [ebp+0x30]
@@ -5240,23 +5240,23 @@ CG_BulletHitEvent_10:
 	mov ecx, ebx
 	mov edx, esi
 	mov eax, edi
-	call CG_BulletHitEvent_Internal
+	call _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_BulletHitEvent_40:
+_Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_40:
 	lea ecx, [ebp-0x30]
 	mov eax, scr_const
 	movzx eax, word [eax+0x90]
 	mov [esp], eax
 	mov edx, esi
 	mov eax, edi
-	call CalcMuzzlePoint
+	call _Z15CalcMuzzlePointiiPfj
 	test eax, eax
-	jz CG_BulletHitEvent_10
+	jz _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_10
 	mov eax, [ebp+0x1c]
 	movss xmm3, dword [eax]
 	subss xmm3, [ebp-0x30]
@@ -5277,9 +5277,9 @@ CG_BulletHitEvent_40:
 	movaps xmm0, xmm2
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
-	jb CG_BulletHitEvent_50
+	jb _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_50
 	movss xmm1, dword [_float_1_00000000]
-CG_BulletHitEvent_70:
+_Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_70:
 	mulss xmm3, xmm1
 	movss [ebp-0x24], xmm3
 	movaps xmm0, xmm1
@@ -5310,20 +5310,20 @@ CG_BulletHitEvent_70:
 	mov ecx, ebx
 	mov edx, esi
 	mov eax, edi
-	call CG_BulletHitEvent_Internal
-	jmp CG_BulletHitEvent_10
-CG_BulletHitEvent_30:
+	call _Z26CG_BulletHitEvent_InternaliiiiPKfS0_S0_iihii
+	jmp _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_10
+_Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_30:
 	mov eax, 0x1
-	jmp CG_BulletHitEvent_60
-CG_BulletHitEvent_50:
+	jmp _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_60
+_Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_50:
 	movss xmm1, dword [_float_1_00000000]
 	divss xmm1, xmm2
-	jmp CG_BulletHitEvent_70
+	jmp _Z17CG_BulletHitEventiiiiPKfS0_S0_iihii_70
 	nop
 
 
 ;CG_HoldBreathInit(cg_s*)
-CG_HoldBreathInit:
+_Z17CG_HoldBreathInitP4cg_s:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -5337,7 +5337,7 @@ CG_HoldBreathInit:
 
 
 ;CG_RegisterWeapon(int, int)
-CG_RegisterWeapon:
+_Z17CG_RegisterWeaponii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5347,15 +5347,15 @@ CG_RegisterWeapon:
 	mov eax, [ebp+0xc]
 	mov [removeMeWhenMPStopsCrashingInHere], eax
 	test eax, eax
-	jnz CG_RegisterWeapon_10
-CG_RegisterWeapon_20:
+	jnz _Z17CG_RegisterWeaponii_10
+_Z17CG_RegisterWeaponii_20:
 	add esp, 0x5c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_RegisterWeapon_10:
+_Z17CG_RegisterWeaponii_10:
 	mov edx, eax
 	mov ebx, eax
 	shl ebx, 0x2
@@ -5363,12 +5363,12 @@ CG_RegisterWeapon_10:
 	lea edi, [ebx+eax]
 	add edi, cg_weaponsArray
 	mov [esp], edx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov [ebp-0x3c], eax
 	mov eax, [edi+0x30]
 	test eax, eax
-	jnz CG_RegisterWeapon_20
-	call SCR_UpdateLoadScreen
+	jnz _Z17CG_RegisterWeaponii_20
+	call _Z20SCR_UpdateLoadScreenv
 	mov dword [esp+0x8], 0x44
 	mov dword [esp+0x4], 0x0
 	mov [esp], edi
@@ -5381,10 +5381,10 @@ CG_RegisterWeapon_10:
 	mov ecx, [ebp-0x3c]
 	mov eax, [ecx+0xc]
 	test eax, eax
-	jz CG_RegisterWeapon_30
+	jz _Z17CG_RegisterWeaponii_30
 	mov eax, [ecx+0x4c]
 	test eax, eax
-	jz CG_RegisterWeapon_40
+	jz _Z17CG_RegisterWeaponii_40
 	mov word [ebp-0x28], 0x0
 	mov eax, scr_const
 	movzx eax, word [eax+0xa6]
@@ -5396,7 +5396,7 @@ CG_RegisterWeapon_10:
 	mov eax, [ecx+0xc]
 	mov [ebp-0x24], eax
 	mov eax, ecx
-	call CG_CreateWeaponViewModelXAnim
+	call _Z29CG_CreateWeaponViewModelXAnimP9WeaponDef
 	mov [edi+0x2c], eax
 	mov edx, [ebp+0x8]
 	mov [esp+0x10], edx
@@ -5407,7 +5407,7 @@ CG_RegisterWeapon_10:
 	mov dword [esp+0x4], 0x2
 	lea eax, [ebp-0x2c]
 	mov [esp], eax
-	call Com_ClientDObjCreate
+	call _Z20Com_ClientDObjCreateP11DObjModel_stP11XAnimTree_sii
 	mov [ebp-0x40], eax
 	mov [edi], eax
 	mov ecx, [ebp-0x3c]
@@ -5419,7 +5419,7 @@ CG_RegisterWeapon_10:
 	mov dword [esp+0x4], 0x0
 	mov eax, [edi+0x2c]
 	mov [esp], eax
-	call XAnimClearTreeGoalWeights
+	call _Z25XAnimClearTreeGoalWeightsP11XAnimTree_sjf
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x1
 	mov dword [esp+0x14], 0x0
@@ -5430,7 +5430,7 @@ CG_RegisterWeapon_10:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp-0x40]
 	mov [esp], eax
-	call XAnimSetGoalWeight
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x1
 	mov dword [esp+0x14], 0x0
@@ -5440,14 +5440,14 @@ CG_RegisterWeapon_10:
 	mov dword [esp+0x4], 0x1
 	mov edx, [ebp-0x40]
 	mov [esp], edx
-	call XAnimSetGoalWeight
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
 	mov ecx, [ebp-0x3c]
 	mov eax, [ecx+0xd0]
 	cmp byte [eax], 0x0
-	jnz CG_RegisterWeapon_50
+	jnz _Z17CG_RegisterWeaponii_50
 	mov esi, ecx
-	jmp CG_RegisterWeapon_60
-CG_RegisterWeapon_80:
+	jmp _Z17CG_RegisterWeaponii_60
+_Z17CG_RegisterWeaponii_80:
 	movzx ecx, byte [ebp-0x19]
 	mov edx, ecx
 	shr dl, 0x5
@@ -5456,15 +5456,15 @@ CG_RegisterWeapon_80:
 	mov eax, 0x80000000
 	shr eax, cl
 	or [edi+edx*4+0x18], eax
-CG_RegisterWeapon_90:
+_Z17CG_RegisterWeaponii_90:
 	add esi, 0x2
 	mov eax, [ebp-0x3c]
 	add eax, 0x10
 	cmp eax, esi
-	jz CG_RegisterWeapon_70
-CG_RegisterWeapon_60:
+	jz _Z17CG_RegisterWeaponii_70
+_Z17CG_RegisterWeaponii_60:
 	cmp word [esi+0xd8], 0x0
-	jz CG_RegisterWeapon_70
+	jz _Z17CG_RegisterWeaponii_70
 	mov byte [ebp-0x19], 0xfe
 	lea eax, [ebp-0x19]
 	mov [esp+0x8], eax
@@ -5472,71 +5472,71 @@ CG_RegisterWeapon_60:
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x40]
 	mov [esp], edx
-	call DObjGetBoneIndex
+	call _Z16DObjGetBoneIndexPK6DObj_sjPh
 	test eax, eax
-	jnz CG_RegisterWeapon_80
+	jnz _Z17CG_RegisterWeaponii_80
 	mov ecx, [ebp-0x3c]
 	mov ebx, [ecx]
 	movzx eax, word [esi+0xd8]
 	mov [esp], eax
-	call SL_ConvertToString
+	call _Z18SL_ConvertToStringj
 	mov [esp+0xc], ebx
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_cg_registerweapo2
 	mov dword [esp], 0xe
-	call Com_PrintError
-	jmp CG_RegisterWeapon_90
-CG_RegisterWeapon_70:
+	call _Z14Com_PrintErroriPKcz
+	jmp _Z17CG_RegisterWeaponii_90
+_Z17CG_RegisterWeaponii_70:
 	lea eax, [edi+0x18]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x40]
 	mov [esp], eax
-	call DObjSetHidePartBits
+	call _Z19DObjSetHidePartBitsP6DObj_sPKj
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x3d4ccccd
 	mov eax, [edi]
 	mov [esp], eax
-	call DObjUpdateClientInfo
+	call _Z20DObjUpdateClientInfoP6DObj_sfh
 	mov ecx, [ebp-0x3c]
-CG_RegisterWeapon_30:
+_Z17CG_RegisterWeaponii_30:
 	mov edx, [ecx+0x30c]
 	test edx, edx
-	jz CG_RegisterWeapon_100
+	jz _Z17CG_RegisterWeaponii_100
 	mov eax, cgMedia
 	mov ecx, [ebp+0xc]
 	mov [eax+ecx*4+0x34], edx
-CG_RegisterWeapon_150:
+_Z17CG_RegisterWeaponii_150:
 	mov ecx, [ebp-0x3c]
 	mov eax, [ecx+0x4]
 	mov [esp], eax
-	call SEH_StringEd_GetString
+	call _Z22SEH_StringEd_GetStringPKc
 	mov [edi+0x38], eax
 	test eax, eax
-	jz CG_RegisterWeapon_110
-CG_RegisterWeapon_210:
+	jz _Z17CG_RegisterWeaponii_110
+_Z17CG_RegisterWeaponii_210:
 	mov ecx, [ebp-0x3c]
 	mov eax, [ecx+0xd4]
 	mov [esp], eax
-	call SEH_StringEd_GetString
+	call _Z22SEH_StringEd_GetStringPKc
 	mov [edi+0x3c], eax
 	test eax, eax
-	jz CG_RegisterWeapon_120
-CG_RegisterWeapon_180:
+	jz _Z17CG_RegisterWeaponii_120
+_Z17CG_RegisterWeaponii_180:
 	mov ecx, [ebp-0x3c]
 	mov eax, [ecx+0x8]
 	mov [esp], eax
-	call SEH_StringEd_GetString
+	call _Z22SEH_StringEd_GetStringPKc
 	mov [edi+0x40], eax
 	test eax, eax
-	jnz CG_RegisterWeapon_20
+	jnz _Z17CG_RegisterWeaponii_20
 	mov eax, loc_warnings
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_RegisterWeapon_130
+	jz _Z17CG_RegisterWeaponii_130
 	mov eax, loc_warningsAsErrors
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_RegisterWeapon_140
+	jz _Z17CG_RegisterWeaponii_140
 	mov edx, [ebp-0x3c]
 	mov eax, [edx+0x8]
 	mov [esp+0xc], eax
@@ -5544,29 +5544,29 @@ CG_RegisterWeapon_180:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_weapon_s_could_n
 	mov dword [esp], 0x7
-	call Com_Error
-CG_RegisterWeapon_130:
+	call _Z9Com_Error11errorParm_tPKcz
+_Z17CG_RegisterWeaponii_130:
 	mov edx, [ebp-0x3c]
 	mov eax, [edx+0x8]
 	mov [edi+0x40], eax
-	jmp CG_RegisterWeapon_20
-CG_RegisterWeapon_40:
+	jmp _Z17CG_RegisterWeaponii_20
+_Z17CG_RegisterWeaponii_40:
 	mov ecx, [ebp-0x3c]
-	jmp CG_RegisterWeapon_30
-CG_RegisterWeapon_100:
+	jmp _Z17CG_RegisterWeaponii_30
+_Z17CG_RegisterWeaponii_100:
 	mov eax, cgMedia
 	mov edx, [ebp+0xc]
 	mov dword [eax+edx*4+0x34], 0x0
-	jmp CG_RegisterWeapon_150
-CG_RegisterWeapon_120:
+	jmp _Z17CG_RegisterWeaponii_150
+_Z17CG_RegisterWeaponii_120:
 	mov eax, loc_warnings
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_RegisterWeapon_160
+	jz _Z17CG_RegisterWeaponii_160
 	mov eax, loc_warningsAsErrors
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_RegisterWeapon_170
+	jz _Z17CG_RegisterWeaponii_170
 	mov edx, [ebp-0x3c]
 	mov eax, [edx+0xd4]
 	mov [esp+0xc], eax
@@ -5574,21 +5574,21 @@ CG_RegisterWeapon_120:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_weapon_s_could_n1
 	mov dword [esp], 0x7
-	call Com_Error
-CG_RegisterWeapon_160:
+	call _Z9Com_Error11errorParm_tPKcz
+_Z17CG_RegisterWeaponii_160:
 	mov edx, [ebp-0x3c]
 	mov eax, [edx+0xd4]
 	mov [edi+0x3c], eax
-	jmp CG_RegisterWeapon_180
-CG_RegisterWeapon_110:
+	jmp _Z17CG_RegisterWeaponii_180
+_Z17CG_RegisterWeaponii_110:
 	mov eax, loc_warnings
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_RegisterWeapon_190
+	jz _Z17CG_RegisterWeaponii_190
 	mov eax, loc_warningsAsErrors
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_RegisterWeapon_200
+	jz _Z17CG_RegisterWeaponii_200
 	mov edx, [ebp-0x3c]
 	mov eax, [edx+0x4]
 	mov [esp+0xc], eax
@@ -5596,13 +5596,13 @@ CG_RegisterWeapon_110:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_weapon_s_could_n2
 	mov dword [esp], 0x7
-	call Com_Error
-CG_RegisterWeapon_190:
+	call _Z9Com_Error11errorParm_tPKcz
+_Z17CG_RegisterWeaponii_190:
 	mov edx, [ebp-0x3c]
 	mov eax, [edx+0x4]
 	mov [edi+0x38], eax
-	jmp CG_RegisterWeapon_210
-CG_RegisterWeapon_50:
+	jmp _Z17CG_RegisterWeaponii_210
+_Z17CG_RegisterWeaponii_50:
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x1
 	mov dword [esp+0x14], 0x0
@@ -5612,15 +5612,15 @@ CG_RegisterWeapon_50:
 	mov dword [esp+0x4], 0x20
 	mov eax, [ebp-0x40]
 	mov [esp], eax
-	call XAnimSetGoalWeight
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], 0x20
 	mov eax, [edi+0x2c]
 	mov [esp], eax
-	call XAnimSetTime
+	call _Z12XAnimSetTimeP11XAnimTree_sjf
 	mov esi, [ebp-0x3c]
-	jmp CG_RegisterWeapon_60
-CG_RegisterWeapon_140:
+	jmp _Z17CG_RegisterWeaponii_60
+_Z17CG_RegisterWeaponii_140:
 	mov ecx, [ebp-0x3c]
 	mov eax, [ecx+0x8]
 	mov [esp+0xc], eax
@@ -5628,9 +5628,9 @@ CG_RegisterWeapon_140:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_warning_weapon_s
 	mov dword [esp], 0x11
-	call Com_PrintWarning
-	jmp CG_RegisterWeapon_130
-CG_RegisterWeapon_170:
+	call _Z16Com_PrintWarningiPKcz
+	jmp _Z17CG_RegisterWeaponii_130
+_Z17CG_RegisterWeaponii_170:
 	mov ecx, [ebp-0x3c]
 	mov eax, [ecx+0xd4]
 	mov [esp+0xc], eax
@@ -5638,9 +5638,9 @@ CG_RegisterWeapon_170:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_warning_weapon_s1
 	mov dword [esp], 0x11
-	call Com_PrintWarning
-	jmp CG_RegisterWeapon_160
-CG_RegisterWeapon_200:
+	call _Z16Com_PrintWarningiPKcz
+	jmp _Z17CG_RegisterWeaponii_160
+_Z17CG_RegisterWeaponii_200:
 	mov ecx, [ebp-0x3c]
 	mov eax, [ecx+0x4]
 	mov [esp+0xc], eax
@@ -5648,13 +5648,13 @@ CG_RegisterWeapon_200:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_warning_weapon_s2
 	mov dword [esp], 0x11
-	call Com_PrintWarning
-	jmp CG_RegisterWeapon_190
+	call _Z16Com_PrintWarningiPKcz
+	jmp _Z17CG_RegisterWeaponii_190
 	add [eax], al
 
 
 ;CG_SetupWeaponDef(int)
-CG_SetupWeaponDef:
+_Z17CG_SetupWeaponDefi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5669,7 +5669,7 @@ CG_SetupWeaponDef:
 	mov dword [esp+0x4], 0x8d2
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CL_GetConfigString
+	call _Z18CL_GetConfigStringii
 	mov [esp+0x4], eax
 	lea ebx, [ebp-0x2214]
 	mov [esp], ebx
@@ -5678,67 +5678,67 @@ CG_SetupWeaponDef:
 	mov edi, 0x1
 	mov edx, ebx
 	movzx eax, byte [ebp-0x2214]
-CG_SetupWeaponDef_60:
+_Z17CG_SetupWeaponDefi_60:
 	test al, al
-	jnz CG_SetupWeaponDef_10
-CG_SetupWeaponDef_70:
+	jnz _Z17CG_SetupWeaponDefi_10
+_Z17CG_SetupWeaponDefi_70:
 	test edi, edi
-	jg CG_SetupWeaponDef_20
+	jg _Z17CG_SetupWeaponDefi_20
 	add esp, 0x221c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_SetupWeaponDef_20:
+_Z17CG_SetupWeaponDefi_20:
 	xor ebx, ebx
-CG_SetupWeaponDef_40:
+_Z17CG_SetupWeaponDefi_40:
 	mov esi, [ebp+ebx*4-0x214]
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call BG_GetWeaponIndexForName
+	call _Z24BG_GetWeaponIndexForNamePKcPFvjE
 	add ebx, 0x1
 	cmp eax, ebx
-	jz CG_SetupWeaponDef_30
+	jz _Z17CG_SetupWeaponDefi_30
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_weapon_index_mis
 	mov dword [esp], 0x2
-	call Com_Error
-CG_SetupWeaponDef_30:
+	call _Z9Com_Error11errorParm_tPKcz
+_Z17CG_SetupWeaponDefi_30:
 	cmp edi, ebx
-	jnz CG_SetupWeaponDef_40
+	jnz _Z17CG_SetupWeaponDefi_40
 	add esp, 0x221c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_SetupWeaponDef_10:
+_Z17CG_SetupWeaponDefi_10:
 	cmp al, 0x20
-	jz CG_SetupWeaponDef_50
+	jz _Z17CG_SetupWeaponDefi_50
 	add edx, 0x1
 	movzx eax, byte [edx]
-	jmp CG_SetupWeaponDef_60
-CG_SetupWeaponDef_50:
+	jmp _Z17CG_SetupWeaponDefi_60
+_Z17CG_SetupWeaponDefi_50:
 	mov byte [edx], 0x0
 	add edx, 0x1
 	movzx eax, byte [edx]
 	test al, al
-	jz CG_SetupWeaponDef_70
+	jz _Z17CG_SetupWeaponDefi_70
 	cmp al, 0x20
-	jz CG_SetupWeaponDef_60
+	jz _Z17CG_SetupWeaponDefi_60
 	cmp edi, 0x7e
-	jg CG_SetupWeaponDef_20
+	jg _Z17CG_SetupWeaponDefi_20
 	mov [ebp+edi*4-0x214], edx
 	add edi, 0x1
 	movzx eax, byte [edx]
-	jmp CG_SetupWeaponDef_60
+	jmp _Z17CG_SetupWeaponDefi_60
 	nop
 	add [eax], al
 
 
 ;CG_AddPlayerWeapon(int, GfxScaledPlacement const*, playerState_s const*, centity_s*, int)
-CG_AddPlayerWeapon:
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -5750,35 +5750,35 @@ CG_AddPlayerWeapon:
 	mov ebx, cgArray
 	mov eax, [ebx+0x24]
 	test byte [eax+0x20], 0x6
-	jz CG_AddPlayerWeapon_10
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_10
 	cmp edx, [eax+0xe8]
-	jz CG_AddPlayerWeapon_20
-CG_AddPlayerWeapon_10:
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_20
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_10:
 	xor eax, eax
-CG_AddPlayerWeapon_250:
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_250:
 	test eax, eax
-	jz CG_AddPlayerWeapon_30
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_30
 	mov eax, [ebx+0x46138]
 	test eax, eax
-	jz CG_AddPlayerWeapon_40
-CG_AddPlayerWeapon_30:
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_40
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_30:
 	mov byte [ebp-0x135], 0x0
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jz CG_AddPlayerWeapon_50
-CG_AddPlayerWeapon_100:
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_50
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_100:
 	mov edx, [ebp+0x10]
 	mov [esp], edx
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	mov [ebp-0x134], eax
 	mov dword [ebp-0x130], 0x1
-CG_AddPlayerWeapon_110:
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_110:
 	mov eax, [ebp-0x134]
 	test eax, eax
-	jle CG_AddPlayerWeapon_60
+	jle _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_60
 	mov ecx, [ebp+0x14]
 	test dword [ecx+0xd4], 0x300
-	jnz CG_AddPlayerWeapon_60
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_60
 	mov eax, [ebp-0x134]
 	shl eax, 0x6
 	mov edx, [ebp-0x134]
@@ -5786,69 +5786,69 @@ CG_AddPlayerWeapon_110:
 	add edi, cg_weaponsArray
 	mov eax, [ebp-0x130]
 	test eax, eax
-	jnz CG_AddPlayerWeapon_70
-CG_AddPlayerWeapon_240:
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_70
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_240:
 	mov eax, [ebp+0x14]
 	cmp byte [eax+0x1c1], 0x0
-	jz CG_AddPlayerWeapon_60
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_60
 	cmp byte [ebp-0x135], 0x0
-	jnz CG_AddPlayerWeapon_80
-CG_AddPlayerWeapon_120:
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_80
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_120:
 	mov edx, [ebp+0x14]
 	mov byte [edx+0x1c1], 0x0
 	mov eax, [ebp+0x18]
 	test eax, eax
-	jz CG_AddPlayerWeapon_60
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_60
 	mov eax, [ebp-0x130]
 	test eax, eax
-	jz CG_AddPlayerWeapon_90
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_90
 	mov eax, scr_const
 	movzx esi, word [eax+0x90]
 	mov ebx, [ebp-0x134]
 	add ebx, 0x400
 	mov ecx, [ebp-0x134]
 	mov [esp], ecx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov eax, [eax+0x14c]
 	test eax, eax
-	jz CG_AddPlayerWeapon_60
-CG_AddPlayerWeapon_260:
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_60
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_260:
 	mov [esp+0xc], esi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PlayBoltedEffect
-CG_AddPlayerWeapon_60:
+	call _Z19CG_PlayBoltedEffectiPK11FxEffectDefij
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_60:
 	add esp, 0x14c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_AddPlayerWeapon_40:
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_40:
 	mov byte [ebp-0x135], 0x1
 	mov eax, [ebp+0x10]
 	test eax, eax
-	jnz CG_AddPlayerWeapon_100
-CG_AddPlayerWeapon_50:
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_100
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_50:
 	mov edx, [ebp+0x14]
 	mov edx, [edx+0x190]
 	mov [ebp-0x134], edx
 	mov dword [ebp-0x130], 0x0
-	jmp CG_AddPlayerWeapon_110
-CG_AddPlayerWeapon_80:
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_110
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_80:
 	mov edx, [ebp-0x130]
 	test edx, edx
-	jnz CG_AddPlayerWeapon_120
-	jmp CG_AddPlayerWeapon_60
-CG_AddPlayerWeapon_70:
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_120
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_60
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_70:
 	mov esi, cgArray
 	lea ebx, [esi+0x50460]
 	mov [esp+0x4], ebx
 	mov ecx, [ebp+0xc]
 	mov [esp], ecx
-	call UnitQuatToAxis
+	call _Z14UnitQuatToAxisPKfPA3_f
 	mov edx, [ebp+0xc]
 	add edx, 0x10
 	mov ecx, [ebp+0xc]
@@ -5860,14 +5860,14 @@ CG_AddPlayerWeapon_70:
 	mov [esi+0x5048c], eax
 	mov eax, [edi]
 	test eax, eax
-	jz CG_AddPlayerWeapon_130
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_130
 	mov [esp], eax
-	call DObjClearSkel
-CG_AddPlayerWeapon_130:
+	call _Z13DObjClearSkelPK6DObj_s
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_130:
 	lea eax, [esi+0xfd25c]
 	mov [esp+0x4], eax
 	mov [esp], ebx
-	call AxisToAngles
+	call _Z12AxisToAnglesPA3_KfPf
 	mov eax, [esi+0x50484]
 	mov [esi+0xfd250], eax
 	mov eax, [esi+0x50488]
@@ -5876,20 +5876,20 @@ CG_AddPlayerWeapon_130:
 	mov [esi+0xfd258], eax
 	mov eax, [ebp+0x18]
 	test eax, eax
-	jnz CG_AddPlayerWeapon_140
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_140
 	mov ebx, esi
-CG_AddPlayerWeapon_300:
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_300:
 	mov eax, [ebx+0x50500]
 	test eax, eax
-	jle CG_AddPlayerWeapon_150
+	jle _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_150
 	sub eax, [ebx+0x46124]
 	mov [ebx+0x50500], eax
-CG_AddPlayerWeapon_150:
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_150:
 	test byte [ebx+0x4614c], 0x4
-	jnz CG_AddPlayerWeapon_160
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_160
 	mov eax, [ebx+0x504f8]
 	test eax, eax
-	js CG_AddPlayerWeapon_170
+	js _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_170
 	mov edx, eax
 	add edx, [ebx+0x46124]
 	mov [ebx+0x504f8], edx
@@ -5899,27 +5899,27 @@ CG_AddPlayerWeapon_150:
 	mulss xmm0, [_float_1000_00000000]
 	cvttss2si eax, xmm0
 	cmp edx, eax
-	jg CG_AddPlayerWeapon_180
+	jg _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_180
 	mov ecx, [ebx+0x50500]
 	test ecx, ecx
-	jle CG_AddPlayerWeapon_190
-CG_AddPlayerWeapon_170:
+	jle _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_190
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_170:
 	mov dword [ebx+0x504f8], 0xffffffff
 	mov dword [ebx+0x504fc], 0x0
 	pxor xmm0, xmm0
 	movss [ebx+0x50504], xmm0
 	movaps xmm1, xmm0
-CG_AddPlayerWeapon_330:
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_330:
 	movss [ebp-0x12c], xmm1
 	ucomiss xmm1, xmm0
-	jp CG_AddPlayerWeapon_200
-	jz CG_AddPlayerWeapon_210
-CG_AddPlayerWeapon_200:
+	jp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_200
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_210
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_200:
 	xor ebx, ebx
 	mov esi, cgsArray
 	add esi, 0xd6c
-	jmp CG_AddPlayerWeapon_220
-CG_AddPlayerWeapon_230:
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_220
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_230:
 	movss xmm0, dword [esi-0x4]
 	movss xmm1, dword [_float_1_00000000]
 	subss xmm0, xmm1
@@ -5927,38 +5927,38 @@ CG_AddPlayerWeapon_230:
 	addss xmm0, xmm1
 	movss [ebp+ebx*4-0x124], xmm0
 	add ebx, 0x1
-CG_AddPlayerWeapon_220:
-	call SND_GetEntChannelCount
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_220:
+	call _Z22SND_GetEntChannelCountv
 	add esi, 0x4
 	cmp ebx, eax
-	jl CG_AddPlayerWeapon_230
+	jl _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_230
 	mov dword [esp+0x8], 0x0
 	lea eax, [ebp-0x124]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1
-	call SND_SetChannelVolumes
-	jmp CG_AddPlayerWeapon_240
-CG_AddPlayerWeapon_20:
+	call _Z21SND_SetChannelVolumesiPKfi
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_240
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_20:
 	mov eax, 0x1
-	jmp CG_AddPlayerWeapon_250
-CG_AddPlayerWeapon_90:
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_250
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_90:
 	mov eax, scr_const
 	movzx esi, word [eax+0x90]
 	mov edx, [ebp+0x14]
 	mov ebx, [edx+0xcc]
 	mov ecx, [ebp-0x134]
 	mov [esp], ecx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov eax, [eax+0x150]
 	test eax, eax
-	jnz CG_AddPlayerWeapon_260
-	jmp CG_AddPlayerWeapon_60
-CG_AddPlayerWeapon_210:
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_260
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_60
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_210:
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], 0x1
-	call SND_DeactivateChannelVolumes
-	jmp CG_AddPlayerWeapon_240
-CG_AddPlayerWeapon_140:
+	call _Z28SND_DeactivateChannelVolumesii
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_240
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_140:
 	mov edx, [ebp+0x10]
 	add edx, 0x1c
 	mov ecx, [ebp+0x10]
@@ -5977,7 +5977,7 @@ CG_AddPlayerWeapon_140:
 	mov [esp+0x4], eax
 	lea ebx, [ebp-0x24]
 	mov [esp], ebx
-	call AddLeanToPosition
+	call _Z17AddLeanToPositionPfffff
 	mov dword [esp+0x14], 0x0
 	mov [esp+0x10], ebx
 	mov dword [esp+0xc], 0x3
@@ -5986,26 +5986,26 @@ CG_AddPlayerWeapon_140:
 	mov [esp+0x4], eax
 	mov eax, [edi]
 	mov [esp], eax
-	call R_AddDObjToScene
+	call _Z16R_AddDObjToScenePK6DObj_sPK7cpose_tjjPff
 	mov eax, [ebp-0x134]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov esi, eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_LookingThroughNightVision
+	call _Z28CG_LookingThroughNightVisioni
 	test al, al
-	jnz CG_AddPlayerWeapon_270
-CG_AddPlayerWeapon_340:
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_270
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_340:
 	xor edx, edx
-CG_AddPlayerWeapon_350:
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_350:
 	mov eax, cg_laserForceOn
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz CG_AddPlayerWeapon_280
+	jnz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_280
 	test dl, dl
-	jz CG_AddPlayerWeapon_290
-CG_AddPlayerWeapon_280:
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_290
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_280:
 	mov dword [esp+0x10], 0x1
 	mov eax, cgArray
 	lea edx, [eax+0x49310]
@@ -6016,8 +6016,8 @@ CG_AddPlayerWeapon_280:
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x14]
 	mov [esp], ecx
-	call CG_Laser_Add
-CG_AddPlayerWeapon_290:
+	call _Z12CG_Laser_AddP9centity_sP6DObj_sP7cpose_tPKf14LaserOwnerEnum
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_290:
 	mov eax, [ebp+0x10]
 	movss xmm1, dword [eax+0x650]
 	mov ebx, cgArray
@@ -6032,8 +6032,8 @@ CG_AddPlayerWeapon_290:
 	mulss xmm0, [eax+0xf4]
 	addss xmm1, xmm0
 	movss [ebx+0x4932c], xmm1
-	jmp CG_AddPlayerWeapon_300
-CG_AddPlayerWeapon_160:
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_300
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_160:
 	cvtsi2ss xmm0, dword [ebx+0x46124]
 	mulss xmm0, [_float_0_00100000]
 	movss [esp+0xc], xmm0
@@ -6044,58 +6044,58 @@ CG_AddPlayerWeapon_160:
 	mov eax, [ebx+0x50504]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x3f800000
-	call DiffTrack
+	call _Z9DiffTrackffff
 	fstp dword [ebx+0x50504]
 	mov eax, [ebx+0x504f8]
 	test eax, eax
-	js CG_AddPlayerWeapon_310
+	js _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_310
 	cmp eax, [ebx+0x504fc]
-	jg CG_AddPlayerWeapon_320
-CG_AddPlayerWeapon_370:
+	jg _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_320
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_370:
 	mov ebx, cgArray
 	mov eax, [ebx+0x504f8]
 	add eax, [ebx+0x46124]
 	mov [ebx+0x504f8], eax
 	pxor xmm0, xmm0
 	movss xmm1, dword [ebx+0x50504]
-	jmp CG_AddPlayerWeapon_330
-CG_AddPlayerWeapon_270:
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_330
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_270:
 	mov eax, [esi+0x514]
 	test eax, eax
-	jz CG_AddPlayerWeapon_340
+	jz _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_340
 	mov edx, 0x1
-	jmp CG_AddPlayerWeapon_350
-CG_AddPlayerWeapon_310:
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_350
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_310:
 	mov dword [ebx+0x504f8], 0x0
 	mov esi, [ebx+0x50500]
 	test esi, esi
-	jle CG_AddPlayerWeapon_360
+	jle _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_360
 	mov dword [ebx+0x504fc], 0x0
-	jmp CG_AddPlayerWeapon_370
-CG_AddPlayerWeapon_180:
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_370
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_180:
 	mov eax, cgMedia
 	mov eax, [eax+0x1060]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PlayClientSoundAlias
+	call _Z23CG_PlayClientSoundAliasiP16snd_alias_list_t
 	mov ebx, cgArray
-	jmp CG_AddPlayerWeapon_170
-CG_AddPlayerWeapon_320:
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_170
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_320:
 	mov eax, cgMedia
 	mov eax, [eax+0x1054]
 	mov [esp+0x4], eax
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call CG_PlayClientSoundAlias
-	jmp CG_AddPlayerWeapon_370
-CG_AddPlayerWeapon_190:
+	call _Z23CG_PlayClientSoundAliasiP16snd_alias_list_t
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_370
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_190:
 	mov eax, cgMedia
 	mov eax, [eax+0x105c]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_PlayClientSoundAlias
+	call _Z23CG_PlayClientSoundAliasiP16snd_alias_list_t
 	mov eax, player_breath_snd_delay
 	mov eax, [eax]
 	movss xmm0, dword [_float_1000_00000000]
@@ -6103,30 +6103,30 @@ CG_AddPlayerWeapon_190:
 	cvttss2si eax, xmm0
 	mov [ebx+0x50500], eax
 	mov ebx, cgArray
-	jmp CG_AddPlayerWeapon_170
-CG_AddPlayerWeapon_360:
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_170
+_Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_360:
 	mov eax, cgMedia
 	mov eax, [eax+0x1058]
 	mov [esp+0x4], eax
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call CG_PlayClientSoundAlias
+	call _Z23CG_PlayClientSoundAliasiP16snd_alias_list_t
 	lea edx, [ebx+0x504fc]
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call SND_GetKnownLength
+	call _Z18SND_GetKnownLengthiPi
 	mov eax, player_breath_snd_delay
 	mov eax, [eax]
 	movss xmm0, dword [_float_1000_00000000]
 	mulss xmm0, [eax+0xc]
 	cvttss2si eax, xmm0
 	mov [ebx+0x50500], eax
-	jmp CG_AddPlayerWeapon_370
+	jmp _Z18CG_AddPlayerWeaponiPK18GfxScaledPlacementPK13playerState_sP9centity_si_370
 	nop
 
 
 ;CG_MeleeBloodEvent(int, centity_s const*, int)
-CG_MeleeBloodEvent:
+_Z18CG_MeleeBloodEventiPK9centity_si:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -6139,11 +6139,11 @@ CG_MeleeBloodEvent:
 	mov edx, cg_weaponsArray
 	mov eax, [edx+eax+0x10]
 	test eax, eax
-	jz CG_MeleeBloodEvent_10
+	jz _Z18CG_MeleeBloodEventiPK9centity_si_10
 	mov eax, cg_blood
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jnz CG_MeleeBloodEvent_20
+	jnz _Z18CG_MeleeBloodEventiPK9centity_si_20
 	mov eax, scr_const
 	movzx eax, word [eax+0xa0]
 	mov [esp+0xc], eax
@@ -6153,11 +6153,11 @@ CG_MeleeBloodEvent:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PlayBoltedEffect
-CG_MeleeBloodEvent_10:
+	call _Z19CG_PlayBoltedEffectiPK11FxEffectDefij
+_Z18CG_MeleeBloodEventiPK9centity_si_10:
 	leave
 	ret
-CG_MeleeBloodEvent_20:
+_Z18CG_MeleeBloodEventiPK9centity_si_20:
 	mov eax, scr_const
 	movzx eax, word [eax+0xa0]
 	mov [esp+0xc], eax
@@ -6167,13 +6167,13 @@ CG_MeleeBloodEvent_20:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PlayBoltedEffect
+	call _Z19CG_PlayBoltedEffectiPK11FxEffectDefij
 	leave
 	ret
 
 
 ;CG_OutOfAmmoChange(int)
-CG_OutOfAmmoChange:
+_Z18CG_OutOfAmmoChangei:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6183,15 +6183,15 @@ CG_OutOfAmmoChange:
 	mov esi, cgArray
 	mov eax, [esi+0x24]
 	test eax, eax
-	jz CG_OutOfAmmoChange_10
+	jz _Z18CG_OutOfAmmoChangei_10
 	cmp dword [esi+0x46140], 0x6
-	jg CG_OutOfAmmoChange_10
+	jg _Z18CG_OutOfAmmoChangei_10
 	mov edi, [esi+0x46224]
 	test edi, edi
-	jnz CG_OutOfAmmoChange_20
+	jnz _Z18CG_OutOfAmmoChangei_20
 	mov ebx, [esi+0x50374]
 	test ebx, ebx
-	jz CG_OutOfAmmoChange_20
+	jz _Z18CG_OutOfAmmoChangei_20
 	mov edx, ebx
 	sar edx, 0x5
 	mov ecx, ebx
@@ -6199,33 +6199,33 @@ CG_OutOfAmmoChange:
 	mov eax, 0x1
 	shl eax, cl
 	test [esi+edx*4+0x46698], eax
-	jnz CG_OutOfAmmoChange_30
-CG_OutOfAmmoChange_20:
+	jnz _Z18CG_OutOfAmmoChangei_30
+_Z18CG_OutOfAmmoChangei_20:
 	mov [esp], edi
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov esi, eax
 	mov eax, [eax+0x508]
 	test eax, eax
-	jnz CG_OutOfAmmoChange_10
+	jnz _Z18CG_OutOfAmmoChangei_10
 	cmp dword [esi+0x13c], 0x3
-	jz CG_OutOfAmmoChange_40
-CG_OutOfAmmoChange_70:
+	jz _Z18CG_OutOfAmmoChangei_40
+_Z18CG_OutOfAmmoChangei_70:
 	mov ecx, 0x1
 	mov edx, 0x1
 	mov eax, [ebp+0x8]
-	call CycleWeapPrimary
+	call _Z16CycleWeapPrimaryiii
 	test al, al
-	jnz CG_OutOfAmmoChange_10
+	jnz _Z18CG_OutOfAmmoChangei_10
 	cmp dword [esi+0x13c], 0x3
-	jz CG_OutOfAmmoChange_50
-CG_OutOfAmmoChange_10:
+	jz _Z18CG_OutOfAmmoChangei_50
+_Z18CG_OutOfAmmoChangei_10:
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_OutOfAmmoChange_40:
+_Z18CG_OutOfAmmoChangei_40:
 	mov edi, [esi+0x540]
 	mov ebx, edi
 	sar ebx, 0x5
@@ -6236,50 +6236,50 @@ CG_OutOfAmmoChange_40:
 	mov eax, 0x1
 	shl eax, cl
 	test [edx+ebx*4], eax
-	jnz CG_OutOfAmmoChange_60
+	jnz _Z18CG_OutOfAmmoChangei_60
 	mov eax, [esi+0x53c]
 	mov [esp+0xc], eax
 	mov eax, [esi]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_player_is_holdin
 	mov dword [esp], 0xe
-	call Com_PrintError
+	call _Z14Com_PrintErroriPKcz
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_SelectWeaponIndex
+	call _Z20CG_SelectWeaponIndexij
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_OutOfAmmoChange_30:
+_Z18CG_OutOfAmmoChangei_30:
 	mov [esp+0x4], ebx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_SelectWeaponIndex
-	jmp CG_OutOfAmmoChange_10
-CG_OutOfAmmoChange_60:
+	call _Z20CG_SelectWeaponIndexij
+	jmp _Z18CG_OutOfAmmoChangei_10
+_Z18CG_OutOfAmmoChangei_60:
 	mov [esp+0x4], edi
 	mov eax, cgArray
 	add eax, 0x4613c
 	mov [esp], eax
-	call BG_WeaponAmmo
+	call _Z13BG_WeaponAmmoPK13playerState_si
 	test eax, eax
-	jz CG_OutOfAmmoChange_70
-CG_OutOfAmmoChange_50:
+	jz _Z18CG_OutOfAmmoChangei_70
+_Z18CG_OutOfAmmoChangei_50:
 	mov eax, [esi+0x540]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_SelectWeaponIndex
-	jmp CG_OutOfAmmoChange_10
+	call _Z20CG_SelectWeaponIndexij
+	jmp _Z18CG_OutOfAmmoChangei_10
 	nop
 
 
 ;CG_ActionSlotDown_f()
-CG_ActionSlotDown_f:
+_Z19CG_ActionSlotDown_fv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6289,68 +6289,68 @@ CG_ActionSlotDown_f:
 	mov ebx, cgArray
 	mov edx, [ebx+0x24]
 	test edx, edx
-	jz CG_ActionSlotDown_f_10
+	jz _Z19CG_ActionSlotDown_fv_10
 	mov eax, [ebx+0x46228]
 	sub eax, 0x3
 	cmp eax, 0x1
-	jbe CG_ActionSlotDown_f_10
+	jbe _Z19CG_ActionSlotDown_fv_10
 	test dword [ebx+0x46148], 0xc00
-	jz CG_ActionSlotDown_f_20
-CG_ActionSlotDown_f_10:
+	jz _Z19CG_ActionSlotDown_fv_20
+_Z19CG_ActionSlotDown_fv_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_ActionSlotDown_f_20:
+_Z19CG_ActionSlotDown_fv_20:
 	cmp byte [ebx+0x4614c], 0x0
-	js CG_ActionSlotDown_f_10
+	js _Z19CG_ActionSlotDown_fv_10
 	test byte [edx+0x20], 0x4
-	jz CG_ActionSlotDown_f_10
+	jz _Z19CG_ActionSlotDown_fv_10
 	mov eax, [ebx+0x46128]
 	sub eax, [ebx+0xfd754]
 	cmp eax, 0xf9
-	jle CG_ActionSlotDown_f_10
+	jle _Z19CG_ActionSlotDown_fv_10
 	lea eax, [ebp-0x1c]
-	call ActionParms
+	call _Z11ActionParmsPi
 	test al, al
-	jz CG_ActionSlotDown_f_10
+	jz _Z19CG_ActionSlotDown_fv_10
 	mov eax, [ebp-0x1c]
 	mov edx, [ebx+eax*4+0x4673c]
 	cmp edx, 0x2
-	jz CG_ActionSlotDown_f_30
+	jz _Z19CG_ActionSlotDown_fv_30
 	cmp edx, 0x3
-	jz CG_ActionSlotDown_f_40
+	jz _Z19CG_ActionSlotDown_fv_40
 	cmp edx, 0x1
-	jz CG_ActionSlotDown_f_50
-CG_ActionSlotDown_f_60:
+	jz _Z19CG_ActionSlotDown_fv_50
+_Z19CG_ActionSlotDown_fv_60:
 	xor eax, eax
-CG_ActionSlotDown_f_90:
+_Z19CG_ActionSlotDown_fv_90:
 	mov ebx, cgArray
 	mov edx, [ebx+0x46128]
 	mov [ebx+0x504bc], edx
 	test al, al
-	jz CG_ActionSlotDown_f_10
+	jz _Z19CG_ActionSlotDown_fv_10
 	mov [ebx+0xfd754], edx
 	test dword [ebx+0x461ec], 0x300
-	jz CG_ActionSlotDown_f_10
+	jz _Z19CG_ActionSlotDown_fv_10
 	mov eax, [ebp-0x1c]
 	cmp dword [ebx+eax*4+0x4673c], 0x1
-	jnz CG_ActionSlotDown_f_10
+	jnz _Z19CG_ActionSlotDown_fv_10
 	or dword [ebx+0xfd750], 0x20
-	jmp CG_ActionSlotDown_f_10
-CG_ActionSlotDown_f_30:
+	jmp _Z19CG_ActionSlotDown_fv_10
+_Z19CG_ActionSlotDown_fv_30:
 	mov eax, [ebx+0x46228]
 	sub eax, 0x2
 	cmp eax, 0x2
-	jbe CG_ActionSlotDown_f_60
+	jbe _Z19CG_ActionSlotDown_fv_60
 	mov eax, [ebx+0x5036c]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov eax, [eax+0x540]
 	test eax, eax
-	jnz CG_ActionSlotDown_f_70
+	jnz _Z19CG_ActionSlotDown_fv_70
 	lea esi, [ebx+0x4613c]
 	mov dword [esp+0xc], 0x1
 	mov dword [esp+0x8], 0x1
@@ -6360,9 +6360,9 @@ CG_ActionSlotDown_f_30:
 	xor ecx, ecx
 	mov edx, esi
 	xor eax, eax
-	call NextWeapInCycle
+	call _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh
 	test eax, eax
-	jnz CG_ActionSlotDown_f_80
+	jnz _Z19CG_ActionSlotDown_fv_80
 	mov dword [esp+0xc], 0x1
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x1
@@ -6371,70 +6371,70 @@ CG_ActionSlotDown_f_30:
 	xor ecx, ecx
 	mov edx, esi
 	xor eax, eax
-	call NextWeapInCycle
+	call _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh
 	test eax, eax
-	jz CG_ActionSlotDown_f_60
-CG_ActionSlotDown_f_80:
+	jz _Z19CG_ActionSlotDown_fv_60
+_Z19CG_ActionSlotDown_fv_80:
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov eax, [eax+0x540]
 	test eax, eax
-	jz CG_ActionSlotDown_f_60
-CG_ActionSlotDown_f_70:
+	jz _Z19CG_ActionSlotDown_fv_60
+_Z19CG_ActionSlotDown_fv_70:
 	mov [esp+0x4], eax
 	mov dword [esp], 0x0
-	call CG_SelectWeaponIndex
+	call _Z20CG_SelectWeaponIndexij
 	mov eax, 0x1
-	jmp CG_ActionSlotDown_f_90
-CG_ActionSlotDown_f_50:
+	jmp _Z19CG_ActionSlotDown_fv_90
+_Z19CG_ActionSlotDown_fv_50:
 	mov edi, [ebx+eax*4+0x4674c]
 	cmp edi, [ebx+0x5036c]
-	jz CG_ActionSlotDown_f_100
+	jz _Z19CG_ActionSlotDown_fv_100
 	mov eax, edi
 	sar eax, 0x5
 	mov ecx, edi
 	and ecx, 0x1f
 	shl edx, cl
 	test [ebx+eax*4+0x46698], edx
-	jz CG_ActionSlotDown_f_60
+	jz _Z19CG_ActionSlotDown_fv_60
 	cmp edi, [ebx+0x46224]
-	jz CG_ActionSlotDown_f_60
+	jz _Z19CG_ActionSlotDown_fv_60
 	mov [esp+0x4], edi
 	mov dword [esp], 0x0
-	call CG_SelectWeaponIndex
+	call _Z20CG_SelectWeaponIndexij
 	mov eax, 0x1
-	jmp CG_ActionSlotDown_f_90
-CG_ActionSlotDown_f_40:
+	jmp _Z19CG_ActionSlotDown_fv_90
+_Z19CG_ActionSlotDown_fv_40:
 	or dword [ebx+0xfd750], 0x40000
 	mov eax, 0x1
-	jmp CG_ActionSlotDown_f_90
-CG_ActionSlotDown_f_100:
+	jmp _Z19CG_ActionSlotDown_fv_90
+_Z19CG_ActionSlotDown_fv_100:
 	mov esi, [ebx+0x50374]
 	cmp edi, esi
-	jz CG_ActionSlotDown_f_110
+	jz _Z19CG_ActionSlotDown_fv_110
 	mov eax, esi
 	sar eax, 0x5
 	mov ecx, esi
 	and ecx, 0x1f
 	shl edx, cl
 	test [ebx+eax*4+0x46698], edx
-	jnz CG_ActionSlotDown_f_120
-CG_ActionSlotDown_f_110:
+	jnz _Z19CG_ActionSlotDown_fv_120
+_Z19CG_ActionSlotDown_fv_110:
 	xor ecx, ecx
 	mov edx, 0x1
 	xor eax, eax
-	call CycleWeapPrimary
-	jmp CG_ActionSlotDown_f_90
-CG_ActionSlotDown_f_120:
+	call _Z16CycleWeapPrimaryiii
+	jmp _Z19CG_ActionSlotDown_fv_90
+_Z19CG_ActionSlotDown_fv_120:
 	mov [esp+0x4], esi
 	mov dword [esp], 0x0
-	call CG_SelectWeaponIndex
+	call _Z20CG_SelectWeaponIndexij
 	mov eax, 0x1
-	jmp CG_ActionSlotDown_f_90
+	jmp _Z19CG_ActionSlotDown_fv_90
 
 
 ;CG_EjectWeaponBrass(int, entityState_s const*, int)
-CG_EjectWeaponBrass:
+_Z19CG_EjectWeaponBrassiPK13entityState_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6448,50 +6448,50 @@ CG_EjectWeaponBrass:
 	mov eax, cg_brass
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
-	jz CG_EjectWeaponBrass_10
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_10
 	cmp dword [esi+0x4], 0x10
-	jg CG_EjectWeaponBrass_10
+	jg _Z19CG_EjectWeaponBrassiPK13entityState_si_10
 	mov ebx, [esi+0xc4]
 	test ebx, ebx
-	jz CG_EjectWeaponBrass_10
-	call BG_GetNumWeapons
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_10
+	call _Z16BG_GetNumWeaponsv
 	cmp ebx, eax
-	jae CG_EjectWeaponBrass_20
+	jae _Z19CG_EjectWeaponBrassiPK13entityState_si_20
 	mov edx, [esi]
 	mov eax, cgArray
 	mov eax, [eax+0x24]
 	test byte [eax+0x20], 0x6
-	jz CG_EjectWeaponBrass_30
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_30
 	cmp edx, [eax+0xe8]
-	jz CG_EjectWeaponBrass_40
-CG_EjectWeaponBrass_30:
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_40
+_Z19CG_EjectWeaponBrassiPK13entityState_si_30:
 	xor eax, eax
-CG_EjectWeaponBrass_120:
+_Z19CG_EjectWeaponBrassiPK13entityState_si_120:
 	mov ebx, eax
 	mov eax, [esi+0xc4]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov edx, [eax+0x214]
 	test edx, edx
-	jz CG_EjectWeaponBrass_50
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_50
 	mov ecx, [eax+0x218]
 	test ecx, ecx
-	jz CG_EjectWeaponBrass_50
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_50
 	cmp edi, 0x1b
-	jz CG_EjectWeaponBrass_60
-CG_EjectWeaponBrass_50:
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_60
+_Z19CG_EjectWeaponBrassiPK13entityState_si_50:
 	test bl, bl
-	jz CG_EjectWeaponBrass_70
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_70
 	mov edx, [eax+0x20c]
-CG_EjectWeaponBrass_110:
+_Z19CG_EjectWeaponBrassiPK13entityState_si_110:
 	test edx, edx
-	jz CG_EjectWeaponBrass_10
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_10
 	test bl, bl
-	jz CG_EjectWeaponBrass_80
-CG_EjectWeaponBrass_90:
+	jz _Z19CG_EjectWeaponBrassiPK13entityState_si_80
+_Z19CG_EjectWeaponBrassiPK13entityState_si_90:
 	mov ecx, [esi+0xc4]
 	add ecx, 0x400
-CG_EjectWeaponBrass_100:
+_Z19CG_EjectWeaponBrassiPK13entityState_si_100:
 	mov eax, scr_const
 	movzx eax, word [eax+0x8a]
 	mov [esp+0xc], eax
@@ -6499,15 +6499,15 @@ CG_EjectWeaponBrass_100:
 	mov [esp+0x4], edx
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call CG_PlayBoltedEffect
-CG_EjectWeaponBrass_10:
+	call _Z19CG_PlayBoltedEffectiPK11FxEffectDefij
+_Z19CG_EjectWeaponBrassiPK13entityState_si_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_EjectWeaponBrass_20:
+_Z19CG_EjectWeaponBrassiPK13entityState_si_20:
 	mov dword [ebp+0xc], _cstring_cg_ejectweaponbr
 	mov dword [ebp+0x8], 0x2
 	add esp, 0x2c
@@ -6515,25 +6515,25 @@ CG_EjectWeaponBrass_20:
 	pop esi
 	pop edi
 	pop ebp
-	jmp Com_Error
-CG_EjectWeaponBrass_60:
+	jmp _Z9Com_Error11errorParm_tPKcz
+_Z19CG_EjectWeaponBrassiPK13entityState_si_60:
 	test bl, bl
-	jnz CG_EjectWeaponBrass_90
+	jnz _Z19CG_EjectWeaponBrassiPK13entityState_si_90
 	mov edx, ecx
-CG_EjectWeaponBrass_80:
+_Z19CG_EjectWeaponBrassiPK13entityState_si_80:
 	mov ecx, [esi]
-	jmp CG_EjectWeaponBrass_100
-CG_EjectWeaponBrass_70:
+	jmp _Z19CG_EjectWeaponBrassiPK13entityState_si_100
+_Z19CG_EjectWeaponBrassiPK13entityState_si_70:
 	mov edx, [eax+0x210]
-	jmp CG_EjectWeaponBrass_110
-CG_EjectWeaponBrass_40:
+	jmp _Z19CG_EjectWeaponBrassiPK13entityState_si_110
+_Z19CG_EjectWeaponBrassiPK13entityState_si_40:
 	mov eax, 0x1
-	jmp CG_EjectWeaponBrass_120
+	jmp _Z19CG_EjectWeaponBrassiPK13entityState_si_120
 	nop
 
 
 ;CG_GetViewDirection(int, int, float*, float*, float*)
-CG_GetViewDirection:
+_Z19CG_GetViewDirectioniiPfS_S_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6546,19 +6546,19 @@ CG_GetViewDirection:
 	mov edi, [ebp+0x14]
 	mov esi, [ebp+0x18]
 	mov dword [esp], 0x0
-	call CL_IsLocalClientActive
+	call _Z22CL_IsLocalClientActivei
 	test al, al
-	jz CG_GetViewDirection_10
+	jz _Z19CG_GetViewDirectioniiPfS_S__10
 	mov eax, cgArray
 	mov edx, [eax+0x24]
 	test byte [edx+0x20], 0x6
-	jnz CG_GetViewDirection_20
-CG_GetViewDirection_40:
+	jnz _Z19CG_GetViewDirectioniiPfS_S__20
+_Z19CG_GetViewDirectioniiPfS_S__40:
 	xor edx, edx
-CG_GetViewDirection_50:
+_Z19CG_GetViewDirectioniiPfS_S__50:
 	test edx, edx
-	jnz CG_GetViewDirection_30
-CG_GetViewDirection_10:
+	jnz _Z19CG_GetViewDirectioniiPfS_S__30
+_Z19CG_GetViewDirectioniiPfS_S__10:
 	mov [ebp+0x14], esi
 	mov [ebp+0x10], edi
 	mov eax, [ebp-0x1c]
@@ -6585,13 +6585,13 @@ CG_GetViewDirection_10:
 	pop esi
 	pop edi
 	pop ebp
-	jmp AngleVectors
-CG_GetViewDirection_20:
+	jmp _Z12AngleVectorsPKfPfS1_S1_
+_Z19CG_GetViewDirectioniiPfS_S__20:
 	cmp ebx, [edx+0xe8]
-	jnz CG_GetViewDirection_40
+	jnz _Z19CG_GetViewDirectioniiPfS_S__40
 	mov edx, 0x1
-	jmp CG_GetViewDirection_50
-CG_GetViewDirection_30:
+	jmp _Z19CG_GetViewDirectioniiPfS_S__50
+_Z19CG_GetViewDirectioniiPfS_S__30:
 	mov [ebp+0x14], esi
 	mov [ebp+0x10], edi
 	mov edx, [ebp-0x1c]
@@ -6603,11 +6603,11 @@ CG_GetViewDirection_30:
 	pop esi
 	pop edi
 	pop ebp
-	jmp BG_GetPlayerViewDirection
+	jmp _Z25BG_GetPlayerViewDirectionPK13playerState_sPfS2_S2_
 
 
 ;CG_RandomEffectAxis(float const*, float*, float*)
-CG_RandomEffectAxis:
+_Z19CG_RandomEffectAxisPKfPfS1_:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6646,7 +6646,7 @@ CG_RandomEffectAxis:
 	mulss xmm0, [esi+0x8]
 	addss xmm0, [ebp-0x1c]
 	movss [ebp-0x1c], xmm0
-	call randomf
+	call _Z7randomfv
 	fstp dword [ebp-0x3c]
 	movss xmm0, dword [ebp-0x3c]
 	mulss xmm0, [_float_360_00000000]
@@ -6655,7 +6655,7 @@ CG_RandomEffectAxis:
 	mov [esp+0x8], eax
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call RotatePointAroundVector
+	call _Z23RotatePointAroundVectorPfPKfS1_f
 	movss xmm3, dword [ebx]
 	lea edx, [ebx+0x4]
 	movss xmm1, dword [ebx+0x4]
@@ -6671,9 +6671,9 @@ CG_RandomEffectAxis:
 	movaps xmm0, xmm2
 	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
-	jb CG_RandomEffectAxis_10
+	jb _Z19CG_RandomEffectAxisPKfPfS1__10
 	movss xmm1, dword [_float_1_00000000]
-CG_RandomEffectAxis_20:
+_Z19CG_RandomEffectAxisPKfPfS1__20:
 	mulss xmm3, xmm1
 	movss [ebx], xmm3
 	movaps xmm0, xmm1
@@ -6708,36 +6708,36 @@ CG_RandomEffectAxis_20:
 	pop edi
 	pop ebp
 	ret
-CG_RandomEffectAxis_10:
+_Z19CG_RandomEffectAxisPKfPfS1__10:
 	movss xmm1, dword [_float_1_00000000]
 	divss xmm1, xmm2
-	jmp CG_RandomEffectAxis_20
+	jmp _Z19CG_RandomEffectAxisPKfPfS1__20
 
 
 ;CG_ScopeIsOverlayed(int)
-CG_ScopeIsOverlayed:
+_Z19CG_ScopeIsOverlayedi:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x28
 	mov eax, clientUIActives
 	cmp dword [eax+0xc], 0x8
-	jle CG_ScopeIsOverlayed_10
+	jle _Z19CG_ScopeIsOverlayedi_10
 	mov eax, cgArray
 	test dword [eax+0x461ec], 0x300
-	jnz CG_ScopeIsOverlayed_20
-CG_ScopeIsOverlayed_30:
+	jnz _Z19CG_ScopeIsOverlayedi_20
+_Z19CG_ScopeIsOverlayedi_30:
 	lea eax, [ebp-0xc]
 	mov [esp+0x4], eax
 	mov eax, cgArray
 	mov [esp], eax
-	call CG_GetWeapReticleZoom
+	call _Z21CG_GetWeapReticleZoomPK4cg_sPf
 	movzx eax, al
 	leave
 	ret
-CG_ScopeIsOverlayed_20:
+_Z19CG_ScopeIsOverlayedi_20:
 	mov edx, [eax+0x466d4]
 	test edx, edx
-	jz CG_ScopeIsOverlayed_30
+	jz _Z19CG_ScopeIsOverlayedi_30
 	mov eax, [eax+0x466d8]
 	lea edx, [eax*4]
 	shl eax, 0x5
@@ -6748,23 +6748,23 @@ CG_ScopeIsOverlayed_20:
 	mov edx, cg_entitiesArray
 	mov eax, [edx+eax+0x190]
 	test eax, eax
-	jz CG_ScopeIsOverlayed_30
+	jz _Z19CG_ScopeIsOverlayedi_30
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ecx, [eax+0x430]
 	test ecx, ecx
-	jz CG_ScopeIsOverlayed_30
+	jz _Z19CG_ScopeIsOverlayedi_30
 	mov eax, 0x1
 	leave
 	ret
-CG_ScopeIsOverlayed_10:
+_Z19CG_ScopeIsOverlayedi_10:
 	xor eax, eax
 	leave
 	ret
 
 
 ;CG_WeaponDObjHandle(int)
-CG_WeaponDObjHandle:
+_Z19CG_WeaponDObjHandlei:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -6775,7 +6775,7 @@ CG_WeaponDObjHandle:
 
 
 ;CG_SelectWeaponIndex(int, unsigned int)
-CG_SelectWeaponIndex:
+_Z20CG_SelectWeaponIndexij:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6790,26 +6790,26 @@ CG_SelectWeaponIndex:
 	mov [edi+0x50370], eax
 	mov eax, [edi+0x5036c]
 	cmp eax, ebx
-	jz CG_SelectWeaponIndex_10
+	jz _Z20CG_SelectWeaponIndexij_10
 	test ebx, ebx
-	jnz CG_SelectWeaponIndex_20
+	jnz _Z20CG_SelectWeaponIndexij_20
 	mov byte [ebp-0x19], 0x0
-CG_SelectWeaponIndex_50:
+_Z20CG_SelectWeaponIndexij_50:
 	mov [edi+0x5036c], ebx
 	mov dword [esp+0x4], 0x1
 	mov eax, [ebp-0x20]
 	mov [esp], eax
-	call CG_MenuShowNotify
+	call _Z17CG_MenuShowNotifyii
 	cmp byte [ebp-0x19], 0x0
-	jz CG_SelectWeaponIndex_30
-CG_SelectWeaponIndex_10:
+	jz _Z20CG_SelectWeaponIndexij_30
+_Z20CG_SelectWeaponIndexij_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_SelectWeaponIndex_30:
+_Z20CG_SelectWeaponIndexij_30:
 	mov dword [ebp+0xc], 0x0
 	mov eax, [ebp-0x20]
 	mov [ebp+0x8], eax
@@ -6818,36 +6818,36 @@ CG_SelectWeaponIndex_30:
 	pop esi
 	pop edi
 	pop ebp
-	jmp CL_SetADS
-CG_SelectWeaponIndex_20:
+	jmp _Z9CL_SetADSih
+_Z20CG_SelectWeaponIndexij_20:
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	cmp ebx, [eax+0x540]
 	setz byte [ebp-0x19]
 	mov [esp], ebx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov esi, [eax+0x13c]
 	test esi, esi
-	jnz CG_SelectWeaponIndex_40
+	jnz _Z20CG_SelectWeaponIndexij_40
 	mov esi, ebx
-CG_SelectWeaponIndex_60:
+_Z20CG_SelectWeaponIndexij_60:
 	mov edi, cgArray
 	mov [edi+0x50374], esi
-	jmp CG_SelectWeaponIndex_50
-CG_SelectWeaponIndex_40:
+	jmp _Z20CG_SelectWeaponIndexij_50
+_Z20CG_SelectWeaponIndexij_40:
 	mov esi, [eax+0x540]
 	mov [esp], esi
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ecx, [eax+0x13c]
 	test ecx, ecx
-	jnz CG_SelectWeaponIndex_50
+	jnz _Z20CG_SelectWeaponIndexij_50
 	test esi, esi
-	jz CG_SelectWeaponIndex_50
-	jmp CG_SelectWeaponIndex_60
+	jz _Z20CG_SelectWeaponIndexij_50
+	jmp _Z20CG_SelectWeaponIndexij_60
 
 
 ;CG_GetPlayerViewOrigin(int, playerState_s const*, float*)
-CG_GetPlayerViewOrigin:
+_Z22CG_GetPlayerViewOriginiPK13playerState_sPf:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6857,7 +6857,7 @@ CG_GetPlayerViewOrigin:
 	mov edx, [ebp+0xc]
 	mov edi, [ebp+0x10]
 	test dword [edx+0xb0], 0x300
-	jz CG_GetPlayerViewOrigin_10
+	jz _Z22CG_GetPlayerViewOriginiPK13playerState_sPf_10
 	mov eax, [edx+0x59c]
 	lea edx, [eax*4]
 	shl eax, 0x5
@@ -6869,27 +6869,27 @@ CG_GetPlayerViewOrigin:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebx+0xcc]
 	mov [esp], eax
-	call Com_GetClientDObj
+	call _Z17Com_GetClientDObjii
 	mov esi, eax
 	test eax, eax
-	jz CG_GetPlayerViewOrigin_20
-CG_GetPlayerViewOrigin_40:
+	jz _Z22CG_GetPlayerViewOriginiPK13playerState_sPf_20
+_Z22CG_GetPlayerViewOriginiPK13playerState_sPf_40:
 	mov [esp+0xc], edi
 	mov eax, scr_const
 	movzx eax, word [eax+0xa8]
 	mov [esp+0x8], eax
 	mov [esp+0x4], esi
 	mov [esp], ebx
-	call CG_DObjGetWorldTagPos
+	call _Z21CG_DObjGetWorldTagPosPK7cpose_tP6DObj_sjPf
 	test eax, eax
-	jz CG_GetPlayerViewOrigin_30
+	jz _Z22CG_GetPlayerViewOriginiPK13playerState_sPf_30
 	add esp, 0x1c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_GetPlayerViewOrigin_10:
+_Z22CG_GetPlayerViewOriginiPK13playerState_sPf_10:
 	mov eax, cgArray
 	mov eax, [eax+0x46128]
 	mov [ebp+0x10], eax
@@ -6900,8 +6900,8 @@ CG_GetPlayerViewOrigin_10:
 	pop esi
 	pop edi
 	pop ebp
-	jmp BG_GetPlayerViewOrigin
-CG_GetPlayerViewOrigin_30:
+	jmp _Z22BG_GetPlayerViewOriginPK13playerState_sPfi
+_Z22CG_GetPlayerViewOriginiPK13playerState_sPf_30:
 	mov dword [ebp+0xc], _cstring_cg_getplayerview
 	mov dword [ebp+0x8], 0x2
 	add esp, 0x1c
@@ -6909,34 +6909,34 @@ CG_GetPlayerViewOrigin_30:
 	pop esi
 	pop edi
 	pop ebp
-	jmp Com_Error
-CG_GetPlayerViewOrigin_20:
+	jmp _Z9Com_Error11errorParm_tPKcz
+_Z22CG_GetPlayerViewOriginiPK13playerState_sPf_20:
 	mov eax, [ebx+0xcc]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_cg_getplayerview1
 	mov dword [esp], 0x2
-	call Com_Error
-	jmp CG_GetPlayerViewOrigin_40
+	call _Z9Com_Error11errorParm_tPKcz
+	jmp _Z22CG_GetPlayerViewOriginiPK13playerState_sPf_40
 
 
 ;CG_UpdateViewModelPose(DObj_s const*, int)
-CG_UpdateViewModelPose:
+_Z22CG_UpdateViewModelPosePK6DObj_si:
 	push ebp
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
 	mov eax, [ebp+0x8]
 	test eax, eax
-	jz CG_UpdateViewModelPose_10
+	jz _Z22CG_UpdateViewModelPosePK6DObj_si_10
 	mov [esp], eax
-	call DObjClearSkel
-CG_UpdateViewModelPose_10:
+	call _Z13DObjClearSkelPK6DObj_s
+_Z22CG_UpdateViewModelPosePK6DObj_si_10:
 	mov ebx, cgArray
 	lea eax, [ebx+0xfd25c]
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x50460]
 	mov [esp], eax
-	call AxisToAngles
+	call _Z12AxisToAnglesPA3_KfPf
 	mov eax, [ebx+0x50484]
 	mov [ebx+0xfd250], eax
 	mov eax, [ebx+0x50488]
@@ -6950,7 +6950,7 @@ CG_UpdateViewModelPose_10:
 
 
 ;CG_AltWeaponToggleIndex(int, cg_s const*)
-CG_AltWeaponToggleIndex:
+_Z23CG_AltWeaponToggleIndexiPK4cg_s:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -6961,11 +6961,11 @@ CG_AltWeaponToggleIndex:
 	lea edi, [esi+0x4613c]
 	mov eax, [esi+0x5036c]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ebx, [eax+0x540]
 	test ebx, ebx
-	jz CG_AltWeaponToggleIndex_10
-CG_AltWeaponToggleIndex_30:
+	jz _Z23CG_AltWeaponToggleIndexiPK4cg_s_10
+_Z23CG_AltWeaponToggleIndexiPK4cg_s_30:
 	mov eax, ebx
 	add esp, 0x1c
 	pop ebx
@@ -6973,7 +6973,7 @@ CG_AltWeaponToggleIndex_30:
 	pop edi
 	pop ebp
 	ret
-CG_AltWeaponToggleIndex_10:
+_Z23CG_AltWeaponToggleIndexiPK4cg_s_10:
 	mov dword [esp+0xc], 0x1
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x1
@@ -6982,9 +6982,9 @@ CG_AltWeaponToggleIndex_10:
 	xor ecx, ecx
 	mov edx, edi
 	mov eax, [ebp+0x8]
-	call NextWeapInCycle
+	call _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh
 	test eax, eax
-	jnz CG_AltWeaponToggleIndex_20
+	jnz _Z23CG_AltWeaponToggleIndexiPK4cg_s_20
 	mov dword [esp+0xc], 0x1
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x1
@@ -6993,12 +6993,12 @@ CG_AltWeaponToggleIndex_10:
 	xor ecx, ecx
 	mov edx, edi
 	mov eax, [ebp+0x8]
-	call NextWeapInCycle
+	call _Z15NextWeapInCycleiPK13playerState_s19weapInventoryType_tjhhh
 	test eax, eax
-	jz CG_AltWeaponToggleIndex_30
-CG_AltWeaponToggleIndex_20:
+	jz _Z23CG_AltWeaponToggleIndexiPK4cg_s_30
+_Z23CG_AltWeaponToggleIndexiPK4cg_s_20:
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ebx, [eax+0x540]
 	mov eax, ebx
 	add esp, 0x1c
@@ -7010,7 +7010,7 @@ CG_AltWeaponToggleIndex_20:
 
 
 ;CG_BulletHitClientEvent(int, int, float const*, float const*, int, int, int)
-CG_BulletHitClientEvent:
+_Z23CG_BulletHitClientEventiiPKfS0_iii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -7028,25 +7028,25 @@ CG_BulletHitClientEvent:
 	mov eax, [ebp+0x1c]
 	mov esi, [ebp+0x20]
 	cmp eax, 0x2a
-	jz CG_BulletHitClientEvent_10
+	jz _Z23CG_BulletHitClientEventiiPKfS0_iii_10
 	cmp eax, 0x2b
-	jz CG_BulletHitClientEvent_20
+	jz _Z23CG_BulletHitClientEventiiPKfS0_iii_20
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_BulletHitClientEvent_10:
+_Z23CG_BulletHitClientEventiiPKfS0_iii_10:
 	mov eax, cgMedia
 	mov eax, [eax+ebx*4+0x350]
-CG_BulletHitClientEvent_30:
+_Z23CG_BulletHitClientEventiiPKfS0_iii_30:
 	mov [esp+0xc], eax
 	mov [esp+0x8], edi
 	mov dword [esp+0x4], 0x3fe
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call CG_PlaySoundAlias
+	call _Z17CG_PlaySoundAliasiiPKfP16snd_alias_list_t
 	mov [ebp+0x18], esi
 	mov dword [ebp+0x14], 0x0
 	mov eax, scr_const
@@ -7062,15 +7062,15 @@ CG_BulletHitClientEvent_30:
 	pop esi
 	pop edi
 	pop ebp
-	jmp BulletTrajectoryEffects
-CG_BulletHitClientEvent_20:
+	jmp _Z23BulletTrajectoryEffectsiiPKfS0_ijhi
+_Z23CG_BulletHitClientEventiiPKfS0_iii_20:
 	mov eax, cgMedia
 	mov eax, [eax+ebx*4+0x3c4]
-	jmp CG_BulletHitClientEvent_30
+	jmp _Z23CG_BulletHitClientEventiiPKfS0_iii_30
 
 
 ;CG_UICheckWeapLockBlink(int, float)
-CG_UICheckWeapLockBlink:
+_Z23CG_UICheckWeapLockBlinkif:
 	push ebp
 	mov ebp, esp
 	xor eax, eax
@@ -7080,7 +7080,7 @@ CG_UICheckWeapLockBlink:
 
 
 ;CG_UpdateHandViewmodels(int, XModel*)
-CG_UpdateHandViewmodels:
+_Z23CG_UpdateHandViewmodelsiP6XModel:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -7091,12 +7091,12 @@ CG_UpdateHandViewmodels:
 	mov edi, cgArray
 	mov ebx, cg_weaponsArray
 	add ebx, 0x44
-	jmp CG_UpdateHandViewmodels_10
-CG_UpdateHandViewmodels_30:
+	jmp _Z23CG_UpdateHandViewmodelsiP6XModel_10
+_Z23CG_UpdateHandViewmodelsiP6XModel_30:
 	movzx eax, byte [edi+0x46959]
 	mov edx, [ebp+0xc]
 	cmp [ebx+0x4], edx
-	jz CG_UpdateHandViewmodels_20
+	jz _Z23CG_UpdateHandViewmodelsiP6XModel_20
 	movzx ecx, al
 	mov dword [esp+0x10], 0x1
 	mov eax, [ebx+0x10]
@@ -7108,15 +7108,15 @@ CG_UpdateHandViewmodels_30:
 	mov [esp], edx
 	mov edx, esi
 	mov eax, [ebp+0x8]
-	call ChangeViewmodelDobj
-CG_UpdateHandViewmodels_20:
+	call _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h
+_Z23CG_UpdateHandViewmodelsiP6XModel_20:
 	add esi, 0x1
 	add ebx, 0x44
 	add edi, 0x1
-CG_UpdateHandViewmodels_10:
-	call BG_GetNumWeapons
+_Z23CG_UpdateHandViewmodelsiP6XModel_10:
+	call _Z16BG_GetNumWeaponsv
 	cmp esi, eax
-	jb CG_UpdateHandViewmodels_30
+	jb _Z23CG_UpdateHandViewmodelsiP6XModel_30
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -7127,7 +7127,7 @@ CG_UpdateHandViewmodels_10:
 
 
 ;CG_UpdateViewWeaponAnim(int)
-CG_UpdateViewWeaponAnim:
+_Z23CG_UpdateViewWeaponAnimi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -7136,35 +7136,35 @@ CG_UpdateViewWeaponAnim:
 	sub esp, 0x6c
 	mov esi, cgArray
 	cmp dword [esi+0x46140], 0x6
-	jle CG_UpdateViewWeaponAnim_10
+	jle _Z23CG_UpdateViewWeaponAnimi_10
 	mov esi, 0x1
 	mov edi, 0x44
-	jmp CG_UpdateViewWeaponAnim_20
-CG_UpdateViewWeaponAnim_50:
+	jmp _Z23CG_UpdateViewWeaponAnimi_20
+_Z23CG_UpdateViewWeaponAnimi_50:
 	mov dword [esp], 0x2
-CG_UpdateViewWeaponAnim_60:
+_Z23CG_UpdateViewWeaponAnimi_60:
 	pxor xmm0, xmm0
 	mov ecx, ebx
 	mov edx, esi
 	mov eax, [ebp+0x8]
-	call StartWeaponAnim
-CG_UpdateViewWeaponAnim_40:
+	call _Z15StartWeaponAnimiiP6DObj_sif
+_Z23CG_UpdateViewWeaponAnimi_40:
 	add esi, 0x1
 	add edi, 0x44
-CG_UpdateViewWeaponAnim_20:
-	call BG_GetNumWeapons
+_Z23CG_UpdateViewWeaponAnimi_20:
+	call _Z16BG_GetNumWeaponsv
 	cmp esi, eax
-	jae CG_UpdateViewWeaponAnim_30
+	jae _Z23CG_UpdateViewWeaponAnimi_30
 	mov eax, cg_weaponsArray
 	mov ebx, [eax+edi]
 	test ebx, ebx
-	jz CG_UpdateViewWeaponAnim_40
+	jz _Z23CG_UpdateViewWeaponAnimi_40
 	mov [esp], ebx
-	call DObjGetTree
+	call _Z11DObjGetTreePK6DObj_s
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call XAnimClearTreeGoalWeights
+	call _Z25XAnimClearTreeGoalWeightsP11XAnimTree_sjf
 	mov dword [esp+0x1c], 0x0
 	mov dword [esp+0x18], 0x1
 	mov dword [esp+0x14], 0x0
@@ -7173,34 +7173,34 @@ CG_UpdateViewWeaponAnim_20:
 	mov dword [esp+0x8], 0x3f800000
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call XAnimSetGoalWeight
+	call _Z18XAnimSetGoalWeightP6DObj_sjfffjji
 	mov [esp], esi
-	call BG_ClipForWeapon
+	call _Z16BG_ClipForWeaponi
 	mov edx, cgArray
 	mov eax, [edx+eax*4+0x46498]
 	test eax, eax
-	jz CG_UpdateViewWeaponAnim_50
+	jz _Z23CG_UpdateViewWeaponAnimi_50
 	mov dword [esp], 0x1
-	jmp CG_UpdateViewWeaponAnim_60
-CG_UpdateViewWeaponAnim_10:
+	jmp _Z23CG_UpdateViewWeaponAnimi_60
+_Z23CG_UpdateViewWeaponAnimi_10:
 	lea eax, [esi+0x4613c]
 	mov [esp], eax
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	mov ebx, eax
 	test eax, eax
-	jg CG_UpdateViewWeaponAnim_70
-CG_UpdateViewWeaponAnim_30:
+	jg _Z23CG_UpdateViewWeaponAnimi_70
+_Z23CG_UpdateViewWeaponAnimi_30:
 	add esp, 0x6c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-CG_UpdateViewWeaponAnim_70:
+_Z23CG_UpdateViewWeaponAnimi_70:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_RegisterWeapon
+	call _Z17CG_RegisterWeaponii
 	mov eax, ebx
 	shl eax, 0x6
 	lea eax, [eax+ebx*4]
@@ -7210,48 +7210,48 @@ CG_UpdateViewWeaponAnim_70:
 	movzx eax, byte [ebx+esi+0x46958]
 	mov [ebp-0x41], al
 	mov [esp], ebx
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov edi, eax
 	mov eax, [eax+0x300]
 	test eax, eax
-	jz CG_UpdateViewWeaponAnim_80
+	jz _Z23CG_UpdateViewWeaponAnimi_80
 	mov eax, [esi+0x46224]
 	mov [esp], eax
-	call BG_ClipForWeapon
+	call _Z16BG_ClipForWeaponi
 	mov eax, [esi+eax*4+0x46498]
 	test eax, eax
-	jnz CG_UpdateViewWeaponAnim_90
+	jnz _Z23CG_UpdateViewWeaponAnimi_90
 	mov eax, [esi+0x46228]
 	cmp eax, 0x7
-	jz CG_UpdateViewWeaponAnim_100
+	jz _Z23CG_UpdateViewWeaponAnimi_100
 	cmp eax, 0x9
-	jz CG_UpdateViewWeaponAnim_100
+	jz _Z23CG_UpdateViewWeaponAnimi_100
 	cmp eax, 0xb
-	jz CG_UpdateViewWeaponAnim_100
+	jz _Z23CG_UpdateViewWeaponAnimi_100
 	cmp eax, 0xa
-	jz CG_UpdateViewWeaponAnim_100
+	jz _Z23CG_UpdateViewWeaponAnimi_100
 	cmp eax, 0x8
-	jz CG_UpdateViewWeaponAnim_100
-CG_UpdateViewWeaponAnim_80:
+	jz _Z23CG_UpdateViewWeaponAnimi_100
+_Z23CG_UpdateViewWeaponAnimi_80:
 	xor esi, esi
-CG_UpdateViewWeaponAnim_250:
+_Z23CG_UpdateViewWeaponAnimi_250:
 	mov edx, [edi+0x304]
 	test edx, edx
-	jz CG_UpdateViewWeaponAnim_110
+	jz _Z23CG_UpdateViewWeaponAnimi_110
 	mov eax, cgArray
 	mov eax, [eax+0x46760]
 	and ah, 0xfd
 	sub eax, 0x8
 	cmp eax, 0x1
-	jbe CG_UpdateViewWeaponAnim_120
-CG_UpdateViewWeaponAnim_110:
+	jbe _Z23CG_UpdateViewWeaponAnimi_120
+_Z23CG_UpdateViewWeaponAnimi_110:
 	xor edx, edx
-CG_UpdateViewWeaponAnim_120:
+_Z23CG_UpdateViewWeaponAnimi_120:
 	mov eax, [ebp-0x48]
 	mov edi, [eax+0x8]
 	test edi, edi
-	jz CG_UpdateViewWeaponAnim_130
-CG_UpdateViewWeaponAnim_330:
+	jz _Z23CG_UpdateViewWeaponAnimi_130
+_Z23CG_UpdateViewWeaponAnimi_330:
 	movzx ecx, byte [ebp-0x41]
 	mov dword [esp+0x10], 0x0
 	mov [esp+0xc], edx
@@ -7262,108 +7262,108 @@ CG_UpdateViewWeaponAnim_330:
 	mov [esp], eax
 	mov edx, ebx
 	mov eax, [ebp+0x8]
-	call ChangeViewmodelDobj
-CG_UpdateViewWeaponAnim_340:
+	call _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h
+_Z23CG_UpdateViewWeaponAnimi_340:
 	mov eax, [ebp-0x48]
 	mov esi, [eax]
 	mov [esp], esi
-	call DObjGetTree
+	call _Z11DObjGetTreePK6DObj_s
 	mov [ebp-0x40], eax
 	mov ebx, cgArray
 	lea eax, [ebx+0x4613c]
 	mov [esp], eax
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	mov edi, eax
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov edx, eax
 	mov ecx, [eax+0x4ec]
 	test ecx, ecx
-	jnz CG_UpdateViewWeaponAnim_140
+	jnz _Z23CG_UpdateViewWeaponAnimi_140
 	mov eax, [eax+0xd0]
 	cmp byte [eax], 0x0
-	jnz CG_UpdateViewWeaponAnim_150
-CG_UpdateViewWeaponAnim_360:
+	jnz _Z23CG_UpdateViewWeaponAnimi_150
+_Z23CG_UpdateViewWeaponAnimi_360:
 	mov ebx, cgArray
 	mov eax, [ebx+0x46760]
 	mov edx, [ebp-0x48]
 	cmp eax, [edx+0x28]
-	jz CG_UpdateViewWeaponAnim_160
-CG_UpdateViewWeaponAnim_230:
+	jz _Z23CG_UpdateViewWeaponAnimi_160
+_Z23CG_UpdateViewWeaponAnimi_230:
 	and ah, 0xfd
 	cmp eax, 0x1d
-	ja CG_UpdateViewWeaponAnim_170
-	jmp dword [eax*4+CG_UpdateViewWeaponAnim_jumptab_0]
-CG_UpdateViewWeaponAnim_140:
+	ja _Z23CG_UpdateViewWeaponAnimi_170
+	jmp dword [eax*4+_Z23CG_UpdateViewWeaponAnimi_jumptab_0]
+_Z23CG_UpdateViewWeaponAnimi_140:
 	cmp dword [ebx+0x46228], 0x7
-	jz CG_UpdateViewWeaponAnim_180
-CG_UpdateViewWeaponAnim_260:
+	jz _Z23CG_UpdateViewWeaponAnimi_180
+_Z23CG_UpdateViewWeaponAnimi_260:
 	xor edx, edx
-CG_UpdateViewWeaponAnim_270:
+_Z23CG_UpdateViewWeaponAnimi_270:
 	mov ebx, cgArray
 	test byte [ebx+0x46148], 0x10
-	jz CG_UpdateViewWeaponAnim_190
+	jz _Z23CG_UpdateViewWeaponAnimi_190
 	test byte [ebx+0x4614c], 0x2
-	jz CG_UpdateViewWeaponAnim_200
-CG_UpdateViewWeaponAnim_190:
+	jz _Z23CG_UpdateViewWeaponAnimi_200
+_Z23CG_UpdateViewWeaponAnimi_190:
 	xor eax, eax
-CG_UpdateViewWeaponAnim_380:
+_Z23CG_UpdateViewWeaponAnimi_380:
 	test dl, dl
-	jnz CG_UpdateViewWeaponAnim_210
+	jnz _Z23CG_UpdateViewWeaponAnimi_210
 	test eax, eax
-	jnz CG_UpdateViewWeaponAnim_220
-CG_UpdateViewWeaponAnim_210:
+	jnz _Z23CG_UpdateViewWeaponAnimi_220
+_Z23CG_UpdateViewWeaponAnimi_210:
 	mov ecx, 0x20
-CG_UpdateViewWeaponAnim_370:
+_Z23CG_UpdateViewWeaponAnimi_370:
 	mov edx, esi
 	mov eax, edi
 	movss xmm0, dword [ebx+0x46230]
-	call PlayADSAnim
+	call _Z11PlayADSAnimfiP6DObj_si
 	mov ebx, cgArray
 	mov eax, [ebx+0x46760]
 	mov edx, [ebp-0x48]
 	cmp eax, [edx+0x28]
-	jnz CG_UpdateViewWeaponAnim_230
-CG_UpdateViewWeaponAnim_160:
+	jnz _Z23CG_UpdateViewWeaponAnimi_230
+_Z23CG_UpdateViewWeaponAnimi_160:
 	cmp edi, [ebx+0x50378]
-	jnz CG_UpdateViewWeaponAnim_230
-	jmp CG_UpdateViewWeaponAnim_240
-CG_UpdateViewWeaponAnim_100:
+	jnz _Z23CG_UpdateViewWeaponAnimi_230
+	jmp _Z23CG_UpdateViewWeaponAnimi_240
+_Z23CG_UpdateViewWeaponAnimi_100:
 	mov eax, [edi+0x388]
 	mov edx, cgArray
 	sub eax, [edx+0x46178]
 	cmp eax, [edi+0x38c]
-	jle CG_UpdateViewWeaponAnim_80
-CG_UpdateViewWeaponAnim_90:
+	jle _Z23CG_UpdateViewWeaponAnimi_80
+_Z23CG_UpdateViewWeaponAnimi_90:
 	mov esi, [edi+0x300]
-	jmp CG_UpdateViewWeaponAnim_250
-CG_UpdateViewWeaponAnim_180:
+	jmp _Z23CG_UpdateViewWeaponAnimi_250
+_Z23CG_UpdateViewWeaponAnimi_180:
 	mov eax, [ebx+0x46178]
 	sub eax, [edx+0x794]
 	test eax, eax
-	jle CG_UpdateViewWeaponAnim_260
+	jle _Z23CG_UpdateViewWeaponAnimi_260
 	mov edx, 0x1
-	jmp CG_UpdateViewWeaponAnim_270
-CG_UpdateViewWeaponAnim_170:
+	jmp _Z23CG_UpdateViewWeaponAnimi_270
+_Z23CG_UpdateViewWeaponAnimi_170:
 	mov dword [esp], 0x1
 	pxor xmm0, xmm0
 	mov ecx, esi
 	mov edx, edi
 	mov eax, [ebp+0x8]
-	call StartWeaponAnim
+	call _Z15StartWeaponAnimiiP6DObj_sif
 	mov eax, [ebx+0x46760]
 	and ah, 0xfd
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_weaponrunxmodela
 	mov dword [esp], 0x13
-	call Com_Printf
-CG_UpdateViewWeaponAnim_390:
+	call _Z10Com_PrintfiPKcz
+_Z23CG_UpdateViewWeaponAnimi_390:
 	mov ebx, cgArray
 	mov eax, [ebx+0x46760]
 	mov edx, [ebp-0x48]
 	mov [edx+0x28], eax
 	mov [ebx+0x50378], edi
-CG_UpdateViewWeaponAnim_240:
+_Z23CG_UpdateViewWeaponAnimi_240:
 	mov dword [esp+0x8], 0x1
 	cvtsi2ss xmm0, dword [ebx+0x46124]
 	mulss xmm0, [_float_0_00100000]
@@ -7371,289 +7371,289 @@ CG_UpdateViewWeaponAnim_240:
 	mov edx, [ebp-0x48]
 	mov eax, [edx]
 	mov [esp], eax
-	call DObjUpdateClientInfo
+	call _Z20DObjUpdateClientInfoP6DObj_sfh
 	lea eax, [ebx+0x4613c]
 	mov [esp], eax
-	call BG_GetViewmodelWeaponIndex
+	call _Z26BG_GetViewmodelWeaponIndexPK13playerState_s
 	test eax, eax
-	jz CG_UpdateViewWeaponAnim_30
+	jz _Z23CG_UpdateViewWeaponAnimi_30
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov [ebp-0x38], eax
 	lea eax, [ebp-0x1c]
 	mov [esp], eax
-	call DObjGetClientNotifyList
+	call _Z23DObjGetClientNotifyListPP13XAnimNotify_s
 	mov [ebp-0x30], eax
 	test eax, eax
-	jle CG_UpdateViewWeaponAnim_30
+	jle _Z23CG_UpdateViewWeaponAnimi_30
 	mov dword [ebp-0x34], 0x0
 	xor esi, esi
-	jmp CG_UpdateViewWeaponAnim_280
-CG_UpdateViewWeaponAnim_290:
+	jmp _Z23CG_UpdateViewWeaponAnimi_280
+_Z23CG_UpdateViewWeaponAnimi_290:
 	add dword [ebp-0x34], 0x1
 	add esi, 0xc
 	mov edx, [ebp-0x34]
 	cmp [ebp-0x30], edx
-	jz CG_UpdateViewWeaponAnim_30
-CG_UpdateViewWeaponAnim_280:
+	jz _Z23CG_UpdateViewWeaponAnimi_30
+_Z23CG_UpdateViewWeaponAnimi_280:
 	mov dword [esp+0x4], _cstring_end
 	mov eax, [ebp-0x1c]
 	mov eax, [eax+esi]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jz CG_UpdateViewWeaponAnim_290
+	jz _Z23CG_UpdateViewWeaponAnimi_290
 	mov dword [esp+0x4], _cstring_nvg_on_powerup
 	mov eax, [ebp-0x1c]
 	mov eax, [eax+esi]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz CG_UpdateViewWeaponAnim_300
+	jnz _Z23CG_UpdateViewWeaponAnimi_300
 	mov edx, cgMedia
 	mov eax, [edx+0x1048]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PlayClientSoundAlias
-CG_UpdateViewWeaponAnim_350:
+	call _Z23CG_PlayClientSoundAliasiP16snd_alias_list_t
+_Z23CG_UpdateViewWeaponAnimi_350:
 	mov eax, [ebp-0x1c]
 	mov eax, [eax+esi]
 	mov edx, [ebp-0x38]
 	cmp word [edx+0xe8], 0x0
-	jz CG_UpdateViewWeaponAnim_290
+	jz _Z23CG_UpdateViewWeaponAnimi_290
 	mov [esp], eax
-	call SL_FindLowercaseString
+	call _Z22SL_FindLowercaseStringPKc
 	mov [ebp-0x2c], eax
 	test eax, eax
-	jz CG_UpdateViewWeaponAnim_290
+	jz _Z23CG_UpdateViewWeaponAnimi_290
 	mov ebx, [ebp-0x38]
 	mov edi, 0x10
-	jmp CG_UpdateViewWeaponAnim_310
-CG_UpdateViewWeaponAnim_320:
+	jmp _Z23CG_UpdateViewWeaponAnimi_310
+_Z23CG_UpdateViewWeaponAnimi_320:
 	add ebx, 0x2
 	sub edi, 0x1
-	jz CG_UpdateViewWeaponAnim_290
-CG_UpdateViewWeaponAnim_310:
+	jz _Z23CG_UpdateViewWeaponAnimi_290
+_Z23CG_UpdateViewWeaponAnimi_310:
 	movzx eax, word [ebx+0xe8]
 	test ax, ax
-	jz CG_UpdateViewWeaponAnim_290
+	jz _Z23CG_UpdateViewWeaponAnimi_290
 	movzx edx, word [ebx+0x108]
 	test dx, dx
-	jz CG_UpdateViewWeaponAnim_320
+	jz _Z23CG_UpdateViewWeaponAnimi_320
 	movzx eax, ax
 	cmp [ebp-0x2c], eax
-	jnz CG_UpdateViewWeaponAnim_320
+	jnz _Z23CG_UpdateViewWeaponAnimi_320
 	movzx eax, dx
 	mov [esp], eax
-	call SL_ConvertToString
+	call _Z18SL_ConvertToStringj
 	test eax, eax
-	jz CG_UpdateViewWeaponAnim_320
+	jz _Z23CG_UpdateViewWeaponAnimi_320
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PlayClientSoundAliasByName
-	jmp CG_UpdateViewWeaponAnim_320
-CG_UpdateViewWeaponAnim_130:
+	call _Z29CG_PlayClientSoundAliasByNameiPKc
+	jmp _Z23CG_UpdateViewWeaponAnimi_320
+_Z23CG_UpdateViewWeaponAnimi_130:
 	cmp esi, [eax+0xc]
-	jnz CG_UpdateViewWeaponAnim_330
+	jnz _Z23CG_UpdateViewWeaponAnimi_330
 	cmp edx, [eax+0x10]
-	jnz CG_UpdateViewWeaponAnim_330
-	jmp CG_UpdateViewWeaponAnim_340
-CG_UpdateViewWeaponAnim_300:
+	jnz _Z23CG_UpdateViewWeaponAnimi_330
+	jmp _Z23CG_UpdateViewWeaponAnimi_340
+_Z23CG_UpdateViewWeaponAnimi_300:
 	mov dword [esp+0x4], _cstring_nvg_off_powerdow
 	mov eax, [ebp-0x1c]
 	mov eax, [eax+esi]
 	mov [esp], eax
-	call Q_stricmp
+	call _Z9I_stricmpPKcS0_
 	test eax, eax
-	jnz CG_UpdateViewWeaponAnim_350
+	jnz _Z23CG_UpdateViewWeaponAnimi_350
 	mov edx, cgMedia
 	mov eax, [edx+0x104c]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call CG_PlayClientSoundAlias
-	jmp CG_UpdateViewWeaponAnim_350
-CG_UpdateViewWeaponAnim_150:
+	call _Z23CG_PlayClientSoundAliasiP16snd_alias_list_t
+	jmp _Z23CG_UpdateViewWeaponAnimi_350
+_Z23CG_UpdateViewWeaponAnimi_150:
 	mov ecx, 0x20
 	mov edx, esi
 	mov eax, edi
 	pxor xmm0, xmm0
-	call PlayADSAnim
-	jmp CG_UpdateViewWeaponAnim_360
-CG_UpdateViewWeaponAnim_220:
+	call _Z11PlayADSAnimfiP6DObj_si
+	jmp _Z23CG_UpdateViewWeaponAnimi_360
+_Z23CG_UpdateViewWeaponAnimi_220:
 	mov ecx, 0x1f
-	jmp CG_UpdateViewWeaponAnim_370
-CG_UpdateViewWeaponAnim_200:
+	jmp _Z23CG_UpdateViewWeaponAnimi_370
+_Z23CG_UpdateViewWeaponAnimi_200:
 	mov eax, 0x1
-	jmp CG_UpdateViewWeaponAnim_380
-CG_UpdateViewWeaponAnim_730:
+	jmp _Z23CG_UpdateViewWeaponAnimi_380
+_Z23CG_UpdateViewWeaponAnimi_730:
 	mov dword [esp], 0x1b
-CG_UpdateViewWeaponAnim_400:
+_Z23CG_UpdateViewWeaponAnimi_400:
 	pxor xmm0, xmm0
 	mov ecx, esi
 	mov edx, edi
 	mov eax, [ebp+0x8]
-	call StartWeaponAnim
-	jmp CG_UpdateViewWeaponAnim_390
-CG_UpdateViewWeaponAnim_690:
+	call _Z15StartWeaponAnimiiP6DObj_sif
+	jmp _Z23CG_UpdateViewWeaponAnimi_390
+_Z23CG_UpdateViewWeaponAnimi_690:
 	mov dword [esp], 0x18
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_700:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_700:
 	mov dword [esp], 0x4
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_710:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_710:
 	mov dword [esp], 0x19
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_720:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_720:
 	mov dword [esp], 0x1a
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_610:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_610:
 	mov dword [esp], 0x11
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_620:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_620:
 	mov dword [esp], 0x10
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_630:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_630:
 	mov dword [esp], 0x13
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_640:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_640:
 	mov dword [esp], 0x12
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_650:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_650:
 	mov dword [esp], 0x15
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_660:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_660:
 	mov dword [esp], 0x14
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_670:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_670:
 	mov dword [esp], 0x16
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_680:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_680:
 	mov dword [esp], 0x17
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_450:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_450:
 	xor ebx, ebx
 	mov dword [ebp-0x3c], 0x1
-CG_UpdateViewWeaponAnim_420:
+_Z23CG_UpdateViewWeaponAnimi_420:
 	mov eax, [ebp-0x3c]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x40]
 	mov [esp], edx
-	call XAnimHasFinished
+	call _Z16XAnimHasFinishedPK11XAnimTree_sj
 	test al, al
-	jnz CG_UpdateViewWeaponAnim_410
+	jnz _Z23CG_UpdateViewWeaponAnimi_410
 	mov eax, [ebp-0x48]
 	mov dword [eax+0x28], 0xffffffff
 	mov ebx, cgArray
 	test byte [ebx+0x46760], 0x1
-	jz CG_UpdateViewWeaponAnim_240
+	jz _Z23CG_UpdateViewWeaponAnimi_240
 	mov ebx, 0x3f000000
-CG_UpdateViewWeaponAnim_410:
+_Z23CG_UpdateViewWeaponAnimi_410:
 	add dword [ebp-0x3c], 0x1
 	cmp dword [ebp-0x3c], 0x1f
-	jnz CG_UpdateViewWeaponAnim_420
+	jnz _Z23CG_UpdateViewWeaponAnimi_420
 	mov [esp], edi
-	call BG_ClipForWeapon
+	call _Z16BG_ClipForWeaponi
 	mov edx, cgArray
 	mov edx, [edx+eax*4+0x46498]
 	test edx, edx
-	jnz CG_UpdateViewWeaponAnim_430
+	jnz _Z23CG_UpdateViewWeaponAnimi_430
 	mov dword [esp], 0x2
-CG_UpdateViewWeaponAnim_440:
+_Z23CG_UpdateViewWeaponAnimi_440:
 	mov [ebp-0x4c], ebx
 	movss xmm0, dword [ebp-0x4c]
 	mov ecx, esi
 	mov edx, edi
 	mov eax, [ebp+0x8]
-	call StartWeaponAnim
-	jmp CG_UpdateViewWeaponAnim_390
-CG_UpdateViewWeaponAnim_460:
+	call _Z15StartWeaponAnimiiP6DObj_sif
+	jmp _Z23CG_UpdateViewWeaponAnimi_390
+_Z23CG_UpdateViewWeaponAnimi_460:
 	mov dword [esp], 0x3
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_470:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_470:
 	mov dword [esp], 0x5
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_480:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_480:
 	mov dword [esp], 0x6
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_490:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_490:
 	mov dword [esp], 0x1c
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_500:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_500:
 	mov dword [esp], 0x1d
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_510:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_510:
 	mov dword [esp], 0x1e
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_520:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_520:
 	mov dword [esp], 0x7
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_530:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_530:
 	mov dword [esp], 0x8
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_540:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_540:
 	mov dword [esp], 0xf
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_550:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_550:
 	mov dword [esp], 0xd
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_560:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_560:
 	mov dword [esp], 0xe
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_570:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_570:
 	mov dword [esp], 0x9
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_580:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_580:
 	mov dword [esp], 0xa
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_590:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_590:
 	mov dword [esp], 0xb
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_600:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_600:
 	mov dword [esp], 0xc
-	jmp CG_UpdateViewWeaponAnim_400
-CG_UpdateViewWeaponAnim_430:
+	jmp _Z23CG_UpdateViewWeaponAnimi_400
+_Z23CG_UpdateViewWeaponAnimi_430:
 	mov dword [esp], 0x1
-	jmp CG_UpdateViewWeaponAnim_440
+	jmp _Z23CG_UpdateViewWeaponAnimi_440
 	
 	
-CG_UpdateViewWeaponAnim_jumptab_0:
-	dd CG_UpdateViewWeaponAnim_450
-	dd CG_UpdateViewWeaponAnim_450
-	dd CG_UpdateViewWeaponAnim_460
-	dd CG_UpdateViewWeaponAnim_470
-	dd CG_UpdateViewWeaponAnim_480
-	dd CG_UpdateViewWeaponAnim_490
-	dd CG_UpdateViewWeaponAnim_500
-	dd CG_UpdateViewWeaponAnim_510
-	dd CG_UpdateViewWeaponAnim_520
-	dd CG_UpdateViewWeaponAnim_530
-	dd CG_UpdateViewWeaponAnim_540
-	dd CG_UpdateViewWeaponAnim_550
-	dd CG_UpdateViewWeaponAnim_560
-	dd CG_UpdateViewWeaponAnim_570
-	dd CG_UpdateViewWeaponAnim_580
-	dd CG_UpdateViewWeaponAnim_590
-	dd CG_UpdateViewWeaponAnim_600
-	dd CG_UpdateViewWeaponAnim_610
-	dd CG_UpdateViewWeaponAnim_620
-	dd CG_UpdateViewWeaponAnim_630
-	dd CG_UpdateViewWeaponAnim_640
-	dd CG_UpdateViewWeaponAnim_650
-	dd CG_UpdateViewWeaponAnim_660
-	dd CG_UpdateViewWeaponAnim_670
-	dd CG_UpdateViewWeaponAnim_680
-	dd CG_UpdateViewWeaponAnim_690
-	dd CG_UpdateViewWeaponAnim_700
-	dd CG_UpdateViewWeaponAnim_710
-	dd CG_UpdateViewWeaponAnim_720
-	dd CG_UpdateViewWeaponAnim_730
+_Z23CG_UpdateViewWeaponAnimi_jumptab_0:
+	dd _Z23CG_UpdateViewWeaponAnimi_450
+	dd _Z23CG_UpdateViewWeaponAnimi_450
+	dd _Z23CG_UpdateViewWeaponAnimi_460
+	dd _Z23CG_UpdateViewWeaponAnimi_470
+	dd _Z23CG_UpdateViewWeaponAnimi_480
+	dd _Z23CG_UpdateViewWeaponAnimi_490
+	dd _Z23CG_UpdateViewWeaponAnimi_500
+	dd _Z23CG_UpdateViewWeaponAnimi_510
+	dd _Z23CG_UpdateViewWeaponAnimi_520
+	dd _Z23CG_UpdateViewWeaponAnimi_530
+	dd _Z23CG_UpdateViewWeaponAnimi_540
+	dd _Z23CG_UpdateViewWeaponAnimi_550
+	dd _Z23CG_UpdateViewWeaponAnimi_560
+	dd _Z23CG_UpdateViewWeaponAnimi_570
+	dd _Z23CG_UpdateViewWeaponAnimi_580
+	dd _Z23CG_UpdateViewWeaponAnimi_590
+	dd _Z23CG_UpdateViewWeaponAnimi_600
+	dd _Z23CG_UpdateViewWeaponAnimi_610
+	dd _Z23CG_UpdateViewWeaponAnimi_620
+	dd _Z23CG_UpdateViewWeaponAnimi_630
+	dd _Z23CG_UpdateViewWeaponAnimi_640
+	dd _Z23CG_UpdateViewWeaponAnimi_650
+	dd _Z23CG_UpdateViewWeaponAnimi_660
+	dd _Z23CG_UpdateViewWeaponAnimi_670
+	dd _Z23CG_UpdateViewWeaponAnimi_680
+	dd _Z23CG_UpdateViewWeaponAnimi_690
+	dd _Z23CG_UpdateViewWeaponAnimi_700
+	dd _Z23CG_UpdateViewWeaponAnimi_710
+	dd _Z23CG_UpdateViewWeaponAnimi_720
+	dd _Z23CG_UpdateViewWeaponAnimi_730
 
 
 ;CG_ImpactEffectForWeapon(int, int, int, FxEffectDef const**, snd_alias_list_t**)
-CG_ImpactEffectForWeapon:
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -7663,7 +7663,7 @@ CG_ImpactEffectForWeapon:
 	mov ebx, [ebp+0x18]
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov edx, eax
 	mov dword [ebx], 0x0
 	mov eax, esi
@@ -7671,10 +7671,10 @@ CG_ImpactEffectForWeapon:
 	mov ecx, eax
 	and cl, 0x1
 	cmp dword [edx+0x138], 0x8
-	ja CG_ImpactEffectForWeapon_10
+	ja _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_10
 	mov eax, [edx+0x138]
-	jmp dword [eax*4+CG_ImpactEffectForWeapon_jumptab_0]
-CG_ImpactEffectForWeapon_10:
+	jmp dword [eax*4+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_jumptab_0]
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_10:
 	mov eax, [ebp+0x14]
 	mov dword [eax], 0x0
 	add esp, 0x10
@@ -7682,28 +7682,28 @@ CG_ImpactEffectForWeapon_10:
 	pop esi
 	pop ebp
 	ret
-CG_ImpactEffectForWeapon_130:
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_130:
 	test cl, cl
-	jz CG_ImpactEffectForWeapon_20
+	jz _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_20
 	mov edx, cgMedia
 	mov eax, [ebp+0xc]
 	mov edx, [edx+eax*4+0x520]
 	mov eax, 0x1
-CG_ImpactEffectForWeapon_90:
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_90:
 	mov [ebx], edx
 	mov ebx, eax
 	mov edx, cgMedia
 	cmp dword [ebp+0xc], 0x7
-	jnz CG_ImpactEffectForWeapon_30
-CG_ImpactEffectForWeapon_50:
+	jnz _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_30
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_50:
 	test esi, 0x2
-	jz CG_ImpactEffectForWeapon_40
+	jz _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_40
 	and esi, 0x1
 	cmp esi, 0x1
 	sbb ecx, ecx
 	and ecx, 0xfffffffe
 	add ecx, 0x3
-CG_ImpactEffectForWeapon_120:
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_120:
 	mov edx, [edx+0x2754]
 	mov eax, ebx
 	shl eax, 0x7
@@ -7718,15 +7718,15 @@ CG_ImpactEffectForWeapon_120:
 	pop esi
 	pop ebp
 	ret
-CG_ImpactEffectForWeapon_200:
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_200:
 	mov eax, [edx+0x59c]
 	mov [ebx], eax
 	mov ebx, 0xb
 	mov edx, cgMedia
-CG_ImpactEffectForWeapon_60:
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_60:
 	cmp dword [ebp+0xc], 0x7
-	jz CG_ImpactEffectForWeapon_50
-CG_ImpactEffectForWeapon_30:
+	jz _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_50
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_30:
 	mov eax, [edx+0x2754]
 	mov edx, [eax+0x4]
 	mov eax, ebx
@@ -7742,110 +7742,110 @@ CG_ImpactEffectForWeapon_30:
 	pop esi
 	pop ebp
 	ret
-CG_ImpactEffectForWeapon_190:
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_190:
 	mov edx, cgMedia
 	mov ecx, [ebp+0xc]
 	mov eax, [edx+ecx*4+0x2dc]
 	mov [ebx], eax
 	mov ebx, 0xa
-	jmp CG_ImpactEffectForWeapon_60
-CG_ImpactEffectForWeapon_180:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_60
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_180:
 	mov edx, cgMedia
 	mov ecx, [ebp+0xc]
 	mov eax, [edx+ecx*4+0x268]
 	mov [ebx], eax
 	mov ebx, 0x9
-	jmp CG_ImpactEffectForWeapon_60
-CG_ImpactEffectForWeapon_170:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_60
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_170:
 	mov eax, [edx+0x208]
 	test eax, eax
-	jz CG_ImpactEffectForWeapon_70
+	jz _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_70
 	mov edx, [ebp+0xc]
 	mov eax, [eax+edx*4]
-CG_ImpactEffectForWeapon_70:
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_70:
 	mov [ebx], eax
 	mov ebx, 0x8
 	mov edx, cgMedia
-	jmp CG_ImpactEffectForWeapon_60
-CG_ImpactEffectForWeapon_160:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_60
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_160:
 	test cl, cl
-	jnz CG_ImpactEffectForWeapon_80
+	jnz _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_80
 	mov edx, cgMedia
 	mov eax, [ebp+0xc]
 	mov edx, [edx+eax*4+0x4ac]
 	mov eax, 0x4
-	jmp CG_ImpactEffectForWeapon_90
-CG_ImpactEffectForWeapon_150:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_90
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_150:
 	test cl, cl
-	jnz CG_ImpactEffectForWeapon_100
+	jnz _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_100
 	mov edx, cgMedia
 	mov ecx, [ebp+0xc]
 	mov edx, [edx+ecx*4+0x438]
 	mov eax, 0x6
-	jmp CG_ImpactEffectForWeapon_90
-CG_ImpactEffectForWeapon_140:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_90
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_140:
 	test cl, cl
-	jnz CG_ImpactEffectForWeapon_110
+	jnz _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_110
 	mov edx, cgMedia
 	mov eax, [ebp+0xc]
 	mov edx, [edx+eax*4+0x3c4]
 	mov eax, 0x2
-	jmp CG_ImpactEffectForWeapon_90
-CG_ImpactEffectForWeapon_40:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_90
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_40:
 	mov ecx, esi
 	and ecx, 0x1
 	neg ecx
 	and ecx, 0x2
-	jmp CG_ImpactEffectForWeapon_120
-CG_ImpactEffectForWeapon_20:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_120
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_20:
 	mov edx, cgMedia
 	mov ecx, [ebp+0xc]
 	mov edx, [edx+ecx*4+0x350]
 	xor eax, eax
-	jmp CG_ImpactEffectForWeapon_90
-CG_ImpactEffectForWeapon_110:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_90
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_110:
 	mov edx, cgMedia
 	mov ecx, [ebp+0xc]
 	mov edx, [edx+ecx*4+0x594]
 	mov eax, 0x3
-	jmp CG_ImpactEffectForWeapon_90
-CG_ImpactEffectForWeapon_100:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_90
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_100:
 	mov edx, cgMedia
 	mov eax, [ebp+0xc]
 	mov edx, [edx+eax*4+0x608]
 	mov eax, 0x7
-	jmp CG_ImpactEffectForWeapon_90
-CG_ImpactEffectForWeapon_80:
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_90
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_80:
 	mov edx, cgMedia
 	mov ecx, [ebp+0xc]
 	mov edx, [edx+ecx*4+0x67c]
 	mov eax, 0x5
-	jmp CG_ImpactEffectForWeapon_90
+	jmp _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_90
 	nop
 	
 	
-CG_ImpactEffectForWeapon_jumptab_0:
-	dd CG_ImpactEffectForWeapon_10
-	dd CG_ImpactEffectForWeapon_130
-	dd CG_ImpactEffectForWeapon_140
-	dd CG_ImpactEffectForWeapon_150
-	dd CG_ImpactEffectForWeapon_160
-	dd CG_ImpactEffectForWeapon_170
-	dd CG_ImpactEffectForWeapon_180
-	dd CG_ImpactEffectForWeapon_190
-	dd CG_ImpactEffectForWeapon_200
+_Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_jumptab_0:
+	dd _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_10
+	dd _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_130
+	dd _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_140
+	dd _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_150
+	dd _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_160
+	dd _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_170
+	dd _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_180
+	dd _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_190
+	dd _Z24CG_ImpactEffectForWeaponiiiPPK11FxEffectDefPP16snd_alias_list_t_200
 
 
 ;CG_PlayerTurretWeaponIdx(int)
-CG_PlayerTurretWeaponIdx:
+_Z24CG_PlayerTurretWeaponIdxi:
 	push ebp
 	mov ebp, esp
 	mov eax, cgArray
 	test dword [eax+0x461ec], 0x300
-	jz CG_PlayerTurretWeaponIdx_10
+	jz _Z24CG_PlayerTurretWeaponIdxi_10
 	mov ecx, [eax+0x466d4]
 	test ecx, ecx
-	jz CG_PlayerTurretWeaponIdx_10
+	jz _Z24CG_PlayerTurretWeaponIdxi_10
 	mov eax, [eax+0x466d8]
 	lea edx, [eax*4]
 	shl eax, 0x5
@@ -7857,14 +7857,14 @@ CG_PlayerTurretWeaponIdx:
 	mov eax, [edx+eax+0x190]
 	pop ebp
 	ret
-CG_PlayerTurretWeaponIdx_10:
+_Z24CG_PlayerTurretWeaponIdxi_10:
 	xor eax, eax
 	pop ebp
 	ret
 
 
 ;CG_UpdateWeaponViewmodels(int)
-CG_UpdateWeaponViewmodels:
+_Z25CG_UpdateWeaponViewmodelsi:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -7875,12 +7875,12 @@ CG_UpdateWeaponViewmodels:
 	mov edi, cgArray
 	mov ebx, cg_weaponsArray
 	add ebx, 0x44
-	jmp CG_UpdateWeaponViewmodels_10
-CG_UpdateWeaponViewmodels_30:
+	jmp _Z25CG_UpdateWeaponViewmodelsi_10
+_Z25CG_UpdateWeaponViewmodelsi_30:
 	mov eax, [edi+0x24]
 	movzx eax, byte [esi+eax+0x828]
 	cmp [ebx+0x14], al
-	jz CG_UpdateWeaponViewmodels_20
+	jz _Z25CG_UpdateWeaponViewmodelsi_20
 	movzx ecx, al
 	mov dword [esp+0x10], 0x1
 	mov eax, [ebx+0x10]
@@ -7893,14 +7893,14 @@ CG_UpdateWeaponViewmodels_30:
 	mov [esp], eax
 	mov edx, esi
 	mov eax, [ebp+0x8]
-	call ChangeViewmodelDobj
-CG_UpdateWeaponViewmodels_20:
+	call _Z19ChangeViewmodelDobjiihP6XModelS0_S0_S0_h
+_Z25CG_UpdateWeaponViewmodelsi_20:
 	add esi, 0x1
 	add ebx, 0x44
-CG_UpdateWeaponViewmodels_10:
-	call BG_GetNumWeapons
+_Z25CG_UpdateWeaponViewmodelsi_10:
+	call _Z16BG_GetNumWeaponsv
 	cmp esi, eax
-	jb CG_UpdateWeaponViewmodels_30
+	jb _Z25CG_UpdateWeaponViewmodelsi_30
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -7910,16 +7910,16 @@ CG_UpdateWeaponViewmodels_10:
 
 
 ;CG_PlayerUsingScopedTurret(int)
-CG_PlayerUsingScopedTurret:
+_Z26CG_PlayerUsingScopedTurreti:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov eax, cgArray
 	test dword [eax+0x461ec], 0x300
-	jz CG_PlayerUsingScopedTurret_10
+	jz _Z26CG_PlayerUsingScopedTurreti_10
 	mov edx, [eax+0x466d4]
 	test edx, edx
-	jz CG_PlayerUsingScopedTurret_10
+	jz _Z26CG_PlayerUsingScopedTurreti_10
 	mov eax, [eax+0x466d8]
 	lea edx, [eax*4]
 	shl eax, 0x5
@@ -7930,23 +7930,23 @@ CG_PlayerUsingScopedTurret:
 	mov edx, cg_entitiesArray
 	mov eax, [edx+eax+0x190]
 	test eax, eax
-	jz CG_PlayerUsingScopedTurret_10
+	jz _Z26CG_PlayerUsingScopedTurreti_10
 	mov [esp], eax
-	call BG_GetWeaponDef
+	call _Z15BG_GetWeaponDefj
 	mov ecx, [eax+0x430]
 	test ecx, ecx
-	jz CG_PlayerUsingScopedTurret_10
+	jz _Z26CG_PlayerUsingScopedTurreti_10
 	mov eax, 0x1
 	leave
 	ret
-CG_PlayerUsingScopedTurret_10:
+_Z26CG_PlayerUsingScopedTurreti_10:
 	xor eax, eax
 	leave
 	ret
 
 
 ;CG_UICheckWeapLockAttackTop(int)
-CG_UICheckWeapLockAttackTop:
+_Z27CG_UICheckWeapLockAttackTopi:
 	push ebp
 	mov ebp, esp
 	xor eax, eax
@@ -7956,38 +7956,38 @@ CG_UICheckWeapLockAttackTop:
 
 
 ;CG_GetLocalClientGlobalsForEnt(int, int)
-CG_GetLocalClientGlobalsForEnt:
+_Z30CG_GetLocalClientGlobalsForEntii:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov dword [esp], 0x0
-	call CL_IsLocalClientActive
+	call _Z22CL_IsLocalClientActivei
 	test al, al
-	jz CG_GetLocalClientGlobalsForEnt_10
+	jz _Z30CG_GetLocalClientGlobalsForEntii_10
 	mov eax, cgArray
 	mov edx, [eax+0x24]
 	test byte [edx+0x20], 0x6
-	jnz CG_GetLocalClientGlobalsForEnt_20
-CG_GetLocalClientGlobalsForEnt_40:
+	jnz _Z30CG_GetLocalClientGlobalsForEntii_20
+_Z30CG_GetLocalClientGlobalsForEntii_40:
 	xor edx, edx
-CG_GetLocalClientGlobalsForEnt_50:
+_Z30CG_GetLocalClientGlobalsForEntii_50:
 	test edx, edx
-	jnz CG_GetLocalClientGlobalsForEnt_30
-CG_GetLocalClientGlobalsForEnt_10:
+	jnz _Z30CG_GetLocalClientGlobalsForEntii_30
+_Z30CG_GetLocalClientGlobalsForEntii_10:
 	xor eax, eax
-CG_GetLocalClientGlobalsForEnt_30:
+_Z30CG_GetLocalClientGlobalsForEntii_30:
 	leave
 	ret
-CG_GetLocalClientGlobalsForEnt_20:
+_Z30CG_GetLocalClientGlobalsForEntii_20:
 	mov ecx, [ebp+0xc]
 	cmp ecx, [edx+0xe8]
-	jnz CG_GetLocalClientGlobalsForEnt_40
+	jnz _Z30CG_GetLocalClientGlobalsForEntii_40
 	mov edx, 0x1
-	jmp CG_GetLocalClientGlobalsForEnt_50
+	jmp _Z30CG_GetLocalClientGlobalsForEntii_50
 
 
 ;CG_UICheckWeapLockAttackDirect(int)
-CG_UICheckWeapLockAttackDirect:
+_Z30CG_UICheckWeapLockAttackDirecti:
 	push ebp
 	mov ebp, esp
 	xor eax, eax
@@ -8037,7 +8037,7 @@ g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
 g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
 g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x5cc13, 0x5cc23, 0x5cd5d, 0x5cd3f, 0x5cd1d, 0x5ccfe, 0x5cce5, 0x5cccc, 0x5cc8d, 0x5e38c, 0x5e38c, 0x5e414, 0x5e420, 0x5e42c, 0x5e438, 0x5e444, 0x5e450, 0x5e45c, 0x5e468, 0x5e474, 0x5e480, 0x5e48c, 0x5e498, 0x5e4a4, 0x5e4b0, 0x5e4bc, 0x5e341, 0x5e34a, 0x5e353, 0x5e35c, 0x5e365, 0x5e36e, 0x5e377, 0x5e380, 0x5e31d, 0x5e326, 0x5e32f, 0x5e338, 0x5e301, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x6101e, 0x611a4, 0x611c6, 0x611e8, 0x61285, 0x61209, 0x612c6, 0x612aa, 0x612e1, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 
 
 ;Zero initialized global or static variables of cg_weapons:
@@ -8074,7 +8074,7 @@ g_swizzleYXZW: resb 0x10
 g_swizzleXYZW: resb 0x10
 g_inc: resb 0x10
 g_negativeZero: resb 0x10
-g_fltMin: resb 0x80
+g_fltMin: resb 0x10
 removeMeWhenMPStopsCrashingInHere: resb 0x80
 
 

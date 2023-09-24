@@ -198,3 +198,17 @@ extern "C" __cdecl const char* G_GetPlayerId(struct gentity_s* ent)
     return va("%s", id);
 
 }
+
+void CS_SetPlayerName(clientState_t *cs, const char* name)
+{
+  SV_UpdatePlayernameById(cs->clientIndex ,name);
+}
+
+extern "C" __cdecl void ClientEndFrame_TurretThink_Stub(gentity_s* ent)
+{
+  gclient_s* client = ent->client;
+	release_assert(client->ps.clientNum == ent->s.number);
+	release_assert(client->ps.viewlocked_entNum != ENTITYNUM_NONE);
+	release_assertx(level.gentities[client->ps.viewlocked_entNum].r.ownerNum.isDefined() && (level.gentities[client->ps.viewlocked_entNum].r.ownerNum.ent() == ent), "viewlocked_entNum is %i, ownerNum is %i, ent->s.number is %i", client->ps.viewlocked_entNum, level.gentities[client->ps.viewlocked_entNum].r.ownerNum,ent->s.number);
+	turret_think_client(&level.gentities[client->ps.viewlocked_entNum]);
+}

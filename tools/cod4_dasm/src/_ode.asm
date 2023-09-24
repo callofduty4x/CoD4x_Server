@@ -5,16 +5,17 @@
 	extern _ZTV10dxUserGeom
 	extern __cxa_atexit
 	extern _Unwind_Resume
-	extern Pool_Init
-	extern Sys_EnterCriticalSection
-	extern Pool_Alloc
-	extern Sys_LeaveCriticalSection
+	extern _ZTV6dxGeom
+	extern _Z9Pool_InitPvP10pooldata_tjj
+	extern _Z24Sys_EnterCriticalSection15CriticalSection
+	extern _Z10Pool_AllocP10pooldata_t
+	extern _Z24Sys_LeaveCriticalSection15CriticalSection
 	extern dMassSetParameters
 	extern dSetZero
 	extern dRSetIdentity
 	extern dGeomGetBodyNext
 	extern ODE_GeomDestruct
-	extern Pool_Free
+	extern _Z9Pool_FreePvP10pooldata_t
 	extern memcpy
 	extern dInvertPDMatrix3
 	extern dMessage
@@ -22,14 +23,14 @@
 	extern dQfromR
 	extern dNormalize4
 	extern dRfromQ
-	extern jointInit
-	extern dxProcessIslands
+	extern _Z9jointInitP7dxJoint
+	extern _Z16dxProcessIslandsP7dxWorldf
 
 ;Exports of ode:
 	global _GLOBAL__I_odeGlob
 	global _ZZ12dBodySetMassE12__FUNCTION__
 	global ODE_WorldGetBodyCount
-	global ODE_Init
+	global _Z8ODE_Initv
 	global dAreConnectedExcluding
 	global dBodyAddForceAtPos
 	global dBodyCreate
@@ -87,11 +88,11 @@ _GLOBAL__I_odeGlob:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -99,36 +100,36 @@ __static_initialization_and_destruction_0:
 	push ebx
 	sub esp, 0x2c
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov esi, odeGlob+0x30330
 	mov edi, 0x2
 	mov ebx, 0x1
-__static_initialization_and_destruction_0_30:
+_Z41__static_initialization_and_destruction_0ii_30:
 	mov [esp], esi
 	call _ZN13dxSimpleSpaceC1Ev
 	add esi, 0x64
 	mov edi, ebx
 	lea ebx, [ebx-0x1]
 	cmp ebx, 0xfffffffe
-	jnz __static_initialization_and_destruction_0_30
+	jnz _Z41__static_initialization_and_destruction_0ii_30
 	mov ebx, odeGlob+0x234470
-__static_initialization_and_destruction_0_40:
+_Z41__static_initialization_and_destruction_0ii_40:
 	lea eax, [ebx+0x20]
 	mov [esp], eax
 	call dMassSetZero
 	add ebx, 0x150
 	cmp ebx, odeGlob+0x25e470
-	jnz __static_initialization_and_destruction_0_40
+	jnz _Z41__static_initialization_and_destruction_0ii_40
 	mov dword [esp+0xc], 0x0
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x0
@@ -155,28 +156,28 @@ __static_initialization_and_destruction_0_40:
 	lea eax, [eax+eax*4]
 	lea eax, [eax*4+odeGlob+0x30330]
 	cmp eax, odeGlob+0x30330
-	jz __static_initialization_and_destruction_0_50
+	jz _Z41__static_initialization_and_destruction_0ii_50
 	lea ebx, [eax-0x64]
 	mov esi, ebx
-__static_initialization_and_destruction_0_60:
+_Z41__static_initialization_and_destruction_0ii_60:
 	mov eax, [esi]
 	mov [esp], ebx
 	call dword [eax]
 	sub esi, 0x64
 	cmp ebx, odeGlob+0x30330
-	jz __static_initialization_and_destruction_0_50
+	jz _Z41__static_initialization_and_destruction_0ii_50
 	sub ebx, 0x64
-	jmp __static_initialization_and_destruction_0_60
+	jmp _Z41__static_initialization_and_destruction_0ii_60
 	mov [ebp-0x1c], eax
 	mov ebx, odeGlob+0x3045c
-__static_initialization_and_destruction_0_70:
+_Z41__static_initialization_and_destruction_0ii_70:
 	sub ebx, 0x64
 	mov eax, [ebx]
 	mov [esp], ebx
 	call dword [eax]
 	cmp ebx, odeGlob+0x30330
-	jnz __static_initialization_and_destruction_0_70
-__static_initialization_and_destruction_0_50:
+	jnz _Z41__static_initialization_and_destruction_0ii_70
+_Z41__static_initialization_and_destruction_0ii_50:
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
 	call _Unwind_Resume
@@ -189,7 +190,7 @@ __tcf_0:
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [odeGlob+0x2c6480], eax
 	mov ebx, odeGlob+0x3045c
@@ -219,7 +220,7 @@ ODE_WorldGetBodyCount:
 
 
 ;ODE_Init()
-ODE_Init:
+_Z8ODE_Initv:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -227,12 +228,12 @@ ODE_Init:
 	mov dword [esp+0x8], 0x150
 	mov dword [esp+0x4], odeGlob+0x25e470
 	mov dword [esp], odeGlob+0x234470
-	call Pool_Init
+	call _Z9Pool_InitPvP10pooldata_tjj
 	mov dword [esp+0xc], 0x800
 	mov dword [esp+0x8], 0xd0
 	mov dword [esp+0x4], odeGlob+0x2c6478
 	mov dword [esp], odeGlob+0x25e478
-	call Pool_Init
+	call _Z9Pool_InitPvP10pooldata_tjj
 	leave
 	ret
 	add [eax], al
@@ -326,12 +327,12 @@ dBodyCreate:
 	sub esp, 0x4c
 	mov edi, [ebp+0x8]
 	mov dword [esp], 0xb
-	call Sys_EnterCriticalSection
+	call _Z24Sys_EnterCriticalSection15CriticalSection
 	mov dword [esp], odeGlob+0x25e470
-	call Pool_Alloc
+	call _Z10Pool_AllocP10pooldata_t
 	mov esi, eax
 	mov dword [esp], 0xb
-	call Sys_LeaveCriticalSection
+	call _Z24Sys_LeaveCriticalSection15CriticalSection
 	test esi, esi
 	jz dBodyCreate_10
 	lea eax, [esi+0x20]
@@ -542,18 +543,18 @@ dBodyDestroy_120:
 	mov eax, [ecx]
 	sub dword [eax+0x8], 0x1
 	mov dword [esp], 0xb
-	call Sys_EnterCriticalSection
+	call _Z24Sys_EnterCriticalSection15CriticalSection
 	mov dword [esp+0x4], odeGlob+0x25e470
 	mov eax, [ebp-0x20]
 	mov [esp], eax
-	call Pool_Free
+	call _Z9Pool_FreePvP10pooldata_t
 	mov dword [ebp+0x8], 0xb
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
-	jmp Sys_LeaveCriticalSection
+	jmp _Z24Sys_LeaveCriticalSection15CriticalSection
 dBodyDestroy_40:
 	mov ecx, edx
 	jmp dBodyDestroy_130
@@ -1069,7 +1070,7 @@ dJointCreateAMotor_20:
 	add dword [ecx+0xc], 0x1
 	mov dword [ebx+0x14], 0x8
 	mov [esp], ebx
-	call jointInit
+	call _Z9jointInitP7dxJoint
 	mov eax, ebx
 	add esp, 0x14
 	pop ebx
@@ -1122,7 +1123,7 @@ dJointCreateBall_20:
 	add dword [ecx+0xc], 0x1
 	mov dword [ebx+0x14], 0x1
 	mov [esp], ebx
-	call jointInit
+	call _Z9jointInitP7dxJoint
 	mov eax, ebx
 	add esp, 0x14
 	pop ebx
@@ -1197,7 +1198,7 @@ dJointCreateContact_30:
 	add dword [ecx+0xc], 0x1
 	mov dword [ebx+0x14], 0x4
 	mov [esp], ebx
-	call jointInit
+	call _Z9jointInitP7dxJoint
 	or dword [ebx+0x18], 0x1
 	mov edx, [ebp+0x10]
 	mov eax, [edx]
@@ -1285,7 +1286,7 @@ dJointCreateHinge_20:
 	add dword [ecx+0xc], 0x1
 	mov dword [ebx+0x14], 0x2
 	mov [esp], ebx
-	call jointInit
+	call _Z9jointInitP7dxJoint
 	mov eax, ebx
 	add esp, 0x14
 	pop ebx
@@ -1613,7 +1614,7 @@ dWorldDestroy:
 	mov edi, [ebp+0x8]
 	mov ebx, [edi]
 	mov dword [esp], 0xb
-	call Sys_EnterCriticalSection
+	call _Z24Sys_EnterCriticalSection15CriticalSection
 	test ebx, ebx
 	jnz dWorldDestroy_10
 	jmp dWorldDestroy_20
@@ -1623,12 +1624,12 @@ dWorldDestroy_10:
 	mov esi, [ebx+0x4]
 	mov dword [esp+0x4], odeGlob+0x25e470
 	mov [esp], ebx
-	call Pool_Free
+	call _Z9Pool_FreePvP10pooldata_t
 	test esi, esi
 	jnz dWorldDestroy_30
 dWorldDestroy_20:
 	mov dword [esp], 0xb
-	call Sys_LeaveCriticalSection
+	call _Z24Sys_LeaveCriticalSection15CriticalSection
 	mov eax, [edi+0x4]
 	test eax, eax
 	jnz dWorldDestroy_40
@@ -1667,7 +1668,7 @@ dWorldQuickStep:
 	push ebp
 	mov ebp, esp
 	pop ebp
-	jmp dxProcessIslands
+	jmp _Z16dxProcessIslandsP7dxWorldf
 	nop
 
 

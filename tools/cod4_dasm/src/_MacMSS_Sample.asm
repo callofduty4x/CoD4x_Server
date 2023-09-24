@@ -8,7 +8,7 @@
 	extern _Unwind_Resume
 	extern calloc
 	extern gMinDataBufferSize
-	extern AIL_WAV_info
+	extern iAIL_WAV_info
 	extern free
 	extern fread
 	extern _ZN12CSoundEngine26minimum_sample_buffer_sizeEii
@@ -49,6 +49,7 @@
 	extern usleep
 	extern _ZN12CSoundObjectD2Ev
 	extern _ZdlPv
+	extern _ZTI12CSoundObject
 	extern _ZN12CSoundObject22get_sample_ms_positionEPiS0_
 	extern _ZN12CSoundObject22set_sample_ms_positionEi
 	extern _ZN12CSoundObject24set_sample_playback_rateEi
@@ -79,6 +80,7 @@
 	global _ZN12CSampleSoundC1ER12CSoundEnginem
 	global _ZN12CSampleSoundD0Ev
 	global _ZN12CSampleSoundD1Ev
+	global _ZTI12CSampleSound
 	global _ZN12CSampleSound13sOpenCallbackE
 	global _ZN12CSampleSound13sReadCallbackE
 	global _ZN12CSampleSound13sSeekCallbackE
@@ -294,7 +296,7 @@ _ZN12CSampleSound11open_streamEPKc_60:
 	mov [esp+0x4], ecx
 	mov eax, [ebp-0x4c]
 	mov [esp], eax
-	call AIL_WAV_info
+	call iAIL_WAV_info
 	test eax, eax
 	jnz _ZN12CSampleSound11open_streamEPKc_40
 	cmp dword [ebp-0x40], 0xffffffff
@@ -447,7 +449,7 @@ _ZN12CSampleSound11open_streamEPKc_160:
 	lea ecx, [ebp-0x44]
 	mov [esp+0x4], ecx
 	mov [esp], ebx
-	call AIL_WAV_info
+	call iAIL_WAV_info
 	test eax, eax
 	jz _ZN12CSampleSound11open_streamEPKc_150
 	mov eax, [ebp-0x40]
@@ -1580,7 +1582,7 @@ _ZN12CSampleSound8DoRenderEPmmP15AudioBufferList_40:
 	lea eax, [ebp-0x1c]
 	mov [esp+0xc], eax
 	mov [esp+0x8], ebx
-	mov dword [esp+0x4], _ZN12CSampleSound18AudioConverterProcEP20OpaqueAudioConverterPmP15AudioBufferListPP28AudioStreamPacketDes
+	mov dword [esp+0x4], _ZN12CSampleSound18AudioConverterProcEP20OpaqueAudioConverterPmP15AudioBufferListPP28AudioStreamPacketDescriptionPv
 	mov eax, [ebx+0xf0]
 	mov [esp], eax
 	call AudioConverterFillComplexBuffer
@@ -2208,8 +2210,10 @@ _ZN12CSampleSound14sCloseCallbackE: dd 0x0
 
 ;Initialized constant data of MacMSS_Sample:
 SECTION .rdata
+;VTypeInfoTable for CSampleSound:
+_ZTI12CSampleSound: dd 0x8, _cstring_12csamplesound, _ZTI12CSoundObject, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CSampleSound:
-_ZTV12CSampleSound: dd 0x0, 0x3b4ee0, _ZN12CSampleSoundD1Ev, _ZN12CSampleSoundD0Ev, _ZN12CSampleSound7ReleaseEv, _ZN12CSampleSound9TheadIdleEv, _ZN12CSampleSound11stop_sampleEv, _ZN12CSampleSound13resume_sampleEv, _ZN12CSampleSound10end_sampleEv, _ZN12CSoundObject22get_sample_ms_positionEPiS0_, _ZN12CSoundObject22set_sample_ms_positionEi, _ZN12CSoundObject24set_sample_playback_rateEi, _ZN12CSampleSound11open_streamEPKc, _ZN12CSampleSound12close_streamEv, _ZN12CSampleSound13ChangedVolumeEv, _ZN12CSampleSound13ChangedFormatEv, _ZN12CSampleSound17Changed3DPositionEv, _ZN12CSampleSound18Changed3DDistancesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+_ZTV12CSampleSound: dd 0x0, _ZTI12CSampleSound, _ZN12CSampleSoundD1Ev, _ZN12CSampleSoundD0Ev, _ZN12CSampleSound7ReleaseEv, _ZN12CSampleSound9TheadIdleEv, _ZN12CSampleSound11stop_sampleEv, _ZN12CSampleSound13resume_sampleEv, _ZN12CSampleSound10end_sampleEv, _ZN12CSoundObject22get_sample_ms_positionEPiS0_, _ZN12CSoundObject22set_sample_ms_positionEi, _ZN12CSoundObject24set_sample_playback_rateEi, _ZN12CSampleSound11open_streamEPKc, _ZN12CSampleSound12close_streamEv, _ZN12CSampleSound13ChangedVolumeEv, _ZN12CSampleSound13ChangedFormatEv, _ZN12CSampleSound17Changed3DPositionEv, _ZN12CSampleSound18Changed3DDistancesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of MacMSS_Sample:
@@ -2219,6 +2223,7 @@ SECTION .bss
 ;All cstrings:
 SECTION .rdata
 _cstring_rb:		db "rb",0
+_cstring_12csamplesound:		db "12CSampleSound",0
 
 
 

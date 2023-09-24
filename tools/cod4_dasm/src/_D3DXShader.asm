@@ -12,7 +12,7 @@
 	extern _ZNSsC1ERKSs
 	extern _ZNSs6appendEPKcm
 	extern _Znwm
-	extern _Znaj
+	extern _Znam
 	extern memcpy
 	extern _ZdlPv
 	extern _ZNSt19basic_istringstreamIcSt11char_traitsIcESaIcEEC1ERKSsSt13_Ios_Openmode
@@ -44,14 +44,15 @@
 	extern _ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base
 	extern _ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base
 	extern _ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_
+	extern _ZTI8IUnknown
 
 ;Exports of D3DXShader:
 	global _GLOBAL__I_sPrograms
 	global EndToken
 	global D3DXCompileShader
-	global OptimizeShader
-	global D3DXCompileShaderInit
-	global Tokenize
+	global _Z14OptimizeShaderRSsS_RKSsS1_i
+	global _Z21D3DXCompileShaderInitv
+	global _Z8TokenizeRSt6vectorISsSaISsEEPKc
 	global _ZN11CD3DXBuffer13GetBufferSizeEv
 	global _ZN11CD3DXBuffer14QueryInterfaceERK5_GUIDPPv
 	global _ZN11CD3DXBuffer16GetBufferPointerEv
@@ -68,6 +69,8 @@
 	global _ZNSt8_Rb_treeISsSt4pairIKSsPKcESt10_Select1stIS4_ESt4lessISsESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E
 	global _ZNSt8_Rb_treeISsSt4pairIKSsPKcESt10_Select1stIS4_ESt4lessISsESaIS4_EE9_M_insertEPSt18_Rb_tree_node_baseSC_RKS4_
 	global _ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3_
+	global _ZTI11CD3DXBuffer
+	global _ZTI11ID3DXBuffer
 	global _ZTV11CD3DXBuffer
 	global sPrograms
 
@@ -82,22 +85,22 @@ _GLOBAL__I_sPrograms:
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	leave
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov dword [sPrograms+0x14], 0x0
 	mov dword [sPrograms+0x4], 0x0
 	mov dword [sPrograms+0x8], 0x0
@@ -220,7 +223,7 @@ D3DXCompileShader_10:
 	mov [esp+0x4], eax
 	lea edx, [ebp-0x30]
 	mov [esp], edx
-	call OptimizeShader
+	call _Z14OptimizeShaderRSsS_RKSsS1_i
 	lea eax, [ebp-0x30]
 	mov [esp+0x4], eax
 	lea edx, [ebp-0x2c]
@@ -261,7 +264,7 @@ D3DXCompileShader_10:
 	mov dword [eax+0x4], 0x0
 	mov [eax+0x8], esi
 	mov [esp], esi
-	call _Znaj
+	call _Znam
 	mov [ebx+0xc], eax
 	mov [esp+0x8], esi
 	mov [esp+0x4], edi
@@ -350,7 +353,7 @@ D3DXCompileShader_70:
 
 
 ;OptimizeShader(std::string&, std::string&, std::string const&, std::string const&, int)
-OptimizeShader:
+_Z14OptimizeShaderRSsS_RKSsS1_i:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -364,7 +367,7 @@ OptimizeShader:
 	mov [esp], eax
 	call _ZNKSs4findEPKcmm
 	mov [ebp-0x158], eax
-OptimizeShader_80:
+_Z14OptimizeShaderRSsS_RKSsS1_i_80:
 	mov eax, [ebp+0x8]
 	mov [ebp-0x154], eax
 	mov dword [ebp-0x14c], 0x2
@@ -375,17 +378,17 @@ OptimizeShader_80:
 	mov [esp], eax
 	call _ZNSt19basic_istringstreamIcSt11char_traitsIcESaIcEEC1ERKSsSt13_Ios_Openmode
 	cmp dword [ebp+0x18], 0x2
-	jz OptimizeShader_10
-OptimizeShader_90:
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_10
+_Z14OptimizeShaderRSsS_RKSsS1_i_90:
 	mov byte [ebp-0x14d], 0x1
-OptimizeShader_100:
+_Z14OptimizeShaderRSsS_RKSsS1_i_100:
 	lea eax, [ebp-0x70]
 	mov [esp], eax
 	call _ZNSsC1Ev
 	lea edx, [ebp-0x74]
 	mov [esp], edx
 	call _ZNSsC1Ev
-OptimizeShader_60:
+_Z14OptimizeShaderRSsS_RKSsS1_i_60:
 	mov dword [esp+0x8], 0xa
 	lea edx, [ebp-0x74]
 	mov [esp+0x4], edx
@@ -395,7 +398,7 @@ OptimizeShader_60:
 	mov edx, [eax]
 	mov edx, [edx-0xc]
 	test byte [eax+edx+0x14], 0x5
-	jnz OptimizeShader_20
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_20
 	mov edx, [ebp-0x70]
 	mov [ebp-0x16c], edx
 	mov eax, [edx-0xc]
@@ -406,9 +409,9 @@ OptimizeShader_60:
 	mov ebx, [edx-0xc]
 	mov [ebp-0x7c], ebx
 	cmp ebx, eax
-	jae OptimizeShader_30
+	jae _Z14OptimizeShaderRSsS_RKSsS1_i_30
 	lea eax, [ebp-0x7c]
-OptimizeShader_150:
+_Z14OptimizeShaderRSsS_RKSsS1_i_150:
 	mov ecx, [eax]
 	cld
 	cmp ecx, ecx
@@ -416,23 +419,23 @@ OptimizeShader_150:
 	mov edi, [ebp-0x168]
 	repe cmpsb
 	mov eax, 0x0
-	jz OptimizeShader_40
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_40
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-OptimizeShader_40:
+_Z14OptimizeShaderRSsS_RKSsS1_i_40:
 	test eax, eax
-	jnz OptimizeShader_50
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_50
 	cmp [ebp-0x164], ebx
-	jnz OptimizeShader_50
-OptimizeShader_140:
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_50
+_Z14OptimizeShaderRSsS_RKSsS1_i_140:
 	lea edx, [ebp-0x74]
 	mov [esp+0x4], edx
 	lea eax, [ebp-0x70]
 	mov [esp], eax
 	call _ZNSs6assignERKSs
-	jmp OptimizeShader_60
-OptimizeShader_20:
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_60
+_Z14OptimizeShaderRSsS_RKSsS1_i_20:
 	lea edx, [ebp-0x74]
 	mov [esp], edx
 	call _ZNSsD1Ev
@@ -470,11 +473,11 @@ OptimizeShader_20:
 	mov [esp], edx
 	call _ZNSt8ios_baseD2Ev
 	sub dword [ebp-0x14c], 0x1
-	jz OptimizeShader_70
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_70
 	mov edx, [ebp+0xc]
 	mov [ebp-0x154], edx
 	cmp dword [ebp-0x14c], 0x2
-	jz OptimizeShader_80
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_80
 	mov dword [esp+0x8], 0x8
 	mov edx, [ebp+0x14]
 	mov [esp+0x4], edx
@@ -482,8 +485,8 @@ OptimizeShader_20:
 	mov [esp], eax
 	call _ZNSt19basic_istringstreamIcSt11char_traitsIcESaIcEEC1ERKSsSt13_Ios_Openmode
 	cmp dword [ebp+0x18], 0x2
-	jnz OptimizeShader_90
-OptimizeShader_10:
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_90
+_Z14OptimizeShaderRSsS_RKSsS1_i_10:
 	mov dword [esp+0xc], 0x2
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_s0
@@ -491,7 +494,7 @@ OptimizeShader_10:
 	mov [esp], edx
 	call _ZNKSs4findEPKcmm
 	add eax, 0x1
-	jnz OptimizeShader_90
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_90
 	mov dword [esp+0xc], 0x2
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_s1
@@ -499,7 +502,7 @@ OptimizeShader_10:
 	mov [esp], eax
 	call _ZNKSs4findEPKcmm
 	add eax, 0x1
-	jnz OptimizeShader_90
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_90
 	mov dword [esp+0xc], 0x2
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_s2
@@ -507,10 +510,10 @@ OptimizeShader_10:
 	mov [esp], edx
 	call _ZNKSs4findEPKcmm
 	add eax, 0x1
-	jnz OptimizeShader_90
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_90
 	mov byte [ebp-0x14d], 0x0
-	jmp OptimizeShader_100
-OptimizeShader_50:
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_100
+_Z14OptimizeShaderRSsS_RKSsS1_i_50:
 	mov dword [esp+0xc], 0x22
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_option_arb_preci
@@ -518,32 +521,32 @@ OptimizeShader_50:
 	mov [esp], eax
 	call _ZNKSs4findEPKcmm
 	add eax, 0x1
-	jz OptimizeShader_110
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_110
 	cmp byte [ebp-0x14d], 0x0
-	jz OptimizeShader_110
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_110
 	mov ebx, 0x1
 	cmp dword [ebp-0x158], 0xffffffff
-	jnz OptimizeShader_120
-OptimizeShader_160:
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_120
+_Z14OptimizeShaderRSsS_RKSsS1_i_160:
 	cmp dword [ebp+0x18], 0x2
-	jz OptimizeShader_130
-OptimizeShader_170:
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_130
+_Z14OptimizeShaderRSsS_RKSsS1_i_170:
 	test bl, bl
-	jnz OptimizeShader_140
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_140
 	lea edx, [ebp-0x74]
 	mov [esp+0x4], edx
 	mov eax, [ebp-0x154]
 	mov [esp], eax
 	call _ZNSs6appendERKSs
-	jmp OptimizeShader_140
-OptimizeShader_30:
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_140
+_Z14OptimizeShaderRSsS_RKSsS1_i_30:
 	lea eax, [ebp-0x78]
-	jmp OptimizeShader_150
-OptimizeShader_110:
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_150
+_Z14OptimizeShaderRSsS_RKSsS1_i_110:
 	xor ebx, ebx
 	cmp dword [ebp-0x158], 0xffffffff
-	jz OptimizeShader_160
-OptimizeShader_120:
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_160
+_Z14OptimizeShaderRSsS_RKSsS1_i_120:
 	mov dword [esp+0xc], 0x4
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_lrp_
@@ -551,7 +554,7 @@ OptimizeShader_120:
 	mov [esp], edx
 	call _ZNKSs4findEPKcmm
 	add eax, 0x1
-	jz OptimizeShader_170
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_170
 	mov dword [ebp-0x88], 0x0
 	mov dword [ebp-0x84], 0x0
 	mov dword [ebp-0x80], 0x0
@@ -559,7 +562,7 @@ OptimizeShader_120:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x88]
 	mov [esp], eax
-	call Tokenize
+	call _Z8TokenizeRSt6vectorISsSaISsEEPKc
 	lea eax, [ebp-0x64]
 	mov [esp], eax
 	call _ZNSsC1Ev
@@ -569,22 +572,22 @@ OptimizeShader_120:
 	mov eax, [edi+0x10]
 	mov ecx, [eax-0x4]
 	test ecx, ecx
-	js OptimizeShader_180
+	js _Z14OptimizeShaderRSsS_RKSsS1_i_180
 	mov [esp], edx
 	call _ZNSs12_M_leak_hardEv
 	mov edi, [ebp-0x88]
 	mov eax, [ebx+0x10]
-OptimizeShader_180:
+_Z14OptimizeShaderRSsS_RKSsS1_i_180:
 	cmp byte [eax], 0x2d
-	jnz OptimizeShader_190
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_190
 	lea edx, [edi+0x10]
 	mov eax, [edi+0x10]
 	mov eax, [eax-0x4]
 	test eax, eax
-	js OptimizeShader_200
+	js _Z14OptimizeShaderRSsS_RKSsS1_i_200
 	mov [esp], edx
 	call _ZNSs12_M_leak_hardEv
-OptimizeShader_200:
+_Z14OptimizeShaderRSsS_RKSsS1_i_200:
 	lea eax, [ebp-0x19]
 	mov [esp+0x8], eax
 	mov eax, [edi+0x10]
@@ -599,7 +602,7 @@ OptimizeShader_200:
 	call _ZNSs6assignERKSs
 	mov [esp], ebx
 	call _ZNSsD1Ev
-OptimizeShader_230:
+_Z14OptimizeShaderRSsS_RKSsS1_i_230:
 	mov eax, [ebp-0x88]
 	lea ebx, [eax+0xc]
 	add eax, 0x4
@@ -764,22 +767,22 @@ OptimizeShader_230:
 	mov edi, [ebp-0x88]
 	mov esi, edi
 	cmp ebx, edi
-	jz OptimizeShader_210
-OptimizeShader_220:
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_210
+_Z14OptimizeShaderRSsS_RKSsS1_i_220:
 	mov [esp], esi
 	call _ZNSsD1Ev
 	add esi, 0x4
 	cmp ebx, esi
-	jnz OptimizeShader_220
-OptimizeShader_250:
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_220
+_Z14OptimizeShaderRSsS_RKSsS1_i_250:
 	mov edi, [ebp-0x88]
-OptimizeShader_210:
+_Z14OptimizeShaderRSsS_RKSsS1_i_210:
 	test edi, edi
-	jz OptimizeShader_140
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_140
 	mov [esp], edi
 	call _ZdlPv
-	jmp OptimizeShader_140
-OptimizeShader_190:
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_140
+_Z14OptimizeShaderRSsS_RKSsS1_i_190:
 	lea eax, [edi+0x10]
 	lea ebx, [ebp-0x58]
 	mov [esp+0x8], eax
@@ -793,8 +796,8 @@ OptimizeShader_190:
 	call _ZNSs6assignERKSs
 	mov [esp], ebx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_230
-OptimizeShader_130:
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_230
+_Z14OptimizeShaderRSsS_RKSsS1_i_130:
 	mov dword [esp+0xc], 0x5
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring__3d
@@ -802,7 +805,7 @@ OptimizeShader_130:
 	mov [esp], edx
 	call _ZNKSs4findEPKcmm
 	add eax, 0x1
-	jz OptimizeShader_170
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_170
 	mov dword [ebp-0x88], 0x0
 	mov dword [ebp-0x84], 0x0
 	mov dword [ebp-0x80], 0x0
@@ -810,7 +813,7 @@ OptimizeShader_130:
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x88]
 	mov [esp], eax
-	call Tokenize
+	call _Z8TokenizeRSt6vectorISsSaISsEEPKc
 	mov eax, [ebp-0x88]
 	add eax, 0x4
 	lea esi, [ebp-0x60]
@@ -837,15 +840,15 @@ OptimizeShader_130:
 	mov edi, [ebp-0x88]
 	mov ebx, edi
 	cmp esi, edi
-	jz OptimizeShader_210
-OptimizeShader_240:
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_210
+_Z14OptimizeShaderRSsS_RKSsS1_i_240:
 	mov [esp], ebx
 	call _ZNSsD1Ev
 	add ebx, 0x4
 	cmp esi, ebx
-	jnz OptimizeShader_240
-	jmp OptimizeShader_250
-OptimizeShader_70:
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_240
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_250
+_Z14OptimizeShaderRSsS_RKSsS1_i_70:
 	mov dword [esp+0xc], 0x0
 	mov edx, [ebp+0xc]
 	mov eax, [edx]
@@ -861,7 +864,7 @@ OptimizeShader_70:
 	pop ebp
 	ret
 	mov [ebp-0x15c], eax
-OptimizeShader_260:
+_Z14OptimizeShaderRSsS_RKSsS1_i_260:
 	mov eax, [0xd5cc064]
 	lea edx, [eax+0xc]
 	mov [ebp-0x140], edx
@@ -873,7 +876,7 @@ OptimizeShader_260:
 	lea edx, [ebp-0x114]
 	mov [esp], edx
 	call _ZNSsD1Ev
-OptimizeShader_280:
+_Z14OptimizeShaderRSsS_RKSsS1_i_280:
 	mov eax, [0xd5cc068]
 	add eax, 0x8
 	mov [ebp-0x138], eax
@@ -897,17 +900,17 @@ OptimizeShader_280:
 	mov [esp], eax
 	call _Unwind_Resume
 	mov [ebp-0x15c], eax
-OptimizeShader_270:
+_Z14OptimizeShaderRSsS_RKSsS1_i_270:
 	lea edx, [ebp-0x70]
 	mov [esp], edx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_260
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_260
 	mov [ebp-0x15c], eax
-OptimizeShader_310:
+_Z14OptimizeShaderRSsS_RKSsS1_i_310:
 	lea eax, [ebp-0x74]
 	mov [esp], eax
 	call _ZNSsD1Ev
-	jmp OptimizeShader_270
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_270
 	mov [ebp-0x15c], eax
 	mov eax, [0xd5cc068]
 	add eax, 0x8
@@ -932,169 +935,169 @@ OptimizeShader_310:
 	mov [esp], edx
 	call _Unwind_Resume
 	mov [ebp-0x15c], eax
-	jmp OptimizeShader_280
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_280
 	mov [ebp-0x15c], eax
-OptimizeShader_320:
+_Z14OptimizeShaderRSsS_RKSsS1_i_320:
 	mov esi, [ebp-0x84]
 	mov edi, [ebp-0x88]
 	mov ebx, edi
 	cmp esi, edi
-	jz OptimizeShader_290
-OptimizeShader_300:
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_290
+_Z14OptimizeShaderRSsS_RKSsS1_i_300:
 	mov [esp], ebx
 	call _ZNSsD1Ev
 	add ebx, 0x4
 	cmp esi, ebx
-	jnz OptimizeShader_300
-OptimizeShader_480:
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_300
+_Z14OptimizeShaderRSsS_RKSsS1_i_480:
 	mov edi, [ebp-0x88]
-OptimizeShader_290:
+_Z14OptimizeShaderRSsS_RKSsS1_i_290:
 	test edi, edi
-	jz OptimizeShader_310
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_310
 	mov [esp], edi
 	call _ZdlPv
-	jmp OptimizeShader_310
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_310
 	mov [ebp-0x15c], eax
-OptimizeShader_330:
+_Z14OptimizeShaderRSsS_RKSsS1_i_330:
 	lea eax, [ebp-0x64]
 	mov [esp], eax
 	call _ZNSsD1Ev
-	jmp OptimizeShader_320
-OptimizeShader_460:
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_320
+_Z14OptimizeShaderRSsS_RKSsS1_i_460:
 	mov [ebp-0x15c], eax
 	mov eax, [ebp-0x88]
 	test eax, eax
-	jz OptimizeShader_310
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_310
 	mov [esp], eax
 	call _ZdlPv
-	jmp OptimizeShader_310
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_310
 	mov [ebp-0x15c], eax
 	mov [esp], ebx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_330
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_330
 	mov [ebp-0x15c], eax
-OptimizeShader_340:
+_Z14OptimizeShaderRSsS_RKSsS1_i_340:
 	lea eax, [ebp-0x44]
 	mov [esp], eax
 	call _ZNSsD1Ev
-	jmp OptimizeShader_330
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_330
 	mov [ebp-0x15c], eax
-OptimizeShader_350:
+_Z14OptimizeShaderRSsS_RKSsS1_i_350:
 	lea eax, [ebp-0x48]
 	mov [esp], eax
 	call _ZNSsD1Ev
-	jmp OptimizeShader_340
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_340
 	mov [ebp-0x15c], eax
 	mov [esp], edi
 	call _ZNSsD1Ev
-	jmp OptimizeShader_350
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_350
 	mov [ebp-0x15c], eax
-OptimizeShader_360:
+_Z14OptimizeShaderRSsS_RKSsS1_i_360:
 	mov [esp], edi
 	call _ZNSsD1Ev
-	jmp OptimizeShader_350
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_350
 	mov [ebp-0x15c], eax
-OptimizeShader_370:
+_Z14OptimizeShaderRSsS_RKSsS1_i_370:
 	mov [esp], esi
 	call _ZNSsD1Ev
-	jmp OptimizeShader_360
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_360
 	mov [ebp-0x15c], eax
 	mov [esp], ebx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_370
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_370
 	mov [ebp-0x15c], eax
-OptimizeShader_380:
+_Z14OptimizeShaderRSsS_RKSsS1_i_380:
 	lea eax, [ebp-0x68]
 	mov [esp], eax
 	call _ZNSsD1Ev
-	jmp OptimizeShader_330
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_330
 	mov [ebp-0x15c], eax
-OptimizeShader_390:
+_Z14OptimizeShaderRSsS_RKSsS1_i_390:
 	lea edx, [ebp-0x28]
 	mov [esp], edx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_380
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_380
 	mov [ebp-0x15c], eax
-OptimizeShader_400:
+_Z14OptimizeShaderRSsS_RKSsS1_i_400:
 	lea edx, [ebp-0x2c]
 	mov [esp], edx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_390
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_390
 	mov [ebp-0x15c], eax
 	lea eax, [ebp-0x30]
 	mov [esp], eax
 	call _ZNSsD1Ev
-	jmp OptimizeShader_400
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_400
 	mov [ebp-0x15c], eax
-OptimizeShader_410:
+_Z14OptimizeShaderRSsS_RKSsS1_i_410:
 	lea edx, [ebp-0x30]
 	mov [esp], edx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_400
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_400
 	mov [ebp-0x15c], eax
-OptimizeShader_420:
+_Z14OptimizeShaderRSsS_RKSsS1_i_420:
 	lea edx, [ebp-0x34]
 	mov [esp], edx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_410
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_410
 	mov [ebp-0x15c], eax
 	mov [esp], edi
 	call _ZNSsD1Ev
-	jmp OptimizeShader_420
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_420
 	mov [ebp-0x15c], eax
-OptimizeShader_430:
+_Z14OptimizeShaderRSsS_RKSsS1_i_430:
 	mov [esp], edi
 	call _ZNSsD1Ev
-	jmp OptimizeShader_420
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_420
 	mov [ebp-0x15c], eax
-OptimizeShader_440:
+_Z14OptimizeShaderRSsS_RKSsS1_i_440:
 	mov [esp], esi
 	call _ZNSsD1Ev
-	jmp OptimizeShader_430
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_430
 	mov [ebp-0x15c], eax
 	mov [esp], ebx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_440
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_440
 	mov [ebp-0x15c], eax
-OptimizeShader_450:
+_Z14OptimizeShaderRSsS_RKSsS1_i_450:
 	lea edx, [ebp-0x6c]
 	mov [esp], edx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_380
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_380
 	mov [ebp-0x15c], eax
 	mov [esp], ebx
 	call _ZNSsD1Ev
-	jmp OptimizeShader_450
-	jmp OptimizeShader_460
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_450
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_460
 	mov [ebp-0x15c], eax
-OptimizeShader_490:
+_Z14OptimizeShaderRSsS_RKSsS1_i_490:
 	mov esi, [ebp-0x84]
 	mov edi, [ebp-0x88]
 	mov ebx, edi
 	cmp esi, edi
-	jz OptimizeShader_290
-OptimizeShader_470:
+	jz _Z14OptimizeShaderRSsS_RKSsS1_i_290
+_Z14OptimizeShaderRSsS_RKSsS1_i_470:
 	mov [esp], ebx
 	call _ZNSsD1Ev
 	add ebx, 0x4
 	cmp esi, ebx
-	jnz OptimizeShader_470
-	jmp OptimizeShader_480
+	jnz _Z14OptimizeShaderRSsS_RKSsS1_i_470
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_480
 	mov [ebp-0x15c], eax
 	mov [esp], ebx
 	call _ZNSsD1Ev
-OptimizeShader_500:
+_Z14OptimizeShaderRSsS_RKSsS1_i_500:
 	mov [esp], esi
 	call _ZNSsD1Ev
-	jmp OptimizeShader_490
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_490
 	mov [ebp-0x15c], eax
-	jmp OptimizeShader_500
-	jmp OptimizeShader_460
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_500
+	jmp _Z14OptimizeShaderRSsS_RKSsS1_i_460
 	nop
 
 
 ;D3DXCompileShaderInit()
-D3DXCompileShaderInit:
+_Z21D3DXCompileShaderInitv:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1118,11 +1121,11 @@ D3DXCompileShaderInit:
 	mov [ebp-0x38], edx
 	mov edi, [ebp-0x3c]
 	test edi, edi
-	jz D3DXCompileShaderInit_10
+	jz _Z21D3DXCompileShaderInitv_10
 	lea eax, [ebp-0x3c]
 	mov [ebp-0x170], eax
 	mov edx, eax
-D3DXCompileShaderInit_170:
+_Z21D3DXCompileShaderInitv_170:
 	mov dword [esp+0x4], _cstring_rb
 	mov eax, [edx]
 	mov [esp], eax
@@ -1140,7 +1143,7 @@ D3DXCompileShaderInit_170:
 	mov [esp], edi
 	call rewind
 	mov [esp], ebx
-	call _Znaj
+	call _Znam
 	mov esi, eax
 	lea eax, [eax+ebx]
 	mov [ebp-0x168], eax
@@ -1150,78 +1153,78 @@ D3DXCompileShaderInit_170:
 	mov [esp], esi
 	call fread
 	cmp esi, [ebp-0x168]
-	jae D3DXCompileShaderInit_20
+	jae _Z21D3DXCompileShaderInitv_20
 	mov ebx, esi
 	mov dword [ebp-0x164], 0x0
 	mov esi, 0x1
-D3DXCompileShaderInit_160:
+_Z21D3DXCompileShaderInitv_160:
 	movzx edx, byte [ebx]
 	test dl, dl
-	jz D3DXCompileShaderInit_30
+	jz _Z21D3DXCompileShaderInitv_30
 	cmp dl, 0xa
-	jz D3DXCompileShaderInit_30
+	jz _Z21D3DXCompileShaderInitv_30
 	cmp dl, 0xd
-	jz D3DXCompileShaderInit_40
+	jz _Z21D3DXCompileShaderInitv_40
 	mov eax, 0x1
-D3DXCompileShaderInit_190:
+_Z21D3DXCompileShaderInitv_190:
 	cmp dl, 0x23
-	jz D3DXCompileShaderInit_50
+	jz _Z21D3DXCompileShaderInitv_50
 	test al, al
-	jnz D3DXCompileShaderInit_60
-D3DXCompileShaderInit_50:
+	jnz _Z21D3DXCompileShaderInitv_60
+_Z21D3DXCompileShaderInitv_50:
 	mov ecx, esi
 	test cl, cl
-	jz D3DXCompileShaderInit_70
+	jz _Z21D3DXCompileShaderInitv_70
 	test al, al
-	jz D3DXCompileShaderInit_70
+	jz _Z21D3DXCompileShaderInitv_70
 	lea ecx, [ebp-0x13c]
-D3DXCompileShaderInit_180:
+_Z21D3DXCompileShaderInitv_180:
 	add ebx, 0x1
 	test dl, dl
-	jz D3DXCompileShaderInit_80
-D3DXCompileShaderInit_100:
+	jz _Z21D3DXCompileShaderInitv_80
+_Z21D3DXCompileShaderInitv_100:
 	cmp dl, 0xa
-	jz D3DXCompileShaderInit_80
+	jz _Z21D3DXCompileShaderInitv_80
 	cmp dl, 0xd
-	jz D3DXCompileShaderInit_80
+	jz _Z21D3DXCompileShaderInitv_80
 	cmp dl, 0x23
-	jz D3DXCompileShaderInit_90
+	jz _Z21D3DXCompileShaderInitv_90
 	cmp dl, 0x20
-	jz D3DXCompileShaderInit_90
+	jz _Z21D3DXCompileShaderInitv_90
 	mov [ecx], dl
 	add ecx, 0x1
 	movzx edx, byte [ebx]
 	add ebx, 0x1
 	test dl, dl
-	jnz D3DXCompileShaderInit_100
-D3DXCompileShaderInit_80:
+	jnz _Z21D3DXCompileShaderInitv_100
+_Z21D3DXCompileShaderInitv_80:
 	mov byte [ecx], 0x0
 	movzx edx, byte [ebx]
-D3DXCompileShaderInit_70:
+_Z21D3DXCompileShaderInitv_70:
 	test dl, dl
-	jz D3DXCompileShaderInit_110
-D3DXCompileShaderInit_130:
+	jz _Z21D3DXCompileShaderInitv_110
+_Z21D3DXCompileShaderInitv_130:
 	cmp dl, 0xa
-	jz D3DXCompileShaderInit_120
+	jz _Z21D3DXCompileShaderInitv_120
 	add ebx, 0x1
 	movzx edx, byte [ebx]
 	test dl, dl
-	jnz D3DXCompileShaderInit_130
-D3DXCompileShaderInit_110:
+	jnz _Z21D3DXCompileShaderInitv_130
+_Z21D3DXCompileShaderInitv_110:
 	cmp dl, 0xa
-	jnz D3DXCompileShaderInit_140
-D3DXCompileShaderInit_120:
+	jnz _Z21D3DXCompileShaderInitv_140
+_Z21D3DXCompileShaderInitv_120:
 	add ebx, 0x1
-D3DXCompileShaderInit_140:
+_Z21D3DXCompileShaderInitv_140:
 	movzx eax, al
 	test esi, eax
-	jz D3DXCompileShaderInit_150
+	jz _Z21D3DXCompileShaderInitv_150
 	mov [ebp-0x164], ebx
 	xor esi, esi
-D3DXCompileShaderInit_150:
+_Z21D3DXCompileShaderInitv_150:
 	cmp [ebp-0x168], ebx
-	ja D3DXCompileShaderInit_160
-D3DXCompileShaderInit_20:
+	ja _Z21D3DXCompileShaderInitv_160
+_Z21D3DXCompileShaderInitv_20:
 	mov ecx, [ebp-0x16c]
 	mov [esp], ecx
 	call fclose
@@ -1229,44 +1232,44 @@ D3DXCompileShaderInit_20:
 	mov edi, [ebp-0x170]
 	mov esi, [edi]
 	test esi, esi
-	jz D3DXCompileShaderInit_10
+	jz _Z21D3DXCompileShaderInitv_10
 	mov edx, edi
-	jmp D3DXCompileShaderInit_170
-D3DXCompileShaderInit_90:
+	jmp _Z21D3DXCompileShaderInitv_170
+_Z21D3DXCompileShaderInitv_90:
 	movzx edx, byte [ebx]
-	jmp D3DXCompileShaderInit_180
-D3DXCompileShaderInit_30:
+	jmp _Z21D3DXCompileShaderInitv_180
+_Z21D3DXCompileShaderInitv_30:
 	xor eax, eax
-	jmp D3DXCompileShaderInit_190
-D3DXCompileShaderInit_60:
+	jmp _Z21D3DXCompileShaderInitv_190
+_Z21D3DXCompileShaderInitv_60:
 	mov dword [esp+0x8], 0x3
 	mov eax, [EndToken]
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call strncmp
 	test eax, eax
-	jz D3DXCompileShaderInit_200
-D3DXCompileShaderInit_280:
+	jz _Z21D3DXCompileShaderInitv_200
+_Z21D3DXCompileShaderInitv_280:
 	movzx edx, byte [ebx]
 	test dl, dl
-	jz D3DXCompileShaderInit_210
-D3DXCompileShaderInit_230:
+	jz _Z21D3DXCompileShaderInitv_210
+_Z21D3DXCompileShaderInitv_230:
 	cmp dl, 0xa
-	jz D3DXCompileShaderInit_220
+	jz _Z21D3DXCompileShaderInitv_220
 	add ebx, 0x1
 	movzx edx, byte [ebx]
 	test dl, dl
-	jnz D3DXCompileShaderInit_230
-D3DXCompileShaderInit_210:
+	jnz _Z21D3DXCompileShaderInitv_230
+_Z21D3DXCompileShaderInitv_210:
 	cmp dl, 0xa
-	jnz D3DXCompileShaderInit_150
-D3DXCompileShaderInit_220:
+	jnz _Z21D3DXCompileShaderInitv_150
+_Z21D3DXCompileShaderInitv_220:
 	add ebx, 0x1
-	jmp D3DXCompileShaderInit_150
-D3DXCompileShaderInit_40:
+	jmp _Z21D3DXCompileShaderInitv_150
+_Z21D3DXCompileShaderInitv_40:
 	xor eax, eax
-	jmp D3DXCompileShaderInit_50
-D3DXCompileShaderInit_200:
+	jmp _Z21D3DXCompileShaderInitv_50
+_Z21D3DXCompileShaderInitv_200:
 	lea eax, [ebp-0x19]
 	mov [esp+0x8], eax
 	lea eax, [ebp-0x13c]
@@ -1279,7 +1282,7 @@ D3DXCompileShaderInit_200:
 	call _ZNSt8_Rb_treeISsSt4pairIKSsPKcESt10_Select1stIS4_ESt4lessISsESaIS4_EE11lower_boundERS1_
 	mov [ebp-0x160], eax
 	cmp eax, sPrograms+0x4
-	jz D3DXCompileShaderInit_240
+	jz _Z21D3DXCompileShaderInitv_240
 	mov [ebp-0x150], eax
 	mov edx, eax
 	add edx, 0x10
@@ -1293,9 +1296,9 @@ D3DXCompileShaderInit_200:
 	mov [ebp-0x158], eax
 	mov [ebp-0x20], eax
 	cmp edi, eax
-	jbe D3DXCompileShaderInit_250
+	jbe _Z21D3DXCompileShaderInitv_250
 	lea eax, [ebp-0x20]
-D3DXCompileShaderInit_290:
+_Z21D3DXCompileShaderInitv_290:
 	mov edx, [edx]
 	mov ecx, [eax]
 	cld
@@ -1304,41 +1307,41 @@ D3DXCompileShaderInit_290:
 	mov edi, edx
 	repe cmpsb
 	mov eax, 0x0
-	jz D3DXCompileShaderInit_260
+	jz _Z21D3DXCompileShaderInitv_260
 	movzx eax, byte [esi-0x1]
 	movzx ecx, byte [edi-0x1]
 	sub eax, ecx
-D3DXCompileShaderInit_260:
+_Z21D3DXCompileShaderInitv_260:
 	mov [ebp-0x17c], eax
 	mov ecx, [ebp-0x158]
 	sub [ebp-0x15c], ecx
 	test eax, eax
 	cmovz eax, [ebp-0x15c]
 	test eax, eax
-	js D3DXCompileShaderInit_240
+	js _Z21D3DXCompileShaderInitv_240
 	mov edi, [0xd5cc01c]
 	mov eax, [ebp-0x150]
-D3DXCompileShaderInit_310:
+_Z21D3DXCompileShaderInitv_310:
 	mov edx, [ebp-0x164]
 	mov [eax+0x14], edx
 	mov eax, [ebp-0x24]
 	lea esi, [eax-0xc]
 	cmp esi, edi
-	jnz D3DXCompileShaderInit_270
-D3DXCompileShaderInit_320:
+	jnz _Z21D3DXCompileShaderInitv_270
+_Z21D3DXCompileShaderInitv_320:
 	mov esi, 0x1
-	jmp D3DXCompileShaderInit_280
-D3DXCompileShaderInit_250:
+	jmp _Z21D3DXCompileShaderInitv_280
+_Z21D3DXCompileShaderInitv_250:
 	lea eax, [ebp-0x28]
-	jmp D3DXCompileShaderInit_290
-D3DXCompileShaderInit_10:
+	jmp _Z21D3DXCompileShaderInitv_290
+_Z21D3DXCompileShaderInitv_10:
 	add esp, 0x1ac
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-D3DXCompileShaderInit_240:
+_Z21D3DXCompileShaderInitv_240:
 	lea edi, [ebp-0x24]
 	mov [esp+0x4], edi
 	lea esi, [ebp-0x30]
@@ -1356,89 +1359,89 @@ D3DXCompileShaderInit_240:
 	mov [ebp-0x14c], edx
 	mov edi, [0xd5cc01c]
 	cmp edx, edi
-	jnz D3DXCompileShaderInit_300
-D3DXCompileShaderInit_330:
+	jnz _Z21D3DXCompileShaderInitv_300
+_Z21D3DXCompileShaderInitv_330:
 	mov [ebp-0x150], esi
 	mov eax, esi
-	jmp D3DXCompileShaderInit_310
-D3DXCompileShaderInit_270:
+	jmp _Z21D3DXCompileShaderInitv_310
+_Z21D3DXCompileShaderInitv_270:
 	sub eax, 0x4
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], eax
 	call _ZN9__gnu_cxx18__exchange_and_addEPVii
 	test eax, eax
-	jg D3DXCompileShaderInit_320
+	jg _Z21D3DXCompileShaderInitv_320
 	lea eax, [ebp-0x1b]
 	mov [esp+0x4], eax
 	mov [esp], esi
 	call _ZNSs4_Rep10_M_destroyERKSaIcE
 	mov esi, 0x1
-	jmp D3DXCompileShaderInit_280
-D3DXCompileShaderInit_300:
+	jmp _Z21D3DXCompileShaderInitv_280
+_Z21D3DXCompileShaderInitv_300:
 	sub eax, 0x4
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], eax
 	call _ZN9__gnu_cxx18__exchange_and_addEPVii
 	test eax, eax
-	jg D3DXCompileShaderInit_330
+	jg _Z21D3DXCompileShaderInitv_330
 	lea eax, [ebp-0x1a]
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x14c]
 	mov [esp], ecx
 	call _ZNSs4_Rep10_M_destroyERKSaIcE
-	jmp D3DXCompileShaderInit_330
+	jmp _Z21D3DXCompileShaderInitv_330
 	mov ebx, eax
 	mov eax, [ebp-0x30]
 	lea esi, [eax-0xc]
 	mov edi, [0xd5cc01c]
 	cmp esi, edi
-	jnz D3DXCompileShaderInit_340
-D3DXCompileShaderInit_380:
+	jnz _Z21D3DXCompileShaderInitv_340
+_Z21D3DXCompileShaderInitv_380:
 	mov eax, [ebp-0x24]
 	lea esi, [eax-0xc]
 	cmp esi, edi
-	jnz D3DXCompileShaderInit_350
-D3DXCompileShaderInit_360:
+	jnz _Z21D3DXCompileShaderInitv_350
+_Z21D3DXCompileShaderInitv_360:
 	mov [esp], ebx
 	call _Unwind_Resume
-D3DXCompileShaderInit_370:
+_Z21D3DXCompileShaderInitv_370:
 	mov ebx, eax
-	jmp D3DXCompileShaderInit_360
-	jmp D3DXCompileShaderInit_370
-D3DXCompileShaderInit_390:
+	jmp _Z21D3DXCompileShaderInitv_360
+	jmp _Z21D3DXCompileShaderInitv_370
+_Z21D3DXCompileShaderInitv_390:
 	mov ebx, eax
 	mov edi, [0xd5cc01c]
-	jmp D3DXCompileShaderInit_380
-	jmp D3DXCompileShaderInit_390
-D3DXCompileShaderInit_350:
+	jmp _Z21D3DXCompileShaderInitv_380
+	jmp _Z21D3DXCompileShaderInitv_390
+_Z21D3DXCompileShaderInitv_350:
 	sub eax, 0x4
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], eax
 	call _ZN9__gnu_cxx18__exchange_and_addEPVii
 	test eax, eax
-	jg D3DXCompileShaderInit_360
+	jg _Z21D3DXCompileShaderInitv_360
 	lea eax, [ebp-0x1b]
 	mov [esp+0x4], eax
 	mov [esp], esi
 	call _ZNSs4_Rep10_M_destroyERKSaIcE
-	jmp D3DXCompileShaderInit_360
-D3DXCompileShaderInit_340:
+	jmp _Z21D3DXCompileShaderInitv_360
+_Z21D3DXCompileShaderInitv_340:
 	sub eax, 0x4
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], eax
 	call _ZN9__gnu_cxx18__exchange_and_addEPVii
 	test eax, eax
-	jg D3DXCompileShaderInit_380
+	jg _Z21D3DXCompileShaderInitv_380
 	lea eax, [ebp-0x1a]
 	mov [esp+0x4], eax
 	mov [esp], esi
 	call _ZNSs4_Rep10_M_destroyERKSaIcE
-	jmp D3DXCompileShaderInit_380
+	jmp _Z21D3DXCompileShaderInitv_380
 	nop
 
 
 ;Tokenize(std::vector<std::string, std::allocator<std::string> >&, char const*)
-Tokenize:
+_Z8TokenizeRSt6vectorISsSaISsEEPKc:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -1465,7 +1468,7 @@ Tokenize:
 	call strtok
 	mov edx, eax
 	test eax, eax
-	jz Tokenize_10
+	jz _Z8TokenizeRSt6vectorISsSaISsEEPKc_10
 	lea eax, [ebp-0x1c]
 	mov [esp+0x8], eax
 	mov [esp+0x4], edx
@@ -1474,45 +1477,45 @@ Tokenize:
 	call _ZNSsC1EPKcRKSaIcE
 	mov eax, [esi+0x4]
 	cmp eax, [esi+0x8]
-	jz Tokenize_20
+	jz _Z8TokenizeRSt6vectorISsSaISsEEPKc_20
 	test eax, eax
-	jz Tokenize_30
+	jz _Z8TokenizeRSt6vectorISsSaISsEEPKc_30
 	mov [esp+0x4], ebx
 	mov [esp], eax
 	call _ZNSsC1ERKSs
 	mov eax, [esi+0x4]
-Tokenize_30:
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_30:
 	add eax, 0x4
 	mov [esi+0x4], eax
-Tokenize_90:
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_90:
 	mov ebx, [ebp-0x20]
 	sub ebx, 0xc
 	mov edi, [0xd5cc01c]
 	cmp ebx, edi
-	jz Tokenize_40
-	jmp Tokenize_50
-Tokenize_80:
+	jz _Z8TokenizeRSt6vectorISsSaISsEEPKc_40
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_50
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_80:
 	test eax, eax
-	jz Tokenize_60
+	jz _Z8TokenizeRSt6vectorISsSaISsEEPKc_60
 	mov [esp+0x4], ebx
 	mov [esp], eax
 	call _ZNSsC1ERKSs
 	mov eax, [esi+0x4]
-Tokenize_60:
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_60:
 	add eax, 0x4
 	mov [esi+0x4], eax
 	mov eax, [ebp-0x28]
 	lea ebx, [eax-0xc]
 	cmp edi, ebx
-	jnz Tokenize_70
-Tokenize_40:
+	jnz _Z8TokenizeRSt6vectorISsSaISsEEPKc_70
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_40:
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x0
 	call strtok
 	mov edx, eax
 	test eax, eax
-	jz Tokenize_10
+	jz _Z8TokenizeRSt6vectorISsSaISsEEPKc_10
 	lea eax, [ebp-0x1b]
 	mov [esp+0x8], eax
 	mov [esp+0x4], edx
@@ -1521,7 +1524,7 @@ Tokenize_40:
 	call _ZNSsC1EPKcRKSaIcE
 	mov eax, [esi+0x4]
 	cmp eax, [esi+0x8]
-	jnz Tokenize_80
+	jnz _Z8TokenizeRSt6vectorISsSaISsEEPKc_80
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
 	mov [esp], esi
@@ -1529,20 +1532,20 @@ Tokenize_40:
 	mov eax, [ebp-0x28]
 	lea ebx, [eax-0xc]
 	cmp edi, ebx
-	jz Tokenize_40
-Tokenize_70:
+	jz _Z8TokenizeRSt6vectorISsSaISsEEPKc_40
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_70:
 	sub eax, 0x4
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], eax
 	call _ZN9__gnu_cxx18__exchange_and_addEPVii
 	test eax, eax
-	jg Tokenize_40
+	jg _Z8TokenizeRSt6vectorISsSaISsEEPKc_40
 	lea eax, [ebp-0x19]
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call _ZNSs4_Rep10_M_destroyERKSaIcE
-	jmp Tokenize_40
-Tokenize_10:
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_40
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_10:
 	mov eax, [esi+0x4]
 	sub eax, [esi]
 	sar eax, 0x2
@@ -1552,67 +1555,67 @@ Tokenize_10:
 	pop edi
 	pop ebp
 	ret
-Tokenize_20:
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_20:
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
 	mov [esp], esi
 	call _ZNSt6vectorISsSaISsEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPSsS1_EERKSs
-	jmp Tokenize_90
-Tokenize_50:
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_90
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_50:
 	lea eax, [ebx+0x8]
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], eax
 	call _ZN9__gnu_cxx18__exchange_and_addEPVii
 	test eax, eax
-	jg Tokenize_40
+	jg _Z8TokenizeRSt6vectorISsSaISsEEPKc_40
 	lea eax, [ebp-0x1a]
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call _ZNSs4_Rep10_M_destroyERKSaIcE
-	jmp Tokenize_40
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_40
 	mov ebx, eax
 	mov eax, [ebp-0x20]
 	lea esi, [eax-0xc]
 	cmp esi, [0xd5cc01c]
-	jnz Tokenize_100
-Tokenize_110:
+	jnz _Z8TokenizeRSt6vectorISsSaISsEEPKc_100
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_110:
 	mov [esp], ebx
 	call _Unwind_Resume
-Tokenize_120:
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_120:
 	mov ebx, eax
-	jmp Tokenize_110
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_110
 	mov ebx, eax
 	mov eax, [ebp-0x28]
 	lea esi, [eax-0xc]
 	cmp edi, esi
-	jz Tokenize_110
+	jz _Z8TokenizeRSt6vectorISsSaISsEEPKc_110
 	sub eax, 0x4
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], eax
 	call _ZN9__gnu_cxx18__exchange_and_addEPVii
 	test eax, eax
-	jg Tokenize_110
+	jg _Z8TokenizeRSt6vectorISsSaISsEEPKc_110
 	lea eax, [ebp-0x19]
 	mov [esp+0x4], eax
 	mov [esp], esi
 	call _ZNSs4_Rep10_M_destroyERKSaIcE
-	jmp Tokenize_110
-Tokenize_100:
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_110
+_Z8TokenizeRSt6vectorISsSaISsEEPKc_100:
 	sub eax, 0x4
 	mov dword [esp+0x4], 0xffffffff
 	mov [esp], eax
 	call _ZN9__gnu_cxx18__exchange_and_addEPVii
 	test eax, eax
-	jg Tokenize_110
+	jg _Z8TokenizeRSt6vectorISsSaISsEEPKc_110
 	lea eax, [ebp-0x1a]
 	mov [esp+0x4], eax
 	mov [esp], esi
 	call _ZNSs4_Rep10_M_destroyERKSaIcE
-	jmp Tokenize_110
-	jmp Tokenize_120
-	jmp Tokenize_120
-	jmp Tokenize_120
-	jmp Tokenize_120
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_110
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_120
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_120
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_120
+	jmp _Z8TokenizeRSt6vectorISsSaISsEEPKc_120
 	nop
 
 
@@ -3102,8 +3105,12 @@ EndToken: dd _cstring_end, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of D3DXShader:
 SECTION .rdata
+;VTypeInfoTable for CD3DXBuffer:
+_ZTI11CD3DXBuffer: dd 0x8, _cstring_11cd3dxbuffer, _ZTI11ID3DXBuffer, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for ID3DXBuffer:
+_ZTI11ID3DXBuffer: dd 0x8, _cstring_11id3dxbuffer, _ZTI8IUnknown, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for CD3DXBuffer:
-_ZTV11CD3DXBuffer: dd 0x0, 0x3b4d60, _ZN11CD3DXBuffer14QueryInterfaceERK5_GUIDPPv, _ZN11CD3DXBuffer6AddRefEv, _ZN11CD3DXBuffer7ReleaseEv, _ZN11CD3DXBuffer16GetBufferPointerEv, _ZN11CD3DXBuffer13GetBufferSizeEv, _ZN11CD3DXBufferD1Ev, _ZN11CD3DXBufferD0Ev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+_ZTV11CD3DXBuffer: dd 0x0, _ZTI11CD3DXBuffer, _ZN11CD3DXBuffer14QueryInterfaceERK5_GUIDPPv, _ZN11CD3DXBuffer6AddRefEv, _ZN11CD3DXBuffer7ReleaseEv, _ZN11CD3DXBuffer16GetBufferPointerEv, _ZN11CD3DXBuffer13GetBufferSizeEv, _ZN11CD3DXBufferD1Ev, _ZN11CD3DXBufferD0Ev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of D3DXShader:
@@ -3136,6 +3143,8 @@ _cstring_rb:		db "rb",0
 _cstring__1:		db " ,",09h,0
 _cstring_vector_m_insert_:		db "vector::_M_insert_aux",0
 _cstring_end:		db "END",0
+_cstring_11cd3dxbuffer:		db "11CD3DXBuffer",0
+_cstring_11id3dxbuffer:		db "11ID3DXBuffer",0
 
 
 

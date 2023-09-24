@@ -1,15 +1,17 @@
 ;Imports of collision_space:
 	extern Phys_NearCallback
 	extern _ZN6dxGeomC2EP7dxSpaceiP6dxBody
+	extern _ZTV6dxGeom
 	extern dFree
 	extern ODE_GeomDestruct
 	extern _Unwind_Resume
 	extern dSetZero
 	extern odeGlob
+	extern _ZTI6dxGeom
 	extern _ZN6dxGeom8AABBTestEPS_Pf
 
 ;Exports of collision_space:
-	global collideAABBs
+	global _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E
 	global ODE_CollideSimpleSpaceWithGeomNoAABBTest
 	global _ZN13dxSimpleSpace10cleanGeomsEv
 	global _ZN13dxSimpleSpace7collideEPvPFvS0_P6dxGeomS2_E
@@ -25,6 +27,8 @@
 	global _ZN7dxSpace7getGeomEi
 	global _ZN7dxSpaceD0Ev
 	global _ZN7dxSpaceD1Ev
+	global _ZTI13dxSimpleSpace
+	global _ZTI7dxSpace
 	global dGeomMoved
 	global dGetSimpleSpace
 	global dSpaceAdd
@@ -40,7 +44,7 @@ SECTION .text
 
 
 ;collideAABBs(dxGeom*, dxGeom*, void*, void (*)(void*, dxGeom*, dxGeom*))
-collideAABBs:
+_Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -52,69 +56,69 @@ collideAABBs:
 	mov [ebp-0x1c], ecx
 	mov eax, [eax+0x10]
 	cmp eax, [edx+0x10]
-	jz collideAABBs_10
+	jz _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10
 	mov eax, [ebx+0x44]
 	test [edx+0x48], eax
-	jz collideAABBs_20
-collideAABBs_40:
+	jz _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_20
+_Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_40:
 	lea edi, [ebx+0x2c]
 	lea edx, [esi+0x2c]
 	movss xmm0, dword [ebx+0x2c]
 	ucomiss xmm0, [edx+0x4]
-	ja collideAABBs_10
+	ja _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10
 	movss xmm0, dword [esi+0x2c]
 	ucomiss xmm0, [edi+0x4]
-	ja collideAABBs_10
+	ja _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10
 	movss xmm0, dword [edi+0x8]
 	ucomiss xmm0, [edx+0xc]
-	ja collideAABBs_10
+	ja _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10
 	movss xmm0, dword [edx+0x8]
 	ucomiss xmm0, [edi+0xc]
-	ja collideAABBs_10
+	ja _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10
 	movss xmm0, dword [edi+0x10]
 	ucomiss xmm0, [edx+0x14]
-	ja collideAABBs_10
+	ja _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10
 	movss xmm0, dword [edx+0x10]
 	ucomiss xmm0, [edi+0x14]
-	jbe collideAABBs_30
-collideAABBs_10:
+	jbe _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_30
+_Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10:
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-collideAABBs_20:
+_Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_20:
 	mov eax, [edx+0x44]
 	test [ebx+0x48], eax
-	jnz collideAABBs_40
+	jnz _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_40
 	add esp, 0x2c
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-collideAABBs_30:
+_Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_30:
 	mov eax, [ebx]
 	mov [esp+0x8], edx
 	mov [esp+0x4], esi
 	mov [esp], ebx
 	call dword [eax+0xc]
 	test eax, eax
-	jz collideAABBs_10
+	jz _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10
 	mov eax, [esi]
 	mov [esp+0x8], edi
 	mov [esp+0x4], ebx
 	mov [esp], esi
 	call dword [eax+0xc]
 	test eax, eax
-	jz collideAABBs_10
+	jz _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10
 	mov [esp+0x8], esi
 	mov [esp+0x4], ebx
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
 	call dword [ebp+0x8]
-	jmp collideAABBs_10
+	jmp _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E_10
 	nop
 
 
@@ -287,7 +291,7 @@ _ZN13dxSimpleSpace7collideEPvPFvS0_P6dxGeomS2_E_50:
 	mov ecx, [ebp+0xc]
 	mov edx, ebx
 	mov eax, esi
-	call collideAABBs
+	call _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E
 	mov ebx, [ebx+0x20]
 	test ebx, ebx
 	jnz _ZN13dxSimpleSpace7collideEPvPFvS0_P6dxGeomS2_E_50
@@ -322,7 +326,7 @@ _ZN13dxSimpleSpace7collideEPvPFvS0_P6dxGeomS2_E_100:
 	mov ecx, [ebp+0xc]
 	mov edx, ebx
 	mov eax, esi
-	call collideAABBs
+	call _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E
 _ZN13dxSimpleSpace7collideEPvPFvS0_P6dxGeomS2_E_110:
 	mov ebx, [ebx+0x20]
 	test ebx, ebx
@@ -370,7 +374,7 @@ _ZN13dxSimpleSpace8collide2EPvP6dxGeomPFvS0_S2_S2_E_40:
 	mov ecx, [ebp+0xc]
 	mov edx, edi
 	mov eax, ebx
-	call collideAABBs
+	call _Z12collideAABBsP6dxGeomS0_PvPFvS1_S0_S0_E
 	mov ebx, [ebx+0x20]
 	test ebx, ebx
 	jnz _ZN13dxSimpleSpace8collide2EPvP6dxGeomPFvS0_S2_S2_E_20
@@ -434,7 +438,7 @@ _ZN13dxSimpleSpaceD0Ev:
 	mov eax, [esi+0x50]
 	test eax, eax
 	jnz _ZN13dxSimpleSpaceD0Ev_20
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	mov dword [esp+0x4], 0x64
@@ -453,7 +457,7 @@ _ZN13dxSimpleSpaceD0Ev_20:
 	call ODE_GeomDestruct
 	test ebx, ebx
 	jnz _ZN13dxSimpleSpaceD0Ev_30
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	mov dword [esp+0x4], 0x64
@@ -468,7 +472,7 @@ _ZN13dxSimpleSpaceD0Ev_10:
 	mov edx, [esi+0x50]
 	test edx, edx
 	jnz _ZN13dxSimpleSpaceD0Ev_40
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	mov dword [esp+0x4], 0x64
@@ -489,7 +493,7 @@ _ZN13dxSimpleSpaceD0Ev_40:
 	call dword [eax+0x18]
 	test ebx, ebx
 	jnz _ZN13dxSimpleSpaceD0Ev_50
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	mov dword [esp+0x4], 0x64
@@ -500,7 +504,7 @@ _ZN13dxSimpleSpaceD0Ev_40:
 	pop esi
 	pop ebp
 	ret
-	mov edx, [0xd5ccae8]
+	mov edx, _ZTV6dxGeom
 	add edx, 0x8
 	mov [esi], edx
 	mov [esp], eax
@@ -523,7 +527,7 @@ _ZN13dxSimpleSpaceD1Ev:
 	mov eax, [esi+0x50]
 	test eax, eax
 	jnz _ZN13dxSimpleSpaceD1Ev_20
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	add esp, 0x10
@@ -539,7 +543,7 @@ _ZN13dxSimpleSpaceD1Ev_20:
 	call ODE_GeomDestruct
 	test ebx, ebx
 	jnz _ZN13dxSimpleSpaceD1Ev_30
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	add esp, 0x10
@@ -551,7 +555,7 @@ _ZN13dxSimpleSpaceD1Ev_10:
 	mov edx, [esi+0x50]
 	test edx, edx
 	jnz _ZN13dxSimpleSpaceD1Ev_40
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	add esp, 0x10
@@ -569,7 +573,7 @@ _ZN13dxSimpleSpaceD1Ev_40:
 	call dword [eax+0x18]
 	test ebx, ebx
 	jnz _ZN13dxSimpleSpaceD1Ev_50
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	add esp, 0x10
@@ -577,7 +581,7 @@ _ZN13dxSimpleSpaceD1Ev_40:
 	pop esi
 	pop ebp
 	ret
-	mov edx, [0xd5ccae8]
+	mov edx, _ZTV6dxGeom
 	add edx, 0x8
 	mov [esi], edx
 	mov [esp], eax
@@ -972,7 +976,7 @@ _ZN7dxSpaceD0Ev:
 	mov eax, [esi+0x50]
 	test eax, eax
 	jnz _ZN7dxSpaceD0Ev_20
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	mov dword [esp+0x4], 0x64
@@ -991,7 +995,7 @@ _ZN7dxSpaceD0Ev_20:
 	call ODE_GeomDestruct
 	test ebx, ebx
 	jnz _ZN7dxSpaceD0Ev_30
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	mov dword [esp+0x4], 0x64
@@ -1006,7 +1010,7 @@ _ZN7dxSpaceD0Ev_10:
 	mov edx, [esi+0x50]
 	test edx, edx
 	jnz _ZN7dxSpaceD0Ev_40
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	mov dword [esp+0x4], 0x64
@@ -1027,7 +1031,7 @@ _ZN7dxSpaceD0Ev_40:
 	call dword [eax+0x18]
 	test ebx, ebx
 	jnz _ZN7dxSpaceD0Ev_50
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	mov dword [esp+0x4], 0x64
@@ -1038,7 +1042,7 @@ _ZN7dxSpaceD0Ev_40:
 	pop esi
 	pop ebp
 	ret
-	mov edx, [0xd5ccae8]
+	mov edx, _ZTV6dxGeom
 	add edx, 0x8
 	mov [esi], edx
 	mov [esp], eax
@@ -1061,7 +1065,7 @@ _ZN7dxSpaceD1Ev:
 	mov eax, [esi+0x50]
 	test eax, eax
 	jnz _ZN7dxSpaceD1Ev_20
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	add esp, 0x10
@@ -1077,7 +1081,7 @@ _ZN7dxSpaceD1Ev_20:
 	call ODE_GeomDestruct
 	test ebx, ebx
 	jnz _ZN7dxSpaceD1Ev_30
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	add esp, 0x10
@@ -1089,7 +1093,7 @@ _ZN7dxSpaceD1Ev_10:
 	mov edx, [esi+0x50]
 	test edx, edx
 	jnz _ZN7dxSpaceD1Ev_40
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	add esp, 0x10
@@ -1107,7 +1111,7 @@ _ZN7dxSpaceD1Ev_40:
 	call dword [eax+0x18]
 	test ebx, ebx
 	jnz _ZN7dxSpaceD1Ev_50
-	mov eax, [0xd5ccae8]
+	mov eax, _ZTV6dxGeom
 	add eax, 0x8
 	mov [esi], eax
 	add esp, 0x10
@@ -1115,7 +1119,7 @@ _ZN7dxSpaceD1Ev_40:
 	pop esi
 	pop ebp
 	ret
-	mov edx, [0xd5ccae8]
+	mov edx, _ZTV6dxGeom
 	add edx, 0x8
 	mov [esi], edx
 	mov [esp], eax
@@ -1428,10 +1432,14 @@ SECTION .data
 
 ;Initialized constant data of collision_space:
 SECTION .rdata
+;VTypeInfoTable for dxSimpleSpace:
+_ZTI13dxSimpleSpace: dd 0x8, _cstring_13dxsimplespace, _ZTI7dxSpace, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for dxSpace:
+_ZTI7dxSpace: dd 0x8, _cstring_7dxspace, _ZTI6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for dxSimpleSpace:
-_ZTV13dxSimpleSpace: dd 0x0, 0x3b4e40, _ZN13dxSimpleSpaceD1Ev, _ZN13dxSimpleSpaceD0Ev, _ZN7dxSpace11computeAABBEv, _ZN6dxGeom8AABBTestEPS_Pf, _ZN7dxSpace7getGeomEi, _ZN7dxSpace3addEP6dxGeom, _ZN7dxSpace6removeEP6dxGeom, _ZN7dxSpace5dirtyEP6dxGeom, _ZN13dxSimpleSpace10cleanGeomsEv, _ZN13dxSimpleSpace7collideEPvPFvS0_P6dxGeomS2_E, _ZN13dxSimpleSpace8collide2EPvP6dxGeomPFvS0_S2_S2_E, 0x0
+_ZTV13dxSimpleSpace: dd 0x0, _ZTI13dxSimpleSpace, _ZN13dxSimpleSpaceD1Ev, _ZN13dxSimpleSpaceD0Ev, _ZN7dxSpace11computeAABBEv, _ZN6dxGeom8AABBTestEPS_Pf, _ZN7dxSpace7getGeomEi, _ZN7dxSpace3addEP6dxGeom, _ZN7dxSpace6removeEP6dxGeom, _ZN7dxSpace5dirtyEP6dxGeom, _ZN13dxSimpleSpace10cleanGeomsEv, _ZN13dxSimpleSpace7collideEPvPFvS0_P6dxGeomS2_E, _ZN13dxSimpleSpace8collide2EPvP6dxGeomPFvS0_S2_S2_E, 0x0
 ;VTable for dxSpace:
-_ZTV7dxSpace: dd 0x0, 0x3b4e20, _ZN7dxSpaceD1Ev, _ZN7dxSpaceD0Ev, _ZN7dxSpace11computeAABBEv, _ZN6dxGeom8AABBTestEPS_Pf, _ZN7dxSpace7getGeomEi, _ZN7dxSpace3addEP6dxGeom, _ZN7dxSpace6removeEP6dxGeom, _ZN7dxSpace5dirtyEP6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+_ZTV7dxSpace: dd 0x0, _ZTI7dxSpace, _ZN7dxSpaceD1Ev, _ZN7dxSpaceD0Ev, _ZN7dxSpace11computeAABBEv, _ZN6dxGeom8AABBTestEPS_Pf, _ZN7dxSpace7getGeomEi, _ZN7dxSpace3addEP6dxGeom, _ZN7dxSpace6removeEP6dxGeom, _ZN7dxSpace5dirtyEP6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of collision_space:
@@ -1440,6 +1448,8 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
+_cstring_13dxsimplespace:		db "13dxSimpleSpace",0
+_cstring_7dxspace:		db "7dxSpace",0
 
 
 

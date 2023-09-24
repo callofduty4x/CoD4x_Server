@@ -126,6 +126,8 @@
 	global _ZNSt6vectorIN7COpenGL8CTexUnitESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EES7_
 	global _ZNSt6vectorIP14COpenGLTextureSaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_
 	global _ZNSt6vectorIP14COpenGLTextureSaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EES7_
+	global _ZTI20COpenGLVertexProgram
+	global _ZTI7COpenGL
 	global _ZN7COpenGL7sOpenGLE
 	global _ZN7COpenGL11sFrameCountE
 	global _ZTV20COpenGLVertexProgram
@@ -142,22 +144,22 @@ _GLOBAL__I__ZNSt3tr177_GLOBAL__N__AspyrBuild_depot_CoD4_Mac_DirectX_9_COpenGL.cp
 	mov edx, 0xffff
 	mov eax, 0x1
 	pop ebp
-	jmp __static_initialization_and_destruction_0
+	jmp _Z41__static_initialization_and_destruction_0ii
 
 
 ;__static_initialization_and_destruction_0(int, int)
-__static_initialization_and_destruction_0:
+_Z41__static_initialization_and_destruction_0ii:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	cmp edx, 0xffff
-	jz __static_initialization_and_destruction_0_10
-__static_initialization_and_destruction_0_20:
+	jz _Z41__static_initialization_and_destruction_0ii_10
+_Z41__static_initialization_and_destruction_0ii_20:
 	leave
 	ret
-__static_initialization_and_destruction_0_10:
+_Z41__static_initialization_and_destruction_0ii_10:
 	sub eax, 0x1
-	jnz __static_initialization_and_destruction_0_20
+	jnz _Z41__static_initialization_and_destruction_0ii_20
 	mov dword [esp], _ZN7COpenGL7sOpenGLE
 	call _ZN7COpenGLC1Ev
 	mov eax, [0xd5cc00c]
@@ -4008,10 +4010,14 @@ _ZN7COpenGL11sFrameCountE: dd 0x0
 
 ;Initialized constant data of COpenGL:
 SECTION .rdata
+;VTypeInfoTable for COpenGLVertexProgram:
+_ZTI20COpenGLVertexProgram: dd 0x8, _cstring_20copenglvertexp, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTypeInfoTable for COpenGL:
+_ZTI7COpenGL: dd 0x8, _cstring_7copengl, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 ;VTable for COpenGLVertexProgram:
-_ZTV20COpenGLVertexProgram: dd 0x0, 0x3b4be0, _ZN20COpenGLVertexProgramD1Ev, _ZN20COpenGLVertexProgramD0Ev
+_ZTV20COpenGLVertexProgram: dd 0x0, _ZTI20COpenGLVertexProgram, _ZN20COpenGLVertexProgramD1Ev, _ZN20COpenGLVertexProgramD0Ev
 ;VTable for COpenGL:
-_ZTV7COpenGL: dd 0x0, 0x3b4c00, _ZN7COpenGLD1Ev, _ZN7COpenGLD0Ev
+_ZTV7COpenGL: dd 0x0, _ZTI7COpenGL, _ZN7COpenGLD1Ev, _ZN7COpenGLD0Ev
 
 
 ;Zero initialized global or static variables of COpenGL:
@@ -4030,6 +4036,8 @@ _cstring_gl_ext_blend_fun:		db "GL_EXT_blend_func_separate",0
 _cstring_gl_ext_stencil_w:		db "GL_EXT_stencil_wrap",0
 _cstring_gl_ext_texture_l:		db "GL_EXT_texture_lod_bias",0
 _cstring_vector_m_insert_:		db "vector::_M_insert_aux",0
+_cstring_20copenglvertexp:		db "20COpenGLVertexProgram",0
+_cstring_7copengl:		db "7COpenGL",0
 
 
 
