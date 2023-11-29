@@ -37,6 +37,7 @@ extern "C"
 
 void Scr_AddBotsMovement();
 qboolean shouldSpamUseButton(gentity_t *bot);
+void Bot_SetBotWeapon(int, unsigned int);
 
 
 #ifdef __cplusplus

@@ -53,6 +53,7 @@
 	extern G_FireRocket
 	extern G_AntiLagRewindClientPos
 	extern G_AntiLag_RestoreClientPos
+	extern Bot_SetBotWeapon
 
 ;Exports of g_weapon:
 	global _ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets
@@ -1090,6 +1091,11 @@ G_SelectWeaponIndex:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
 	call SV_GameSendServerCommand
+	mov eax, [ebp+0xc]
+	push eax
+	mov eax, [ebp+0x8]
+	push eax
+	call Bot_SetBotWeapon
 	leave
 	ret
 

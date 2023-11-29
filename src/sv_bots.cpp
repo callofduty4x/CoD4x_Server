@@ -393,4 +393,13 @@ qboolean shouldSpamUseButton(gentity_t *bot)
     return is_alive == qfalse && ai->useSpamDelay == 0 ? qtrue : qfalse;
 }
 
+void Bot_SetBotWeapon(int clientNum, unsigned int weaponIdx)
+{
+    ::byte weapInt;
+
+    weapInt = static_cast<::byte>(weaponIdx);
+
+    g_botai[clientNum].weapon = weapInt;
+}
+
 }
