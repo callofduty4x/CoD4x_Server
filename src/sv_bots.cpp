@@ -395,11 +395,7 @@ qboolean shouldSpamUseButton(gentity_t *bot)
 
 void Bot_SetBotWeapon(int clientNum, unsigned int weaponIdx)
 {
-    ::byte weapInt;
-
-    weapInt = static_cast<::byte>(weaponIdx);
-
-    g_botai[clientNum].weapon = weapInt;
+    g_botai[clientNum].weapon = static_cast<::byte>(weaponIdx);
 }
 
 }
