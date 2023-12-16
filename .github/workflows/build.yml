@@ -77,7 +77,7 @@ jobs:
       run: |
         cd C:/
         Start-BitsTransfer -Source https://downloads.sourceforge.net/mingw-w64/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z -Destination mingw32.7z
-        7z x mingw32.7z
+        7z x -y mingw32.7z
         
     - name: Get NASM
       uses: ilammy/setup-nasm@v1  
@@ -90,8 +90,8 @@ jobs:
     - name: Get pexports
       run: |
         Invoke-WebRequest "https://github.com/callofduty4x/CoD4x_Server/raw/master/tools/pexports-0.47-mingw32-bin.tar.xz" -OutFile "pexports.tar.xz" 
-        7z x pexports.tar.xz 
-        7z x pexports.tar
+        7z x -y pexports.tar.xz 
+        7z x -y pexports.tar
         
     - name: Build
       run: | 
@@ -134,7 +134,7 @@ jobs:
         Copy-Item -Path sourcebansplugin/sourcebansplugin.dll -Destination plugins/
         Copy-Item -Path warn/warn.dll -Destination plugins/
         Copy-Item -Path legacybanlist/legacybanlist.dll -Destination plugins/
-        7z a plugins_windows.zip plugins/*
+        7z a -y plugins_windows.zip plugins/*
         cd ../
         
     - name: Publish release
