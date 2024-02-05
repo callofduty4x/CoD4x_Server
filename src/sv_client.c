@@ -2584,6 +2584,7 @@ void SV_ExecuteClientCommand( client_t *cl, const char *s, qboolean clientOK, qb
 		if ( !strcmp( SV_Cmd_Argv( 0 ), u->name ) ) {
 
 			if(!inDl || u->indlcmd){
+                PHandler_Event(PLUGINS_ONCLIENTCOMMAND, cl, s);
 				u->func( cl );
 			}
 			SV_Cmd_EndTokenizedString( );

@@ -49,6 +49,7 @@
 	PCL void OnClientSpawn(gentity_t* ent);
 	PCL void OnClientEnterWorld(client_t* client);
 	PCL void OnClientUserinfoChanged(client_t* client);
+	PCL void OnClientCommand(client_t* client, const char* command);
 	PCL void OnClientMoveCommand(client_t* client, usercmd_t* ucmd);
 	PCL void OnPlayerKilled(gentity_t* self, gentity_t* inflictor, gentity_t* attacker, int damage, int meansOfDeath, int iWeapon, hitLocation_t hitLocation);
 	PCL void OnPlayerWantReservedSlot(netadr_t* from, char* pbguid, char* userinfo, int authstate, qboolean *isallowed);
