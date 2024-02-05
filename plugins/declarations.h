@@ -965,11 +965,15 @@ typedef struct {//(0x2146c);
     int var_03;
 } clientSnapshot_t; //size: 0x2f84
 
+#pragma pack()
+
 typedef struct {
     char num;
     char data[256];
     int dataLen;
 } voices_t;
+
+#pragma pack(1)
 
 typedef struct {
     int checksum;
@@ -1143,6 +1147,8 @@ typedef struct client_s
 	byte			gamestateSent;
 	byte			hasValidPassword;
 	statData_t		stats;
+	int				localization; // loc_language
+	qboolean		lockedout;
 }client_t;
 
 
