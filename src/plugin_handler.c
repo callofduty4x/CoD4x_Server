@@ -65,6 +65,7 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnPreGameRestart",
     "OnPostGameRestart",
     "OnClientUserinfoChanged",
+    "OnClientCommand",
     "OnClientMoveCommand",
     "OnPlayerKilled",
     "OnPlayerWantReservedSlot",
