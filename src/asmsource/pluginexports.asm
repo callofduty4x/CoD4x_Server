@@ -125,6 +125,7 @@ pexport NET_CompareAdr
 ralias Plugin_Milliseconds, Sys_Milliseconds
 ralias Plugin_SleepSec, Sys_SleepSec
 ralias Plugin_SleepMSec, Sys_SleepMSec
+ralias Plugin_IsLANAddress, Sys_IsLANAddress
 
 pexport Scr_AddEntity
 pexport Scr_AllocArray

@@ -154,6 +154,8 @@
     __cdecl qboolean Plugin_NET_CompareAdr (netadr_t *a, netadr_t *b);
     __cdecl qboolean Plugin_NET_CompareBaseAdrMask(netadr_t *a, netadr_t *b, int netmask);
     __cdecl qboolean Plugin_NET_CompareBaseAdr (netadr_t *a, netadr_t *b);
+    
+    __cdecl qboolean Plugin_IsLANAddress(netadr_t *a);
 
     /* Do not use anymore */
 //    __cdecl const char *Plugin_NET_AdrToString (netadr_t *a);
