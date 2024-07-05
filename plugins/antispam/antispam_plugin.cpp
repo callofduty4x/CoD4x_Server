@@ -101,9 +101,9 @@ hence inheriting any legal licenses that it's parent has.
 #include <functional>
 
 
-int ANTISPAM_MAXMESSAGES = 0;
-int bindlimit = 5;
-int chatbanDuration = 0;
+int antispam_maxMessagesPerMinute = 0;
+int antispam_bindspamLimit = 5;
+int antispam_chatBanDuration = 0;
 
 
 //Forward declarations for userData_t
@@ -187,8 +187,9 @@ userData_t()
 	
 	bool Banned(int timer)
 	{
-		msgtimecheck(timer);
-	//	Plugin_ChatPrintf(-1,"Time : %d",timer);
+		msgtimecheck(timer)
+		//Plugin_ChatPrintf(slotint, "[^3Antispam^7] You are chat banned for ^1%d ^2seconds^7 for bind spamming", chatbanDuration - (timer - bantime));
+
 	
 
 		if(timer - bantime >= chatbanDuration)
@@ -330,7 +331,8 @@ if(data.players[slot].Banned(timer))
 	return;
 }
 
-//Plugin_ChatPrintf(-1,"Time : %d",timer);
+//Plugin_ChatPrintf(slotint, "[^3Antispam^7] You are chat banned for ^1%d ^2seconds^7 for bind spamming", chatbanDuration - (timer - bantime));
+
 
 							/*  --------------New Algorithm with more flexibility ------------------------
 			Penalizes players for bindspams by keeping track of messages as long as 120 seconds.		*/
