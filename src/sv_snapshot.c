@@ -152,7 +152,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg)
 			}
 			else if (client->demorecording && client->netchan.outgoingSequence - client->deltaMessage < client->lastDemoNonDeltaSequence)
 			{
-				Com_PrintWarning(CON_CHANNEL_SERVER, "%s: Cannot send delta frame to client otherwise server demo may be corrupted\n", client->name);
+				Com_PrintWarning(CON_CHANNEL_SERVER, "%s: Cannot use delta frame otherwise server demo may get corrupted\n", client->name);
 			}
 			else
 			{
