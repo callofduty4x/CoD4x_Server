@@ -106,233 +106,173 @@ void SV_UpdateServerCommandsToClientRecover( client_t *client, msg_t *msg )
 }
 
 
-__cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
+__cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg)
+{
+	qboolean nonDeltaFrameRequested = qfalse;
+	qboolean deltaFrame = qfalse;
 
-    snapshotInfo_t snapInfo;
-    int lastframe;
-    int from_num_entities;
-    int newindex, oldindex, newnum, oldnum;
-    clientState_t *newcs, *oldcs;
-    entityState_t *newent, *oldent;
-    clientSnapshot_t *frame, *oldframe;
-    int i;
-    int snapFlags;
-    int var_x, from_first_entity, from_num_clients, from_first_client;
-
-    snapInfo.clnum = client - svsHeader.clients;
-    snapInfo.client = (void*)client;
-	snapInfo.snapshotDeltaTime = 0;
-    snapInfo.fromBaseline = 0;
-    snapInfo.archived = 0;
-
-    frame = &client->frames[client->netchan.outgoingSequence & PACKET_MASK];
-    frame->var_03 = svsHeader.time;
-
-    if(client->deltaMessage <= 0 ||  client->state != CS_ACTIVE) {
-        oldframe = NULL;
-        lastframe = 0;
-        var_x = 0;
-
-    } else if(client->netchan.outgoingSequence - client->deltaMessage >= PACKET_BACKUP - 3) {
-        Com_DPrintf(CON_CHANNEL_SERVER,"%s: Delta request from out of date packet.\n", client->name);
-        oldframe = NULL;
-        lastframe = 0;
-        var_x = 0;
-
-    } else if(client->demoDeltaFrameCount <= 0 && client->demorecording){
-
-        oldframe = NULL;
-        lastframe = 0;
-        var_x = 0;
-        client->demowaiting = qfalse;
-        Com_DPrintf(CON_CHANNEL_SERVER,"Force a nondelta frame for %s for demo recording\n", client->name);
-
-        if(client->demoMaxDeltaFrames < 1024)
-        {
-            client->demoMaxDeltaFrames <<= 1;
-        }
-        client->demoDeltaFrameCount = client->demoMaxDeltaFrames;
-
-
-    } else {
-        oldframe = &client->frames[client->deltaMessage & PACKET_MASK];
-        lastframe = client->netchan.outgoingSequence - client->deltaMessage;
-        var_x = oldframe->var_03;
-        client->demoDeltaFrameCount--;
-
-        if(oldframe->first_entity <  svsHeader.nextSnapshotEntities - svsHeader.numSnapshotEntities) {
-            Com_DPrintWarning(CON_CHANNEL_SERVER,"%s: Delta request from out of date entities - delta against entity %i, oldest is %i, current is %i.  Their old snapshot had %i entities in it\n",
-                            client->name, oldframe->first_entity, svs.nextSnapshotEntities - svs.numSnapshotEntities, svs.nextSnapshotEntities, oldframe->num_entities );
-            oldframe = NULL;
-            lastframe = 0;
-            var_x = 0;
-
-        } else if(oldframe->first_client <  svsHeader.nextSnapshotClients - svsHeader.numSnapshotClients) {
-
-            Com_DPrintWarning(CON_CHANNEL_SERVER,"%s: Delta request from out of date clients - delta against client %i, oldest is %i, current is %i.  Their old snapshot had %i clients in it\n",
-                            client->name, oldframe->first_client, svs.nextSnapshotClients - svs.numSnapshotClients, svs.nextSnapshotClients, oldframe->num_clients);
-            oldframe = NULL;
-            lastframe = 0;
-            var_x = 0;
-        }
-    }
-
-
-    MSG_WriteByte(msg, svc_snapshot);
-    MSG_WriteLong(msg, svsHeader.time);
-    MSG_WriteByte(msg, lastframe);
-    snapInfo.snapshotDeltaTime = var_x;
-
-    snapFlags = svsHeader.snapFlagServerBit;
-
-    if(client->rateDelayed){
-	snapFlags |= 1;
-    }
-
-    if(client->state == CS_ACTIVE) {
-
-	client->unksnapshotvar = 1;
-
-    } else {
-		if(client->state != CS_ZOMBIE){
-			client->unksnapshotvar = 0;
-		}
-    }
-
-    if(!client->unksnapshotvar){
-		snapFlags |= 2;
-    }
-
-    MSG_WriteByte(msg, snapFlags);
-
-    if(oldframe) {
-		MSG_WriteDeltaPlayerstate( &snapInfo, msg, svsHeader.time, &oldframe->ps, &frame->ps);
-		from_num_entities = oldframe->num_entities;
-		from_first_entity = oldframe->first_entity;
-		from_num_clients = oldframe->num_clients;
-		from_first_client = oldframe->first_client;
-    } else {
-	        MSG_WriteDeltaPlayerstate( &snapInfo, msg, svsHeader.time, 0, &frame->ps);
-		from_num_entities = 0;
-		from_first_entity = 0;
-		from_num_clients = 0;
-		from_first_client = 0;
-    }
-
-    MSG_ClearLastReferencedEntity(msg);
-
-
-    newindex = 0;
-    oldindex = 0;
-
-//    Com_Printf(CON_CHANNEL_SERVER,"Delta client: %i:\n", snapInfo.clnum);
-
-
-    while ( newindex < frame->num_entities || oldindex < from_num_entities)
+	if (client->demorecording && client->demowaiting)
 	{
-		if ( newindex >= frame->num_entities ) {
-			newnum = 9999;
-			newent = NULL;
-		} else {
-			newent = &svsHeader.snapshotEntities[( frame->first_entity + newindex ) % svsHeader.numSnapshotEntities];
-			newnum = newent->number;
+		// store the sequence when the demo was requested to start
+		if (client->demoRequestedSequence <= 0)
+		{
+			client->demoRequestedSequence = client->netchan.outgoingSequence;
 		}
 
-		if ( oldindex >= from_num_entities ) {
-			oldnum = 9999;
-			oldent = NULL;
-		} else {
-			oldent = &svsHeader.snapshotEntities[( from_first_entity + oldindex ) % svsHeader.numSnapshotEntities];
-			oldnum = oldent->number;
+		// if the client is up-to-date, or the demo has been waiting for PACKET_BACKUP (32) or more snapshots, start the demo with a non-delta snapshot
+		if (client->netchan.outgoingSequence - client->deltaMessage == 1 || client->netchan.outgoingSequence - client->demoRequestedSequence >= PACKET_BACKUP)
+		{
+			nonDeltaFrameRequested = qtrue;
+			client->demowaiting = qfalse;
+			client->demoRequestedSequence = 0;
+			client->lastDemoNonDeltaSequence = client->netchan.outgoingSequence;
+			Com_DPrintf(CON_CHANNEL_SERVER, "Force a nondelta frame for %s for demo recording\n", client->name);
 		}
-
-		if ( newnum == oldnum ) {
-			// delta update from old position
-			// because the force parm is qfalse, this will not result
-			// in any bytes being emited if the entity has not changed at all
-	//		Com_Printf(CON_CHANNEL_SERVER,"^2Delta Update Entity - New delta: %i Old delta: %i\n", newent->number, oldent->number);
-			MSG_WriteDeltaEntity( &snapInfo, msg, svsHeader.time, oldent, newent, qfalse );
-			oldindex++;
-			newindex++;
-			continue;
+	}
+	
+	if (!nonDeltaFrameRequested && client->deltaMessage > 0 && client->netchan.outgoingSequence > client->deltaMessage && client->state == CS_ACTIVE)
+	{
+		if (client->netchan.outgoingSequence - client->deltaMessage >= PACKET_BACKUP - 3)
+		{
+			Com_DPrintf(CON_CHANNEL_SERVER, "%s: Delta request from out of date packet.\n", client->name);
 		}
+		else
+		{
+			const clientSnapshot_t* oldframe = &client->frames[client->deltaMessage & PACKET_MASK];
 
-		if ( newnum < oldnum ) {
-			// this is a new entity, send it from the baseline
+			if (oldframe->first_entity < svsHeader.nextSnapshotEntities - svsHeader.numSnapshotEntities)
+			{
+				Com_PrintWarning(CON_CHANNEL_SERVER, "%s: Delta request from out of date entities - delta against entity %i, oldest is %i, current is %i.  Their old snapshot had %i entities in it\n",
+					client->name, oldframe->first_entity, svs.nextSnapshotEntities - svs.numSnapshotEntities, svs.nextSnapshotEntities, oldframe->num_entities);
+			}
+			else if (oldframe->first_client < svsHeader.nextSnapshotClients - svsHeader.numSnapshotClients)
+			{
+				Com_PrintWarning(CON_CHANNEL_SERVER, "%s: Delta request from out of date clients - delta against client %i, oldest is %i, current is %i.  Their old snapshot had %i clients in it\n",
+					client->name, oldframe->first_client, svs.nextSnapshotClients - svs.numSnapshotClients, svs.nextSnapshotClients, oldframe->num_clients);
+			}
+			else if (client->demorecording && client->netchan.outgoingSequence - client->deltaMessage < client->lastDemoNonDeltaSequence)
+			{
+				Com_PrintWarning(CON_CHANNEL_SERVER, "%s: Cannot use delta frame otherwise server demo may get corrupted\n", client->name);
+			}
+			else
+			{
+				deltaFrame = qtrue;
+			}
+		}
+	}
+
+	client->frames[client->netchan.outgoingSequence & PACKET_MASK].var_03 = svsHeader.time;
+
+	const clientSnapshot_t* oldframe = (deltaFrame) ? &client->frames[client->deltaMessage & PACKET_MASK] : NULL;
+	const clientSnapshot_t* newframe = &client->frames[client->netchan.outgoingSequence & PACKET_MASK];
+	const int deltaNum = (deltaFrame) ? client->netchan.outgoingSequence - client->deltaMessage : 0;
+	const int deltaTime = (deltaFrame) ? oldframe->var_03 : 0;
+
+	snapshotInfo_t snapInfo;
+	memset(&snapInfo, 0, sizeof(snapInfo));
+	snapInfo.clnum = client - svsHeader.clients;
+	snapInfo.client = client;
+	snapInfo.snapshotDeltaTime = deltaTime;
+
+	int snapFlags = svsHeader.snapFlagServerBit;
+	if (client->rateDelayed)
+	{
+		snapFlags |= 1;
+	}
+
+	client->unksnapshotvar = (client->state == CS_ACTIVE) ? 1 : (client->state != CS_ZOMBIE) ? 0 : client->unksnapshotvar;
+	if (!client->unksnapshotvar)
+	{
+		snapFlags |= 2;
+	}
+
+	MSG_WriteByte(msg, svc_snapshot);
+	MSG_WriteLong(msg, svsHeader.time);
+	MSG_WriteByte(msg, deltaNum);
+	MSG_WriteByte(msg, snapFlags);
+
+	MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, (oldframe) ? &oldframe->ps : NULL, &newframe->ps);
+	MSG_ClearLastReferencedEntity(msg);
+
+	const int from_num_entities = (oldframe) ? oldframe->num_entities : 0;
+	const int from_first_entity = (oldframe) ? oldframe->first_entity : 0;
+   
+	for (int oldindex = 0, newindex = 0; oldindex < from_num_entities || newindex < newframe->num_entities;)
+	{
+		const entityState_t* oldent = (oldindex >= from_num_entities) ? NULL :
+			&svsHeader.snapshotEntities[(from_first_entity + oldindex) % svsHeader.numSnapshotEntities];
+		const entityState_t* newent = (newindex >= newframe->num_entities) ? NULL :
+			&svsHeader.snapshotEntities[(newframe->first_entity + newindex) % svsHeader.numSnapshotEntities];
+
+		const int oldnum = (oldindex >= from_num_entities) ? 99999 : oldent->number;
+		const int newnum = (newindex >= newframe->num_entities) ? 99999 : newent->number;
+
+		if (newnum < oldnum)
+		{ // new entity
 			snapInfo.fromBaseline = 1;
-	//		Com_Printf(CON_CHANNEL_SERVER,"Delta Add Entity: %i\n", newent->number);
-			MSG_WriteDeltaEntity( &snapInfo, msg, svsHeader.time, &svsHeader.svEntities[newnum].baseline.s, newent, qtrue );
+			MSG_WriteDeltaEntity(&snapInfo, msg, svsHeader.time, &svsHeader.svEntities[newnum].baseline.s, newent, qtrue);
 			snapInfo.fromBaseline = 0;
 			newindex++;
 			continue;
 		}
-
-		if ( newnum > oldnum ) {
-			// the old entity isn't present in the new message
-	//		Com_Printf(CON_CHANNEL_SERVER,"Delta Remove Entity: %i\n", oldent->number);
-			MSG_WriteDeltaEntity( &snapInfo, msg, svsHeader.time, oldent, NULL, qtrue );
+		else if (newnum > oldnum)
+		{ // remove entity
+			MSG_WriteDeltaEntity(&snapInfo, msg, svsHeader.time, oldent, NULL, qtrue);
 			oldindex++;
 			continue;
 		}
-    }
+		else
+		{ // update existing entity
+			MSG_WriteDeltaEntity(&snapInfo, msg, svsHeader.time, oldent, newent, qfalse);
+			oldindex++;
+			newindex++;
+			continue;
+		}
+	}
 
+	MSG_WriteEntityIndex(&snapInfo, msg, (MAX_GENTITIES - 1), GENTITYNUM_BITS);
+	MSG_ClearLastReferencedEntity(msg);
 
-    MSG_WriteEntityIndex(&snapInfo, msg, ( MAX_GENTITIES - 1 ), GENTITYNUM_BITS);
-    MSG_ClearLastReferencedEntity(msg);
-
-    newindex = 0;
-    oldindex = 0;
-
-    while(newindex < frame->num_clients || oldindex < from_num_clients)
+	const int from_num_clients = (oldframe) ? oldframe->num_clients : 0;
+	const int from_first_client = (oldframe) ? oldframe->first_client : 0;
+   
+	for (int oldindex = 0, newindex = 0; oldindex < from_num_clients || newindex < newframe->num_clients;)
 	{
-		if(newindex >= frame->num_clients){
-			newnum = 9999;
-			newcs = NULL;
-		}else{
+		const clientState_t* oldcs = (oldindex >= from_num_clients) ? NULL : 
+			&svsHeader.snapshotClients[(from_first_client + oldindex) % svsHeader.numSnapshotClients];
+		const clientState_t* newcs = (newindex >= newframe->num_clients) ? NULL :
+			&svsHeader.snapshotClients[(newframe->first_client + newindex) % svsHeader.numSnapshotClients];
 
-			newcs = &svsHeader.snapshotClients[(frame->first_client + newindex) % svsHeader.numSnapshotClients];
-			newnum = newcs->clientIndex;
-		}
+		const int oldnum = (oldindex >= from_num_clients) ? 99999 : oldcs->clientIndex;
+		const int newnum = (newindex >= newframe->num_clients) ? 99999 : newcs->clientIndex;
 
-		if(oldindex >= from_num_clients){
-			oldnum = 9999;
-			oldcs = NULL;
-		}else{
-
-			oldcs = &svsHeader.snapshotClients[(from_first_client + oldindex) % svsHeader.numSnapshotClients];
-			oldnum = oldcs->clientIndex;
-		}
-
-		if ( newnum == oldnum ) {
-			// delta update from old position
-			// because the force parm is qfalse, this will not result
-			// in any bytes being emited if the entity has not changed at all
-			MSG_WriteDeltaClient( &snapInfo, msg, svsHeader.time, oldcs, newcs, qfalse );
-			oldindex++;
+		if (newnum < oldnum)
+		{ // new client
+			MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, NULL, newcs, qtrue);
 			newindex++;
 			continue;
 		}
-
-		if ( newnum < oldnum ) {
-			MSG_WriteDeltaClient( &snapInfo, msg, svsHeader.time, NULL, newcs, qtrue );
-			newindex++;
+		else if (newnum > oldnum)
+		{ // remove client
+			MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, oldcs, NULL, qtrue);
+			oldindex++;
 			continue;
 		}
-
-		if ( newnum > oldnum ) {
-			MSG_WriteDeltaClient( &snapInfo, msg, svsHeader.time, oldcs, NULL, qtrue );
+		else
+		{ // update existing client
+			MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, oldcs, newcs, qfalse);
 			oldindex++;
+			newindex++;
 			continue;
 		}
 	}
 
 	MSG_WriteBit0(msg);
 
-	if(sv_padPackets->integer){
-		for( i=0 ; i < sv_padPackets->integer ; i++){
-			MSG_WriteByte( msg, 0); //svc_nop
-		}
-    }
+	for (int i = 0; i < sv_padPackets->integer; i++)
+	{
+		MSG_WriteByte(msg, svc_nop);
+	}
 }
 
 
