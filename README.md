@@ -20,13 +20,17 @@ A compatible client modification can be found here: [CoD4x_Client_pub](https://g
 The CoD4x server can run on Windows and Linux. 
 The CoD4x client update is only available for windows.
 
-## Setting up a Call of Duty 4 server with Cod4x 1.8
+## Setting up a Call of Duty 4 server with Cod4x
 Download binaries: [Releases](https://github.com/callofduty4x/CoD4x_Server/releases)
 
 You also require the base game to run a server. Copy every .iwd file in `cod4directory/main/` to `serverdirectory/main/`.
 Also copy everything inside `cod4directory/zone` to `serverdirectory/zone`.
 
 Now you can run the server with `./cod4x18_dedrun +map mp_killhouse`. If you are running a local server on Windows use `cod4x18_dedrun.exe +map mp_killhouse +set dedicated 2 +set net_ip 127.0.0.1`. Join the server with your client via the console (`^`) by typing `/connect 127.0.0.1` (if hosted locally), and see if you can join the server.
+
+You will need a token if you want your server to be listed on the [Cod4x Master List](https://cod4master.cod4x.ovh). You can generate a token [here](https://cod4master.cod4x.ovh/index.php?token_generator=true).
+
+Once a token is generated add it to the sv_authtoken cvar in server.cfg or command-line parameters by using `sv_authtoken "mytokenhere`
 
 Hint: you probably want to run the server on a separate user. Please don't run the server (any server) as root. That would be a major security threat.
 
