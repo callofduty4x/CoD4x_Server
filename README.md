@@ -72,7 +72,6 @@ docker run -d --name cod4x-server --restart=unless-stopped \
 -v ./plugins:/home/user/cod4/plugins \
 -v ./usermaps:/home/user/cod4/usermaps \
 alexandercurl/cod4x-server +exec server.cfg +map_rotate
-
 ```
 
 ## Compiling on Linux
