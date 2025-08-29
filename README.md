@@ -20,7 +20,7 @@ A compatible client modification can be found here: [CoD4x_Client_pub](https://g
 The CoD4x server can run on Windows and Linux. 
 The CoD4x client update is only available for windows.
 
-## Setting up a Call of Duty 4 server with Cod4x
+## Setting up a Call of Duty 4 server with CoD4X
 Download binaries: [Releases](https://github.com/callofduty4x/CoD4x_Server/releases)
 
 You also require the base game to run a server. Copy every .iwd file in `cod4directory/main/` to `serverdirectory/main/`.
@@ -30,12 +30,49 @@ Now you can run the server with `./cod4x18_dedrun +map mp_killhouse`. If you are
 
 You will need a token if you want your server to be listed on the [Cod4x Master List](https://cod4master.cod4x.ovh). You can generate a token [here](https://cod4master.cod4x.ovh/index.php?token_generator=true).
 
-Once a token is generated add it to the sv_authtoken cvar in server.cfg or command-line parameters by using `sv_authtoken "mytokenhere`
+Once a token is generated add it to the sv_authtoken cvar in server.cfg or command-line parameters by using `sv_authtoken "mytokenhere"`
 
 Hint: you probably want to run the server on a separate user. Please don't run the server (any server) as root. That would be a major security threat.
 
 A more detailed server tutorial is available on [our wiki](https://github.com/callofduty4x/CoD4x_Server/wiki/Server-setup).
 [Also read about new banlists here](https://github.com/callofduty4x/CoD4x_Server/wiki/Banlists-in-version-15.9--and-other-changes)
+
+## Setting up Call of Duty 4 Server with CoD4X in Docker
+
+Official images are now availabe on [Docker Hub](https://hub.docker.com/r/alexandercurl/cod4x-server)
+
+Setting up with `docker compose` example config, also can be found in the repository:
+```
+services:
+ cod4x-server:
+  container_name: cod4x-server
+  hostname: cod4x-server
+  image: alexandercurl/cod4x-server:latest
+  ports:
+      - "28960:28960/tcp"
+      - "28960:28960/udp"
+    # Volumes store your data between container upgrades
+  volumes:
+      - "./main:/home/user/cod4/main"
+      - "./main_shared:/home/user/cod4/main_shared"
+      - "./zone:/home/user/cod4/zone"
+      - "./mods:/home/user/cod4/mods"
+      - "./plugins:/home/user/cod4/plugins"
+      - "./usermaps:/home/user/cod4/usermaps"
+  restart: unless-stopped
+```
+
+Running with `docker run`:
+```
+docker run -d --name cod4x-server --restart=unless-stopped \
+-p 28960:28960 -p 28960:28960/udp \
+-v ./main:/home/user/cod4/main \
+-v ./zone:/home/user/cod4/zone \
+-v ./mods:/home/user/cod4/mods \
+-v ./plugins:/home/user/cod4/plugins \
+-v ./usermaps:/home/user/cod4/usermaps \
+alexandercurl/cod4x-server +exec server.cfg +map_rotate
+```
 
 ## Compiling on Linux
 To compile CoD4x from source, you need to install the following prerequisites:

@@ -1,0 +1,17 @@
+services:
+ cod4x-server:
+  container_name: cod4x-server
+  hostname: cod4x-server
+  image: alexandercurl/cod4x-server:latest
+  ports:
+      - "28960:28960/tcp"
+      - "28960:28960/udp"
+    # Volumes store your data between container upgrades
+  volumes:
+      - "./main:/home/user/cod4/main"
+      - "./main_shared:/home/user/cod4/main_shared"
+      - "./zone:/home/user/cod4/zone"
+      - "./mods:/home/user/cod4/mods"
+      - "./plugins:/home/user/cod4/plugins"
+      - "./usermaps:/home/user/cod4/usermaps"
+  restart: unless-stopped
