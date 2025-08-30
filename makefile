@@ -53,7 +53,7 @@ else
 DCFLAGS=-fno-pie -O1 -DNDEBUG
 endif
 
-WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -static -lm
+WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--stack,0x800000 -static-libgcc -static -lm
 WIN_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 winmm crypt32 stdc++
 LINUX_LFLAGS=-m32 -g -static-libgcc -rdynamic -Wl,-rpath=./
 LINUX_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 dl pthread m stdc++
@@ -168,7 +168,7 @@ gittagging:
 ifneq ($(OS),Windows_NT)
 	git tag -a v$(VERSION)
 	git push origin --tags
-endif	
+endif
 
 #################################
 # A rule to make mbedtls library.
@@ -284,7 +284,7 @@ clean_all:
 docker: $(TARGET)
 	@docker build . -t cod4x/bleeding
 
-plugins: 
+plugins:
 	@$(MAKE) -C $(PLUGIN_DIR)/screenshotsender
 	#@$(MAKE) -C $(PLUGIN_DIR)/antispam
 	@$(MAKE) -C $(PLUGIN_DIR)/censor
