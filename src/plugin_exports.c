@@ -28,7 +28,7 @@
 #include "sapi.h"
 #include "g_shared.h"
 #include "sv_snapshot.h"
-#include "sv_snapshot_plugins.h"
+#include "plugin_snapshot_patching.h"
 /*=========================================*
  *                                         *
  *        Plugin Handler's exports         *

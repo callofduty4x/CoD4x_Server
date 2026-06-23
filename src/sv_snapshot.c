@@ -28,7 +28,7 @@
 #include "server.h"
 #include "huffman.h"
 #include "msg.h"
-#include "sv_snapshot_plugins.h"
+#include "plugin_snapshot_patching.h"
 #include "sys_main.h"
 #include "g_sv_shared.h"
 #include "cm_public.h"

@@ -1,16 +1,13 @@
 #include "q_shared.h"
 #include "server.h"
 #include "plugin_handler.h"
-#include "sv_snapshot_plugins.h"
+#include "plugin_snapshot_patching.h"
 
 #include <string.h>
 
-static pluginSnapshotPlayerStatePatch_fn snapshotPlayerStatePatchCallback = NULL;
-static int snapshotPlayerStatePatchPluginId = -1;
-static pluginSnapshotEntityPatch_fn snapshotEntityPatchCallback = NULL;
-static int snapshotEntityPatchPluginId = -1;
-static pluginSnapshotClientStatePatch_fn snapshotClientStatePatchCallback = NULL;
-static int snapshotClientStatePatchPluginId = -1;
+static pluginSnapshotPlayerStatePatch_fn snapshotPlayerStatePatches[MAX_PLUGINS];
+static pluginSnapshotEntityPatch_fn snapshotEntityPatches[MAX_PLUGINS];
+static pluginSnapshotClientStatePatch_fn snapshotClientStatePatches[MAX_PLUGINS];
 
 static void SV_InsertSortedSnapshotEntity(clientSnapshot_t *frame, const entityState_t *entState)
 {
@@ -80,6 +77,58 @@ static void SV_InsertSortedSnapshotClient(clientSnapshot_t *frame, const clientS
 	*(&svs.snapshotClients[(frame->first_client + insertAt) % svs.numSnapshotClients]) = *clientState;
 }
 
+static void SV_AppendSnapshotEntity(client_t *client, clientSnapshot_t *frame, playerState_t *ps,
+	entityState_t *entState, int archiveTime, int pluginId)
+{
+	pluginSnapshotEntityPatch_fn callback;
+
+	callback = snapshotEntityPatches[pluginId];
+	if(!callback)
+	{
+		return;
+	}
+
+	pluginFunctions.hasControl = pluginId;
+	if(callback(client, ps, entState, archiveTime, SNAPSHOT_PATCH_APPEND))
+	{
+		SV_InsertSortedSnapshotEntity(frame, entState);
+
+		svs.nextSnapshotEntities++;
+		if(svs.nextSnapshotEntities >= 0x7FFFFFFE)
+		{
+			Com_Error(ERR_FATAL, "svs.nextSnapshotEntities wrapped");
+		}
+		frame->num_entities++;
+	}
+	pluginFunctions.hasControl = PLUGIN_UNKNOWN;
+}
+
+static void SV_AppendSnapshotClient(client_t *client, clientSnapshot_t *frame, playerState_t *ps,
+	clientState_t *clientState, int archiveTime, int pluginId)
+{
+	pluginSnapshotClientStatePatch_fn callback;
+
+	callback = snapshotClientStatePatches[pluginId];
+	if(!callback)
+	{
+		return;
+	}
+
+	pluginFunctions.hasControl = pluginId;
+	if(callback(client, ps, clientState, -1, archiveTime, SNAPSHOT_PATCH_APPEND))
+	{
+		SV_InsertSortedSnapshotClient(frame, clientState);
+
+		svs.nextSnapshotClients++;
+		if(svs.nextSnapshotClients >= 0x7FFFFFFE)
+		{
+			Com_Error(ERR_FATAL, "svs.nextSnapshotClients wrapped");
+		}
+		frame->num_clients++;
+	}
+	pluginFunctions.hasControl = PLUGIN_UNKNOWN;
+}
+
 void SV_SnapshotPatchPlayerState(client_t *client, playerState_t *framePs, int archiveTime)
 {
 	PHandler_CallSnapshotPlayerStatePatch(client, framePs, archiveTime);
@@ -93,20 +142,18 @@ void SV_SnapshotPatchEntity(client_t *client, playerState_t *framePs, entityStat
 void SV_SnapshotAppendOwnEntity(client_t *client, clientSnapshot_t *frame, playerState_t *ps, int archiveTime)
 {
 	entityState_t entState;
+	int pluginId;
 
-	if(!PHandler_CallSnapshotEntityPatch(client, ps, &entState, archiveTime, SNAPSHOT_PATCH_APPEND))
+	for(pluginId = 0; pluginId < MAX_PLUGINS; pluginId++)
 	{
-		return;
-	}
+		if(!snapshotEntityPatches[pluginId])
+		{
+			continue;
+		}
 
-	SV_InsertSortedSnapshotEntity(frame, &entState);
-
-	svs.nextSnapshotEntities++;
-	if(svs.nextSnapshotEntities >= 0x7FFFFFFE)
-	{
-		Com_Error(ERR_FATAL, "svs.nextSnapshotEntities wrapped");
+		memset(&entState, 0, sizeof(entState));
+		SV_AppendSnapshotEntity(client, frame, ps, &entState, archiveTime, pluginId);
 	}
-	frame->num_entities++;
 }
 
 void SV_SnapshotPatchClientState(client_t *client, playerState_t *framePs, clientState_t *cs, int csClientIndex, int archiveTime)
@@ -117,20 +164,18 @@ void SV_SnapshotPatchClientState(client_t *client, playerState_t *framePs, clien
 void SV_SnapshotAppendOwnClient(client_t *client, clientSnapshot_t *frame, playerState_t *ps, int archiveTime)
 {
 	clientState_t clientState;
+	int pluginId;
 
-	if(!PHandler_CallSnapshotClientStatePatch(client, ps, &clientState, -1, archiveTime, SNAPSHOT_PATCH_APPEND))
+	for(pluginId = 0; pluginId < MAX_PLUGINS; pluginId++)
 	{
-		return;
-	}
+		if(!snapshotClientStatePatches[pluginId])
+		{
+			continue;
+		}
 
-	SV_InsertSortedSnapshotClient(frame, &clientState);
-
-	svs.nextSnapshotClients++;
-	if(svs.nextSnapshotClients >= 0x7FFFFFFE)
-	{
-		Com_Error(ERR_FATAL, "svs.nextSnapshotClients wrapped");
+		memset(&clientState, 0, sizeof(clientState));
+		SV_AppendSnapshotClient(client, frame, ps, &clientState, archiveTime, pluginId);
 	}
-	frame->num_clients++;
 }
 
 void PHandler_RegisterSnapshotPlayerStatePatch(int pluginId, pluginSnapshotPlayerStatePatch_fn callback)
@@ -139,30 +184,45 @@ void PHandler_RegisterSnapshotPlayerStatePatch(int pluginId, pluginSnapshotPlaye
 	{
 		return;
 	}
-	snapshotPlayerStatePatchPluginId = pluginId;
-	snapshotPlayerStatePatchCallback = callback;
+	snapshotPlayerStatePatches[pluginId] = callback;
 }
 
 void PHandler_UnregisterSnapshotPlayerStatePatch(int pluginId)
 {
-	if(snapshotPlayerStatePatchPluginId != pluginId)
+	if(pluginId < 0 || pluginId >= MAX_PLUGINS)
 	{
 		return;
 	}
-	snapshotPlayerStatePatchPluginId = -1;
-	snapshotPlayerStatePatchCallback = NULL;
+	snapshotPlayerStatePatches[pluginId] = NULL;
 }
 
 qboolean PHandler_CallSnapshotPlayerStatePatch(client_t *client, playerState_t *framePs, int archiveTime)
 {
-	if(!snapshotPlayerStatePatchCallback || snapshotPlayerStatePatchPluginId < 0)
+	qboolean patched;
+	int pluginId;
+
+	if(!client || !framePs)
 	{
 		return qfalse;
 	}
-	pluginFunctions.hasControl = snapshotPlayerStatePatchPluginId;
-	qboolean result = snapshotPlayerStatePatchCallback(client, framePs, archiveTime);
-	pluginFunctions.hasControl = PLUGIN_UNKNOWN;
-	return result;
+
+	patched = qfalse;
+	for(pluginId = 0; pluginId < MAX_PLUGINS; pluginId++)
+	{
+		if(!snapshotPlayerStatePatches[pluginId])
+		{
+			continue;
+		}
+
+		pluginFunctions.hasControl = pluginId;
+		if(snapshotPlayerStatePatches[pluginId](client, framePs, archiveTime))
+		{
+			patched = qtrue;
+		}
+		pluginFunctions.hasControl = PLUGIN_UNKNOWN;
+	}
+
+	return patched;
 }
 
 void PHandler_RegisterSnapshotEntityPatch(int pluginId, pluginSnapshotEntityPatch_fn callback)
@@ -171,31 +231,39 @@ void PHandler_RegisterSnapshotEntityPatch(int pluginId, pluginSnapshotEntityPatc
 	{
 		return;
 	}
-	snapshotEntityPatchPluginId = pluginId;
-	snapshotEntityPatchCallback = callback;
+	snapshotEntityPatches[pluginId] = callback;
 }
 
 void PHandler_UnregisterSnapshotEntityPatch(int pluginId)
 {
-	if(snapshotEntityPatchPluginId != pluginId)
+	if(pluginId < 0 || pluginId >= MAX_PLUGINS)
 	{
 		return;
 	}
-	snapshotEntityPatchPluginId = -1;
-	snapshotEntityPatchCallback = NULL;
+	snapshotEntityPatches[pluginId] = NULL;
 }
 
-qboolean PHandler_CallSnapshotEntityPatch(client_t *client, playerState_t *framePs, entityState_t *entState,
+void PHandler_CallSnapshotEntityPatch(client_t *client, playerState_t *framePs, entityState_t *entState,
 	int archiveTime, snapshotPatchMode_t mode)
 {
-	if(!snapshotEntityPatchCallback || snapshotEntityPatchPluginId < 0 || !client || !framePs || !entState)
+	int pluginId;
+
+	if(!client || !framePs || !entState || mode != SNAPSHOT_PATCH_MODIFY)
 	{
-		return qfalse;
+		return;
 	}
-	pluginFunctions.hasControl = snapshotEntityPatchPluginId;
-	qboolean result = snapshotEntityPatchCallback(client, framePs, entState, archiveTime, mode);
-	pluginFunctions.hasControl = PLUGIN_UNKNOWN;
-	return result;
+
+	for(pluginId = 0; pluginId < MAX_PLUGINS; pluginId++)
+	{
+		if(!snapshotEntityPatches[pluginId])
+		{
+			continue;
+		}
+
+		pluginFunctions.hasControl = pluginId;
+		snapshotEntityPatches[pluginId](client, framePs, entState, archiveTime, mode);
+		pluginFunctions.hasControl = PLUGIN_UNKNOWN;
+	}
 }
 
 void PHandler_RegisterSnapshotClientStatePatch(int pluginId, pluginSnapshotClientStatePatch_fn callback)
@@ -204,31 +272,39 @@ void PHandler_RegisterSnapshotClientStatePatch(int pluginId, pluginSnapshotClien
 	{
 		return;
 	}
-	snapshotClientStatePatchPluginId = pluginId;
-	snapshotClientStatePatchCallback = callback;
+	snapshotClientStatePatches[pluginId] = callback;
 }
 
 void PHandler_UnregisterSnapshotClientStatePatch(int pluginId)
 {
-	if(snapshotClientStatePatchPluginId != pluginId)
+	if(pluginId < 0 || pluginId >= MAX_PLUGINS)
 	{
 		return;
 	}
-	snapshotClientStatePatchPluginId = -1;
-	snapshotClientStatePatchCallback = NULL;
+	snapshotClientStatePatches[pluginId] = NULL;
 }
 
-qboolean PHandler_CallSnapshotClientStatePatch(client_t *client, playerState_t *framePs, clientState_t *cs,
+void PHandler_CallSnapshotClientStatePatch(client_t *client, playerState_t *framePs, clientState_t *cs,
 	int csClientIndex, int archiveTime, snapshotPatchMode_t mode)
 {
-	if(!snapshotClientStatePatchCallback || snapshotClientStatePatchPluginId < 0 || !client || !framePs || !cs)
+	int pluginId;
+
+	if(!client || !framePs || !cs || mode != SNAPSHOT_PATCH_MODIFY)
 	{
-		return qfalse;
+		return;
 	}
-	pluginFunctions.hasControl = snapshotClientStatePatchPluginId;
-	qboolean result = snapshotClientStatePatchCallback(client, framePs, cs, csClientIndex, archiveTime, mode);
-	pluginFunctions.hasControl = PLUGIN_UNKNOWN;
-	return result;
+
+	for(pluginId = 0; pluginId < MAX_PLUGINS; pluginId++)
+	{
+		if(!snapshotClientStatePatches[pluginId])
+		{
+			continue;
+		}
+
+		pluginFunctions.hasControl = pluginId;
+		snapshotClientStatePatches[pluginId](client, framePs, cs, csClientIndex, archiveTime, mode);
+		pluginFunctions.hasControl = PLUGIN_UNKNOWN;
+	}
 }
 
 int SV_GetArchivedClientEntityState(int clientNum, int *pArchiveTime, entityState_t *entState)

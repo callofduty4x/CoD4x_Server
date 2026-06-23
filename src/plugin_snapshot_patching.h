@@ -1,5 +1,5 @@
-#ifndef SV_SNAPSHOT_PLUGINS_H
-#define SV_SNAPSHOT_PLUGINS_H
+#ifndef PLUGIN_SNAPSHOT_PATCHING_H
+#define PLUGIN_SNAPSHOT_PATCHING_H
 
 #include "player.h"
 #include "server.h"
@@ -36,11 +36,11 @@ void PHandler_UnregisterSnapshotPlayerStatePatch(int pluginId);
 qboolean PHandler_CallSnapshotPlayerStatePatch(client_t *client, playerState_t *framePs, int archiveTime);
 void PHandler_RegisterSnapshotEntityPatch(int pluginId, pluginSnapshotEntityPatch_fn callback);
 void PHandler_UnregisterSnapshotEntityPatch(int pluginId);
-qboolean PHandler_CallSnapshotEntityPatch(client_t *client, playerState_t *framePs, entityState_t *entState,
+void PHandler_CallSnapshotEntityPatch(client_t *client, playerState_t *framePs, entityState_t *entState,
 	int archiveTime, snapshotPatchMode_t mode);
 void PHandler_RegisterSnapshotClientStatePatch(int pluginId, pluginSnapshotClientStatePatch_fn callback);
 void PHandler_UnregisterSnapshotClientStatePatch(int pluginId);
-qboolean PHandler_CallSnapshotClientStatePatch(client_t *client, playerState_t *framePs, clientState_t *cs,
+void PHandler_CallSnapshotClientStatePatch(client_t *client, playerState_t *framePs, clientState_t *cs,
 	int csClientIndex, int archiveTime, snapshotPatchMode_t mode);
 
 #ifdef __cplusplus
