@@ -237,6 +237,7 @@ extern "C"
 {
 #endif
 void PHandler_Event(int, ...);
+#include "sv_snapshot_plugins.h"
 #ifdef __cplusplus
 };
 #endif

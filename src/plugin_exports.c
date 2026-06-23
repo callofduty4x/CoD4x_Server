@@ -27,6 +27,8 @@
 #include "httpftp.h"
 #include "sapi.h"
 #include "g_shared.h"
+#include "sv_snapshot.h"
+#include "sv_snapshot_plugins.h"
 /*=========================================*
  *                                         *
  *        Plugin Handler's exports         *
@@ -1107,4 +1109,138 @@ P_P_F void Plugin_DPrintf( const char *fmt, ...) {
 P_P_F level_locals_t* Plugin_GetLevelBase( )
 {
     return &level;
+}
+
+P_P_F void Plugin_RegisterSnapshotPlayerStatePatch(pluginSnapshotPlayerStatePatch_fn callback)
+{
+    volatile int pID = PHandler_CallerID();
+
+    if(pID < 0)
+    {
+        Com_PrintError(CON_CHANNEL_PLUGINS, "Plugin_RegisterSnapshotPlayerStatePatch called from unknown plugin\n");
+        return;
+    }
+    if(callback == NULL)
+    {
+        PHandler_UnregisterSnapshotPlayerStatePatch(pID);
+        return;
+    }
+    PHandler_RegisterSnapshotPlayerStatePatch(pID, callback);
+}
+
+P_P_F void Plugin_UnregisterSnapshotPlayerStatePatch(void)
+{
+    volatile int pID = PHandler_CallerID();
+
+    if(pID < 0)
+    {
+        return;
+    }
+    PHandler_UnregisterSnapshotPlayerStatePatch(pID);
+}
+
+P_P_F void Plugin_RegisterSnapshotEntityPatch(pluginSnapshotEntityPatch_fn callback)
+{
+    volatile int pID = PHandler_CallerID();
+
+    if(pID < 0)
+    {
+        Com_PrintError(CON_CHANNEL_PLUGINS, "Plugin_RegisterSnapshotEntityPatch called from unknown plugin\n");
+        return;
+    }
+    if(callback == NULL)
+    {
+        PHandler_UnregisterSnapshotEntityPatch(pID);
+        return;
+    }
+    PHandler_RegisterSnapshotEntityPatch(pID, callback);
+}
+
+P_P_F void Plugin_UnregisterSnapshotEntityPatch(void)
+{
+    volatile int pID = PHandler_CallerID();
+
+    if(pID < 0)
+    {
+        return;
+    }
+    PHandler_UnregisterSnapshotEntityPatch(pID);
+}
+
+P_P_F void Plugin_RegisterSnapshotClientStatePatch(pluginSnapshotClientStatePatch_fn callback)
+{
+    volatile int pID = PHandler_CallerID();
+
+    if(pID < 0)
+    {
+        Com_PrintError(CON_CHANNEL_PLUGINS, "Plugin_RegisterSnapshotClientStatePatch called from unknown plugin\n");
+        return;
+    }
+    if(callback == NULL)
+    {
+        PHandler_UnregisterSnapshotClientStatePatch(pID);
+        return;
+    }
+    PHandler_RegisterSnapshotClientStatePatch(pID, callback);
+}
+
+P_P_F void Plugin_UnregisterSnapshotClientStatePatch(void)
+{
+    volatile int pID = PHandler_CallerID();
+
+    if(pID < 0)
+    {
+        return;
+    }
+    PHandler_UnregisterSnapshotClientStatePatch(pID);
+}
+
+P_P_F qboolean Plugin_SV_GetArchivedClientInfo(int clientNum, int archiveTime, playerState_t *ps, clientState_t *cs, float *origin)
+{
+    int health;
+    int otherFlags;
+
+    return SV_GetArchivedClientInfo(clientNum, &archiveTime, ps, cs, origin, &health, &otherFlags) ? qtrue : qfalse;
+}
+
+P_P_F qboolean Plugin_SV_GetArchivedClientEntityState(int clientNum, int archiveTime, entityState_t *entState)
+{
+    if(!entState)
+    {
+        return qfalse;
+    }
+    return SV_GetArchivedClientEntityState(clientNum, &archiveTime, entState) ? qtrue : qfalse;
+}
+
+P_P_F qboolean Plugin_SV_GetArchivedClientOrigin(int clientNum, int archiveTime, float *origin)
+{
+    return Plugin_SV_GetArchivedClientInfo(clientNum, archiveTime, NULL, NULL, origin);
+}
+
+P_P_F qboolean Plugin_SV_GetArchivedClientState(int clientNum, int archiveTime, clientState_t *cs)
+{
+    if(!cs)
+    {
+        return qfalse;
+    }
+    return SV_GetArchivedClientState(clientNum, &archiveTime, cs) ? qtrue : qfalse;
+}
+
+P_P_F qboolean Plugin_SV_GetClientState(int clientNum, clientState_t *cs)
+{
+    clientState_t *src;
+
+    if(!cs || clientNum < 0 || clientNum >= sv_maxclients->integer)
+    {
+        return qfalse;
+    }
+
+    src = G_GetClientState(clientNum);
+    if(!src)
+    {
+        return qfalse;
+    }
+
+    Com_Memcpy(cs, src, sizeof(clientState_t));
+    return qtrue;
 }
