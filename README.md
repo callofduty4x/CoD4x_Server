@@ -144,6 +144,8 @@ They can also use it on their own servers.
 
 4. Plugins have to be made available as sourcecode so the user can interact with it
 
+5. Bot clients should not be disguised as real players. All bots must have 0 or 999 ping and include "bot" at either the start of end of their name.
+
 Server's IPs violating these conditions can get permanently disabled.
 
 These conditions have been established to keep user created content open to everyone, and also to value the work on CoD4x.
