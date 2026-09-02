@@ -133,18 +133,13 @@ If you would like to work on a completely new feature, we would appreciate if yo
 If you're not a programmer but still want to help, you can help by testing and reporting bugs, but also by writing documentation. Please submit your bug reports to the Github issue tracker.
 
 ## Usage conditions for server hosters
-Aside from agreeing to the license, by making any use of CoD4x18 server you agree to the following:
+Aside from agreeing to the [license](./License.md), by making any use of CoD4x18 server you agree to the following:
 
-1. You make content which is connected to your CoD4x18 Server available to the developers on request. For example if you run a mod, you have to make everything available that is required to run another server just like your own. Think of a complete mod.ff, .iwds, plugins, database handlers, etc.
+1. Respect other communities!
 
-2. The developers reserve the right to reuse your content as long as it is not used commercially. You have a right for your name/clan/website getting mentioned if this is going to happen.
-They can also use it on their own servers.
+2. Don't spam the master server with private servers to overshadow other servers
 
-3. Maps you have installed on a server have to be either available on the internet already, or be made available to the community at the [CoD4x forums](https://cod4x.ovh), with all required assets, like scripts, within 20 weeks of installation. You have to annouce your map on the [CoD4x forums](https://cod4x.ovh) on the same day you have installed it to gain the 20 weeks grace period. Not announced maps will have to be made available within 1 week.
-
-4. Plugins have to be made available as sourcecode so the user can interact with it
-
-5. Bot clients shall not be disguised as real players. All bots must report a ping of 0 or 999, and their names shall be prefixed with `[BOT]`.
+3. Bot clients shall not be disguised as real players. All bots must report a ping of 0 or 999, and their names shall be prefixed with `[BOT]`.
 
 Server's IPs violating these conditions can get permanently disabled.
 
