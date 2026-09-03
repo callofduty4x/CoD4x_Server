@@ -237,6 +237,7 @@ extern "C"
 {
 #endif
 void PHandler_Event(int, ...);
+#include "plugin_snapshot_patching.h"
 #ifdef __cplusplus
 };
 #endif

@@ -11,6 +11,7 @@
 #include "xassets.h"
 #include "xassets/rawfile.h"
 #include "cscr_variable.h"
+#include "g_shared.h"
 
 #define VAR_STAT_MASK 0x60
 #define VAR_MASK 0x1F

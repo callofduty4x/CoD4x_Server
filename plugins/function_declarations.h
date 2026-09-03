@@ -371,4 +371,27 @@
 
     __cdecl const char* Plugin_GetCommonVersionString(); //return cod4x version
     __cdecl level_locals_t* Plugin_GetLevelBase( );
+
+    typedef enum
+    {
+        SNAPSHOT_PATCH_MODIFY = 0,
+        SNAPSHOT_PATCH_APPEND = 1
+    } snapshotPatchMode_t;
+
+    typedef qboolean (*pluginSnapshotPlayerStatePatch_fn)(client_t *client, playerState_t *framePs, int archiveTime);
+    typedef qboolean (*pluginSnapshotEntityPatch_fn)(client_t *client, playerState_t *framePs, entityState_t *entState,
+        int archiveTime, snapshotPatchMode_t mode);
+    typedef qboolean (*pluginSnapshotClientStatePatch_fn)(client_t *client, playerState_t *framePs, clientState_t *cs,
+        int csClientIndex, int archiveTime, snapshotPatchMode_t mode);
+    __cdecl void Plugin_RegisterSnapshotPlayerStatePatch(pluginSnapshotPlayerStatePatch_fn callback);
+    __cdecl void Plugin_UnregisterSnapshotPlayerStatePatch(void);
+    __cdecl void Plugin_RegisterSnapshotEntityPatch(pluginSnapshotEntityPatch_fn callback);
+    __cdecl void Plugin_UnregisterSnapshotEntityPatch(void);
+    __cdecl void Plugin_RegisterSnapshotClientStatePatch(pluginSnapshotClientStatePatch_fn callback);
+    __cdecl void Plugin_UnregisterSnapshotClientStatePatch(void);
+    __cdecl qboolean Plugin_SV_GetArchivedClientOrigin(int clientNum, int archiveTime, float *origin);
+    __cdecl qboolean Plugin_SV_GetArchivedClientInfo(int clientNum, int archiveTime, playerState_t *ps, clientState_t *cs, float *origin);
+    __cdecl qboolean Plugin_SV_GetArchivedClientEntityState(int clientNum, int archiveTime, entityState_t *entState);
+    __cdecl qboolean Plugin_SV_GetArchivedClientState(int clientNum, int archiveTime, clientState_t *cs);
+    __cdecl qboolean Plugin_SV_GetClientState(int clientNum, clientState_t *cs);
     __cdecl void Plugin_UpdatePlayername(unsigned int clientnumber, const char* newname);
