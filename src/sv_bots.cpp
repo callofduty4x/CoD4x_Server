@@ -300,7 +300,7 @@ static void scr_botlookatplayer(scr_entref_t ent_num)
     gentity_t *target;
     int argc;
     vec3_t look_origin;
-    short tag_name;
+    unsigned int tag_name;
     mvabuf;
 
     bot = VM_GetGEntityForEntRef(ent_num);
