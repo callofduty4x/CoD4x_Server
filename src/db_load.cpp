@@ -2986,7 +2986,9 @@ void __cdecl DB_UnloadXZoneInternal(unsigned int zoneIndex, bool createDefault)
           }
           *pAssetEntryIndex = assetEntry->nextHash;
           DB_FreeXAssetEntry(assetEntry);
-          if ( *g_defaultAssetName[asset.type] )
+          // No default LOCALIZE_ENTRY on a dedicated server ("CGAME_UNKNOWN" is client-only), so maps with
+          // custom localized strings crash here on unload. Safe to free without a stub (name-resolved).
+          if ( *g_defaultAssetName[asset.type] && asset.type != ASSET_TYPE_LOCALIZE_ENTRY )
           {
             Sys_LeaveCriticalSection(CRITSECT_DBHASH);
             Sys_Error("Could not load default asset for asset type '%s'", (&g_assetNames)[asset.type]);
