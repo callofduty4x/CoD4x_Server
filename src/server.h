@@ -138,8 +138,8 @@ struct client_s
 	qboolean			demowaiting;
 	char				demoName[MAX_QPATH];
 	int					demoArchiveIndex;
-	int					demoMaxDeltaFrames;
-	int					demoDeltaFrameCount;
+	int					demoRequestedSequence;
+	int					lastDemoNonDeltaSequence;
 	qboolean				undercover;
 	int					bantime;
 	int					clienttimeout;

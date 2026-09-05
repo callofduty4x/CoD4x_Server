@@ -243,8 +243,8 @@ void SV_RecordClient( client_t* cl, char* basename ) {
 	// don't start saving messages until a non-delta compressed message is received
 	cl->demowaiting = qtrue;
 	cl->demoArchiveIndex = 0;
-	cl->demoMaxDeltaFrames = 1;
-	cl->demoDeltaFrameCount = 0;
+	cl->demoRequestedSequence = 0;
+	cl->lastDemoNonDeltaSequence = 0;
 
 	// write out the gamestate message
 	MSG_Init( &msg, bufData, sizeof( bufData ) );
