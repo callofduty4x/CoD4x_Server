@@ -19,557 +19,472 @@
 ===========================================================================
 */
 
-#include "../q_shared.h"
 #include "../sys_main.h"
-#include "../qcommon.h"
-#include "../cmd.h"
-#include "../sys_cod4defs.h"
-#include "sys_win32.h"
+#include "../q_shared.h"
+#include "../cmd_completion.h"
+#include "../qcommon_io.h"
+#include "../cvar.h"
 
-
-#include <errno.h>
-#include <float.h>
+#include <unistd.h>
+#include <signal.h>
 #include <fcntl.h>
-#include <stdio.h>
-#include <direct.h>
-#include <io.h>
-#include <conio.h>
+#include <sys/time.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
 
-#define SYSCON_DEFAULT_WIDTH    540
-#define SYSCON_DEFAULT_HEIGHT   450
-
-#define COPY_ID         1
-#define QUIT_ID         2
-#define CLEAR_ID        3
-
-#define ERRORBOX_ID     10
-#define ERRORTEXT_ID    11
-
-#define EDIT_ID         100
-#define INPUT_ID        101
-
-
-
-// Next default values for new objects
-//
-#ifdef APSTUDIO_INVOKED
-#ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1005
-#define _APS_NEXT_SYMED_VALUE           101
-#endif
+#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
 #endif
 
-//********************************************************
+// TTY console routines.
+// NOTE: if the user is editing a line when something gets printed to the early
+// console then it won't look good so we provide CON_Hide and CON_Show to be
+// called before and after a stdout or stderr output
+static cvar_t* com_ansiColor;
 
+// General flag to tell about tty console mode
+static qboolean ttycon_on = qfalse;
+static qboolean stdin_active = qtrue;
+static int ttycon_hide = 0;
 
-typedef struct
+// Some key codes that the terminal may be using, initialised on start up
+static field_t TTY_con;
+HANDLE hStdout = NULL;
+HANDLE hStdin = NULL;
+DWORD stdoutOriginalMode = 0;
+DWORD stdinOriginalMode = 0;
+DWORD stdinConsoleMode = 0;
+
+// This is somewhat of aduplicate of the graphical console history
+// But it's safer more modular to have our own here
+#define CON_HISTORY 32
+static field_t ttyEditLines[CON_HISTORY];
+static int hist_current = -1, hist_count = 0;
+
+void Field_AutoComplete(field_t *field);
+field_t *Hist_Prev(void);
+
+#ifndef MAXPRINTMSG
+#define MAXPRINTMSG 1024
+#endif
+
+/**
+ * @brief Output a backspace.
+ * @remarks it seems on some terminals just sending '\b' is not enough so instead wesend "\b \b".
+ * @todo - FIXME there may be a way to find out if '\b' alone would work though.
+ */
+static void CON_Back(void)
 {
-	HWND hWnd;
-	HWND hwndBuffer;
+	char key;
 
-	HWND hwndButtonClear;
-	HWND hwndButtonCopy;
-	HWND hwndButtonQuit;
+	key = '\b';
+	write(STDOUT_FILENO, &key, 1);
+	key = ' ';
+	write(STDOUT_FILENO, &key, 1);
+	key = '\b';
+	write(STDOUT_FILENO, &key, 1);
+}
 
-	HWND hwndErrorBox;
-	HWND hwndErrorText;
+/**
+ * @brief Console move back.
+ */
+static void CON_MoveBack(void)
+{
+	write(STDOUT_FILENO, "\033[D", 3);
+}
 
-	HBITMAP hbmLogo;
-	HBITMAP hbmClearBitmap;
+/**
+ * @brief Console move forward.
+ */
+static void CON_MoveForward(void)
+{
+	write(STDOUT_FILENO, "\033[C", 3);
+}
 
-	HBRUSH hbrEditBackground;
+/**
+ * @brief History add.
+ * @param field - The history field.
+ */
+void Hist_Add(field_t *field)
+{
+	int i;
+	assert(hist_count <= CON_HISTORY);
+	assert(hist_count >= 0);
+	assert(hist_current >= -1);
+	assert(hist_current <= hist_count);
 
-	HFONT hfBufferFont;
-	HFONT hfButtonFont;
-
-	HWND hwndInputLine;
-
-	char errorString[80];
-
-	char consoleText[512], returnedText[512];
-	int visLevel;
-	qboolean quitOnClose;
-	int windowWidth, windowHeight;
-
-	WNDPROC SysInputLineWndProc;
-
-} WinConData;
-
-static WinConData s_wcd;
-
-static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
-
-	static qboolean s_timePolarity;
-	int cx, cy;
-	float sx; /*, sy*/
-	float x, y, w, h;
-
-	switch ( uMsg )
+	if ((hist_count > 0 && strcmp(field->buffer, ttyEditLines[0].buffer) == 0) || field->len == 0)
 	{
-	case WM_SIZE:
-		// NERVE - SMF
-		cx = LOWORD( lParam );
-		cy = HIWORD( lParam );
-/*
-		if ( cx < SYSCON_DEFAULT_WIDTH )
-			cx = SYSCON_DEFAULT_WIDTH;
-		if ( cy < SYSCON_DEFAULT_HEIGHT )
-			cy = SYSCON_DEFAULT_HEIGHT;
-*/
-		sx = (float)cx / SYSCON_DEFAULT_WIDTH;
-		//sy = (float)cy / SYSCON_DEFAULT_HEIGHT;
+		// Don't add duplicate entries to history (same as HISTCONTROL = ignoredups in bash)
+		// Reinit
+		hist_current = -1;
+		return;
+	}
+	// Make some room
+	for (i = CON_HISTORY - 1; i > 0; i--)
+		ttyEditLines[i] = ttyEditLines[i - 1];
+	ttyEditLines[0] = *field;
+	if (hist_count < CON_HISTORY)
+		hist_count++;
 
-		x = 8;
-		y = 6;
-		w = cx - 15;
-		h = cy - 60;
-		SetWindowPos( s_wcd.hwndBuffer, NULL, x, y, w, h, 0 );
+	// Reinit
+	hist_current = -1;
+}
 
-		y = y + h + 4;
-		h = 20;
-		SetWindowPos( s_wcd.hwndInputLine, NULL, x, y, w, h, 0 );
+/**
+ * @brief History prev.
+ * @return field_t*
+ */
+field_t *Hist_Prev(void)
+{
+	int hist_prev;
+	assert(hist_count <= CON_HISTORY);
+	assert(hist_count >= 0);
+	assert(hist_current >= -1);
+	assert(hist_current <= hist_count);
 
-		y = y + h + 4;
-		w = 72 * sx;
-		h = 24;
-		SetWindowPos( s_wcd.hwndButtonCopy, NULL, x, y, w, h, 0 );
+	hist_prev = hist_current + 1;
+	if (hist_prev >= hist_count)
+		return NULL;
+	hist_current++;
+	return &(ttyEditLines[hist_current]);
+}
 
-		x = x + w + 2;
-		SetWindowPos( s_wcd.hwndButtonClear, NULL, x, y, w, h, 0 );
+/**
+ * @brief History next.
+ * @return field_t*
+ */
+field_t *Hist_Next(void)
+{
+	assert(hist_count <= CON_HISTORY);
+	assert(hist_count >= 0);
+	assert(hist_current >= -1);
+	assert(hist_current <= hist_count);
 
-		x = cx - 6 - w;
-		SetWindowPos( s_wcd.hwndButtonQuit, NULL, x, y, w, h, 0 );
+	if (hist_current >= 0)
+		hist_current--;
+	if (hist_current == -1)
+		return NULL;
+	return &(ttyEditLines[hist_current]);
+}
 
-		s_wcd.windowWidth = cx;
-		s_wcd.windowHeight = cy;
-		// -NERVE - SMF
-		break;
-	case WM_ACTIVATE:
-		if ( LOWORD( wParam ) != WA_INACTIVE ) {
-			SetFocus( s_wcd.hwndInputLine );
-		}
-		break;
+/**
+ * @brief Create console.
+ */
+void CON_Init(void)
+{
+	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	hStdin = GetStdHandle(STD_INPUT_HANDLE);
+    GetConsoleMode(hStdout, &stdoutOriginalMode);
+    GetConsoleMode(hStdin, &stdinOriginalMode);
 
-	case WM_CLOSE:
-		return 0;
-	case WM_CTLCOLORSTATIC:
-		if ( ( HWND ) lParam == s_wcd.hwndBuffer ) {
-			SetBkColor( ( HDC ) wParam, RGB( 0, 0, 0 ) );
-			SetTextColor( ( HDC ) wParam, RGB( 0xff, 0xff, 0xff ) );
+	// Detect ansi support
+	qboolean ansiSupport = !!(stdoutOriginalMode & ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 
-#if 0   // this draws a background in the edit box, but there are issues with this
-			if ( ( hdcScaled = CreateCompatibleDC( ( HDC ) wParam ) ) != 0 ) {
-				if ( SelectObject( ( HDC ) hdcScaled, s_wcd.hbmLogo ) ) {
-					StretchBlt( ( HDC ) wParam, 0, 0, 512, 384,
-								hdcScaled, 0, 0, 512, 384,
-								SRCCOPY );
-				}
-				DeleteDC( hdcScaled );
-			}
-#endif
-			return ( long ) s_wcd.hbrEditBackground;
-		}
-		break;
+    // Disable line buffering and echoing of input characters
+    stdinConsoleMode = stdinOriginalMode & ~(ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT);
+    SetConsoleMode(hStdin, stdinConsoleMode);
 
-	case WM_COMMAND:
-		if ( wParam == COPY_ID ) {
-			SendMessageA( s_wcd.hwndBuffer, EM_SETSEL, 0, -1 );
-			SendMessageA( s_wcd.hwndBuffer, WM_COPY, 0, 0 );
-		} else if ( wParam == QUIT_ID )   {
-			if ( s_wcd.quitOnClose ) {
-				PostQuitMessage( 0 );
-			} else
-			{
-				Cbuf_AddText("quit\n");
+	Field_Clear(&TTY_con);
+	ttycon_on = qtrue;
 
-			}
-		} else if ( wParam == CLEAR_ID )   {
-			SendMessageA( s_wcd.hwndBuffer, EM_SETSEL, 0, -1 );
-			SendMessageA( s_wcd.hwndBuffer, EM_REPLACESEL, FALSE, ( LPARAM ) "" );
-			UpdateWindow( s_wcd.hwndBuffer );
-		}
-		break;
-	case WM_CREATE:
-//		s_wcd.hbmLogo = LoadBitmap( g_wv.hInstance, MAKEINTRESOURCE( IDB_BITMAP1 ) );
-//		s_wcd.hbmClearBitmap = LoadBitmap( g_wv.hInstance, MAKEINTRESOURCE( IDB_BITMAP2 ) );
-		s_wcd.hbrEditBackground = CreateSolidBrush( RGB( 0, 0, 0 ) );
-		SetTimer( hWnd, 1, 1000, NULL );
-		break;
-	case WM_ERASEBKGND:
-#if 0
-		HDC hdcScaled;
-		HGDIOBJ oldObject;
+	com_ansiColor = Cvar_RegisterBool("ttycon_ansiColor", ansiSupport, CVAR_ARCHIVE, "Use ansi colors for sysconsole output");
+}
 
-#if 1   // a single, large image
-		hdcScaled = CreateCompatibleDC( ( HDC ) wParam );
-		assert( hdcScaled != 0 );
+/**
+ * @brief Shutdown console.
+ */
+void CON_Shutdown(void)
+{
+	if (ttycon_on)
+		CON_Back();
+	// Restore blocking to stdin reads
+	SetConsoleMode(hStdin, stdinOriginalMode);
+}
 
-		if ( hdcScaled ) {
-			oldObject = SelectObject( ( HDC ) hdcScaled, s_wcd.hbmLogo );
-			assert( oldObject != 0 );
-			if ( oldObject ) {
-				StretchBlt( ( HDC ) wParam, 0, 0, s_wcd.windowWidth, s_wcd.windowHeight,
-							hdcScaled, 0, 0, 512, 384,
-							SRCCOPY );
-			}
-			DeleteDC( hdcScaled );
-			hdcScaled = 0;
-		}
-#else   // a repeating brush
+/**
+ * @brief Console show.
+ */
+void CON_Show(void)
+{
+	if (ttycon_on)
+	{
+		int i;
+		assert(ttycon_hide > 0);
+		ttycon_hide--;
+
+		if (ttycon_hide == 0)
 		{
-			HBRUSH hbrClearBrush;
-			RECT r;
-
-			GetWindowRect( hWnd, &r );
-
-			r.bottom = r.bottom - r.top + 1;
-			r.right = r.right - r.left + 1;
-			r.top = 0;
-			r.left = 0;
-
-			hbrClearBrush = CreatePatternBrush( s_wcd.hbmClearBitmap );
-
-			assert( hbrClearBrush != 0 );
-
-			if ( hbrClearBrush ) {
-				FillRect( ( HDC ) wParam, &r, hbrClearBrush );
-				DeleteObject( hbrClearBrush );
-			}
+			write(STDOUT_FILENO, "]", 1);
+			for (i = 0; i < TTY_con.len; i++)
+				write(STDOUT_FILENO, TTY_con.buffer + i, 1);
+			for (i = 0; i < TTY_con.len - TTY_con.cursor; ++i)
+				CON_MoveBack();
 		}
-#endif
-		return 1;
-#endif
-		return DefWindowProc( hWnd, uMsg, wParam, lParam );
-	case WM_TIMER:
-		if ( wParam == 1 ) {
-			s_timePolarity = !s_timePolarity;
-			if ( s_wcd.hwndErrorBox ) {
-				InvalidateRect( s_wcd.hwndErrorBox, NULL, FALSE );
-			}
-		}
-		break;
 	}
-
-	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }
 
-LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
-	char inputBuffer[1024];
-
-	switch ( uMsg )
+/**
+ * @brief Clear the display of the line currently edited bring cursor back to beginning of line.
+ */
+static void CON_Hide(void)
+{
+	if (ttycon_on)
 	{
-	case WM_KILLFOCUS:
-		if ( ( HWND ) wParam == s_wcd.hWnd ||
-			 ( HWND ) wParam == s_wcd.hwndErrorBox ) {
-			SetFocus( hWnd );
-			return 0;
+		int i;
+
+		if (ttycon_hide)
+		{
+			ttycon_hide++;
+			return;
 		}
-		break;
+		for (i = TTY_con.cursor; i < TTY_con.len; ++i)
+			CON_MoveForward();
+		for (i = 0; i < TTY_con.len; i++)
+			CON_Back();
 
-	case WM_CHAR:
-		if ( wParam == 13 ) {
-			GetWindowText( s_wcd.hwndInputLine, inputBuffer, sizeof( inputBuffer ) );
-			strncat( s_wcd.consoleText, inputBuffer, sizeof( s_wcd.consoleText ) - strlen( s_wcd.consoleText ) - 5 );
-			strcat( s_wcd.consoleText, "\n" );
-			SetWindowText( s_wcd.hwndInputLine, "" );
-
-			//CON_Print( va( "]%s\n", inputBuffer ) );
-
-			return 0;
-		}
-	}
-
-	return CallWindowProc( s_wcd.SysInputLineWndProc, hWnd, uMsg, wParam, lParam );
-}
-
-/*
-** Sys_CreateConsole
-*/
-void CON_InitInternal( void ) {
-	HDC hDC;
-	WNDCLASS wc;
-	RECT rect;
-	const char *DEDCLASS = CLIENT_WINDOW_TITLE " Console";
-	const char *WINDOWNAME = CLIENT_WINDOW_TITLE " Console";
-
-	int nHeight;
-	int swidth, sheight;
-	int DEDSTYLE = WS_POPUPWINDOW | WS_CAPTION | WS_MINIMIZEBOX | WS_SIZEBOX;
-
-	memset( &wc, 0, sizeof( wc ) );
-
-	wc.style         = 0;
-	wc.lpfnWndProc   = (WNDPROC) ConWndProc;
-	wc.cbClsExtra    = 0;
-	wc.cbWndExtra    = 0;
-	wc.hInstance     = g_wv.hInstance;
-	wc.hIcon         = LoadIcon( g_wv.hInstance, MAKEINTRESOURCE( IDI_ICON1 ) );
-	wc.hCursor       = LoadCursor( NULL,IDC_ARROW );
-	wc.hbrBackground = (void *)COLOR_WINDOW;
-	wc.lpszMenuName  = 0;
-	wc.lpszClassName = DEDCLASS;
-
-	if ( !RegisterClass( &wc ) ) {
-		return;
-	}
-
-	rect.left = 0;
-	rect.right = SYSCON_DEFAULT_WIDTH;
-	rect.top = 0;
-	rect.bottom = SYSCON_DEFAULT_HEIGHT;
-	AdjustWindowRect( &rect, DEDSTYLE, FALSE );
-
-	hDC = GetDC( GetDesktopWindow() );
-	swidth = GetDeviceCaps( hDC, HORZRES );
-	sheight = GetDeviceCaps( hDC, VERTRES );
-	ReleaseDC( GetDesktopWindow(), hDC );
-
-	s_wcd.windowWidth = rect.right - rect.left + 1;
-	s_wcd.windowHeight = rect.bottom - rect.top + 1;
-
-	s_wcd.hWnd = CreateWindowEx( 0,
-								 DEDCLASS,
-								 WINDOWNAME,
-								 DEDSTYLE,
-								 ( swidth - 600 ) / 2, ( sheight - 450 ) / 2, rect.right - rect.left + 1, rect.bottom - rect.top + 1,
-								 NULL,
-								 NULL,
-								 g_wv.hInstance,
-								 NULL );
-
-	if ( s_wcd.hWnd == NULL ) {
-		return;
-	}
-
-	//
-	// create fonts
-	//
-	hDC = GetDC( s_wcd.hWnd );
-	nHeight = -MulDiv( 8, GetDeviceCaps( hDC, LOGPIXELSY ), 72 );
-
-	s_wcd.hfBufferFont = CreateFont( nHeight,
-									 0,
-									 0,
-									 0,
-									 FW_LIGHT,
-									 0,
-									 0,
-									 0,
-									 DEFAULT_CHARSET,
-									 OUT_DEFAULT_PRECIS,
-									 CLIP_DEFAULT_PRECIS,
-									 DEFAULT_QUALITY,
-									 FF_MODERN | FIXED_PITCH,
-									 "Courier New" );
-
-	ReleaseDC( s_wcd.hWnd, hDC );
-
-	//
-	// create the input line
-	//
-	s_wcd.hwndInputLine = CreateWindow( "edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER |
-										ES_LEFT | ES_AUTOHSCROLL,
-										6, 400, 528, 20,
-										s_wcd.hWnd,
-										( HMENU ) INPUT_ID,         // child window ID
-										g_wv.hInstance, NULL );
-
-	//
-	// create the buttons
-	//
-	s_wcd.hwndButtonCopy = CreateWindow( "button", NULL, BS_PUSHBUTTON | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-										 5, 425, 72, 24,
-										 s_wcd.hWnd,
-										 ( HMENU ) COPY_ID,         // child window ID
-										 g_wv.hInstance, NULL );
-	SendMessageA( s_wcd.hwndButtonCopy, WM_SETTEXT, 0, ( LPARAM ) "copy" );
-
-	s_wcd.hwndButtonClear = CreateWindow( "button", NULL, BS_PUSHBUTTON | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-										  82, 425, 72, 24,
-										  s_wcd.hWnd,
-										  ( HMENU ) CLEAR_ID,       // child window ID
-										  g_wv.hInstance, NULL );
-	SendMessageA( s_wcd.hwndButtonClear, WM_SETTEXT, 0, ( LPARAM ) "clear" );
-
-	s_wcd.hwndButtonQuit = CreateWindow( "button", NULL, BS_PUSHBUTTON | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-										 462, 425, 72, 24,
-										 s_wcd.hWnd,
-										 ( HMENU ) QUIT_ID,         // child window ID
-										 g_wv.hInstance, NULL );
-	SendMessageA( s_wcd.hwndButtonQuit, WM_SETTEXT, 0, ( LPARAM ) "quit" );
-
-
-	//
-	// create the scrollbuffer
-	//
-	s_wcd.hwndBuffer = CreateWindow( "edit", NULL, WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_BORDER |
-									 ES_LEFT | ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY,
-									 6, 6, 526, 390,
-									 s_wcd.hWnd,
-									 ( HMENU ) EDIT_ID,             // child window ID
-									 g_wv.hInstance, NULL );
-	SendMessageA( s_wcd.hwndBuffer, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
-
-	s_wcd.SysInputLineWndProc = ( WNDPROC ) SetWindowLong( s_wcd.hwndInputLine, GWL_WNDPROC, ( long ) InputLineWndProc );
-	SendMessageA( s_wcd.hwndInputLine, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
-
-	ShowWindow( s_wcd.hWnd, SW_SHOWDEFAULT );
-	UpdateWindow( s_wcd.hWnd );
-	SetForegroundWindow( s_wcd.hWnd );
-	SetFocus( s_wcd.hwndInputLine );
-
-	s_wcd.visLevel = 1;
-}
-
-/*
-** Sys_DestroyConsole
-*/
-void CON_Shutdown( void ) {
-	if ( s_wcd.hWnd ) {
-		ShowWindow( s_wcd.hWnd, SW_HIDE );
-		CloseWindow( s_wcd.hWnd );
-		DestroyWindow( s_wcd.hWnd );
-		s_wcd.hWnd = 0;
+		CON_Back();
+		ttycon_hide++;
 	}
 }
 
-/*
-** Sys_ShowConsole
-*/
-void CON_Show( int visLevel, qboolean quitOnClose ) {
-	s_wcd.quitOnClose = quitOnClose;
-	mvabuf;
+/**
+ * @brief Console input.
+ * @return char*
+ */
+char *CON_Input(void)
+{
+	// We use this when sending back commands
+	static char text[MAX_EDIT_LINE];
+	field_t *history;
 
-	if ( visLevel == s_wcd.visLevel ) {
-		return;
-	}
-
-	s_wcd.visLevel = visLevel;
-
-	if ( !s_wcd.hWnd ) {
-		return;
-	}
-
-	switch ( visLevel )
+	if (ttycon_on)
 	{
-	case 0:
-		ShowWindow( s_wcd.hWnd, SW_HIDE );
-		break;
-	case 1:
-		ShowWindow( s_wcd.hWnd, SW_SHOWNORMAL );
-		SendMessageA( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
-		break;
-	case 2:
-		ShowWindow( s_wcd.hWnd, SW_MINIMIZE );
-		break;
-	default:
-		Sys_Error( va("Invalid visLevel %d sent to Sys_ShowConsole\n", visLevel ));
-		break;
-	}
-}
+		DWORD numEventsRead;
+		DWORD lpNumberOfEvents;
+		INPUT_RECORD inputRecord;
 
-/*
-** Sys_ConsoleInput
-*/
-char *CON_Input( void ) {
+		GetNumberOfConsoleInputEvents(hStdin, &lpNumberOfEvents);
+		if (!lpNumberOfEvents)
+			return NULL;
 
-	if ( s_wcd.consoleText[0] == 0 ) {
+		ReadConsoleInput(hStdin, &inputRecord, 1, &numEventsRead);
+		if (inputRecord.EventType != KEY_EVENT || !inputRecord.Event.KeyEvent.bKeyDown)
+			return NULL;
+
+		WORD event = inputRecord.Event.KeyEvent.wVirtualKeyCode;
+		char key = inputRecord.Event.KeyEvent.uChar.AsciiChar;
+
+		// We have something, backspace ?
+		// NOTE: TTimo testing a lot of values .. seems it's the only way to get it to work everywhere
+		if (event == VK_BACK || event == VK_DELETE)
+		{
+			if (TTY_con.len > 0 && TTY_con.cursor > 0)
+			{
+				CON_Hide();
+				memmove(TTY_con.buffer + TTY_con.cursor - 1, TTY_con.buffer + TTY_con.cursor, TTY_con.len - TTY_con.cursor + 2);
+				TTY_con.len--;
+				TTY_con.cursor--;
+				CON_Show();
+			}
+			return NULL;
+		}
+		// Delete word
+		if (event == VK_ESCAPE)
+		{
+			CON_Hide();
+			bool trailing_spaces = TTY_con.cursor > 0 && TTY_con.buffer[TTY_con.cursor - 1] == ' ';
+			while (TTY_con.len > 0 && TTY_con.cursor > 0)
+			{
+				if (TTY_con.buffer[TTY_con.cursor - 1] == ' ')
+				{
+					if (!trailing_spaces)
+						break;
+				}
+				else
+					trailing_spaces = false;
+				memmove(TTY_con.buffer + TTY_con.cursor - 1, TTY_con.buffer + TTY_con.cursor, TTY_con.len - TTY_con.cursor + 2);
+				TTY_con.len--;
+				TTY_con.cursor--;
+			}
+			CON_Show();
+			return NULL;
+		}
+		if (event == VK_RETURN)
+		{
+			// Push it in history
+			TTY_con.cursor = TTY_con.len;
+			Hist_Add(&TTY_con);
+			Q_strncpyz(text, TTY_con.buffer, sizeof(text));
+			Field_Clear(&TTY_con);
+			write(STDOUT_FILENO, "\n]", 2);
+			return text;
+		}
+		if (event == VK_TAB)
+		{
+			CON_Hide();
+			Field_AutoComplete(&TTY_con);
+			CON_Show();
+			return NULL;
+		}
+		if (event == VK_UP)
+		{
+			history = Hist_Prev();
+			if (history)
+			{
+				CON_Hide();
+				TTY_con = *history;
+				CON_Show();
+			}
+			return NULL;
+		}
+		if (event == VK_DOWN)
+		{
+			history = Hist_Next();
+			CON_Hide();
+			if (history)
+				TTY_con = *history;
+			else
+				Field_Clear(&TTY_con);
+			CON_Show();
+			return NULL;
+		}
+		if (event == VK_LEFT)
+		{
+			if (TTY_con.cursor > 0)
+			{
+				TTY_con.cursor--;
+				CON_MoveBack();
+			}
+			return NULL;
+		}
+		if (event == VK_RIGHT)
+		{
+			if (TTY_con.cursor < TTY_con.len)
+			{
+				TTY_con.cursor++;
+				CON_MoveForward();
+			}
+			return NULL;
+		}
+		if (!key || TTY_con.len >= sizeof(text) - 1)
+			return NULL;
+
+		// Push regular character
+		CON_Hide();
+		memmove(TTY_con.buffer + TTY_con.cursor + 1, TTY_con.buffer + TTY_con.cursor, TTY_con.len - TTY_con.cursor + 1);
+		TTY_con.buffer[TTY_con.cursor] = key;
+		TTY_con.len++;
+		TTY_con.cursor++;
+		CON_Show();
 		return NULL;
 	}
-
-	strcpy( s_wcd.returnedText, s_wcd.consoleText );
-	s_wcd.consoleText[0] = 0;
-
-	return s_wcd.returnedText;
-}
-
-/*
-** Conbuf_AppendText
-*/
-void CON_Print( const char *pMsg ) {
-#define CONSOLE_BUFFER_SIZE     16384
-
-	char buffer[CONSOLE_BUFFER_SIZE * 2];
-	char *b = buffer;
-	const char *msg;
-	int bufLen;
-	int i = 0;
-	static unsigned long s_totalChars;
-
-	//
-	// if the message is REALLY long, use just the last portion of it
-	//
-	if ( strlen( pMsg ) > CONSOLE_BUFFER_SIZE - 1 ) {
-		msg = pMsg + strlen( pMsg ) - CONSOLE_BUFFER_SIZE + 1;
-	} else
+	else if (stdin_active)
 	{
-		msg = pMsg;
-	}
+		int len;
+		fd_set fdset;
+		struct timeval timeout;
 
-	//
-	// copy into an intermediate buffer
-	//
-	while ( msg[i] && ( ( b - buffer ) < sizeof( buffer ) - 1 ) )
-	{
-		if ( msg[i] == '\n' && msg[i + 1] == '\r' ) {
-			b[0] = '\r';
-			b[1] = '\n';
-			b += 2;
-			i++;
-		} else if ( msg[i] == '\r' )     {
-			b[0] = '\r';
-			b[1] = '\n';
-			b += 2;
-		} else if ( msg[i] == '\n' )     {
-			b[0] = '\r';
-			b[1] = '\n';
-			b += 2;
-		} else if ( Q_IsColorString( &msg[i] ) )   {
-			i++;
-		} else
+		FD_ZERO(&fdset);
+		FD_SET(STDIN_FILENO, &fdset);
+		timeout.tv_sec = 0;
+		timeout.tv_usec = 0;
+		if (select(STDIN_FILENO + 1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(STDIN_FILENO, &fdset))
+			return NULL;
+
+		len = read(STDIN_FILENO, text, sizeof(text));
+		if (len == 0)
 		{
-			*b = msg[i];
-			b++;
+			// EOF
+			stdin_active = qfalse;
+			return NULL;
 		}
-		i++;
+		if (len < 1)
+			return NULL;
+
+		// Rip off the /n and terminate
+		text[len-1] = 0;
+		return text;
 	}
-	*b = 0;
-	bufLen = b - buffer;
-
-	s_totalChars += bufLen;
-
-	//
-	// replace selection instead of appending if we're overflowing
-	//
-	if ( s_totalChars > CONSOLE_BUFFER_SIZE ) {
-		SendMessageA( s_wcd.hwndBuffer, EM_SETSEL, 0, -1 );
-		s_totalChars = bufLen;
-	} else {
-		// NERVE - SMF - always append at the bottom of the textbox
-		SendMessageA( s_wcd.hwndBuffer, EM_SETSEL, 0xFFFF, 0xFFFF );
-	}
-
-	//
-	// put this text into the windows console
-	//
-	SendMessageA( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
-	SendMessageA( s_wcd.hwndBuffer, EM_SCROLLCARET, 0, 0 );
-
-	
-	SendMessageA( s_wcd.hwndBuffer, EM_REPLACESEL, 0, (LPARAM) buffer );
-	//
-    //InvalidateRect(s_wcd.hwndBuffer, NULL, TRUE);
+	return NULL;
 }
 
-void CON_DisableDraw() 
+/**
+ * @brief Transform Q3 colour codes to ANSI escape sequences.
+ * @param msg - The message to transform.
+ */
+void Sys_AnsiColorPrint(const char *msg)
 {
-	SendMessage(  s_wcd.hwndBuffer, WM_SETREDRAW, (WPARAM) FALSE, 0);
+	static char buffer[MAXPRINTMSG];
+	int length = 0;
+
+	static int q3ToAnsi[8] = {
+		30, // COLOR_BLACK
+		31, // COLOR_RED
+		32, // COLOR_GREEN
+		33, // COLOR_YELLOW
+		34, // COLOR_BLUE
+		36, // COLOR_CYAN
+		35, // COLOR_MAGENTA
+		0   // COLOR_WHITE
+	};
+
+	while (*msg)
+	{
+		if (Q_IsColorString(msg) || *msg == '\n')
+		{
+			// First empty the buffer
+			if (length > 0)
+			{
+				buffer[length] = '\0';
+				fputs(buffer, stderr);
+				length = 0;
+			}
+			if (*msg == '\n')
+			{
+				// Issue a reset and then the newline
+				fputs("\033[0m\n", stderr);
+				msg++;
+			}
+			else
+			{
+				// Print the color code
+				Com_sprintf(buffer, sizeof(buffer), "\033[1;%dm", q3ToAnsi[ColorIndex(*(msg + 1))]);
+				fputs(buffer, stderr);
+				msg += 2;
+			}
+		}
+		else
+		{
+			if (length >= MAXPRINTMSG - 1)
+				break;
+
+			buffer[length] = *msg;
+			length++;
+			msg++;
+		}
+	}
+	// Empty anything still left in the buffer
+	if (length > 0)
+	{
+		buffer[length] = '\0';
+		fputs(buffer, stderr);
+	}
 }
 
-void CON_EnableDraw() 
+/**
+ * @brief Print to the console.
+ * @param msg - The message.
+ */
+void CON_Print(const char *msg)
 {
-	SendMessageA( s_wcd.hwndBuffer, WM_SETREDRAW,  (WPARAM) TRUE, 0);
+	CON_Hide();
+
+	if (com_ansiColor && com_ansiColor->integer)
+		Sys_AnsiColorPrint(msg);
+	else
+		fputs(msg, stderr);
+
+	CON_Show();
 }

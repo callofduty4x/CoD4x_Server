@@ -881,9 +881,6 @@ void Sec_Update( qboolean getbasefiles ){
 	{
 		Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed. Trying to recover...\n");
 		Sec_UndoBackup(files.next);
-
-//		MessageBoxA(NULL, "Couldn't install update", "Couldn't install update", MB_OK);
-		
 		Sec_AutoupdateUnlock(lockfile);
 		Com_Quit_f();
 		return;
