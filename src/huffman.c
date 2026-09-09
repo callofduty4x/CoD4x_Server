@@ -50,9 +50,9 @@ static int get_bit( byte *fin ) {
 
 /* Get a symbol */
 
-static void Huff_offsetReceive( node_t *node, int *ch, byte *fin, int *offset ) {
+static void Huff_offsetReceive( node_t *node, int *ch, byte *fin, int readsize, int *offset ) {
 	bloc = *offset;
-	while ( node && node->symbol == INTERNAL_NODE ) {
+	while ( node && node->symbol == INTERNAL_NODE && bloc < readsize ) {
 
 		if ( get_bit( fin ) ) {
 			node = node->right;
@@ -60,6 +60,13 @@ static void Huff_offsetReceive( node_t *node, int *ch, byte *fin, int *offset ) 
 		} else {
 			node = node->left;
 
+		}
+		
+		if ( bloc >= readsize ) {
+			//Com_PrintError("OOB buffer access\n");
+			*ch = 7; // EOF
+			*offset = bloc;
+			return;
 		}
 	}
 	if ( !node ) {
@@ -128,7 +135,7 @@ int MSG_ReadBitsCompress(const byte* input, int readsize, byte* outputBuf, int o
     }
 
     for(offset = 0, i = 0; offset < readsize && i < outputBufSize; i++){
-        Huff_offsetReceive( msgHuff.tree, &get, (byte*)input, &offset);
+        Huff_offsetReceive( msgHuff.tree, &get, (byte*)input, readsize, &offset);
         *outptr = (byte)get;
         outptr++;
     }
