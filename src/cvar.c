@@ -1848,6 +1848,34 @@ void Cvar_SetS_f( void ) {
 
 /*
 ============
+Cvar_SetI_f
+
+As Cvar_Set, but also flags it as INIT - can only be set once
+============
+*/
+void Cvar_SetI_f( void ) {
+	cvar_t	*v;
+
+	if ( Cmd_Argc() < 3 ) {
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: seti <variable> <value>\n");
+		return;
+	}
+	Cvar_Set_f();
+
+	Sys_EnterCriticalSection(CRITSECT_CVAR);
+
+	v = Cvar_FindVar( Cmd_Argv( 1 ) );
+	if ( !v ) {
+		Sys_LeaveCriticalSection(CRITSECT_CVAR);
+		return;
+	}
+	Cvar_AddFlags(v, CVAR_INIT);
+	Sys_LeaveCriticalSection(CRITSECT_CVAR);
+}
+
+
+/*
+============
 Cvar_SetA_f
 
 As Cvar_Set, but also flags it as archived
@@ -2415,6 +2443,8 @@ void Cvar_Init (void)
 	Cmd_SetCommandCompletionFunc( "set", Cvar_CompleteCvarName );
 	Cmd_AddCommand ("sets", Cvar_SetS_f);
 	Cmd_SetCommandCompletionFunc( "sets", Cvar_CompleteCvarName );
+	Cmd_AddCommand ("seti", Cvar_SetI_f);
+	Cmd_SetCommandCompletionFunc( "seti", Cvar_CompleteCvarName );
 	Cmd_AddCommand ("seta", Cvar_SetA_f);
 	Cmd_SetCommandCompletionFunc( "seta", Cvar_CompleteCvarName );
 	Cmd_AddCommand ("setfromcvar", Cvar_SetFromCvar_f);
