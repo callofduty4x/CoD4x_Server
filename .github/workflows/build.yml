@@ -21,6 +21,7 @@ jobs:
       
     - name: Set up needed libs
       run: | 
+        sudo apt-get update
         sudo apt-get install g++-multilib gcc-multilib 
         sudo dpkg --add-architecture i386 
         sudo apt-get update
