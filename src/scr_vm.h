@@ -708,7 +708,9 @@ int __cdecl Scr_GetInt( unsigned int );
 float __cdecl Scr_GetFloat( unsigned int );
 char* __cdecl Scr_GetString( unsigned int );
 gentity_t* __cdecl Scr_GetEntity( unsigned int );
-short __cdecl Scr_GetConstString( unsigned int );
+/* Returns a full 32-bit script string index. Must not be narrowed here: declaring
+   this `short` makes the caller sign-extend any index >= 0x8000 into 0xFFFFxxxx. */
+unsigned int __cdecl Scr_GetConstString( unsigned int );
 unsigned int __cdecl Scr_GetType( unsigned int );
 unsigned int __cdecl Scr_GetPointerType( unsigned int );
 void __cdecl Scr_GetVector( unsigned int, float* );

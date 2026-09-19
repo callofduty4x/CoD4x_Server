@@ -3411,7 +3411,7 @@ void PlayerCmd_SetStance(scr_entref_t playerEntNum)
         Scr_ObjectError("entity is not a client");
 
     // Param check.
-    short stanceIdx = Scr_GetConstString(0);
+    unsigned int stanceIdx = Scr_GetConstString(0);
     if (stanceIdx != (unsigned short)scr_const.stand && stanceIdx != (unsigned short)scr_const.crouch && stanceIdx != (unsigned short)scr_const.prone)
         Scr_ParamError(0, "stance must be one of {stand, crouch, prone}");
 
