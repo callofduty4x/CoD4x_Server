@@ -51,7 +51,7 @@ unsigned sysMsgTime;
 qboolean windowsCreated;
 } WinVars_t;
 
-void CON_Show( int visLevel, qboolean quitOnClose );
+void CON_Show(void);
 char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text);
 
 extern WinVars_t g_wv;

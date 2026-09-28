@@ -37,7 +37,6 @@
 #include <io.h>
 #include <Shlobj.h>
 
-void Sys_ShowErrorDialog(const char* functionName);
 void Sys_InitThreadContext();
 
 WinVars_t g_wv;
@@ -190,7 +189,7 @@ qboolean Sys_MemoryProtectWrite(void* startoffset, int len)
 
 	if(VirtualProtect((LPVOID)startoffset, len, PAGE_READWRITE, &oldProtect) == 0)
 	{
-	        Sys_ShowErrorDialog("Sys_MemoryProtectWrite");
+	        fprintf(stderr, "Sys_MemoryProtectWrite");
             return qfalse;
 	}
 
@@ -204,7 +203,7 @@ qboolean Sys_MemoryProtectExec(void* startoffset, int len)
 
 	if(VirtualProtect((LPVOID)startoffset, len, PAGE_EXECUTE_READ, &oldProtect) == 0)
 	{
-            Sys_ShowErrorDialog("Sys_MemoryProtectExec");
+            fprintf(stderr, "Sys_MemoryProtectExec");
             return qfalse;
 	}
 
@@ -218,30 +217,11 @@ qboolean Sys_MemoryProtectReadonly(void* startoffset, int len)
 
 	if(VirtualProtect((LPVOID)startoffset, len, PAGE_READONLY, &oldProtect) == 0)
 	{
-	        Sys_ShowErrorDialog("Sys_MemoryProtectReadonly");
+	        fprintf(stderr, "Sys_MemoryProtectReadonly");
             return qfalse;
 	}
 
 	return qtrue;
-}
-
-void Sys_ShowErrorDialog(const char* functionName)
-{
-	void* HWND = NULL;
-	char errMessageBuf[1024];
-	char displayMessageBuf[1024];
-	DWORD lastError = GetLastError();
-
-	if(lastError != 0)
-	{
-		FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, lastError, MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT), errMessageBuf, sizeof(errMessageBuf) -1, NULL);
-	}else{
-		Q_strncpyz(errMessageBuf, "Unknown Error", sizeof(errMessageBuf));
-	}
-
-	Com_sprintf(displayMessageBuf, sizeof(displayMessageBuf), "Error in function: %s\nThe error is: %s", functionName, errMessageBuf);
-
-	MessageBoxA(HWND, displayMessageBuf, "System Error", MB_OK | MB_ICONERROR);
 }
 
 const char *Sys_DefaultHomePath( void ) {
@@ -610,7 +590,7 @@ void Sys_PlatformInit( void )
 	if(received_mem != allocptr)
 	{
 		Com_sprintf(errormsg, sizeof(errormsg), "Sys_PlatformInit: Allocate memory @ %p failed Received: %p", allocptr, received_mem);
-		Sys_ShowErrorDialog(errormsg);
+		fprintf(stderr, errormsg);
 		exit(1);
 	}
 #endif
@@ -641,7 +621,7 @@ void* Sys_LoadLibrary(const char* dlfile)
 /*
 	if(handle == NULL)
 	{
-		Sys_ShowErrorDialog("Sys_LoadLibrary");
+		fprintf(stderr, "Sys_LoadLibrary");
 	}
 */
 	return handle;
@@ -782,79 +762,13 @@ char** GetStrTable(void* filebuf, int len, sharedlib_data_t *text)
 	return PE32_GetStrTable(filebuf, len, text);
 }
 
-void CON_InitInternal();
-
-/* Win32 message loop thread */
-void* Sys_EventLoopThread(void* nullarg){
-	MSG msg;
-
-	CON_InitInternal();
-	g_wv.windowsCreated = qtrue;
-
-
-	// pump the message loop
-	while ( GetMessageA( &msg, NULL, 0, 0 ) > 0)
-	{
-		// save the msg time, because wndprocs don't have access to the timestamp
-		g_wv.sysMsgTime = msg.time;
-
-		TranslateMessage( &msg );
-		DispatchMessageA( &msg );
-	}
-	MessageBoxA(NULL, "GetMessageA has failed", "GetMessageA has failed", MB_OK);
-	Com_Quit_f();
-	return NULL;
-}
-
 void Sys_EventLoop()
 {
 
 }
 
-void CON_Init()
-{
-	static qboolean messageThreadActive = 0;
-	threadid_t tid;
-
-	if(messageThreadActive)
-	{
-		return;
-	}
-
-	messageThreadActive = Sys_CreateNewThread(Sys_EventLoopThread, &tid, NULL);
-	while(messageThreadActive && !g_wv.windowsCreated)
-	{
-		Sys_SleepSec(0);
-	}
-}
-
-
-void* Sys_ErrorBoxThread(void* message)
-{
-	MessageBoxA(NULL, (char*)message, CLIENT_WINDOW_TITLE " - System Crash", MB_OK | MB_ICONERROR | MB_TOPMOST );
-	return NULL;
-}
-
 void Sys_WaitForErrorConfirmation(const char* error)
 {
-	MSG msg;
-	unsigned int maxwait;
-	threadid_t tid;
-
-	CON_Show( 1, qtrue );
-
-	Sys_CreateNewThread(Sys_ErrorBoxThread, &tid, (void*)error);
-
-	// wait for the user to quit or wait for max 60 seconds
-	maxwait = Sys_Milliseconds() + 60000;
-	do{
-		if ( !GetMessage( &msg, NULL, 0, 0 ) ) {
-			break;
-		}
-		TranslateMessage( &msg );
-		DispatchMessage( &msg );
-	}while( Sys_Milliseconds() < maxwait );
-
 
 }
 
@@ -879,7 +793,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		Sys_SetExeFile( "" );
 		Sys_SetExeFileShort( "" );
 		Sys_SetBinaryPath( "" );
-		MessageBoxA(NULL, "Path is too long. The whole path to location of this .exe file must not exceed 254 characters", CLIENT_WINDOW_TITLE " Error", MB_OK | MB_ICONERROR);
+		fprintf(stderr, "Path is too long. The whole path to location of this .exe file must not exceed 254 characters");
 		return 1;
 	}else{
 		Sys_SetExeFile( lpFilename );
@@ -890,13 +804,13 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			*lastSep = '\0';
 			if(strlen(lastSep +1) > MAX_QPATH)
 			{
-				MessageBoxA(NULL, ".EXE filename exceeds " "64" " characters.", CLIENT_WINDOW_TITLE " Error", MB_OK | MB_ICONERROR);
+				fprintf(stderr, ".EXE filename exceeds " "64" " characters.");
 				return 1;
 			}
 			Sys_SetBinaryPath( lpFilename );
 			Sys_SetExeFileShort( lastSep +1 );
 		}else{
-			MessageBoxA(NULL, "GetModuleFileName() returned an unexpected filepath.", CLIENT_WINDOW_TITLE " Error", MB_OK | MB_ICONERROR);
+			fprintf(stderr, "GetModuleFileName() returned an unexpected filepath.");
 			return 1;
 		}
 	}
@@ -964,7 +878,7 @@ void Sys_SetThreadLocalStorage(void** localvar)
 {
     if(TlsSetValue(tlsKey, localvar) == FALSE)
 	{
-		Sys_ShowErrorDialog("Sys_SetThreadLocalStorage");
+		fprintf(stderr, "Sys_SetThreadLocalStorage");
 		ExitProcess(-1);
 	}
 }
