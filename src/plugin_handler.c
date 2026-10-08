@@ -42,7 +42,6 @@
 pluginWrapper_t pluginFunctions;
 pluginScriptCallStubBase_t __attribute__((section(".text#"))) pluginScriptCallStubs;
 
-
 char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
 
     "OnInfoRequest",
@@ -379,6 +378,9 @@ void PHandler_Unload(int id) // Unload a plugin, safe for use.
             }
 
         }
+        PHandler_UnregisterSnapshotPlayerStatePatch(id);
+        PHandler_UnregisterSnapshotEntityPatch(id);
+        PHandler_UnregisterSnapshotClientStatePatch(id);
         lib_handle = pluginFunctions.plugins[id].lib_handle;                // Save the lib handle
         Com_Memset(&(pluginFunctions.plugins[id]), 0x00, sizeof(plugin_t));     // Wipe out all the data
         Sys_CloseLibrary(lib_handle);                                                // Close the dll as there are no more references to it

@@ -28,6 +28,7 @@
 #include "server.h"
 #include "huffman.h"
 #include "msg.h"
+#include "plugin_snapshot_patching.h"
 #include "sys_main.h"
 #include "g_sv_shared.h"
 #include "cm_public.h"
@@ -875,6 +876,11 @@ static cachedSnapshot_t *SV_GetCachedSnapshot(int *pArchiveTime)
   return NULL;
 }
 
+cachedSnapshot_t *SV_QueryCachedSnapshot(int *pArchiveTime)
+{
+  return SV_GetCachedSnapshot(pArchiveTime);
+}
+
 /*
 =============
 SV_BuildClientSnapshot
@@ -940,6 +946,8 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 
 	frame->ps = *ps;
 
+    SV_SnapshotPatchPlayerState(client, &frame->ps, archiveTime);
+
 	//Update client num from other source here
 	clientNum = frame->ps.clientNum;
 
@@ -972,6 +980,8 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 
 			*entState = aent->s;
 
+            SV_SnapshotPatchEntity(client, &frame->ps, entState, archiveTime);
+
             if ( entState->lerp.pos.trTime )
 			{
               entState->lerp.pos.trTime += snapTime;
@@ -998,6 +1008,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 			frame->num_entities++;
         }
 
+		SV_SnapshotAppendOwnEntity(client, frame, &frame->ps, archiveTime);
 
 		int maxCachedClients = sizeof(svs.cachedSnapshotClients) / sizeof(svs.cachedSnapshotClients[0]);
 
@@ -1006,6 +1017,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 			cachedClient = &svs.cachedSnapshotClients[(i + cachedSnap->first_client) % maxCachedClients];
 			clientState = &svs.snapshotClients[svs.nextSnapshotClients % svs.numSnapshotClients];
 			*clientState = cachedClient->cs;
+            SV_SnapshotPatchClientState(client, &frame->ps, clientState, cachedClient->cs.clientIndex, archiveTime);
 			svs.nextSnapshotClients++;
 
 			// this should never hit, map should always be restarted first in SV_Frame
@@ -1014,6 +1026,8 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 			}
 			frame->num_clients++;
         }
+
+		SV_SnapshotAppendOwnClient(client, frame, &frame->ps, archiveTime);
 		return;
 	}
 
@@ -1028,6 +1042,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 		ent = SV_GentityNum( entityNumbers.snapshotEntities[i] );
 		entState = &svs.snapshotEntities[svs.nextSnapshotEntities % svs.numSnapshotEntities];
 		*entState = ent->s;
+        SV_SnapshotPatchEntity(client, &frame->ps, entState, archiveTime);
 		svs.nextSnapshotEntities++;
 		// this should never hit, map should always be restarted first in SV_Frame
 		if ( svs.nextSnapshotEntities >= 0x7FFFFFFE ) {
@@ -1035,6 +1050,8 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 		}
 		frame->num_entities++;
 	}
+
+	SV_SnapshotAppendOwnEntity(client, frame, &frame->ps, archiveTime);
 
 
 	// copy the client states out
@@ -1054,6 +1071,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 
 		clientState = &svs.snapshotClients[svs.nextSnapshotClients % svs.numSnapshotClients];
 		*clientState = *clientStateSource;
+        SV_SnapshotPatchClientState(client, &frame->ps, clientState, i, archiveTime);
 
 		svs.nextSnapshotClients++;
 		// this should never hit, map should always be restarted first in SV_Frame
@@ -1062,6 +1080,8 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 		}
 		frame->num_clients++;
 	}
+
+	SV_SnapshotAppendOwnClient(client, frame, &frame->ps, archiveTime);
 
 
 }
