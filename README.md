@@ -116,7 +116,7 @@ If compilation was successful the binary will be placed in the `/bin/` folder.
 To compile CoD4x from source you require the following tools:
 
 - [NASM](http://www.nasm.us/pub/nasm/releasebuilds/?C=M;O=D)
-- [MinGW](http://www.mingw.org/): 'gcc' and 'mingw32-make'
+- [MinGW](https://downloads.sourceforge.net/mingw-w64/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z): 'gcc' and 'mingw32-make'
 
 Now compile the server by running `mingw32-make`.
 
